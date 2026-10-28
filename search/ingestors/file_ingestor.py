@@ -14,6 +14,8 @@ class FileIngestor(BaseIngestor):
         file_path: str,
         title: Optional[str] = None,
         source_type: str = "document",
+        chunk_size: Optional[int] = None,
+        overlap: Optional[int] = None,
     ) -> List[str]:
         """Ingest text file into search indices with chunking."""
         path = Path(file_path)
@@ -26,7 +28,7 @@ class FileIngestor(BaseIngestor):
             raise IOError(f"Could not read file {file_path}: {e}")
 
         doc_title = title or path.stem.replace("_", " ").title()
-        chunks = self.chunk_text(content, chunk_size=1500, overlap=200)
+        chunks = self.chunk_text(content, chunk_size=chunk_size, overlap=overlap)
 
         ingested_ids = []
         for idx, chunk in enumerate(chunks):

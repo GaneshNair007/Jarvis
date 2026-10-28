@@ -64,7 +64,15 @@ class Settings(BaseSettings):
     openrouter_api_key: Optional[str] = Field(default=None)
     openrouter_base_url: str = Field(default="https://openrouter.ai/api/v1")
     openrouter_default_model: str = Field(default="openrouter/free")
+    openrouter_site_url: str = Field(default="https://github.com/GaneshNair007/Jarvis")
+    openrouter_app_title: str = Field(default="JARVIS AI OS")
+    openrouter_models_cache_ttl_sec: int = Field(default=3600)
+    openrouter_http_timeout_sec: float = Field(default=15.0)
     cloud_gateway_timeout_sec: float = Field(default=45.0)
+
+    # ─── GitHub Developer Integration ───────────────────────────────────────
+    github_default_repo: str = Field(default="GaneshNair007/Jarvis")
+    github_api_base_url: str = Field(default="https://api.github.com")
 
     # ─── Mem0 Long-Term Memory ──────────────────────────────────────────────
     mem0_api_key: Optional[str] = Field(default=None)

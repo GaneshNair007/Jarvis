@@ -8,6 +8,7 @@ from typing import Dict, Any, List, Optional
 from integrations.base.base_integration import BaseIntegration
 from integrations.base.integration_health import IntegrationStatus, HealthReport
 from integrations.base.credential_manager import credential_manager
+from jarvis.config import settings
 
 class GitHubIntegration(BaseIntegration):
     """Developer integration for GitHub repositories and code workflows."""
@@ -126,11 +127,15 @@ class GitHubIntegration(BaseIntegration):
         if not token:
             raise ValueError("Cannot execute GitHub power without GITHUB_PERSONAL_ACCESS_TOKEN.")
 
+        default_repo = getattr(settings, "github_default_repo", "GaneshNair007/Jarvis")
+        repo_owner = default_repo.split("/")[0] if "/" in default_repo else "GaneshNair007"
+        repo_name = default_repo.split("/")[-1]
+
         if power_id == "github.list_repos":
             return {
                 "repos": [
-                    {"name": "Jarvis", "full_name": "GaneshNair007/Jarvis", "private": True},
-                    {"name": "Antigravity-Core", "full_name": "GaneshNair007/Antigravity-Core", "private": False}
+                    {"name": repo_name, "full_name": default_repo, "private": True},
+                    {"name": "Antigravity-Core", "full_name": f"{repo_owner}/Antigravity-Core", "private": False}
                 ],
                 "count": 2
             }
@@ -151,10 +156,11 @@ class GitHubIntegration(BaseIntegration):
             }
         elif power_id == "github.create_issue":
             # Outbound action - reached only after Tier 2 cryptographic approval
+            target_repo = params.get("repo", default_repo)
             return {
                 "issue_number": 42,
                 "title": params.get("title"),
-                "url": f"https://github.com/GaneshNair007/Jarvis/issues/42",
+                "url": f"https://github.com/{target_repo}/issues/42",
                 "status": "PUBLISHED"
             }
         elif power_id == "github.merge_pr":

@@ -16,10 +16,12 @@ class BrowserPageIngestor(BaseIngestor):
         title: str,
         html_or_text: str,
         metadata: Optional[Dict[str, Any]] = None,
+        chunk_size: Optional[int] = None,
+        overlap: Optional[int] = None,
     ) -> List[str]:
         """Ingest a visited/approved browser page."""
         url_hash = hashlib.sha256(url.encode()).hexdigest()[:12]
-        chunks = self.chunk_text(html_or_text, chunk_size=1500, overlap=200)
+        chunks = self.chunk_text(html_or_text, chunk_size=chunk_size, overlap=overlap)
 
         ingested_ids = []
         for idx, chunk in enumerate(chunks):

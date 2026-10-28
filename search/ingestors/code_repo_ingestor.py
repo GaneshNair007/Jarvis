@@ -7,27 +7,28 @@ filters out binaries, and indexes code modules with file and line provenance.
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from search.ingestors.base_ingestor import BaseIngestor
+from jarvis.constants import (
+    DEFAULT_CODE_EXTENSIONS,
+    DEFAULT_IGNORED_DIRS,
+    DEFAULT_CODE_INGEST_MAX_FILES,
+    MAX_INGEST_FILE_SIZE_BYTES,
+)
 
 
 class CodeRepoIngestor(BaseIngestor):
     # Allowed source extensions
-    CODE_EXTENSIONS = {
-        ".py", ".js", ".ts", ".jsx", ".tsx", ".html", ".css",
-        ".go", ".rs", ".java", ".c", ".cpp", ".h", ".sh",
-        ".json", ".yaml", ".yml", ".toml", ".sql", ".dockerfile",
-    }
+    CODE_EXTENSIONS = DEFAULT_CODE_EXTENSIONS
 
     # Directories to unconditionally ignore
-    IGNORED_DIRS = {
-        ".git", ".venv", "venv", "node_modules", "__pycache__",
-        ".pytest_cache", "dist", "build", ".next", ".artifacts",
-    }
+    IGNORED_DIRS = DEFAULT_IGNORED_DIRS
 
     async def ingest_repository(
         self,
         repo_dir: str,
         repo_name: Optional[str] = None,
-        max_files: int = 150,
+        max_files: int = DEFAULT_CODE_INGEST_MAX_FILES,
+        chunk_size: Optional[int] = None,
+        overlap: Optional[int] = None,
     ) -> List[str]:
         """Index source code files within a repository directory."""
         root = Path(repo_dir)
@@ -53,9 +54,9 @@ class CodeRepoIngestor(BaseIngestor):
             if path.suffix.lower() not in self.CODE_EXTENSIONS and path.name.lower() != "dockerfile":
                 continue
 
-            # Skip files larger than 500KB
+            # Skip files larger than MAX_INGEST_FILE_SIZE_BYTES
             try:
-                if path.stat().st_size > 500 * 1024:
+                if path.stat().st_size > MAX_INGEST_FILE_SIZE_BYTES:
                     continue
                 content = path.read_text(encoding="utf-8", errors="replace").strip()
             except Exception:
@@ -80,7 +81,7 @@ class CodeRepoIngestor(BaseIngestor):
             )
 
             # Chunk large files if needed
-            chunks = self.chunk_text(content, chunk_size=2000, overlap=250)
+            chunks = self.chunk_text(content, chunk_size=chunk_size, overlap=overlap)
             for c_idx, chunk in enumerate(chunks):
                 chunk_id = f"{doc_id}_{c_idx}" if len(chunks) > 1 else doc_id
                 chunk_title = f"{title} (Part {c_idx + 1})" if len(chunks) > 1 else title

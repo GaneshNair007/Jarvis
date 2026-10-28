@@ -14,6 +14,8 @@ class PDFIngestor(BaseIngestor):
         self,
         file_path: str,
         title: Optional[str] = None,
+        chunk_size: Optional[int] = None,
+        overlap: Optional[int] = None,
     ) -> List[str]:
         """Ingest PDF document with page-specific provenance."""
         path = Path(file_path)
@@ -34,7 +36,7 @@ class PDFIngestor(BaseIngestor):
                 if not text:
                     continue
 
-                page_chunks = self.chunk_text(text, chunk_size=1200, overlap=150)
+                page_chunks = self.chunk_text(text, chunk_size=chunk_size, overlap=overlap)
                 for chunk_idx, chunk in enumerate(page_chunks):
                     doc_id = f"pdf:{path.stem}_p{page_num + 1}_c{chunk_idx}"
                     chunk_title = f"{doc_title} (Page {page_num + 1})"

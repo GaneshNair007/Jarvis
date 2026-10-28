@@ -67,8 +67,8 @@ class OpenRouterClient:
     def _get_headers(self) -> Dict[str, str]:
         headers = {
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://github.com/GaneshNair007/Jarvis",
-            "X-Title": "JARVIS AI OS",
+            "HTTP-Referer": getattr(settings, "openrouter_site_url", "https://github.com/GaneshNair007/Jarvis"),
+            "X-Title": getattr(settings, "openrouter_app_title", "JARVIS AI OS"),
         }
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
@@ -77,11 +77,13 @@ class OpenRouterClient:
     def get_free_models(self, force_refresh: bool = False) -> List[str]:
         """Queries the live OpenRouter catalog and returns all zero-cost models."""
         now = time.time()
-        if not force_refresh and self._cached_free_models and (now - self._cache_time < 3600):
+        ttl = getattr(settings, "openrouter_models_cache_ttl_sec", 3600)
+        if not force_refresh and self._cached_free_models and (now - self._cache_time < ttl):
             return self._cached_free_models
 
         try:
-            with httpx.Client(timeout=15.0) as client:
+            http_timeout = getattr(settings, "openrouter_http_timeout_sec", 15.0)
+            with httpx.Client(timeout=http_timeout) as client:
                 res = client.get(f"{self.base_url}/models")
                 if res.status_code == 200:
                     data = res.json().get("data", [])

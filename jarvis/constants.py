@@ -200,3 +200,21 @@ INGESTION_REDACTION_PATTERNS: List[Tuple[re.Pattern, str]] = [
     (re.compile(r'(?i)(password|secret|passwd|token)\s*[:=]\s*["\']?([^"\s\',;]{4,})["\']?'), r"\1: [REDACTED_SECRET]"),
     (re.compile(r"\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12}|(?:[0-9]{4}[ -]){3}[0-9]{4})\b"), "[REDACTED_CARD_NUMBER]"),
 ]
+
+
+# ─── Code Ingestion Constants ───────────────────────────────────────────────
+
+DEFAULT_CODE_EXTENSIONS = {
+    ".py", ".js", ".ts", ".jsx", ".tsx", ".html", ".css",
+    ".go", ".rs", ".java", ".c", ".cpp", ".h", ".sh",
+    ".json", ".yaml", ".yml", ".toml", ".sql", ".dockerfile",
+}
+
+DEFAULT_IGNORED_DIRS = {
+    ".git", ".venv", "venv", "node_modules", "__pycache__",
+    ".pytest_cache", "dist", "build", ".next", ".artifacts",
+}
+
+DEFAULT_CODE_INGEST_MAX_FILES = 150
+MAX_INGEST_FILE_SIZE_BYTES = 500 * 1024  # 500 KB
+

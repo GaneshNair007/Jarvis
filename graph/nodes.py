@@ -6,6 +6,8 @@ from core.model_router import ModelRouter
 from core.policy import PolicyEngine
 from jarvis.core.audit import audit_ledger
 
+from jarvis.config import settings
+
 router = ModelRouter()
 policy = PolicyEngine()
 memory = mem0_client
@@ -13,7 +15,7 @@ memory = mem0_client
 def memory_retrieval(state: JarvisState) -> Dict[str, Any]:
     memories = memory.search(
         state.get("user_input", ""),
-        filters={"user_id": state.get("user_id", "ganesh")},
+        filters={"user_id": state.get("user_id", settings.jarvis_user_id)},
     )
     return {
         "retrieved_memories": [
@@ -45,9 +47,7 @@ def model_router(state: JarvisState) -> Dict[str, Any]:
         sensitivity="private" if state.get("risk_level", "low") != "low" else "public",
     )
 
-    prompt_path = Path("config/system_prompts/core_agent.md")
-    if not prompt_path.exists():
-        prompt_path = Path(__file__).resolve().parent.parent / "config" / "system_prompts" / "core_agent.md"
+    prompt_path = settings.config_dir / "system_prompts" / "core_agent.md"
     system_prompt = prompt_path.read_text(encoding="utf-8") if prompt_path.exists() else "You are JARVIS."
 
     messages = [
@@ -85,7 +85,7 @@ def memory_update(state: JarvisState) -> Dict[str, Any]:
                 {"role": "user", "content": user_input},
                 {"role": "assistant", "content": final_response},
             ],
-            user_id=state.get("user_id", "ganesh"),
+            user_id=state.get("user_id", settings.jarvis_user_id),
         )
     return {}
 
