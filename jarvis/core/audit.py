@@ -102,6 +102,11 @@ class AuditLedger:
         )
 
 
+    def verify_chain(self) -> bool:
+        """Convenience method returning True if audit chain is intact."""
+        valid, _, _ = self.verify_integrity()
+        return valid
+
     def verify_integrity(self) -> Tuple[bool, int, str]:
         """
         Walks the entire audit file from line 0 to EOF, verifying the SHA-256 chain.
