@@ -63,6 +63,7 @@ class Settings(BaseSettings):
     audit_log_path: Path = Field(default=PROJECT_ROOT / "data" / "logs" / "audit.jsonl")
     screenshot_dir: Path = Field(default=PROJECT_ROOT / "data" / "screenshots")
     catalog_path: Path = Field(default=PROJECT_ROOT / "data" / "powers_catalog.json")
+    jarvis_artifact_dir: Path = Field(default=PROJECT_ROOT / "data" / "artifacts")
 
     model_config = SettingsConfigDict(
         env_file=str(PROJECT_ROOT / ".env"),
@@ -75,6 +76,7 @@ class Settings(BaseSettings):
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.audit_log_path.parent.mkdir(parents=True, exist_ok=True)
         self.screenshot_dir.mkdir(parents=True, exist_ok=True)
+        self.jarvis_artifact_dir.mkdir(parents=True, exist_ok=True)
 
 # Global Settings Instance
 settings = Settings()

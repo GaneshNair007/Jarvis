@@ -33,7 +33,9 @@ htmlcov/
 
 # Local data & logs (preserve structure, ignore large local data)
 data/logs/*.jsonl
+data/logs/*.log
 data/screenshots/*.png
+data/artifacts/screenshots/*.png
 data/*.db
 data/*.db-wal
 data/*.db-shm

@@ -80,6 +80,28 @@ class AuditLedger:
         self.last_hash = entry_hash
         return record
 
+    def record(
+        self,
+        actor: str,
+        action: str,
+        target: str,
+        payload: Any,
+        result: str = "SUCCESS",
+        task_id: str = "general",
+        power_id: str = "browser_power",
+    ) -> Dict[str, Any]:
+        """Convenience method for recording actions from workers and browser subsystems."""
+        return self.log_event(
+            event_type=action,
+            task_id=task_id,
+            power_id=power_id,
+            status=result,
+            inputs={"target": target},
+            outputs=payload,
+            details={"actor": actor}
+        )
+
+
     def verify_integrity(self) -> Tuple[bool, int, str]:
         """
         Walks the entire audit file from line 0 to EOF, verifying the SHA-256 chain.

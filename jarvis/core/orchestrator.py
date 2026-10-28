@@ -167,6 +167,18 @@ class JarvisOrchestrator:
                 "action": "lock_workstation",
                 "message": "Workstation lock requested."
             }
+        elif cleaned.startswith("search ") or "web search" in cleaned:
+            from jarvis.powers.browser_powers import browser_powers
+            q = cleaned.replace("web search", "").replace("search", "").strip()
+            return browser_powers.search_web(q or query)
+        elif cleaned.startswith("research ") or "deep research" in cleaned:
+            from jarvis.powers.browser_powers import browser_powers
+            topic = cleaned.replace("deep research", "").replace("research", "").strip()
+            return browser_powers.deep_research(topic or query)
+        elif cleaned.startswith("read url ") or (cleaned.startswith("http://") or cleaned.startswith("https://")):
+            from jarvis.powers.browser_powers import browser_powers
+            url = query.replace("read url", "").strip()
+            return browser_powers.read_url(url)
         else:
             return {
                 "type": "instant_command",

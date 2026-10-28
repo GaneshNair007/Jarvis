@@ -53,3 +53,5 @@ def setup_logger(name: str = "jarvis") -> logging.Logger:
 
 # Global default logger
 logger = setup_logger()
+get_logger = setup_logger
+
