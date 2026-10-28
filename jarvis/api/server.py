@@ -9,8 +9,10 @@ Exposes:
 
 import asyncio
 import time
+from pathlib import Path
 from typing import Dict, Any, Optional, List
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Body
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -23,6 +25,7 @@ from jarvis.core.power_registry import power_registry
 from jarvis.core.audit import audit_ledger
 from jarvis.memory.store import db_store
 from jarvis.powers.it_admin_powers import it_admin_powers
+from jarvis.api.routes_voice import router as voice_router
 
 app = FastAPI(
     title="JARVIS Personal AI Operating System",
@@ -37,6 +40,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include Voice Router
+app.include_router(voice_router)
+
+DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
+
+@app.get("/")
+@app.get("/dashboard")
+async def serve_dashboard():
+    """Serves the interactive Iron Man glassmorphic HUD dashboard."""
+    if not DASHBOARD_HTML.exists():
+        raise HTTPException(status_code=404, detail="Dashboard UI file not found")
+    return FileResponse(DASHBOARD_HTML)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # MODEL ROUTER SPECIFIC APIS (Prompt Mandate)

@@ -54,6 +54,30 @@ def run_powers_summary():
         print(f"  - {cat:30}: {p_count} powers")
     print()
 
+def run_voice_mode():
+    from jarvis.voice.wake import wake_detector
+    from jarvis.voice.tts import tts_engine
+    print("\n🎙️  JARVIS Full-Duplex Voice Mode Active")
+    print("Wake word: 'Hey Jarvis' or press Enter for Push-to-Talk. Type 'exit' to quit.\n")
+    tts_engine.speak_live("Jarvis voice subsystem online.", async_mode=True)
+    wake_detector.start_listening()
+
+    while True:
+        try:
+            cmd = input("voice> ")
+            if cmd.strip().lower() in ["exit", "quit"]:
+                wake_detector.stop_listening()
+                print("Voice mode deactivated.")
+                break
+            elif not cmd.strip():
+                wake_detector.trigger_push_to_talk("console_enter")
+                print("Activated via Push-to-Talk.")
+            else:
+                run_cli_chat(cmd)
+        except (KeyboardInterrupt, EOFError):
+            wake_detector.stop_listening()
+            break
+
 def cli_entrypoint():
     args = sys.argv[1:]
     if not args or args[0] == "serve":
@@ -69,8 +93,10 @@ def cli_entrypoint():
         run_audit_verify()
     elif args[0] == "powers":
         run_powers_summary()
+    elif args[0] == "voice":
+        run_voice_mode()
     else:
-        print(f"Unknown command '{args[0]}'. Use: serve, chat, health, audit, powers")
+        print(f"Unknown command '{args[0]}'. Use: serve, chat, health, audit, powers, voice")
 
 if __name__ == "__main__":
     cli_entrypoint()
