@@ -15,10 +15,12 @@ from integrations.base import (
 )
 from integrations.system.system_diagnostics import SystemDiagnosticsIntegration
 from integrations.github.github_integration import GitHubIntegration
+from integrations.openrouter.openrouter_integration import OpenRouterIntegration
 
 # Auto-register foundational integrations
 integration_registry.register(SystemDiagnosticsIntegration())
 integration_registry.register(GitHubIntegration())
+integration_registry.register(OpenRouterIntegration())
 
 __all__ = [
     "BaseIntegration",
@@ -36,4 +38,5 @@ __all__ = [
     "HealthReport",
     "SystemDiagnosticsIntegration",
     "GitHubIntegration",
+    "OpenRouterIntegration",
 ]

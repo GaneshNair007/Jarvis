@@ -4,7 +4,8 @@
 [![Docker & Deployment Readiness](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml)
 [![Security & DLP Audit](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-3776AB?logo=python&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-100%20passed-brightgreen?logo=pytest&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-105%20passed-brightgreen?logo=pytest&logoColor=white)
+![OpenRouter](https://img.shields.io/badge/openrouter-free%20%26%20reasoning-6366F1)
 ![Docker](https://img.shields.io/badge/docker-ready-2496ED?logo=docker&logoColor=white)
 ![Architecture](https://img.shields.io/badge/architecture-LangGraph%20%7C%20LiteLLM%20%7C%20Mem0-blueviolet)
 ![Local Search](https://img.shields.io/badge/search-sub--50ms%20local-00C7B7)
@@ -113,11 +114,20 @@ curl -X POST http://localhost:8000/kill-switch -H "Content-Type: application/jso
 # Run Milestone 1 Core Acceptance Suite (12 tests)
 pytest tests/test_milestone1_core.py -v
 
-# Run Full Repository Suite (100 tests across 16 suites)
+# Run OpenRouter Reasoning & Free Tier Suite (5 tests)
+pytest tests/test_openrouter.py -v
+
+# Run Full Repository Suite (105 tests across 17 suites)
 pytest -v
 ```
 
-All **100 tests** pass with 100% deterministic reliability.
+All **105 tests** pass with 100% deterministic reliability.
+
+### 🌐 OpenRouter Zero-Cost & Reasoning Models Integration
+JARVIS includes native, zero-cost LLM routing to OpenRouter's free router (`openrouter/free`) and 19+ free tier models (Gemma 4, Nemotron 3.5, LFM 2.5, Laguna, Cohere):
+- **Deep Reasoning Traces**: Captures step-by-step reasoning tokens (`completionTokensDetails.reasoningTokens`) for complex logic and math tasks.
+- **Automatic Fallback Chain**: If an upstream free model is throttled or rate-limited (HTTP 429), automatically fails over across alternate zero-cost models.
+- **Zero Cost Guarantee**: Verified by CostGovernor with $0.00 usage estimation and budget gate compliance.
 
 ### 🔄 CI/CD Automation & Resilient Retries
 All pull requests and commits to `main` trigger automated GitHub Actions workflows:

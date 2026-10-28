@@ -157,12 +157,17 @@ class ModelRouter:
 
             # Check if budget or privacy permits Tier 3
             if can_cloud and can_budget:
+                provider = (
+                    "openrouter" if "openrouter" in target_model
+                    else ("anthropic" if "claude" in target_model
+                    else ("openai" if "gpt" in target_model else "google"))
+                )
                 decision = RoutingDecision(
                     task_id=request.task_id,
                     tier="TIER_3_CLOUD",
-                    provider="anthropic" if "claude" in target_model else ("openai" if "gpt" in target_model else "google"),
+                    provider=provider,
                     selected_model=target_model,
-                    reason=f"Tier 3 Frontier Cloud escalated: High complexity public research/coding. {budget_reason}",
+                    reason=f"Tier 3 Frontier Cloud / OpenRouter escalated: High complexity public research/coding. {budget_reason}",
                     redacted_context=self.privacy_gate.minimize_context(redacted_context),
                     redactions_made=total_redactions,
                     estimated_cost_usd=est_cost,

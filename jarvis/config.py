@@ -57,10 +57,13 @@ class Settings(BaseSettings):
     litellm_master_key: Optional[str] = Field(default=None)
     local_model: str = Field(default="ollama/llama3.1")
 
-    # ─── Tier 3: Frontier Cloud Gateway ─────────────────────────────────────
+    # ─── Tier 3: Frontier Cloud Gateway & OpenRouter Free Tier ──────────────
     claude_api_key: Optional[str] = Field(default=None)
     openai_api_key: Optional[str] = Field(default=None)
     gemini_api_key: Optional[str] = Field(default=None)
+    openrouter_api_key: Optional[str] = Field(default=None)
+    openrouter_base_url: str = Field(default="https://openrouter.ai/api/v1")
+    openrouter_default_model: str = Field(default="openrouter/free")
     cloud_gateway_timeout_sec: float = Field(default=45.0)
 
     # ─── Mem0 Long-Term Memory ──────────────────────────────────────────────

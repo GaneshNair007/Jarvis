@@ -159,6 +159,8 @@ DEFAULT_SOURCE_AUTHORITY: Dict[str, float] = {
 DEFAULT_PRICING_TABLE: Dict[str, Dict[str, float]] = {
     "ollama": {"input": 0.0, "output": 0.0},
     "vllm": {"input": 0.0, "output": 0.0},
+    "openrouter/free": {"input": 0.0, "output": 0.0},
+    "openrouter-free": {"input": 0.0, "output": 0.0},
     "claude-3-7-sonnet": {"input": 0.003, "output": 0.015},
     "gpt-4o": {"input": 0.0025, "output": 0.010},
     "gpt-4o-mini": {"input": 0.00015, "output": 0.0006},

@@ -15,7 +15,7 @@ class ModelRouter:
         if sensitivity == "private":
             return self.local_model
         if task_type in {"deep_research", "complex_coding", "advanced_vision"}:
-            return "claude-sonnet"  # LiteLLM alias configured in proxy
+            return "claude-sonnet"  # LiteLLM alias configured in proxy (falls back to openrouter-free / local-jarvis)
         return self.local_model
 
     def complete(self, model: str, messages: List[Dict[str, Any]], timeout: Optional[float] = 2.0) -> Dict[str, Any]:

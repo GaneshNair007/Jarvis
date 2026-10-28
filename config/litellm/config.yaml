@@ -15,12 +15,17 @@ model_list:
     litellm_params:
       model: gemini/gemini-2.5-pro
       api_key: os.environ/GEMINI_API_KEY
+  - model_name: openrouter-free
+    litellm_params:
+      model: openrouter/openrouter/free
+      api_key: os.environ/OPENROUTER_API_KEY
 
 router_settings:
   fallbacks:
-    - claude-sonnet: ["local-jarvis"]
-    - gpt: ["local-jarvis"]
-    - gemini: ["local-jarvis"]
+    - claude-sonnet: ["openrouter-free", "local-jarvis"]
+    - gpt: ["openrouter-free", "local-jarvis"]
+    - gemini: ["openrouter-free", "local-jarvis"]
+    - openrouter-free: ["local-jarvis"]
 
 litellm_settings:
   drop_params: true
