@@ -19,7 +19,7 @@ from jarvis.memory.layers import memory_manager
 from jarvis.memory.document_rag import document_rag
 from jarvis.memory.correction_engine import correction_engine
 
-router = APIRouter(prefix="/api/v1", tags=["Memory Vault"])
+router = APIRouter(tags=["Memory Vault"])
 
 # Pydantic Schemas
 class MemoryAddRequest(BaseModel):

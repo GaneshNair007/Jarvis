@@ -1,64 +1,110 @@
-# JARVIS: Personal AI Operating System
+# JARVIS — Personal AI Operating System
 
-> **Personal AI Operating System**  
-> *A screen-first, voice-driven, always-available multi-agent assistant for real computer work.*
-
----
-
-## ⚡ Key Highlights
-- **Three-Tier Hybrid Model Router**:
-  - **BYPASS**: Deterministic Instant OS Commands (0 tokens, ~1ms).
-  - **Tier 1 (Local Reflex)**: Ollama (`llama3.2:3b`), local OCR, zero external data leakage.
-  - **Tier 2 (Private GPU Reasoning)**: vLLM OpenAI-compatible server for deep reasoning within the private boundary.
-  - **Tier 3 (Frontier Cloud)**: Claude 3.7 / GPT-4o / Gemini 2.0 Pro for complex public research and advanced refactoring.
-- **Deterministic Policy Gate**: Deny-by-default access control with HMAC-SHA256 human approval tokens.
-- **Data Loss Prevention (DLP)**: Automatic secret and PII redaction pipeline.
-- **Cost Governor**: Strict per-task ($0.50), daily ($5.00), and monthly budget caps with circuit breakers.
-- **Cryptographic Audit Ledger**: Tamper-evident SHA-256 chained audit trail.
-- **355 Powers Catalog**: Built-in registry spanning 20 functional domains.
-- **5-Layer Persistent Memory**: SQLite WAL storage with cognitive layers (Raw, Semantic, Episodic, Working, Directive).
+> **A private, local-first personal AI operating system for technical IT professionals, developers, researchers, and creators.**  
+> *Engineered with LangGraph cognitive StateGraph, LiteLLM hybrid model gateway, Mem0 long-term memory, PostgreSQL persistence, Redis real-time streaming, Ollama private local models, and Docker Compose orchestration.*
 
 ---
 
-## 🚀 Quick Start
+## ⚡ Core Architecture
 
-### 1. Installation
-```bash
-git clone https://github.com/GaneshNair007/Jarvis.git
-cd jarvis
-pip install -r requirements.txt
+```
+User (Voice / Chat / Glassmorphic HUD / curl)
+                      │
+                      ▼
+               FastAPI Server (:8000)
+                      │
+                      ▼
+        LangGraph Cognitive StateGraph
+  ┌───────────────────────────────────────────────┐
+  │ 1. memory_retrieval (Mem0 / SQLite Vault)     │
+  │    Queries long-term user memory              │
+  └───────────────────────┬───────────────────────┘
+                          ▼
+  ┌───────────────────────────────────────────────┐
+  │ 2. policy_check (Tier 0 to Tier 3)            │
+  │    Evaluates permissions & DLP rules          │
+  └───────────────────────┬───────────────────────┘
+                          ▼
+  ┌───────────────────────────────────────────────┐
+  │ 3. model_router (LiteLLM Gateway :4000)       │
+  │    Routes: Ollama local / Claude / GPT / Gemini│
+  └───────────────────────┬───────────────────────┘
+                          ▼
+  ┌───────────────────────────────────────────────┐
+  │ 4. memory_update (Mem0 Provenance Writeback)  │
+  │    Saves turn & user preferences to memory   │
+  └───────────────────────────────────────────────┘
 ```
 
-### 2. Configure Environment
+---
+
+## 📦 Docker Compose Stack
+
+The complete stack is configured in `docker-compose.yml`:
+1. **`postgres:16-alpine`**: Relational checkpointing & state store (port `5432`).
+2. **`redis:7-alpine`**: Task queue & event streaming (port `6379`).
+3. **`ollama/ollama:latest`**: Local offline LLM & embeddings (port `11434`).
+4. **`ghcr.io/berriai/litellm:main-stable`**: Unified OpenAI-compatible gateway with fallbacks (port `4000`).
+5. **`jarvis-api`**: FastAPI core daemon with LangGraph & Mem0 (port `8000`).
+6. **`jarvis-dashboard`**: Iron Man glassmorphic HUD dashboard (port `3000`).
+
+---
+
+## 🚀 Quickstart
+
+### 1. Launch with Docker Compose
 ```bash
 cp .env.example .env
-# Edit .env with your personal keys and preferences
+docker compose up -d --build
+docker compose ps
+docker compose logs -f jarvis-api
 ```
 
-### 3. Run the Server
+### 2. Verify Health
 ```bash
-python -m jarvis.main serve
+curl http://localhost:8000/health
 ```
-The FastAPI and WebSocket server will start on **http://127.0.0.1:8000**.
 
-### 4. CLI Commands
+### 3. Test Mem0 Memory & Recall
 ```bash
-# Check host performance telemetry
-python -m jarvis.main health
+# 1. Store preference
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"user_id":"ganesh","message":"Remember that my preferred stack is Python FastAPI."}'
 
-# Send an instant command or chat query
-python -m jarvis.main chat "System health"
-python -m jarvis.main chat "Open VS Code"
-python -m jarvis.main chat "Research latest PyTorch releases"
-
-# Verify audit trail integrity
-python -m jarvis.main audit
-
-# Inspect power catalog summary
-python -m jarvis.main powers
+# 2. Recall preference
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"user_id":"ganesh","message":"What is my preferred stack?"}'
 ```
+JARVIS will recall the preference via Mem0 and respond:
+`"Your preferred stack is Python FastAPI."`
 
-### 5. Running Tests
+---
+
+## 🛡️ Safety & Policy Engine
+
+Enforces four approval tiers:
+- **Tier 0 (Observe)**: Autonomously allowed read-only actions (web search, memory search, system telemetry).
+- **Tier 1 (Reversible Action)**: Local drafts, scratch files, local document ingest.
+- **Tier 2 (Explicit Approval)**: File deletion, emails, deployments, computer mouse/keyboard action.
+- **Tier 3 (Step-Up Authentication)**: Formatting disks, wiping systems, financial/crypto transactions.
+
+Emergency kill switch:
 ```bash
-pytest
+curl -X POST http://localhost:8000/kill-switch -H "Content-Type: application/json" -d '{"active": true}'
 ```
+
+---
+
+## 🧪 Automated Test Suite
+
+```bash
+# Run Milestone 1 Core Acceptance Suite (12 tests)
+pytest tests/test_milestone1_core.py -v
+
+# Run Full Repository Suite (76 tests)
+pytest -v
+```
+
+All 76 tests pass with 100% deterministic reliability.

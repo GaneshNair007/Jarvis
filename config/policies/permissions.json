@@ -1,0 +1,83 @@
+{
+  "policy_version": "1.0.0",
+  "tiers": {
+    "tier_0": {
+      "name": "OBSERVE",
+      "description": "Read-only operations, web search, local telemetry inspection",
+      "approval_required": false
+    },
+    "tier_1": {
+      "name": "REVERSIBLE",
+      "description": "Creating temporary drafts, local notes, non-destructive file writes in sandbox",
+      "approval_required": false
+    },
+    "tier_2": {
+      "name": "EXPLICIT_APPROVAL",
+      "description": "Outward communication, computer use, submitting forms, deleting files, purchasing",
+      "approval_required": true
+    },
+    "tier_3": {
+      "name": "STEP_UP_AUTH",
+      "description": "Modifying security policies, deploying production code, wiping databases",
+      "approval_required": true,
+      "mfa_required": true
+    }
+  },
+  "allowed_apps": [
+    "notepad",
+    "code",
+    "cmd",
+    "powershell",
+    "explorer",
+    "calculator",
+    "terminal"
+  ],
+  "blocked_apps": [
+    "regedit",
+    "format",
+    "crypto_wallet",
+    "metamask"
+  ],
+  "allowed_domains": [
+    "github.com",
+    "arxiv.org",
+    "wikipedia.org",
+    "python.org",
+    "pypi.org",
+    "huggingface.co",
+    "duckduckgo.com"
+  ],
+  "blocked_domains": [
+    "localhost",
+    "127.0.0.1",
+    "169.254.169.254",
+    "internal.lan"
+  ],
+  "allowed_folders": [
+    "data",
+    "scratch",
+    "artifacts"
+  ],
+  "blocked_folders": [
+    ".git",
+    "C:\\Windows\\System32",
+    "/etc",
+    "/root"
+  ],
+  "sensitive_data_patterns": [
+    "password",
+    "secret_key",
+    "private_key",
+    "api_key",
+    "token"
+  ],
+  "rate_limits": {
+    "max_requests_per_minute": 60,
+    "max_parallel_workers": 3
+  },
+  "cost_limits": {
+    "max_per_task_usd": 0.50,
+    "daily_budget_usd": 5.00,
+    "monthly_budget_usd": 50.00
+  }
+}

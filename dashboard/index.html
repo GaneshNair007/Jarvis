@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JARVIS — Personal AI Operating System HUD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --panel-bg: rgba(14, 20, 33, 0.75);
+      --panel-border: rgba(0, 229, 255, 0.2);
+      --panel-border-hover: rgba(0, 229, 255, 0.5);
+      --cyan: #00e5ff;
+      --cyan-glow: rgba(0, 229, 255, 0.35);
+      --amber: #ffb300;
+      --emerald: #00e676;
+      --crimson: #ff1744;
+      --text-main: #e0e7ff;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 229, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(0, 230, 118, 0.04) 0%, transparent 40%);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Header Bar */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--panel-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-arc {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow);
+      position: relative;
+      animation: pulse 3s infinite;
+    }
+
+    .brand-arc::after {
+      content: '';
+      position: absolute;
+      top: 6px; left: 6px; right: 6px; bottom: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.8; }
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #fff;
+    }
+
+    .brand-tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-kill {
+      background: rgba(255, 23, 68, 0.15);
+      border: 1px solid var(--crimson);
+      color: var(--crimson);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-kill:hover {
+      background: var(--crimson);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(255, 23, 68, 0.6);
+    }
+
+    /* Main Grid Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr 340px;
+      gap: 20px;
+      padding: 24px;
+      flex: 1;
+    }
+
+    /* Glass Panels */
+    .glass-panel {
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+      transition: border-color 0.2s ease;
+    }
+
+    .glass-panel:hover {
+      border-color: var(--panel-border-hover);
+    }
+
+    .panel-header {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--cyan);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Telemetry Dials */
+    .telemetry-row {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .gauge-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .gauge-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .gauge-bar-bg {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .gauge-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    /* Model Router Status */
+    .router-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: rgba(0, 229, 255, 0.05);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+    }
+
+    /* Center Chat Console */
+    .chat-console {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-right: 8px;
+      max-height: 520px;
+    }
+
+    .chat-msg {
+      padding: 12px 16px;
+      border-radius: 8px;
+      max-width: 80%;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .msg-user {
+      align-self: flex-end;
+      background: rgba(0, 229, 255, 0.15);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: #fff;
+    }
+
+    .msg-jarvis {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tier-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 6px;
+      background: rgba(0, 229, 255, 0.2);
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .chat-input-bar {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .chat-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .btn-send {
+      background: var(--cyan);
+      color: #000;
+      border: none;
+      padding: 0 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-send:hover {
+      background: #80f2ff;
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    /* Voice Interface Controls */
+    .voice-control-box {
+      margin-top: 16px;
+      padding: 14px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      border: 1px dashed var(--panel-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-mic {
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-mic.recording {
+      background: var(--crimson);
+      border-color: var(--crimson);
+      color: #fff;
+      animation: pulse 1s infinite;
+    }
+
+    /* Right Sidebar: Approvals & Audit */
+    .approvals-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 220px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+
+    .approval-card {
+      background: rgba(255, 179, 0, 0.08);
+      border: 1px solid rgba(255, 179, 0, 0.3);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+
+    .approval-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .btn-app-yes {
+      background: var(--emerald);
+      color: #000;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .btn-app-no {
+      background: rgba(255, 23, 68, 0.3);
+      color: #fff;
+      border: 1px solid var(--crimson);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .audit-terminal {
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: #a7f3d0;
+      max-height: 240px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .audit-entry {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-arc"></div>
+      <div class="brand-title">JARVIS</div>
+      <div class="brand-tag">OS v1.0.0-PROD</div>
+    </div>
+    <div class="header-actions">
+      <span id="conn-status" style="font-size: 0.8rem; color: var(--emerald);">● ONLINE</span>
+      <button class="btn-kill" onclick="triggerKillSwitch()">EMERGENCY KILL SWITCH</button>
+    </div>
+  </header>
+
+  <main class="dashboard-grid">
+
+    <!-- Left Column: Telemetry & Model Router -->
+    <section class="glass-panel">
+      <div class="panel-header">
+        <span>System Telemetry</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">HOST: WIN-WORKSTATION</span>
+      </div>
+
+      <div class="telemetry-row">
+        <div class="gauge-card">
+          <div class="gauge-label">
+            <span>CPU Load</span>
+            <span id="cpu-val">0%</span>
+          </div>
+          <div class="gauge-bar-bg">
+            <div id="cpu-bar" class="gauge-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="gauge-card">
+          <div class="gauge-label">
+            <span>RAM Usage</span>
+            <span id="ram-val">0%</span>
+          </div>
+          <div class="gauge-bar-bg">
+            <div id="ram-bar" class="gauge-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="gauge-card">
+          <div class="gauge-label">
+            <span>Disk Usage (C:\)</span>
+            <span id="disk-val">0%</span>
+          </div>
+          <div class="gauge-bar-bg">
+            <div id="disk-bar" class="gauge-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-header" style="margin-top: 10px;">
+        <span>Model Router Tiers</span>
+      </div>
+
+      <div class="router-badge">
+        <span>⚡ BYPASS: Deterministic</span>
+        <span style="color: var(--cyan);">0 ms</span>
+      </div>
+      <div class="router-badge">
+        <span>🔒 TIER 1: Ollama Reflex</span>
+        <span style="color: var(--emerald);">Local $0.00</span>
+      </div>
+      <div class="router-badge">
+        <span>🧠 TIER 2: Private GPU vLLM</span>
+        <span style="color: var(--text-muted);">LAN</span>
+      </div>
+      <div class="router-badge">
+        <span>🌐 TIER 3: Frontier Cloud</span>
+        <span style="color: var(--amber);">Gated</span>
+      </div>
+
+      <div style="margin-top: auto; padding-top: 10px;">
+        <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+          <span>Daily Budget:</span>
+          <span id="budget-val">$0.00 / $5.00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Center Column: Primary Chat & Voice Console -->
+    <section class="glass-panel chat-console">
+      <div class="panel-header">
+        <span>Command Console</span>
+        <span id="active-state" style="font-size: 0.75rem; color: var(--cyan);">READY</span>
+      </div>
+
+      <div id="chat-messages" class="chat-messages">
+        <div class="chat-msg msg-jarvis">
+          <span class="tier-tag">JARVIS</span>
+          Jarvis operating system online. Three-tier model router and deterministic policy gate active. How may I assist you, Ganesh?
+        </div>
+      </div>
+
+      <div class="voice-control-box">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button id="mic-btn" class="btn-mic" onclick="toggleMicrophone()">
+            <span id="mic-icon">🎙️</span>
+            <span id="mic-text">Hold to Speak</span>
+          </button>
+          <span id="voice-transcript" style="font-size: 0.8rem; color: var(--text-muted); font-style: italic;">"Hey Jarvis" wake detector listening...</span>
+        </div>
+        <button onclick="triggerBargeIn()" style="background: none; border: 1px solid var(--amber); color: var(--amber); border-radius: 4px; padding: 4px 8px; font-size: 0.75rem; cursor: pointer;">
+          Barge-In
+        </button>
+      </div>
+
+      <div class="chat-input-bar">
+        <input id="chat-input" class="chat-input" type="text" placeholder="Type a command (e.g. 'System health', 'Open VS Code', 'Research AI models')..." onkeydown="handleChatKey(event)">
+        <button class="btn-send" onclick="sendChat()">Execute</button>
+      </div>
+    </section>
+
+    <!-- Right Column: Approvals & Cryptographic Audit -->
+    <section class="glass-panel">
+      <div class="panel-header">
+        <span>Pending Approvals</span>
+        <span id="pending-count" style="font-size: 0.75rem; color: var(--amber);">0 PENDING</span>
+      </div>
+
+      <div id="approvals-list" class="approvals-list">
+        <div style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 20px 0;">
+          No actions requiring approval.
+        </div>
+      </div>
+
+      <div class="panel-header">
+        <span>SHA-256 Audit Ledger</span>
+        <button onclick="verifyAudit()" style="background:none; border:none; color:var(--cyan); cursor:pointer; font-size:0.75rem;">Verify Chain</button>
+      </div>
+
+      <div id="audit-terminal" class="audit-terminal">
+        <div class="audit-entry">[SYSTEM] Initialized append-only audit stream.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const API_BASE = window.location.origin;
+
+    // WebSocket Telemetry Connection
+    function connectWebSocket() {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const ws = new WebSocket(`${protocol}//${window.location.host}/ws/stream`);
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === 'telemetry_pulse') {
+            document.getElementById('cpu-val').innerText = `${data.cpu_percent}%`;
+            document.getElementById('cpu-bar').style.width = `${data.cpu_percent}%`;
+
+            document.getElementById('ram-val').innerText = `${data.ram_percent}%`;
+            document.getElementById('ram-bar').style.width = `${data.ram_percent}%`;
+
+            document.getElementById('disk-val').innerText = `${data.disk_percent}%`;
+            document.getElementById('disk-bar').style.width = `${data.disk_percent}%`;
+
+            if (data.kill_switch_active) {
+              document.getElementById('conn-status').innerText = '● KILL SWITCH ACTIVE';
+              document.getElementById('conn-status').style.color = 'var(--crimson)';
+            }
+          }
+        } catch (e) {
+          console.error("WS Parse error", e);
+        }
+      };
+
+      ws.onclose = () => {
+        document.getElementById('conn-status').innerText = '○ RECONNECTING...';
+        document.getElementById('conn-status').style.color = 'var(--amber)';
+        setTimeout(connectWebSocket, 3000);
+      };
+    }
+
+    connectWebSocket();
+
+    // Chat Handler
+    async function sendChat() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendMessage(text, 'user');
+      input.value = '';
+
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: text })
+        });
+        const data = await resp.json();
+
+        let reply = '';
+        if (data.response) {
+          reply = data.response.message || data.response.reply || JSON.stringify(data.response);
+        } else if (data.message) {
+          reply = data.message;
+        }
+
+        appendMessage(reply, 'jarvis', data.tier);
+        loadAudit();
+      } catch (err) {
+        appendMessage(`Error: ${err.message}`, 'jarvis', 'ERROR');
+      }
+    }
+
+    function appendMessage(text, sender, tier) {
+      const container = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = `chat-msg msg-${sender}`;
+
+      if (sender === 'jarvis') {
+        const tierTag = tier ? `<span class="tier-tag">[${tier}]</span>` : '';
+        div.innerHTML = `${tierTag}${text}`;
+      } else {
+        div.innerText = text;
+      }
+
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function handleChatKey(e) {
+      if (e.key === 'Enter') sendChat();
+    }
+
+    // Voice Interaction (Web Speech API)
+    let recognition = null;
+    let isRecording = false;
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+
+      recognition.onresult = (event) => {
+        const transcript = Array.from(event.results)
+          .map(r => r[0].transcript)
+          .join('');
+        document.getElementById('voice-transcript').innerText = `"${transcript}"`;
+
+        if (event.results[0].isFinal) {
+          document.getElementById('chat-input').value = transcript;
+          sendChat();
+          stopMic();
+        }
+      };
+
+      recognition.onerror = () => stopMic();
+      recognition.onend = () => stopMic();
+    }
+
+    function toggleMicrophone() {
+      if (!recognition) {
+        alert("Web Speech API not supported in this browser. Please use Chrome/Edge or the text console.");
+        return;
+      }
+      if (isRecording) {
+        stopMic();
+      } else {
+        startMic();
+      }
+    }
+
+    function startMic() {
+      if (!recognition) return;
+      isRecording = true;
+      document.getElementById('mic-btn').classList.add('recording');
+      document.getElementById('mic-text').innerText = "Listening...";
+      recognition.start();
+    }
+
+    function stopMic() {
+      isRecording = false;
+      document.getElementById('mic-btn').classList.remove('recording');
+      document.getElementById('mic-text').innerText = "Hold to Speak";
+      if (recognition) recognition.stop();
+    }
+
+    async function triggerBargeIn() {
+      await fetch(`${API_BASE}/api/v1/voice/barge-in`, { method: 'POST' });
+      appendMessage("Spoken output interrupted (Barge-in triggered).", 'jarvis', 'VOICE');
+    }
+
+    async function triggerKillSwitch() {
+      if (confirm("Are you sure you want to trigger the EMERGENCY KILL SWITCH?")) {
+        const resp = await fetch(`${API_BASE}/api/v1/kill-switch?active=true&reason=HUD_Button`, { method: 'POST' });
+        const data = await resp.json();
+        alert("EMERGENCY KILL SWITCH ACTIVATED: All sub-processes stopped.");
+        loadAudit();
+      }
+    }
+
+    // Audit Log Loader
+    async function loadAudit() {
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/audit?limit=15`);
+        const data = await resp.json();
+        const term = document.getElementById('audit-terminal');
+        term.innerHTML = '';
+        data.entries.forEach(entry => {
+          const div = document.createElement('div');
+          div.className = 'audit-entry';
+          div.innerText = `[${entry.event_type}] ${entry.power_id || ''} => ${entry.status} (Hash: ${entry.entry_hash ? entry.entry_hash.substring(0, 10) : ''}...)`;
+          term.appendChild(div);
+        });
+        term.scrollTop = term.scrollHeight;
+      } catch (e) {}
+    }
+
+    async function verifyAudit() {
+      const resp = await fetch(`${API_BASE}/api/v1/audit?verify_chain=true`);
+      const data = await resp.json();
+      alert(`Audit Chain Integrity: ${data.chain_integrity.message}`);
+    }
+
+    setInterval(loadAudit, 5000);
+    loadAudit();
+  </script>
+</body>
+</html>

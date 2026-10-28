@@ -30,6 +30,8 @@ from jarvis.api.routes_browser import router as browser_router
 from jarvis.api.routes_tasks import router as tasks_router
 from jarvis.api.routes_memory import router as memory_router
 from jarvis.api.routes_desktop import router as desktop_router
+import uuid
+from graph.jarvis_graph import jarvis_graph
 
 app = FastAPI(
     title="JARVIS Personal AI Operating System",
@@ -49,7 +51,9 @@ app.add_middleware(
 app.include_router(voice_router)
 app.include_router(browser_router)
 app.include_router(tasks_router)
+app.include_router(tasks_router, prefix="/api/v1")
 app.include_router(memory_router)
+app.include_router(memory_router, prefix="/api/v1")
 app.include_router(desktop_router)
 
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
@@ -191,15 +195,123 @@ async def resolve_approval(task_id: str, resolution: ApprovalResolution):
         "approval_token": token
     }
 
+class RootChatPayload(BaseModel):
+    user_id: str = "ganesh"
+    message: Optional[str] = None
+    query: Optional[str] = None
+    context: Optional[str] = ""
+    task_type: Optional[str] = "chat"
+    approval_token: Optional[str] = None
+
+@app.post("/chat")
+async def chat_root(req: RootChatPayload):
+    """
+    Primary LangGraph cognitive entrypoint:
+    START -> memory_retrieval -> policy_check -> model_router -> memory_update -> END
+    """
+    user_input = req.message or req.query or ""
+    if not user_input.strip():
+        raise HTTPException(status_code=400, detail="Either 'message' or 'query' must be provided.")
+
+    task_id = f"tsk_{uuid.uuid4().hex[:10]}"
+    initial_state = {
+        "task_id": task_id,
+        "user_id": req.user_id,
+        "messages": [{"role": "user", "content": user_input}],
+        "user_input": user_input,
+        "retrieved_memories": [],
+        "task_type": req.task_type or "chat",
+        "risk_level": "low",
+        "approval_required": False,
+        "approval_id": req.approval_token,
+        "selected_tools": [],
+        "selected_agents": [],
+        "model_route": "",
+        "tool_results": [],
+        "final_response": "",
+        "evidence": []
+    }
+
+    final_state = jarvis_graph.invoke(initial_state)
+
+    audit_ledger.record(
+        actor=req.user_id,
+        action="CHAT_REQUEST",
+        target=final_state.get("model_route", "local"),
+        payload={"task_id": task_id, "user_input": user_input},
+        result="SUCCESS",
+        task_id=task_id
+    )
+
+    return {
+        "task_id": final_state["task_id"],
+        "user_id": final_state["user_id"],
+        "response": final_state["final_response"],
+        "reply": final_state["final_response"],
+        "retrieved_memories": final_state["retrieved_memories"],
+        "model_route": final_state["model_route"],
+        "risk_level": final_state["risk_level"],
+        "approval_required": final_state["approval_required"]
+    }
+
+@app.get("/health")
+async def health_root():
+    """Health check endpoint confirming Jarvis core services."""
+    return {
+        "status": "healthy",
+        "service": "jarvis-core",
+        "version": "1.0.0",
+        "timestamp": time.time()
+    }
+
+class RootKillSwitchPayload(BaseModel):
+    active: bool = True
+    reason: str = "API trigger"
+
+@app.post("/kill-switch")
 @app.post("/api/v1/kill-switch")
-async def toggle_kill_switch(active: bool = True, reason: str = "API trigger"):
+async def toggle_kill_switch(payload: Optional[RootKillSwitchPayload] = None, active: bool = True, reason: str = "API trigger"):
     """Emergency software kill switch."""
-    if active:
-        policy_gate.trigger_kill_switch(reason=reason)
+    is_active = payload.active if payload else active
+    switch_reason = payload.reason if payload else reason
+    if is_active:
+        policy_gate.trigger_kill_switch(reason=switch_reason)
     else:
         policy_gate.reset_kill_switch()
-    return {"kill_switch_active": policy_gate.kill_switch_active, "reason": reason}
+    return {
+        "kill_switch_active": policy_gate.kill_switch_active,
+        "status": "ACTIVATED" if policy_gate.kill_switch_active else "DEACTIVATED",
+        "reason": switch_reason
+    }
 
+@app.get("/powers")
+async def list_powers_root(category: Optional[str] = None, search: Optional[str] = None):
+    """Lists operational capabilities from initial powers and catalog."""
+    if search:
+        return power_registry.search_powers(search)
+    if category:
+        return power_registry.get_powers_by_category(category)
+    return {
+        "total_powers": power_registry.total_count(),
+        "powers": power_registry.list_powers(),
+        "categories": power_registry.list_categories()
+    }
+
+@app.post("/powers/{power_id}/enable")
+async def enable_power_root(power_id: str):
+    success = power_registry.enable_power(power_id)
+    if not success:
+        raise HTTPException(status_code=404, detail=f"Power '{power_id}' not found")
+    return {"power_id": power_id, "enabled": True}
+
+@app.post("/powers/{power_id}/disable")
+async def disable_power_root(power_id: str):
+    success = power_registry.disable_power(power_id)
+    if not success:
+        raise HTTPException(status_code=404, detail=f"Power '{power_id}' not found")
+    return {"power_id": power_id, "enabled": False}
+
+@app.get("/audit")
 @app.get("/api/v1/audit")
 async def inspect_audit(limit: int = 50, verify_chain: bool = False):
     """Retrieves recent audit events and optionally verifies SHA-256 chain integrity."""
@@ -209,6 +321,7 @@ async def inspect_audit(limit: int = 50, verify_chain: bool = False):
         valid, count, msg = audit_ledger.verify_integrity()
         chain_status = {"valid": valid, "verified_records": count, "message": msg}
     return {
+        "total": len(entries),
         "entries": entries,
         "chain_integrity": chain_status
     }
