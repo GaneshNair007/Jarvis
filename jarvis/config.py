@@ -60,10 +60,20 @@ class Settings(BaseSettings):
 
     # Storage Paths
     db_path: Path = Field(default=PROJECT_ROOT / "data" / "jarvis.db")
+    search_db_path: Path = Field(default=PROJECT_ROOT / "data" / "jarvis_search.db")
     audit_log_path: Path = Field(default=PROJECT_ROOT / "data" / "logs" / "audit.jsonl")
     screenshot_dir: Path = Field(default=PROJECT_ROOT / "data" / "screenshots")
     catalog_path: Path = Field(default=PROJECT_ROOT / "data" / "powers_catalog.json")
     jarvis_artifact_dir: Path = Field(default=PROJECT_ROOT / "data" / "artifacts")
+
+    # Local Search Engine Settings
+    redis_url: str = Field(default="redis://localhost:6379/0")
+    meilisearch_url: str = Field(default="http://localhost:7700")
+    meilisearch_master_key: str = Field(default="masterKey123")
+    qdrant_url: str = Field(default="http://localhost:6333")
+    qdrant_collection: str = Field(default="jarvis_docs")
+    searxng_url: str = Field(default="http://localhost:8888")
+    search_cache_ttl_sec: int = Field(default=3600)
 
     model_config = SettingsConfigDict(
         env_file=str(PROJECT_ROOT / ".env"),

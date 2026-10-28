@@ -38,12 +38,32 @@ The test suite covers both unit logic and end-to-end FastAPI client integrations
 
 ---
 
-## 3. Execution Command
+## 4. Local Search Brain Verification Matrix (`tests/test_local_search.py`)
+
+| Test ID | Test Target | Verification Criteria | Status |
+| :--- | :--- | :--- | :--- |
+| `SRCH-01` | SQLite FTS5 Indexing & BM25 Search | `search_index` virtual table indexes records; `bm25()` rank & highlighted snippets generated | **PASSED** |
+| `SRCH-02` | Content Hash Deduplication | SHA-256 content digest prevents duplicate records; updates existing docs | **PASSED** |
+| `SRCH-03` | Sensitive Data Redaction | Secrets, API keys, JWTs, private keys, passwords, and cards are redacted pre-index | **PASSED** |
+| `SRCH-04` | Semantic Vector Search & Fallback | Vector cosine search retrieves conceptual matches; in-memory fallback works offline | **PASSED** |
+| `SRCH-05` | Hybrid Ranking & Verifiable Citations | RRF merges keyword and semantic hits; deterministic `citation_id` generated with provenance | **PASSED** |
+| `SRCH-06` | Hot Cache (Sub-5ms Latency) | Redis / in-memory cache delivers hits in `< 5ms`; clears cleanly on invalidation | **PASSED** |
+| `SRCH-07` | Text & Markdown Ingestion | Chunking with overlap; section-aware heading preservation | **PASSED** |
+| `SRCH-08` | Code Repository Ingestion | `.gitignore` rules respected; source files indexed; binaries/hidden trees skipped | **PASSED** |
+| `SRCH-09` | SearXNG Web Cache Ingestion | Web search hits ingested locally with provenance; immediate subsequent local hits | **PASSED** |
+| `SRCH-10` | Document Deletion & Reindexing | Soft deletion in SQLite; purge from FTS5; incremental non-destructive reindexing | **PASSED** |
+| `SRCH-11` | End-to-End Orchestrator Pipeline | Orchestrator handles cache check, multi-engine retrieval, citations, and audit logging | **PASSED** |
+| `SRCH-12` | Search REST API Endpoints | 16 FastAPI search endpoints validated (`/search/local`, `/search/hybrid`, `/search/ingest/*`, etc.) | **PASSED** |
+
+---
+
+## 5. Execution Commands
 
 ```bash
-# Run Milestone 1 Suite
-pytest tests/test_milestone1_core.py -v
+# Run Local Search Brain Test Suite
+pytest tests/test_local_search.py -v
 
 # Run Complete Repository Suite
 pytest -v
 ```
+

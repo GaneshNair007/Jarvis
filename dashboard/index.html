@@ -719,8 +719,205 @@
       font-size: 0.75rem;
       color: var(--amber);
     }
+
+    /* ========================================================
+       LOCAL SEARCH BRAIN STYLES
+       ======================================================== */
+    .search-box-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .search-main-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 16px 20px 16px 48px;
+      color: #fff;
+      font-size: 1.1rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .search-main-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      color: var(--cyan);
+    }
+
+    .search-options-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pill-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mode-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mode-pill:hover {
+      border-color: var(--cyan);
+      color: #fff;
+    }
+
+    .mode-pill.active {
+      background: rgba(0, 229, 255, 0.2);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
+    }
+
+    .search-telemetry-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--emerald);
+      background: rgba(0, 230, 118, 0.1);
+      border: 1px solid rgba(0, 230, 118, 0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .results-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .search-result-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      backdrop-filter: blur(16px);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .search-result-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0, 229, 255, 0.1);
+    }
+
+    .res-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .res-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .res-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    .res-snippet {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .res-snippet b {
+      color: var(--cyan);
+      background: rgba(0, 229, 255, 0.15);
+      padding: 0 3px;
+      border-radius: 2px;
+    }
+
+    .res-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-box {
+      background: #0d121f;
+      border: 1px solid var(--cyan);
+      border-radius: 12px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
+    }
+
+    .modal-content {
+      flex: 1;
+      overflow-y: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #e0e7ff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 16px;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
   </style>
 </head>
+
 <body>
 
   <header>
@@ -740,6 +937,10 @@
       <button id="nav-btn-integrations" class="nav-btn" onclick="switchTab('integrations')">
         <span>🔌</span> Integrations Hub
         <span id="integrations-total-badge" class="badge-count">2</span>
+      </button>
+      <button id="nav-btn-search" class="nav-btn" onclick="switchTab('search')">
+        <span>🔍</span> Local Search Brain
+        <span id="search-total-badge" class="badge-count">0</span>
       </button>
     </nav>
 
@@ -919,27 +1120,138 @@
     </div>
   </main>
 
+  <!-- TAB 3: Search Brain View -->
+  <main id="view-search" class="integrations-view">
+    <div class="integrations-header">
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 4px;">Private Local Search Brain</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Millisecond keyword (SQLite FTS5), instant (Meilisearch), and semantic (Qdrant) search across all local PDFs, code, notes, and docs. Zero cloud search APIs.
+        </p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-integ btn-integ-check" onclick="reindexCorpus()">🔄 Reindex All</button>
+        <button class="btn-integ btn-integ-disable" onclick="clearSearchCache()">🧹 Clear Cache</button>
+      </div>
+    </div>
+
+    <!-- Quick Stats Bar -->
+    <div class="integ-stats-bar">
+      <div class="stat-pill">
+        <span class="stat-pill-label">Indexed Documents</span>
+        <span id="search-stat-docs" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Avg Query Latency</span>
+        <span id="search-stat-latency" class="stat-pill-val" style="color: var(--emerald);">0 ms</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Hot Cache Hit Rate</span>
+        <span id="search-stat-cache" class="stat-pill-val" style="color: var(--cyan);">0%</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Privacy Shield</span>
+        <span class="stat-pill-val" style="color: var(--amber); font-size: 1.05rem; padding-top: 4px;">REDACTION ACTIVE</span>
+      </div>
+    </div>
+
+    <!-- Search Box Panel -->
+    <div class="search-box-panel">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input
+          id="search-main-input"
+          class="search-main-input"
+          type="text"
+          placeholder="Search your code, PDFs, markdown notes, chat history, or documentation in milliseconds..."
+          oninput="onSearchInput()"
+          onkeydown="if(event.key==='Enter') executeSearch()"
+        />
+      </div>
+
+      <div class="search-options-row">
+        <!-- Search Mode Toggle -->
+        <div class="pill-group">
+          <button id="mode-btn-hybrid" class="mode-pill active" onclick="setSearchMode('hybrid')">⚡ Hybrid (Recommended)</button>
+          <button id="mode-btn-keyword" class="mode-pill" onclick="setSearchMode('keyword')">🔤 Keyword (FTS5)</button>
+          <button id="mode-btn-semantic" class="mode-pill" onclick="setSearchMode('semantic')">🧠 Semantic (Qdrant)</button>
+          <button id="mode-btn-research" class="mode-pill" onclick="setSearchMode('research')">🌐 Research (+ Web Refresh)</button>
+        </div>
+
+        <!-- Latency / Status Badge -->
+        <span id="search-telemetry-badge" class="search-telemetry-badge">Ready • Sub-5ms Target</span>
+      </div>
+
+      <!-- Filters Row -->
+      <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <span style="font-size: 0.75rem; color: var(--text-muted); margin-right: 4px;">SOURCE:</span>
+        <button class="mode-pill active" onclick="setSearchFilter('', this)">All</button>
+        <button class="mode-pill" onclick="setSearchFilter('code_repo', this)">💻 Code</button>
+        <button class="mode-pill" onclick="setSearchFilter('pdf', this)">📄 PDFs</button>
+        <button class="mode-pill" onclick="setSearchFilter('markdown_notes', this)">📝 Notes</button>
+        <button class="mode-pill" onclick="setSearchFilter('browser_page', this)">🌐 Browser</button>
+        <button class="mode-pill" onclick="setSearchFilter('web_cache', this)">🗄️ Web Cache</button>
+      </div>
+    </div>
+
+    <!-- Results Stream -->
+    <div id="search-results-list" class="results-container">
+      <div style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 40px 0;">
+        Type above to execute instant search across your indexed private corpus.
+      </div>
+    </div>
+  </main>
+
+  <!-- Document Inspector Modal -->
+  <div id="doc-modal" class="modal-overlay" onclick="if(event.target===this) closeDocModal()">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 id="modal-title" style="color: #fff; font-size: 1.1rem;">Document Inspector</h3>
+        <button onclick="closeDocModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer;">✕</button>
+      </div>
+      <div id="modal-meta" style="font-size: 0.75rem; color: var(--cyan); margin-bottom: 12px;"></div>
+      <div id="modal-content" class="modal-content"></div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px;">
+        <button class="btn-integ btn-integ-kill" id="modal-del-btn" onclick="deleteCurrentDoc()">Delete From Index</button>
+        <button class="btn-integ btn-integ-check" onclick="closeDocModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const API_BASE = window.location.origin;
+    let currentSearchMode = 'hybrid';
+    let currentSearchFilter = '';
+    let searchDebounceTimer = null;
+    let inspectingDocId = null;
 
     // Tab Switching
     function switchTab(tabName) {
       const consoleView = document.getElementById('view-console');
       const integView = document.getElementById('view-integrations');
+      const searchView = document.getElementById('view-search');
       const btnConsole = document.getElementById('nav-btn-console');
       const btnInteg = document.getElementById('nav-btn-integrations');
+      const btnSearch = document.getElementById('nav-btn-search');
+
+      consoleView.style.display = 'none';
+      integView.classList.remove('active');
+      searchView.classList.remove('active');
+      btnConsole.classList.remove('active');
+      btnInteg.classList.remove('active');
+      btnSearch.classList.remove('active');
 
       if (tabName === 'console') {
         consoleView.style.display = 'grid';
-        integView.classList.remove('active');
         btnConsole.classList.add('active');
-        btnInteg.classList.remove('active');
-      } else {
-        consoleView.style.display = 'none';
+      } else if (tabName === 'integrations') {
         integView.classList.add('active');
-        btnConsole.classList.remove('active');
         btnInteg.classList.add('active');
         loadIntegrations();
+      } else if (tabName === 'search') {
+        searchView.classList.add('active');
+        btnSearch.classList.add('active');
+        loadSearchStats();
       }
     }
 
@@ -1289,8 +1601,196 @@
       }
     }
 
+    // ========================================================
+    // SEARCH BRAIN CONTROLLER
+    // ========================================================
+    async function loadSearchStats() {
+      try {
+        let resp = await fetch(`${API_BASE}/api/v1/search/stats`);
+        if (!resp.ok) resp = await fetch(`${API_BASE}/search/stats`);
+        const data = await resp.json();
+
+        document.getElementById('search-stat-docs').innerText = data.total_documents || 0;
+        document.getElementById('search-total-badge').innerText = data.total_documents || 0;
+        document.getElementById('search-stat-latency').innerText = `${data.avg_query_latency_ms || 0} ms`;
+
+        if (data.cache) {
+          document.getElementById('search-stat-cache').innerText = `${data.cache.hit_ratio_percent || 0}%`;
+        }
+      } catch (e) {
+        console.error("Error loading search stats", e);
+      }
+    }
+
+    function setSearchMode(mode) {
+      currentSearchMode = mode;
+      ['hybrid', 'keyword', 'semantic', 'research'].forEach(m => {
+        const btn = document.getElementById(`mode-btn-${m}`);
+        if (btn) btn.classList.toggle('active', m === mode);
+      });
+      executeSearch();
+    }
+
+    function setSearchFilter(filterType, btn) {
+      currentSearchFilter = filterType;
+      btn.parentElement.querySelectorAll('.mode-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      executeSearch();
+    }
+
+    function onSearchInput() {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(executeSearch, 180);
+    }
+
+    async function executeSearch() {
+      const input = document.getElementById('search-main-input');
+      const q = input.value.trim();
+      const container = document.getElementById('search-results-list');
+      const badge = document.getElementById('search-telemetry-badge');
+
+      if (!q) {
+        container.innerHTML = `
+          <div style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 40px 0;">
+            Type above to execute instant search across your indexed private corpus.
+          </div>
+        `;
+        badge.innerText = 'Ready • Sub-5ms Target';
+        return;
+      }
+
+      badge.innerText = 'Searching local corpus...';
+
+      try {
+        const body = {
+          query: q,
+          limit: 15,
+          source_type: currentSearchFilter || null,
+          refresh_web: currentSearchMode === 'research',
+        };
+
+        const endpoint = currentSearchMode === 'keyword' ? '/api/v1/search/local' :
+                         currentSearchMode === 'research' ? '/api/v1/search/research' :
+                         '/api/v1/search/hybrid';
+
+        let resp = await fetch(`${API_BASE}${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        if (!resp.ok) {
+          resp = await fetch(`${API_BASE}${endpoint.replace('/api/v1', '')}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        }
+
+        const data = await resp.json();
+        const providers = (data.providers_used || []).join(' + ') || 'cache';
+        const hitInfo = data.cache_hit ? '⚡ Cache Hit' : '⚡ Local Search';
+
+        badge.innerText = `${hitInfo}: ${data.latency_ms} ms • ${data.total_results} results • [${providers}]`;
+
+        if (!data.results || data.results.length === 0) {
+          container.innerHTML = `
+            <div style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 40px 0;">
+              No local results found for "${q}". Switch to <strong>Research (+ Web Refresh)</strong> to query the web.
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = '';
+        data.results.forEach(res => {
+          const card = document.createElement('div');
+          card.className = 'search-result-card';
+
+          const prov = res.provenance || {};
+          const sourceBadge = `<span class="meta-chip">📁 ${res.source_type}</span>`;
+          const scoreBadge = `<span class="meta-chip" style="color:var(--cyan);">Score: ${res.score}</span>`;
+          const providersBadge = (res.providers || []).map(p => `<span class="meta-chip">${p}</span>`).join(' ');
+
+          card.innerHTML = `
+            <div class="res-top">
+              <span class="res-title">${res.title}</span>
+              <div style="display:flex; gap:6px;">
+                ${scoreBadge}
+                ${sourceBadge}
+              </div>
+            </div>
+            ${res.url ? `<a class="res-url" href="${res.url}" target="_blank">${res.url}</a>` : ''}
+            <div class="res-snippet">${res.snippet}</div>
+            <div class="res-bottom">
+              <div>${providersBadge}</div>
+              <div style="display:flex; gap:8px;">
+                <button class="btn-dry-run" onclick="inspectDoc('${res.doc_id}')">Inspect Document</button>
+              </div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+        loadSearchStats();
+      } catch (err) {
+        badge.innerText = `Search error: ${err.message}`;
+      }
+    }
+
+    async function reindexCorpus() {
+      if (confirm("Reindex all documents into SQLite FTS5 index?")) {
+        let resp = await fetch(`${API_BASE}/api/v1/search/reindex`, { method: 'POST' });
+        if (!resp.ok) resp = await fetch(`${API_BASE}/search/reindex`, { method: 'POST' });
+        const data = await resp.json();
+        alert(`Reindexing complete: ${data.reindexed_count} documents indexed.`);
+        loadSearchStats();
+      }
+    }
+
+    async function clearSearchCache() {
+      let resp = await fetch(`${API_BASE}/api/v1/search/cache/clear`, { method: 'POST' });
+      if (!resp.ok) resp = await fetch(`${API_BASE}/search/cache/clear`, { method: 'POST' });
+      alert("Search hot cache cleared.");
+      loadSearchStats();
+    }
+
+    async function inspectDoc(docId) {
+      inspectingDocId = docId;
+      try {
+        let resp = await fetch(`${API_BASE}/api/v1/search/documents/${docId}`);
+        if (!resp.ok) resp = await fetch(`${API_BASE}/search/documents/${docId}`);
+        const doc = await resp.json();
+
+        document.getElementById('modal-title').innerText = doc.title || doc.doc_id;
+        document.getElementById('modal-meta').innerText = `ID: ${doc.doc_id} | Type: ${doc.source_type} | Updated: ${doc.updated_at}`;
+        document.getElementById('modal-content').innerText = doc.content || '';
+        document.getElementById('doc-modal').style.display = 'flex';
+      } catch (e) {
+        alert(`Could not load document: ${e.message}`);
+      }
+    }
+
+    function closeDocModal() {
+      document.getElementById('doc-modal').style.display = 'none';
+      inspectingDocId = null;
+    }
+
+    async function deleteCurrentDoc() {
+      if (!inspectingDocId) return;
+      if (confirm(`Delete document '${inspectingDocId}' from index?`)) {
+        await fetch(`${API_BASE}/api/v1/search/documents/${inspectingDocId}`, { method: 'DELETE' });
+        closeDocModal();
+        alert("Document deleted from search index.");
+        loadSearchStats();
+        executeSearch();
+      }
+    }
+
     setInterval(loadAudit, 5000);
     loadAudit();
+    loadSearchStats();
+
   </script>
 </body>
 </html>

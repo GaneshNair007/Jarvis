@@ -164,3 +164,68 @@ Simulates power execution without making changes, providing blast radius impact 
 ### `GET /integrations/{integration_id}/audit`
 Retrieves audit events filtered specifically for the target integration.
 
+---
+
+## 8. Local Search Brain Endpoints
+
+Mounted at root (`/search/...`) and versioned (`/api/v1/search/...`):
+
+### `POST /search/local`
+Executes pure local keyword search via SQLite FTS5 (BM25 ranking + snippet generation).
+- **Body**: `{"query": string, "limit"?: int, "source_type"?: string}`
+- **Response**: `{ "query": string, "mode": "local", "latency_ms": float, "results": [ ... ], "citations": [ ... ] }`
+
+### `POST /search/hybrid`
+Executes hybrid local fusion (SQLite FTS5 + Meilisearch + Qdrant Ollama embeddings + RRF merger).
+- **Body**: `{"query": string, "limit"?: int, "source_type"?: string}`
+- **Response**: `{ "query": string, "mode": "hybrid", "latency_ms": float, "results": [ ... ], "citations": [ ... ] }`
+
+### `POST /search/research`
+Deep research orchestrator. Queries local index first; if local results are insufficient, triggers SearXNG web refresh, ingests fresh web results locally, and returns fused citations.
+- **Body**: `{"query": string, "limit"?: int, "force_web_refresh"?: bool}`
+
+### `POST /search/ingest/file`
+Ingests a single text, markdown, or code document with sensitive-data redaction and deduplication.
+- **Body**: `{"file_path": string, "source_type"?: string, "metadata"?: dict}`
+
+### `POST /search/ingest/folder`
+Recursively ingests all supported documents in a folder tree.
+- **Body**: `{"folder_path": string, "source_type"?: string, "recursive"?: bool}`
+
+### `POST /search/ingest/pdf`
+Ingests a PDF document with page-level text extraction and chunking.
+- **Body**: `{"file_path": string, "metadata"?: dict}`
+
+### `POST /search/ingest/url`
+Ingests article or web content with provenance URL.
+- **Body**: `{"url": string, "title": string, "content": string, "metadata"?: dict}`
+
+### `POST /search/ingest/repo`
+Recursively indexes a local code repository while respecting `.gitignore`.
+- **Body**: `{"repo_path": string, "repo_name"?: string, "respect_gitignore"?: bool}`
+
+### `POST /search/reindex`
+Incrementally reindexes all active SQLite documents into SQLite FTS5 and Meilisearch.
+
+### `GET /search/status`
+Returns live status, availability, and response latencies of SQLite FTS5, Meilisearch, Qdrant, Redis, and SearXNG.
+
+### `GET /search/stats`
+Returns total indexed documents, active documents, deleted documents, and document counts by source type.
+
+### `GET /search/documents`
+Lists paginated indexed documents (`limit`, `offset`, `source_type`).
+
+### `GET /search/documents/{doc_id}`
+Retrieves full document record, provenance metadata, and SHA-256 content hash.
+
+### `DELETE /search/documents/{doc_id}`
+Soft-deletes a document from SQLite archive, removes it from FTS5, Meilisearch, and Qdrant, and invalidates hot cache.
+
+### `POST /search/cache/clear`
+Flushes all cached search queries from Redis and memory.
+
+### `GET /search/health`
+Health check endpoint returning `{"status": "healthy", "engines": { ... }}`.
+
+

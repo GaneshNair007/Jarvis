@@ -38,7 +38,22 @@ Every integration loaded via `integrations/` dynamically registers its powers in
 
 ---
 
-## 3. Power Master Catalog
+## 3. Local Search Brain Powers (Zero-API Millisecond Retrieval)
+
+The local search engine adds instant local retrieval capabilities across all indexed document types:
+
+| Power ID | Power Name | Integration / Module | Danger Level | Approval Required | Description |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `PWR-SEARCH-LOCAL` | `search.local` | `local_search` | None | No | Sub-millisecond SQLite FTS5 BM25 keyword search |
+| `PWR-SEARCH-HYBRID` | `search.hybrid` | `local_search` | None | No | Hybrid search combining FTS5, Meilisearch, and Qdrant semantic vectors |
+| `PWR-SEARCH-RESEARCH`| `search.research` | `local_search` | Low | No | Local-first search with automatic SearXNG web fallback and caching |
+| `PWR-SEARCH-INGEST` | `search.ingest` | `local_search` | Low | No | Sanitizes and indexes files, folders, code repos, and PDFs |
+| `PWR-SEARCH-REINDEX` | `search.reindex` | `local_search` | Low | No | Incremental non-destructive reindex of SQLite FTS5 and Meilisearch |
+| `PWR-SEARCH-FLUSH` | `search.clear_cache` | `local_search` | Low | No | Flushes hot Redis and in-memory search caches |
+
+---
+
+## 4. Power Master Catalog
 
 In addition to initial and integration powers, JARVIS includes the complete **355-power catalog** indexed across 12 operational domains:
 1. Core Assistant Powers (`PWR-001` to `PWR-015`)
