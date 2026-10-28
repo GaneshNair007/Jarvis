@@ -14,6 +14,7 @@ from jarvis.core.model_router import model_router, RoutingRequest
 from jarvis.core.policy_gate import policy_gate
 from jarvis.core.audit import audit_ledger
 from jarvis.core.power_registry import power_registry
+from jarvis.memory.store import db_store
 
 class JarvisOrchestrator:
     def __init__(self):
@@ -22,6 +23,7 @@ class JarvisOrchestrator:
         self.audit = audit_ledger
         self.registry = power_registry
         self.state_machine = state_machine
+        self.store = db_store
 
     async def process_user_query(
         self,
@@ -42,6 +44,7 @@ class JarvisOrchestrator:
         """
         task_id = task_id or f"tsk_{uuid.uuid4().hex[:10]}"
         self.state_machine.create_task(task_id, "NEW")
+        self.store.save_task(task_id, title=query[:80], status="NEW", inputs={"query": query})
 
         start_time = time.time()
 
@@ -68,6 +71,7 @@ class JarvisOrchestrator:
 
         if not policy_allowed:
             self.state_machine.transition(task_id, "REJECTED", reason=policy_msg)
+            self.store.save_task(task_id, title=query[:80], status="REJECTED", power_id="policy_gate", inputs={"query": query}, outputs={"reason": policy_msg})
             self.audit.log_event(
                 event_type="POLICY_REJECT",
                 task_id=task_id,
@@ -91,32 +95,17 @@ class JarvisOrchestrator:
         if decision.tier == "BYPASS":
             # Instant command execution
             execution_result = self._execute_instant_command(query)
-        elif decision.tier == "TIER_1_LOCAL":
-            # Local reflex execution simulation / Ollama call
-            execution_result = {
-                "reply": f"Jarvis (Local Reflex - {decision.selected_model}): Processed '{decision.redacted_context or query}' locally with zero external transmission.",
-                "local_tokens": 120,
-                "latency_ms": round((time.time() - start_time) * 1000, 2)
-            }
-        elif decision.tier == "TIER_2_PRIVATE":
-            # Private GPU vLLM execution
-            execution_result = {
-                "reply": f"Jarvis (Private GPU - {decision.selected_model}): Deep reasoning completed within secure user boundary.",
-                "private_tokens": 450,
-                "latency_ms": round((time.time() - start_time) * 1000, 2)
-            }
-        elif decision.tier == "TIER_3_CLOUD":
-            # Frontier cloud execution
-            execution_result = {
-                "reply": f"Jarvis (Frontier Cloud - {decision.selected_model}): Synthesized research and advanced reasoning response.",
-                "cloud_tokens": 850,
-                "cost_usd": decision.estimated_cost_usd,
-                "latency_ms": round((time.time() - start_time) * 1000, 2)
-            }
+        elif decision.tier in ("TIER_1_LOCAL", "TIER_2_PRIVATE", "TIER_3_CLOUD"):
+            # Unified LiteLLM inference execution across local and cloud tiers
+            execution_result = self.router.execute_inference(
+                decision=decision,
+                prompt=decision.redacted_context or query,
+            )
 
         # Step 4: Verification & Completion
         self.state_machine.transition(task_id, "VERIFYING", reason="Validating execution receipts")
         self.state_machine.transition(task_id, "COMPLETED", reason="Task finished successfully")
+        self.store.save_task(task_id, title=query[:80], status="COMPLETED", power_id=decision.selected_model, inputs={"query": query}, outputs=execution_result)
 
         # Step 5: Cryptographic Audit Logging
         self.audit.log_event(

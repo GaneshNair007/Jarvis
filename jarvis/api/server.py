@@ -27,6 +27,7 @@ from jarvis.memory.store import db_store
 from jarvis.powers.it_admin_powers import it_admin_powers
 from jarvis.api.routes_voice import router as voice_router
 from jarvis.api.routes_browser import router as browser_router
+from jarvis.api.routes_tasks import router as tasks_router
 
 app = FastAPI(
     title="JARVIS Personal AI Operating System",
@@ -42,9 +43,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include Voice & Browser Routers
+# Include Voice, Browser & Task Engine Routers
 app.include_router(voice_router)
 app.include_router(browser_router)
+app.include_router(tasks_router)
 
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
 

@@ -9,6 +9,8 @@ A running audit log of all build iterations, test suites, and git commits.
 - **`d0b026d`**: Complete sequential non-lossy PDF extraction (434 pages, 30,162 lines) and final merged blueprint.
 - **`6b9a025`**: Phase 0 & Phase 1 Foundations (RotatingFileHandler logger, Full-Duplex Voice Pipeline: Wake word, PTT, STT, SAPI WAV TTS, Barge-in, Iron Man Glassmorphic HUD Dashboard).
 - **`223f5dc`**: CLI `--help` flag documentation and usage improvements.
+- **`9a8dc54`**: Milestone B — Safe Browser Read-Only Subsystem (Playwright DOM extraction, SSRF protection, screenshot evidence capture with SHA-256 hashes, DuckDuckGo search, and deep research worker).
+- **Milestone 2 & Part 2 Task Engine**: Added LiteLLM unified routing (`ollama/llama3.2:3b`, vLLM, Cloud API), CostGovernor token/dollar accounting, and Part 2 REST task management endpoints (`POST /tasks`, `/cancel`, `/approve`, `GET /tasks`, `/logs`, `/artifacts`).
 
 ---
 
@@ -16,12 +18,15 @@ A running audit log of all build iterations, test suites, and git commits.
 - **Test Session 1 (Core)**: 23 passed in 1.48s
 - **Test Session 2 (Phase 0 & 1 with Voice & Dashboard)**: 37 passed in 4.31s
 - **Test Session 3 (Post Polish)**: 37 passed in 4.15s
+- **Test Session 4 (Milestone B & Task Engine/LiteLLM)**: 51 passed in 73.79s
   - `tests/test_api.py`: 8 passed
   - `tests/test_audit.py`: 1 passed
+  - `tests/test_browser.py`: 8 passed
   - `tests/test_dashboard.py`: 5 passed
   - `tests/test_model_router.py`: 7 passed
   - `tests/test_orchestrator.py`: 3 passed
   - `tests/test_policy_gate.py`: 3 passed
   - `tests/test_power_registry.py`: 2 passed
   - `tests/test_privacy_gate.py`: 2 passed
+  - `tests/test_tasks_and_litellm.py`: 6 passed
   - `tests/test_voice.py`: 6 passed

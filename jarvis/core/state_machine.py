@@ -17,16 +17,17 @@ class TaskState(BaseModel):
 
 class TaskStateMachine:
     VALID_TRANSITIONS: Dict[str, Set[str]] = {
-        "NEW": {"TRIAGED", "REJECTED", "FAILED"},
-        "TRIAGED": {"PLANNED", "POLICY_CHECK", "FAILED"},
-        "PLANNED": {"POLICY_CHECK", "FAILED"},
-        "POLICY_CHECK": {"QUEUED", "RUNNING", "REJECTED", "FAILED"},
-        "QUEUED": {"RUNNING", "FAILED"},
-        "RUNNING": {"VERIFYING", "COMPLETED", "FAILED"},
-        "VERIFYING": {"COMPLETED", "FAILED"},
+        "NEW": {"TRIAGED", "REJECTED", "FAILED", "CANCELLED"},
+        "TRIAGED": {"PLANNED", "POLICY_CHECK", "FAILED", "CANCELLED"},
+        "PLANNED": {"POLICY_CHECK", "FAILED", "CANCELLED"},
+        "POLICY_CHECK": {"QUEUED", "RUNNING", "REJECTED", "FAILED", "CANCELLED"},
+        "QUEUED": {"RUNNING", "FAILED", "CANCELLED"},
+        "RUNNING": {"VERIFYING", "COMPLETED", "FAILED", "CANCELLED"},
+        "VERIFYING": {"COMPLETED", "FAILED", "CANCELLED"},
         "COMPLETED": set(),
         "FAILED": {"NEW"}, # Allow retry
-        "REJECTED": {"NEW"} # Allow re-submission
+        "REJECTED": {"NEW"}, # Allow re-submission
+        "CANCELLED": set()
     }
 
     def __init__(self):
@@ -55,6 +56,11 @@ class TaskStateMachine:
 
     def get_task(self, task_id: str) -> Optional[TaskState]:
         return self.tasks.get(task_id)
+
+    def get_task_state(self, task_id: str) -> Optional[str]:
+        task = self.tasks.get(task_id)
+        return task.current_status if task else None
+
 
 # Singleton State Machine
 state_machine = TaskStateMachine()
