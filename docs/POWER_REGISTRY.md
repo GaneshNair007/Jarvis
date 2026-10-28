@@ -4,9 +4,9 @@
 The JARVIS Power Registry maintains 355 capabilities extracted from the 434-page blueprint across 20 primary categories.
 
 ### Category Breakdown
-1. **Core Assistant & Voice (PWR-001 to PWR-015)**: Wake-word activation, push-to-talk, streaming STT, Piper TTS, barge-in detection.
-2. **Screen Awareness & Computer Use (PWR-016 to PWR-049)**: Active window tracking, screenshot capture, OCR, see-act-verify desktop controls.
-3. **Instant Local Commands (PWR-027 to PWR-049)**: Deterministic OS commands bypassing LLMs.
+1. **Core Assistant & Voice (PWR-001 to PWR-015)**: Wake-word activation, push-to-talk, streaming STT, Piper TTS, barge-in detection [STATUS: Integrated in `jarvis/voice/`].
+2. **Screen Awareness & Computer Use (PWR-016 to PWR-049)**: Active window tracking, screenshot capture, Win32 UI automation, see-act-verify desktop controls, safety allow-list [STATUS: Integrated in `jarvis/computer/desktop_worker.py` and `jarvis/powers/desktop_powers.py`].
+3. **Instant Local Commands (PWR-027 to PWR-049)**: Deterministic OS commands bypassing LLMs [STATUS: Integrated in `jarvis/powers/instant_powers.py`].
 4. **Dictation & Writing (PWR-050 to PWR-062)**: Focused field injection, drafting, grammar correction.
 5. **Browser & Web Automation (PWR-063 to PWR-081)**: Playwright DOM locator navigation, form completion, session management [STATUS: Integrated Read-Only in `jarvis/browser/`].
 6. **File & Document Intelligence (PWR-082 to PWR-099)**: PDF ingestion, PyMuPDF page-specific semantic chunking, vector RAG search, exact provenance citations (file path, page number, chunk ID, SHA-256) [STATUS: Integrated in `jarvis/memory/document_rag.py` and `jarvis/memory/correction_engine.py`].

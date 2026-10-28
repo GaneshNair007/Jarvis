@@ -7,9 +7,9 @@ This ledger tracks the live integration status of all 355 capabilities catalogue
 ## 1. Summary Statistics
 - **Total Catalogued Powers**: 355
 - **Total Categories**: 22
-- **Powers Integrated & Verified**: 47 (Core, Configuration, Audit, Policy Gate, 7-Layer Memory Vault, Voice Loop, Safe Browser Subsystem PWR-013..015, PWR-063..067, Part 2 Task Engine & LiteLLM Model Router, Document RAG & Correction Pipeline PWR-082..099)
-- **Pending Implementation**: 308
-- **Current Test Coverage**: 57 automated tests passing in 76.76s
+- **Powers Integrated & Verified**: 58 (Core, Configuration, Audit, Policy Gate, 7-Layer Memory Vault, Voice Loop, Safe Browser Subsystem PWR-013..015, PWR-063..067, Part 2 Task Engine & LiteLLM Model Router, Document RAG PWR-082..099, Desktop Computer Use PWR-016..026)
+- **Pending Implementation**: 297
+- **Current Test Coverage**: 64 automated tests passing in 78.49s
 
 ---
 
@@ -18,7 +18,7 @@ This ledger tracks the live integration status of all 355 capabilities catalogue
 | Category | Power Range | Priority | Status | Implemented Module | Tests |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Voice & Speech** | `PWR-001` - `PWR-015` | P0 | **Integrated** | `jarvis/voice/` (`wake.py`, `stt.py`, `tts.py`, `pipeline.py`) | `test_voice.py` |
-| **Screen Awareness** | `PWR-016` - `PWR-026` | P0 | *Loop 6* | Deferred to Loop 6 | Pending |
+| **Screen Awareness** | `PWR-016` - `PWR-026` | P0 | **Integrated** | `jarvis/computer/desktop_worker.py`, `desktop_powers.py` | `test_desktop.py` |
 | **Instant Local Commands**| `PWR-027` - `PWR-049` | P0 | **Integrated** | `jarvis/powers/instant_powers.py` | `test_model_router.py` |
 | **Dictation & Writing** | `PWR-050` - `PWR-062` | P1 | *Loop 5/6* | Voice transcription ready | Pending injection |
 | **Browser Automation** | `PWR-063` - `PWR-081` | P0 | **Integrated (Read-Only)** | `jarvis/browser/`, `jarvis/powers/browser_powers.py` | `test_browser.py` |

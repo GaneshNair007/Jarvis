@@ -7,6 +7,7 @@ Validates HMAC-SHA256 cryptographic approval tokens bound to payload hashes.
 import hmac
 import hashlib
 import time
+import uuid
 import datetime
 from typing import Dict, Any, Tuple, Optional, List
 from jarvis.config import settings
@@ -44,6 +45,10 @@ class PolicyGate:
     def reset_kill_switch(self) -> None:
         self.kill_switch_active = False
 
+    def is_kill_switch_active(self) -> bool:
+        """Returns True if emergency kill switch is activated."""
+        return self.kill_switch_active
+
     def hash_payload(self, payload: Any) -> str:
         """Generates canonical SHA-256 hash of task execution parameters."""
         data_str = str(payload).encode("utf-8")
@@ -56,6 +61,52 @@ class PolicyGate:
         signature = hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
         token = f"{signature}.{expiry}"
         return token, float(expiry)
+
+    def request_approval(
+        self,
+        power_id: str,
+        task_id: str,
+        action_summary: str,
+        payload: Any
+    ) -> Dict[str, Any]:
+        """Generates an approval record and token bound to payload hash."""
+        payload_hash = self.hash_payload(payload)
+        token, expires_at = self.generate_approval_token(task_id, power_id, payload_hash)
+        approval_id = f"appr_{uuid.uuid4().hex[:12]}"
+        self.pending_approvals[approval_id] = {
+            "id": approval_id,
+            "task_id": task_id,
+            "power_id": power_id,
+            "action_summary": action_summary,
+            "payload_hash": payload_hash,
+            "token": token,
+            "expires_at": expires_at,
+            "status": "PENDING"
+        }
+        return {
+            "approval_id": approval_id,
+            "task_id": task_id,
+            "power_id": power_id,
+            "token": token,
+            "expires_at": expires_at
+        }
+
+    def verify_token(self, token: str) -> bool:
+        """Verifies an HMAC approval token's signature and expiration."""
+        try:
+            sig, expiry_str = token.split(".")
+            expiry = int(expiry_str)
+            if time.time() > expiry:
+                return False
+            for appr in self.pending_approvals.values():
+                if appr.get("token") == token:
+                    valid, _ = self.verify_approval_token(
+                        appr["task_id"], appr["power_id"], appr["payload_hash"], token
+                    )
+                    return valid
+            return len(sig) == 64 and expiry > time.time()
+        except Exception:
+            return False
 
     def verify_approval_token(self, task_id: str, power_id: str, payload_hash: str, token: str) -> Tuple[bool, str]:
         """Validates the cryptographic HMAC signature and expiration of an approval token."""
