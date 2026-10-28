@@ -10,3 +10,17 @@
 [2026-10-29 01:34:21] [INFO] [jarvis:pipeline:39] Voice Pipeline: User barge-in detected! Aborting speech.
 [2026-10-29 01:34:21] [INFO] [jarvis:tts:47] Speech playback cancelled (barge-in event).
 [2026-10-29 01:34:21] [INFO] [jarvis:pipeline:56] Voice Pipeline Transcribed: 'Jarvis, report system health'
+[2026-10-29 01:35:46] [INFO] [jarvis:stt:25] faster-whisper not installed; using local speech decoder interface.
+[2026-10-29 01:35:46] [INFO] [jarvis:tts:32] Windows native SAPI SpeechSynthesizer initialized.
+[2026-10-29 01:35:48] [INFO] [jarvis:wake:30] Push-to-talk triggered via web_dashboard
+[2026-10-29 01:35:48] [INFO] [jarvis:pipeline:32] Voice Pipeline: Wake event received (push_to_talk)
+[2026-10-29 01:35:48] [INFO] [jarvis:pipeline:39] Voice Pipeline: User barge-in detected! Aborting speech.
+[2026-10-29 01:35:48] [INFO] [jarvis:tts:47] Speech playback cancelled (barge-in event).
+[2026-10-29 01:35:48] [WARNING] [jarvis:tts:96] SAPI file synthesis failed: (-2147221008, 'CoInitialize has not been called.', None, None); using fallback PCM generator.
+[2026-10-29 01:35:48] [INFO] [jarvis:wake:30] Push-to-talk triggered via test_hotkey
+[2026-10-29 01:35:48] [INFO] [jarvis:pipeline:32] Voice Pipeline: Wake event received (push_to_talk)
+[2026-10-29 01:35:49] [INFO] [jarvis:pipeline:39] Voice Pipeline: User barge-in detected! Aborting speech.
+[2026-10-29 01:35:49] [INFO] [jarvis:tts:47] Speech playback cancelled (barge-in event).
+[2026-10-29 01:35:49] [INFO] [jarvis:pipeline:56] Voice Pipeline Transcribed: 'Jarvis, report system health'
+[2026-10-29 01:37:37] [INFO] [jarvis:stt:25] faster-whisper not installed; using local speech decoder interface.
+[2026-10-29 01:37:37] [INFO] [jarvis:tts:32] Windows native SAPI SpeechSynthesizer initialized.

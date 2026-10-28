@@ -95,8 +95,19 @@ def cli_entrypoint():
         run_powers_summary()
     elif args[0] == "voice":
         run_voice_mode()
+    elif args[0] in ["--help", "-h", "help"]:
+        print("""
+JARVIS Operating System CLI
+Usage:
+  python -m jarvis.main serve       # Run production FastAPI & WebSocket server
+  python -m jarvis.main chat "text" # Process a single query via terminal
+  python -m jarvis.main health      # Print live host health metrics
+  python -m jarvis.main audit       # Verify cryptographic audit chain integrity
+  python -m jarvis.main powers      # List catalog power statistics
+  python -m jarvis.main voice       # Launch interactive full-duplex voice console
+""")
     else:
-        print(f"Unknown command '{args[0]}'. Use: serve, chat, health, audit, powers, voice")
+        print(f"Unknown command '{args[0]}'. Use: serve, chat, health, audit, powers, voice, --help")
 
 if __name__ == "__main__":
     cli_entrypoint()
