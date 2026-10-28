@@ -7,9 +7,9 @@ This ledger tracks the live integration status of all 355 capabilities catalogue
 ## 1. Summary Statistics
 - **Total Catalogued Powers**: 355
 - **Total Categories**: 22
-- **Powers Integrated & Verified**: 35 (Core, Configuration, Audit, Policy Gate, 5-Layer Memory, Voice Loop, Safe Browser Subsystem PWR-013..015, PWR-063..067, Part 2 Task Engine & LiteLLM Model Router)
-- **Pending Implementation**: 320
-- **Current Test Coverage**: 51 automated tests passing in 73.79s
+- **Powers Integrated & Verified**: 47 (Core, Configuration, Audit, Policy Gate, 7-Layer Memory Vault, Voice Loop, Safe Browser Subsystem PWR-013..015, PWR-063..067, Part 2 Task Engine & LiteLLM Model Router, Document RAG & Correction Pipeline PWR-082..099)
+- **Pending Implementation**: 308
+- **Current Test Coverage**: 57 automated tests passing in 76.76s
 
 ---
 
@@ -22,7 +22,7 @@ This ledger tracks the live integration status of all 355 capabilities catalogue
 | **Instant Local Commands**| `PWR-027` - `PWR-049` | P0 | **Integrated** | `jarvis/powers/instant_powers.py` | `test_model_router.py` |
 | **Dictation & Writing** | `PWR-050` - `PWR-062` | P1 | *Loop 5/6* | Voice transcription ready | Pending injection |
 | **Browser Automation** | `PWR-063` - `PWR-081` | P0 | **Integrated (Read-Only)** | `jarvis/browser/`, `jarvis/powers/browser_powers.py` | `test_browser.py` |
-| **File & Document** | `PWR-082` - `PWR-099` | P0 | *Milestone 3* | Scheduled for Milestone 3 (Document RAG) | Pending |
+| **File & Document** | `PWR-082` - `PWR-099` | P0 | **Integrated** | `jarvis/memory/document_rag.py`, `correction_engine.py` | `test_memory_vault.py` |
 | **IT Administration** | `PWR-100` - `PWR-126` | P0 | **Partial** | `jarvis/powers/it_admin_powers.py` (`PWR-100`, `101`, `118`) | `test_api.py` |
 | **Networking** | `PWR-127` - `PWR-143` | P1 | *Loop 9* | Deferred to Loop 9 | Pending |
 | **Security & Privacy** | `PWR-144` - `PWR-161` | P0 | **Integrated** | `jarvis/core/` (`privacy_gate.py`, `policy_gate.py`, `audit.py`) | `test_audit.py`, `test_privacy_gate.py` |
