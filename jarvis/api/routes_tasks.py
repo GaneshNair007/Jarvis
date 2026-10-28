@@ -18,6 +18,7 @@ from typing import Any, Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
+from jarvis.config import settings
 from jarvis.core.state_machine import state_machine
 from jarvis.core.orchestrator import orchestrator
 from jarvis.core.policy_gate import policy_gate
@@ -29,7 +30,7 @@ router = APIRouter(tags=["tasks"])
 
 class CreateTaskRequest(BaseModel):
     intent: str
-    user_id: str = "ganesh"
+    user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)
     priority: str = "normal"
     deadline: Optional[float] = None
     device_required: str = "laptop"
@@ -39,7 +40,7 @@ class CreateTaskRequest(BaseModel):
 
 class TaskApprovalRequest(BaseModel):
     approved: bool
-    user_id: str = "ganesh"
+    user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)
     notes: str = ""
 
 

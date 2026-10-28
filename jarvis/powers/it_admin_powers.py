@@ -10,13 +10,15 @@ import ssl
 import datetime
 from typing import Dict, Any, List
 
+from jarvis.config import settings
+
 class ITAdminPowers:
     @staticmethod
     def system_health_report() -> Dict[str, Any]:
         """PWR-100: Generates comprehensive host performance telemetry."""
         cpu_pct = psutil.cpu_percent(interval=0.1)
         ram = psutil.virtual_memory()
-        disk = psutil.disk_usage("C:\\" if psutil.WINDOWS else "/")
+        disk = psutil.disk_usage(settings.disk_mount_path)
 
         boot_time = datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")
 

@@ -104,7 +104,7 @@ class LocalMem0Adapter:
 
 def get_mem0_client():
     """Instantiates official Mem0 MemoryClient if API key exists, otherwise local SQLite adapter."""
-    api_key = os.getenv("MEM0_API_KEY")
+    api_key = settings.mem0_api_key
     if api_key and api_key != "your_mem0_key" and not api_key.startswith("mock"):
         try:
             from mem0 import MemoryClient

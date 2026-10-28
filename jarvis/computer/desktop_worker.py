@@ -23,35 +23,43 @@ try:
 except ImportError:
     HAS_WIN32 = False
 
-import pyautogui
-pyautogui.FAILSAFE = True  # Moving mouse to (0,0) throws FailSafeException immediately
-pyautogui.PAUSE = 0.1     # 100ms pause between actions
-
 from jarvis.config import settings
 from jarvis.core.logger import get_logger
 from jarvis.core.audit import audit_ledger
 from jarvis.core.policy_gate import policy_gate
+
+try:
+    import pyautogui
+    pyautogui.FAILSAFE = True  # Moving mouse to (0,0) throws FailSafeException immediately
+    pyautogui.PAUSE = settings.desktop_action_pause_sec
+    HAS_PYAUTOGUI = True
+except Exception:
+    pyautogui = None
+    HAS_PYAUTOGUI = False
 
 logger = get_logger("desktop_worker")
 
 class DesktopWorker:
     """Autonomous desktop operator implementing the See-Act-Verify cycle."""
 
-    DEFAULT_ALLOWED_APPS = [
-        "notepad", "code", "cmd", "powershell", "explorer", "calculator", "terminal"
-    ]
+    DEFAULT_ALLOWED_APPS = list(settings.desktop_allowed_apps)
 
     def __init__(self, screenshot_dir: Optional[Path] = None):
         self.screenshot_dir = screenshot_dir or settings.screenshot_dir
         self.screenshot_dir.mkdir(parents=True, exist_ok=True)
         self.is_controlling_screen = False
-        self.allowed_apps = list(self.DEFAULT_ALLOWED_APPS)
+        self.allowed_apps = list(settings.desktop_allowed_apps)
         self.task_history: List[Dict[str, Any]] = []
 
     def get_screen_size(self) -> Tuple[int, int]:
         """Returns the primary screen width and height in pixels."""
-        size = pyautogui.size()
-        return (size.width, size.height)
+        if HAS_PYAUTOGUI and pyautogui:
+            try:
+                size = pyautogui.size()
+                return (size.width, size.height)
+            except Exception:
+                pass
+        return (1920, 1080)
 
     def get_active_window(self) -> Dict[str, Any]:
         """Retrieves details of the current foreground window via Win32 API."""
@@ -130,10 +138,14 @@ class DesktopWorker:
         Falls back to virtual desktop buffer if session is headless/non-interactive.
         """
         now = time.time()
-        try:
-            img = pyautogui.screenshot(region=region) if region else pyautogui.screenshot()
-        except OSError:
-            # Running in non-interactive/headless Windows session or virtual subshell
+        img = None
+        if HAS_PYAUTOGUI and pyautogui:
+            try:
+                img = pyautogui.screenshot(region=region) if region else pyautogui.screenshot()
+            except Exception:
+                img = None
+        if img is None:
+            # Running in non-interactive/headless Windows/Linux session or virtual subshell
             w, h = self.get_screen_size()
             if region:
                 w, h = region[2], region[3]

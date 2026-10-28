@@ -9,13 +9,14 @@ Supports:
 import time
 import threading
 from typing import Callable, Optional, List, Dict, Any
+from jarvis.config import settings
 from jarvis.core.logger import logger
 
 class WakeWordDetector:
-    WAKE_PHRASES = ["hey jarvis", "jarvis", "ok jarvis"]
+    WAKE_PHRASES = list(settings.voice_wake_phrases)
 
-    def __init__(self, sensitivity: float = 0.5):
-        self.sensitivity = sensitivity
+    def __init__(self, sensitivity: Optional[float] = None):
+        self.sensitivity = sensitivity if sensitivity is not None else settings.voice_sensitivity
         self.is_listening = False
         self._listener_thread: Optional[threading.Thread] = None
         self._callbacks: List[Callable[[Dict[str, Any]], None]] = []
@@ -54,7 +55,7 @@ class WakeWordDetector:
         # Simple energy threshold for simulated/mocked frame processing
         # When openWakeWord is installed, it runs model inference on frame
         energy = sum(abs(b - 128) for b in frame_bytes[:1000]) / min(len(frame_bytes), 1000)
-        if energy > 85.0: # Voice activity detected
+        if energy > settings.voice_energy_threshold:  # Voice activity detected
             return {
                 "detected": True,
                 "confidence": min(1.0, energy / 100.0),

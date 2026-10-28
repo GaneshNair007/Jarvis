@@ -15,20 +15,13 @@ from contextlib import contextmanager
 from playwright.sync_api import Browser, BrowserContext, Page, sync_playwright
 
 from jarvis.core.logger import get_logger
+from jarvis.constants import BLOCKED_SSRF_NETWORKS
+from jarvis.config import settings
 
 logger = get_logger("browser.context")
 
 # Blocked private and link-local subnets for SSRF defense
-BLOCKED_NETWORKS = [
-    ipaddress.ip_network("127.0.0.0/8"),
-    ipaddress.ip_network("10.0.0.0/8"),
-    ipaddress.ip_network("172.16.0.0/12"),
-    ipaddress.ip_network("192.168.0.0/16"),
-    ipaddress.ip_network("169.254.0.0/16"),
-    ipaddress.ip_network("::1/128"),
-    ipaddress.ip_network("fc00::/7"),
-    ipaddress.ip_network("fe80::/10"),
-]
+BLOCKED_NETWORKS = BLOCKED_SSRF_NETWORKS
 
 
 class SSRFValidationError(PermissionError):
@@ -39,9 +32,13 @@ class SSRFValidationError(PermissionError):
 class BrowserContextManager:
     """Manages ephemeral Playwright browser sessions."""
 
-    def __init__(self, headless: bool = True, timeout_ms: int = 15000):
-        self.headless = headless
-        self.timeout_ms = timeout_ms
+    def __init__(
+        self,
+        headless: Optional[bool] = None,
+        timeout_ms: Optional[int] = None,
+    ):
+        self.headless = headless if headless is not None else settings.browser_headless
+        self.timeout_ms = timeout_ms if timeout_ms is not None else settings.browser_timeout_ms
 
     @staticmethod
     def validate_url(url: str, allow_private: bool = False) -> str:

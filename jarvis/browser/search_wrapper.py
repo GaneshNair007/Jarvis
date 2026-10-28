@@ -14,6 +14,8 @@ import httpx
 from pydantic import BaseModel
 
 from jarvis.core.logger import get_logger
+from jarvis.constants import DEFAULT_USER_AGENT, DEFAULT_DUCKDUCKGO_SEARCH_URL
+from jarvis.config import settings
 
 logger = get_logger("browser.search")
 
@@ -27,10 +29,10 @@ class SearchResult(BaseModel):
 class WebSearchWrapper:
     """Provides privacy-friendly web search querying."""
 
-    def __init__(self, timeout_sec: float = 10.0):
-        self.timeout_sec = timeout_sec
+    def __init__(self, timeout_sec: Optional[float] = None):
+        self.timeout_sec = timeout_sec if timeout_sec is not None else settings.browser_search_timeout_sec
         self.headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "User-Agent": DEFAULT_USER_AGENT,
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         }
 
@@ -46,13 +48,13 @@ class WebSearchWrapper:
         """
         logger.info(f"Executing web search for: '{query}'")
         encoded_query = quote_plus(query)
-        search_url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
+        search_url = f"{DEFAULT_DUCKDUCKGO_SEARCH_URL}?q={encoded_query}"
 
         results: list[SearchResult] = []
         try:
             with httpx.Client(timeout=self.timeout_sec, follow_redirects=True) as client:
                 resp = client.post(
-                    "https://html.duckduckgo.com/html/",
+                    DEFAULT_DUCKDUCKGO_SEARCH_URL,
                     data={"q": query},
                     headers=self.headers,
                 )

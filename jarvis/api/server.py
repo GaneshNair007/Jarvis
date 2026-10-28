@@ -14,9 +14,10 @@ from typing import Dict, Any, Optional, List
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Body
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from jarvis.config import settings
+from jarvis.constants import APP_DESCRIPTION, APP_TITLE, APP_VERSION
 from jarvis.core.model_router import model_router, RoutingRequest, RoutingDecision
 from jarvis.core.cost_governor import cost_governor
 from jarvis.core.orchestrator import orchestrator
@@ -36,14 +37,14 @@ import uuid
 from graph.jarvis_graph import jarvis_graph
 
 app = FastAPI(
-    title="JARVIS Personal AI Operating System",
-    version="1.0.0",
-    description="Local-first, screen-first, voice-driven multi-agent AI operator with policy-aware hybrid routing."
+    title=APP_TITLE,
+    version=APP_VERSION,
+    description=APP_DESCRIPTION
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.cors_allow_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -115,7 +116,7 @@ class ExpensiveCallApproval(BaseModel):
     task_id: str
     target_model: str
     approved: bool
-    user_signature: str = "ganesh"
+    user_signature: str = Field(default_factory=lambda: settings.jarvis_user_id)
 
 @app.post("/model/approve-expensive-call")
 async def approve_expensive_call(approval: ExpensiveCallApproval):
@@ -181,7 +182,7 @@ async def list_tasks(limit: int = 50):
 class ApprovalResolution(BaseModel):
     task_id: str
     approved: bool
-    user_id: str = "ganesh"
+    user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)
 
 @app.post("/api/v1/approvals/{task_id}/resolve")
 async def resolve_approval(task_id: str, resolution: ApprovalResolution):
@@ -202,7 +203,7 @@ async def resolve_approval(task_id: str, resolution: ApprovalResolution):
     }
 
 class RootChatPayload(BaseModel):
-    user_id: str = "ganesh"
+    user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)
     message: Optional[str] = None
     query: Optional[str] = None
     context: Optional[str] = ""

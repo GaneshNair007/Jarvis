@@ -8,6 +8,7 @@ import hashlib
 import time
 import uuid
 from typing import Any, Dict, List, Optional
+from jarvis.config import settings
 from jarvis.core.audit import audit_ledger
 from search.hybrid_ranker import HybridRanker
 from search.ingestors.web_cache_ingestor import WebCacheIngestor
@@ -27,8 +28,6 @@ class SearchOrchestrator:
         cache: Optional[SearchCache] = None,
         searxng: Optional[SearXNGClient] = None,
     ):
-        from jarvis.config import settings
-
         self.local = local_engine or LocalSearchEngine(str(settings.search_db_path))
         self.semantic = semantic_search or QdrantSemanticSearch(
             qdrant_url=settings.qdrant_url,
@@ -55,8 +54,9 @@ class SearchOrchestrator:
         limit: int = 10,
         source_type: Optional[str] = None,
         refresh_web: bool = False,
-        user_id: str = "ganesh",
+        user_id: Optional[str] = None,
     ) -> Dict[str, Any]:
+        user_id = user_id or settings.jarvis_user_id
         """
         Execute full local-first search pipeline:
         1. Query normalization

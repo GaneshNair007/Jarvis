@@ -9,31 +9,26 @@ import hashlib
 import time
 from typing import Any, Dict, List, Optional
 from search.local_search_engine import SearchHit
+from jarvis.constants import DEFAULT_SOURCE_AUTHORITY
 
 
 class HybridRanker:
     # Authority weights by document source type
-    SOURCE_AUTHORITY = {
-        "code_repo": 1.25,
-        "markdown_notes": 1.20,
-        "pdf": 1.15,
-        "document": 1.10,
-        "chat_history": 1.05,
-        "browser_page": 1.00,
-        "web_cache": 0.90,
-    }
+    SOURCE_AUTHORITY = dict(DEFAULT_SOURCE_AUTHORITY)
 
     def __init__(
         self,
-        keyword_weight: float = 0.40,
-        semantic_weight: float = 0.35,
-        instant_weight: float = 0.25,
-        rrf_k: int = 60,
+        keyword_weight: Optional[float] = None,
+        semantic_weight: Optional[float] = None,
+        instant_weight: Optional[float] = None,
+        rrf_k: Optional[int] = None,
     ):
-        self.keyword_weight = keyword_weight
-        self.semantic_weight = semantic_weight
-        self.instant_weight = instant_weight
-        self.rrf_k = rrf_k
+        from jarvis.config import settings
+
+        self.keyword_weight = keyword_weight if keyword_weight is not None else settings.rrf_keyword_weight
+        self.semantic_weight = semantic_weight if semantic_weight is not None else settings.rrf_semantic_weight
+        self.instant_weight = instant_weight if instant_weight is not None else settings.rrf_instant_weight
+        self.rrf_k = rrf_k if rrf_k is not None else settings.rrf_k
 
     def merge(
         self,

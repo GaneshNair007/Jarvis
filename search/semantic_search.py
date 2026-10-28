@@ -21,17 +21,12 @@ class QdrantSemanticSearch:
         embed_model: str = "nomic-embed-text",
         vector_dim: int = 768,
     ):
-        if qdrant_url is None:
-            from jarvis.config import settings
-            self.qdrant_url = settings.qdrant_url.rstrip("/")
-            self.embedder_url = settings.ollama_base_url.rstrip("/")
-            self.embed_model = settings.ollama_embed_model
-        else:
-            self.qdrant_url = qdrant_url.rstrip("/")
-            self.embedder_url = embedder_url.rstrip("/") if embedder_url else "http://localhost:11434"
-            self.embed_model = embed_model
+        from jarvis.config import settings
 
-        self.collection = collection
+        self.qdrant_url = (qdrant_url or settings.qdrant_url).rstrip("/")
+        self.embedder_url = (embedder_url or settings.ollama_base_url).rstrip("/")
+        self.embed_model = embed_model or settings.ollama_embed_model
+        self.collection = collection or settings.qdrant_collection
         self.vector_dim = vector_dim
 
         # In-memory vector cache fallback for offline testing

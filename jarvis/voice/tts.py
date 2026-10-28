@@ -12,12 +12,13 @@ import wave
 import struct
 import math
 from typing import Optional, Dict, Any
+from jarvis.config import settings
 from jarvis.core.logger import logger
 
 class TextToSpeech:
-    def __init__(self, voice_speed: int = 1, volume: int = 100):
-        self.voice_speed = voice_speed
-        self.volume = volume
+    def __init__(self, voice_speed: Optional[int] = None, volume: Optional[int] = None):
+        self.voice_speed = voice_speed if voice_speed is not None else settings.tts_speed
+        self.volume = volume if volume is not None else settings.tts_volume
         self.is_speaking = False
         self._interrupted = False
         self._sapi_speaker = None

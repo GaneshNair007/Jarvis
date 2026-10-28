@@ -10,19 +10,13 @@ import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from jarvis.core.audit import audit_ledger
+from jarvis.constants import INGESTION_REDACTION_PATTERNS
+from jarvis.config import settings
 
 
 class BaseIngestor:
     # Strict regex patterns for sensitive data redaction
-    REDACTION_PATTERNS = [
-        (re.compile(r"sk-[A-Za-z0-9_-]{20,}", re.IGNORECASE), "[REDACTED_API_KEY]"),
-        (re.compile(r"ghp_[A-Za-z0-9]{36}", re.IGNORECASE), "[REDACTED_GITHUB_TOKEN]"),
-        (re.compile(r"AKIA[0-9A-Z]{16}", re.IGNORECASE), "[REDACTED_AWS_KEY]"),
-        (re.compile(r"eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}", re.IGNORECASE), "[REDACTED_JWT]"),
-        (re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]+?-----END [A-Z ]*PRIVATE KEY-----", re.MULTILINE), "[REDACTED_PRIVATE_KEY]"),
-        (re.compile(r'(?i)(password|secret|passwd|token)\s*[:=]\s*["\']?([^"\s\',;]{4,})["\']?'), r"\1: [REDACTED_SECRET]"),
-        (re.compile(r"\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12}|(?:[0-9]{4}[ -]){3}[0-9]{4})\b"), "[REDACTED_CARD_NUMBER]"),
-    ]
+    REDACTION_PATTERNS = INGESTION_REDACTION_PATTERNS
 
     def __init__(self, local_engine, semantic_engine=None, meili_engine=None):
         self.local_engine = local_engine
@@ -38,19 +32,26 @@ class BaseIngestor:
         return cleaned
 
     @staticmethod
-    def chunk_text(text: str, chunk_size: int = 1200, overlap: int = 200) -> List[str]:
+    def chunk_text(
+        text: str,
+        chunk_size: Optional[int] = None,
+        overlap: Optional[int] = None,
+    ) -> List[str]:
         """Split text into overlapping semantic passages."""
-        if len(text) <= chunk_size:
+        effective_chunk_size = chunk_size if chunk_size is not None else settings.ingest_chunk_size
+        effective_overlap = overlap if overlap is not None else settings.ingest_chunk_overlap
+
+        if len(text) <= effective_chunk_size:
             return [text]
 
         chunks = []
         start = 0
         while start < len(text):
-            end = min(start + chunk_size, len(text))
+            end = min(start + effective_chunk_size, len(text))
             chunk = text[start:end].strip()
             if chunk:
                 chunks.append(chunk)
-            start += chunk_size - overlap
+            start += effective_chunk_size - effective_overlap
         return chunks
 
     @staticmethod

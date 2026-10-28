@@ -22,16 +22,16 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from jarvis.memory.models import Base
+from jarvis.config import settings
 
 target_metadata = Base.metadata
 
 def get_url():
-    db_url = os.getenv("DATABASE_URL")
-    if db_url:
-        return db_url
-    data_dir = Path(__file__).resolve().parent.parent / "data"
-    data_dir.mkdir(parents=True, exist_ok=True)
-    return f"sqlite:///{data_dir}/jarvis_orm.db"
+    if settings.database_url:
+        return settings.database_url
+    sqlite_path = settings.db_path.parent / "jarvis_orm.db"
+    sqlite_path.parent.mkdir(parents=True, exist_ok=True)
+    return f"sqlite:///{sqlite_path}"
 
 
 def run_migrations_offline() -> None:

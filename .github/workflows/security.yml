@@ -1,0 +1,45 @@
+name: Security & DLP Audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  security-audit:
+    name: Secrets & Safety Gate Inspection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Permissions Schema & Configuration Files (with Auto-Retry)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          retry_on: error
+          command: |
+            python -c "
+            import json
+            from pathlib import Path
+            p = Path('config/policies/permissions.json')
+            assert p.exists(), 'permissions.json missing'
+            data = json.loads(p.read_text('utf-8'))
+            assert 'tiers' in data, 'Missing tiers in permissions.json'
+            print('Permissions schema verified: OK')
+            "
+
+      - name: Verify No Unencrypted Secrets in Committed Code
+        run: |
+          echo "Scanning codebase for hardcoded OpenAI / Anthropic live secret keys..."
+          ! grep -rE "sk-ant-api03-[A-Za-z0-9_-]{80,}" jarvis/ search/ core/ tests/ || (echo "Potential Anthropic API key detected!" && exit 1)
+          ! grep -rE "sk-[A-Za-z0-9]{48}" jarvis/ search/ core/ tests/ || (echo "Potential OpenAI API key detected!" && exit 1)
+          echo "Secret scan passed with 0 exposed credentials."

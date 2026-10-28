@@ -11,6 +11,8 @@ import subprocess
 import os
 from typing import Dict, Any
 
+from jarvis.constants import DEFAULT_APP_COMMANDS
+
 class InstantPowers:
     @staticmethod
     def lock_workstation() -> Dict[str, Any]:
@@ -41,13 +43,7 @@ class InstantPowers:
     @staticmethod
     def launch_app(app_name: str) -> Dict[str, Any]:
         """PWR-027: Launch an approved desktop application."""
-        allowed_apps = {
-            "vscode": "code",
-            "chrome": "chrome",
-            "terminal": "powershell",
-            "notepad": "notepad",
-            "calculator": "calc"
-        }
+        allowed_apps = DEFAULT_APP_COMMANDS
         cmd = allowed_apps.get(app_name.lower().strip())
         if not cmd:
             return {"status": "error", "message": f"Application '{app_name}' is not in the allowed application list"}

@@ -1,0 +1,58 @@
+name: Docker & Deployment Readiness
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate-deployment:
+    name: Docker Build & Compose Stack Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Environment File Template
+        run: |
+          test -f .env.example || (echo ".env.example is missing!" && exit 1)
+          echo "Copying .env.example to .env for validation"
+          cp .env.example .env
+
+      - name: Validate Docker Compose Configuration (with Auto-Retry)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          retry_on: error
+          command: |
+            docker compose config
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build JARVIS API Container (with Auto-Retry)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 15
+          max_attempts: 3
+          retry_on: error
+          command: |
+            docker build -t jarvis-api:latest -f Dockerfile .
+
+      - name: Build JARVIS Dashboard Container (with Auto-Retry)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          retry_on: error
+          command: |
+            docker build -t jarvis-dashboard:latest -f dashboard/Dockerfile dashboard/
+
+      - name: Test Container Image Inspection
+        run: |
+          docker image inspect jarvis-api:latest > /dev/null
+          docker image inspect jarvis-dashboard:latest > /dev/null
+          echo "All container images built and verified successfully."

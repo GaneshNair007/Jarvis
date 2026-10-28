@@ -2,11 +2,12 @@ import os
 import re
 from typing import List, Dict, Any, Optional
 from litellm import completion
+from jarvis.config import settings
 
 class ModelRouter:
     def __init__(self):
-        self.local_model = os.getenv("LOCAL_MODEL", "ollama/llama3.1")
-        self.litellm_base = os.getenv("LITELLM_BASE_URL", "http://litellm:4000")
+        self.local_model = settings.local_model
+        self.litellm_base = settings.litellm_base_url
 
     def route(self, task_type: str, sensitivity: str) -> str:
         if task_type in {"instant_command", "simple_chat", "memory_search"}:

@@ -139,14 +139,14 @@ class JarvisOrchestrator:
                 "type": "telemetry",
                 "cpu_percent": psutil.cpu_percent(interval=None),
                 "ram_percent": psutil.virtual_memory().percent,
-                "disk_percent": psutil.disk_usage("C:\\").percent if hasattr(psutil, "disk_usage") else 0.0,
+                "disk_percent": psutil.disk_usage(settings.disk_mount_path).percent if hasattr(psutil, "disk_usage") else 0.0,
                 "message": "System health metrics retrieved immediately."
             }
         elif "screenshot" in cleaned:
             return {
                 "type": "screenshot",
                 "status": "captured",
-                "file": "data/screenshots/latest_screen.png",
+                "file": str(settings.screenshot_dir / "latest_screen.png"),
                 "message": "Screen capture executed immediately."
             }
         elif "lock" in cleaned:

@@ -13,8 +13,16 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-PERMISSIONS_PATH = PROJECT_ROOT / "config" / "policies" / "permissions.json"
+from jarvis.config import settings
+from jarvis.constants import (
+    DEFAULT_CRITICAL_KEYWORDS,
+    DEFAULT_POLICY_ALLOWED_APPS,
+    DEFAULT_POLICY_BLOCKED_APPS,
+    DEFAULT_TIER1_KEYWORDS,
+    DEFAULT_TIER2_KEYWORDS,
+)
+
+PERMISSIONS_PATH = settings.config_dir / "policies" / "permissions.json"
 
 class PolicyDecision(BaseModel):
     risk_level: str = Field(default="low", description="low, medium, high, critical")
@@ -37,8 +45,8 @@ class PolicyEngine:
             except Exception:
                 pass
         return {
-            "allowed_apps": ["notepad", "code", "cmd", "powershell", "explorer", "calculator", "terminal"],
-            "blocked_apps": ["regedit", "format", "crypto_wallet", "metamask"],
+            "allowed_apps": list(DEFAULT_POLICY_ALLOWED_APPS),
+            "blocked_apps": list(DEFAULT_POLICY_BLOCKED_APPS),
             "sensitive_data_patterns": ["password", "secret_key", "private_key", "api_key", "token"]
         }
 
@@ -54,7 +62,7 @@ class PolicyEngine:
         text_lower = user_input.lower()
 
         # Tier 3: Critical / Destructive System / Financial
-        critical_keywords = ["drop database", "format disk", "wipe system", "trade crypto", "mint nft"]
+        critical_keywords = DEFAULT_CRITICAL_KEYWORDS
         if any(w in text_lower for w in critical_keywords):
             return PolicyDecision(
                 risk_level="critical",
@@ -65,10 +73,7 @@ class PolicyEngine:
             )
 
         # Tier 2: Irreversible Outbound / Physical computer use / Deletion
-        dangerous_keywords = [
-            "delete file", "rm -rf", "send email", "post to", "purchase", "buy", "book flight",
-            "push to main", "deploy to prod", "click on", "type password"
-        ]
+        dangerous_keywords = DEFAULT_TIER2_KEYWORDS
         if any(w in text_lower for w in dangerous_keywords) or task_type in ("desktop_control", "outbound_comms"):
             return PolicyDecision(
                 risk_level="high",
@@ -79,7 +84,7 @@ class PolicyEngine:
             )
 
         # Tier 1: Reversible local writes / drafts / sandboxed execution
-        reversible_keywords = ["create draft", "write file", "save note", "test code", "ingest document"]
+        reversible_keywords = DEFAULT_TIER1_KEYWORDS
         if any(w in text_lower for w in reversible_keywords) or task_type in ("document_ingest", "code_generation"):
             return PolicyDecision(
                 risk_level="medium",

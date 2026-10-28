@@ -11,17 +11,22 @@ from typing import Any, Dict, Optional
 
 
 class SearchCache:
-    def __init__(self, redis_url: Optional[str] = None, default_ttl_sec: int = 3600):
-        self.default_ttl_sec = default_ttl_sec
+    def __init__(self, redis_url: Optional[str] = None, default_ttl_sec: Optional[int] = None):
+        from jarvis.config import settings
+
+        self.default_ttl_sec = default_ttl_sec if default_ttl_sec is not None else settings.search_cache_ttl_sec
         self.redis_client = None
         self._memory_cache: Dict[str, Dict[str, Any]] = {}
         self.hits = 0
         self.misses = 0
 
-        if redis_url:
+        target_redis = redis_url or settings.redis_url
+        if target_redis:
             try:
                 import redis
-                self.redis_client = redis.Redis.from_url(redis_url, decode_responses=True, socket_timeout=1.0)
+                self.redis_client = redis.Redis.from_url(
+                    target_redis, decode_responses=True, socket_timeout=settings.redis_socket_timeout_sec
+                )
                 self.redis_client.ping()
             except Exception:
                 self.redis_client = None

@@ -166,8 +166,8 @@ class Embedding(Base):
     created_at = Column(Float, default=time.time)
 
 def get_db_engine():
-    """Returns SQLAlchemy engine connecting to DATABASE_URL or SQLite fallback."""
-    db_url = os.getenv("DATABASE_URL")
+    """Returns SQLAlchemy engine connecting to configured database_url or SQLite fallback."""
+    db_url = settings.database_url
     if db_url and "postgres" in db_url:
         return create_engine(db_url, echo=False)
     # Default to local SQLite database

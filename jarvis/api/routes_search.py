@@ -8,6 +8,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
+from jarvis.config import settings
 from search import search_orchestrator
 from search.ingestors import (
     BrowserPageIngestor,
@@ -27,7 +28,7 @@ class SearchRequest(BaseModel):
     limit: int = Field(default=10, ge=1, le=100)
     source_type: Optional[str] = Field(default=None, description="Optional filter by source type")
     refresh_web: bool = Field(default=False, description="Whether to query SearXNG if local results are insufficient")
-    user_id: str = Field(default="ganesh")
+    user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)
 
 
 class IngestFileRequest(BaseModel):

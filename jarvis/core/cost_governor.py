@@ -8,22 +8,11 @@ import time
 import datetime
 from typing import Dict, Any, Tuple, Optional
 from jarvis.config import settings
+from jarvis.constants import DEFAULT_PRICING_TABLE
 
 class CostGovernor:
     # Model pricing per 1K tokens (estimated USD)
-    PRICING_TABLE = {
-        # Tier 1 & 2 Local (Free compute)
-        "ollama": {"input": 0.0, "output": 0.0},
-        "vllm": {"input": 0.0, "output": 0.0},
-
-        # Tier 3 Cloud Frontier
-        "claude-3-7-sonnet": {"input": 0.003, "output": 0.015},
-        "gpt-4o": {"input": 0.0025, "output": 0.010},
-        "gpt-4o-mini": {"input": 0.00015, "output": 0.0006},
-        "gemini-2.0-flash": {"input": 0.0001, "output": 0.0004},
-        "gemini-2.0-pro": {"input": 0.00125, "output": 0.005},
-        "default_cloud": {"input": 0.003, "output": 0.015}
-    }
+    PRICING_TABLE = DEFAULT_PRICING_TABLE
 
     def __init__(self):
         self.daily_budget_limit = settings.daily_budget_limit

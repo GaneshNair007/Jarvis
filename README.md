@@ -1,5 +1,15 @@
 # JARVIS — Personal AI Operating System
 
+[![CI Pipeline](https://github.com/GaneshNair007/Jarvis/actions/workflows/ci.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/ci.yml)
+[![Docker & Deployment Readiness](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml)
+[![Security & DLP Audit](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml)
+![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-3776AB?logo=python&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-100%20passed-brightgreen?logo=pytest&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-ready-2496ED?logo=docker&logoColor=white)
+![Architecture](https://img.shields.io/badge/architecture-LangGraph%20%7C%20LiteLLM%20%7C%20Mem0-blueviolet)
+![Local Search](https://img.shields.io/badge/search-sub--50ms%20local-00C7B7)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 > **A private, local-first personal AI operating system for technical IT professionals, developers, researchers, and creators.**  
 > *Engineered with LangGraph cognitive StateGraph, LiteLLM hybrid model gateway, Mem0 long-term memory, PostgreSQL persistence, Redis real-time streaming, Ollama private local models, and Docker Compose orchestration.*
 
@@ -97,14 +107,21 @@ curl -X POST http://localhost:8000/kill-switch -H "Content-Type: application/jso
 
 ---
 
-## 🧪 Automated Test Suite
+## 🧪 Automated Test Suite & CI/CD
 
 ```bash
 # Run Milestone 1 Core Acceptance Suite (12 tests)
 pytest tests/test_milestone1_core.py -v
 
-# Run Full Repository Suite (76 tests)
+# Run Full Repository Suite (100 tests across 16 suites)
 pytest -v
 ```
 
-All 76 tests pass with 100% deterministic reliability.
+All **100 tests** pass with 100% deterministic reliability.
+
+### 🔄 CI/CD Automation & Resilient Retries
+All pull requests and commits to `main` trigger automated GitHub Actions workflows:
+- **CI Pipeline (`ci.yml`)**: Multi-Python matrix (`3.11`, `3.12`), bytecode compilation verification, flake8 quality checks, and full pytest suite execution with automatic retry on transient failure (`nick-fields/retry@v3`).
+- **Docker Readiness (`docker.yml`)**: Validates `docker-compose.yml`, builds `jarvis-api` and `jarvis-dashboard` container images, and inspects image health with automatic retries.
+- **Security & DLP Audit (`security.yml`)**: Scans for credential leaks, verifies permission tier schemas, and enforces zero-trust DLP safety policies.
+
