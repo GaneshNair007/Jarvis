@@ -124,3 +124,43 @@ Returns append-only SHA-256 audit ledger records with integrity verification.
 
 ### `POST /kill-switch`
 Emergency software kill switch that immediately halts task execution and rejects incoming non-read requests.
+
+---
+
+## 7. Integration Gateway Endpoints
+
+Available at both root (`/integrations/...`) and versioned (`/api/v1/integrations/...`):
+
+### `GET /integrations`
+Lists all registered integrations, their categories, enabled status, connection status, and health.
+
+### `GET /integrations/{integration_id}`
+Retrieves detailed metadata for a specific integration.
+
+### `POST /integrations/{integration_id}/connect`
+Connects an integration, verifies credentials, and returns setup instructions if unconfigured.
+
+### `POST /integrations/{integration_id}/disconnect`
+Disconnects an active integration.
+
+### `POST /integrations/{integration_id}/enable`
+Enables an integration.
+
+### `POST /integrations/{integration_id}/disable`
+Disables an integration (local kill switch).
+
+### `GET /integrations/{integration_id}/health`
+Runs a live health check on the integration (`HEALTHY`, `DEGRADED`, `UNCONFIGURED`, `DISABLED`, `KILL_SWITCHED`).
+
+### `GET /integrations/{integration_id}/powers`
+Lists all powers declared under this integration.
+
+### `POST /integrations/{integration_id}/powers/{power_id}/execute`
+Executes an integration power with parameter validation, rate limiting, and frozen-hash approval verification.
+
+### `POST /integrations/{integration_id}/powers/{power_id}/dry-run`
+Simulates power execution without making changes, providing blast radius impact analysis and approval requirements.
+
+### `GET /integrations/{integration_id}/audit`
+Retrieves audit events filtered specifically for the target integration.
+

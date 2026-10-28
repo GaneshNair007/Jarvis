@@ -222,9 +222,15 @@ class PowerRegistry:
             return True
         return False
 
+    def register_power(self, power: Dict[str, Any]) -> None:
+        """Registers a dynamic or integration power."""
+        pid = power.get("power_id") or power.get("name")
+        if pid:
+            self.initial_powers[pid] = power
+
     def list_powers(self) -> List[Dict[str, Any]]:
-        """Returns the roster of initial core powers."""
-        return list(INITIAL_POWERS)
+        """Returns the roster of initial and integration-registered powers."""
+        return list(self.initial_powers.values())
 
     def search_powers(self, query: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Searches powers by keyword across name, description, and examples."""

@@ -100,6 +100,47 @@
       border: 1px solid var(--cyan);
     }
 
+    .header-nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--cyan);
+      color: #fff;
+    }
+
+    .nav-btn.active {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+    }
+
+    .badge-count {
+      background: var(--cyan);
+      color: #000;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
     .header-actions {
       display: flex;
       align-items: center;
@@ -397,6 +438,287 @@
       margin-bottom: 6px;
       line-height: 1.4;
     }
+
+    /* ========================================================
+       INTEGRATIONS HUB STYLES
+       ======================================================== */
+    .integrations-view {
+      display: none;
+      padding: 24px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .integrations-view.active {
+      display: block;
+    }
+
+    .integrations-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      backdrop-filter: blur(16px);
+    }
+
+    .integ-stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-pill-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-pill-val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .integrations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 20px;
+    }
+
+    .integration-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 20px;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .integration-card:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 8px 30px rgba(0, 229, 255, 0.12);
+    }
+
+    .integ-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .integ-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .integ-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--cyan);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    .status-healthy {
+      background: rgba(0, 230, 118, 0.15);
+      border: 1px solid var(--emerald);
+      color: var(--emerald);
+    }
+
+    .status-unconfigured {
+      background: rgba(255, 179, 0, 0.15);
+      border: 1px solid var(--amber);
+      color: var(--amber);
+    }
+
+    .status-disabled {
+      background: rgba(148, 163, 184, 0.15);
+      border: 1px solid var(--text-muted);
+      color: var(--text-muted);
+    }
+
+    .status-kill-switched {
+      background: rgba(255, 23, 68, 0.15);
+      border: 1px solid var(--crimson);
+      color: var(--crimson);
+    }
+
+    .integ-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .integ-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .meta-chip {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .integ-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-integ {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-integ-enable {
+      background: rgba(0, 230, 118, 0.2);
+      border: 1px solid var(--emerald);
+      color: var(--emerald);
+    }
+    .btn-integ-enable:hover {
+      background: var(--emerald);
+      color: #000;
+    }
+
+    .btn-integ-disable {
+      background: rgba(148, 163, 184, 0.2);
+      border: 1px solid var(--text-muted);
+      color: #fff;
+    }
+    .btn-integ-disable:hover {
+      background: var(--text-muted);
+      color: #000;
+    }
+
+    .btn-integ-connect {
+      background: rgba(0, 229, 255, 0.2);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+    }
+    .btn-integ-connect:hover {
+      background: var(--cyan);
+      color: #000;
+    }
+
+    .btn-integ-check {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+    .btn-integ-check:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .btn-integ-kill {
+      background: rgba(255, 23, 68, 0.2);
+      border: 1px solid var(--crimson);
+      color: var(--crimson);
+      margin-left: auto;
+    }
+    .btn-integ-kill:hover {
+      background: var(--crimson);
+      color: #fff;
+    }
+
+    .powers-drawer {
+      margin-top: 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      display: none;
+    }
+
+    .power-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.78rem;
+    }
+
+    .danger-tag {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .danger-low { background: rgba(0, 230, 118, 0.2); color: var(--emerald); }
+    .danger-medium { background: rgba(0, 229, 255, 0.2); color: var(--cyan); }
+    .danger-high { background: rgba(255, 179, 0, 0.2); color: var(--amber); }
+    .danger-extreme { background: rgba(255, 23, 68, 0.2); color: var(--crimson); }
+
+    .btn-dry-run {
+      background: rgba(0, 229, 255, 0.15);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+    .btn-dry-run:hover {
+      background: var(--cyan);
+      color: #000;
+    }
+
+    .instructions-box {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 6px;
+      background: rgba(255, 179, 0, 0.08);
+      border: 1px dashed rgba(255, 179, 0, 0.4);
+      font-size: 0.75rem;
+      color: var(--amber);
+    }
   </style>
 </head>
 <body>
@@ -404,16 +726,31 @@
   <header>
     <div class="brand">
       <div class="brand-arc"></div>
-      <div class="brand-title">JARVIS</div>
-      <div class="brand-tag">OS v1.0.0-PROD</div>
+      <div>
+        <div class="brand-title">JARVIS</div>
+        <div class="brand-tag">OS v1.0.0-PROD</div>
+      </div>
     </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="header-nav">
+      <button id="nav-btn-console" class="nav-btn active" onclick="switchTab('console')">
+        <span>🖥️</span> Command Console
+      </button>
+      <button id="nav-btn-integrations" class="nav-btn" onclick="switchTab('integrations')">
+        <span>🔌</span> Integrations Hub
+        <span id="integrations-total-badge" class="badge-count">2</span>
+      </button>
+    </nav>
+
     <div class="header-actions">
       <span id="conn-status" style="font-size: 0.8rem; color: var(--emerald);">● ONLINE</span>
       <button class="btn-kill" onclick="triggerKillSwitch()">EMERGENCY KILL SWITCH</button>
     </div>
   </header>
 
-  <main class="dashboard-grid">
+  <!-- TAB 1: Console View -->
+  <main id="view-console" class="dashboard-grid">
 
     <!-- Left Column: Telemetry & Model Router -->
     <section class="glass-panel">
@@ -493,7 +830,7 @@
       <div id="chat-messages" class="chat-messages">
         <div class="chat-msg msg-jarvis">
           <span class="tier-tag">JARVIS</span>
-          Jarvis operating system online. Three-tier model router and deterministic policy gate active. How may I assist you, Ganesh?
+          Jarvis operating system online. Three-tier model router, deterministic policy gate, and unified integration hub active. How may I assist you, Ganesh?
         </div>
       </div>
 
@@ -541,8 +878,70 @@
 
   </main>
 
+  <!-- TAB 2: Integrations Hub View -->
+  <main id="view-integrations" class="integrations-view">
+    <div class="integrations-header">
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 4px;">Unified Integrations Hub</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Modular, permission-scoped, approval-gated bridges. Every risky action requires cryptographic verification.
+        </p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-integ btn-integ-check" onclick="loadIntegrations()">🔄 Refresh</button>
+        <button class="btn-integ btn-integ-kill" onclick="triggerKillSwitch()">Global Kill Switch</button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="integ-stats-bar">
+      <div class="stat-pill">
+        <span class="stat-pill-label">Registered Hubs</span>
+        <span id="stat-total" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Active / Enabled</span>
+        <span id="stat-enabled" class="stat-pill-val" style="color: var(--emerald);">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Registered Powers</span>
+        <span id="stat-powers" class="stat-pill-val" style="color: var(--cyan);">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Approval Gate</span>
+        <span class="stat-pill-val" style="color: var(--amber); font-size: 1.1rem; padding-top: 4px;">SHA-256 STRICT</span>
+      </div>
+    </div>
+
+    <!-- Integrations Grid -->
+    <div id="integrations-grid" class="integrations-grid">
+      <!-- Cards rendered dynamically via JS -->
+    </div>
+  </main>
+
   <script>
     const API_BASE = window.location.origin;
+
+    // Tab Switching
+    function switchTab(tabName) {
+      const consoleView = document.getElementById('view-console');
+      const integView = document.getElementById('view-integrations');
+      const btnConsole = document.getElementById('nav-btn-console');
+      const btnInteg = document.getElementById('nav-btn-integrations');
+
+      if (tabName === 'console') {
+        consoleView.style.display = 'grid';
+        integView.classList.remove('active');
+        btnConsole.classList.add('active');
+        btnInteg.classList.remove('active');
+      } else {
+        consoleView.style.display = 'none';
+        integView.classList.add('active');
+        btnConsole.classList.remove('active');
+        btnInteg.classList.add('active');
+        loadIntegrations();
+      }
+    }
 
     // WebSocket Telemetry Connection
     function connectWebSocket() {
@@ -697,6 +1096,7 @@
         const data = await resp.json();
         alert("EMERGENCY KILL SWITCH ACTIVATED: All sub-processes stopped.");
         loadAudit();
+        loadIntegrations();
       }
     }
 
@@ -721,6 +1121,172 @@
       const resp = await fetch(`${API_BASE}/api/v1/audit?verify_chain=true`);
       const data = await resp.json();
       alert(`Audit Chain Integrity: ${data.chain_integrity.message}`);
+    }
+
+    // ========================================================
+    // INTEGRATIONS API & UI CONTROLLER
+    // ========================================================
+    async function loadIntegrations() {
+      try {
+        let resp = await fetch(`${API_BASE}/api/v1/integrations`);
+        if (!resp.ok) resp = await fetch(`${API_BASE}/integrations`);
+        const data = await resp.json();
+
+        const grid = document.getElementById('integrations-grid');
+        grid.innerHTML = '';
+
+        let totalPowers = 0;
+        let enabledCount = 0;
+
+        document.getElementById('stat-total').innerText = data.total || data.integrations.length;
+        document.getElementById('integrations-total-badge').innerText = data.total || data.integrations.length;
+
+        data.integrations.forEach(integ => {
+          if (integ.enabled) enabledCount++;
+          totalPowers += (integ.powers_count || (integ.available_powers ? integ.available_powers.length : 0));
+
+          const card = document.createElement('div');
+          card.className = 'integration-card';
+          card.id = `card-${integ.id}`;
+
+          let statusClass = 'status-disabled';
+          if (integ.kill_switch_active) statusClass = 'status-kill-switched';
+          else if (integ.health_status === 'HEALTHY') statusClass = 'status-healthy';
+          else if (integ.health_status === 'UNCONFIGURED') statusClass = 'status-unconfigured';
+
+          card.innerHTML = `
+            <div class="integ-top">
+              <div>
+                <div class="integ-title">${integ.display_name}</div>
+                <div class="integ-id">${integ.id}</div>
+              </div>
+              <span class="status-badge ${statusClass}">${integ.health_status}</span>
+            </div>
+
+            <div class="integ-desc">${integ.description}</div>
+
+            <div class="integ-meta">
+              <span class="meta-chip">📁 ${integ.category}</span>
+              <span class="meta-chip">⚡ ${integ.rate_limit_rpm} RPM</span>
+              <span class="meta-chip">${integ.is_connected ? '🟢 Connected' : '⚪ Disconnected'}</span>
+              <span class="meta-chip">${integ.enabled ? '✅ Enabled' : '⏸️ Disabled'}</span>
+            </div>
+
+            <div id="setup-box-${integ.id}" class="instructions-box" style="${integ.health_status === 'UNCONFIGURED' ? 'display:block;' : 'display:none;'}">
+              ⚠️ <strong>Missing Credentials:</strong> Configure environment variables to activate full powers.
+            </div>
+
+            <div class="integ-actions">
+              ${integ.enabled ? 
+                `<button class="btn-integ btn-integ-disable" onclick="toggleIntegration('${integ.id}', false)">Disable</button>` :
+                `<button class="btn-integ btn-integ-enable" onclick="toggleIntegration('${integ.id}', true)">Enable</button>`
+              }
+              ${integ.is_connected ?
+                `<button class="btn-integ btn-integ-check" onclick="connectIntegration('${integ.id}', false)">Disconnect</button>` :
+                `<button class="btn-integ btn-integ-connect" onclick="connectIntegration('${integ.id}', true)">Connect</button>`
+              }
+              <button class="btn-integ btn-integ-check" onclick="checkIntegrationHealth('${integ.id}')">Health</button>
+              <button class="btn-integ btn-integ-check" onclick="togglePowersDrawer('${integ.id}')">Powers (${integ.powers_count || 0})</button>
+              <button class="btn-integ btn-integ-kill" onclick="killIntegration('${integ.id}')">Kill</button>
+            </div>
+
+            <div id="drawer-${integ.id}" class="powers-drawer">
+              <div style="font-size:0.75rem; color:var(--cyan); margin-bottom:6px; font-weight:600;">AVAILABLE POWERS</div>
+              <div id="powers-list-${integ.id}">Loading powers...</div>
+            </div>
+          `;
+
+          grid.appendChild(card);
+        });
+
+        document.getElementById('stat-enabled').innerText = enabledCount;
+        document.getElementById('stat-powers').innerText = totalPowers;
+
+      } catch (err) {
+        console.error("Error loading integrations:", err);
+      }
+    }
+
+    async function toggleIntegration(integId, enable) {
+      const action = enable ? 'enable' : 'disable';
+      await fetch(`${API_BASE}/api/v1/integrations/${integId}/${action}`, { method: 'POST' });
+      loadIntegrations();
+      loadAudit();
+    }
+
+    async function connectIntegration(integId, connect) {
+      const action = connect ? 'connect' : 'disconnect';
+      const resp = await fetch(`${API_BASE}/api/v1/integrations/${integId}/${action}`, { method: 'POST' });
+      const data = await resp.json();
+      if (!data.success && data.setup_instructions) {
+        alert(`${integId.toUpperCase()} Setup Needed:\n${data.setup_instructions.instructions || JSON.stringify(data.setup_instructions)}`);
+      }
+      loadIntegrations();
+      loadAudit();
+    }
+
+    async function checkIntegrationHealth(integId) {
+      const resp = await fetch(`${API_BASE}/api/v1/integrations/${integId}/health`);
+      const data = await resp.json();
+      alert(`Integration: ${integId}\nStatus: ${data.status}\nMessage: ${data.message}\nLatency: ${data.latency_ms || 0}ms`);
+      loadIntegrations();
+    }
+
+    async function killIntegration(integId) {
+      if (confirm(`Emergency kill integration '${integId}'?`)) {
+        await fetch(`${API_BASE}/api/v1/integrations/${integId}/disable`, { method: 'POST' });
+        loadIntegrations();
+        loadAudit();
+      }
+    }
+
+    async function togglePowersDrawer(integId) {
+      const drawer = document.getElementById(`drawer-${integId}`);
+      if (drawer.style.display === 'block') {
+        drawer.style.display = 'none';
+        return;
+      }
+      drawer.style.display = 'block';
+      const listContainer = document.getElementById(`powers-list-${integId}`);
+      
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/integrations/${integId}/powers`);
+        const data = await resp.json();
+        listContainer.innerHTML = '';
+        
+        data.powers.forEach(p => {
+          const item = document.createElement('div');
+          item.className = 'power-item';
+          item.innerHTML = `
+            <div>
+              <strong>${p.name}</strong> <span style="color:var(--text-muted);">(${p.power_id})</span>
+              <div style="font-size:0.7rem; color:var(--text-muted);">${p.description}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="danger-tag danger-${p.danger_level}">${p.danger_level}</span>
+              <button class="btn-dry-run" onclick="executeDryRun('${integId}', '${p.power_id}')">Dry Run</button>
+            </div>
+          `;
+          listContainer.appendChild(item);
+        });
+      } catch (err) {
+        listContainer.innerText = `Error: ${err.message}`;
+      }
+    }
+
+    async function executeDryRun(integId, powerId) {
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/integrations/${integId}/powers/${powerId}/dry-run`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ params: {} })
+        });
+        const data = await resp.json();
+        alert(`DRY-RUN SIMULATION (${powerId}):\nStatus: ${data.status || 'Simulated'}\nWould Execute: ${data.would_execute}\nImpact: ${data.simulated_impact}\nRequired Approval: Tier ${data.required_tier}`);
+        loadAudit();
+      } catch (err) {
+        alert(`Dry run failed: ${err.message}`);
+      }
     }
 
     setInterval(loadAudit, 5000);

@@ -30,6 +30,7 @@ from jarvis.api.routes_browser import router as browser_router
 from jarvis.api.routes_tasks import router as tasks_router
 from jarvis.api.routes_memory import router as memory_router
 from jarvis.api.routes_desktop import router as desktop_router
+from jarvis.api.routes_integrations import router as integrations_router
 import uuid
 from graph.jarvis_graph import jarvis_graph
 
@@ -55,6 +56,8 @@ app.include_router(tasks_router, prefix="/api/v1")
 app.include_router(memory_router)
 app.include_router(memory_router, prefix="/api/v1")
 app.include_router(desktop_router)
+app.include_router(integrations_router)
+app.include_router(integrations_router, prefix="/api/v1")
 
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
 

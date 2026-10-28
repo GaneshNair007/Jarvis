@@ -14,12 +14,14 @@ def test_serve_dashboard_root():
     assert "JARVIS — Personal AI Operating System HUD" in response.text
     assert "System Telemetry" in response.text
     assert "Command Console" in response.text
+    assert "Integrations Hub" in response.text
 
 def test_serve_dashboard_explicit_route():
     """Phase 0: Web dashboard HTML served at '/dashboard'."""
     response = client.get("/dashboard")
     assert response.status_code == 200
     assert "JARVIS" in response.text
+    assert "Integrations Hub" in response.text
 
 def test_voice_push_to_talk_api():
     """Phase 1: Push-to-talk REST trigger."""

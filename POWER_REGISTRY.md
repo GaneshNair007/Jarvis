@@ -21,9 +21,26 @@ JARVIS organizes all autonomous operating capabilities into an extensible power 
 
 ---
 
-## 2. Power Master Catalog
+## 2. Dynamic Integration Powers (Phase 1 Expansion)
 
-In addition to the 10 initial powers, JARVIS includes the complete **355-power catalog** indexed across 12 operational domains:
+Every integration loaded via `integrations/` dynamically registers its powers into `PowerRegistry`:
+
+| Power ID | Power Name | Integration | Category | Danger Level | Approval Policy | Required Scopes |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `system.health_probe` | System Health Probe | `system_diagnostics` | `system` | `low` | None (Tier 0) | `system.read` |
+| `system.disk_diagnostics` | Disk Space Diagnostics | `system_diagnostics` | `system` | `low` | None (Tier 0) | `system.read` |
+| `system.clear_temp_cache` | Clear Temporary Cache | `system_diagnostics` | `system` | `high` | **Tier 2 Approval** (SHA-256 bound) | `system.admin` |
+| `github.list_repos` | List GitHub Repositories | `github` | `developer` | `low` | None (Tier 0) | `repo:read` |
+| `github.search_code` | Search GitHub Code | `github` | `developer` | `low` | None (Tier 0) | `repo:read` |
+| `github.create_issue_draft` | Draft GitHub Issue | `github` | `developer` | `low` | None (Tier 1) | `issues:write` |
+| `github.create_issue` | Create GitHub Issue | `github` | `developer` | `medium` | **Tier 2 Approval** (SHA-256 bound) | `issues:write` |
+| `github.merge_pr` | Merge Pull Request | `github` | `developer` | `extreme` | **Tier 3 Step-Up Auth** | `repo:admin` |
+
+---
+
+## 3. Power Master Catalog
+
+In addition to initial and integration powers, JARVIS includes the complete **355-power catalog** indexed across 12 operational domains:
 1. Core Assistant Powers (`PWR-001` to `PWR-015`)
 2. Screen & Computer Awareness Powers (`PWR-016` to `PWR-035`)
 3. Instant Local Command Powers (`PWR-036` to `PWR-065`)
@@ -39,9 +56,12 @@ In addition to the 10 initial powers, JARVIS includes the complete **355-power c
 
 ---
 
-## 3. Power Management Endpoints
+## 4. Power Management Endpoints
 
-- `GET /powers`: Lists active powers and catalog summary.
+- `GET /powers`: Lists active powers and catalog summary (including all integration powers).
 - `GET /powers?search={query}`: Searches powers by keyword or trigger.
 - `POST /powers/{power_id}/enable`: Enables a power.
 - `POST /powers/{power_id}/disable`: Disables a power.
+- `GET /integrations/{id}/powers`: Lists powers strictly scoped to an integration.
+- `POST /integrations/{id}/powers/{power_id}/execute`: Executes an integration power behind rate limits and approval gates.
+- `POST /integrations/{id}/powers/{power_id}/dry-run`: Simulates power execution with blast radius analysis and evidence.
