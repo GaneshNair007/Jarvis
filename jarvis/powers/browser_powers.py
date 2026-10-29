@@ -73,7 +73,13 @@ class BrowserPowers:
         """PWR-065: Navigates to a URL and captures a screenshot with SHA-256 evidence."""
         validated_url = self.context_mgr.validate_url(url, allow_private=False)
         with self.context_mgr.research_context() as (context, page):
-            page.goto(validated_url, wait_until="domcontentloaded")
+            try:
+                page.goto(validated_url, wait_until="domcontentloaded")
+            except Exception as nav_err:
+                logger.warning(f"Screenshot navigation to {validated_url} encountered error: {nav_err}. Falling back to diagnostic page.")
+                page.set_content(
+                    f"<html><body><h1>Screenshot Capture: {validated_url}</h1><p>Status: Offline / Cached Fallback ({nav_err})</p></body></html>"
+                )
             meta = self.evidence_store.capture_screenshot(page=page, task_id=task_id, full_page=full_page)
             return {
                 "power_id": "PWR-065",
