@@ -63,10 +63,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install System Dependencies (Headless Display & Database Drivers)
+      - name: Install System Dependencies (Headless Display, Database Drivers & GUI)
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb x11-xserver-utils libpq-dev
+          sudo apt-get install -y xvfb x11-xserver-utils libpq-dev python3-tk scrot
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -83,7 +83,10 @@ jobs:
           command: |
             python -m pip install --upgrade pip setuptools wheel
             pip install -r requirements.txt
-            python -m playwright install --with-deps chromium
+
+      - name: Install Playwright Chromium & System Libraries
+        run: |
+          python -m playwright install --with-deps chromium
 
       - name: Run Pytest Acceptance & Unit Suites (with Auto-Retry on Failure)
         uses: nick-fields/retry@v3
