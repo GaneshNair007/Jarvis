@@ -13,6 +13,9 @@ from jarvis.browser.evidence import EvidenceStore
 from jarvis.browser.research_worker import ResearchWorker
 from jarvis.browser.search_wrapper import WebSearchWrapper
 from jarvis.browser.url_reader import URLReader
+from jarvis.core.logger import get_logger
+
+logger = get_logger("powers.browser")
 
 
 class BrowserPowers:
