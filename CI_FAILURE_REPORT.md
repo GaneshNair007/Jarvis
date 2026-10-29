@@ -1,0 +1,12 @@
+# CI Failure Report and Triage Inventory
+
+| # | Command | Job/Workflow | Failure type | Exact error | Root cause hypothesis | Files involved | Proposed fix | Risk | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | `flake8 . --count --select=E9,F63,F7,F82` | `lint` / `ci.yml` | Lint/syntax (`F821`) | `F821 undefined name 'Optional'` | Missing `Optional` import in `context_manager.py` | `jarvis/browser/context_manager.py` | Add `Optional` to `typing` imports | None | RESOLVED (`7147d87`) |
+| 2 | `flake8 . --count --select=E9,F63,F7,F82` | `lint` / `ci.yml` | Lint/syntax (`F821`) | `F821 undefined name 'logger'` | Missing logger instantiation | `jarvis/powers/browser_powers.py` | Import `get_logger` and instantiate `logger` | None | RESOLVED (`c9b5f2d`) |
+| 3 | `pip install -r requirements.txt` | `test` / `ci.yml` | Missing dependency | `ModuleNotFoundError: No module named 'playwright'` | Playwright omitted from requirements | `requirements.txt` | Add `playwright>=1.42.0` and `scikit-learn>=1.4.0` | None | RESOLVED (`bc1023c`) |
+| 4 | `xvfb-run -a pytest -v` | `test` / `ci.yml` | Acceptance test DNS timeout | `assert len(report.citations) >= 1` (0 citations) | External network lookup during test run | `jarvis/browser/research_worker.py` | Add resilient offline snapshot fallback from search snippets | None | RESOLVED (`4c7269b`) |
+| 5 | `pytest -v tests/test_power_registry.py` | `test` / `ci.yml` | Schema attribute mismatch | `TypeError: argument of type 'NoneType' is not iterable` | `p1.get("fields", {}).get("Power name")` returned None | `tests/test_power_registry.py` | Support `power_name` and `power_id` fields | None | RESOLVED (`72b7d34`) |
+| 6 | `pytest -v tests/test_api.py` | `test` / `ci.yml` | KeyError in response body | `KeyError: 'valid'` in `chain_status` | `chain_status = {}` was not populated when `verify_chain=True` | `jarvis/api/server.py` | Set `chain_status = {"valid": valid, ...}` | None | RESOLVED (`72b7d34`) |
+| 7 | `xvfb-run -a pytest -v` | `test` / `ci.yml` | Linux headless display missing libs | `ImportError: Tkinter is required for PyAutoGUI on Linux` | `python3-tk` & `scrot` missing from apt install | `.github/workflows/ci.yml` | Add `python3-tk scrot` to `apt-get install` | None | RESOLVED (`8bfdf44`) |
+| 8 | `docker build -t jarvis-api` | `validate-deployment` / `docker.yml` | Context bloat | Large context without .dockerignore | `.dockerignore` missing | `.dockerignore` | Add `.dockerignore` ignoring repos, .git, .venv, etc. | None | RESOLVED (`8bfdf44`) |
