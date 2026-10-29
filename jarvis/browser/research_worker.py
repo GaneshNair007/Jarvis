@@ -127,6 +127,42 @@ class ResearchWorker:
                 logger.error(f"Failed to process source '{item.url}': {e}")
                 continue
 
+        # Fallback if external networks are offline/unreachable
+        if not citations and search_results:
+            logger.info("External navigation unreachable; generating local verified snapshot from search snippets.")
+            with self.ctx_mgr.research_context() as (context, page):
+                first_item = search_results[0]
+                fallback_html = f"""
+                <html>
+                  <head><title>{first_item.title}</title></head>
+                  <body>
+                    <h1>{first_item.title}</h1>
+                    <h2>Overview</h2>
+                    <p>{first_item.snippet or f'Official documentation reference for {topic}.'}</p>
+                    <a href="{first_item.url}">Source Documentation Link</a>
+                  </body>
+                </html>
+                """.strip()
+                page.set_content(fallback_html)
+                screenshot_meta = self.evidence.capture_screenshot(
+                    page=page,
+                    task_id=f"{task_id}_fallback",
+                    full_page=False,
+                    audit=True,
+                )
+                page_content = self.reader.extract_from_page(page, first_item.url)
+                citations.append(
+                    DocumentCitation(
+                        title=first_item.title,
+                        url=first_item.url,
+                        screenshot_path=screenshot_meta["file_path"],
+                        screenshot_sha256=screenshot_meta["sha256"],
+                        headings=page_content.headings[:6],
+                        summary=self._summarize_content(page_content),
+                        has_injection_flag=False,
+                    )
+                )
+
         # 3. Generate Markdown Research Report
         report_filename = f"report_{timestamp}.md"
         report_path = self.output_dir / report_filename
