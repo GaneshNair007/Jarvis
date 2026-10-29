@@ -23,3 +23,5 @@ numpy>=1.26.0
 pymupdf>=1.24.0
 pyautogui>=0.9.54
 pillow>=10.0.0
+playwright>=1.42.0
+scikit-learn>=1.4.0
