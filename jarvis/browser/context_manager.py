@@ -9,7 +9,7 @@ from __future__ import annotations
 import ipaddress
 import socket
 from urllib.parse import urlparse
-from typing import Generator
+from typing import Generator, Optional
 from contextlib import contextmanager
 
 from playwright.sync_api import Browser, BrowserContext, Page, sync_playwright
