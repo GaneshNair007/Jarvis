@@ -150,24 +150,57 @@ async def chat_endpoint(req: ChatRequest):
     )
     return result
 
-@app.get("/api/v1/powers")
-async def list_powers(category: Optional[str] = None, search: Optional[str] = None):
-    """Lists operational capabilities from the 355-power catalog."""
-    if search:
-        return power_registry.search_powers(search)
-    if category:
-        return power_registry.get_powers_by_category(category)
+# ══════════════════════════════════════════════════════════════════════════════
+# JARVIS 355 POWER CATALOG & ECOSYSTEM (JARVIS = a + b + c ... n)
+# ══════════════════════════════════════════════════════════════════════════════
+
+@app.get("/api/v1/powers/ecosystem")
+async def get_ecosystem():
+    """Returns the multi-repo composition formula: JARVIS = a + b + c ... n."""
+    repos = power_registry.list_ecosystem_repos()
+    breakdown = {}
+    for r in repos:
+        pwrs = power_registry.get_powers_by_repo(r)
+        breakdown[r] = {
+            "power_count": len(pwrs),
+            "sample_powers": [p.get("power_id") for p in pwrs[:5]],
+            "local_path": f"repos/{r}"
+        }
     return {
+        "formula": power_registry.get_ecosystem_formula(),
         "total_powers": power_registry.total_count(),
-        "categories": power_registry.list_categories()
+        "total_repositories": len(repos),
+        "repositories": breakdown
+    }
+
+@app.get("/api/v1/powers")
+async def list_powers(category: Optional[str] = None, repo: Optional[str] = None, q: Optional[str] = None, search: Optional[str] = None):
+    """Lists JARVIS powers with optional filtering by category, contributing repo, or keyword search."""
+    search_term = q or search
+    if search_term:
+        return {"query": search_term, "results": power_registry.search_powers(search_term)}
+    if repo:
+        powers = power_registry.get_powers_by_repo(repo)
+        return {"repo": repo, "total": len(powers), "powers": powers}
+    if category:
+        powers = power_registry.get_powers_by_category(category)
+        return {"category": category, "total": len(powers), "powers": powers}
+    
+    all_powers = power_registry.list_all_powers()
+    return {
+        "total_powers": len(all_powers),
+        "total_categories": len(power_registry.list_categories()),
+        "ecosystem_formula": power_registry.get_ecosystem_formula(),
+        "powers": all_powers
     }
 
 @app.get("/api/v1/powers/{power_id}")
-async def get_power(power_id: str):
-    p = power_registry.get_power(power_id)
-    if not p:
+async def get_power_detail(power_id: str):
+    """Retrieves complete 31-field definition of a specific JARVIS power."""
+    power = power_registry.get_power(power_id)
+    if not power:
         raise HTTPException(status_code=404, detail=f"Power '{power_id}' not found")
-    return p
+    return power
 
 @app.get("/api/v1/system/health")
 async def system_health():

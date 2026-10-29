@@ -39,6 +39,9 @@ data/artifacts/screenshots/*.png
 data/*.db
 data/*.db-wal
 data/*.db-shm
+
+# External Cloned Ecosystem Repositories
+repos/
 .env
 
 # OS Files

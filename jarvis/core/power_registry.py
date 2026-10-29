@@ -180,6 +180,7 @@ class PowerRegistry:
         self.initial_powers: Dict[str, Dict[str, Any]] = {p["name"]: p for p in INITIAL_POWERS}
         for p in INITIAL_POWERS:
             self.initial_powers[p["power_id"]] = p
+        self.repo_index: Dict[str, List[str]] = {}
         self._load_catalog()
 
     def _load_catalog(self) -> None:
@@ -191,14 +192,23 @@ class PowerRegistry:
             with open(self.catalog_path, "r", encoding="utf-8") as f:
                 records = json.load(f)
                 for item in records:
-                    pid = item.get("id")
+                    pid = item.get("power_id") or item.get("id")
                     if not pid:
                         continue
                     self.powers[pid] = item
-                    cat = item.get("fields", {}).get("Category", "General")
+                    
+                    # Category index
+                    cat = item.get("category") or item.get("fields", {}).get("Category", "General")
                     if cat not in self.category_index:
                         self.category_index[cat] = []
                     self.category_index[cat].append(pid)
+
+                    # Repository index (JARVIS = a + b + c ... n)
+                    repos = item.get("contributing_repos", [])
+                    for r in repos:
+                        if r not in self.repo_index:
+                            self.repo_index[r] = []
+                        self.repo_index[r].append(pid)
         except Exception as e:
             print(f"[PowerRegistry] Warning: Error loading catalog: {e}")
 
@@ -206,7 +216,10 @@ class PowerRegistry:
         """Retrieves power definition by ID or name (e.g. 'PWR-001' or 'chat')."""
         if power_id in self.initial_powers:
             return self.initial_powers[power_id]
-        return self.powers.get(power_id.upper())
+        pid_upper = power_id.upper()
+        if pid_upper in self.powers:
+            return self.powers[pid_upper]
+        return self.powers.get(power_id)
 
     def enable_power(self, power_id: str) -> bool:
         p = self.get_power(power_id)
@@ -232,6 +245,12 @@ class PowerRegistry:
         """Returns the roster of initial and integration-registered powers."""
         return list(self.initial_powers.values())
 
+    def list_all_powers(self) -> List[Dict[str, Any]]:
+        """Returns all 355 powers from the Master Catalog."""
+        if self.powers:
+            return list(self.powers.values())
+        return list(self.initial_powers.values())
+
     def search_powers(self, query: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Searches powers by keyword across name, description, and examples."""
         query_lower = query.lower()
@@ -244,9 +263,9 @@ class PowerRegistry:
 
         # Check catalog powers
         for p in self.powers.values():
-            name = (p.get("fields", {}).get("Power name") or p.get("name", "")).lower()
-            desc = (p.get("fields", {}).get("One-line description") or "").lower()
-            examples = (p.get("fields", {}).get("User command examples") or "").lower()
+            name = (p.get("power_name") or p.get("fields", {}).get("Power name") or p.get("name", "")).lower()
+            desc = (p.get("one_line_description") or p.get("fields", {}).get("One-line description") or "").lower()
+            examples = (p.get("user_command_examples") or p.get("fields", {}).get("User command examples") or "").lower()
 
             if query_lower in name or query_lower in desc or query_lower in examples:
                 results.append(p)
@@ -261,6 +280,17 @@ class PowerRegistry:
     def get_powers_by_category(self, category: str) -> List[Dict[str, Any]]:
         pids = self.category_index.get(category, [])
         return [self.powers[pid] for pid in pids if pid in self.powers]
+
+    def get_powers_by_repo(self, repo_name: str) -> List[Dict[str, Any]]:
+        pids = self.repo_index.get(repo_name.lower(), [])
+        return [self.powers[pid] for pid in pids if pid in self.powers]
+
+    def list_ecosystem_repos(self) -> List[str]:
+        return sorted(list(self.repo_index.keys()))
+
+    def get_ecosystem_formula(self) -> str:
+        repos = self.list_ecosystem_repos()
+        return "JARVIS = " + " + ".join(repos) + f" ({self.total_count()} powers)"
 
     def total_count(self) -> int:
         return len(self.powers) or len(INITIAL_POWERS)
