@@ -58,7 +58,49 @@ def test_api_powers():
     response = client.get("/api/v1/powers")
     assert response.status_code == 200
     data = response.json()
-    assert data["total_powers"] >= 300
+    assert data["total_powers"] == 355
+    assert len(data["powers"]) == 355
+    assert data["total_categories"] == 22
+
+def test_api_powers_ecosystem():
+    response = client.get("/api/v1/powers/ecosystem")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["total_powers"] == 355
+    assert data["total_repositories"] == 11
+    assert "openclaw" in data["repositories"]
+    assert "browser-use" in data["repositories"]
+
+def test_api_power_detail():
+    # Valid lookup uppercase
+    res = client.get("/api/v1/powers/PWR-001")
+    assert res.status_code == 200
+    assert res.json()["power_name"] == "Wake-Word Activation"
+
+    # Valid lookup lowercase
+    res_low = client.get("/api/v1/powers/pwr-001")
+    assert res_low.status_code == 200
+    assert res_low.json()["power_id"] == "PWR-001"
+
+    # Invalid lookup 404
+    res_404 = client.get("/api/v1/powers/PWR-NONEXISTENT")
+    assert res_404.status_code == 404
+
+def test_api_powers_filters():
+    # Filter by repo
+    res_repo = client.get("/api/v1/powers?repo=browser-use")
+    assert res_repo.status_code == 200
+    assert res_repo.json()["total_powers"] >= 10
+
+    # Filter by category
+    res_cat = client.get("/api/v1/powers?category=Voice")
+    assert res_cat.status_code == 200
+    assert res_cat.json()["total_powers"] >= 5
+
+    # Filter by search query
+    res_q = client.get("/api/v1/powers?q=screenshot")
+    assert res_q.status_code == 200
+    assert res_q.json()["total_matches"] >= 1
 
 def test_api_audit():
     response = client.get("/api/v1/audit?verify_chain=true")

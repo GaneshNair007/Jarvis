@@ -197,29 +197,47 @@ class PowerRegistry:
                         continue
                     self.powers[pid] = item
                     
-                    # Category index
+                    # Category index (case-insensitive key mapping)
                     cat = item.get("category") or item.get("fields", {}).get("Category", "General")
-                    if cat not in self.category_index:
-                        self.category_index[cat] = []
-                    self.category_index[cat].append(pid)
+                    cat_key = cat.strip().lower()
+                    if cat_key not in self.category_index:
+                        self.category_index[cat_key] = []
+                    self.category_index[cat_key].append(pid)
 
                     # Repository index (JARVIS = a + b + c ... n)
-                    repos = item.get("contributing_repos", [])
+                    repos = list(item.get("contributing_repos", []))
+                    srepo = item.get("source_repo")
+                    if srepo and srepo not in repos:
+                        repos.insert(0, srepo)
                     for r in repos:
-                        if r not in self.repo_index:
-                            self.repo_index[r] = []
-                        self.repo_index[r].append(pid)
+                        r_key = r.strip().lower()
+                        if r_key not in self.repo_index:
+                            self.repo_index[r_key] = []
+                        if pid not in self.repo_index[r_key]:
+                            self.repo_index[r_key].append(pid)
         except Exception as e:
             print(f"[PowerRegistry] Warning: Error loading catalog: {e}")
 
     def get_power(self, power_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieves power definition by ID or name (e.g. 'PWR-001' or 'chat')."""
+        """Retrieves power definition by ID, slug, or name (e.g. 'PWR-001' or 'chat')."""
         if power_id in self.initial_powers:
             return self.initial_powers[power_id]
-        pid_upper = power_id.upper()
+        
+        pid_clean = power_id.strip()
+        pid_upper = pid_clean.upper()
         if pid_upper in self.powers:
             return self.powers[pid_upper]
-        return self.powers.get(power_id)
+        if pid_clean in self.powers:
+            return self.powers[pid_clean]
+        
+        # Search by slug or power_name
+        query = pid_clean.lower()
+        for p in self.powers.values():
+            if p.get("slug") == query:
+                return p
+            if (p.get("power_name") or "").lower() == query:
+                return p
+        return None
 
     def enable_power(self, power_id: str) -> bool:
         p = self.get_power(power_id)
@@ -252,7 +270,7 @@ class PowerRegistry:
         return list(self.initial_powers.values())
 
     def search_powers(self, query: str, limit: int = 10) -> List[Dict[str, Any]]:
-        """Searches powers by keyword across name, description, and examples."""
+        """Searches powers by keyword across name, slug, description, and examples."""
         query_lower = query.lower()
         results = []
 
@@ -264,10 +282,11 @@ class PowerRegistry:
         # Check catalog powers
         for p in self.powers.values():
             name = (p.get("power_name") or p.get("fields", {}).get("Power name") or p.get("name", "")).lower()
+            slug = (p.get("slug") or "").lower()
             desc = (p.get("one_line_description") or p.get("fields", {}).get("One-line description") or "").lower()
             examples = (p.get("user_command_examples") or p.get("fields", {}).get("User command examples") or "").lower()
 
-            if query_lower in name or query_lower in desc or query_lower in examples:
+            if query_lower in name or query_lower in slug or query_lower in desc or query_lower in examples:
                 results.append(p)
                 if len(results) >= limit:
                     break
@@ -275,14 +294,22 @@ class PowerRegistry:
         return results[:limit]
 
     def list_categories(self) -> List[str]:
-        return sorted(list(self.category_index.keys()))
+        # Return properly capitalized categories
+        cats = set()
+        for p in self.powers.values():
+            c = p.get("category")
+            if c:
+                cats.add(c)
+        return sorted(list(cats))
 
     def get_powers_by_category(self, category: str) -> List[Dict[str, Any]]:
-        pids = self.category_index.get(category, [])
+        cat_key = category.strip().lower()
+        pids = self.category_index.get(cat_key, [])
         return [self.powers[pid] for pid in pids if pid in self.powers]
 
     def get_powers_by_repo(self, repo_name: str) -> List[Dict[str, Any]]:
-        pids = self.repo_index.get(repo_name.lower(), [])
+        r_key = repo_name.strip().lower()
+        pids = self.repo_index.get(r_key, [])
         return [self.powers[pid] for pid in pids if pid in self.powers]
 
     def list_ecosystem_repos(self) -> List[str]:

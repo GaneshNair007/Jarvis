@@ -174,29 +174,58 @@ async def get_ecosystem():
     }
 
 @app.get("/api/v1/powers")
-async def list_powers(category: Optional[str] = None, repo: Optional[str] = None, q: Optional[str] = None, search: Optional[str] = None):
+async def list_powers(
+    category: Optional[str] = None,
+    repo: Optional[str] = None,
+    q: Optional[str] = None,
+    search: Optional[str] = None,
+    limit: Optional[int] = None,
+    offset: int = 0
+):
     """Lists JARVIS powers with optional filtering by category, contributing repo, or keyword search."""
     search_term = q or search
     if search_term:
-        return {"query": search_term, "results": power_registry.search_powers(search_term)}
+        results = power_registry.search_powers(search_term, limit=limit or 50)
+        return {
+            "query": search_term,
+            "total_matches": len(results),
+            "powers": results
+        }
     if repo:
         powers = power_registry.get_powers_by_repo(repo)
-        return {"repo": repo, "total": len(powers), "powers": powers}
+        paginated = powers[offset: offset + limit] if limit and limit > 0 else powers[offset:]
+        return {
+            "repo": repo,
+            "total_powers": len(powers),
+            "offset": offset,
+            "limit": limit or len(powers),
+            "powers": paginated
+        }
     if category:
         powers = power_registry.get_powers_by_category(category)
-        return {"category": category, "total": len(powers), "powers": powers}
+        paginated = powers[offset: offset + limit] if limit and limit > 0 else powers[offset:]
+        return {
+            "category": category,
+            "total_powers": len(powers),
+            "offset": offset,
+            "limit": limit or len(powers),
+            "powers": paginated
+        }
     
     all_powers = power_registry.list_all_powers()
+    paginated = all_powers[offset: offset + limit] if limit and limit > 0 else all_powers[offset:]
     return {
         "total_powers": len(all_powers),
         "total_categories": len(power_registry.list_categories()),
         "ecosystem_formula": power_registry.get_ecosystem_formula(),
-        "powers": all_powers
+        "offset": offset,
+        "limit": limit or len(all_powers),
+        "powers": paginated
     }
 
 @app.get("/api/v1/powers/{power_id}")
 async def get_power_detail(power_id: str):
-    """Retrieves complete 31-field definition of a specific JARVIS power."""
+    """Retrieves complete definition of a specific JARVIS power by ID or slug."""
     power = power_registry.get_power(power_id)
     if not power:
         raise HTTPException(status_code=404, detail=f"Power '{power_id}' not found")

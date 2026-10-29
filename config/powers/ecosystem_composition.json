@@ -1,24 +1,22 @@
 {
-  "formula": "JARVIS = atticus + browser-use + career-ops + cua + hermes-agent + mcp-servers + open-interpreter + open-jarvis + openclaw + openhands + ui-tars-desktop",
+  "formula": "JARVIS = atticus-mac + browser-use + career-ops + cua + hermes-agent + mcp-servers + open-interpreter + open-jarvis + openclaw + openhands + ui-tars-desktop",
+  "mathematical_reconciliation": {
+    "total_unique_powers": 355,
+    "total_repository_associations": 427,
+    "single_repo_powers": 285,
+    "multi_repo_powers": 70,
+    "reconciliation_formula": "Total Associations (427) = 285 (1 repo) + 68*2 (2 repos) + 2*3 (3 repos) = 355 Unique Powers"
+  },
   "total_powers": 355,
   "total_repos": 11,
+  "status_distribution": {
+    "executable": 45,
+    "requires_configuration": 264,
+    "reference_only": 46
+  },
   "repositories": {
-    "atticus-mac": {
-      "name": "atticus-mac",
-      "repo_url": "https://github.com/SaarthurR/atticus-mac",
-      "power_count": 28,
-      "sample_powers": [
-        "PWR-002",
-        "PWR-018",
-        "PWR-025",
-        "PWR-027",
-        "PWR-028"
-      ],
-      "description": "macOS/desktop menu-bar voice assistant with learned shortcuts and instant local execution"
-    },
     "openclaw": {
       "name": "openclaw",
-      "repo_url": "https://github.com/openclaw/openclaw",
       "power_count": 248,
       "sample_powers": [
         "PWR-001",
@@ -27,11 +25,24 @@
         "PWR-005",
         "PWR-009"
       ],
-      "description": "Multi-channel gateway daemon (Telegram, Slack, Discord), subagent routing, cron, session tools"
+      "source_dir": "repos/openclaw",
+      "repo_url": "https://github.com/openclaw"
+    },
+    "atticus-mac": {
+      "name": "atticus-mac",
+      "power_count": 28,
+      "sample_powers": [
+        "PWR-002",
+        "PWR-018",
+        "PWR-025",
+        "PWR-027",
+        "PWR-028"
+      ],
+      "source_dir": "repos/atticus-mac",
+      "repo_url": "https://github.com/atticus-mac"
     },
     "hermes-agent": {
       "name": "hermes-agent",
-      "repo_url": "https://github.com/NousResearch/hermes-agent",
       "power_count": 25,
       "sample_powers": [
         "PWR-006",
@@ -40,11 +51,11 @@
         "PWR-057",
         "PWR-144"
       ],
-      "description": "Autonomous skill creation, MEMORY.md/USER.md, FTS5 recall, 8 external memory plugins, command allow-lists"
+      "source_dir": "repos/hermes-agent",
+      "repo_url": "https://github.com/hermes-agent"
     },
     "mcp-servers": {
       "name": "mcp-servers",
-      "repo_url": "https://github.com/modelcontextprotocol/servers",
       "power_count": 11,
       "sample_powers": [
         "PWR-013",
@@ -53,63 +64,11 @@
         "PWR-032",
         "PWR-082"
       ],
-      "description": "Standardized MCP tool layer (Filesystem, Fetch, Git, Memory, Sequential Thinking, Time)"
-    },
-    "ui-tars-desktop": {
-      "name": "ui-tars-desktop",
-      "repo_url": "https://github.com/bytedance/UI-TARS-desktop",
-      "power_count": 12,
-      "sample_powers": [
-        "PWR-016",
-        "PWR-017",
-        "PWR-018",
-        "PWR-019",
-        "PWR-020"
-      ],
-      "description": "GUI vision-language model agent for screen awareness, visual clicking, and desktop navigation"
-    },
-    "open-interpreter": {
-      "name": "open-interpreter",
-      "repo_url": "https://github.com/openinterpreter/open-interpreter",
-      "power_count": 19,
-      "sample_powers": [
-        "PWR-048",
-        "PWR-034",
-        "PWR-035",
-        "PWR-036",
-        "PWR-037"
-      ],
-      "description": "Terminal agent running code locally with computer-use skill for native application execution"
-    },
-    "browser-use": {
-      "name": "browser-use",
-      "repo_url": "https://github.com/browser-use/browser-use",
-      "power_count": 20,
-      "sample_powers": [
-        "PWR-063",
-        "PWR-064",
-        "PWR-065",
-        "PWR-066",
-        "PWR-067"
-      ],
-      "description": "AI-driven browser automation library with DOM locators, form filling, and page interaction"
-    },
-    "cua": {
-      "name": "cua",
-      "repo_url": "https://github.com/trycua/cua",
-      "power_count": 10,
-      "sample_powers": [
-        "PWR-016",
-        "PWR-017",
-        "PWR-020",
-        "PWR-021",
-        "PWR-022"
-      ],
-      "description": "Disposable container and VM sandboxes for safe computer-use execution"
+      "source_dir": "repos/mcp-servers",
+      "repo_url": "https://github.com/mcp-servers"
     },
     "open-jarvis": {
       "name": "open-jarvis",
-      "repo_url": "https://github.com/open-jarvis/OpenJarvis",
       "power_count": 21,
       "sample_powers": [
         "PWR-015",
@@ -118,11 +77,63 @@
         "PWR-290",
         "PWR-291"
       ],
-      "description": "Layered local-first framework: orchestrator, deep-research, monitor, and persistent operative agents"
+      "source_dir": "repos/open-jarvis",
+      "repo_url": "https://github.com/open-jarvis"
+    },
+    "ui-tars-desktop": {
+      "name": "ui-tars-desktop",
+      "power_count": 12,
+      "sample_powers": [
+        "PWR-016",
+        "PWR-017",
+        "PWR-018",
+        "PWR-019",
+        "PWR-020"
+      ],
+      "source_dir": "repos/ui-tars-desktop",
+      "repo_url": "https://github.com/ui-tars-desktop"
+    },
+    "cua": {
+      "name": "cua",
+      "power_count": 10,
+      "sample_powers": [
+        "PWR-016",
+        "PWR-017",
+        "PWR-020",
+        "PWR-021",
+        "PWR-022"
+      ],
+      "source_dir": "repos/cua",
+      "repo_url": "https://github.com/cua"
+    },
+    "open-interpreter": {
+      "name": "open-interpreter",
+      "power_count": 19,
+      "sample_powers": [
+        "PWR-048",
+        "PWR-034",
+        "PWR-035",
+        "PWR-036",
+        "PWR-037"
+      ],
+      "source_dir": "repos/open-interpreter",
+      "repo_url": "https://github.com/open-interpreter"
+    },
+    "browser-use": {
+      "name": "browser-use",
+      "power_count": 20,
+      "sample_powers": [
+        "PWR-063",
+        "PWR-064",
+        "PWR-065",
+        "PWR-066",
+        "PWR-067"
+      ],
+      "source_dir": "repos/browser-use",
+      "repo_url": "https://github.com/browser-use"
     },
     "openhands": {
       "name": "openhands",
-      "repo_url": "https://github.com/OpenHands/OpenHands",
       "power_count": 23,
       "sample_powers": [
         "PWR-162",
@@ -131,11 +142,11 @@
         "PWR-164",
         "PWR-165"
       ],
-      "description": "Software-development agents with repo navigation, code generation, refactoring, and test runners"
+      "source_dir": "repos/openhands",
+      "repo_url": "https://github.com/openhands"
     },
     "career-ops": {
       "name": "career-ops",
-      "repo_url": "https://github.com/career-ops-hq/career-ops",
       "power_count": 10,
       "sample_powers": [
         "PWR-328",
@@ -144,7 +155,8 @@
         "PWR-331",
         "PWR-332"
       ],
-      "description": "Job-board scanning, ATS resume generation, cover letter drafting, company research, and application tracking"
+      "source_dir": "repos/career-ops",
+      "repo_url": "https://github.com/career-ops"
     }
   }
 }
