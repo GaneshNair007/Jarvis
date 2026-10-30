@@ -58,7 +58,9 @@ class ModelRouter:
         r"^take\s+screenshot$",
         r"^system\s+health(\s+report)?$",
         r"^disk\s+usage$",
-        r"^docker\s+(ps|status|containers)$"
+        r"^docker\s+(ps|status|containers)$",
+        r"^/(job-scan|generate-resume|generate-cover|company-research|find-contact|draft-email|analyze-applications|interview-prep|red-flags|analyze-offer|pipeline|career).*",
+        r"^/(browser|generative_ui|automation|plugin|migrate-workflows).*"
     ]
 
     def __init__(self):

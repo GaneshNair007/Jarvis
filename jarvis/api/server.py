@@ -33,6 +33,7 @@ from jarvis.api.routes_memory import router as memory_router
 from jarvis.api.routes_desktop import router as desktop_router
 from jarvis.api.routes_integrations import router as integrations_router
 from jarvis.api.routes_search import router as search_router
+from jarvis.api.routes_career import router as career_router
 import uuid
 from graph.jarvis_graph import jarvis_graph
 
@@ -62,6 +63,7 @@ app.include_router(integrations_router)
 app.include_router(integrations_router, prefix="/api/v1")
 app.include_router(search_router)
 app.include_router(search_router, prefix="/api/v1")
+app.include_router(career_router)
 
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
 

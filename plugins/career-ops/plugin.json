@@ -1,0 +1,12 @@
+{
+  "name": "jarvis-career-ops",
+  "displayName": "Career-Ops Subsystem",
+  "version": "1.0.0",
+  "description": "Local-first job scanning, ATS fit scoring, tailored resume generation, interview prep, and offer analysis.",
+  "suggestedPrompts": [
+    "/job-scan Principal AI Systems Architect at ScaleTech",
+    "/generate-resume Staff Distributed Systems Engineer",
+    "/pipeline"
+  ]
+}
+

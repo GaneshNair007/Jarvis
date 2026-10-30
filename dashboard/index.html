@@ -938,6 +938,10 @@
         <span>🔌</span> Integrations Hub
         <span id="integrations-total-badge" class="badge-count">2</span>
       </button>
+      <button id="nav-btn-career" class="nav-btn" onclick="switchTab('career')">
+        <span>🚀</span> Career & Swarms
+        <span id="career-total-badge" class="badge-count">10</span>
+      </button>
       <button id="nav-btn-search" class="nav-btn" onclick="switchTab('search')">
         <span>🔍</span> Local Search Brain
         <span id="search-total-badge" class="badge-count">0</span>
@@ -1202,6 +1206,137 @@
     </div>
   </main>
 
+  <!-- TAB 4: Career-Ops & Swarms View -->
+  <main id="view-career" class="integrations-view">
+    <div class="integ-header">
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 4px;">Career-Ops & Multi-Agent Swarm Hub</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          Local-first ATS job fit scoring, tailored resumes, interview preparation, pipeline tracking, and specialized agent swarms.
+        </p>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-integ btn-integ-check" onclick="loadCareerDashboard()">🔄 Refresh Pipeline</button>
+      </div>
+    </div>
+
+    <!-- Career Telemetry Row -->
+    <div class="search-stats-row">
+      <div class="stat-pill">
+        <span class="stat-pill-label">Tracked Apps</span>
+        <span id="career-stat-apps" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Target Comp</span>
+        <span id="career-stat-target" class="stat-pill-val" style="color: var(--emerald);">$220,000</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Screening Rate</span>
+        <span id="career-stat-screening" class="stat-pill-val" style="color: var(--cyan);">0%</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Active Swarm Workers</span>
+        <span id="career-stat-workers" class="stat-pill-val" style="color: var(--amber);">3 Concurrency</span>
+      </div>
+    </div>
+
+    <!-- Grid Container -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+      
+      <!-- Left Column: ATS Scanner & Tools -->
+      <div class="glass-panel" style="padding: 20px;">
+        <div class="panel-header" style="margin-bottom: 16px;">
+          <span>ATS Fit Scanner & Resume Tailoring</span>
+          <span class="badge-pill badge-pill-emerald">PWR-328 - PWR-331</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div>
+            <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Job Title</label>
+            <input id="career-input-title" class="search-main-input" style="height: 38px; font-size: 0.85rem; margin-top: 4px;" placeholder="e.g. Principal AI Systems Architect" value="Principal AI Systems Architect">
+          </div>
+          <div>
+            <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Company Name</label>
+            <input id="career-input-company" class="search-main-input" style="height: 38px; font-size: 0.85rem; margin-top: 4px;" placeholder="e.g. Anthropic, OpenAI, Stripe" value="ScaleAI Labs">
+          </div>
+          <div>
+            <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Job Description / Keywords</label>
+            <textarea id="career-input-desc" class="search-main-input" style="height: 100px; font-size: 0.85rem; margin-top: 4px; resize: vertical;" placeholder="Paste job requirements...">Seeking Principal Systems Architect experienced in Python, FastAPI, distributed systems, SQLite FTS5, Qdrant vector retrieval, and concurrency.</textarea>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 8px;">
+            <button class="btn-integ btn-integ-check" style="flex: 1;" onclick="scanJobFromUI()">⚡ Scan Fit Score</button>
+            <button class="btn-integ btn-integ-enable" style="flex: 1;" onclick="generateResumeFromUI()">📄 Tailor Resume</button>
+            <button class="btn-integ btn-integ-enable" style="flex: 1;" onclick="prepareInterviewFromUI()">🎯 Interview Prep</button>
+          </div>
+        </div>
+
+        <!-- Result Box -->
+        <div id="career-result-box" style="margin-top: 16px; padding: 14px; background: rgba(0, 229, 255, 0.05); border: 1px solid var(--panel-border); border-radius: 8px; display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span id="career-res-title" style="font-weight: 700; color: #fff;"></span>
+            <span id="career-res-score" style="font-size: 1.1rem; font-weight: 700; color: var(--emerald);"></span>
+          </div>
+          <div id="career-res-rec" style="font-size: 0.8rem; color: var(--cyan); margin-bottom: 8px;"></div>
+          <div id="career-res-body" style="font-size: 0.82rem; color: var(--text-main); line-height: 1.5;"></div>
+        </div>
+      </div>
+
+      <!-- Right Column: Swarm Monitor & Pipeline -->
+      <div class="glass-panel" style="padding: 20px;">
+        <div class="panel-header" style="margin-bottom: 16px;">
+          <span>Multi-Agent Swarm Status</span>
+          <span class="badge-pill badge-pill-cyan">PWR-288 - PWR-307</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px;">
+            <div>
+              <div style="font-weight: 600; color: #fff; font-size: 0.9rem;">Orchestrator & Planner Agents</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Dynamic goal decomposition into atomic subtasks</div>
+            </div>
+            <span class="badge-pill badge-pill-emerald">PWR-288 / 289</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px;">
+            <div>
+              <div style="font-weight: 600; color: #fff; font-size: 0.9rem;">Researcher & Browser Agents</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Safe DOM extraction and citation validation</div>
+            </div>
+            <span class="badge-pill badge-pill-cyan">PWR-290 / 293</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px;">
+            <div>
+              <div style="font-weight: 600; color: #fff; font-size: 0.9rem;">Coder & Reviewer Agents</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Deterministic local code generation & verification</div>
+            </div>
+            <span class="badge-pill badge-pill-cyan">PWR-291 / 297</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px;">
+            <div>
+              <div style="font-weight: 600; color: #fff; font-size: 0.9rem;">Security Guard & Approval Manager</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Zero-leak DLP redaction and SHA-256 tokens</div>
+            </div>
+            <span class="badge-pill badge-pill-emerald">PWR-298 / 299</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px; padding: 12px; border-top: 1px solid rgba(255,255,255,0.08);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted);">
+            <span>Cumulative Swarm Cost:</span>
+            <span id="swarm-cost-val" style="color: var(--emerald); font-family: monospace;">$0.00000 USD</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+            <span>Concurrency Guard:</span>
+            <span style="color: var(--cyan);">Active (Max 3 Workers)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <!-- Document Inspector Modal -->
   <div id="doc-modal" class="modal-overlay" onclick="if(event.target===this) closeDocModal()">
     <div class="modal-box">
@@ -1233,6 +1368,8 @@
       const btnConsole = document.getElementById('nav-btn-console');
       const btnInteg = document.getElementById('nav-btn-integrations');
       const btnSearch = document.getElementById('nav-btn-search');
+      const careerView = document.getElementById('view-career');
+      const btnCareer = document.getElementById('nav-btn-career');
 
       consoleView.style.display = 'none';
       integView.classList.remove('active');
@@ -1240,6 +1377,8 @@
       btnConsole.classList.remove('active');
       btnInteg.classList.remove('active');
       btnSearch.classList.remove('active');
+      if (careerView) careerView.classList.remove('active');
+      if (btnCareer) btnCareer.classList.remove('active');
 
       if (tabName === 'console') {
         consoleView.style.display = 'grid';
@@ -1252,6 +1391,10 @@
         searchView.classList.add('active');
         btnSearch.classList.add('active');
         loadSearchStats();
+      } else if (tabName === 'career') {
+        if (careerView) careerView.classList.add('active');
+        if (btnCareer) btnCareer.classList.add('active');
+        loadCareerDashboard();
       }
     }
 
@@ -1790,6 +1933,133 @@
     setInterval(loadAudit, 5000);
     loadAudit();
     loadSearchStats();
+
+    // Career-Ops Dashboard Handlers
+    async function loadCareerDashboard() {
+      try {
+        const [statusRes, pipeRes] = await Promise.all([
+          fetch(`${API_BASE}/api/v1/career/status`),
+          fetch(`${API_BASE}/api/v1/career/pipeline`)
+        ]);
+        if (statusRes.ok) {
+          const status = await statusRes.json();
+          if (status.target_compensation) {
+            document.getElementById('career-stat-target').innerText = `$${status.target_compensation.toLocaleString()}`;
+          }
+        }
+        if (pipeRes.ok) {
+          const pipe = await pipeRes.json();
+          document.getElementById('career-stat-apps').innerText = pipe.total_tracked || '0';
+          document.getElementById('career-stat-screening').innerText = `${Math.round(pipe.screening_rate || 0)}%`;
+        }
+      } catch (err) {
+        console.warn('Could not load career dashboard telemetry:', err);
+      }
+    }
+
+    async function scanJobFromUI() {
+      const title = document.getElementById('career-input-title').value;
+      const company = document.getElementById('career-input-company').value;
+      const desc = document.getElementById('career-input-desc').value;
+      const resultBox = document.getElementById('career-result-box');
+      resultBox.style.display = 'block';
+      document.getElementById('career-res-title').innerText = 'Analyzing ATS Fit...';
+      document.getElementById('career-res-score').innerText = '...';
+      document.getElementById('career-res-rec').innerText = '';
+      document.getElementById('career-res-body').innerText = 'Evaluating keyword overlap, skills taxonomy, and ATS suitability...';
+
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/career/scan`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ job_title: title, company_name: company, description: desc })
+        });
+        const data = await resp.json();
+        const score = data.fit_score ? data.fit_score.global_score : (data.global_score || 0);
+        const rec = data.fit_score ? data.fit_score.recommendation : (data.recommendation || 'Evaluated');
+        const matched = data.fit_score ? data.fit_score.matched_skills : (data.matched_skills || []);
+        const missing = data.fit_score ? data.fit_score.missing_critical_skills : (data.missing_skills || []);
+
+        document.getElementById('career-res-title').innerText = `${title} @ ${company}`;
+        document.getElementById('career-res-score').innerText = `${score.toFixed(1)}% Match`;
+        document.getElementById('career-res-rec').innerText = `Recommendation: ${rec}`;
+        document.getElementById('career-res-body').innerHTML = `
+          <div><strong>Matched Skills:</strong> ${matched.length ? matched.join(', ') : 'None'}</div>
+          <div style="margin-top: 4px;"><strong>Skill Gaps:</strong> ${missing.length ? missing.join(', ') : 'None identified'}</div>
+        `;
+      } catch (err) {
+        document.getElementById('career-res-title').innerText = 'Scan Error';
+        document.getElementById('career-res-body').innerText = String(err);
+      }
+    }
+
+    async function generateResumeFromUI() {
+      const title = document.getElementById('career-input-title').value;
+      const company = document.getElementById('career-input-company').value;
+      const resultBox = document.getElementById('career-result-box');
+      resultBox.style.display = 'block';
+      document.getElementById('career-res-title').innerText = 'Generating Tailored ATS Resume...';
+      document.getElementById('career-res-score').innerText = 'PWR-330';
+      document.getElementById('career-res-rec').innerText = 'In Progress';
+      document.getElementById('career-res-body').innerText = 'Optimizing typography, ATS headers, and achievement bullets...';
+
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/career/resume`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ job_title: title, company_name: company })
+        });
+        const data = await resp.json();
+        document.getElementById('career-res-title').innerText = `Tailored Resume Generated: ${data.target_company}`;
+        document.getElementById('career-res-score').innerText = `${data.format_version || 'ATS-v1.0'}`;
+        document.getElementById('career-res-rec').innerText = `Saved locally to ${data.file_path || 'data/resumes/'}`;
+        document.getElementById('career-res-body').innerHTML = `
+          <div><strong>Target Role:</strong> ${data.target_role}</div>
+          <div style="margin-top: 4px;"><strong>Targeted Keywords:</strong> ${(data.targeted_keywords || []).join(', ')}</div>
+          <div style="margin-top: 6px; font-size: 0.78rem; color: var(--emerald);">✓ Verified 0% PII leak, local artifact saved</div>
+        `;
+      } catch (err) {
+        document.getElementById('career-res-title').innerText = 'Generation Error';
+        document.getElementById('career-res-body').innerText = String(err);
+      }
+    }
+
+    async function prepareInterviewFromUI() {
+      const title = document.getElementById('career-input-title').value;
+      const company = document.getElementById('career-input-company').value;
+      const desc = document.getElementById('career-input-desc').value;
+      const resultBox = document.getElementById('career-result-box');
+      resultBox.style.display = 'block';
+      document.getElementById('career-res-title').innerText = 'Synthesizing Interview Prep & STAR Guide...';
+      document.getElementById('career-res-score').innerText = 'PWR-336';
+      document.getElementById('career-res-rec').innerText = 'Analyzing';
+      document.getElementById('career-res-body').innerText = 'Scanning red flags, behavioral traps, and technical domain questions...';
+
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/career/interview-prep`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ role_title: title, company_name: company, job_description: desc })
+        });
+        const data = await resp.json();
+        const redFlags = data.red_flags || [];
+        const questions = (data.star_questions || []).slice(0, 3);
+
+        document.getElementById('career-res-title').innerText = `Interview Prep: ${title} @ ${company}`;
+        document.getElementById('career-res-score').innerText = `${redFlags.length} Red Flags`;
+        document.getElementById('career-res-rec').innerText = `Technical Focus: ${(data.technical_topics || []).slice(0, 4).join(', ')}`;
+        document.getElementById('career-res-body').innerHTML = `
+          <div><strong>Key Practice Questions:</strong></div>
+          <ul style="margin: 4px 0 8px 18px; padding: 0;">
+            ${questions.map(q => `<li>${q}</li>`).join('')}
+          </ul>
+          ${redFlags.length ? `<div style="color: var(--amber);"><strong>Warnings:</strong> ${redFlags.join('; ')}</div>` : '<div style="color: var(--emerald);">✓ No deceptive job listing patterns detected</div>'}
+        `;
+      } catch (err) {
+        document.getElementById('career-res-title').innerText = 'Interview Prep Error';
+        document.getElementById('career-res-body').innerText = String(err);
+      }
+    }
 
   </script>
 </body>

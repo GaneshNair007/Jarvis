@@ -1,0 +1,54 @@
+[
+  {
+    "application_id": "app_deeptech_ai_principal_ai_systems_architect",
+    "company_name": "DeepTech AI",
+    "job_title": "Principal AI Systems Architect",
+    "job_url": "https://jobs.example.com/deeptech/101",
+    "status": "saved",
+    "fit_score": 94.1,
+    "resume_path": null,
+    "cover_letter_path": null,
+    "applied_date": "2026-10-30T17:50:56.742476+00:00",
+    "notes": [],
+    "salary_offered": null
+  },
+  {
+    "application_id": "app_meta_research_scientist",
+    "company_name": "Meta",
+    "job_title": "Research Scientist",
+    "job_url": null,
+    "status": "screening",
+    "fit_score": 88.5,
+    "resume_path": null,
+    "cover_letter_path": null,
+    "applied_date": "2026-10-30T17:50:56.831028+00:00",
+    "notes": [],
+    "salary_offered": null
+  },
+  {
+    "application_id": "app_acme_staff_engineer",
+    "company_name": "Acme",
+    "job_title": "Staff Engineer",
+    "job_url": null,
+    "status": "saved",
+    "fit_score": 73.5,
+    "resume_path": null,
+    "cover_letter_path": null,
+    "applied_date": "2026-10-30T17:50:56.999772+00:00",
+    "notes": [],
+    "salary_offered": null
+  },
+  {
+    "application_id": "app_scaletech_lead_ai_architect",
+    "company_name": "ScaleTech",
+    "job_title": "Lead AI Architect",
+    "job_url": null,
+    "status": "saved",
+    "fit_score": 72.6,
+    "resume_path": null,
+    "cover_letter_path": null,
+    "applied_date": "2026-10-30T17:50:57.036821+00:00",
+    "notes": [],
+    "salary_offered": null
+  }
+]

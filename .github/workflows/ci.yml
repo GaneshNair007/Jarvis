@@ -33,7 +33,7 @@ jobs:
           max_attempts: 3
           retry_on: error
           command: |
-            python -m py_compile $(find jarvis search core alembic tests -name "*.py")
+            python -m py_compile $(find jarvis search core alembic tests scripts -name "*.py")
 
       - name: Flake8 Critical Linting (with Auto-Retry)
         uses: nick-fields/retry@v3

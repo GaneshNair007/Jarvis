@@ -168,6 +168,62 @@ class JarvisOrchestrator:
             from jarvis.powers.browser_powers import browser_powers
             url = query.replace("read url", "").strip()
             return browser_powers.read_url(url)
+        elif cleaned.startswith("/job-scan") or cleaned.startswith("/career scan"):
+            from jarvis.powers.career_powers import career_powers
+            parts = query.replace("/job-scan", "").replace("/career scan", "").strip()
+            title = parts or "Principal AI Systems Architect"
+            company = "Target Enterprise"
+            if " at " in parts:
+                title, company = parts.split(" at ", 1)
+            return career_powers.scan_job_listing(job_title=title.strip(), company_name=company.strip(), description=f"Seeking {title} experienced in distributed systems, async python, and search engines.")
+        elif cleaned.startswith("/generate-resume") or cleaned.startswith("/career resume"):
+            from jarvis.powers.career_powers import career_powers
+            parts = query.replace("/generate-resume", "").replace("/career resume", "").strip()
+            title = parts or "Principal Systems Architect"
+            company = "Target Tech"
+            if " at " in parts:
+                title, company = parts.split(" at ", 1)
+            return career_powers.generate_tailored_resume(job_title=title.strip(), company_name=company.strip())
+        elif cleaned.startswith("/generate-cover") or cleaned.startswith("/career cover"):
+            from jarvis.powers.career_powers import career_powers
+            parts = query.replace("/generate-cover", "").replace("/career cover", "").strip()
+            title = parts or "Lead Engineer"
+            company = "Target Tech"
+            if " at " in parts:
+                title, company = parts.split(" at ", 1)
+            return career_powers.generate_cover_letter(job_title=title.strip(), company_name=company.strip())
+        elif cleaned.startswith("/company-research"):
+            from jarvis.powers.career_powers import career_powers
+            company = query.replace("/company-research", "").strip() or "Google"
+            return career_powers.research_company_brief(company_name=company)
+        elif cleaned.startswith("/find-contact"):
+            from jarvis.powers.career_powers import career_powers
+            company = query.replace("/find-contact", "").strip() or "OpenAI"
+            return career_powers.find_company_contacts(company_name=company)
+        elif cleaned.startswith("/draft-email"):
+            from jarvis.powers.career_powers import career_powers
+            parts = query.replace("/draft-email", "").strip()
+            return career_powers.draft_application_email(recipient_name="Hiring Team", company_name=parts or "Acme Corp", role_title="Principal Systems Architect")
+        elif cleaned.startswith("/analyze-applications") or cleaned.startswith("/pipeline"):
+            from jarvis.powers.career_powers import career_powers
+            return career_powers.analyze_application_pipeline()
+        elif cleaned.startswith("/interview-prep"):
+            from jarvis.powers.career_powers import career_powers
+            parts = query.replace("/interview-prep", "").strip() or "Principal AI Architect at TechCorp"
+            title, company = parts, "TechCorp"
+            if " at " in parts:
+                title, company = parts.split(" at ", 1)
+            return career_powers.interview_prep_and_red_flags(role_title=title.strip(), company_name=company.strip())
+        elif cleaned.startswith("/red-flags"):
+            from jarvis.powers.career_powers import career_powers
+            company = query.replace("/red-flags", "").strip() or "Startup Inc"
+            return career_powers.interview_prep_and_red_flags(role_title="Engineer", company_name=company, job_description="Fast-paced environment wearing many hats, rockstar required.")
+        elif cleaned.startswith("/analyze-offer"):
+            from jarvis.powers.career_powers import career_powers
+            return career_powers.analyze_offer_and_salary_gap(company_name="InnovateAI", role_title="Principal AI Architect", base_salary=240000.0, bonus=35000.0, equity_annual_val=80000.0)
+        elif cleaned.startswith("/career"):
+            from jarvis.powers.career_powers import career_powers
+            return career_powers.get_service_status()
         else:
             return {
                 "type": "instant_command",
