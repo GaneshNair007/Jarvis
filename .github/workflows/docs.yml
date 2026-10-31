@@ -1,0 +1,74 @@
+name: 📚 Documentation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'jarvis/**/*.py'
+      - 'docs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-docs:
+    name: 📝 Generate API Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install pdoc3 sphinx sphinx-rtd-theme
+          pip install -r requirements.txt
+
+      - name: 🏗️ Build docs
+        run: |
+          mkdir -p docs/api
+          pdoc --html --output-dir docs/api jarvis --force
+
+      - name: 📊 Generate stats
+        run: |
+          echo "# 📊 Project Statistics" > docs/STATS.md
+          echo "" >> docs/STATS.md
+          echo "Generated: $(date)" >> docs/STATS.md
+          echo "" >> docs/STATS.md
+          echo "## Lines of Code" >> docs/STATS.md
+          find jarvis -name "*.py" | xargs wc -l | tail -n 1 >> docs/STATS.md
+          echo "" >> docs/STATS.md
+          echo "## File Count" >> docs/STATS.md
+          find jarvis -name "*.py" | wc -l >> docs/STATS.md
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+
+  update-readme:
+    name: 🔄 Update README Stats
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 📊 Update stats
+        run: |
+          # This creates activity on your profile
+          date +%s > .github/last-update
+          
+      - name: 💾 Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .github/last-update || true
+          git commit -m "📊 Auto-update: $(date)" || exit 0
+          git push

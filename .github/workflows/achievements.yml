@@ -1,0 +1,116 @@
+name: 🏆 Achievement Hunter
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Daily at 8 AM
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  achievement-tracker:
+    name: 🎯 Track Achievement Progress
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🏆 Achievement Checklist
+        run: |
+          cat << 'EOF' > .github/ACHIEVEMENTS.md
+          # 🏆 GitHub Achievement Badges Progress
+          
+          ## 🎯 Available Achievements
+          
+          ### ⭐ Quickdraw
+          **How to earn:** Close an issue or PR within 5 minutes of opening
+          **Status:** 🟡 In Progress
+          **Tip:** We have auto-release workflow that can trigger quickly!
+          
+          ### 🌟 Pair Extraordinaire  
+          **How to earn:** Co-author commits on merged PR
+          **Status:** 🟡 In Progress
+          **Tip:** Use `Co-authored-by:` in commit messages
+          
+          ### 🚀 Galaxy Brain
+          **How to earn:** Get accepted answer in Discussions
+          **Status:** ⚪ Not Started
+          **Tip:** Enable Discussions and answer questions
+          
+          ### 💎 YOLO
+          **How to earn:** Merge PR without review
+          **Status:** ⚪ Not Started
+          **Tip:** Merge your own PRs (use with caution!)
+          
+          ### 🌲 Pull Shark
+          **How to earn:** Merged pull requests (Bronze: 2, Silver: 16, Gold: 128)
+          **Status:** 🟡 In Progress
+          **Tip:** Create and merge feature PRs regularly
+          
+          ### ⚡ Starstruck
+          **How to earn:** Repository stars (Bronze: 16, Silver: 128, Gold: 512)
+          **Status:** 🟡 In Progress
+          **Tip:** Make your project awesome and promote it!
+          
+          ### 🔥 Contributor Badges
+          **Arctic Code Vault:** Contributed in 2020 (automatic)
+          **Mars 2020 Helicopter:** Contributed to specific projects
+          
+          ---
+          
+          Last updated: $(date)
+          
+          ## 📊 Quick Stats
+          - Total commits: $(git rev-list --count HEAD)
+          - Active workflows: $(ls -1 .github/workflows/*.yml | wc -l)
+          - Repository age: $(git log --reverse --format="%ai" | head -1 | cut -d' ' -f1)
+          
+          EOF
+
+      - name: 💾 Commit achievements
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .github/ACHIEVEMENTS.md
+          git commit -m "🏆 Update achievement tracker: $(date +%Y-%m-%d)" || exit 0
+          git push
+
+  create-sample-issue:
+    name: 🎯 Create Sample Issue (for Quickdraw practice)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 📝 Create practice issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🏆 Quickdraw Practice: Close me within 5 minutes!',
+              body: '## 🎯 Achievement Practice\n\nThis is a practice issue for earning the **Quickdraw** achievement badge.\n\n**Instructions:**\n1. Close this issue within 5 minutes of opening\n2. This will help you progress toward the Quickdraw badge!\n\n🏆 Good luck!',
+              labels: ['achievement', 'practice', 'quickdraw']
+            });
+            
+            console.log(`Created issue #${issue.data.number}`);
+            
+            // Auto-close after 4 minutes to demonstrate
+            await new Promise(resolve => setTimeout(resolve, 240000));
+            
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.data.number,
+              state: 'closed'
+            });
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.data.number,
+              body: '🏆 Quickdraw achievement progress! Issue closed within 5 minutes. ⚡'
+            });

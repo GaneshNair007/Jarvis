@@ -1,0 +1,6 @@
+# Auto-assign configuration for PRs
+addReviewers: true
+addAssignees: author
+reviewers:
+  - GaneshNair007
+numberOfReviewers: 1
