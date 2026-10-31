@@ -51,11 +51,15 @@ class DeveloperPowers:
             cmd = ["git", "diff"]
             if file_path:
                 cmd.append(file_path)
-            res = subprocess.run(cmd, cwd=repo_path, capture_output=True, text=True, timeout=10)
+            res = subprocess.run(
+                cmd, cwd=repo_path, capture_output=True,
+                text=True, timeout=10, encoding="utf-8", errors="replace"
+            )
+            diff_out = res.stdout or ""
             return {
                 "power_id": "PWR-026",
-                "diff_length": len(res.stdout),
-                "diff_preview": res.stdout[:2000]
+                "diff_length": len(diff_out),
+                "diff_preview": diff_out[:2000]
             }
         except Exception as e:
             return {"power_id": "PWR-026", "error": str(e)}

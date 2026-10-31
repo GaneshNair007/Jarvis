@@ -1,4 +1,4 @@
-"""
+﻿"""
 JARVIS Production FastAPI Server
 Exposes:
   1. Policy-Aware Model Router APIs (/model/route, /model/configure, /model/status, /model/usage, /model/costs, /model/approve-expensive-call)
@@ -35,7 +35,7 @@ from jarvis.api.routes_integrations import router as integrations_router
 from jarvis.api.routes_search import router as search_router
 from jarvis.api.routes_career import router as career_router
 import uuid
-from graph.jarvis_graph import jarvis_graph
+from graph.jarvis_graph import get_jarvis_graph
 
 app = FastAPI(
     title=APP_TITLE,
@@ -75,9 +75,9 @@ async def serve_dashboard():
         raise HTTPException(status_code=404, detail="Dashboard UI file not found")
     return FileResponse(DASHBOARD_HTML)
 
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 # MODEL ROUTER SPECIFIC APIS (Prompt Mandate)
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @app.post("/model/route", response_model=RoutingDecision)
 async def route_model_request(req: RoutingRequest):
@@ -131,9 +131,9 @@ async def approve_expensive_call(approval: ExpensiveCallApproval):
         "token": f"exp_app_{int(time.time())}"
     }
 
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 # CORE JARVIS CHAT & ORCHESTRATION APIS
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 class ChatRequest(BaseModel):
     query: str
@@ -152,9 +152,9 @@ async def chat_endpoint(req: ChatRequest):
     )
     return result
 
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 # JARVIS 355 POWER CATALOG & ECOSYSTEM (JARVIS = a + b + c ... n)
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @app.get("/api/v1/powers/ecosystem")
 async def get_ecosystem():
@@ -303,7 +303,10 @@ async def chat_root(req: RootChatPayload):
         "evidence": []
     }
 
-    final_state = jarvis_graph.invoke(initial_state)
+    final_state = get_jarvis_graph().invoke(
+        initial_state,
+        config={"configurable": {"thread_id": task_id}},
+    )
 
     audit_ledger.record(
         actor=req.user_id,
@@ -397,9 +400,9 @@ async def inspect_audit(limit: int = 50, verify_chain: bool = False):
         "chain_integrity": chain_status
     }
 
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 # WEBSOCKET STREAM FOR IRON MAN HUD
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @app.websocket("/ws/stream")
 async def hud_websocket_stream(websocket: WebSocket):
@@ -421,3 +424,4 @@ async def hud_websocket_stream(websocket: WebSocket):
             await asyncio.sleep(1.5)
     except WebSocketDisconnect:
         pass
+
