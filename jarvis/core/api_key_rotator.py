@@ -568,22 +568,124 @@ class OpenRouterKeyRotator(BaseKeyRotator):
         return None
 
 
+
+
+class GroqKeyRotator(BaseKeyRotator):
+    """
+    Key rotator for Groq Cloud free-tier ultra-fast LPU inference (500 tokens/sec).
+    Supports llama-3.3-70b-versatile, qwen-2.5-32b, deepseek-r1-distill, and whisper-large-v3.
+    """
+
+    def __init__(self, default_model: str = "llama-3.3-70b-versatile"):
+        super().__init__(provider="groq")
+        self.default_model = default_model
+        self.base_url = "https://api.groq.com/openai/v1"
+        self._discover_keys()
+
+    def _discover_keys(self):
+        discovered = []
+        raw_keys = os.getenv("GROQ_API_KEYS", "")
+        if raw_keys:
+            discovered.extend([k.strip() for k in raw_keys.split(",") if k.strip()])
+
+        for var in ["GROQ_KEY_1", "GROQ_KEY_2", "GROQ_KEY_3"]:
+            val = os.getenv(var)
+            if val and val.strip():
+                discovered.append(val.strip())
+
+        single = os.getenv("GROQ_API_KEY")
+        if single and isinstance(single, str) and single.strip():
+            discovered.append(single.strip())
+
+        for k in discovered:
+            self.add_key(k)
+
+        logger.info(f"GroqKeyRotator initialized with {len(self.keys)} keys.")
+
+    def generate_chat_completion(
+        self,
+        prompt: str,
+        system_instruction: str = "You are JARVIS, an autonomous personal AI assistant created for Ganesh Nair.",
+        model: Optional[str] = None,
+        timeout_sec: float = 15.0,
+    ) -> Optional[Dict[str, Any]]:
+        if not self.is_available or not prompt:
+            return None
+
+        target_model = model or self.default_model
+        start_time = time.time()
+
+        for attempt in range(max(len(self.keys), 2)):
+            api_key = self.get_next_key()
+            if not api_key:
+                break
+
+            tracker = self._trackers[api_key]
+            url = f"{self.base_url.rstrip('/')}/chat/completions"
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            }
+            payload = json.dumps({
+                "model": target_model,
+                "messages": [
+                    {"role": "system", "content": system_instruction},
+                    {"role": "user", "content": prompt},
+                ],
+                "temperature": 0.7,
+                "max_tokens": 1024,
+            }).encode("utf-8")
+
+            req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
+            try:
+                with urllib.request.urlopen(req, timeout=timeout_sec) as resp:
+                    if resp.status == 200:
+                        data = json.loads(resp.read().decode("utf-8"))
+                        choice = data.get("choices", [{}])[0]
+                        reply_text = choice.get("message", {}).get("content", "").strip()
+                        tokens = data.get("usage", {}).get("total_tokens", len(prompt) // 4 + len(reply_text) // 4)
+                        duration_ms = round((time.time() - start_time) * 1000, 2)
+                        tracker.record_success()
+                        return {
+                            "status": "success",
+                            "model": target_model,
+                            "reply": reply_text,
+                            "tokens_used": tokens,
+                            "key_used": tracker.redacted_key,
+                            "duration_ms": duration_ms,
+                        }
+            except urllib.error.HTTPError as e:
+                if e.code == 429:
+                    tracker.record_429(cooldown_seconds=30.0)
+                    continue
+                else:
+                    tracker.record_error()
+                    logger.error(f"Groq HTTP Error {e.code}")
+            except Exception as e:
+                tracker.record_error()
+                logger.warning(f"Groq request error: {e}")
+
+        return None
+
+
 class APIKeyRotatorManager:
     """Unified manager aggregating all provider key rotators."""
 
     def __init__(self):
         self.gemini = GeminiKeyRotator()
         self.openrouter = OpenRouterKeyRotator()
+        self.groq = GroqKeyRotator()
 
     @property
     def is_available(self) -> bool:
-        return self.gemini.is_available or self.openrouter.is_available
+        return self.gemini.is_available or self.openrouter.is_available or self.groq.is_available
 
     def get_summary(self) -> Dict[str, Any]:
         """Telemetry summary across all providers."""
         return {
             "gemini": self.gemini.get_metrics(),
             "openrouter": self.openrouter.get_metrics(),
+            "groq": self.groq.get_metrics(),
         }
 
 
@@ -591,3 +693,4 @@ class APIKeyRotatorManager:
 api_key_rotator = APIKeyRotatorManager()
 gemini_rotator = api_key_rotator.gemini
 openrouter_rotator = api_key_rotator.openrouter
+groq_rotator = api_key_rotator.groq
