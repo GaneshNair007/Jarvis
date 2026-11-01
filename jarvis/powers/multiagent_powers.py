@@ -1,5 +1,5 @@
-"""JARVIS Multi-Agent Swarm Powers (PWR-288 to PWR-307).
-
+"""
+JARVIS Multi-Agent Swarm Powers (PWR-288 to PWR-307)
 Exposes individual agent role invocations, planning decomposition,
 agent dashboard telemetry, handoffs, parallel execution, cost tracking, and cancellation.
 """
@@ -15,7 +15,7 @@ logger = get_logger("powers.multiagent")
 
 
 class MultiAgentPowers:
-    """Implementations for Multi-Agent swarm powers (PWR-288 to PWR-307)."""
+    """Implementations for all 20 Multi-Agent capabilities (PWR-288 to PWR-307)."""
 
     def __init__(self):
         self.swarm = agent_swarm
@@ -59,6 +59,58 @@ class MultiAgentPowers:
             "output": f"Subagent [{agent_role.value}] processed task successfully.",
         }
 
+    def pwr_290_researcher(self, topic: str) -> Dict[str, Any]:
+        """PWR-290: Researcher agent deep analysis."""
+        return self.invoke_subagent("researcher", {"topic": topic})
+
+    def pwr_291_coder(self, task: str) -> Dict[str, Any]:
+        """PWR-291: Coder agent implementation."""
+        return self.invoke_subagent("coder", {"task": task})
+
+    def pwr_292_file_agent(self, path: str, action: str = "read") -> Dict[str, Any]:
+        """PWR-292: File manipulation agent."""
+        return self.invoke_subagent("file", {"path": path, "action": action})
+
+    def pwr_293_browser_agent(self, url: str) -> Dict[str, Any]:
+        """PWR-293: Web automation and DOM scraper agent."""
+        return self.invoke_subagent("browser", {"url": url})
+
+    def pwr_294_sysadmin_agent(self, command: str) -> Dict[str, Any]:
+        """PWR-294: System administrator diagnostics agent."""
+        return self.invoke_subagent("system_admin", {"command": command})
+
+    def pwr_295_finance_agent(self, query: str) -> Dict[str, Any]:
+        """PWR-295: Financial analyst agent."""
+        return self.invoke_subagent("finance", {"query": query})
+
+    def pwr_296_content_agent(self, topic: str) -> Dict[str, Any]:
+        """PWR-296: Content strategist & media copywriter agent."""
+        return self.invoke_subagent("content", {"topic": topic})
+
+    def pwr_297_reviewer_agent(self, artifact: str) -> Dict[str, Any]:
+        """PWR-297: Reviewer/Critic quality gate agent."""
+        return self.invoke_subagent("reviewer", {"artifact": artifact})
+
+    def pwr_298_security_agent(self, target: str) -> Dict[str, Any]:
+        """PWR-298: Security guard posture auditor."""
+        return self.invoke_subagent("security", {"target": target})
+
+    def pwr_299_approval_manager(self, action: str) -> Dict[str, Any]:
+        """PWR-299: Approval manager handling HMAC tokens."""
+        return self.invoke_subagent("approval", {"action": action})
+
+    def pwr_300_memory_manager(self, fact: str) -> Dict[str, Any]:
+        """PWR-300: Memory manager indexing into persistent vault."""
+        return self.invoke_subagent("memory", {"fact": fact})
+
+    def pwr_301_tool_selector(self, task_description: str) -> Dict[str, Any]:
+        """PWR-301: Tool selector routing intent to exact power catalog item."""
+        return self.invoke_subagent("tool_selector", {"task": task_description})
+
+    def pwr_302_task_decomposer(self, goal: str) -> Dict[str, Any]:
+        """PWR-302: Decomposes goal into granular execution units."""
+        return self.plan_and_decompose(goal)
+
     def get_agent_dashboard(self) -> Dict[str, Any]:
         """PWR-303: Live telemetry and status of all active agent swarms."""
         state = self.swarm.get_dashboard_state()
@@ -75,7 +127,7 @@ class MultiAgentPowers:
         }
 
     def execute_parallel_swarms(self, goals: List[str]) -> Dict[str, Any]:
-        """PWR-305: Executes multiple agent tasks with bounded concurrency (max 2-3)."""
+        """PWR-305: Executes multiple agent tasks with bounded concurrency."""
         plans = [self.swarm.decompose_goal(g) for g in goals]
 
         async def _run_all():
@@ -108,4 +160,5 @@ class MultiAgentPowers:
         }
 
 
+# Global Singleton Instance
 multiagent_powers = MultiAgentPowers()

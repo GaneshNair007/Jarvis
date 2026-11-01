@@ -102,18 +102,32 @@ class JarvisOrchestrator:
             execution_result = self._execute_instant_command(query)
         elif decision.tier in ("TIER_1_LOCAL", "TIER_2_PRIVATE", "TIER_3_CLOUD"):
             # Unified LiteLLM inference execution across local and cloud tiers
+            full_prompt = (
+                f"Source Context:\n{decision.redacted_context}\n\nUser Question: {query}\n"
+                "Instruction: Answer strictly based on the source context provided. "
+                "Identify the source file. If information is not in the source, state so honestly without inventing facts."
+                if decision.redacted_context
+                else query
+            )
             execution_result = self.router.execute_inference(
                 decision=decision,
-                prompt=decision.redacted_context or query,
+                prompt=full_prompt,
             )
 
-        # Step 4: Verification & Completion
+        # Step 4: Verification & Completion (Honest State)
+        is_failed = execution_result.get("status") in ("unavailable", "error", "failed") or bool(execution_result.get("error"))
+        final_state = "FAILED" if is_failed else "COMPLETED"
+
         self.state_machine.transition(task_id, "VERIFYING", reason="Validating execution receipts")
-        self.state_machine.transition(task_id, "COMPLETED", reason="Task finished successfully")
+        self.state_machine.transition(
+            task_id,
+            final_state,
+            reason="Execution failed: " + str(execution_result.get("error", "unavailable")) if is_failed else "Task finished successfully"
+        )
         self.store.save_task(
             task_id,
             title=query[:80],
-            status="COMPLETED",
+            status=final_state,
             power_id=decision.selected_model,
             inputs={"query": query},
             outputs=execution_result,
@@ -121,10 +135,10 @@ class JarvisOrchestrator:
 
         # Step 5: Cryptographic Audit Logging
         self.audit.log_event(
-            event_type="TASK_COMPLETED",
+            event_type="TASK_" + final_state,
             task_id=task_id,
             power_id=decision.selected_model,
-            status="SUCCESS",
+            status="FAILURE" if is_failed else "SUCCESS",
             inputs={"query": query, "tier": decision.tier},
             outputs=execution_result,
             details={"cost_usd": decision.estimated_cost_usd, "duration_ms": (time.time() - start_time) * 1000},
@@ -132,7 +146,7 @@ class JarvisOrchestrator:
 
         return {
             "task_id": task_id,
-            "status": "COMPLETED",
+            "status": final_state,
             "tier": decision.tier,
             "provider": decision.provider,
             "model": decision.selected_model,
@@ -208,6 +222,48 @@ class JarvisOrchestrator:
                 "message": "\n".join(summary_lines),
                 "details": res,
             }
+        elif cleaned.startswith("read file ") or cleaned.startswith("cat "):
+            from jarvis.powers.file_powers import file_powers
+            fp = cleaned.replace("read file", "").replace("cat", "").strip()
+            return file_powers.read_file(fp)
+        elif cleaned.startswith("pwr-"):
+            # Direct power invocation
+            parts = cleaned.split()
+            pid = parts[0].upper()
+            return self.registry.execute_power(pid)
+        elif cleaned.startswith("ping "):
+            from jarvis.powers.networking_powers import networking_powers
+            host = cleaned.replace("ping", "").strip() or "127.0.0.1"
+            return networking_powers.ping(host)
+        elif cleaned.startswith("speedtest") or "speed test" in cleaned:
+            from jarvis.powers.networking_powers import networking_powers
+            return networking_powers.speed_test_estimate()
+        elif cleaned.startswith("check internet"):
+            from jarvis.powers.networking_powers import networking_powers
+            return networking_powers.check_internet()
+        elif cleaned.startswith("stock ") or "stock quote" in cleaned:
+            from jarvis.powers.finance_powers import finance_powers
+            sym = cleaned.replace("stock quote", "").replace("stock", "").strip() or "NVDA"
+            return finance_powers.pwr_215_stock_watchlist(sym)
+        elif "market briefing" in cleaned:
+            from jarvis.powers.finance_powers import finance_powers
+            return finance_powers.pwr_222_market_briefing()
+        elif "portfolio" in cleaned:
+            from jarvis.powers.finance_powers import finance_powers
+            return finance_powers.pwr_224_portfolio_journal()
+        elif "hud" in cleaned or "mission control" in cleaned:
+            from jarvis.powers.ironman_powers import ironman_powers
+            return ironman_powers.mission_control_hud()
+        elif "threat assessment" in cleaned:
+            from jarvis.powers.ironman_powers import ironman_powers
+            return ironman_powers.threat_assessment()
+        elif "security posture" in cleaned or "security scan" in cleaned:
+            from jarvis.powers.security_powers import security_powers
+            return security_powers.security_posture_report()
+        elif cleaned.startswith("youtube script ") or cleaned.startswith("video script "):
+            from jarvis.powers.youtube_powers import youtube_powers
+            topic = cleaned.replace("youtube script", "").replace("video script", "").strip() or "AI OS"
+            return youtube_powers.generate_video_script(topic)
         elif any(w in cleaned for w in ["who are you", "what can you do", "help"]):
             from jarvis.core.model_router import model_router
             return {

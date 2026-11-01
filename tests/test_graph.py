@@ -199,8 +199,13 @@ class TestConditionalEdges:
         assert _after_policy_check(state) == "END_POLICY_HALT"
 
     def test_after_policy_check_allows_tier3_with_token(self):
-        """Tier 3 with valid approval_id → model_router."""
+        """Tier 3 with valid approval status → model_router."""
         from graph.jarvis_graph import _after_policy_check
 
-        state = {"policy_tier": 3, "approval_required": True, "approval_id": "tok_abc123"}
+        state = {
+            "policy_tier": 3,
+            "approval_required": True,
+            "approval_id": "tok_abc123",
+            "approvals": {"status": "APPROVED"},
+        }
         assert _after_policy_check(state) == "model_router"

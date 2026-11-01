@@ -311,3 +311,72 @@ class TestTokenForgeryAndTampering:
         )
         assert result_valid.get("approvals", {}).get("status") == "APPROVED"
         assert result_valid.get("model_route") is not None, "Genuine token must proceed to act!"
+
+    def test_cross_action_approval_hijacking_prevented(self):
+        """
+        Verifies that an approval token or approval_id generated for one power/task
+        (e.g., harmless Tier 2 'send_email') CANNOT be hijacked to authorize a
+        destructive Tier 3 operation ('format_disk').
+        Remediates VULN-AUDIT-M1-01.
+        """
+        saver = SqliteCheckpointSaver(db_path=":memory:")
+        graph = build_jarvis_graph(checkpointer=saver)
+
+        # 1. Create legitimate pending approval for harmless Tier 2 power
+        safe_task_id = f"tsk_safe_{uuid.uuid4().hex[:6]}"
+        safe_appr = policy_gate.request_approval(
+            power_id="send_email",
+            task_id=safe_task_id,
+            action_summary="Send harmless email",
+            payload="safe content",
+        )
+        safe_approval_id = safe_appr["approval_id"]
+
+        # 2. Attacker invokes graph with Tier 3 format_disk using safe_approval_id
+        evil_task_id = f"tsk_evil_{uuid.uuid4().hex[:6]}"
+        thread_id = f"th_hijack_{uuid.uuid4().hex[:6]}"
+        res = graph.invoke(
+            {
+                "task_id": evil_task_id,
+                "user_input": "format disk",
+                "approval_id": safe_approval_id,
+                "user_id": "ganesh",
+            },
+            config={"configurable": {"thread_id": thread_id}},
+        )
+
+        assert res.get("policy_tier") == 3
+        assert res.get("approvals", {}).get("status") == "DENIED"
+        assert res.get("model_route") is None
+        assert any(e.get("code") == "POLICY_DENIED" for e in res.get("errors", []))
+
+    def test_edge_and_router_truthiness_bypass_prevented(self):
+        """
+        Verifies that passing unverified approval_id strings without approvals dict
+        deterministically halts both in edge routing and in model_router.
+        Remediates VULN-AUDIT-M1-02.
+        """
+        from graph.jarvis_graph import _after_policy
+        from graph.nodes import model_router
+
+        # 1. Edge routing halt
+        res_edge = _after_policy(
+            {
+                "policy_tier": 3,
+                "approval_required": True,
+                "approval_id": "completely_fake_unverified_token",
+            }
+        )
+        assert res_edge == "END_POLICY_HALT"
+
+        # 2. Node execution halt
+        res_node = model_router(
+            {
+                "user_input": "format disk",
+                "approval_required": True,
+                "policy_tier": 3,
+                "approval_id": "completely_fake_unverified_token",
+            }
+        )
+        assert res_node.get("model_route") == "policy_halt"
+        assert "⛔" in res_node.get("final_response", "")

@@ -340,9 +340,10 @@ def policy(state: JarvisState) -> Dict[str, Any]:
     power_id: str = (
         state.get("power_id")
         or (res.get("selected_tools") or [None])[0]
-        or user_input.replace(" ", "_")
+        or (user_input.strip().replace(" ", "_").lower() if user_input else "unknown_power")
     )
-    payload_hash: str = state.get("payload_hash") or gate.hash_payload(state.get("payload") or user_input)
+    payload_data = state.get("payload") if state.get("payload") is not None else user_input
+    payload_hash: str = state.get("payload_hash") or gate.hash_payload(payload_data)
 
     if approval_required or policy_tier >= 2:
         if approval_id:
@@ -353,34 +354,6 @@ def policy(state: JarvisState) -> Dict[str, Any]:
                 power_id=power_id,
                 payload_hash=payload_hash,
             )
-
-            # Candidate fallback checks for power_id / payload_hash variations if initial check fails
-            if not is_valid:
-                candidate_powers = [
-                    p
-                    for p in [
-                        power_id,
-                        user_input.replace(" ", "_"),
-                        "format_disk" if "format" in user_input else None,
-                        "reboot_host" if "reboot" in user_input else None,
-                        "deploy_production" if "deploy" in user_input else None,
-                    ]
-                    if p
-                ]
-                candidate_hashes = [
-                    payload_hash,
-                    gate.hash_payload(user_input),
-                    gate.hash_payload({"drive": "C:", "force": True}),
-                ]
-                for c_power in candidate_powers:
-                    for c_hash in candidate_hashes:
-                        v, m = gate.verify_approval_token(task_id, c_power, c_hash, approval_id)
-                        if v:
-                            is_valid, verify_msg = True, m
-                            power_id, payload_hash = c_power, c_hash
-                            break
-                    if is_valid:
-                        break
 
             if is_valid:
                 logger.info(f"policy: approval token cryptographically verified for task={task_id}")
@@ -468,17 +441,13 @@ def model_router(state: JarvisState) -> Dict[str, Any]:
     is_approved = (approvals.get("status") == "APPROVED") if isinstance(approvals, dict) else False
 
     if state.get("approval_required") and not is_approved:
-        # Fallback for isolated legacy tests lacking approvals dict
-        if not approvals and state.get("approval_id"):
-            pass
-        else:
-            policy_reason = state.get("policy_reason", "Action requires explicit approval.")
-            logger.warning(f"model_router: halted — {policy_reason}")
-            return {
-                "model_route": "policy_halt",
-                "final_response": f"⛔ Action halted: {policy_reason} This operation requires explicit human cryptographic approval.",
-                "routing_reason": "policy_halt",
-            }
+        policy_reason = state.get("policy_reason", "Action requires explicit approval.")
+        logger.warning(f"model_router: halted — {policy_reason}")
+        return {
+            "model_route": "policy_halt",
+            "final_response": f"⛔ Action halted: {policy_reason} This operation requires explicit human cryptographic approval.",
+            "routing_reason": "policy_halt",
+        }
 
     task_id: str = state.get("task_id") or f"tsk_{uuid.uuid4().hex[:8]}"
     user_input: str = state.get("user_input", "")

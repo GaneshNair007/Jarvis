@@ -97,8 +97,7 @@ def _after_policy(state: JarvisState) -> str:
     """
     Route decision after policy node:
     - If Tier >= 3 (critical destructive / step-up auth required):
-      - If approvals dict is present: MUST have status == "APPROVED".
-      - If approvals dict is absent: check approval_id / approval_token.
+      - MUST have approvals dict with status == "APPROVED".
       - Otherwise -> END_POLICY_HALT.
     - Otherwise -> act.
     """
@@ -107,18 +106,10 @@ def _after_policy(state: JarvisState) -> str:
 
     if approval_required and tier >= 3:
         approvals = state.get("approvals")
-        if isinstance(approvals, dict):
-            if approvals.get("status") == "APPROVED":
-                return "act"
-            logger.warning("Routing after policy: Tier 3 halt (approval status is not APPROVED)")
-            return "END_POLICY_HALT"
-
-        # Direct edge unit test compatibility fallback:
-        approval_id = state.get("approval_id") or state.get("approval_token")
-        if not approval_id:
-            logger.warning("Routing after policy: Tier 3 halt without approval token")
-            return "END_POLICY_HALT"
-        return "act"
+        if isinstance(approvals, dict) and approvals.get("status") == "APPROVED":
+            return "act"
+        logger.warning("Routing after policy: Tier 3 halt (approval status is not APPROVED)")
+        return "END_POLICY_HALT"
 
     return "act"
 
@@ -167,14 +158,9 @@ def _after_policy_check(state: JarvisState) -> str:
 
     if approval_required and tier >= 3:
         approvals = state.get("approvals")
-        if isinstance(approvals, dict):
-            if approvals.get("status") == "APPROVED":
-                return "model_router"
-            return "END_POLICY_HALT"
-        approval_id = state.get("approval_id") or state.get("approval_token")
-        if not approval_id:
-            return "END_POLICY_HALT"
-        return "model_router"
+        if isinstance(approvals, dict) and approvals.get("status") == "APPROVED":
+            return "model_router"
+        return "END_POLICY_HALT"
 
     return "model_router"
 

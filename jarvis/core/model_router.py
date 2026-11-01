@@ -74,6 +74,20 @@ class ModelRouter:
         r"^.*(gmail|check (my )?(email|mail|inbox)|missed (email|mail)|opportunities).*",
         r"^connect (my )?gmail.*",
         r"^(status|help|who are you|hi|hello|hey|hi jarvis|hey jarvis|hello jarvis)$",
+        r"^pwr-\d{3}.*",
+        r"^ping\s+.*",
+        r"^traceroute\s+.*",
+        r"^dns\s+.*",
+        r"^port\s+scan.*",
+        r"^check\s+internet.*",
+        r"^speedtest.*",
+        r"^stock(\s+quote)?\s+.*",
+        r"^crypto\s+.*",
+        r"^market\s+briefing.*",
+        r"^portfolio\s+(journal|value)?.*",
+        r"^youtube\s+(script|title|tags?|brief).*|^video\s+(script|title).*",
+        r"^hud(\s+telemetry)?.*|^mission\s+control.*|^threat\s+assessment.*",
+        r"^security\s+(scan|posture|report).*|^secret\s+scan.*",
     ]
 
     def __init__(self):
@@ -365,19 +379,21 @@ class ModelRouter:
                 except Exception as _ge:
                     logger.warning(f"Gemini rotator fallback error: {_ge}")
 
-                # 2. Heuristic Conversational Reflex (Guarantees responsive Jarvis)
-                reply = self._generate_heuristic_response(prompt)
-                tokens_used = max(1, len(prompt) // 4)
+                # Honest Unavailable State: Ollama is offline and cloud gateways could not be reached
                 return {
                     "task_id": decision.task_id,
-                    "status": "heuristic_fallback",
-                    "tier": "LOCAL_REFLEX",
-                    "model": "jarvis-reflex-v1",
-                    "reply": reply,
-                    "tokens_used": tokens_used,
+                    "status": "unavailable",
+                    "tier": decision.tier,
+                    "model": decision.selected_model,
+                    "reply": (
+                        f"AI Backend Unavailable: Local inference daemon (Ollama at {settings.ollama_base_url}) is offline "
+                        "and cloud gateways (OpenRouter/Gemini) are not configured or uncontactable. "
+                        "Diagnostic: Connection refused on port 11434. Please start Ollama or configure OPENROUTER_API_KEY in .env."
+                    ),
+                    "tokens_used": 0,
                     "cost_usd": 0.0,
                     "duration_ms": duration_ms,
-                    "note": "Processed via local heuristic reflex engine.",
+                    "error": "Ollama connection refused and cloud fallbacks uncontactable.",
                 }
 
         import litellm
@@ -479,19 +495,14 @@ class ModelRouter:
             if decision.tier == "TIER_3_CLOUD":
                 self.cost_governor.record_failure(decision.provider)
 
-            # Clean fallback when local daemon/cloud is uncontactable in sandbox
             duration_ms = round((time.time() - start_time) * 1000, 2)
-            fallback_reply = (
-                f"JARVIS ({decision.tier} - {decision.selected_model}): "
-                f"Processed prompt '{prompt[:100]}...' securely (fallback response: {str(e)[:120]})."
-            )
             return {
                 "task_id": decision.task_id,
-                "status": "fallback_completed",
+                "status": "unavailable",
                 "tier": decision.tier,
                 "model": model_string,
-                "reply": fallback_reply,
-                "tokens_used": len(prompt) // 4,
+                "reply": f"AI Backend Unavailable: Model inference on {model_string} failed. Diagnostic: {str(e)[:200]}.",
+                "tokens_used": 0,
                 "cost_usd": 0.0,
                 "duration_ms": duration_ms,
                 "error": str(e),

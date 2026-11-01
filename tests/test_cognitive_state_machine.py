@@ -436,7 +436,12 @@ class TestCognitiveStateMachineGraph:
         state_halt = {"policy_tier": 3, "approval_required": True, "approval_id": None}
         assert _after_policy(state_halt) == "END_POLICY_HALT"
 
-        state_approved = {"policy_tier": 3, "approval_required": True, "approval_id": "tok_valid"}
+        state_approved = {
+            "policy_tier": 3,
+            "approval_required": True,
+            "approval_id": "tok_valid",
+            "approvals": {"status": "APPROVED"},
+        }
         assert _after_policy(state_approved) == "act"
 
         state_tier0 = {"policy_tier": 0, "approval_required": False, "approval_id": None}

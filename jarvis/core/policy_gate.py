@@ -145,6 +145,12 @@ class PolicyGate:
         # 1. Search pending_approvals records
         for appr in list(self.pending_approvals.values()):
             if appr.get("token") == token or appr.get("id") == token or appr.get("approval_id") == token:
+                if power_id and appr.get("power_id") != power_id:
+                    continue
+                if task_id and appr.get("task_id") != task_id:
+                    continue
+                if payload_hash and appr.get("payload_hash") != payload_hash:
+                    continue
                 return self.verify_approval_token(
                     task_id=appr.get("task_id", task_id or ""),
                     power_id=appr.get("power_id", power_id or ""),
