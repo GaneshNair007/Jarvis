@@ -333,6 +333,11 @@ class ModelRouter:
         Tracks token consumption, records costs in CostGovernor, and implements fallbacks.
         """
         start_time = time.time()
+        try:
+            from jarvis.security.ten_layer_shield import jarvis_security_suite
+            prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+        except Exception as _sec_err:
+            logger.warning(f"Security sanitizer error: {_sec_err}")
 
         if decision.tier == "BYPASS":
             return {
