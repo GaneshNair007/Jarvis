@@ -18,8 +18,12 @@ from typing import Dict, Any, Optional, List
 from pydantic import BaseModel, Field
 
 from jarvis.config import settings
+from jarvis.core.logger import get_logger
 from jarvis.core.privacy_gate import privacy_gate
 from jarvis.core.cost_governor import cost_governor
+from jarvis.core.api_key_rotator import api_key_rotator, gemini_rotator, openrouter_rotator
+
+logger = get_logger("core.model_router")
 
 
 class RoutingRequest(BaseModel):
@@ -307,10 +311,12 @@ class ModelRouter:
             "tier_3_cloud": {
                 "claude_available": bool(settings.claude_api_key),
                 "openai_available": bool(settings.openai_api_key),
-                "gemini_available": bool(settings.gemini_api_key),
+                "gemini_available": bool(settings.gemini_api_key or gemini_rotator.is_available),
+                "openrouter_available": bool(settings.openrouter_api_key or openrouter_rotator.is_available),
                 "circuit_breakers": {
                     p: self.cost_governor.is_circuit_open(p) for p in ["anthropic", "openai", "google"]
                 },
+                "key_rotator_summary": api_key_rotator.get_summary(),
             },
             "budget_status": self.cost_governor.get_summary(),
         }
@@ -412,23 +418,43 @@ class ModelRouter:
             api_base = settings.vllm_base_url
             api_key = settings.vllm_api_key
         elif decision.tier == "TIER_3_CLOUD":
-            try:
-                from jarvis.core.openrouter_client import openrouter_client
-                if openrouter_client.is_available:
-                    or_res = openrouter_client.generate_completion(prompt, system_instruction=system_prompt)
-                    if or_res and or_res.get("reply"):
+            # 1. Attempt OpenRouter multi-key rotator
+            if "openrouter" in decision.selected_model or not ("claude" in decision.selected_model or "gpt" in decision.selected_model or "gemini" in decision.selected_model):
+                try:
+                    if openrouter_rotator.is_available:
+                        or_res = openrouter_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                        if or_res and or_res.get("reply"):
+                            return {
+                                "task_id": decision.task_id,
+                                "status": "success",
+                                "tier": "TIER_3_CLOUD",
+                                "model": or_res.get("model", "deepseek/deepseek-chat"),
+                                "reply": or_res["reply"],
+                                "tokens_used": or_res.get("tokens_used", len(prompt) // 4),
+                                "cost_usd": 0.0,
+                                "duration_ms": or_res.get("duration_ms", round((time.time() - start_time) * 1000, 2)),
+                            }
+                except Exception as _ore:
+                    logger.warning(f"OpenRouter rotator execution error: {_ore}")
+
+            # 2. Attempt Gemini multi-account rotator if Gemini model targeted
+            if "gemini" in decision.selected_model and gemini_rotator.is_available:
+                try:
+                    gem_model = decision.selected_model.replace("gemini/", "")
+                    gem_res = gemini_rotator.generate_chat_completion(prompt, system_instruction=system_prompt, model=gem_model)
+                    if gem_res and gem_res.get("reply"):
                         return {
                             "task_id": decision.task_id,
                             "status": "success",
                             "tier": "TIER_3_CLOUD",
-                            "model": or_res.get("model", "deepseek/deepseek-chat"),
-                            "reply": or_res["reply"],
-                            "tokens_used": or_res.get("tokens_used", len(prompt) // 4),
+                            "model": gem_res.get("model", f"google/{gem_model}"),
+                            "reply": gem_res["reply"],
+                            "tokens_used": len(prompt) // 4 + len(gem_res["reply"]) // 4,
                             "cost_usd": 0.0,
-                            "duration_ms": or_res.get("duration_ms", round((time.time() - start_time) * 1000, 2)),
+                            "duration_ms": gem_res.get("duration_ms", round((time.time() - start_time) * 1000, 2)),
                         }
-            except Exception as _ore:
-                logger.warning(f"OpenRouter cloud error: {_ore}")
+                except Exception as _gre:
+                    logger.warning(f"Gemini rotator execution error: {_gre}")
 
             if "claude" in decision.selected_model:
                 model_string = f"anthropic/{decision.selected_model}"
@@ -438,7 +464,7 @@ class ModelRouter:
                 api_key = settings.openai_api_key
             elif "gemini" in decision.selected_model:
                 model_string = f"gemini/{decision.selected_model}"
-                api_key = settings.gemini_api_key
+                api_key = gemini_rotator.get_next_key() or settings.gemini_api_key
 
         try:
             kwargs: Dict[str, Any] = {
