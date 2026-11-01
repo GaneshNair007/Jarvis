@@ -34,3 +34,4 @@ jobs:
           test -f TARGET_ARCHITECTURE.md
           test -f docs/BRAIN_MASTER_PROMPT.md
           echo "All core documentation verified successfully."
+
