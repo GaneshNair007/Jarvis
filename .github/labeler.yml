@@ -1,0 +1,14 @@
+# Labels for pull requests
+powers:
+  - "jarvis/powers/**/*"
+core:
+  - "jarvis/core/**/*"
+browser:
+  - "jarvis/browser/**/*"
+tests:
+  - "tests/**/*"
+documentation:
+  - "docs/**/*"
+  - "*.md"
+ci:
+  - ".github/workflows/**/*"

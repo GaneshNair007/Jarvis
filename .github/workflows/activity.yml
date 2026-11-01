@@ -1,0 +1,35 @@
+name: Repository Activity & Stats
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-activity:
+    name: Sync Activity & Telemetry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Update Activity Timestamp
+        run: |
+          mkdir -p data/logs
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > data/logs/last_active.txt
+          echo "Activity heartbeat recorded."
+
+      - name: Commit & Push Activity Update
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/logs/last_active.txt
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(activity): automated heartbeat update [skip ci]" && git push)

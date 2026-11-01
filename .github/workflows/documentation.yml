@@ -1,0 +1,36 @@
+name: Documentation & Architecture Verification
+
+on:
+  push:
+    paths:
+      - "docs/**"
+      - "*.md"
+  pull_request:
+    paths:
+      - "docs/**"
+      - "*.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-docs:
+    name: Verify Markdown & Schema Integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify Key Documents Exist
+        run: |
+          test -f README.md
+          test -f ARCHITECTURE.md
+          test -f TARGET_ARCHITECTURE.md
+          test -f docs/BRAIN_MASTER_PROMPT.md
+          echo "All core documentation verified successfully."
