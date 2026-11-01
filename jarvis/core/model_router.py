@@ -325,7 +325,26 @@ class ModelRouter:
         if decision.tier == "TIER_1_LOCAL":
             if not self.check_ollama_readiness(use_cache=True):
                 duration_ms = round((time.time() - start_time) * 1000, 2)
-                # 1. Try multi-account Gemini key rotator
+                # 1. Try OpenRouter Frontier Gateway (Active configured key)
+                try:
+                    from jarvis.core.openrouter_client import openrouter_client
+                    if openrouter_client.is_available:
+                        or_res = openrouter_client.generate_completion(prompt, system_instruction=system_prompt)
+                        if or_res and or_res.get("reply"):
+                            return {
+                                "task_id": decision.task_id,
+                                "status": "success",
+                                "tier": "TIER_3_CLOUD",
+                                "model": or_res.get("model", "deepseek/deepseek-chat"),
+                                "reply": or_res["reply"],
+                                "tokens_used": or_res.get("tokens_used", len(prompt) // 4),
+                                "cost_usd": 0.0,
+                                "duration_ms": or_res.get("duration_ms", duration_ms),
+                            }
+                except Exception as _ore:
+                    logger.warning(f"OpenRouter inference fallback error: {_ore}")
+
+                # 2. Try multi-account Gemini key rotator
                 try:
                     from jarvis.core.gemini_rotator import gemini_rotator
                     if gemini_rotator.is_available:
@@ -375,6 +394,24 @@ class ModelRouter:
             api_base = settings.vllm_base_url
             api_key = settings.vllm_api_key
         elif decision.tier == "TIER_3_CLOUD":
+            try:
+                from jarvis.core.openrouter_client import openrouter_client
+                if openrouter_client.is_available:
+                    or_res = openrouter_client.generate_completion(prompt, system_instruction=system_prompt)
+                    if or_res and or_res.get("reply"):
+                        return {
+                            "task_id": decision.task_id,
+                            "status": "success",
+                            "tier": "TIER_3_CLOUD",
+                            "model": or_res.get("model", "deepseek/deepseek-chat"),
+                            "reply": or_res["reply"],
+                            "tokens_used": or_res.get("tokens_used", len(prompt) // 4),
+                            "cost_usd": 0.0,
+                            "duration_ms": or_res.get("duration_ms", round((time.time() - start_time) * 1000, 2)),
+                        }
+            except Exception as _ore:
+                logger.warning(f"OpenRouter cloud error: {_ore}")
+
             if "claude" in decision.selected_model:
                 model_string = f"anthropic/{decision.selected_model}"
                 api_key = settings.claude_api_key
