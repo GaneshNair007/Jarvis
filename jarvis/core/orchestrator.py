@@ -191,6 +191,23 @@ class JarvisOrchestrator:
         elif "weekly sweep" in cleaned:
             from jarvis.routines.ops_workflows import weekly_ops_sweep
             return weekly_ops_sweep.run()
+        elif any(k in cleaned for k in ["gmail", "email", "inbox", "check mail", "check emails", "missed mail", "opportunities"]):
+            from jarvis.powers.email_powers import email_powers
+            res = email_powers.scan_inbox_for_opportunities()
+            summary_lines = [
+                f"Scanned inbox for {res['account']}: Found {res['opportunities_found']} opportunities ({res['urgent_count']} urgent):"
+            ]
+            for idx, item in enumerate(res["opportunities"], 1):
+                summary_lines.append(f"{idx}. [{item['category']}] {item['subject']} ({item['from']})")
+                summary_lines.append(f"   Action: {item['recommended_action']}")
+
+            return {
+                "type": "email_triage",
+                "power_id": "PWR-191",
+                "status": "completed",
+                "message": "\n".join(summary_lines),
+                "details": res,
+            }
         elif any(w in cleaned for w in ["who are you", "what can you do", "help"]):
             from jarvis.core.model_router import model_router
             return {

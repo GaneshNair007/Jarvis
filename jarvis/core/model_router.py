@@ -71,6 +71,8 @@ class ModelRouter:
         r"^.*(turn (on|off)|set|switch)\s+(the\s+)?(ac|air condition|projector|tv|geyser|lights?|lamp).*",
         r"^.*(movie night|work mode|sleep mode|morning wake).*",
         r"^.*(opportunity radar|career radar|daily pulse|system pulse|weekly sweep).*",
+        r"^.*(gmail|check (my )?(email|mail|inbox)|missed (email|mail)|opportunities).*",
+        r"^connect (my )?gmail.*",
         r"^(status|help|who are you|hi|hello|hey|hi jarvis|hey jarvis|hello jarvis)$",
     ]
 
