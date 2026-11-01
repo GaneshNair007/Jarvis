@@ -1,23 +1,43 @@
 ---
-name: Bug Report
-about: Create a report to help improve Project JARVIS
-title: "[BUG] "
-labels: ["bug", "triage"]
-assignees: ["GaneshNair007"]
+name: 🐛 Bug Report
+about: Create a report to help us improve
+title: '[BUG] '
+labels: 'bug, needs-triage'
+assignees: ''
 ---
 
-### Describe the Bug
+## 🐛 Bug Description
 A clear and concise description of what the bug is.
 
-### Reproduction Steps
-1. Execute command: `...`
-2. Endpoint called: `...`
-3. Error observed: `...`
+## 📋 Steps to Reproduce
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
 
-### Expected Behavior
-A clear description of what you expected to happen.
+## ✅ Expected Behavior
+A clear and concise description of what you expected to happen.
 
-### System Telemetry
-- OS: Windows / Linux
-- Python Version: 3.12
-- GPU / VRAM:
+## ❌ Actual Behavior
+What actually happened.
+
+## 📸 Screenshots
+If applicable, add screenshots to help explain your problem.
+
+## 🖥️ Environment
+- OS: [e.g., Ubuntu 22.04, macOS 13, Windows 11]
+- Python Version: [e.g., 3.11.5]
+- JARVIS Version: [e.g., v1.0.0]
+- Docker: [Yes/No]
+
+## 📝 Additional Context
+Add any other context about the problem here.
+
+## 🔍 Logs
+```
+Paste relevant logs here
+```
+
+---
+💡 **Tip**: For faster resolution, provide detailed steps and logs!
+🏆 **Achievement**: Contributing to issues helps earn GitHub badges!

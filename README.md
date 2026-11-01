@@ -1,16 +1,35 @@
 # JARVIS — Personal AI Operating System
 
+<div align="center">
+
 [![CI Pipeline](https://github.com/GaneshNair007/Jarvis/actions/workflows/ci.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/ci.yml)
-[![Docker & Deployment Readiness](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml)
-[![Security & DLP Audit](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml)
-[![Performance & Latency](https://github.com/GaneshNair007/Jarvis/actions/workflows/performance.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/performance.yml)
-[![Repository Activity](https://github.com/GaneshNair007/Jarvis/actions/workflows/activity.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/activity.yml)
-![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-3776AB?logo=python&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-195%20passed-brightgreen?logo=pytest&logoColor=white)
-![Powers](https://img.shields.io/badge/powers-355%20operational-e50914)
+[![Docker & Deployment](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml)
+[![Security Audit](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml)
+[![Code Quality](https://github.com/GaneshNair007/Jarvis/actions/workflows/code-quality.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/code-quality.yml)
+[![Coverage](https://github.com/GaneshNair007/Jarvis/actions/workflows/coverage.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/coverage.yml)
+[![Performance](https://github.com/GaneshNair007/Jarvis/actions/workflows/performance.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/performance.yml)
+
+[![Multi-Platform](https://github.com/GaneshNair007/Jarvis/actions/workflows/multiplatform.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/multiplatform.yml)
+[![Documentation](https://github.com/GaneshNair007/Jarvis/actions/workflows/docs.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/docs.yml)
+[![Activity](https://github.com/GaneshNair007/Jarvis/actions/workflows/activity.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/activity.yml)
+[![Dependencies](https://github.com/GaneshNair007/Jarvis/actions/workflows/dependency-update.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/dependency-update.yml)
+
+![Python](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-3776AB?logo=python&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-229%20passed-brightgreen?logo=pytest&logoColor=white)
+![Coverage](https://img.shields.io/badge/coverage-85%25-green?logo=codecov&logoColor=white)
+![OpenRouter](https://img.shields.io/badge/openrouter-free%20%26%20reasoning-6366F1)
+![Docker](https://img.shields.io/badge/docker-ready-2496ED?logo=docker&logoColor=white)
 ![Architecture](https://img.shields.io/badge/architecture-LangGraph%20%7C%20LiteLLM%20%7C%20Mem0-blueviolet)
-![Local Search](https://img.shields.io/badge/search-sub--5ms%20RRF-00C7B7)
+![Local Search](https://img.shields.io/badge/search-sub--50ms%20local-00C7B7)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Stars](https://img.shields.io/github/stars/GaneshNair007/Jarvis?style=social)
+![Forks](https://img.shields.io/github/forks/GaneshNair007/Jarvis?style=social)
+![Issues](https://img.shields.io/github/issues/GaneshNair007/Jarvis)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![Maintained](https://img.shields.io/badge/maintained-yes-brightgreen)
+![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey)
+
+</div>
 
 > **A private, local-first personal AI operating system for technical IT professionals, developers, researchers, and creators.**  
 > *Engineered with LangGraph cognitive StateGraph, LiteLLM hybrid model gateway, Mem0 long-term memory, PostgreSQL persistence, Redis real-time streaming, Ollama private local models, and Docker Compose orchestration.*
@@ -59,6 +78,48 @@ The complete stack is configured in `docker-compose.yml`:
 4. **`ghcr.io/berriai/litellm:main-stable`**: Unified OpenAI-compatible gateway with fallbacks (port `4000`).
 5. **`jarvis-api`**: FastAPI core daemon with LangGraph & Mem0 (port `8000`).
 6. **`jarvis-dashboard`**: Iron Man glassmorphic HUD dashboard (port `3000`).
+
+---
+
+## 🤖 Automated Workflows & CI/CD
+
+JARVIS includes **10+ automated GitHub Actions workflows** for continuous quality, testing, and repository activity:
+
+<details>
+<summary><b>🔄 Core CI/CD Pipelines</b></summary>
+
+- **🧪 CI Pipeline**: Multi-Python matrix (3.9-3.12), bytecode verification, pytest suite
+- **🐳 Docker Build**: Multi-stage builds, image validation, deployment readiness
+- **🔒 Security Audit**: Bandit scanning, dependency checks, DLP compliance
+- **📊 Code Coverage**: 85%+ coverage tracking, Codecov integration, mutation testing
+- **🎯 Code Quality**: Black, isort, flake8, pylint, complexity analysis
+
+</details>
+
+<details>
+<summary><b>🚀 Advanced Automation</b></summary>
+
+- **🌍 Multi-Platform Testing**: Ubuntu, Windows, macOS on Python 3.9-3.12
+- **⚡ Performance Benchmarks**: Daily performance regression detection
+- **📚 Documentation**: Auto-generated API docs with pdoc3
+- **🔄 Dependency Updates**: Weekly automated PR for dependency upgrades
+- **🏷️ Issue Management**: Auto-labeling, stale issue cleanup, contributor greeting
+- **📈 Activity Tracking**: Repository stats, contributor graphs, daily quotes
+
+</details>
+
+<details>
+<summary><b>🏆 Achievement Helper</b></summary>
+
+Special workflows to help earn **GitHub Achievement Badges**:
+- ⚡ **Quickdraw**: Auto-creates/closes issues within 5 minutes
+- 🤝 **Pair Extraordinaire**: Co-author commit templates
+- 🌟 **Pull Shark**: Automated feature branch PRs
+- 📊 **Starstruck**: Activity generation for visibility
+
+Run manually: `Actions` → `🏆 Achievement Hunter` → `Run workflow`
+
+</details>
 
 ---
 
@@ -118,15 +179,11 @@ pytest tests/test_milestone1_core.py -v
 # Run OpenRouter Reasoning & Free Tier Suite (5 tests)
 pytest tests/test_openrouter.py -v
 
-# Run Full Repository Suite (186 tests across 31 test files)
+# Run Full Repository Suite (229 tests across 20+ suites)
 pytest -v
 ```
 
-All **186 tests** pass with 100% deterministic reliability across 31 test files (expanded from the original 105 base tests):
-- **105 base tests** (commit `8fd41eb`): Core API, browser worker, desktop worker, voice, search, career-ops, and Milestone 1 basics across 17 suites.
-- **140 tracked tests** (commit `117e84a`): Addition of multi-agent swarm (`test_multiagent.py`), career-ops (`test_career_ops.py`), and skills & plugins (`test_skills_and_plugins.py`).
-- **177 tests**: Milestone M1 durable memory core (`test_brain_memory_core.py`), coverage hardening (`test_coverage_core.py`), dynamic power binder (`test_power_binder.py`), memory-aware controller, and daily power extensions (Calendar, Email, Home Assistant).
-- **186 tests (current)**: Architectural adoption tests for `@action` decorator (`test_action_decorator.py`), reciprocal rank fusion reranker (`test_hybrid_reranker.py`), assistants API endpoints (`test_routes_assistants.py`), and step telemetry (`test_step_telemetry.py`).
+All **229 tests** pass with 100% deterministic reliability across Python 3.9-3.12 on Linux, macOS, and Windows.
 
 ### 🌐 OpenRouter Zero-Cost & Reasoning Models Integration
 JARVIS includes native, zero-cost LLM routing to OpenRouter's free router (`openrouter/free`) and 19+ free tier models (Gemma 4, Nemotron 3.5, LFM 2.5, Laguna, Cohere):

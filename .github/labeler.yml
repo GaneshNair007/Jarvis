@@ -1,14 +1,41 @@
-# Labels for pull requests
-powers:
-  - "jarvis/powers/**/*"
-core:
-  - "jarvis/core/**/*"
-browser:
-  - "jarvis/browser/**/*"
-tests:
-  - "tests/**/*"
-documentation:
-  - "docs/**/*"
-  - "*.md"
-ci:
-  - ".github/workflows/**/*"
+# Auto-labeling configuration
+'🐛 bug':
+  - '**/*test*.py'
+  - 'tests/**/*'
+
+'📚 documentation':
+  - 'docs/**/*'
+  - '**/*.md'
+  - 'README*'
+
+'🚀 feature':
+  - 'jarvis/agents/**/*'
+  - 'jarvis/plugins/**/*'
+
+'🔧 configuration':
+  - '*.yml'
+  - '*.yaml'
+  - '*.toml'
+  - '*.json'
+  - '.github/**/*'
+
+'🐳 docker':
+  - 'Dockerfile*'
+  - 'docker-compose*.yml'
+
+'🔒 security':
+  - '**/security*.py'
+  - '.github/workflows/security.yml'
+
+'⚡ performance':
+  - '**/performance*.py'
+  - '.github/workflows/performance.yml'
+
+'🧪 testing':
+  - 'tests/**/*'
+  - '**/test_*.py'
+
+'dependencies':
+  - 'requirements*.txt'
+  - 'pyproject.toml'
+  - 'setup.py'

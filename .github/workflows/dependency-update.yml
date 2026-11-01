@@ -1,0 +1,59 @@
+name: 🔄 Dependency Updates
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sundays
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-dependencies:
+    name: 📦 Update Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 🔍 Check for updates
+        run: |
+          pip install pip-upgrader
+          pip-upgrade requirements.txt --skip-package-installation || echo "No updates"
+
+      - name: 🔒 Update pip-tools
+        run: |
+          pip install pip-tools
+          pip-compile requirements.txt --upgrade || echo "Already up-to-date"
+
+      - name: 📝 Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: '⬆️ Update dependencies'
+          title: '⬆️ Weekly dependency update'
+          body: |
+            🤖 Automated dependency update
+            
+            This PR updates dependencies to their latest compatible versions.
+            
+            🏆 Achievement: Contributing to Quickdraw badge via automated PRs!
+          branch: dependencies/auto-update
+          delete-branch: true
+          labels: dependencies, automated
+
+  dependabot-auto-merge:
+    name: 🤝 Auto-merge Dependabot
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: ✅ Auto-approve
+        run: gh pr review --approve "${{ github.event.pull_request.number }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
