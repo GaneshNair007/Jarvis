@@ -9,6 +9,7 @@ Evaluates permissions, blocked applications, sensitive data patterns, and danger
 """
 
 import json
+import re
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
@@ -16,6 +17,8 @@ from pydantic import BaseModel, Field
 from jarvis.config import settings
 from jarvis.constants import (
     DEFAULT_CRITICAL_KEYWORDS,
+    DEFAULT_CRITICAL_POWERS,
+    DEFAULT_APPROVAL_REQUIRED_POWERS,
     DEFAULT_POLICY_ALLOWED_APPS,
     DEFAULT_POLICY_BLOCKED_APPS,
     DEFAULT_TIER1_KEYWORDS,
@@ -53,16 +56,31 @@ class PolicyEngine:
         }
 
     def evaluate(
-        self, user_input: str, task_type: str = "chat", memories: Optional[List[str]] = None
+        self,
+        user_input: str,
+        task_type: str = "chat",
+        memories: Optional[List[str]] = None,
+        tools: Optional[List[str]] = None,
     ) -> PolicyDecision:
         """
         Evaluates input text and requested task against policy rules and assign approval tiers.
+        Normalizes snake_case, kebab-case, and whitespace, cross-referencing critical power catalogs.
         """
         text_lower = user_input.lower()
+        # Normalization: convert underscores and hyphens to spaces to match multi-word phrases
+        text_normalized = re.sub(r"[\s_\-]+", " ", text_lower).strip()
+        tokens = set(re.findall(r"[a-zA-Z0-9_\-]+", text_lower))
+        tool_set = {t.lower() for t in tools} if tools else set()
 
-        # Tier 3: Critical / Destructive System / Financial
+        # Tier 3: Critical / Destructive System / Financial / Host Lifecycle
         critical_keywords = DEFAULT_CRITICAL_KEYWORDS
-        if any(w in text_lower for w in critical_keywords):
+        critical_powers = DEFAULT_CRITICAL_POWERS
+        if (
+            any(w in text_lower for w in critical_keywords)
+            or any(w in text_normalized for w in critical_keywords)
+            or any(t in critical_powers for t in tokens)
+            or any(t in critical_powers for t in tool_set)
+        ):
             return PolicyDecision(
                 risk_level="critical",
                 approval_required=True,
@@ -73,7 +91,14 @@ class PolicyEngine:
 
         # Tier 2: Irreversible Outbound / Physical computer use / Deletion
         dangerous_keywords = DEFAULT_TIER2_KEYWORDS
-        if any(w in text_lower for w in dangerous_keywords) or task_type in ("desktop_control", "outbound_comms"):
+        tier2_powers = DEFAULT_APPROVAL_REQUIRED_POWERS - critical_powers
+        if (
+            any(w in text_lower for w in dangerous_keywords)
+            or any(w in text_normalized for w in dangerous_keywords)
+            or any(t in tier2_powers for t in tokens)
+            or any(t in tier2_powers for t in tool_set)
+            or task_type in ("desktop_control", "outbound_comms")
+        ):
             return PolicyDecision(
                 risk_level="high",
                 approval_required=True,
@@ -84,7 +109,11 @@ class PolicyEngine:
 
         # Tier 1: Reversible local writes / drafts / sandboxed execution
         reversible_keywords = DEFAULT_TIER1_KEYWORDS
-        if any(w in text_lower for w in reversible_keywords) or task_type in ("document_ingest", "code_generation"):
+        if (
+            any(w in text_lower for w in reversible_keywords)
+            or any(w in text_normalized for w in reversible_keywords)
+            or task_type in ("document_ingest", "code_generation")
+        ):
             return PolicyDecision(
                 risk_level="medium",
                 approval_required=False,

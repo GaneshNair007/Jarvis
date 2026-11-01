@@ -171,6 +171,32 @@ class JarvisOrchestrator:
                 "action": "lock_workstation",
                 "message": "Workstation lock requested.",
             }
+        elif any(k in cleaned for k in ["ac", "air condition", "projector", "geyser", "light", "lamp", "movie night", "work mode", "sleep mode", "morning wake"]):
+            from jarvis.powers.smart_home_powers import smart_home_powers
+            res = smart_home_powers.process_voice_command(query)
+            if res.get("status") != "unhandled":
+                return {
+                    "type": "smart_home",
+                    "power_id": res.get("power_id"),
+                    "status": "executed",
+                    "message": res.get("feedback", "Smart home action completed."),
+                    "details": res,
+                }
+        elif "opportunity radar" in cleaned or "career radar" in cleaned or "leads" in cleaned:
+            from jarvis.routines.ops_workflows import opportunity_radar
+            return opportunity_radar.run()
+        elif "daily pulse" in cleaned or "system pulse" in cleaned:
+            from jarvis.routines.ops_workflows import daily_system_pulse
+            return daily_system_pulse.run()
+        elif "weekly sweep" in cleaned:
+            from jarvis.routines.ops_workflows import weekly_ops_sweep
+            return weekly_ops_sweep.run()
+        elif any(w in cleaned for w in ["who are you", "what can you do", "help"]):
+            from jarvis.core.model_router import model_router
+            return {
+                "type": "assistant_info",
+                "message": model_router._generate_heuristic_response(query),
+            }
         elif cleaned.startswith("search ") or "web search" in cleaned:
             from jarvis.powers.browser_powers import browser_powers
 

@@ -88,14 +88,19 @@ class TestPerceiveInputFuzzing:
         state3 = {"messages": [{"no_content": True}]}
         assert perceive(state3)["user_input"] == ""
 
-    def test_perceive_non_string_user_input_raises_attribute_error(self):
-        """
-        EMPIRICAL FINDING: Passing a non-string object (such as a dictionary)
-        directly in state['user_input'] causes unhandled AttributeError in perceive
-        due to (user_input or '').strip() assumption.
-        """
-        with pytest.raises(AttributeError, match="'dict' object has no attribute 'strip'"):
-            perceive({"user_input": {"text": "malformed_dict"}})
+    def test_perceive_non_string_user_input_coerced_safely(self):
+        """Non-string inputs (e.g. dict, int, list) are safely coerced to str without AttributeError."""
+        out_dict = perceive({"user_input": {"text": "malformed_dict"}})
+        assert out_dict["user_input"] == "{'text': 'malformed_dict'}"
+        assert out_dict["goal"] == "{'text': 'malformed_dict'}"
+
+        out_int = perceive({"user_input": 12345})
+        assert out_int["user_input"] == "12345"
+        assert out_int["goal"] == "12345"
+
+        out_none = perceive({"user_input": None})
+        assert out_none["user_input"] == ""
+        assert out_none["goal"] == ""
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -264,14 +269,14 @@ class TestReflectionLoopBounds:
         assert node_visits.count("reflect") == 1
         assert node_visits.count("remember") == 1
 
-    def test_multi_turn_reflection_count_persistence_finding(self):
+    def test_multi_turn_reflection_counter_reset_and_independent_retries(self):
         """
-        EMPIRICAL FINDING: On multi-turn threads, reflection_count is not reset
-        by perceive(), causing subsequent turns to inherit exhausted reflection counts.
+        Verifies that perceive() resets reflection_count to 0 and clears errors for each new turn.
+        Turn 2 gets its own independent 3-retry budget even if Turn 1 exhausted its retries.
         """
         saver = SqliteCheckpointSaver(db_path=":memory:")
         graph = build_jarvis_graph(checkpointer=saver)
-        thread_id = f"th_leak_{uuid.uuid4().hex[:8]}"
+        thread_id = f"th_multi_turn_{uuid.uuid4().hex[:8]}"
         config = {"configurable": {"thread_id": thread_id}}
 
         # Turn 1: hits max retries due to transient errors
@@ -282,10 +287,9 @@ class TestReflectionLoopBounds:
             res1 = graph.invoke({"user_input": "turn 1 query", "user_id": "ganesh"}, config=config)
 
         assert res1["reflection_count"] == 4
+        assert "Operation failed after 3 recovery attempts" in res1["final_response"]
 
-        # Turn 2: Starts with reflection_count=4 from Turn 1.
-        # When an error occurs on Turn 2, reflect() immediately increments to 5 (> 3)
-        # and halts Turn 2 on the FIRST error with 0 retries.
+        # Turn 2: Starts a fresh turn. Counter must reset to 0, granting full 3 retries.
         turn2_nodes: List[str] = []
         with patch(
             "jarvis.core.model_router.ModelRouter.execute_inference",
@@ -294,10 +298,33 @@ class TestReflectionLoopBounds:
             for event in graph.stream({"user_input": "turn 2 query", "user_id": "ganesh"}, config=config):
                 turn2_nodes.append(list(event.keys())[0])
 
-        assert turn2_nodes.count("act") == 1, (
-            "Turn 2 had 0 retries because reflection_count leaked from Turn 1!"
+        assert turn2_nodes.count("act") == 4, (
+            f"Expected Turn 2 to have 4 act executions (full 3 retries), got {turn2_nodes.count('act')}"
         )
-        assert turn2_nodes.count("reflect") == 1
+        assert turn2_nodes.count("reflect") == 4
+        assert turn2_nodes[-1] == "remember"
+
+    def test_multi_turn_clean_turn_succeeds_after_prior_failure(self):
+        """Verifies that Turn 2 succeeds with confidence 1.0 and 0 errors even after Turn 1 failed."""
+        saver = SqliteCheckpointSaver(db_path=":memory:")
+        graph = build_jarvis_graph(checkpointer=saver)
+        thread_id = f"th_clean_after_fail_{uuid.uuid4().hex[:8]}"
+        config = {"configurable": {"thread_id": thread_id}}
+
+        # Turn 1: fails
+        with patch(
+            "jarvis.core.model_router.ModelRouter.execute_inference",
+            side_effect=Exception("Connection timed out"),
+        ):
+            res1 = graph.invoke({"user_input": "turn 1 query", "user_id": "ganesh"}, config=config)
+        assert res1["reflection_count"] == 4
+
+        # Turn 2: clean fast-path query
+        res2 = graph.invoke({"user_input": "status", "user_id": "ganesh"}, config=config)
+        assert res2["is_fast_path"] is True
+        assert res2["confidence"] == 1.0
+        assert len(res2.get("errors", [])) == 0
+        assert "Operation failed" not in res2["final_response"]
 
 
 # ═══════════════════════════════════════════════════════════════════════════════

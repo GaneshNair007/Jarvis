@@ -118,7 +118,60 @@ DEFAULT_POLICY_ALLOWED_APPS = ["notepad", "code", "cmd", "powershell", "explorer
 
 DEFAULT_POLICY_BLOCKED_APPS = ["regedit", "format", "crypto_wallet", "metamask"]
 
-DEFAULT_CRITICAL_KEYWORDS = ["drop database", "format disk", "wipe system", "trade crypto", "mint nft"]
+DEFAULT_CRITICAL_POWERS = {
+    "format_disk",
+    "drop_database",
+    "wipe_system",
+    "reboot_host",
+    "shutdown_host",
+    "deploy_production",
+    "execute_trade",
+    "trade_crypto",
+    "mint_nft",
+}
+
+DEFAULT_APPROVAL_REQUIRED_POWERS = {
+    # Tier 3 Critical Powers
+    "format_disk",
+    "drop_database",
+    "wipe_system",
+    "reboot_host",
+    "shutdown_host",
+    "deploy_production",
+    "execute_trade",
+    "trade_crypto",
+    "mint_nft",
+    # Tier 2 Explicit Approval Powers
+    "delete_file",
+    "drop_table",
+    "kill_process",
+    "send_email",
+    "post_tweet",
+    "submit_form",
+    "send_chat_message",
+    "purchase_item",
+}
+
+DEFAULT_CRITICAL_KEYWORDS = [
+    "drop database",
+    "drop_database",
+    "format disk",
+    "format_disk",
+    "wipe system",
+    "wipe_system",
+    "trade crypto",
+    "trade_crypto",
+    "mint nft",
+    "mint_nft",
+    "reboot host",
+    "reboot_host",
+    "shutdown host",
+    "shutdown_host",
+    "deploy production",
+    "deploy_production",
+    "execute trade",
+    "execute_trade",
+]
 
 DEFAULT_HIGH_RISK_KEYWORDS = ["delete file", "rm -rf", "drop table", "send email", "post tweet", "curl -x post"]
 
@@ -126,19 +179,48 @@ DEFAULT_MEDIUM_RISK_KEYWORDS = ["write file", "create directory", "npm install",
 
 DEFAULT_TIER2_KEYWORDS = [
     "delete file",
+    "delete_file",
     "rm -rf",
+    "rm_rf",
+    "drop table",
+    "drop_table",
+    "kill process",
+    "kill_process",
     "send email",
+    "send_email",
     "post to",
+    "post_tweet",
+    "post tweet",
+    "submit form",
+    "submit_form",
+    "send chat message",
+    "send_chat_message",
+    "purchase item",
+    "purchase_item",
     "purchase",
     "buy",
     "book flight",
+    "book_flight",
     "push to main",
+    "push_to_main",
     "deploy to prod",
+    "deploy_to_prod",
     "click on",
     "type password",
 ]
 
-DEFAULT_TIER1_KEYWORDS = ["create draft", "write file", "save note", "test code", "ingest document"]
+DEFAULT_TIER1_KEYWORDS = [
+    "create draft",
+    "create_draft",
+    "write file",
+    "write_file",
+    "save note",
+    "save_note",
+    "test code",
+    "test_code",
+    "ingest document",
+    "ingest_document",
+]
 
 
 # ─── Search Brain Defaults ──────────────────────────────────────────────────

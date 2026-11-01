@@ -161,11 +161,11 @@ class TestPolicyGateTier3Adversarial:
             assert result.get("final_response") is None, f"Query '{query}' leaked to act and executed: {result.get('final_response')}"
             assert result.get("model_route") is None, f"Query '{query}' invoked model routing"
 
-    def test_tier3_dangerous_power_names_bypass_empirical_finding(self):
+    def test_tier3_dangerous_power_names_deterministic_halt(self):
         """
-        EMPIRICAL CHALLENGE: Tests whether literal dangerous power names
-        ('format_disk', 'reboot_host', 'deploy_production') are detected as Tier 3 or bypass policy.
-        Documents the empirical reality of current policy_engine keyword matching vs policy_gate power names.
+        VERIFICATION OF FIX (VULN-M1-01):
+        Literal dangerous power names ('format_disk', 'reboot_host', 'deploy_production')
+        are normalized, classified as Tier 3 (critical), and deterministically halted at END_POLICY_HALT.
         """
         saver = SqliteCheckpointSaver(db_path=":memory:")
         graph = build_jarvis_graph(checkpointer=saver)
@@ -175,27 +175,30 @@ class TestPolicyGateTier3Adversarial:
             {"user_input": "format_disk", "user_id": "ganesh"},
             config={"configurable": {"thread_id": f"th_fd_{uuid.uuid4().hex[:6]}"}},
         )
+        assert res_format.get("policy_tier") == 3
+        assert res_format.get("approval_required") is True
+        assert res_format.get("final_response") is None
+        assert res_format.get("model_route") is None
+
         # 2. Test reboot_host
         res_reboot = graph.invoke(
             {"user_input": "reboot_host", "user_id": "ganesh"},
             config={"configurable": {"thread_id": f"th_rb_{uuid.uuid4().hex[:6]}"}},
         )
+        assert res_reboot.get("policy_tier") == 3
+        assert res_reboot.get("approval_required") is True
+        assert res_reboot.get("final_response") is None
+        assert res_reboot.get("model_route") is None
+
         # 3. Test deploy_production
         res_deploy = graph.invoke(
             {"user_input": "deploy_production", "user_id": "ganesh"},
             config={"configurable": {"thread_id": f"th_dp_{uuid.uuid4().hex[:6]}"}},
         )
-
-        # Empirical findings: PolicyEngine assigns tier 0 because of missing snake_case aliases
-        # and omission from DEFAULT_CRITICAL_KEYWORDS.
-        # This empirically demonstrates that format_disk, reboot_host, deploy_production bypass policy halts!
-        format_bypassed = (res_format.get("policy_tier") == 0 and res_format.get("model_route") is not None)
-        reboot_bypassed = (res_reboot.get("policy_tier") == 0 and res_reboot.get("model_route") is not None)
-        deploy_bypassed = (res_deploy.get("policy_tier") == 0 and res_deploy.get("model_route") is not None)
-
-        assert format_bypassed, "Empirical observation: format_disk bypassed policy gate"
-        assert reboot_bypassed, "Empirical observation: reboot_host bypassed policy gate"
-        assert deploy_bypassed, "Empirical observation: deploy_production bypassed policy gate"
+        assert res_deploy.get("policy_tier") == 3
+        assert res_deploy.get("approval_required") is True
+        assert res_deploy.get("final_response") is None
+        assert res_deploy.get("model_route") is None
 
     def test_emergency_kill_switch_deterministic_halt(self):
         """
@@ -267,28 +270,44 @@ class TestTokenForgeryAndTampering:
         assert valid is False
         assert "expired" in reason.lower()
 
-    def test_graph_approval_token_validation_gap_empirical_finding(self):
+    def test_graph_approval_token_validation_enforces_cryptographic_verification(self):
         """
-        EMPIRICAL CHALLENGE: Tests whether passing an unverified/forged approval_id string
-        into the 8-node graph bypasses the Tier 3 policy gate without cryptographic verification.
-        Demonstrates the architectural decoupling between graph routing and PolicyGate.
+        Verifies that passing a forged approval_id into the 8-node graph deterministically
+        halts at policy gate with status DENIED, while a genuine HMAC token allows execution.
+        Remediates VULN-M1-02.
         """
         saver = SqliteCheckpointSaver(db_path=":memory:")
         graph = build_jarvis_graph(checkpointer=saver)
 
-        thread_id = f"th_forge_{uuid.uuid4().hex[:6]}"
-        result = graph.invoke(
+        # 1. Forged token MUST halt at END_POLICY_HALT with DENIED status
+        thread_id_forged = f"th_forge_{uuid.uuid4().hex[:6]}"
+        result_forged = graph.invoke(
             {
                 "user_input": "format disk",  # Triggers Tier 3
                 "approval_id": "completely_bogus_unverified_token_string",  # Forged non-HMAC string
                 "user_id": "ganesh",
             },
-            config={"configurable": {"thread_id": thread_id}},
+            config={"configurable": {"thread_id": thread_id_forged}},
         )
+        assert result_forged.get("policy_tier") == 3
+        assert result_forged.get("model_route") is None, "Forged token must NOT execute act!"
+        assert result_forged.get("approvals", {}).get("status") == "DENIED"
+        assert any(e.get("code") == "POLICY_DENIED" for e in result_forged.get("errors", []))
 
-        # Because _after_policy only checks `bool(state.get('approval_id'))` and never
-        # verifies the HMAC token against PolicyGate, the forged token allows act to execute!
-        assert result.get("policy_tier") == 3
-        assert result.get("model_route") is not None, "Forged token bypassed _after_policy and reached act!"
-        assert result.get("approvals", {}).get("status") == "APPROVED"
-        assert result.get("approvals", {}).get("approval_id") == "completely_bogus_unverified_token_string"
+        # 2. Genuine HMAC token MUST verify and execute act
+        task_id = f"tsk_valid_{uuid.uuid4().hex[:6]}"
+        thread_id_valid = f"th_valid_{uuid.uuid4().hex[:6]}"
+        payload_hash = policy_gate.hash_payload("format disk")
+        token, _ = policy_gate.generate_approval_token(task_id, "format_disk", payload_hash)
+
+        result_valid = graph.invoke(
+            {
+                "task_id": task_id,
+                "user_input": "format disk",
+                "approval_id": token,
+                "user_id": "ganesh",
+            },
+            config={"configurable": {"thread_id": thread_id_valid}},
+        )
+        assert result_valid.get("approvals", {}).get("status") == "APPROVED"
+        assert result_valid.get("model_route") is not None, "Genuine token must proceed to act!"

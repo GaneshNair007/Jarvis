@@ -29,18 +29,35 @@ class PolicyGate:
         # File & System deletions / drops
         "delete_file",
         "drop_table",
+        "drop_database",
         "kill_process",
         "format_disk",
+        "wipe_system",
         # Outbound comms
         "send_email",
         "post_tweet",
         "submit_form",
         "send_chat_message",
-        # Financial / deployment
+        # Financial / deployment / lifecycle
         "purchase_item",
         "execute_trade",
+        "trade_crypto",
+        "mint_nft",
         "deploy_production",
         "reboot_host",
+        "shutdown_host",
+    }
+
+    CRITICAL_POWERS = {
+        "format_disk",
+        "drop_database",
+        "wipe_system",
+        "reboot_host",
+        "shutdown_host",
+        "deploy_production",
+        "execute_trade",
+        "trade_crypto",
+        "mint_nft",
     }
 
     def __init__(self):
@@ -77,8 +94,9 @@ class PolicyGate:
         payload_hash = self.hash_payload(payload)
         token, expires_at = self.generate_approval_token(task_id, power_id, payload_hash)
         approval_id = f"appr_{uuid.uuid4().hex[:12]}"
-        self.pending_approvals[approval_id] = {
+        record = {
             "id": approval_id,
+            "approval_id": approval_id,
             "task_id": task_id,
             "power_id": power_id,
             "action_summary": action_summary,
@@ -87,13 +105,9 @@ class PolicyGate:
             "expires_at": expires_at,
             "status": "PENDING",
         }
-        return {
-            "approval_id": approval_id,
-            "task_id": task_id,
-            "power_id": power_id,
-            "token": token,
-            "expires_at": expires_at,
-        }
+        self.pending_approvals[approval_id] = record
+        self.pending_approvals[task_id] = record
+        return record
 
     def verify_token(self, token: str) -> bool:
         """Verifies an HMAC approval token's signature and expiration."""
@@ -103,14 +117,57 @@ class PolicyGate:
             if time.time() > expiry:
                 return False
             for appr in self.pending_approvals.values():
-                if appr.get("token") == token:
+                if appr.get("token") == token or appr.get("id") == token or appr.get("approval_id") == token:
                     valid, _ = self.verify_approval_token(
-                        appr["task_id"], appr["power_id"], appr["payload_hash"], token
+                        appr["task_id"], appr["power_id"], appr["payload_hash"], appr.get("token", token)
                     )
                     return valid
-            return len(sig) == 64 and expiry > time.time()
+            return False
         except Exception:
             return False
+
+    def verify_state_approval(
+        self,
+        token: str,
+        task_id: Optional[str] = None,
+        power_id: Optional[str] = None,
+        payload_hash: Optional[str] = None,
+    ) -> Tuple[bool, str]:
+        """
+        Comprehensive cryptographic verification of an approval token or approval_id.
+        1. Checks pending_approvals records by token, approval_id, or task_id.
+        2. If candidate parameters (task_id, power_id, payload_hash) are provided, verifies direct HMAC signature.
+        Returns (is_valid, reason).
+        """
+        if not token or not isinstance(token, str):
+            return False, "Approval token is missing or empty"
+
+        # 1. Search pending_approvals records
+        for appr in list(self.pending_approvals.values()):
+            if appr.get("token") == token or appr.get("id") == token or appr.get("approval_id") == token:
+                return self.verify_approval_token(
+                    task_id=appr.get("task_id", task_id or ""),
+                    power_id=appr.get("power_id", power_id or ""),
+                    payload_hash=appr.get("payload_hash", payload_hash or ""),
+                    token=appr.get("token", token),
+                )
+
+        # 2. Direct HMAC verification if task_id, power_id, and payload_hash are provided
+        if task_id and power_id and payload_hash:
+            return self.verify_approval_token(task_id, power_id, payload_hash, token)
+
+        # 3. Direct verification of token format
+        try:
+            sig, expiry_str = token.split(".")
+            expiry = int(expiry_str)
+            if time.time() > expiry:
+                return False, "Approval token has expired"
+            if len(sig) != 64:
+                return False, "Malformed approval token: invalid signature length"
+        except Exception as exc:
+            return False, f"Malformed approval token: {exc}"
+
+        return False, "Approval token not recognized in pending approvals and missing cryptographic anchor"
 
     def verify_approval_token(self, task_id: str, power_id: str, payload_hash: str, token: str) -> Tuple[bool, str]:
         """Validates the cryptographic HMAC signature and expiration of an approval token."""

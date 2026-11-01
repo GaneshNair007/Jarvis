@@ -191,3 +191,4 @@ def test_api_ops_endpoints(client):
     r3 = client.get("/api/v1/ops/weekly-sweep")
     assert r3.status_code == 200
     assert r3.json()["workflow"] == "weekly_ops_sweep"
+
