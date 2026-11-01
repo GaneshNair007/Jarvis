@@ -40,10 +40,7 @@ class MultiAgentPowers:
             "power_id": "PWR-289",
             "plan_id": plan.plan_id,
             "goal": plan.goal,
-            "tasks": [
-                {"task_id": t.task_id, "title": t.title, "role": t.role.value}
-                for t in plan.tasks
-            ]
+            "tasks": [{"task_id": t.task_id, "title": t.title, "role": t.role.value} for t in plan.tasks],
         }
 
     def invoke_subagent(self, role: str, inputs: Dict[str, Any]) -> Dict[str, Any]:
@@ -65,10 +62,7 @@ class MultiAgentPowers:
     def get_agent_dashboard(self) -> Dict[str, Any]:
         """PWR-303: Live telemetry and status of all active agent swarms."""
         state = self.swarm.get_dashboard_state()
-        return {
-            "power_id": "PWR-303",
-            **state
-        }
+        return {"power_id": "PWR-303", **state}
 
     def handoff_task(self, source_agent: str, target_agent: str, payload: Dict[str, Any]) -> Dict[str, Any]:
         """PWR-304: Preserves context during seamless handoff between two agents."""
@@ -77,12 +71,13 @@ class MultiAgentPowers:
             "source_agent": source_agent,
             "target_agent": target_agent,
             "payload_preserved": True,
-            "status": "HANDOFF_SUCCESS"
+            "status": "HANDOFF_SUCCESS",
         }
 
     def execute_parallel_swarms(self, goals: List[str]) -> Dict[str, Any]:
         """PWR-305: Executes multiple agent tasks with bounded concurrency (max 2-3)."""
         plans = [self.swarm.decompose_goal(g) for g in goals]
+
         async def _run_all():
             return await asyncio.gather(*(self.swarm.execute_plan(p.plan_id) for p in plans))
 
@@ -114,4 +109,3 @@ class MultiAgentPowers:
 
 
 multiagent_powers = MultiAgentPowers()
-

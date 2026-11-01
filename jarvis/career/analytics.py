@@ -48,7 +48,7 @@ class CareerPipelineAnalytics:
         job_title: str,
         job_url: Optional[str] = None,
         fit_score: float = 0.0,
-        status: str = "applied"
+        status: str = "applied",
     ) -> ApplicationEntry:
         """Records a new application in the local pipeline ledger."""
         app_id = f"app_{company_name.lower().replace(' ', '_')}_{job_title.lower().replace(' ', '_')}"
@@ -60,14 +60,16 @@ class CareerPipelineAnalytics:
             job_title=job_title,
             job_url=job_url,
             fit_score=fit_score,
-            status=status
+            status=status,
         )
         self.applications[clean_id] = entry
         self._save()
         logger.info(f"Recorded application {clean_id}: {job_title} at {company_name}")
         return entry
 
-    def update_status(self, application_id: str, new_status: str, note: Optional[str] = None) -> Optional[ApplicationEntry]:
+    def update_status(
+        self, application_id: str, new_status: str, note: Optional[str] = None
+    ) -> Optional[ApplicationEntry]:
         """Updates the status of an existing application."""
         if application_id not in self.applications:
             return None
@@ -95,18 +97,10 @@ class CareerPipelineAnalytics:
                 "funnel": {"applied": 0, "screening": 0, "interview": 0, "offer": 0, "rejected": 0},
                 "conversion_rates": {"screening_rate": 0.0, "interview_rate": 0.0, "offer_rate": 0.0},
                 "average_fit_score": 0.0,
-                "insights": ["No applications recorded yet. Use /job-scan or /record-application to begin."]
+                "insights": ["No applications recorded yet. Use /job-scan or /record-application to begin."],
             }
 
-        counts = {
-            "saved": 0,
-            "applied": 0,
-            "screening": 0,
-            "interview": 0,
-            "offer": 0,
-            "rejected": 0,
-            "withdrawn": 0
-        }
+        counts = {"saved": 0, "applied": 0, "screening": 0, "interview": 0, "offer": 0, "rejected": 0, "withdrawn": 0}
 
         total_score = 0.0
         for app in self.applications.values():
@@ -118,18 +112,22 @@ class CareerPipelineAnalytics:
         avg_score = round(total_score / total, 1)
 
         # Conversions
-        active_applied = max(1, counts["applied"] + counts["screening"] + counts["interview"] + counts["offer"] + counts["rejected"])
+        active_applied = max(
+            1, counts["applied"] + counts["screening"] + counts["interview"] + counts["offer"] + counts["rejected"]
+        )
         screening_rate = round((counts["screening"] + counts["interview"] + counts["offer"]) / active_applied * 100, 1)
         interview_rate = round((counts["interview"] + counts["offer"]) / active_applied * 100, 1)
         offer_rate = round(counts["offer"] / active_applied * 100, 1)
 
         insights = [
             f"Pipeline contains {total} tracked applications with an average fit score of {avg_score}%.",
-            f"Screening conversion rate is {screening_rate}% across active applications."
+            f"Screening conversion rate is {screening_rate}% across active applications.",
         ]
 
         if counts["rejected"] > 0:
-            insights.append(f"Rejected applications ({counts['rejected']}) indicate checking keyword match density on ATS resumes.")
+            insights.append(
+                f"Rejected applications ({counts['rejected']}) indicate checking keyword match density on ATS resumes."
+            )
 
         return {
             "total_applications": total,
@@ -137,9 +135,8 @@ class CareerPipelineAnalytics:
             "conversion_rates": {
                 "screening_rate": screening_rate,
                 "interview_rate": interview_rate,
-                "offer_rate": offer_rate
+                "offer_rate": offer_rate,
             },
             "average_fit_score": avg_score,
-            "insights": insights
+            "insights": insights,
         }
-

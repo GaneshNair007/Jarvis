@@ -20,7 +20,7 @@ class SmartHomePowers:
             "light.office_desk": {"state": "on", "brightness": 80, "color_temp": 4000},
             "light.living_room": {"state": "off", "brightness": 0, "color_temp": 2700},
             "climate.thermostat": {"state": "heat", "temperature": 70, "target_temperature": 72},
-            "lock.front_door": {"state": "locked"}
+            "lock.front_door": {"state": "locked"},
         }
 
     def get_device_status(self, entity_id: Optional[str] = None) -> Dict[str, Any]:
@@ -28,11 +28,7 @@ class SmartHomePowers:
         if entity_id:
             state = self.device_states.get(entity_id, {"state": "unavailable"})
             return {"power_id": "PWR-238", "entity_id": entity_id, "state": state}
-        return {
-            "power_id": "PWR-238",
-            "devices_count": len(self.device_states),
-            "devices": self.device_states
-        }
+        return {"power_id": "PWR-238", "devices_count": len(self.device_states), "devices": self.device_states}
 
     def toggle_light(self, entity_id: str, state: str = "toggle") -> Dict[str, Any]:
         """PWR-239: Toggles or sets smart light state."""
@@ -41,12 +37,7 @@ class SmartHomePowers:
             dev["state"] = "off" if dev.get("state") == "on" else "on"
         else:
             dev["state"] = state.lower()
-        return {
-            "power_id": "PWR-239",
-            "entity_id": entity_id,
-            "new_state": dev["state"]
-        }
+        return {"power_id": "PWR-239", "entity_id": entity_id, "new_state": dev["state"]}
 
 
 smart_home_powers = SmartHomePowers()
-

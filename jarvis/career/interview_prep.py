@@ -17,10 +17,7 @@ class InterviewPrepEngine:
     """Prepares users for technical, system design, and behavioral interviews."""
 
     def prepare_interview(
-        self,
-        role_title: str,
-        company_name: str,
-        focus_tech: Optional[List[str]] = None
+        self, role_title: str, company_name: str, focus_tech: Optional[List[str]] = None
     ) -> InterviewPrepSession:
         """Constructs a comprehensive interview readiness session."""
         tech_list = focus_tech or ["Distributed Systems", "Concurrency", "FastAPI", "SQLite FTS5", "Vector Search"]
@@ -29,30 +26,30 @@ class InterviewPrepEngine:
             {
                 "category": "Architecture & Scaling",
                 "question": f"Describe a time you designed a mission-critical system for {role_title} that handled high concurrency. How did you ensure sub-second response times?",
-                "star_framework": "Situation: Legacy latency bottlenecks; Task: Re-architect retrieval layer; Action: Fused lexical FTS5 and vector indices with async caching; Result: Reduced p99 latency by 85%."
+                "star_framework": "Situation: Legacy latency bottlenecks; Task: Re-architect retrieval layer; Action: Fused lexical FTS5 and vector indices with async caching; Result: Reduced p99 latency by 85%.",
             },
             {
                 "category": "Conflict & Technical Disagreement",
                 "question": "Tell me about a time you disagreed with a peer or leadership regarding technology selection. How did you resolve it?",
-                "star_framework": "Situation: Debate over cloud API dependency vs local-first SQLite/Qdrant; Task: Justify local-first privacy; Action: Ran empirical latency & cost benchmarks; Result: Secured consensus for local-first design."
+                "star_framework": "Situation: Debate over cloud API dependency vs local-first SQLite/Qdrant; Task: Justify local-first privacy; Action: Ran empirical latency & cost benchmarks; Result: Secured consensus for local-first design.",
             },
             {
                 "category": "Failure & Resilience",
                 "question": "Walk me through an incident where a production service failed unexpectedly. How did you diagnose, mitigate, and prevent recurrence?",
-                "star_framework": "Situation: Async worker queue saturation under unexpected burst load; Task: Prevent cascade failure; Action: Instituted backpressure and circuit breakers; Result: Zero data loss, automated recovery."
-            }
+                "star_framework": "Situation: Async worker queue saturation under unexpected burst load; Task: Prevent cascade failure; Action: Instituted backpressure and circuit breakers; Result: Zero data loss, automated recovery.",
+            },
         ]
 
         questions_to_ask_team = [
             f"What is the team's typical development-to-deployment cycle for new capabilities at {company_name}?",
             "How does the engineering organization balance feature velocity against technical debt and architectural refactoring?",
-            "What are the biggest scalability or data integrity challenges the engineering team expects to face in the next 12 months?"
+            "What are the biggest scalability or data integrity challenges the engineering team expects to face in the next 12 months?",
         ]
 
         red_flag_warnings = [
             "Excessive churn in engineering leadership over the past 12-18 months.",
             "Lack of dedicated CI/CD regression testing or reliance on manual production deployments.",
-            "Vague descriptions of role ownership or ambiguous on-call rotation schedules."
+            "Vague descriptions of role ownership or ambiguous on-call rotation schedules.",
         ]
 
         logger.info(f"Generated interview prep session for {role_title} at {company_name}")
@@ -63,7 +60,7 @@ class InterviewPrepEngine:
             star_questions=star_questions,
             technical_focus_areas=tech_list,
             questions_to_ask_team=questions_to_ask_team,
-            red_flag_warnings=red_flag_warnings
+            red_flag_warnings=red_flag_warnings,
         )
 
     def check_red_flags(self, company_name: str, job_description: str) -> List[str]:
@@ -79,7 +76,7 @@ class InterviewPrepEngine:
             ("rockstar", "May indicate immature engineering hierarchy or subjective performance reviews."),
             ("ninja", "May indicate lack of structured job scope."),
             ("guru", "May indicate unstructured organizational expectations."),
-            ("unlimited pto", "Verify actual average days taken; can sometimes discourage planned vacation time.")
+            ("unlimited pto", "Verify actual average days taken; can sometimes discourage planned vacation time."),
         ]
 
         for phrase, meaning in patterns:

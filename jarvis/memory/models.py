@@ -11,13 +11,12 @@ Defines:
 import os
 import time
 from typing import Optional
-from sqlalchemy import (
-    create_engine, Column, String, Integer, Float, Text, Boolean, DateTime, ForeignKey, JSON
-)
+from sqlalchemy import create_engine, Column, String, Integer, Float, Text, Boolean, DateTime, ForeignKey, JSON
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 from jarvis.config import settings
 
 Base = declarative_base()
+
 
 class User(Base):
     __tablename__ = "users"
@@ -26,6 +25,7 @@ class User(Base):
     role = Column(String(64), default="owner")
     created_at = Column(Float, default=time.time)
 
+
 class Conversation(Base):
     __tablename__ = "conversations"
     id = Column(String(64), primary_key=True)
@@ -33,6 +33,7 @@ class Conversation(Base):
     title = Column(String(256), default="New Session")
     created_at = Column(Float, default=time.time)
     updated_at = Column(Float, default=time.time)
+
 
 class Message(Base):
     __tablename__ = "messages"
@@ -43,6 +44,7 @@ class Message(Base):
     model = Column(String(64), nullable=True)
     tokens = Column(Integer, default=0)
     created_at = Column(Float, default=time.time)
+
 
 class Task(Base):
     __tablename__ = "tasks"
@@ -57,6 +59,7 @@ class Task(Base):
     created_at = Column(Float, default=time.time)
     updated_at = Column(Float, default=time.time)
 
+
 class TaskStep(Base):
     __tablename__ = "task_steps"
     id = Column(String(64), primary_key=True)
@@ -68,6 +71,7 @@ class TaskStep(Base):
     artifact = Column(String(256), nullable=True)
     created_at = Column(Float, default=time.time)
 
+
 class TaskEvent(Base):
     __tablename__ = "task_events"
     id = Column(String(64), primary_key=True)
@@ -75,6 +79,7 @@ class TaskEvent(Base):
     event_type = Column(String(64), nullable=False)
     payload = Column(Text, nullable=True)
     timestamp = Column(Float, default=time.time)
+
 
 class Approval(Base):
     __tablename__ = "approvals"
@@ -87,6 +92,7 @@ class Approval(Base):
     status = Column(String(32), default="PENDING")
     created_at = Column(Float, default=time.time)
     expires_at = Column(Float, nullable=False)
+
 
 class AuditEvent(Base):
     __tablename__ = "audit_events"
@@ -109,6 +115,7 @@ class AuditEvent(Base):
     prev_hash = Column(String(64), nullable=True)
     timestamp = Column(Float, default=time.time)
 
+
 class Power(Base):
     __tablename__ = "powers"
     power_id = Column(String(64), primary_key=True)
@@ -119,6 +126,7 @@ class Power(Base):
     approval_required = Column(Boolean, default=False)
     danger_level = Column(String(32), default="low")
     version = Column(String(32), default="1.0.0")
+
 
 class Memory(Base):
     __tablename__ = "memories"
@@ -133,6 +141,7 @@ class Memory(Base):
     created_at = Column(Float, default=time.time)
     updated_at = Column(Float, default=time.time)
 
+
 class Document(Base):
     __tablename__ = "documents"
     id = Column(String(64), primary_key=True)
@@ -146,6 +155,7 @@ class Document(Base):
     metadata_json = Column(Text, nullable=True)
     created_at = Column(Float, default=time.time)
 
+
 class DocumentChunk(Base):
     __tablename__ = "document_chunks"
     id = Column(String(64), primary_key=True)
@@ -156,6 +166,7 @@ class DocumentChunk(Base):
     metadata_json = Column(Text, nullable=True)
     created_at = Column(Float, default=time.time)
 
+
 class Embedding(Base):
     __tablename__ = "embeddings"
     id = Column(String(64), primary_key=True)
@@ -165,6 +176,7 @@ class Embedding(Base):
     model = Column(String(64), default="nomic-embed-text")
     created_at = Column(Float, default=time.time)
 
+
 def get_db_engine():
     """Returns SQLAlchemy engine connecting to configured database_url or SQLite fallback."""
     db_url = settings.database_url
@@ -173,6 +185,7 @@ def get_db_engine():
     # Default to local SQLite database
     sqlite_path = settings.db_path.parent / "jarvis_orm.db"
     return create_engine(f"sqlite:///{sqlite_path}", echo=False)
+
 
 def init_db(engine=None):
     """Creates all database tables."""

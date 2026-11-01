@@ -95,7 +95,11 @@ def cancel_task(task_id: str, reason: str = "User requested cancellation"):
     if not current_state:
         raise HTTPException(status_code=404, detail=f"Task '{task_id}' not found")
     if current_state in ("COMPLETED", "FAILED_TERMINAL", "CANCELLED"):
-        return {"task_id": task_id, "status": current_state, "message": f"Task already in terminal state: {current_state}"}
+        return {
+            "task_id": task_id,
+            "status": current_state,
+            "message": f"Task already in terminal state: {current_state}",
+        }
 
     state_machine.transition(task_id, "CANCELLED", reason=reason)
     audit_ledger.record(
@@ -168,11 +172,13 @@ def get_task_artifacts(task_id: str):
             outputs = e.get("outputs", {})
             if isinstance(outputs, dict):
                 if "sha256" in outputs or "report_file" in outputs or "file" in outputs:
-                    artifacts.append({
-                        "event_type": e.get("event_type"),
-                        "timestamp": e.get("timestamp"),
-                        "artifact_metadata": outputs,
-                    })
+                    artifacts.append(
+                        {
+                            "event_type": e.get("event_type"),
+                            "timestamp": e.get("timestamp"),
+                            "artifact_metadata": outputs,
+                        }
+                    )
     return {
         "task_id": task_id,
         "total_artifacts": len(artifacts),

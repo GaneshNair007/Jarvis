@@ -7,6 +7,7 @@ from jarvis.api.server import app
 
 client = TestClient(app)
 
+
 def test_api_model_status():
     response = client.get("/model/status")
     assert response.status_code == 200
@@ -15,28 +16,28 @@ def test_api_model_status():
     assert "tier_2_private" in data
     assert "tier_3_cloud" in data
 
+
 def test_api_model_route_bypass():
-    payload = {
-        "user_intent": "Open VS Code",
-        "task_type": "instant_command"
-    }
+    payload = {"user_intent": "Open VS Code", "task_type": "instant_command"}
     response = client.post("/model/route", json=payload)
     assert response.status_code == 200
     data = response.json()
     assert data["tier"] == "BYPASS"
     assert data["provider"] == "deterministic"
 
+
 def test_api_model_route_sensitive():
     payload = {
         "user_intent": "Analyze private tax statement",
         "task_type": "memory_retrieval",
         "sensitivity_level": "confidential",
-        "attached_context": "Annual salary and investment holdings"
+        "attached_context": "Annual salary and investment holdings",
     }
     response = client.post("/model/route", json=payload)
     assert response.status_code == 200
     data = response.json()
     assert data["tier"] in ["TIER_1_LOCAL", "TIER_2_PRIVATE"]
+
 
 def test_api_system_health():
     response = client.get("/api/v1/system/health")
@@ -46,6 +47,7 @@ def test_api_system_health():
     assert "memory" in data
     assert "disk" in data
 
+
 def test_api_chat():
     payload = {"query": "System health"}
     response = client.post("/api/v1/chat", json=payload)
@@ -53,6 +55,7 @@ def test_api_chat():
     data = response.json()
     assert data["status"] == "COMPLETED"
     assert data["tier"] == "BYPASS"
+
 
 def test_api_powers():
     response = client.get("/api/v1/powers")
@@ -62,6 +65,7 @@ def test_api_powers():
     assert len(data["powers"]) == 355
     assert data["total_categories"] == 22
 
+
 def test_api_powers_ecosystem():
     response = client.get("/api/v1/powers/ecosystem")
     assert response.status_code == 200
@@ -70,6 +74,7 @@ def test_api_powers_ecosystem():
     assert data["total_repositories"] == 11
     assert "openclaw" in data["repositories"]
     assert "browser-use" in data["repositories"]
+
 
 def test_api_power_detail():
     # Valid lookup uppercase
@@ -85,6 +90,7 @@ def test_api_power_detail():
     # Invalid lookup 404
     res_404 = client.get("/api/v1/powers/PWR-NONEXISTENT")
     assert res_404.status_code == 404
+
 
 def test_api_powers_filters():
     # Filter by repo
@@ -102,12 +108,14 @@ def test_api_powers_filters():
     assert res_q.status_code == 200
     assert res_q.json()["total_matches"] >= 1
 
+
 def test_api_audit():
     response = client.get("/api/v1/audit?verify_chain=true")
     assert response.status_code == 200
     data = response.json()
     assert "entries" in data
     assert data["chain_integrity"]["valid"] is True
+
 
 def test_api_kill_switch():
     # Activate

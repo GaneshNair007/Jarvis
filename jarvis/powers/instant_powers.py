@@ -13,6 +13,7 @@ from typing import Dict, Any
 
 from jarvis.constants import DEFAULT_APP_COMMANDS
 
+
 class InstantPowers:
     @staticmethod
     def lock_workstation() -> Dict[str, Any]:
@@ -20,6 +21,7 @@ class InstantPowers:
         try:
             if os.name == "nt":
                 import ctypes
+
                 ctypes.windll.user32.LockWorkStation()
             else:
                 subprocess.run(["xdg-screensaver", "lock"], check=False)
@@ -32,6 +34,7 @@ class InstantPowers:
         """PWR-038: Read current text content from the OS clipboard."""
         try:
             import tkinter as tk
+
             root = tk.Tk()
             root.withdraw()
             text = root.clipboard_get()
@@ -53,5 +56,6 @@ class InstantPowers:
             return {"status": "success", "launched": app_name, "command": cmd}
         except Exception as e:
             return {"status": "error", "message": f"Failed to launch '{app_name}': {e}"}
+
 
 instant_powers = InstantPowers()

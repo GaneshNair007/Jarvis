@@ -21,9 +21,7 @@ class ITAdminPowers:
         ram = psutil.virtual_memory()
         disk = psutil.disk_usage(settings.disk_mount_path)
 
-        boot_time = datetime.datetime.fromtimestamp(psutil.boot_time()).strftime(
-            "%Y-%m-%d %H:%M:%S"
-        )
+        boot_time = datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")
 
         # Fast non-blocking top processes (sampled only when requested)
         top_processes = []

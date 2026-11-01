@@ -17,10 +17,7 @@ class ContactFinder:
     """Finds contacts and drafts tailored LinkedIn / Email outreach."""
 
     def find_contacts(
-        self,
-        company_name: str,
-        role_title: Optional[str] = None,
-        target_department: str = "Engineering"
+        self, company_name: str, role_title: Optional[str] = None, target_department: str = "Engineering"
     ) -> List[ContactProfile]:
         """Discovers primary contacts and prepares tailored connection notes."""
         company = company_name.strip()
@@ -38,7 +35,7 @@ class ContactFinder:
                     f"Hi there! I noticed {company}'s exciting work in {target_department}. "
                     f"I'm an experienced Systems Engineer with a deep background in distributed AI and low-latency infrastructure. "
                     f"I would love to connect and learn more about your engineering team's current priorities for the {role} role!"
-                )
+                ),
             ),
             ContactProfile(
                 name=f"Hiring Manager ({company})",
@@ -51,8 +48,8 @@ class ContactFinder:
                     f"Hello! I've been following {company}'s architectural initiatives. As a Principal AI Systems Engineer "
                     f"specializing in high-throughput async backends and local search engines, I saw your opening for {role}. "
                     f"Would you be open to a brief chat regarding how my systems experience aligns with your roadmap?"
-                )
-            )
+                ),
+            ),
         ]
 
         logger.info(f"Discovered {len(contacts)} contacts for {company} ({role})")

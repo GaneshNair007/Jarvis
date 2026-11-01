@@ -34,8 +34,8 @@ class Verdict(str, Enum):
 
 @dataclass
 class CriticIssue:
-    severity: str   # info | warning | error | critical
-    category: str   # safety | completeness | accuracy | quality | policy
+    severity: str  # info | warning | error | critical
+    category: str  # safety | completeness | accuracy | quality | policy
     description: str
     suggestion: str = ""
 
@@ -43,11 +43,12 @@ class CriticIssue:
 @dataclass
 class CriticReport:
     """Structured critique of an executor's output."""
+
     report_id: str = field(default_factory=lambda: f"crit_{uuid.uuid4().hex[:8]}")
     task_id: str = ""
     goal: str = ""
     verdict: Verdict = Verdict.PASS
-    score: float = 1.0        # 0.0 (terrible) → 1.0 (perfect)
+    score: float = 1.0  # 0.0 (terrible) → 1.0 (perfect)
     issues: List[CriticIssue] = field(default_factory=list)
     summary: str = ""
     retry_recommended: bool = False
@@ -139,9 +140,7 @@ class CriticAgent:
 
         # ── Verdict scoring ───────────────────────────────────────────────────
         verdict, score = self._score(issues)
-        retry_recommended = verdict == Verdict.RETRY or any(
-            i.severity == "error" for i in issues
-        )
+        retry_recommended = verdict == Verdict.RETRY or any(i.severity == "error" for i in issues)
 
         summary = self._build_summary(verdict, issues, score)
         duration_ms = round((time.time() - start) * 1000, 2)
@@ -167,26 +166,31 @@ class CriticAgent:
 
     def _safety_scan(self, output: str) -> List[CriticIssue]:
         import re
+
         issues = []
         for name, pattern in self.SAFETY_RED_FLAGS:
             if re.search(pattern, output):
-                issues.append(CriticIssue(
-                    severity="critical",
-                    category="safety",
-                    description=f"Output may contain sensitive data: {name}",
-                    suggestion="Redact or mask sensitive information before returning.",
-                ))
+                issues.append(
+                    CriticIssue(
+                        severity="critical",
+                        category="safety",
+                        description=f"Output may contain sensitive data: {name}",
+                        suggestion="Redact or mask sensitive information before returning.",
+                    )
+                )
         return issues
 
     def _completeness_check(self, goal: str, output: str) -> List[CriticIssue]:
         issues = []
         if not output or len(output.strip()) < 20:
-            issues.append(CriticIssue(
-                severity="error",
-                category="completeness",
-                description="Output is empty or too short to address the goal.",
-                suggestion="Retry the task with a more explicit prompt.",
-            ))
+            issues.append(
+                CriticIssue(
+                    severity="error",
+                    category="completeness",
+                    description="Output is empty or too short to address the goal.",
+                    suggestion="Retry the task with a more explicit prompt.",
+                )
+            )
             return issues
 
         # Check if key terms from the goal appear in the output
@@ -195,37 +199,44 @@ class CriticAgent:
         missing = [w for w in goal_words if w not in output_lower]
 
         if len(missing) > len(goal_words) * 0.6 and len(goal_words) > 3:
-            issues.append(CriticIssue(
-                severity="warning",
-                category="completeness",
-                description=f"Output may not address key goal terms: {', '.join(list(missing)[:5])}",
-                suggestion="Ensure the response directly addresses all aspects of the goal.",
-            ))
+            issues.append(
+                CriticIssue(
+                    severity="warning",
+                    category="completeness",
+                    description=f"Output may not address key goal terms: {', '.join(list(missing)[:5])}",
+                    suggestion="Ensure the response directly addresses all aspects of the goal.",
+                )
+            )
         return issues
 
     def _quality_check(self, output: str) -> List[CriticIssue]:
         issues = []
         if len(output) > 10000:
-            issues.append(CriticIssue(
-                severity="info",
-                category="quality",
-                description="Output is very long and may need summarisation.",
-                suggestion="Consider summarising the output to under 2000 characters.",
-            ))
+            issues.append(
+                CriticIssue(
+                    severity="info",
+                    category="quality",
+                    description="Output is very long and may need summarisation.",
+                    suggestion="Consider summarising the output to under 2000 characters.",
+                )
+            )
         error_phrases = ["traceback", "error:", "exception:", "syntaxerror", "nameerror"]
         if any(p in output.lower() for p in error_phrases):
-            issues.append(CriticIssue(
-                severity="error",
-                category="quality",
-                description="Output contains error traces or exceptions.",
-                suggestion="Fix the underlying error and retry.",
-            ))
+            issues.append(
+                CriticIssue(
+                    severity="error",
+                    category="quality",
+                    description="Output contains error traces or exceptions.",
+                    suggestion="Fix the underlying error and retry.",
+                )
+            )
         return issues
 
     def _llm_review(self, goal: str, output: str) -> List[CriticIssue]:
         """Use the LLM to produce a structured critique."""
         try:
             from jarvis.core.model_router import model_router, RoutingRequest
+
             prompt = (
                 f"You are a strict AI quality reviewer.\n"
                 f"Goal: {goal}\n\n"
@@ -244,7 +255,8 @@ class CriticAgent:
             result = model_router.execute_inference(decision=decision, prompt=prompt)
             content = (
                 result.get("choices", [{}])[0].get("message", {}).get("content", "")
-                if isinstance(result, dict) else str(result)
+                if isinstance(result, dict)
+                else str(result)
             )
 
             if "NO_ISSUES" in content:
@@ -254,17 +266,19 @@ class CriticAgent:
             for line in content.splitlines():
                 line = line.strip()
                 if line.startswith("[") and "|" in line and "]" in line:
-                    tag = line[1:line.index("]")]
+                    tag = line[1 : line.index("]")]
                     parts = tag.split("|")
                     severity = parts[0].strip().lower() if parts else "info"
                     category = parts[1].strip().lower() if len(parts) > 1 else "quality"
-                    description = line[line.index("]") + 1:].strip()
+                    description = line[line.index("]") + 1 :].strip()
                     if description:
-                        issues.append(CriticIssue(
-                            severity=severity,
-                            category=category,
-                            description=description,
-                        ))
+                        issues.append(
+                            CriticIssue(
+                                severity=severity,
+                                category=category,
+                                description=description,
+                            )
+                        )
             return issues
         except Exception as exc:
             logger.debug(f"_llm_review failed: {exc}")
@@ -292,19 +306,12 @@ class CriticAgent:
         critical = [i for i in issues if i.severity == "critical"]
         errors = [i for i in issues if i.severity == "error"]
         if critical:
-            return (
-                f"🚨 CRITICAL issues detected (score: {score:.2f}): "
-                + "; ".join(i.description for i in critical[:2])
+            return f"🚨 CRITICAL issues detected (score: {score:.2f}): " + "; ".join(
+                i.description for i in critical[:2]
             )
         if errors:
-            return (
-                f"❌ Errors found (score: {score:.2f}): "
-                + "; ".join(i.description for i in errors[:2])
-            )
-        return (
-            f"⚠️ Minor issues (score: {score:.2f}): "
-            + "; ".join(i.description for i in issues[:2])
-        )
+            return f"❌ Errors found (score: {score:.2f}): " + "; ".join(i.description for i in errors[:2])
+        return f"⚠️ Minor issues (score: {score:.2f}): " + "; ".join(i.description for i in issues[:2])
 
 
 # ── Singleton ─────────────────────────────────────────────────────────────────

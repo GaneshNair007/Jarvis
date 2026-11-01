@@ -24,7 +24,7 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["litellm", "mem0"],
-        "test_status": "verified"
+        "test_status": "verified",
     },
     {
         "power_id": "PWR-MEM-SEARCH",
@@ -40,7 +40,7 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["mem0", "sqlite/postgres"],
-        "test_status": "verified"
+        "test_status": "verified",
     },
     {
         "power_id": "PWR-MEM-ADD",
@@ -56,7 +56,7 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["mem0"],
-        "test_status": "verified"
+        "test_status": "verified",
     },
     {
         "power_id": "PWR-MEM-DELETE",
@@ -72,7 +72,7 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["mem0"],
-        "test_status": "verified"
+        "test_status": "verified",
     },
     {
         "power_id": "PWR-TASK-CREATE",
@@ -88,7 +88,7 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["task_engine"],
-        "test_status": "verified"
+        "test_status": "verified",
     },
     {
         "power_id": "PWR-TASK-STATUS",
@@ -104,7 +104,7 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["task_engine"],
-        "test_status": "verified"
+        "test_status": "verified",
     },
     {
         "power_id": "PWR-WEB-RESEARCH",
@@ -120,7 +120,7 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["playwright", "duckduckgo"],
-        "test_status": "verified"
+        "test_status": "verified",
     },
     {
         "power_id": "PWR-URL-READ",
@@ -136,7 +136,7 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["playwright"],
-        "test_status": "verified"
+        "test_status": "verified",
     },
     {
         "power_id": "PWR-DOC-INGEST",
@@ -152,7 +152,7 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["pymupdf", "tfidf"],
-        "test_status": "verified"
+        "test_status": "verified",
     },
     {
         "power_id": "PWR-DOC-QUERY",
@@ -168,9 +168,10 @@ INITIAL_POWERS = [
         "enabled": True,
         "version": "1.0.0",
         "dependencies": ["document_rag"],
-        "test_status": "verified"
-    }
+        "test_status": "verified",
+    },
 ]
+
 
 class PowerRegistry:
     def __init__(self, catalog_path: Optional[Path] = None):
@@ -196,7 +197,7 @@ class PowerRegistry:
                     if not pid:
                         continue
                     self.powers[pid] = item
-                    
+
                     # Category index (case-insensitive key mapping)
                     cat = item.get("category") or item.get("fields", {}).get("Category", "General")
                     cat_key = cat.strip().lower()
@@ -222,14 +223,14 @@ class PowerRegistry:
         """Retrieves power definition by ID, slug, or name (e.g. 'PWR-001' or 'chat')."""
         if power_id in self.initial_powers:
             return self.initial_powers[power_id]
-        
+
         pid_clean = power_id.strip()
         pid_upper = pid_clean.upper()
         if pid_upper in self.powers:
             return self.powers[pid_upper]
         if pid_clean in self.powers:
             return self.powers[pid_clean]
-        
+
         # Search by slug or power_name
         query = pid_clean.lower()
         for p in self.powers.values():
@@ -284,7 +285,9 @@ class PowerRegistry:
             name = (p.get("power_name") or p.get("fields", {}).get("Power name") or p.get("name", "")).lower()
             slug = (p.get("slug") or "").lower()
             desc = (p.get("one_line_description") or p.get("fields", {}).get("One-line description") or "").lower()
-            examples = (p.get("user_command_examples") or p.get("fields", {}).get("User command examples") or "").lower()
+            examples = (
+                p.get("user_command_examples") or p.get("fields", {}).get("User command examples") or ""
+            ).lower()
 
             if query_lower in name or query_lower in slug or query_lower in desc or query_lower in examples:
                 results.append(p)
@@ -321,6 +324,7 @@ class PowerRegistry:
 
     def total_count(self) -> int:
         return len(self.powers) or len(INITIAL_POWERS)
+
 
 # Singleton Power Registry
 power_registry = PowerRegistry()

@@ -109,56 +109,72 @@ class AgentSwarmCoordinator:
 
         g_lower = goal.lower()
         if "research" in g_lower or "search" in g_lower:
-            tasks.append(SubTask(
-                task_id=f"{plan_id}_1",
-                title=f"Research technical background: {goal[:50]}",
-                role=AgentRole.RESEARCHER,
-                inputs={"query": goal}
-            ))
-            tasks.append(SubTask(
-                task_id=f"{plan_id}_2",
-                title=f"Synthesize findings and recommendations",
-                role=AgentRole.CONTENT,
-                inputs={"context_from": f"{plan_id}_1"}
-            ))
-            tasks.append(SubTask(
-                task_id=f"{plan_id}_3",
-                title=f"Review and verify source citations",
-                role=AgentRole.REVIEWER,
-                inputs={"verify_task": f"{plan_id}_2"}
-            ))
+            tasks.append(
+                SubTask(
+                    task_id=f"{plan_id}_1",
+                    title=f"Research technical background: {goal[:50]}",
+                    role=AgentRole.RESEARCHER,
+                    inputs={"query": goal},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f"{plan_id}_2",
+                    title=f"Synthesize findings and recommendations",
+                    role=AgentRole.CONTENT,
+                    inputs={"context_from": f"{plan_id}_1"},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f"{plan_id}_3",
+                    title=f"Review and verify source citations",
+                    role=AgentRole.REVIEWER,
+                    inputs={"verify_task": f"{plan_id}_2"},
+                )
+            )
         elif "code" in g_lower or "build" in g_lower or "implement" in g_lower:
-            tasks.append(SubTask(
-                task_id=f"{plan_id}_1",
-                title=f"Plan architectural interfaces and dependencies",
-                role=AgentRole.PLANNER,
-                inputs={"objective": goal}
-            ))
-            tasks.append(SubTask(
-                task_id=f"{plan_id}_2",
-                title=f"Implement source code and automated tests",
-                role=AgentRole.CODER,
-                inputs={"spec_from": f"{plan_id}_1"}
-            ))
-            tasks.append(SubTask(
-                task_id=f"{plan_id}_3",
-                title=f"Verify security policy and DLP compliance",
-                role=AgentRole.SECURITY,
-                inputs={"code_task": f"{plan_id}_2"}
-            ))
+            tasks.append(
+                SubTask(
+                    task_id=f"{plan_id}_1",
+                    title=f"Plan architectural interfaces and dependencies",
+                    role=AgentRole.PLANNER,
+                    inputs={"objective": goal},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f"{plan_id}_2",
+                    title=f"Implement source code and automated tests",
+                    role=AgentRole.CODER,
+                    inputs={"spec_from": f"{plan_id}_1"},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f"{plan_id}_3",
+                    title=f"Verify security policy and DLP compliance",
+                    role=AgentRole.SECURITY,
+                    inputs={"code_task": f"{plan_id}_2"},
+                )
+            )
         else:
-            tasks.append(SubTask(
-                task_id=f"{plan_id}_1",
-                title=f"Analyze intent and select tools",
-                role=AgentRole.TOOL_SELECTOR,
-                inputs={"user_query": goal}
-            ))
-            tasks.append(SubTask(
-                task_id=f"{plan_id}_2",
-                title=f"Execute coordinated sub-agent action",
-                role=AgentRole.ORCHESTRATOR,
-                inputs={"task": goal}
-            ))
+            tasks.append(
+                SubTask(
+                    task_id=f"{plan_id}_1",
+                    title=f"Analyze intent and select tools",
+                    role=AgentRole.TOOL_SELECTOR,
+                    inputs={"user_query": goal},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f"{plan_id}_2",
+                    title=f"Execute coordinated sub-agent action",
+                    role=AgentRole.ORCHESTRATOR,
+                    inputs={"task": goal},
+                )
+            )
 
         plan = SwarmExecutionPlan(plan_id=plan_id, goal=goal, tasks=tasks)
         self.active_plans[plan_id] = plan
@@ -167,9 +183,7 @@ class AgentSwarmCoordinator:
         return plan
 
     async def execute_plan(
-        self,
-        plan_id: str,
-        execution_handler: Optional[Callable[[SubTask], Dict[str, Any]]] = None
+        self, plan_id: str, execution_handler: Optional[Callable[[SubTask], Dict[str, Any]]] = None
     ) -> SwarmExecutionPlan:
         """PWR-305: Executes subtasks in parallel (bounded by max 2-3 workers)."""
         if plan_id not in self.active_plans:
@@ -199,7 +213,7 @@ class AgentSwarmCoordinator:
                             "role": task.role.value,
                             "power_id": self.agent_registry[task.role]["power_id"],
                             "result": f"Executed subtask '{task.title}' successfully.",
-                            "timestamp": time.time()
+                            "timestamp": time.time(),
                         }
                     task.outputs = res
                     task.status = "COMPLETED"
@@ -264,15 +278,14 @@ class AgentSwarmCoordinator:
                             "title": t.title,
                             "role": t.role.value,
                             "status": t.status,
-                            "duration_ms": t.duration_ms
+                            "duration_ms": t.duration_ms,
                         }
                         for t in p.tasks
-                    ]
+                    ],
                 }
                 for p in list(self.active_plans.values())[-10:]
-            ]
+            ],
         }
 
 
 agent_swarm = AgentSwarmCoordinator()
-

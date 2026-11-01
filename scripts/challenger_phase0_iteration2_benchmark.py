@@ -164,12 +164,8 @@ def benchmark_ollama_offline_latency() -> Dict[str, Any]:
         blackhole_res = router.check_ollama_readiness(timeout_sec=0.5, use_cache=False)
         dt_ms = (time.perf_counter_ns() - t0) / 1_000_000.0
 
-        print(
-            f"  Blackhole IP response time: {dt_ms:.2f} ms (Socket timeout capped at min(0.02, 0.5) = 20ms)"
-        )
-        print(
-            f"  Blackhole status: {blackhole_res['status']}, reachable: {blackhole_res['reachable']}"
-        )
+        print(f"  Blackhole IP response time: {dt_ms:.2f} ms (Socket timeout capped at min(0.02, 0.5) = 20ms)")
+        print(f"  Blackhole status: {blackhole_res['status']}, reachable: {blackhole_res['reachable']}")
         # Must be bounded near 20ms-70ms, never blocking for 500ms or 17s
         assert dt_ms < 70.0, f"Socket probe timeout exceeded 70ms: {dt_ms:.2f}ms"
     finally:
@@ -240,9 +236,7 @@ def benchmark_read_last_hash_reverse_seek() -> Dict[str, Any]:
     print(f"  P95:    {p95_us:.3f} us ({p95_ms:.6f} ms)")
     print(f"  P99:    {p99_us:.3f} us ({p99_ms:.6f} ms)")
     print(f"  Max:    {max_us:.3f} us ({max_ms:.6f} ms)")
-    print(
-        f"  Standalone Wall-Clock Latency: {mean_ms:.6f} ms (includes Windows NTFS open/close syscalls)"
-    )
+    print(f"  Standalone Wall-Clock Latency: {mean_ms:.6f} ms (includes Windows NTFS open/close syscalls)")
 
     # Breakdown: Pure reverse-seek on open handle
     pure_seek_us = []
@@ -287,12 +281,8 @@ def benchmark_read_last_hash_reverse_seek() -> Dict[str, Any]:
     print(
         f"  Pure Reverse Seek + JSON Parse Mean: {pure_mean_us:.3f} us ({pure_mean_ms:.6f} ms) -> Target < 0.1ms: {pure_mean_ms < 0.1}"
     )
-    print(
-        f"  Pure Reverse Seek Median:            {pure_median_us:.3f} us ({pure_median_us / 1000:.6f} ms)"
-    )
-    print(
-        f"  Pure Reverse Seek P95:               {pure_p95_us:.3f} us ({pure_p95_us / 1000:.6f} ms)"
-    )
+    print(f"  Pure Reverse Seek Median:            {pure_median_us:.3f} us ({pure_median_us / 1000:.6f} ms)")
+    print(f"  Pure Reverse Seek P95:               {pure_p95_us:.3f} us ({pure_p95_us / 1000:.6f} ms)")
     print(
         f"  Windows NTFS File Open/Close Overhead: ~{(mean_us - pure_mean_us):.3f} us (~{(mean_ms - pure_mean_ms):.4f} ms)"
     )
@@ -359,9 +349,7 @@ def benchmark_read_last_hash_reverse_seek() -> Dict[str, Any]:
                     "reverse_seek_us": mean_seek_us,
                     "reverse_seek_ms": mean_seek_us / 1000.0,
                     "naive_readlines_ms": mean_naive_ms,
-                    "speedup_factor": (mean_naive_ms * 1000.0) / mean_seek_us
-                    if mean_seek_us > 0
-                    else 0,
+                    "speedup_factor": (mean_naive_ms * 1000.0) / mean_seek_us if mean_seek_us > 0 else 0,
                 }
             )
 
@@ -375,9 +363,7 @@ def benchmark_read_last_hash_reverse_seek() -> Dict[str, Any]:
         seek_str = f"{sr['reverse_seek_us']:.2f} us ({sr['reverse_seek_ms']:.4f} ms)"
         naive_str = f"{sr['naive_readlines_ms']:.4f} ms"
         speedup_str = f"{sr['speedup_factor']:.1f}x"
-        print(
-            f"{rec_str:<10} | {size_str:<12} | {seek_str:<20} | {naive_str:<25} | {speedup_str:<12}"
-        )
+        print(f"{rec_str:<10} | {size_str:<12} | {seek_str:<20} | {naive_str:<25} | {speedup_str:<12}")
 
     # Check that reverse_seek latency does NOT grow with size (ratio between 10 records and 100,000 records < 3x)
     seek_10 = scaling_results[0]["reverse_seek_us"]
@@ -388,9 +374,7 @@ def benchmark_read_last_hash_reverse_seek() -> Dict[str, Any]:
     print(
         f"  Naive readlines() ratio:     {scaling_results[-1]['naive_readlines_ms'] / scaling_results[0]['naive_readlines_ms']:.1f}x (Linear O(N))"
     )
-    print(
-        f"  Reverse seek ratio:          {seek_100k / seek_10:.2f}x (Flat O(1) within OS cache jitter)"
-    )
+    print(f"  Reverse seek ratio:          {seek_100k / seek_10:.2f}x (Flat O(1) within OS cache jitter)")
 
     # 3. Adversarial Edge Cases
     print("\nAdversarial Edge Cases for _read_last_hash():")
@@ -442,9 +426,7 @@ def benchmark_read_last_hash_reverse_seek() -> Dict[str, Any]:
         # Should gracefully return GENESIS_HASH instead of crashing
         res_corrupt = l_corrupt._read_last_hash()
         assert res_corrupt == AuditLedger.GENESIS_HASH
-        print(
-            "  [PASS] Corrupted trailing JSON line -> graceful GENESIS_HASH fallback without crash"
-        )
+        print("  [PASS] Corrupted trailing JSON line -> graceful GENESIS_HASH fallback without crash")
 
     return {
         "prod_mean_ms": mean_ms,

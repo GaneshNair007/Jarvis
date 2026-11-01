@@ -12,6 +12,7 @@ from typing import Callable, Optional, List, Dict, Any
 from jarvis.config import settings
 from jarvis.core.logger import logger
 
+
 class WakeWordDetector:
     WAKE_PHRASES = list(settings.voice_wake_phrases)
 
@@ -34,7 +35,7 @@ class WakeWordDetector:
             "trigger": "push_to_talk",
             "source": source,
             "timestamp": time.time(),
-            "phrase": "push_to_talk"
+            "phrase": "push_to_talk",
         }
         self._dispatch_event(event)
         return event
@@ -56,11 +57,7 @@ class WakeWordDetector:
         # When openWakeWord is installed, it runs model inference on frame
         energy = sum(abs(b - 128) for b in frame_bytes[:1000]) / min(len(frame_bytes), 1000)
         if energy > settings.voice_energy_threshold:  # Voice activity detected
-            return {
-                "detected": True,
-                "confidence": min(1.0, energy / 100.0),
-                "timestamp": time.time()
-            }
+            return {"detected": True, "confidence": min(1.0, energy / 100.0), "timestamp": time.time()}
         return None
 
     def _dispatch_event(self, event: Dict[str, Any]) -> None:
@@ -79,6 +76,7 @@ class WakeWordDetector:
         """Stops background listener."""
         self.is_listening = False
         logger.info("Wake-word listener stopped.")
+
 
 # Singleton Wake Word Detector
 wake_detector = WakeWordDetector()

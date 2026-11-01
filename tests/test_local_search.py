@@ -59,6 +59,7 @@ def temp_orchestrator(tmp_path):
 
 # ─── 1. SQLite FTS5 Keyword Search & BM25 Ranking ────────────────────────────
 
+
 def test_sqlite_fts5_indexing_and_bm25_search(temp_search_engine):
     """Verifies that SQLite FTS5 indexes text, ranks via BM25, and produces highlighted snippets."""
     engine = temp_search_engine
@@ -90,6 +91,7 @@ def test_sqlite_fts5_indexing_and_bm25_search(temp_search_engine):
 
 # ─── 2. Duplicate Detection via SHA-256 Content Hash ─────────────────────────
 
+
 def test_duplicate_detection_by_content_hash(temp_search_engine):
     """Verifies that identical document content is not duplicated in the index."""
     engine = temp_search_engine
@@ -118,6 +120,7 @@ def test_duplicate_detection_by_content_hash(temp_search_engine):
 
 # ─── 3. Sensitive Data Redaction Before Indexing ──────────────────────────────
 
+
 def test_sensitive_data_redaction():
     """Verifies that API keys, passwords, private keys, and card numbers are redacted."""
     raw_text = (
@@ -140,8 +143,10 @@ def test_sensitive_data_redaction():
 
 # ─── 4. Local Semantic Search & Deterministic Vector Fallback ────────────────
 
+
 def test_semantic_search_vector_fallback():
     """Verifies vector embedding and cosine similarity retrieval without external APIs."""
+
     async def _run():
         semantic = QdrantSemanticSearch(collection="test_semantic_docs")
 
@@ -168,6 +173,7 @@ def test_semantic_search_vector_fallback():
 
 
 # ─── 5. Hybrid Ranker with Citations & Provenance ────────────────────────────
+
 
 def test_hybrid_ranking_and_citations():
     """Verifies that RRF combines keyword and semantic hits with valid citations."""
@@ -213,6 +219,7 @@ def test_hybrid_ranking_and_citations():
 
 # ─── 6. Hot Cache (Sub-5ms Latency & Invalidation) ───────────────────────────
 
+
 def test_search_cache_hit_and_invalidation():
     """Verifies that hot cache returns results in sub-5ms and clears cleanly."""
     cache = SearchCache(default_ttl_sec=30)
@@ -239,8 +246,10 @@ def test_search_cache_hit_and_invalidation():
 
 # ─── 7. Ingestion: Text & Markdown Files ─────────────────────────────────────
 
+
 def test_file_and_markdown_ingestion(tmp_path, temp_search_engine):
     """Verifies file and markdown ingestors with section-aware chunking."""
+
     async def _run():
         engine = temp_search_engine
 
@@ -274,8 +283,10 @@ def test_file_and_markdown_ingestion(tmp_path, temp_search_engine):
 
 # ─── 8. Ingestion: Code Repository (.gitignore awareness) ────────────────────
 
+
 def test_code_repo_ingestion(tmp_path, temp_search_engine):
     """Verifies repository ingestor walks code files and ignores .git/__pycache__."""
+
     async def _run():
         engine = temp_search_engine
         repo_root = tmp_path / "sample_repo"
@@ -310,8 +321,10 @@ def test_code_repo_ingestion(tmp_path, temp_search_engine):
 
 # ─── 9. SearXNG Fresh-Web Search & Automatic Local Indexing ──────────────────
 
+
 def test_web_cache_ingestion(temp_search_engine):
     """Verifies fresh web search results are ingested locally for next-time millisecond recall."""
+
     async def _run():
         engine = temp_search_engine
         web_ingestor = WebCacheIngestor(local_engine=engine)
@@ -339,6 +352,7 @@ def test_web_cache_ingestion(temp_search_engine):
 
 
 # ─── 10. Document Deletion & Incremental Reindexing ──────────────────────────
+
 
 def test_document_deletion_and_reindex(temp_search_engine):
     """Verifies that deleted documents are excluded and reindex is non-destructive."""
@@ -372,8 +386,10 @@ def test_document_deletion_and_reindex(temp_search_engine):
 
 # ─── 11. Search Orchestrator Pipeline ────────────────────────────────────────
 
+
 def test_search_orchestrator_pipeline(temp_orchestrator):
     """Verifies end-to-end SearchOrchestrator pipeline."""
+
     async def _run():
         orch = temp_orchestrator
 
@@ -400,6 +416,7 @@ def test_search_orchestrator_pipeline(temp_orchestrator):
 
 
 # ─── 12. Search REST API Endpoints ───────────────────────────────────────────
+
 
 def test_search_rest_api_endpoints():
     """Verifies all FastAPI Search endpoints."""

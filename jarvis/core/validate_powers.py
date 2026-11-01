@@ -20,7 +20,7 @@ KNOWN_REPOSITORIES = {
     "open-jarvis",
     "openclaw",
     "openhands",
-    "ui-tars-desktop"
+    "ui-tars-desktop",
 }
 
 REQUIRED_FIELDS = [
@@ -32,8 +32,9 @@ REQUIRED_FIELDS = [
     "contributing_repos",
     "execution_handler",
     "status",
-    "danger_level"
+    "danger_level",
 ]
+
 
 def validate_catalog() -> int:
     catalog_path = Path("data/powers_catalog.json")
@@ -55,7 +56,7 @@ def validate_catalog() -> int:
     duplicate_names = 0
     invalid_entries = 0
     unattributed_entries = 0
-    
+
     executable_count = 0
     config_required_count = 0
     reference_only_count = 0
@@ -132,14 +133,14 @@ def validate_catalog() -> int:
     print(f"Reference-only powers: {reference_only_count}")
 
     passed = (
-        len(discovered_source_repos) == 11 and
-        total_loaded == 355 and
-        len(seen_ids) == 355 and
-        duplicate_ids == 0 and
-        duplicate_names == 0 and
-        invalid_entries == 0 and
-        unattributed_entries == 0 and
-        missing_powers == 0
+        len(discovered_source_repos) == 11
+        and total_loaded == 355
+        and len(seen_ids) == 355
+        and duplicate_ids == 0
+        and duplicate_names == 0
+        and invalid_entries == 0
+        and unattributed_entries == 0
+        and missing_powers == 0
     )
 
     if passed:
@@ -148,6 +149,7 @@ def validate_catalog() -> int:
     else:
         print("Result: FAIL")
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(validate_catalog())

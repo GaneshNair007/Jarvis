@@ -22,28 +22,39 @@ logger = get_logger("graph.nodes")
 
 # ── Lazy imports to avoid circular deps at collection time ───────────────────
 
+
 def _mem0():
     from jarvis.memory.mem0_client import mem0_client
+
     return mem0_client
+
 
 def _router():
     from jarvis.core.model_router import model_router as _mr
+
     return _mr
+
 
 def _policy():
     from jarvis.core.policy_engine import policy_engine
+
     return policy_engine
+
 
 def _audit():
     from jarvis.core.audit import audit_ledger
+
     return audit_ledger
+
 
 def _settings():
     from jarvis.config import settings
+
     return settings
 
 
 # ── Node 1: memory_retrieval ─────────────────────────────────────────────────
+
 
 def memory_retrieval(state: JarvisState) -> Dict[str, Any]:
     """
@@ -63,11 +74,7 @@ def memory_retrieval(state: JarvisState) -> Dict[str, Any]:
         # Mem0 returns a list of dicts with a "memory" key
         if isinstance(results, dict):
             results = results.get("results", [])
-        retrieved = [
-            item.get("memory", item.get("text", ""))
-            for item in (results or [])
-            if item
-        ]
+        retrieved = [item.get("memory", item.get("text", "")) for item in (results or []) if item]
     except Exception as exc:
         logger.warning(f"memory_retrieval: mem0 search failed — {exc}")
 
@@ -76,6 +83,7 @@ def memory_retrieval(state: JarvisState) -> Dict[str, Any]:
 
 
 # ── Node 2: policy_check ──────────────────────────────────────────────────────
+
 
 def policy_check(state: JarvisState) -> Dict[str, Any]:
     """
@@ -94,8 +102,7 @@ def policy_check(state: JarvisState) -> Dict[str, Any]:
     )
 
     logger.info(
-        f"policy_check: tier={decision.tier} risk={decision.risk_level} "
-        f"approval_required={decision.approval_required}"
+        f"policy_check: tier={decision.tier} risk={decision.risk_level} approval_required={decision.approval_required}"
     )
 
     return {
@@ -108,6 +115,7 @@ def policy_check(state: JarvisState) -> Dict[str, Any]:
 
 
 # ── Node 3: model_router ──────────────────────────────────────────────────────
+
 
 def model_router(state: JarvisState) -> Dict[str, Any]:
     """
@@ -139,6 +147,7 @@ def model_router(state: JarvisState) -> Dict[str, Any]:
     # ── Build routing request ────────────────────────────────────────────────
     try:
         from jarvis.core.model_router import RoutingRequest
+
         routing_req = RoutingRequest(
             task_id=task_id,
             user_intent=user_input,
@@ -161,9 +170,7 @@ def model_router(state: JarvisState) -> Dict[str, Any]:
             prompt=decision.redacted_context or user_input,
         )
         content = (
-            result.get("choices", [{}])[0]
-            .get("message", {})
-            .get("content", str(result))
+            result.get("choices", [{}])[0].get("message", {}).get("content", str(result))
             if isinstance(result, dict)
             else str(result)
         )
@@ -205,6 +212,7 @@ def model_router(state: JarvisState) -> Dict[str, Any]:
 
 # ── Node 4: memory_update ─────────────────────────────────────────────────────
 
+
 def memory_update(state: JarvisState) -> Dict[str, Any]:
     """
     Writes the completed turn (user input + JARVIS response) back to Mem0.
@@ -216,9 +224,7 @@ def memory_update(state: JarvisState) -> Dict[str, Any]:
 
     skip_phrases = ("⛔", "Action halted", "Inference error", "Model routing error")
     should_write = (
-        bool(user_input)
-        and bool(final_response)
-        and not any(final_response.startswith(p) for p in skip_phrases)
+        bool(user_input) and bool(final_response) and not any(final_response.startswith(p) for p in skip_phrases)
     )
 
     if should_write:

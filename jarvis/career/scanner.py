@@ -25,8 +25,23 @@ class JobScanner:
     def _extract_keywords(text: str) -> Set[str]:
         words = re.findall(r"\b[A-Za-z0-9+#.-]{2,}\b", text.lower())
         stop_words = {
-            "the", "and", "for", "with", "that", "this", "from", "you", "will",
-            "are", "have", "our", "work", "team", "role", "experience", "years"
+            "the",
+            "and",
+            "for",
+            "with",
+            "that",
+            "this",
+            "from",
+            "you",
+            "will",
+            "are",
+            "have",
+            "our",
+            "work",
+            "team",
+            "role",
+            "experience",
+            "years",
         }
         return {w for w in words if w not in stop_words and len(w) > 2}
 
@@ -36,7 +51,7 @@ class JobScanner:
         company_name: str,
         description: str,
         job_url: Optional[str] = None,
-        job_id: Optional[str] = None
+        job_id: Optional[str] = None,
     ) -> JobFitScore:
         """Calculates ATS match and competency fit score for a job posting."""
         if not job_id:
@@ -84,9 +99,7 @@ class JobScanner:
         else:
             recommendation = "Not Recommended - Low Competency Alignment"
 
-        logger.info(
-            f"Job scan complete: {job_title} at {company_name} -> Score: {global_score}% ({recommendation})"
-        )
+        logger.info(f"Job scan complete: {job_title} at {company_name} -> Score: {global_score}% ({recommendation})")
 
         return JobFitScore(
             job_id=job_id,
@@ -98,5 +111,5 @@ class JobScanner:
             soft_skills_score=round(soft_skills_score, 1),
             matched_skills=matched,
             missing_skills=missing[:8],
-            recommendation=recommendation
+            recommendation=recommendation,
         )

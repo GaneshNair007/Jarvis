@@ -1,0 +1,27 @@
+{
+  "fast_path": {
+    "operation": "instant_command (fast-path bypass)",
+    "iterations": 10,
+    "mean_ms": 28.83,
+    "median_ms": 27.6,
+    "p95_ms": 42.03,
+    "min_ms": 24.64,
+    "max_ms": 42.03,
+    "cost_usd": 0.0
+  },
+  "memory_benchmark": {
+    "operation": "memory_recall_accuracy",
+    "stored_facts": 5,
+    "recalled_facts": 5,
+    "recall_accuracy_pct": 100.0,
+    "mean_recall_lat_ms": 5.86,
+    "cross_user_leakage": 0,
+    "honest_unknown_rate_pct": 100.0
+  },
+  "hybrid_rrf": {
+    "operation": "hybrid_rrf_reranker",
+    "iterations": 50,
+    "mean_us": 43.6,
+    "median_us": 40.6
+  }
+}

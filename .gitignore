@@ -47,3 +47,12 @@ repos/
 # OS Files
 .DS_Store
 Thumbs.db
+
+# Scratch and Teamwork Runs
+scratch/
+.agents/teamwork/
+.ruff_cache/
+test-results/
+data/calendar/
+data/logs/*.bak*
+data/logs/*.lock

@@ -16,13 +16,7 @@ class FinancePowers:
     """Implementations for Finance and Market domain capabilities."""
 
     def __init__(self):
-        self.mock_rates = {
-            "USD": 1.0,
-            "EUR": 0.92,
-            "GBP": 0.79,
-            "INR": 83.2,
-            "JPY": 154.5
-        }
+        self.mock_rates = {"USD": 1.0, "EUR": 0.92, "GBP": 0.79, "INR": 83.2, "JPY": 154.5}
 
     def convert_currency(self, amount: float, from_curr: str, to_curr: str) -> Dict[str, Any]:
         """PWR-180: Real-time currency conversion."""
@@ -39,7 +33,7 @@ class FinancePowers:
             "from_currency": fc,
             "to_currency": tc,
             "converted_amount": converted,
-            "rate": round(self.mock_rates[tc] / self.mock_rates[fc], 4)
+            "rate": round(self.mock_rates[tc] / self.mock_rates[fc], 4),
         }
 
     def get_stock_quote(self, symbol: str) -> Dict[str, Any]:
@@ -52,12 +46,7 @@ class FinancePowers:
             "NVDA": {"price": 138.25, "change_pct": "+3.1%", "currency": "USD"},
         }
         quote = mock_quotes.get(sym, {"price": 150.00, "change_pct": "0.0%", "currency": "USD"})
-        return {
-            "power_id": "PWR-181",
-            "symbol": sym,
-            **quote
-        }
+        return {"power_id": "PWR-181", "symbol": sym, **quote}
 
 
 finance_powers = FinancePowers()
-

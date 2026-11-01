@@ -24,12 +24,14 @@ from jarvis.constants import (
 
 PERMISSIONS_PATH = settings.config_dir / "policies" / "permissions.json"
 
+
 class PolicyDecision(BaseModel):
     risk_level: str = Field(default="low", description="low, medium, high, critical")
     approval_required: bool = Field(default=False)
     allowed_tools: List[str] = Field(default_factory=list)
     tier: int = Field(default=0, ge=0, le=3)
     reason: str = Field(default="Standard read/local operation permitted.")
+
 
 class PolicyEngine:
     """Deterministic policy gate enforcing Tier 0 to Tier 3 boundaries."""
@@ -47,14 +49,11 @@ class PolicyEngine:
         return {
             "allowed_apps": list(DEFAULT_POLICY_ALLOWED_APPS),
             "blocked_apps": list(DEFAULT_POLICY_BLOCKED_APPS),
-            "sensitive_data_patterns": ["password", "secret_key", "private_key", "api_key", "token"]
+            "sensitive_data_patterns": ["password", "secret_key", "private_key", "api_key", "token"],
         }
 
     def evaluate(
-        self,
-        user_input: str,
-        task_type: str = "chat",
-        memories: Optional[List[str]] = None
+        self, user_input: str, task_type: str = "chat", memories: Optional[List[str]] = None
     ) -> PolicyDecision:
         """
         Evaluates input text and requested task against policy rules and assign approval tiers.
@@ -69,7 +68,7 @@ class PolicyEngine:
                 approval_required=True,
                 allowed_tools=[],
                 tier=3,
-                reason="Tier 3 Action: Critical or irreversible system wipe requires step-up authentication."
+                reason="Tier 3 Action: Critical or irreversible system wipe requires step-up authentication.",
             )
 
         # Tier 2: Irreversible Outbound / Physical computer use / Deletion
@@ -80,7 +79,7 @@ class PolicyEngine:
                 approval_required=True,
                 allowed_tools=["desktop_worker", "email_client"],
                 tier=2,
-                reason="Tier 2 Action: Irreversible outbound or computer control requires explicit approval token."
+                reason="Tier 2 Action: Irreversible outbound or computer control requires explicit approval token.",
             )
 
         # Tier 1: Reversible local writes / drafts / sandboxed execution
@@ -91,7 +90,7 @@ class PolicyEngine:
                 approval_required=False,
                 allowed_tools=["filesystem", "document_rag", "git_tool"],
                 tier=1,
-                reason="Tier 1 Action: Local reversible write permitted without approval."
+                reason="Tier 1 Action: Local reversible write permitted without approval.",
             )
 
         # Tier 0: Observe / Web Search / Read-only memory
@@ -100,8 +99,9 @@ class PolicyEngine:
             approval_required=False,
             allowed_tools=["web_search", "memory_search", "url_read", "telemetry"],
             tier=0,
-            reason="Tier 0 Action: Read-only or observational query permitted autonomously."
+            reason="Tier 0 Action: Read-only or observational query permitted autonomously.",
         )
+
 
 # Global PolicyEngine Instance
 policy_engine = PolicyEngine()

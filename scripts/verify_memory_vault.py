@@ -27,6 +27,7 @@ import fitz  # PyMuPDF
 
 client = TestClient(app)
 
+
 def run_verification():
     print("=" * 80)
     print("  JARVIS PRIVATE MEMORY VAULT & DOCUMENT INTELLIGENCE - LIVE VERIFICATION")
@@ -46,33 +47,41 @@ def run_verification():
 
     # 2. Add Facts and Hypotheses
     print("\n[2] Demonstrating Fact vs. Hypothesis Ingestion...")
-    fact_resp = client.post("/api/v1/memory/add", json={
-        "layer": "SEMANTIC",
-        "content": "Ganesh Nair is the primary systems architect and owner of JARVIS.",
-        "is_hypothesis": False,
-        "confidence": 1.0,
-        "evidence_count": 1,
-        "metadata": {"role": "owner", "verified": True}
-    })
-    print(f"  -> Fact Stored: Node ID: {fact_resp.json()['node_id']} | Confidence: {fact_resp.json()['confidence']} (100% Fact)")
+    fact_resp = client.post(
+        "/api/v1/memory/add",
+        json={
+            "layer": "SEMANTIC",
+            "content": "Ganesh Nair is the primary systems architect and owner of JARVIS.",
+            "is_hypothesis": False,
+            "confidence": 1.0,
+            "evidence_count": 1,
+            "metadata": {"role": "owner", "verified": True},
+        },
+    )
+    print(
+        f"  -> Fact Stored: Node ID: {fact_resp.json()['node_id']} | Confidence: {fact_resp.json()['confidence']} (100% Fact)"
+    )
 
-    hypo_resp = client.post("/api/v1/memory/add", json={
-        "layer": "SEMANTIC",
-        "content": "User appears to work primarily between 00:00 and 04:00 IST on deep infrastructure.",
-        "is_hypothesis": True,
-        "confidence": 0.88,
-        "evidence_count": 6,
-        "metadata": {"source": "git_commit_telemetry"}
-    })
-    print(f"  -> Hypothesis Stored: Node ID: {hypo_resp.json()['node_id']} | Confidence: {hypo_resp.json()['confidence']} | Observations: 6")
+    hypo_resp = client.post(
+        "/api/v1/memory/add",
+        json={
+            "layer": "SEMANTIC",
+            "content": "User appears to work primarily between 00:00 and 04:00 IST on deep infrastructure.",
+            "is_hypothesis": True,
+            "confidence": 0.88,
+            "evidence_count": 6,
+            "metadata": {"source": "git_commit_telemetry"},
+        },
+    )
+    print(
+        f"  -> Hypothesis Stored: Node ID: {hypo_resp.json()['node_id']} | Confidence: {hypo_resp.json()['confidence']} | Observations: 6"
+    )
 
     # 3. Search Memory
     print("\n[3] Testing Memory Search with Filtering (POST /api/v1/memory/search)...")
-    search_resp = client.post("/api/v1/memory/search", json={
-        "query": "Ganesh Nair",
-        "layer": "SEMANTIC",
-        "min_confidence": 0.9
-    })
+    search_resp = client.post(
+        "/api/v1/memory/search", json={"query": "Ganesh Nair", "layer": "SEMANTIC", "min_confidence": 0.9}
+    )
     results = search_resp.json()["results"]
     print(f"  -> Found {len(results)} matching high-confidence memory records:")
     for r in results[:2]:
@@ -80,12 +89,15 @@ def run_verification():
 
     # 4. User Correction Pipeline
     print("\n[4] Testing User Correction Pipeline & Directive Promotion (POST /api/v1/memory/correction)...")
-    corr_resp = client.post("/api/v1/memory/correction", json={
-        "user_quote": "Do not delete any .git or .env files under any circumstance",
-        "new_instruction": "Strictly prohibit deletion or overwrite of .git directories and .env credential files",
-        "scope": "always",
-        "failure_id": "audit_check_102"
-    })
+    corr_resp = client.post(
+        "/api/v1/memory/correction",
+        json={
+            "user_quote": "Do not delete any .git or .env files under any circumstance",
+            "new_instruction": "Strictly prohibit deletion or overwrite of .git directories and .env credential files",
+            "scope": "always",
+            "failure_id": "audit_check_102",
+        },
+    )
     corr = corr_resp.json()
     print(f"  -> Correction Logged: {corr['correction_id']}")
     print(f"  -> Scope:             {corr['scope']}")
@@ -100,30 +112,39 @@ def run_verification():
     doc = fitz.open()
     # Page 1
     p1 = doc.new_page()
-    p1.insert_text((50, 70), "JARVIS System Architecture v2.0\nExecutive Summary: Fully autonomous local-first assistant.", fontsize=11)
+    p1.insert_text(
+        (50, 70),
+        "JARVIS System Architecture v2.0\nExecutive Summary: Fully autonomous local-first assistant.",
+        fontsize=11,
+    )
     # Page 2
     p2 = doc.new_page()
-    p2.insert_text((50, 70), "Subsystem Specification: Threat Model & Policy Gate\nDangerous powers (PWR-144 to PWR-161) require ephemeral HMAC approval tokens.", fontsize=11)
+    p2.insert_text(
+        (50, 70),
+        "Subsystem Specification: Threat Model & Policy Gate\nDangerous powers (PWR-144 to PWR-161) require ephemeral HMAC approval tokens.",
+        fontsize=11,
+    )
     # Page 3
     p3 = doc.new_page()
-    p3.insert_text((50, 70), "Emergency Procedures: Global Kill Switch hotkey halts all active background workers within 50ms.", fontsize=11)
+    p3.insert_text(
+        (50, 70),
+        "Emergency Procedures: Global Kill Switch hotkey halts all active background workers within 50ms.",
+        fontsize=11,
+    )
     doc.save(str(tmp_pdf))
     doc.close()
 
     try:
-        ingest_resp = client.post("/api/v1/documents/ingest", json={
-            "file_path": str(tmp_pdf)
-        })
+        ingest_resp = client.post("/api/v1/documents/ingest", json={"file_path": str(tmp_pdf)})
         doc_data = ingest_resp.json()
-        print(f"  -> Ingested File: {doc_data['file_name']} ({doc_data['total_pages']} pages, {doc_data['total_chunks']} chunks)")
+        print(
+            f"  -> Ingested File: {doc_data['file_name']} ({doc_data['total_pages']} pages, {doc_data['total_chunks']} chunks)"
+        )
         print(f"  -> SHA-256 Provenance Checksum: {doc_data['sha256']}")
 
         # Query specifically for Page 2 content
         print("\n[6] Querying Document for 'HMAC approval tokens'...")
-        q2_resp = client.post("/api/v1/documents/query", json={
-            "query": "HMAC approval tokens",
-            "top_k": 2
-        })
+        q2_resp = client.post("/api/v1/documents/query", json={"query": "HMAC approval tokens", "top_k": 2})
         q2 = q2_resp.json()
         print(f"  -> Query: '{q2['query']}'")
         for idx, cit in enumerate(q2["citations"], 1):
@@ -131,14 +152,11 @@ def run_verification():
             print(f"       * Document:    {cit['file_name']}")
             print(f"       * Page Number: Page {cit['page_number']} (Exact Citation)")
             print(f"       * Match Score: {cit['score']}")
-            print(f"       * Excerpt:     \"{cit['excerpt'].strip()}\"")
+            print(f'       * Excerpt:     "{cit["excerpt"].strip()}"')
 
         # Query specifically for Page 3 content
         print("\n[7] Querying Document for 'Global Kill Switch hotkey'...")
-        q3_resp = client.post("/api/v1/documents/query", json={
-            "query": "Global Kill Switch hotkey",
-            "top_k": 2
-        })
+        q3_resp = client.post("/api/v1/documents/query", json={"query": "Global Kill Switch hotkey", "top_k": 2})
         q3 = q3_resp.json()
         print(f"  -> Query: '{q3['query']}'")
         for idx, cit in enumerate(q3["citations"], 1):
@@ -146,7 +164,7 @@ def run_verification():
             print(f"       * Document:    {cit['file_name']}")
             print(f"       * Page Number: Page {cit['page_number']} (Exact Citation)")
             print(f"       * Match Score: {cit['score']}")
-            print(f"       * Excerpt:     \"{cit['excerpt'].strip()}\"")
+            print(f'       * Excerpt:     "{cit["excerpt"].strip()}"')
     finally:
         if tmp_pdf.exists():
             tmp_pdf.unlink()
@@ -165,6 +183,7 @@ def run_verification():
     print("\n" + "=" * 80)
     print("  VERIFICATION COMPLETE: ALL MEMORY & DOCUMENT RAG CAPABILITIES FULLY FUNCTIONAL")
     print("=" * 80)
+
 
 if __name__ == "__main__":
     run_verification()

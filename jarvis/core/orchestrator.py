@@ -16,6 +16,7 @@ from jarvis.core.audit import audit_ledger
 from jarvis.core.power_registry import power_registry
 from jarvis.memory.store import db_store
 
+
 class JarvisOrchestrator:
     def __init__(self):
         self.router = model_router
@@ -31,7 +32,7 @@ class JarvisOrchestrator:
         task_id: Optional[str] = None,
         context: str = "",
         sensitivity_level: str = "medium",
-        approval_token: Optional[str] = None
+        approval_token: Optional[str] = None,
     ) -> Dict[str, Any]:
         """
         End-to-End Orchestration Loop:
@@ -50,10 +51,7 @@ class JarvisOrchestrator:
 
         # Step 1: Model Routing & Intent Triage
         routing_req = RoutingRequest(
-            task_id=task_id,
-            user_intent=query,
-            sensitivity_level=sensitivity_level,
-            attached_context=context
+            task_id=task_id, user_intent=query, sensitivity_level=sensitivity_level, attached_context=context
         )
         decision = self.router.route(routing_req)
         self.state_machine.transition(task_id, "TRIAGED", reason=f"Routed to {decision.tier} ({decision.provider})")
@@ -66,26 +64,33 @@ class JarvisOrchestrator:
             power_id=decision.selected_model,
             privilege_level=privilege_level,
             payload={"query": query, "model": decision.selected_model},
-            approval_token=approval_token
+            approval_token=approval_token,
         )
 
         if not policy_allowed:
             self.state_machine.transition(task_id, "REJECTED", reason=policy_msg)
-            self.store.save_task(task_id, title=query[:80], status="REJECTED", power_id="policy_gate", inputs={"query": query}, outputs={"reason": policy_msg})
+            self.store.save_task(
+                task_id,
+                title=query[:80],
+                status="REJECTED",
+                power_id="policy_gate",
+                inputs={"query": query},
+                outputs={"reason": policy_msg},
+            )
             self.audit.log_event(
                 event_type="POLICY_REJECT",
                 task_id=task_id,
                 power_id="policy_gate",
                 status="REJECTED",
                 inputs={"query": query},
-                outputs={"reason": policy_msg, "pending_approval": pending_approval}
+                outputs={"reason": policy_msg, "pending_approval": pending_approval},
             )
             return {
                 "task_id": task_id,
                 "status": "REJECTED",
                 "message": policy_msg,
                 "pending_approval": pending_approval,
-                "tier": decision.tier
+                "tier": decision.tier,
             }
 
         # Step 3: Execution Execution lane
@@ -105,7 +110,14 @@ class JarvisOrchestrator:
         # Step 4: Verification & Completion
         self.state_machine.transition(task_id, "VERIFYING", reason="Validating execution receipts")
         self.state_machine.transition(task_id, "COMPLETED", reason="Task finished successfully")
-        self.store.save_task(task_id, title=query[:80], status="COMPLETED", power_id=decision.selected_model, inputs={"query": query}, outputs=execution_result)
+        self.store.save_task(
+            task_id,
+            title=query[:80],
+            status="COMPLETED",
+            power_id=decision.selected_model,
+            inputs={"query": query},
+            outputs=execution_result,
+        )
 
         # Step 5: Cryptographic Audit Logging
         self.audit.log_event(
@@ -115,7 +127,7 @@ class JarvisOrchestrator:
             status="SUCCESS",
             inputs={"query": query, "tier": decision.tier},
             outputs=execution_result,
-            details={"cost_usd": decision.estimated_cost_usd, "duration_ms": (time.time() - start_time) * 1000}
+            details={"cost_usd": decision.estimated_cost_usd, "duration_ms": (time.time() - start_time) * 1000},
         )
 
         return {
@@ -126,7 +138,7 @@ class JarvisOrchestrator:
             "model": decision.selected_model,
             "response": execution_result,
             "routing_reason": decision.reason,
-            "duration_ms": round((time.time() - start_time) * 1000, 2)
+            "duration_ms": round((time.time() - start_time) * 1000, 2),
         }
 
     def _execute_instant_command(self, query: str) -> Dict[str, Any]:
@@ -135,49 +147,61 @@ class JarvisOrchestrator:
 
         if "health" in cleaned or "telemetry" in cleaned:
             import psutil
+
             return {
                 "type": "telemetry",
                 "cpu_percent": psutil.cpu_percent(interval=None),
                 "ram_percent": psutil.virtual_memory().percent,
-                "disk_percent": psutil.disk_usage(settings.disk_mount_path).percent if hasattr(psutil, "disk_usage") else 0.0,
-                "message": "System health metrics retrieved immediately."
+                "disk_percent": psutil.disk_usage(settings.disk_mount_path).percent
+                if hasattr(psutil, "disk_usage")
+                else 0.0,
+                "message": "System health metrics retrieved immediately.",
             }
         elif "screenshot" in cleaned:
             return {
                 "type": "screenshot",
                 "status": "captured",
                 "file": str(settings.screenshot_dir / "latest_screen.png"),
-                "message": "Screen capture executed immediately."
+                "message": "Screen capture executed immediately.",
             }
         elif "lock" in cleaned:
             return {
                 "type": "system_control",
                 "status": "dispatched",
                 "action": "lock_workstation",
-                "message": "Workstation lock requested."
+                "message": "Workstation lock requested.",
             }
         elif cleaned.startswith("search ") or "web search" in cleaned:
             from jarvis.powers.browser_powers import browser_powers
+
             q = cleaned.replace("web search", "").replace("search", "").strip()
             return browser_powers.search_web(q or query)
         elif cleaned.startswith("research ") or "deep research" in cleaned:
             from jarvis.powers.browser_powers import browser_powers
+
             topic = cleaned.replace("deep research", "").replace("research", "").strip()
             return browser_powers.deep_research(topic or query)
         elif cleaned.startswith("read url ") or (cleaned.startswith("http://") or cleaned.startswith("https://")):
             from jarvis.powers.browser_powers import browser_powers
+
             url = query.replace("read url", "").strip()
             return browser_powers.read_url(url)
         elif cleaned.startswith("/job-scan") or cleaned.startswith("/career scan"):
             from jarvis.powers.career_powers import career_powers
+
             parts = query.replace("/job-scan", "").replace("/career scan", "").strip()
             title = parts or "Principal AI Systems Architect"
             company = "Target Enterprise"
             if " at " in parts:
                 title, company = parts.split(" at ", 1)
-            return career_powers.scan_job_listing(job_title=title.strip(), company_name=company.strip(), description=f"Seeking {title} experienced in distributed systems, async python, and search engines.")
+            return career_powers.scan_job_listing(
+                job_title=title.strip(),
+                company_name=company.strip(),
+                description=f"Seeking {title} experienced in distributed systems, async python, and search engines.",
+            )
         elif cleaned.startswith("/generate-resume") or cleaned.startswith("/career resume"):
             from jarvis.powers.career_powers import career_powers
+
             parts = query.replace("/generate-resume", "").replace("/career resume", "").strip()
             title = parts or "Principal Systems Architect"
             company = "Target Tech"
@@ -186,6 +210,7 @@ class JarvisOrchestrator:
             return career_powers.generate_tailored_resume(job_title=title.strip(), company_name=company.strip())
         elif cleaned.startswith("/generate-cover") or cleaned.startswith("/career cover"):
             from jarvis.powers.career_powers import career_powers
+
             parts = query.replace("/generate-cover", "").replace("/career cover", "").strip()
             title = parts or "Lead Engineer"
             company = "Target Tech"
@@ -194,21 +219,30 @@ class JarvisOrchestrator:
             return career_powers.generate_cover_letter(job_title=title.strip(), company_name=company.strip())
         elif cleaned.startswith("/company-research"):
             from jarvis.powers.career_powers import career_powers
+
             company = query.replace("/company-research", "").strip() or "Google"
             return career_powers.research_company_brief(company_name=company)
         elif cleaned.startswith("/find-contact"):
             from jarvis.powers.career_powers import career_powers
+
             company = query.replace("/find-contact", "").strip() or "OpenAI"
             return career_powers.find_company_contacts(company_name=company)
         elif cleaned.startswith("/draft-email"):
             from jarvis.powers.career_powers import career_powers
+
             parts = query.replace("/draft-email", "").strip()
-            return career_powers.draft_application_email(recipient_name="Hiring Team", company_name=parts or "Acme Corp", role_title="Principal Systems Architect")
+            return career_powers.draft_application_email(
+                recipient_name="Hiring Team",
+                company_name=parts or "Acme Corp",
+                role_title="Principal Systems Architect",
+            )
         elif cleaned.startswith("/analyze-applications") or cleaned.startswith("/pipeline"):
             from jarvis.powers.career_powers import career_powers
+
             return career_powers.analyze_application_pipeline()
         elif cleaned.startswith("/interview-prep"):
             from jarvis.powers.career_powers import career_powers
+
             parts = query.replace("/interview-prep", "").strip() or "Principal AI Architect at TechCorp"
             title, company = parts, "TechCorp"
             if " at " in parts:
@@ -216,21 +250,35 @@ class JarvisOrchestrator:
             return career_powers.interview_prep_and_red_flags(role_title=title.strip(), company_name=company.strip())
         elif cleaned.startswith("/red-flags"):
             from jarvis.powers.career_powers import career_powers
+
             company = query.replace("/red-flags", "").strip() or "Startup Inc"
-            return career_powers.interview_prep_and_red_flags(role_title="Engineer", company_name=company, job_description="Fast-paced environment wearing many hats, rockstar required.")
+            return career_powers.interview_prep_and_red_flags(
+                role_title="Engineer",
+                company_name=company,
+                job_description="Fast-paced environment wearing many hats, rockstar required.",
+            )
         elif cleaned.startswith("/analyze-offer"):
             from jarvis.powers.career_powers import career_powers
-            return career_powers.analyze_offer_and_salary_gap(company_name="InnovateAI", role_title="Principal AI Architect", base_salary=240000.0, bonus=35000.0, equity_annual_val=80000.0)
+
+            return career_powers.analyze_offer_and_salary_gap(
+                company_name="InnovateAI",
+                role_title="Principal AI Architect",
+                base_salary=240000.0,
+                bonus=35000.0,
+                equity_annual_val=80000.0,
+            )
         elif cleaned.startswith("/career"):
             from jarvis.powers.career_powers import career_powers
+
             return career_powers.get_service_status()
         else:
             return {
                 "type": "instant_command",
                 "status": "executed",
                 "command": cleaned,
-                "message": f"Instant command '{cleaned}' dispatched."
+                "message": f"Instant command '{cleaned}' dispatched.",
             }
+
 
 # Singleton Orchestrator
 orchestrator = JarvisOrchestrator()

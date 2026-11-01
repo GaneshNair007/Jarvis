@@ -27,6 +27,7 @@ class PDFIngestor(BaseIngestor):
 
         try:
             import fitz  # PyMuPDF
+
             doc = fitz.open(str(path))
             total_pages = len(doc)
 

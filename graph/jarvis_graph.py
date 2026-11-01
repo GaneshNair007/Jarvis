@@ -32,6 +32,7 @@ from graph.nodes import (
 
 # ── Checkpointer ────────────────────────────────────────────────────────────
 
+
 def _build_checkpointer():
     """
     Try PostgreSQL checkpointer first; fall back to in-process MemorySaver.
@@ -42,6 +43,7 @@ def _build_checkpointer():
     if pg_url:
         try:
             from langgraph.checkpoint.postgres import PostgresSaver  # type: ignore
+
             saver = PostgresSaver.from_conn_string(pg_url)
             saver.setup()  # creates checkpoint tables if missing
             return saver
@@ -51,6 +53,7 @@ def _build_checkpointer():
 
 
 # ── Conditional edge helpers ─────────────────────────────────────────────────
+
 
 def _after_policy_check(state: JarvisState) -> str:
     """
@@ -79,6 +82,7 @@ def _after_model_router(state: JarvisState) -> str:
 
 
 # ── Graph builder ─────────────────────────────────────────────────────────────
+
 
 def build_jarvis_graph(checkpointer=None):
     """

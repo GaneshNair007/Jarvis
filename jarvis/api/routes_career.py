@@ -84,7 +84,7 @@ def scan_job(request: JobScanRequest):
             job_title=request.job_title,
             company_name=request.company_name,
             description=request.description,
-            job_url=request.job_url
+            job_url=request.job_url,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -95,9 +95,7 @@ def generate_resume(request: ResumeRequest):
     """PWR-330: Tailored ATS resume generation."""
     try:
         return career_powers.generate_tailored_resume(
-            job_title=request.job_title,
-            company_name=request.company_name,
-            target_keywords=request.target_keywords
+            job_title=request.job_title, company_name=request.company_name, target_keywords=request.target_keywords
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -108,9 +106,7 @@ def generate_cover_letter(request: CoverLetterRequest):
     """PWR-331: Tailored cover letter generation."""
     try:
         return career_powers.generate_cover_letter(
-            job_title=request.job_title,
-            company_name=request.company_name,
-            key_challenges=request.key_challenges
+            job_title=request.job_title, company_name=request.company_name, key_challenges=request.key_challenges
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -120,10 +116,7 @@ def generate_cover_letter(request: CoverLetterRequest):
 def research_company(request: CompanyResearchRequest):
     """PWR-332: Company research dossier."""
     try:
-        return career_powers.research_company_brief(
-            company_name=request.company_name,
-            domain=request.domain
-        )
+        return career_powers.research_company_brief(company_name=request.company_name, domain=request.domain)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -132,10 +125,7 @@ def research_company(request: CompanyResearchRequest):
 def find_contacts(request: ContactFinderRequest):
     """PWR-333: Contact discovery and outreach draft."""
     try:
-        return career_powers.find_company_contacts(
-            company_name=request.company_name,
-            role_title=request.role_title
-        )
+        return career_powers.find_company_contacts(company_name=request.company_name, role_title=request.role_title)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -145,9 +135,7 @@ def draft_email(request: EmailDraftRequest):
     """PWR-334: Application email draft."""
     try:
         return career_powers.draft_application_email(
-            recipient_name=request.recipient_name,
-            company_name=request.company_name,
-            role_title=request.role_title
+            recipient_name=request.recipient_name, company_name=request.company_name, role_title=request.role_title
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -170,9 +158,7 @@ def list_applications(status: Optional[str] = None):
 def update_application_status(application_id: str, request: UpdateStatusRequest):
     """Updates the status of a tracked application."""
     updated = career_powers.service.update_application_status(
-        application_id=application_id,
-        new_status=request.status,
-        note=request.note
+        application_id=application_id, new_status=request.status, note=request.note
     )
     if not updated:
         raise HTTPException(status_code=404, detail="Application not found")
@@ -187,7 +173,7 @@ def prepare_interview(request: InterviewPrepRequest):
             role_title=request.role_title,
             company_name=request.company_name,
             job_description=request.job_description,
-            focus_tech=request.focus_tech
+            focus_tech=request.focus_tech,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -202,8 +188,7 @@ def analyze_offer(request: OfferAnalysisRequest):
             role_title=request.role_title,
             base_salary=request.base_salary,
             bonus=request.bonus,
-            equity_annual_val=request.equity_annual_val
+            equity_annual_val=request.equity_annual_val,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-

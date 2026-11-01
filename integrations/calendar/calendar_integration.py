@@ -51,8 +51,7 @@ class CalendarIntegration(BaseIntegration):
             display_name="Calendar",
             category="productivity",
             description=(
-                "Read and write calendar events via CalDAV (Nextcloud, iCloud, Fastmail) "
-                "and Google Calendar API."
+                "Read and write calendar events via CalDAV (Nextcloud, iCloud, Fastmail) and Google Calendar API."
             ),
             required_credentials=["CALDAV_URL"],
             danger_level="low",
@@ -124,11 +123,13 @@ class CalendarIntegration(BaseIntegration):
             try:
                 principal = self._caldav_client.principal()
                 for cal in principal.calendars():
-                    calendars.append({
-                        "backend": "caldav",
-                        "id": str(cal.url),
-                        "name": cal.name or str(cal.url),
-                    })
+                    calendars.append(
+                        {
+                            "backend": "caldav",
+                            "id": str(cal.url),
+                            "name": cal.name or str(cal.url),
+                        }
+                    )
             except Exception as exc:
                 logger.warning(f"CalDAV list_calendars: {exc}")
 
@@ -136,13 +137,15 @@ class CalendarIntegration(BaseIntegration):
             try:
                 result = self._gcal_service.calendarList().list().execute()
                 for item in result.get("items", []):
-                    calendars.append({
-                        "backend": "google",
-                        "id": item["id"],
-                        "name": item.get("summary", item["id"]),
-                        "color": item.get("colorId"),
-                        "primary": item.get("primary", False),
-                    })
+                    calendars.append(
+                        {
+                            "backend": "google",
+                            "id": item["id"],
+                            "name": item.get("summary", item["id"]),
+                            "color": item.get("colorId"),
+                            "primary": item.get("primary", False),
+                        }
+                    )
             except Exception as exc:
                 logger.warning(f"Google Calendar list_calendars: {exc}")
 
@@ -180,14 +183,18 @@ class CalendarIntegration(BaseIntegration):
         if self._gcal_service:
             try:
                 cal_id = calendar_id or "primary"
-                result = self._gcal_service.events().list(
-                    calendarId=cal_id,
-                    timeMin=start.isoformat(),
-                    timeMax=end.isoformat(),
-                    maxResults=max_results,
-                    singleEvents=True,
-                    orderBy="startTime",
-                ).execute()
+                result = (
+                    self._gcal_service.events()
+                    .list(
+                        calendarId=cal_id,
+                        timeMin=start.isoformat(),
+                        timeMax=end.isoformat(),
+                        maxResults=max_results,
+                        singleEvents=True,
+                        orderBy="startTime",
+                    )
+                    .execute()
+                )
                 for item in result.get("items", []):
                     events.append(self._parse_google_event(item))
             except Exception as exc:
@@ -197,6 +204,7 @@ class CalendarIntegration(BaseIntegration):
         if self._caldav_client and not events:
             try:
                 from caldav import Calendar  # type: ignore
+
                 principal = self._caldav_client.principal()
                 for cal in principal.calendars():
                     if calendar_id and str(cal.url) != calendar_id:
@@ -244,9 +252,7 @@ class CalendarIntegration(BaseIntegration):
                     "attendees": [{"email": a} for a in attendees],
                 }
                 cal_id = calendar_id or "primary"
-                result = self._gcal_service.events().insert(
-                    calendarId=cal_id, body=event_body
-                ).execute()
+                result = self._gcal_service.events().insert(calendarId=cal_id, body=event_body).execute()
                 logger.info(f"CalendarIntegration: event created (Google) — {result.get('id')}")
                 return {
                     "power_id": "PWR-342",
@@ -264,6 +270,7 @@ class CalendarIntegration(BaseIntegration):
         if self._caldav_client:
             try:
                 from icalendar import Calendar as ICalendar, Event  # type: ignore
+
                 cal = ICalendar()
                 cal.add("prodid", "-//JARVIS//EN")
                 cal.add("version", "2.0")
@@ -352,11 +359,13 @@ class CalendarIntegration(BaseIntegration):
                         except Exception:
                             pass
                 if not overlap:
-                    free_slots.append({
-                        "start": cursor.isoformat(),
-                        "end": slot_end.isoformat(),
-                        "duration_minutes": duration_minutes,
-                    })
+                    free_slots.append(
+                        {
+                            "start": cursor.isoformat(),
+                            "end": slot_end.isoformat(),
+                            "duration_minutes": duration_minutes,
+                        }
+                    )
             cursor += timedelta(minutes=30)
 
         return {
@@ -394,6 +403,7 @@ class CalendarIntegration(BaseIntegration):
             return {"connected": False, "reason": "CALDAV_URL not set"}
         try:
             import caldav  # type: ignore
+
             client = caldav.DAVClient(url=url, username=username, password=password)
             client.principal()  # test connection
             self._caldav_client = client
@@ -412,6 +422,7 @@ class CalendarIntegration(BaseIntegration):
         try:
             from google.oauth2.credentials import Credentials  # type: ignore
             from googleapiclient.discovery import build  # type: ignore
+
             creds = Credentials(
                 token=None,
                 refresh_token=refresh_token,
@@ -445,6 +456,7 @@ class CalendarIntegration(BaseIntegration):
     def _parse_caldav_event(self, event: Any) -> Dict[str, Any]:
         try:
             from icalendar import Calendar as ICalendar  # type: ignore
+
             cal = ICalendar.from_ical(event.data)
             for component in cal.walk():
                 if component.name == "VEVENT":
@@ -452,7 +464,9 @@ class CalendarIntegration(BaseIntegration):
                         "backend": "caldav",
                         "id": str(component.get("uid", "")),
                         "title": str(component.get("summary", "Untitled")),
-                        "start": str(component.get("dtstart", {}).dt if hasattr(component.get("dtstart", {}), "dt") else ""),
+                        "start": str(
+                            component.get("dtstart", {}).dt if hasattr(component.get("dtstart", {}), "dt") else ""
+                        ),
                         "end": str(component.get("dtend", {}).dt if hasattr(component.get("dtend", {}), "dt") else ""),
                         "description": str(component.get("description", "")),
                         "location": str(component.get("location", "")),
@@ -483,6 +497,7 @@ class CalendarIntegration(BaseIntegration):
 
     def _execute_power_impl(self, power_id: str, payload: dict, approval_token=None):
         from datetime import datetime
+
         dispatch = {
             "PWR-340": lambda p: self.list_calendars(),
             "PWR-341": lambda p: self.list_events(

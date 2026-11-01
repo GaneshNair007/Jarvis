@@ -39,12 +39,12 @@ class CompanyResearcher:
         culture_signals = [
             "Engineering-driven, remote-friendly or hybrid cadence",
             "High autonomy with emphasis on clean system architecture",
-            "Continuous deployment with automated testing standards"
+            "Continuous deployment with automated testing standards",
         ]
         leadership = ["VP of Engineering", "Head of AI Infrastructure", "Staff Technical Lead"]
         recent_news = [
             f"{clean_name} expands engineering initiatives in AI orchestration and cloud scalability.",
-            f"Active hiring across distributed systems and platform infrastructure."
+            f"Active hiring across distributed systems and platform infrastructure.",
         ]
         red_flags = []
 
@@ -57,7 +57,7 @@ class CompanyResearcher:
             recent_news=recent_news,
             leadership=leadership,
             glassdoor_rating=4.3,
-            red_flags=red_flags
+            red_flags=red_flags,
         )
 
         # Cache locally
@@ -68,4 +68,3 @@ class CompanyResearcher:
 
         logger.info(f"Generated research dossier for {clean_name}")
         return dossier
-

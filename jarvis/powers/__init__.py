@@ -11,6 +11,9 @@ from jarvis.powers.security_powers import security_powers
 from jarvis.powers.finance_powers import finance_powers
 from jarvis.powers.smart_home_powers import smart_home_powers
 from jarvis.powers.automation_powers import automation_powers
+from jarvis.powers.calendar_powers import calendar_powers
+from jarvis.powers.email_powers import email_powers
+from jarvis.powers.homeassistant_powers import homeassistant_powers
 
 __all__ = [
     "browser_powers",
@@ -24,4 +27,7 @@ __all__ = [
     "finance_powers",
     "smart_home_powers",
     "automation_powers",
+    "calendar_powers",
+    "email_powers",
+    "homeassistant_powers",
 ]

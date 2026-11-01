@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     """Centralized, typed application settings."""
 
     # ─── Core Application Settings ──────────────────────────────────────────
+    data_dir: Path = Field(default=PROJECT_ROOT / "data", description="Data directory")
     jarvis_env: str = Field(
         default="development",
         description="Environment: development, test, production",
@@ -154,9 +155,7 @@ class Settings(BaseSettings):
     )
 
     # ─── Voice Engine Settings ──────────────────────────────────────────────
-    voice_wake_phrases: List[str] = Field(
-        default_factory=lambda: ["hey jarvis", "jarvis", "ok jarvis"]
-    )
+    voice_wake_phrases: List[str] = Field(default_factory=lambda: ["hey jarvis", "jarvis", "ok jarvis"])
     voice_sensitivity: float = Field(default=0.5)
     voice_energy_threshold: float = Field(default=85.0)
     tts_speed: int = Field(default=1)
@@ -175,9 +174,7 @@ class Settings(BaseSettings):
         valid_modes = {"development", "test", "production", "staging"}
         v_clean = v.strip().lower()
         if v_clean not in valid_modes:
-            raise ValueError(
-                f"Invalid JARVIS_ENV '{v}'. Must be one of: {', '.join(sorted(valid_modes))}"
-            )
+            raise ValueError(f"Invalid JARVIS_ENV '{v}'. Must be one of: {', '.join(sorted(valid_modes))}")
         return v_clean
 
     def ensure_directories(self) -> None:

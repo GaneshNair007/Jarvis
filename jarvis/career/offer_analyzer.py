@@ -24,7 +24,7 @@ class OfferAnalyzer:
         base_salary: float,
         bonus: float = 0.0,
         equity_annual_val: float = 0.0,
-        profile: Optional[UserCareerProfile] = None
+        profile: Optional[UserCareerProfile] = None,
     ) -> OfferAnalysis:
         """Calculates total compensation gap and provides negotiation strategy."""
         p = profile or UserCareerProfile()
@@ -71,6 +71,5 @@ class OfferAnalyzer:
             gap=gap,
             gap_percentage=gap_percentage,
             verdict=verdict,
-            negotiation_script=negotiation_script
+            negotiation_script=negotiation_script,
         )
-

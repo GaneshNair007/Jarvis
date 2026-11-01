@@ -24,6 +24,7 @@ SERVICE_NAME = "jarvis-core"
 
 # ─── Enums ──────────────────────────────────────────────────────────────────
 
+
 class TaskStatus(str, Enum):
     NEW = "NEW"
     TRIAGED = "TRIAGED"
@@ -97,8 +98,7 @@ BLOCKED_SSRF_NETWORKS = [
 ]
 
 DEFAULT_USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 )
 
 DEFAULT_DUCKDUCKGO_SEARCH_URL = "https://html.duckduckgo.com/html/"
@@ -114,34 +114,31 @@ DEFAULT_APP_COMMANDS = {
     "calculator": "calc",
 }
 
-DEFAULT_POLICY_ALLOWED_APPS = [
-    "notepad", "code", "cmd", "powershell", "explorer", "calculator", "terminal"
-]
+DEFAULT_POLICY_ALLOWED_APPS = ["notepad", "code", "cmd", "powershell", "explorer", "calculator", "terminal"]
 
-DEFAULT_POLICY_BLOCKED_APPS = [
-    "regedit", "format", "crypto_wallet", "metamask"
-]
+DEFAULT_POLICY_BLOCKED_APPS = ["regedit", "format", "crypto_wallet", "metamask"]
 
-DEFAULT_CRITICAL_KEYWORDS = [
-    "drop database", "format disk", "wipe system", "trade crypto", "mint nft"
-]
+DEFAULT_CRITICAL_KEYWORDS = ["drop database", "format disk", "wipe system", "trade crypto", "mint nft"]
 
-DEFAULT_HIGH_RISK_KEYWORDS = [
-    "delete file", "rm -rf", "drop table", "send email", "post tweet", "curl -x post"
-]
+DEFAULT_HIGH_RISK_KEYWORDS = ["delete file", "rm -rf", "drop table", "send email", "post tweet", "curl -x post"]
 
-DEFAULT_MEDIUM_RISK_KEYWORDS = [
-    "write file", "create directory", "npm install", "pip install"
-]
+DEFAULT_MEDIUM_RISK_KEYWORDS = ["write file", "create directory", "npm install", "pip install"]
 
 DEFAULT_TIER2_KEYWORDS = [
-    "delete file", "rm -rf", "send email", "post to", "purchase", "buy", "book flight",
-    "push to main", "deploy to prod", "click on", "type password"
+    "delete file",
+    "rm -rf",
+    "send email",
+    "post to",
+    "purchase",
+    "buy",
+    "book flight",
+    "push to main",
+    "deploy to prod",
+    "click on",
+    "type password",
 ]
 
-DEFAULT_TIER1_KEYWORDS = [
-    "create draft", "write file", "save note", "test code", "ingest document"
-]
+DEFAULT_TIER1_KEYWORDS = ["create draft", "write file", "save note", "test code", "ingest document"]
 
 
 # ─── Search Brain Defaults ──────────────────────────────────────────────────
@@ -196,25 +193,57 @@ INGESTION_REDACTION_PATTERNS: List[Tuple[re.Pattern, str]] = [
     (re.compile(r"ghp_[A-Za-z0-9]{36}", re.IGNORECASE), "[REDACTED_GITHUB_TOKEN]"),
     (re.compile(r"AKIA[0-9A-Z]{16}", re.IGNORECASE), "[REDACTED_AWS_KEY]"),
     (re.compile(r"eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}", re.IGNORECASE), "[REDACTED_JWT]"),
-    (re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]+?-----END [A-Z ]*PRIVATE KEY-----", re.MULTILINE), "[REDACTED_PRIVATE_KEY]"),
+    (
+        re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]+?-----END [A-Z ]*PRIVATE KEY-----", re.MULTILINE),
+        "[REDACTED_PRIVATE_KEY]",
+    ),
     (re.compile(r'(?i)(password|secret|passwd|token)\s*[:=]\s*["\']?([^"\s\',;]{4,})["\']?'), r"\1: [REDACTED_SECRET]"),
-    (re.compile(r"\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12}|(?:[0-9]{4}[ -]){3}[0-9]{4})\b"), "[REDACTED_CARD_NUMBER]"),
+    (
+        re.compile(
+            r"\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12}|(?:[0-9]{4}[ -]){3}[0-9]{4})\b"
+        ),
+        "[REDACTED_CARD_NUMBER]",
+    ),
 ]
 
 
 # ─── Code Ingestion Constants ───────────────────────────────────────────────
 
 DEFAULT_CODE_EXTENSIONS = {
-    ".py", ".js", ".ts", ".jsx", ".tsx", ".html", ".css",
-    ".go", ".rs", ".java", ".c", ".cpp", ".h", ".sh",
-    ".json", ".yaml", ".yml", ".toml", ".sql", ".dockerfile",
+    ".py",
+    ".js",
+    ".ts",
+    ".jsx",
+    ".tsx",
+    ".html",
+    ".css",
+    ".go",
+    ".rs",
+    ".java",
+    ".c",
+    ".cpp",
+    ".h",
+    ".sh",
+    ".json",
+    ".yaml",
+    ".yml",
+    ".toml",
+    ".sql",
+    ".dockerfile",
 }
 
 DEFAULT_IGNORED_DIRS = {
-    ".git", ".venv", "venv", "node_modules", "__pycache__",
-    ".pytest_cache", "dist", "build", ".next", ".artifacts",
+    ".git",
+    ".venv",
+    "venv",
+    "node_modules",
+    "__pycache__",
+    ".pytest_cache",
+    "dist",
+    "build",
+    ".next",
+    ".artifacts",
 }
 
 DEFAULT_CODE_INGEST_MAX_FILES = 150
 MAX_INGEST_FILE_SIZE_BYTES = 500 * 1024  # 500 KB
-

@@ -10,6 +10,7 @@ from typing import Dict, Any, Tuple, Optional
 from jarvis.config import settings
 from jarvis.constants import DEFAULT_PRICING_TABLE
 
+
 class CostGovernor:
     # Model pricing per 1K tokens (estimated USD)
     PRICING_TABLE = DEFAULT_PRICING_TABLE
@@ -33,7 +34,9 @@ class CostGovernor:
     def _month_key(self) -> str:
         return datetime.datetime.now().strftime("%Y-%m")
 
-    def estimate_call_cost(self, model_name: str, estimated_input_tokens: int, estimated_output_tokens: int = 500) -> float:
+    def estimate_call_cost(
+        self, model_name: str, estimated_input_tokens: int, estimated_output_tokens: int = 500
+    ) -> float:
         """Calculates expected cost for an inference call in USD."""
         pricing = self.PRICING_TABLE.get(model_name.lower())
         if not pricing:
@@ -42,9 +45,15 @@ class CostGovernor:
                     pricing = v
                     break
         if not pricing:
-            pricing = self.PRICING_TABLE["default_cloud"] if ("gpt" in model_name or "claude" in model_name or "gemini" in model_name) else self.PRICING_TABLE["ollama"]
+            pricing = (
+                self.PRICING_TABLE["default_cloud"]
+                if ("gpt" in model_name or "claude" in model_name or "gemini" in model_name)
+                else self.PRICING_TABLE["ollama"]
+            )
 
-        cost = (estimated_input_tokens / 1000.0 * pricing["input"]) + (estimated_output_tokens / 1000.0 * pricing["output"])
+        cost = (estimated_input_tokens / 1000.0 * pricing["input"]) + (
+            estimated_output_tokens / 1000.0 * pricing["output"]
+        )
         return round(cost, 6)
 
     def can_execute_call(self, task_id: str, model_name: str, estimated_input_tokens: int) -> Tuple[bool, str, float]:
@@ -66,17 +75,27 @@ class CostGovernor:
         # 3. Check Per-Task Budget
         current_task_cost = self.task_usage.get(task_id, 0.0)
         if current_task_cost + est_cost > self.max_per_task_budget:
-            return False, f"Per-task budget limit exceeded (${current_task_cost + est_cost:.3f} > ${self.max_per_task_budget:.2f})", est_cost
+            return (
+                False,
+                f"Per-task budget limit exceeded (${current_task_cost + est_cost:.3f} > ${self.max_per_task_budget:.2f})",
+                est_cost,
+            )
 
         # 4. Check Daily Budget
         today = self._today_key()
         current_daily_cost = self.daily_usage.get(today, 0.0)
         if current_daily_cost + est_cost > self.daily_budget_limit:
-            return False, f"Daily cloud budget limit reached (${current_daily_cost + est_cost:.3f} > ${self.daily_budget_limit:.2f})", est_cost
+            return (
+                False,
+                f"Daily cloud budget limit reached (${current_daily_cost + est_cost:.3f} > ${self.daily_budget_limit:.2f})",
+                est_cost,
+            )
 
         return True, "Call approved by Cost Governor", est_cost
 
-    def record_usage(self, task_id: str, model_name: str, input_tokens: int, output_tokens: int, actual_cost: Optional[float] = None) -> float:
+    def record_usage(
+        self, task_id: str, model_name: str, input_tokens: int, output_tokens: int, actual_cost: Optional[float] = None
+    ) -> float:
         """Records token and dollar expenditure in real time."""
         if actual_cost is None:
             actual_cost = self.estimate_call_cost(model_name, input_tokens, output_tokens)
@@ -141,8 +160,11 @@ class CostGovernor:
             "monthly_limit_usd": self.monthly_budget_limit,
             "max_per_task_limit_usd": self.max_per_task_budget,
             "models": self.model_stats,
-            "active_circuit_breakers": {p: cb["tripped_until"] > time.time() for p, cb in self.circuit_breakers.items()}
+            "active_circuit_breakers": {
+                p: cb["tripped_until"] > time.time() for p, cb in self.circuit_breakers.items()
+            },
         }
+
 
 # Singleton Cost Governor
 cost_governor = CostGovernor()

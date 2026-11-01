@@ -11,6 +11,7 @@ from pathlib import Path
 from logging.handlers import RotatingFileHandler
 from jarvis.config import settings
 
+
 def setup_logger(name: str = "jarvis") -> logging.Logger:
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG if settings.jarvis_debug else logging.INFO)
@@ -25,8 +26,7 @@ def setup_logger(name: str = "jarvis") -> logging.Logger:
 
     # Formatter
     formatter = logging.Formatter(
-        fmt="[%(asctime)s] [%(levelname)s] [%(name)s:%(module)s:%(lineno)d] %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S"
+        fmt="[%(asctime)s] [%(levelname)s] [%(name)s:%(module)s:%(lineno)d] %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
     )
 
     # Console Handler
@@ -38,10 +38,7 @@ def setup_logger(name: str = "jarvis") -> logging.Logger:
     # Rotating File Handler (Max 10MB, 5 backups)
     try:
         file_handler = RotatingFileHandler(
-            filename=str(log_file),
-            maxBytes=10 * 1024 * 1024,
-            backupCount=5,
-            encoding="utf-8"
+            filename=str(log_file), maxBytes=10 * 1024 * 1024, backupCount=5, encoding="utf-8"
         )
         file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(formatter)
@@ -51,7 +48,7 @@ def setup_logger(name: str = "jarvis") -> logging.Logger:
 
     return logger
 
+
 # Global default logger
 logger = setup_logger()
 get_logger = setup_logger
-

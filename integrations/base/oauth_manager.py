@@ -10,6 +10,7 @@ import hmac
 import hashlib
 from typing import Dict, Any, Optional, List
 
+
 class OAuthManager:
     """Manages OAuth 2.0 authorization flows, tokens, and verification states."""
 
@@ -17,23 +18,23 @@ class OAuthManager:
         "google": {
             "auth_url": "https://accounts.google.com/o/oauth2/v2/auth",
             "token_url": "https://oauth2.googleapis.com/token",
-            "revoke_url": "https://oauth2.googleapis.com/revoke"
+            "revoke_url": "https://oauth2.googleapis.com/revoke",
         },
         "meta": {
             "auth_url": "https://www.facebook.com/v20.0/dialog/oauth",
             "token_url": "https://graph.facebook.com/v20.0/oauth/access_token",
-            "revoke_url": "https://graph.facebook.com/v20.0/permissions"
+            "revoke_url": "https://graph.facebook.com/v20.0/permissions",
         },
         "github": {
             "auth_url": "https://github.com/login/oauth/authorize",
             "token_url": "https://github.com/login/oauth/access_token",
-            "revoke_url": "https://api.github.com/applications"
+            "revoke_url": "https://api.github.com/applications",
         },
         "slack": {
             "auth_url": "https://slack.com/oauth/v2/authorize",
             "token_url": "https://slack.com/api/oauth.v2.access",
-            "revoke_url": "https://slack.com/api/auth.revoke"
-        }
+            "revoke_url": "https://slack.com/api/auth.revoke",
+        },
     }
 
     def __init__(self):
@@ -43,11 +44,7 @@ class OAuthManager:
         self._tokens: Dict[str, Dict[str, Any]] = {}
 
     def generate_authorization_url(
-        self,
-        provider: str,
-        client_id: str,
-        redirect_uri: str,
-        scopes: List[str]
+        self, provider: str, client_id: str, redirect_uri: str, scopes: List[str]
     ) -> Dict[str, Any]:
         """Generates a secure OAuth authorization URL with anti-tamper state token."""
         endpoints = self.OAUTH_ENDPOINTS.get(provider)
@@ -60,7 +57,7 @@ class OAuthManager:
             "provider": provider,
             "scopes": scopes,
             "created_at": now,
-            "expires_at": now + 600.0  # 10 minute expiration
+            "expires_at": now + 600.0,  # 10 minute expiration
         }
 
         scope_param = " ".join(scopes)
@@ -75,12 +72,7 @@ class OAuthManager:
             f"prompt=consent"
         )
 
-        return {
-            "provider": provider,
-            "authorization_url": auth_url,
-            "state": state,
-            "expires_in_sec": 600
-        }
+        return {"provider": provider, "authorization_url": auth_url, "state": state, "expires_in_sec": 600}
 
     def verify_state(self, state: str) -> Optional[Dict[str, Any]]:
         """Verifies state token is valid and unexpired."""
@@ -98,7 +90,7 @@ class OAuthManager:
         access_token: str,
         refresh_token: Optional[str] = None,
         expires_in_sec: int = 3600,
-        scopes: Optional[List[str]] = None
+        scopes: Optional[List[str]] = None,
     ) -> None:
         """Stores token with expiration timestamp."""
         now = time.time()
@@ -107,7 +99,7 @@ class OAuthManager:
             "refresh_token": refresh_token,
             "created_at": now,
             "expires_at": now + expires_in_sec,
-            "scopes": scopes or []
+            "scopes": scopes or [],
         }
 
     def is_connected(self, provider: str) -> bool:
@@ -126,6 +118,7 @@ class OAuthManager:
     def revoke_token(self, provider: str) -> bool:
         """Revokes and discards stored token."""
         return self._tokens.pop(provider, None) is not None
+
 
 # Global OAuth manager instance
 oauth_manager = OAuthManager()

@@ -13,6 +13,7 @@ class SearXNGClient:
     def __init__(self, base_url: Optional[str] = None):
         if base_url is None:
             from jarvis.config import settings
+
             self.base_url = settings.searxng_url.rstrip("/")
         else:
             self.base_url = base_url.rstrip("/")

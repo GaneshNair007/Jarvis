@@ -7,6 +7,7 @@ from jarvis.graph.nodes import (
     memory_update,
 )
 
+
 def build_jarvis_graph():
     graph = StateGraph(JarvisState)
     graph.add_node("memory_retrieval", memory_retrieval)
@@ -19,6 +20,7 @@ def build_jarvis_graph():
     graph.add_edge("model_router", "memory_update")
     graph.add_edge("memory_update", END)
     return graph.compile()
+
 
 jarvis_graph = build_jarvis_graph()
 

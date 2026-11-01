@@ -19,6 +19,7 @@ class MeiliSearchEngine:
     ):
         if url is None or master_key is None:
             from jarvis.config import settings
+
             self.url = url or settings.meilisearch_url.rstrip("/")
             self.master_key = master_key or settings.meilisearch_master_key
         else:

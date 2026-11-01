@@ -26,6 +26,7 @@ BLOCKED_NETWORKS = BLOCKED_SSRF_NETWORKS
 
 class SSRFValidationError(PermissionError):
     """Raised when an outbound URL resolves to a protected private or local network."""
+
     pass
 
 

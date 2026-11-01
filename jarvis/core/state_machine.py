@@ -8,12 +8,14 @@ import time
 from typing import Dict, Any, Optional, Set
 from pydantic import BaseModel, Field
 
+
 class TaskState(BaseModel):
     task_id: str
     current_status: str = "NEW"
     history: list = Field(default_factory=list)
     created_at: float = Field(default_factory=time.time)
     updated_at: float = Field(default_factory=time.time)
+
 
 class TaskStateMachine:
     VALID_TRANSITIONS: Dict[str, Set[str]] = {
@@ -25,9 +27,9 @@ class TaskStateMachine:
         "RUNNING": {"VERIFYING", "COMPLETED", "FAILED", "CANCELLED"},
         "VERIFYING": {"COMPLETED", "FAILED", "CANCELLED"},
         "COMPLETED": set(),
-        "FAILED": {"NEW"}, # Allow retry
-        "REJECTED": {"NEW"}, # Allow re-submission
-        "CANCELLED": set()
+        "FAILED": {"NEW"},  # Allow retry
+        "REJECTED": {"NEW"},  # Allow re-submission
+        "CANCELLED": set(),
     }
 
     def __init__(self):

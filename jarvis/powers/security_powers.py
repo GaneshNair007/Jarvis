@@ -25,7 +25,7 @@ class SecurityPowers:
             "anthropic_key": r"sk-ant-[A-Za-z0-9_-]{32,}",
             "aws_access_key": r"AKIA[0-9A-Z]{16}",
             "jwt_token": r"eyJ[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*",
-            "private_key": r"-----BEGIN (RSA|OPENSSH|EC) PRIVATE KEY-----"
+            "private_key": r"-----BEGIN (RSA|OPENSSH|EC) PRIVATE KEY-----",
         }
 
         found_findings = []
@@ -40,7 +40,7 @@ class SecurityPowers:
             "safe": len(found_findings) == 0,
             "findings_count": len(found_findings),
             "findings": found_findings,
-            "redacted_text_length": len(redacted)
+            "redacted_text_length": len(redacted),
         }
 
     def verify_kill_switch(self) -> Dict[str, Any]:
@@ -49,18 +49,13 @@ class SecurityPowers:
         return {
             "power_id": "PWR-279",
             "kill_switch_active": is_blocked,
-            "system_state": "LOCKED" if is_blocked else "OPERATIONAL"
+            "system_state": "LOCKED" if is_blocked else "OPERATIONAL",
         }
 
     def verify_approval_token(self, token: str, action: Optional[str] = None) -> Dict[str, Any]:
         """PWR-284: Verifies cryptographic validity and expiration of an approval token."""
         valid = policy_gate.verify_token(token)
-        return {
-            "power_id": "PWR-284",
-            "token": token,
-            "action": action,
-            "valid": valid
-        }
+        return {"power_id": "PWR-284", "token": token, "action": action, "valid": valid}
 
 
 security_powers = SecurityPowers()

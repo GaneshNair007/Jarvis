@@ -15,6 +15,7 @@ from typing import Optional, Dict, Any
 from jarvis.config import settings
 from jarvis.core.logger import logger
 
+
 class TextToSpeech:
     def __init__(self, voice_speed: Optional[int] = None, volume: Optional[int] = None):
         self.voice_speed = voice_speed if voice_speed is not None else settings.tts_speed
@@ -27,6 +28,7 @@ class TextToSpeech:
     def _init_sapi(self) -> None:
         try:
             import win32com.client
+
             self._sapi_speaker = win32com.client.Dispatch("SAPI.SpVoice")
             self._sapi_speaker.Rate = self.voice_speed
             self._sapi_speaker.Volume = self.volume
@@ -79,11 +81,12 @@ class TextToSpeech:
         if self._sapi_speaker:
             try:
                 import win32com.client
+
                 stream = win32com.client.Dispatch("SAPI.SpFileStream")
                 with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
                     tmp_path = tmp.name
 
-                stream.Open(tmp_path, 3) # 3 = SSFMCreateForWrite
+                stream.Open(tmp_path, 3)  # 3 = SSFMCreateForWrite
                 self._sapi_speaker.AudioOutputStream = stream
                 self._sapi_speaker.Speak(text, 0)
                 stream.Close()
@@ -108,7 +111,7 @@ class TextToSpeech:
             wf.setframerate(sample_rate)
 
             # Generate pleasant soft audio tone sequence
-            freq = 440.0 # A4
+            freq = 440.0  # A4
             data = bytearray()
             for i in range(num_samples):
                 t = float(i) / sample_rate
@@ -118,6 +121,7 @@ class TextToSpeech:
             wf.writeframes(data)
 
         return buf.getvalue()
+
 
 # Singleton Text to Speech
 tts_engine = TextToSpeech()

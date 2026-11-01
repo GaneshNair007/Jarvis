@@ -10,10 +10,12 @@ from pathlib import Path
 
 # ── PlannerAgent ───────────────────────────────────────────────────────────────
 
+
 class TestPlannerAgent:
     def test_decompose_simple_goal(self):
         """Simple goal produces at least 1 plan step."""
         from jarvis.agents.planner import PlannerAgent
+
         planner = PlannerAgent()
         plan = planner.decompose("Search the web for Python tutorials")
         assert plan.plan_id.startswith("plan_")
@@ -23,6 +25,7 @@ class TestPlannerAgent:
     def test_decompose_assigns_researcher_for_search(self):
         """Search-related goals should assign researcher role."""
         from jarvis.agents.planner import PlannerAgent
+
         planner = PlannerAgent()
         plan = planner.decompose("Find the latest news about LangGraph")
         roles = [s.assigned_role for s in plan.steps]
@@ -31,6 +34,7 @@ class TestPlannerAgent:
     def test_decompose_assigns_coder_for_code_task(self):
         """Code-related goals should assign coder role."""
         from jarvis.agents.planner import PlannerAgent
+
         planner = PlannerAgent()
         plan = planner.decompose("Write a Python script to parse CSV files")
         roles = [s.assigned_role for s in plan.steps]
@@ -39,6 +43,7 @@ class TestPlannerAgent:
     def test_decompose_adds_review_for_deploy(self):
         """Deploy/publish goals should include a reviewer_critic step."""
         from jarvis.agents.planner import PlannerAgent
+
         planner = PlannerAgent()
         plan = planner.decompose("Deploy the application to production")
         roles = [s.assigned_role for s in plan.steps]
@@ -47,6 +52,7 @@ class TestPlannerAgent:
     def test_plan_to_dict(self):
         """Plan.to_dict() produces valid serialisable output."""
         from jarvis.agents.planner import PlannerAgent
+
         planner = PlannerAgent()
         plan = planner.decompose("Summarise my emails")
         d = plan.to_dict()
@@ -57,6 +63,7 @@ class TestPlannerAgent:
     def test_plan_complexity_levels(self):
         """Complex multi-step goals produce medium/high complexity."""
         from jarvis.agents.planner import PlannerAgent
+
         planner = PlannerAgent()
         plan = planner.decompose(
             "Research vector databases, write a Python script to benchmark them, "
@@ -67,6 +74,7 @@ class TestPlannerAgent:
     def test_requires_approval_for_delete(self):
         """Goals containing 'delete' should require approval."""
         from jarvis.agents.planner import PlannerAgent
+
         planner = PlannerAgent()
         plan = planner.decompose("Delete all log files older than 30 days")
         assert plan.requires_approval is True
@@ -74,6 +82,7 @@ class TestPlannerAgent:
     def test_plan_step_dependencies_chained(self):
         """Steps after the first should have dependency references."""
         from jarvis.agents.planner import PlannerAgent
+
         planner = PlannerAgent()
         plan = planner.decompose("Deploy the service to staging")
         if len(plan.steps) > 1:
@@ -82,14 +91,18 @@ class TestPlannerAgent:
 
 # ── ResearcherAgent ────────────────────────────────────────────────────────────
 
+
 class TestResearcherAgent:
     def test_research_returns_report(self):
         """research() returns a ResearchReport with a report_id."""
         from jarvis.agents.researcher import ResearcherAgent
+
         agent = ResearcherAgent()
-        with patch.object(agent, "_search_local", return_value=[]), \
-             patch.object(agent, "_search_documents", return_value=[]), \
-             patch.object(agent, "_search_web", return_value=[]):
+        with (
+            patch.object(agent, "_search_local", return_value=[]),
+            patch.object(agent, "_search_documents", return_value=[]),
+            patch.object(agent, "_search_web", return_value=[]),
+        ):
             report = agent.research("LangGraph checkpointing")
         assert report.report_id.startswith("res_")
         assert report.query == "LangGraph checkpointing"
@@ -97,6 +110,7 @@ class TestResearcherAgent:
     def test_research_uses_web_fallback(self):
         """When local search is empty, web search is attempted."""
         from jarvis.agents.researcher import ResearcherAgent, ResearchResult
+
         agent = ResearcherAgent()
         mock_web = [
             ResearchResult(
@@ -107,9 +121,11 @@ class TestResearcherAgent:
                 relevance_score=0.9,
             )
         ]
-        with patch.object(agent, "_search_local", return_value=[]), \
-             patch.object(agent, "_search_documents", return_value=[]), \
-             patch.object(agent, "_search_web", return_value=mock_web):
+        with (
+            patch.object(agent, "_search_local", return_value=[]),
+            patch.object(agent, "_search_documents", return_value=[]),
+            patch.object(agent, "_search_web", return_value=mock_web),
+        ):
             report = agent.research("LangGraph")
         assert len(report.findings) == 1
         assert "web_search" in report.sources_consulted
@@ -118,10 +134,13 @@ class TestResearcherAgent:
         """ResearchReport.to_dict() is JSON-serialisable."""
         import json
         from jarvis.agents.researcher import ResearcherAgent
+
         agent = ResearcherAgent()
-        with patch.object(agent, "_search_local", return_value=[]), \
-             patch.object(agent, "_search_documents", return_value=[]), \
-             patch.object(agent, "_search_web", return_value=[]):
+        with (
+            patch.object(agent, "_search_local", return_value=[]),
+            patch.object(agent, "_search_documents", return_value=[]),
+            patch.object(agent, "_search_web", return_value=[]),
+        ):
             report = agent.research("test topic")
         d = report.to_dict()
         assert json.dumps(d)  # no exception
@@ -131,6 +150,7 @@ class TestResearcherAgent:
     def test_synthesis_fallback_when_no_llm(self):
         """Synthesise falls back to concatenated snippets when LLM unavailable."""
         from jarvis.agents.researcher import ResearcherAgent, ResearchResult
+
         agent = ResearcherAgent()
         findings = [
             ResearchResult(
@@ -147,11 +167,13 @@ class TestResearcherAgent:
 
 # ── ExecutorAgent ──────────────────────────────────────────────────────────────
 
+
 class TestExecutorAgent:
     def test_execute_file_read_success(self):
         """file_read action reads an existing file."""
         from jarvis.agents.executor import ExecutorAgent
         import tempfile, os
+
         agent = ExecutorAgent()
         with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False) as f:
             f.write("Hello JARVIS")
@@ -167,6 +189,7 @@ class TestExecutorAgent:
         """file_write action writes content to disk."""
         from jarvis.agents.executor import ExecutorAgent
         import tempfile, os
+
         agent = ExecutorAgent()
         tmp_path = tempfile.mktemp(suffix=".txt")
         try:
@@ -182,6 +205,7 @@ class TestExecutorAgent:
     def test_execute_file_read_missing_file(self):
         """file_read on non-existent file returns failed status."""
         from jarvis.agents.executor import ExecutorAgent
+
         agent = ExecutorAgent()
         result = agent.execute("file_read", {"path": "/nonexistent/path/file.txt"})
         assert result.status == "failed"
@@ -190,6 +214,7 @@ class TestExecutorAgent:
     def test_execute_shell_returns_result(self):
         """Shell action executes and returns stdout."""
         from jarvis.agents.executor import ExecutorAgent
+
         agent = ExecutorAgent()
         result = agent.execute(
             "shell",
@@ -203,6 +228,7 @@ class TestExecutorAgent:
         """ExecutionResult.to_dict() is JSON-serialisable."""
         import json
         from jarvis.agents.executor import ExecutorAgent
+
         agent = ExecutorAgent()
         result = agent.execute("file_read", {"path": "/nonexistent"})
         d = result.to_dict()
@@ -213,19 +239,24 @@ class TestExecutorAgent:
     def test_execute_unknown_action_falls_back_to_llm(self):
         """Unknown action type dispatches to _run_llm fallback."""
         from jarvis.agents.executor import ExecutorAgent
+
         agent = ExecutorAgent()
         with patch.object(agent, "_run_llm") as mock_llm:
-            mock_llm.return_value = MagicMock(status="success", stdout="test", action_type="", execution_id="", duration_ms=0.0)
+            mock_llm.return_value = MagicMock(
+                status="success", stdout="test", action_type="", execution_id="", duration_ms=0.0
+            )
             agent.execute("unknown_action_xyz", {"prompt": "test"})
         mock_llm.assert_called_once()
 
 
 # ── CriticAgent ────────────────────────────────────────────────────────────────
 
+
 class TestCriticAgent:
     def test_review_good_output_passes(self):
         """Clean, complete output should pass or pass_with_warnings."""
         from jarvis.agents.critic import CriticAgent, Verdict
+
         critic = CriticAgent()
         report = critic.review(
             goal="Summarise the features of LangGraph",
@@ -242,6 +273,7 @@ class TestCriticAgent:
     def test_review_empty_output_fails(self):
         """Empty output should fail with completeness error and retry recommended."""
         from jarvis.agents.critic import CriticAgent, Verdict
+
         critic = CriticAgent()
         report = critic.review(goal="Write a summary", output="", use_llm=False)
         # Empty output gets an error-severity issue → score deduction = 0.25 → score 0.75
@@ -252,6 +284,7 @@ class TestCriticAgent:
     def test_review_detects_email_pii(self):
         """Output containing email addresses should trigger safety issue."""
         from jarvis.agents.critic import CriticAgent
+
         critic = CriticAgent()
         report = critic.review(
             goal="Find contact info",
@@ -264,6 +297,7 @@ class TestCriticAgent:
     def test_review_detects_error_traces(self):
         """Output with Python traceback triggers quality error."""
         from jarvis.agents.critic import CriticAgent
+
         critic = CriticAgent()
         report = critic.review(
             goal="Run a calculation",
@@ -277,6 +311,7 @@ class TestCriticAgent:
         """CriticReport.to_dict() is JSON-serialisable."""
         import json
         from jarvis.agents.critic import CriticAgent
+
         critic = CriticAgent()
         report = critic.review("Test goal", "Test output", use_llm=False)
         d = report.to_dict()
@@ -288,6 +323,7 @@ class TestCriticAgent:
     def test_score_decreases_with_critical_issues(self):
         """Critical safety issues should drop score below 0.6."""
         from jarvis.agents.critic import CriticAgent, CriticIssue
+
         critic = CriticAgent()
         issues = [
             CriticIssue(severity="critical", category="safety", description="PII detected"),

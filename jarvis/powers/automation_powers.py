@@ -22,14 +22,14 @@ class AutomationPowers:
                 "cron": "0 8 * * *",
                 "description": "Daily 8 AM news, calendar, and task summary",
                 "status": "active",
-                "last_run": time.time() - 3600
+                "last_run": time.time() - 3600,
             },
             "nightly_index_optimizer": {
                 "cron": "0 2 * * *",
                 "description": "Re-indexes SQLite FTS5 database and prunes expired cache",
                 "status": "active",
-                "last_run": time.time() - 7200
-            }
+                "last_run": time.time() - 7200,
+            },
         }
 
     def list_schedules(self) -> Dict[str, Any]:
@@ -37,7 +37,7 @@ class AutomationPowers:
         return {
             "power_id": "PWR-253",
             "active_schedules_count": len(self.scheduled_jobs),
-            "schedules": self.scheduled_jobs
+            "schedules": self.scheduled_jobs,
         }
 
     def register_schedule(self, name: str, cron: str, prompt: str) -> Dict[str, Any]:
@@ -47,15 +47,9 @@ class AutomationPowers:
             "cron": cron,
             "description": prompt,
             "status": "active",
-            "registered_at": time.time()
+            "registered_at": time.time(),
         }
-        return {
-            "power_id": "PWR-254",
-            "schedule_id": clean_name,
-            "cron": cron,
-            "status": "registered"
-        }
+        return {"power_id": "PWR-254", "schedule_id": clean_name, "cron": cron, "status": "registered"}
 
 
 automation_powers = AutomationPowers()
-

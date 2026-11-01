@@ -69,7 +69,7 @@ def test_pwr_304_agent_handoff():
     res = multiagent_powers.handoff_task(
         source_agent="researcher",
         target_agent="content_strategist",
-        payload={"research_notes": "Retrieved 5 papers on hybrid retrieval"}
+        payload={"research_notes": "Retrieved 5 papers on hybrid retrieval"},
     )
     assert res["power_id"] == "PWR-304"
     assert res["status"] == "HANDOFF_SUCCESS"
@@ -78,11 +78,7 @@ def test_pwr_304_agent_handoff():
 
 def test_pwr_305_parallel_execution():
     """Validates bounded concurrent execution of multiple agent goals."""
-    goals = [
-        "Analyze system memory telemetry",
-        "Inspect repository git diff",
-        "Benchmark SQLite FTS5 index speed"
-    ]
+    goals = ["Analyze system memory telemetry", "Inspect repository git diff", "Benchmark SQLite FTS5 index speed"]
     res = multiagent_powers.execute_parallel_swarms(goals)
     assert res["power_id"] == "PWR-305"
     assert res["executed_plans_count"] == 3
@@ -102,4 +98,3 @@ def test_pwr_307_agent_cancellation():
     cancelled = multiagent_powers.cancel_swarm_execution(plan.plan_id, reason="User interrupted")
     assert cancelled["power_id"] == "PWR-307"
     assert cancelled["cancelled"] is True
-

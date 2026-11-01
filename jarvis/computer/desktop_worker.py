@@ -19,6 +19,7 @@ try:
     import win32gui
     import win32con
     import win32process
+
     HAS_WIN32 = True
 except ImportError:
     HAS_WIN32 = False
@@ -30,6 +31,7 @@ from jarvis.core.policy_gate import policy_gate
 
 try:
     import pyautogui
+
     pyautogui.FAILSAFE = True  # Moving mouse to (0,0) throws FailSafeException immediately
     pyautogui.PAUSE = settings.desktop_action_pause_sec
     HAS_PYAUTOGUI = True
@@ -38,6 +40,7 @@ except Exception:
     HAS_PYAUTOGUI = False
 
 logger = get_logger("desktop_worker")
+
 
 class DesktopWorker:
     """Autonomous desktop operator implementing the See-Act-Verify cycle."""
@@ -75,7 +78,7 @@ class DesktopWorker:
                 "title": title,
                 "rect": list(rect),
                 "width": max(0, rect[2] - rect[0]),
-                "height": max(0, rect[3] - rect[1])
+                "height": max(0, rect[3] - rect[1]),
             }
         except Exception as e:
             logger.warning("Error getting active window: %s", e)
@@ -93,11 +96,7 @@ class DesktopWorker:
                 title = win32gui.GetWindowText(hwnd)
                 if title.strip():
                     rect = win32gui.GetWindowRect(hwnd)
-                    windows.append({
-                        "hwnd": hwnd,
-                        "title": title,
-                        "rect": list(rect)
-                    })
+                    windows.append({"hwnd": hwnd, "title": title, "rect": list(rect)})
 
         try:
             win32gui.EnumWindows(enum_handler, None)
@@ -151,6 +150,7 @@ class DesktopWorker:
                 w, h = region[2], region[3]
             img = Image.new("RGB", (max(w, 100), max(h, 100)), color=(18, 24, 38))
             from PIL import ImageDraw
+
             draw = ImageDraw.Draw(img)
             active_win = self.get_active_window()
             draw.text((30, 30), f"JARVIS Screen Buffer [{time.strftime('%Y-%m-%d %H:%M:%S')}]", fill=(0, 210, 255))
@@ -161,6 +161,7 @@ class DesktopWorker:
 
         # Save to buffer and compute hash
         import io
+
         buf = io.BytesIO()
         img.save(buf, format="PNG")
         img_bytes = buf.getvalue()
@@ -177,7 +178,7 @@ class DesktopWorker:
             "timestamp": now,
             "width": img.width,
             "height": img.height,
-            "region": list(region) if region else None
+            "region": list(region) if region else None,
         }
 
         audit_ledger.record(
@@ -185,7 +186,7 @@ class DesktopWorker:
             action="SCREEN_CAPTURE",
             target=str(file_path),
             payload={"sha256": sha256, "width": img.width, "height": img.height},
-            result="CAPTURED"
+            result="CAPTURED",
         )
 
         return evidence
@@ -197,12 +198,7 @@ class DesktopWorker:
             return True
         return any(allowed in title_lower for allowed in self.allowed_apps)
 
-    def see_act_verify(
-        self,
-        action: str,
-        params: Dict[str, Any],
-        task_id: str = "desktop_action"
-    ) -> Dict[str, Any]:
+    def see_act_verify(self, action: str, params: Dict[str, Any], task_id: str = "desktop_action") -> Dict[str, Any]:
         """
         Executes a desktop action following the See–Act–Verify lifecycle:
           1. SEE: Capture pre-action screenshot and inspect active window
@@ -228,13 +224,13 @@ class DesktopWorker:
                 action="DESKTOP_POLICY_REJECT",
                 target=target_app,
                 payload={"action": action, "params": params},
-                result="DENIED"
+                result="DENIED",
             )
             return {
                 "status": "POLICY_BLOCKED",
                 "reason": f"Application '{target_app}' is not in the allowed application roster.",
                 "pre_evidence": pre_screen,
-                "observable_change": False
+                "observable_change": False,
             }
 
         # 3. ACT
@@ -264,7 +260,7 @@ class DesktopWorker:
                     return {
                         "status": "POLICY_BLOCKED",
                         "reason": "Direct typing of credential keywords blocked by policy.",
-                        "pre_evidence": pre_screen
+                        "pre_evidence": pre_screen,
                     }
                 pyautogui.write(text, interval=interval)
 
@@ -308,7 +304,9 @@ class DesktopWorker:
         post_screen = self.capture_screen()
 
         # Check observable change
-        observable_change = (pre_screen["sha256"] != post_screen["sha256"]) or (pre_window.get("title") != post_window.get("title"))
+        observable_change = (pre_screen["sha256"] != post_screen["sha256"]) or (
+            pre_window.get("title") != post_window.get("title")
+        )
 
         result_payload = {
             "task_id": task_id,
@@ -320,7 +318,7 @@ class DesktopWorker:
             "post_evidence": post_screen,
             "pre_window": pre_window,
             "post_window": post_window,
-            "observable_change": observable_change
+            "observable_change": observable_change,
         }
 
         # Save to local history
@@ -334,9 +332,9 @@ class DesktopWorker:
                 "pre_sha256": pre_screen["sha256"],
                 "post_sha256": post_screen["sha256"],
                 "observable_change": observable_change,
-                "status": act_result
+                "status": act_result,
             },
-            result=act_result
+            result=act_result,
         )
 
         return result_payload
@@ -351,8 +349,9 @@ class DesktopWorker:
             "active_window": active,
             "allowed_apps": self.allowed_apps,
             "kill_switch_active": policy_gate.is_kill_switch_active(),
-            "recent_tasks_count": len(self.task_history)
+            "recent_tasks_count": len(self.task_history),
         }
+
 
 # Singleton Desktop Worker Instance
 desktop_worker = DesktopWorker()

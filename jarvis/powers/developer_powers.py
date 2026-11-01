@@ -21,18 +21,10 @@ class DeveloperPowers:
         """PWR-025: Checks git status of the working tree."""
         try:
             res = subprocess.run(
-                ["git", "status", "--porcelain"],
-                cwd=repo_path,
-                capture_output=True,
-                text=True,
-                timeout=10
+                ["git", "status", "--porcelain"], cwd=repo_path, capture_output=True, text=True, timeout=10
             )
             branch = subprocess.run(
-                ["git", "branch", "--show-current"],
-                cwd=repo_path,
-                capture_output=True,
-                text=True,
-                timeout=5
+                ["git", "branch", "--show-current"], cwd=repo_path, capture_output=True, text=True, timeout=5
             ).stdout.strip()
             modified = [line.strip() for line in res.stdout.splitlines() if line.strip()]
             return {
@@ -40,7 +32,7 @@ class DeveloperPowers:
                 "branch": branch or "main",
                 "clean": len(modified) == 0,
                 "modified_files_count": len(modified),
-                "modified_files": modified[:20]
+                "modified_files": modified[:20],
             }
         except Exception as e:
             return {"power_id": "PWR-025", "error": str(e), "clean": False}
@@ -52,15 +44,10 @@ class DeveloperPowers:
             if file_path:
                 cmd.append(file_path)
             res = subprocess.run(
-                cmd, cwd=repo_path, capture_output=True,
-                text=True, timeout=10, encoding="utf-8", errors="replace"
+                cmd, cwd=repo_path, capture_output=True, text=True, timeout=10, encoding="utf-8", errors="replace"
             )
             diff_out = res.stdout or ""
-            return {
-                "power_id": "PWR-026",
-                "diff_length": len(diff_out),
-                "diff_preview": diff_out[:2000]
-            }
+            return {"power_id": "PWR-026", "diff_length": len(diff_out), "diff_preview": diff_out[:2000]}
         except Exception as e:
             return {"power_id": "PWR-026", "error": str(e)}
 
@@ -68,21 +55,16 @@ class DeveloperPowers:
         """PWR-027: Executes local test suite."""
         try:
             res = subprocess.run(
-                ["python", "-m", "pytest", test_path, "-q"],
-                cwd=repo_path,
-                capture_output=True,
-                text=True,
-                timeout=60
+                ["python", "-m", "pytest", test_path, "-q"], cwd=repo_path, capture_output=True, text=True, timeout=60
             )
             return {
                 "power_id": "PWR-027",
                 "exit_code": res.returncode,
                 "passed": res.returncode == 0,
-                "summary": res.stdout.splitlines()[-1] if res.stdout.splitlines() else "No output"
+                "summary": res.stdout.splitlines()[-1] if res.stdout.splitlines() else "No output",
             }
         except Exception as e:
             return {"power_id": "PWR-027", "error": str(e), "passed": False}
 
 
 developer_powers = DeveloperPowers()
-

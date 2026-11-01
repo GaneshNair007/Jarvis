@@ -7,6 +7,7 @@ from jarvis.api.server import app
 
 client = TestClient(app)
 
+
 def test_serve_dashboard_root():
     """Phase 0: Web dashboard HTML served at '/'."""
     response = client.get("/")
@@ -16,12 +17,14 @@ def test_serve_dashboard_root():
     assert "Command Console" in response.text
     assert "Integrations Hub" in response.text
 
+
 def test_serve_dashboard_explicit_route():
     """Phase 0: Web dashboard HTML served at '/dashboard'."""
     response = client.get("/dashboard")
     assert response.status_code == 200
     assert "JARVIS" in response.text
     assert "Integrations Hub" in response.text
+
 
 def test_voice_push_to_talk_api():
     """Phase 1: Push-to-talk REST trigger."""
@@ -30,12 +33,14 @@ def test_voice_push_to_talk_api():
     data = response.json()
     assert data["trigger"] == "push_to_talk"
 
+
 def test_voice_barge_in_api():
     """Phase 1: Barge-in REST trigger."""
     response = client.post("/api/v1/voice/barge-in")
     assert response.status_code == 200
     data = response.json()
     assert data["speech_cancelled"] is True
+
 
 def test_voice_synthesize_api():
     """Phase 1: Speech synthesis REST endpoint returns WAV audio."""

@@ -11,9 +11,11 @@ from unittest.mock import MagicMock, patch
 
 # ─── Home Assistant ────────────────────────────────────────────────────────────
 
+
 class TestHomeAssistantIntegration:
     def _get_integration(self):
         from integrations.home_assistant.home_assistant import HomeAssistantIntegration
+
         return HomeAssistantIntegration()
 
     def test_init_disabled_by_default(self):
@@ -60,10 +62,12 @@ class TestHomeAssistantIntegration:
         ha.base_url = "http://ha.local:8123"
         ha.token = "test_token"
         with patch.object(ha, "_ha_request") as mock_req:
-            mock_req.return_value = {"data": [
-                {"entity_id": "light.living_room", "state": "on", "attributes": {"friendly_name": "Living Room"}},
-                {"entity_id": "sensor.temperature", "state": "22.5", "attributes": {"unit_of_measurement": "°C"}},
-            ]}
+            mock_req.return_value = {
+                "data": [
+                    {"entity_id": "light.living_room", "state": "on", "attributes": {"friendly_name": "Living Room"}},
+                    {"entity_id": "sensor.temperature", "state": "22.5", "attributes": {"unit_of_measurement": "°C"}},
+                ]
+            }
             result = ha.get_home_summary()
         assert result["power_id"] == "PWR-324"
         assert "lights_count" in result
@@ -75,10 +79,12 @@ class TestHomeAssistantIntegration:
         ha.base_url = "http://ha.local:8123"
         ha.token = "test_token"
         with patch.object(ha, "_ha_request") as mock_req:
-            mock_req.return_value = {"data": [
-                {"entity_id": "light.bedroom", "state": "off", "attributes": {}},
-                {"entity_id": "switch.fan", "state": "on", "attributes": {}},
-            ]}
+            mock_req.return_value = {
+                "data": [
+                    {"entity_id": "light.bedroom", "state": "off", "attributes": {}},
+                    {"entity_id": "switch.fan", "state": "on", "attributes": {}},
+                ]
+            }
             result = ha.list_entities(domain="light")
         assert result["power_id"] == "PWR-320"
         entity_ids = [e["entity_id"] for e in result["entities"]]
@@ -104,9 +110,11 @@ class TestHomeAssistantIntegration:
 
 # ─── Calendar Integration ──────────────────────────────────────────────────────
 
+
 class TestCalendarIntegration:
     def _get_integration(self):
         from integrations.calendar.calendar_integration import CalendarIntegration
+
         return CalendarIntegration()
 
     def test_init_disabled_by_default(self):
@@ -167,6 +175,7 @@ class TestCalendarIntegration:
     def test_create_event_no_backend(self):
         """create_event() returns ERROR when no backends are connected."""
         from datetime import datetime, timezone, timedelta
+
         cal = self._get_integration()
         result = cal.create_event(
             title="Test Meeting",
@@ -178,9 +187,11 @@ class TestCalendarIntegration:
 
 # ─── Finance Integration ───────────────────────────────────────────────────────
 
+
 class TestFinanceIntegration:
     def _get_integration(self):
         from integrations.finance.finance_integration import FinanceIntegration
+
         return FinanceIntegration()
 
     def test_init_disabled_by_default(self):
@@ -214,9 +225,7 @@ class TestFinanceIntegration:
         """get_crypto_quote() calls CoinGecko and returns structured result."""
         fin = self._get_integration()
         mock_response = MagicMock()
-        mock_response.json.return_value = {
-            "bitcoin": {"usd": 65000.0, "usd_24h_change": 1.5}
-        }
+        mock_response.json.return_value = {"bitcoin": {"usd": 65000.0, "usd_24h_change": 1.5}}
         mock_response.raise_for_status = MagicMock()
         with patch("httpx.Client") as mock_client:
             mock_client.return_value.__enter__.return_value.get.return_value = mock_response
@@ -312,11 +321,13 @@ class TestFinanceIntegration:
 
 # ─── Alembic Migration Tests ────────────────────────────────────────────────────
 
+
 class TestAlembicMigrations:
     def test_migration_0002_upgrade_runs(self):
         """Migration 0002 upgrade() should execute without syntax errors."""
         import importlib.util, sys
         from pathlib import Path
+
         spec = importlib.util.spec_from_file_location(
             "m002",
             str(Path(__file__).parent.parent / "alembic/versions/0002_add_integrations_and_plugins.py"),
@@ -332,6 +343,7 @@ class TestAlembicMigrations:
         """Migration 0003 upgrade() should be callable."""
         import importlib.util
         from pathlib import Path
+
         spec = importlib.util.spec_from_file_location(
             "m003",
             str(Path(__file__).parent.parent / "alembic/versions/0003_add_graph_checkpoints_and_voice_sessions.py"),
@@ -347,6 +359,7 @@ class TestAlembicMigrations:
         """Revisions form an unbroken chain from 0001 → 0002 → 0003."""
         import importlib.util
         from pathlib import Path
+
         base = Path(__file__).parent.parent / "alembic/versions"
 
         def load(filename):

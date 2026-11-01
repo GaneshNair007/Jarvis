@@ -6,16 +6,19 @@ import asyncio
 from jarvis.core.orchestrator import orchestrator
 from jarvis.memory.layers import memory_manager
 
+
 def test_orchestrator_instant_command():
     result = asyncio.run(orchestrator.process_user_query("System health"))
     assert result["status"] == "COMPLETED"
     assert result["tier"] == "BYPASS"
     assert "cpu_percent" in result["response"]
 
+
 def test_orchestrator_chat_query():
     result = asyncio.run(orchestrator.process_user_query("What is the speed of light?"))
     assert result["status"] == "COMPLETED"
     assert result["tier"] in ["TIER_1_LOCAL", "TIER_2_PRIVATE", "TIER_3_CLOUD"]
+
 
 def test_five_layer_memory():
     # 1. Directive
@@ -28,9 +31,7 @@ def test_five_layer_memory():
 
     # 2. Episodic memory
     ep_id = memory_manager.store_memory(
-        layer="EPISODIC",
-        content="User discussed migrating database to PostgreSQL",
-        metadata={"session_id": "sess_123"}
+        layer="EPISODIC", content="User discussed migrating database to PostgreSQL", metadata={"session_id": "sess_123"}
     )
     assert ep_id is not None
 

@@ -47,6 +47,7 @@ class LocalSearchEngine:
     def __init__(self, db_path: Optional[str] = None):
         if db_path is None:
             from jarvis.config import settings
+
             self.db_path = str(settings.search_db_path)
         else:
             self.db_path = str(db_path)
@@ -133,7 +134,7 @@ class LocalSearchEngine:
         Sanitize search query for SQLite FTS5 syntax.
         Safely strips unescaped punctuation while preserving alphanumeric words.
         """
-        clean = re.sub(r'[^\w\s\-_"]', ' ', query).strip()
+        clean = re.sub(r'[^\w\s\-_"]', " ", query).strip()
         tokens = [t.strip() for t in clean.split() if t.strip()]
         if not tokens:
             return '""'
@@ -212,9 +213,7 @@ class LocalSearchEngine:
             )
             return True
 
-    def keyword_search(
-        self, query: str, limit: int = 20, source_type: Optional[str] = None
-    ) -> List[SearchHit]:
+    def keyword_search(self, query: str, limit: int = 20, source_type: Optional[str] = None) -> List[SearchHit]:
         """
         Run millisecond SQLite FTS5 full-text keyword search using bm25 ranking.
         """
@@ -502,9 +501,7 @@ class LocalSearchEngine:
     def get_stats(self) -> Dict[str, Any]:
         """Return corpus stats and telemetry."""
         with self._connect() as conn:
-            doc_count = conn.execute(
-                "SELECT COUNT(*) FROM documents WHERE deleted_at IS NULL"
-            ).fetchone()[0]
+            doc_count = conn.execute("SELECT COUNT(*) FROM documents WHERE deleted_at IS NULL").fetchone()[0]
 
             types = conn.execute(
                 """
@@ -515,13 +512,9 @@ class LocalSearchEngine:
                 """
             ).fetchall()
 
-            queries = conn.execute(
-                "SELECT COUNT(*), AVG(latency_ms) FROM search_queries"
-            ).fetchone()
+            queries = conn.execute("SELECT COUNT(*), AVG(latency_ms) FROM search_queries").fetchone()
 
-            citations_count = conn.execute(
-                "SELECT COUNT(*) FROM citations"
-            ).fetchone()[0]
+            citations_count = conn.execute("SELECT COUNT(*) FROM citations").fetchone()[0]
 
             db_size_bytes = Path(self.db_path).stat().st_size if Path(self.db_path).exists() else 0
 

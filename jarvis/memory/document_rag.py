@@ -22,9 +22,11 @@ logger = get_logger("document_rag")
 
 try:
     import fitz  # PyMuPDF
+
     HAS_PYMUPDF = True
 except ImportError:
     HAS_PYMUPDF = False
+
 
 class DocumentRAG:
     """Manages document ingestion, chunking, indexing, and verifiable citation retrieval."""
@@ -92,14 +94,16 @@ class DocumentRAG:
                 page_chunks = self._chunk_text(page_text)
                 for c_idx, chunk_content in enumerate(page_chunks):
                     chunk_id = f"{doc_id}_p{page_num}_{c_idx}"
-                    chunks.append({
-                        "id": chunk_id,
-                        "doc_id": doc_id,
-                        "page_number": page_num,
-                        "chunk_index": chunk_global_idx,
-                        "content": chunk_content,
-                        "metadata": {"page": page_num, "sub_chunk": c_idx}
-                    })
+                    chunks.append(
+                        {
+                            "id": chunk_id,
+                            "doc_id": doc_id,
+                            "page_number": page_num,
+                            "chunk_index": chunk_global_idx,
+                            "content": chunk_content,
+                            "metadata": {"page": page_num, "sub_chunk": c_idx},
+                        }
+                    )
                     chunk_global_idx += 1
             doc.close()
         else:
@@ -112,14 +116,16 @@ class DocumentRAG:
             text_chunks = self._chunk_text(text)
             for c_idx, chunk_content in enumerate(text_chunks):
                 chunk_id = f"{doc_id}_p1_{c_idx}"
-                chunks.append({
-                    "id": chunk_id,
-                    "doc_id": doc_id,
-                    "page_number": 1,
-                    "chunk_index": c_idx,
-                    "content": chunk_content,
-                    "metadata": {"chunk_idx": c_idx}
-                })
+                chunks.append(
+                    {
+                        "id": chunk_id,
+                        "doc_id": doc_id,
+                        "page_number": 1,
+                        "chunk_index": c_idx,
+                        "content": chunk_content,
+                        "metadata": {"chunk_idx": c_idx},
+                    }
+                )
 
         # Save document record
         self.store.save_document(
@@ -131,7 +137,7 @@ class DocumentRAG:
             total_pages=total_pages,
             total_chunks=len(chunks),
             file_size=file_size,
-            metadata=metadata or {}
+            metadata=metadata or {},
         )
 
         # Save chunks
@@ -143,7 +149,7 @@ class DocumentRAG:
             action="DOCUMENT_INGEST",
             target=str(path),
             payload={"doc_id": doc_id, "file_name": file_name, "pages": total_pages, "chunks": len(chunks)},
-            result="INGESTED"
+            result="INGESTED",
         )
 
         logger.info("Ingested document %s (%s): %d pages, %d chunks", file_name, doc_id, total_pages, len(chunks))
@@ -156,7 +162,7 @@ class DocumentRAG:
             "sha256": sha256,
             "total_pages": total_pages,
             "total_chunks": len(chunks),
-            "file_size": file_size
+            "file_size": file_size,
         }
 
     def ingest_text(self, content: str, title: str, metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -173,14 +179,16 @@ class DocumentRAG:
         chunks = []
         for c_idx, chunk_content in enumerate(text_chunks):
             chunk_id = f"{doc_id}_p1_{c_idx}"
-            chunks.append({
-                "id": chunk_id,
-                "doc_id": doc_id,
-                "page_number": 1,
-                "chunk_index": c_idx,
-                "content": chunk_content,
-                "metadata": {"chunk_idx": c_idx}
-            })
+            chunks.append(
+                {
+                    "id": chunk_id,
+                    "doc_id": doc_id,
+                    "page_number": 1,
+                    "chunk_index": c_idx,
+                    "content": chunk_content,
+                    "metadata": {"chunk_idx": c_idx},
+                }
+            )
 
         self.store.save_document(
             doc_id=doc_id,
@@ -191,7 +199,7 @@ class DocumentRAG:
             total_pages=1,
             total_chunks=len(chunks),
             file_size=len(content_bytes),
-            metadata=metadata or {}
+            metadata=metadata or {},
         )
 
         if chunks:
@@ -205,15 +213,10 @@ class DocumentRAG:
             "sha256": sha256,
             "total_pages": 1,
             "total_chunks": len(chunks),
-            "file_size": len(content_bytes)
+            "file_size": len(content_bytes),
         }
 
-    def query_documents(
-        self,
-        query: str,
-        top_k: int = 5,
-        doc_id: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def query_documents(self, query: str, top_k: int = 5, doc_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Executes semantic RAG query across document chunks, returning ranked excerpts
         with exact file path, page number, chunk ID, and SHA-256 provenance.
@@ -241,7 +244,7 @@ class DocumentRAG:
                 "query": query,
                 "citations": [],
                 "answer": "No indexed documents found in the memory vault.",
-                "total_chunks_searched": 0
+                "total_chunks_searched": 0,
             }
 
         corpus = [c["content"] for c in chunks]
@@ -255,9 +258,7 @@ class DocumentRAG:
         except Exception as e:
             logger.warning("Vectorization fallback due to: %s", e)
             # Fallback substring scoring
-            sim_scores = np.array([
-                1.0 if query_clean.lower() in c.lower() else 0.0 for c in corpus
-            ])
+            sim_scores = np.array([1.0 if query_clean.lower() in c.lower() else 0.0 for c in corpus])
 
         # Rank indices by highest similarity
         ranked_indices = np.argsort(sim_scores)[::-1]
@@ -277,15 +278,17 @@ class DocumentRAG:
                 "page_number": ch.get("page_number", 1),
                 "score": round(score, 4),
                 "sha256": ch.get("sha256", ""),
-                "excerpt": ch["content"]
+                "excerpt": ch["content"],
             }
             citations.append(citation)
             synthesized_excerpts.append(
-                f"[Doc: {citation['file_name']}, Page: {citation['page_number']}, Score: {citation['score']}]\n\"{citation['excerpt']}\""
+                f'[Doc: {citation["file_name"]}, Page: {citation["page_number"]}, Score: {citation["score"]}]\n"{citation["excerpt"]}"'
             )
 
         if citations:
-            answer = f"Found {len(citations)} relevant citations matching query '{query}':\n\n" + "\n\n".join(synthesized_excerpts)
+            answer = f"Found {len(citations)} relevant citations matching query '{query}':\n\n" + "\n\n".join(
+                synthesized_excerpts
+            )
         else:
             answer = f"No matching passages found for '{query}' in the {len(chunks)} indexed document chunks."
 
@@ -294,15 +297,10 @@ class DocumentRAG:
             action="DOCUMENT_QUERY",
             target=doc_id or "ALL_DOCS",
             payload={"query": query, "top_k": top_k, "retrieved_citations": len(citations)},
-            result="SUCCESS"
+            result="SUCCESS",
         )
 
-        return {
-            "query": query,
-            "citations": citations,
-            "answer": answer,
-            "total_chunks_searched": len(chunks)
-        }
+        return {"query": query, "citations": citations, "answer": answer, "total_chunks_searched": len(chunks)}
 
     def delete_document(self, doc_id: str) -> bool:
         """Deletes a document and its cascading chunks from the vault."""
@@ -311,6 +309,7 @@ class DocumentRAG:
     def list_documents(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Lists all ingested documents."""
         return self.store.list_documents(limit=limit)
+
 
 # Singleton Document RAG Instance
 document_rag = DocumentRAG()

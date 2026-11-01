@@ -12,25 +12,35 @@ import datetime
 from typing import Dict, Any, Tuple, Optional, List
 from jarvis.config import settings
 
+
 class PolicyGate:
     # Privilege Level mappings
     PRIVILEGE_LEVELS = {
-        0: "PUBLIC_READ",       # Web search, public docs
-        1: "LOCAL_READ",        # Reading local files, telemetry
-        2: "LOCAL_WRITE",       # Writing temp drafts, local notes
-        3: "OUTBOUND_COMM",     # Sending emails, posting messages
-        4: "SYSTEM_MODIFY",     # Installing packages, editing configs
-        5: "IRREVERSIBLE_OP"    # Deleting files, code deploy, financial purchase
+        0: "PUBLIC_READ",  # Web search, public docs
+        1: "LOCAL_READ",  # Reading local files, telemetry
+        2: "LOCAL_WRITE",  # Writing temp drafts, local notes
+        3: "OUTBOUND_COMM",  # Sending emails, posting messages
+        4: "SYSTEM_MODIFY",  # Installing packages, editing configs
+        5: "IRREVERSIBLE_OP",  # Deleting files, code deploy, financial purchase
     }
 
     # Powers that strictly require human cryptographic approval
     APPROVAL_REQUIRED_POWERS = {
         # File & System deletions / drops
-        "delete_file", "drop_table", "kill_process", "format_disk",
+        "delete_file",
+        "drop_table",
+        "kill_process",
+        "format_disk",
         # Outbound comms
-        "send_email", "post_tweet", "submit_form", "send_chat_message",
+        "send_email",
+        "post_tweet",
+        "submit_form",
+        "send_chat_message",
         # Financial / deployment
-        "purchase_item", "execute_trade", "deploy_production", "reboot_host"
+        "purchase_item",
+        "execute_trade",
+        "deploy_production",
+        "reboot_host",
     }
 
     def __init__(self):
@@ -62,13 +72,7 @@ class PolicyGate:
         token = f"{signature}.{expiry}"
         return token, float(expiry)
 
-    def request_approval(
-        self,
-        power_id: str,
-        task_id: str,
-        action_summary: str,
-        payload: Any
-    ) -> Dict[str, Any]:
+    def request_approval(self, power_id: str, task_id: str, action_summary: str, payload: Any) -> Dict[str, Any]:
         """Generates an approval record and token bound to payload hash."""
         payload_hash = self.hash_payload(payload)
         token, expires_at = self.generate_approval_token(task_id, power_id, payload_hash)
@@ -81,14 +85,14 @@ class PolicyGate:
             "payload_hash": payload_hash,
             "token": token,
             "expires_at": expires_at,
-            "status": "PENDING"
+            "status": "PENDING",
         }
         return {
             "approval_id": approval_id,
             "task_id": task_id,
             "power_id": power_id,
             "token": token,
-            "expires_at": expires_at
+            "expires_at": expires_at,
         }
 
     def verify_token(self, token: str) -> bool:
@@ -131,7 +135,7 @@ class PolicyGate:
         power_id: str,
         privilege_level: int,
         payload: Dict[str, Any],
-        approval_token: Optional[str] = None
+        approval_token: Optional[str] = None,
     ) -> Tuple[bool, str, Optional[Dict[str, Any]]]:
         """
         Deterministic Policy Evaluation:
@@ -154,9 +158,9 @@ class PolicyGate:
 
         # 3. Check if Power or Privilege Level requires approval
         needs_approval = (
-            privilege_level >= 3 or
-            power_id.lower() in self.APPROVAL_REQUIRED_POWERS or
-            any(danger_kw in power_id.lower() for danger_kw in ["delete", "drop", "deploy", "buy", "send", "kill"])
+            privilege_level >= 3
+            or power_id.lower() in self.APPROVAL_REQUIRED_POWERS
+            or any(danger_kw in power_id.lower() for danger_kw in ["delete", "drop", "deploy", "buy", "send", "kill"])
         )
 
         if needs_approval:
@@ -169,10 +173,14 @@ class PolicyGate:
                     "payload_hash": payload_hash,
                     "token": token,
                     "expires_at": expiry,
-                    "action_summary": f"Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})"
+                    "action_summary": f"Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})",
                 }
                 self.pending_approvals[task_id] = approval_req
-                return False, f"POLICY REQUIREMENT: Human approval required for {power_id} (Level {privilege_level})", approval_req
+                return (
+                    False,
+                    f"POLICY REQUIREMENT: Human approval required for {power_id} (Level {privilege_level})",
+                    approval_req,
+                )
 
             # Verify token
             valid, reason = self.verify_approval_token(task_id, power_id, payload_hash, approval_token)
@@ -189,6 +197,7 @@ class PolicyGate:
                     return False, f"SECURITY VIOLATION: Path '{target_dir}' is not within allowed directories", None
 
         return True, "Policy Gate approved execution", None
+
 
 # Singleton Policy Gate
 policy_gate = PolicyGate()
