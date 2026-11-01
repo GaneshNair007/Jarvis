@@ -1,13 +1,17 @@
 """
 JARVIS Text-to-Speech (TTS) Module (PWR-004)
 Synthesizes natural spoken speech with low latency and barge-in cancellation.
-Uses Windows SAPI natively (with SpFileStream for real WAV output), and supports Piper.
+Supports ElevenLabs Neural Voice API, Windows SAPI natively (with SpFileStream for real WAV output),
+and pure Python PCM audio fallback.
 """
 
 import os
 import io
+import json
 import time
 import tempfile
+import urllib.request
+import urllib.error
 import wave
 import struct
 import math
@@ -20,6 +24,12 @@ class TextToSpeech:
     def __init__(self, voice_speed: Optional[int] = None, volume: Optional[int] = None):
         self.voice_speed = voice_speed if voice_speed is not None else settings.tts_speed
         self.volume = volume if volume is not None else settings.tts_volume
+        self.elevenlabs_api_key = os.getenv(
+            "ELEVENLABS_API_KEY", getattr(settings, "elevenlabs_api_key", None)
+        )
+        self.elevenlabs_voice_id = os.getenv(
+            "ELEVENLABS_VOICE_ID", getattr(settings, "elevenlabs_voice_id", "21m00Tcm4TlvDq8ikWAM")
+        )
         self.is_speaking = False
         self._interrupted = False
         self._sapi_speaker = None
@@ -36,6 +46,36 @@ class TextToSpeech:
         except Exception as e:
             logger.info(f"SAPI not loaded: {e}; using fallback PCM WAV generator.")
             self._sapi_speaker = None
+
+    def synthesize_elevenlabs(self, text: str) -> Optional[bytes]:
+        """Synthesizes high-fidelity speech using ElevenLabs API when configured."""
+        if not self.elevenlabs_api_key or not text:
+            return None
+
+        url = f"https://api.elevenlabs.io/v1/text-to-speech/{self.elevenlabs_voice_id}"
+        headers = {
+            "xi-api-key": self.elevenlabs_api_key,
+            "Content-Type": "application/json",
+            "Accept": "audio/mpeg",
+        }
+        payload = json.dumps({
+            "text": text,
+            "model_id": "eleven_monolingual_v1",
+            "voice_settings": {
+                "stability": 0.5,
+                "similarity_boost": 0.75,
+            },
+        }).encode("utf-8")
+
+        req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=5.0) as resp:
+                if resp.status == 200:
+                    logger.info("ElevenLabs speech synthesis succeeded.")
+                    return resp.read()
+        except Exception as e:
+            logger.warning(f"ElevenLabs TTS call failed or timed out: {e}; falling back to SAPI/PCM.")
+            return None
 
     def cancel_speech(self) -> None:
         """Interrupts ongoing speech immediately upon user barge-in."""
@@ -71,13 +111,22 @@ class TextToSpeech:
 
     def synthesize_to_wav(self, text: str) -> bytes:
         """
-        Synthesizes text into standard WAV audio bytes.
-        Can be streamed over WebSockets or played by client dashboards.
+        Synthesizes text into audio bytes.
+        Order of precedence:
+        1. ElevenLabs Neural TTS (if ELEVENLABS_API_KEY is configured)
+        2. Windows native SAPI to WAV
+        3. Pure Python standard library PCM WAV generator
         """
         if not text:
             return b""
 
-        # 1. Attempt SAPI synthesis to SpFileStream
+        # 1. Attempt ElevenLabs synthesis
+        if self.elevenlabs_api_key:
+            audio = self.synthesize_elevenlabs(text)
+            if audio:
+                return audio
+
+        # 2. Attempt SAPI synthesis to SpFileStream
         if self._sapi_speaker:
             try:
                 import win32com.client
@@ -99,7 +148,7 @@ class TextToSpeech:
             except Exception as e:
                 logger.warning(f"SAPI file synthesis failed: {e}; using fallback PCM generator.")
 
-        # 2. Fallback: Pure Python standard library PCM WAV generator (chime/beep/audio)
+        # 3. Fallback: Pure Python standard library PCM WAV generator (chime/beep/audio)
         sample_rate = 16000
         duration = min(3.0, 0.3 + (len(text) * 0.04))
         num_samples = int(sample_rate * duration)

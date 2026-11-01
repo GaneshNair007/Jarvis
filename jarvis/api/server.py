@@ -35,6 +35,8 @@ from jarvis.api.routes_integrations import router as integrations_router
 from jarvis.api.routes_search import router as search_router
 from jarvis.api.routes_career import router as career_router
 from jarvis.api.routes_assistants import router as assistants_router
+from jarvis.api.routes_smart_home import router as smart_home_router
+from jarvis.api.routes_ops import router as ops_router
 import uuid
 from graph.jarvis_graph import get_jarvis_graph
 
@@ -62,6 +64,8 @@ app.include_router(search_router)
 app.include_router(search_router, prefix="/api/v1")
 app.include_router(career_router)
 app.include_router(assistants_router)
+app.include_router(smart_home_router)
+app.include_router(ops_router)
 
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
 
