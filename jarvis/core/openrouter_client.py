@@ -45,6 +45,16 @@ class OpenRouterClient:
         if not self.is_available or not prompt:
             return None
 
+        # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
+        try:
+            from jarvis.security.ten_layer_shield import jarvis_security_suite
+            prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+            if system_instruction:
+                system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
+        except Exception as _sec_err:
+            logger.critical(f"OpenRouter egress firewall halted call: {_sec_err}")
+            raise RuntimeError(f"Cloud egress blocked by Zero-Leak Firewall: {_sec_err}") from _sec_err
+
         target_model = model or self.default_model
         url = f"{self.base_url.rstrip('/')}/chat/completions"
         headers = {

@@ -81,7 +81,23 @@ class TestOpenMausGrokBot:
         # 3. Resolve approval
         resolved = broker.resolve(priv_id, approved=True)
         assert resolved is True
-        assert broker._pending_decisions[priv_id]["status"] == "APPROVED"
+        rec = broker._pending_decisions[priv_id]
+        assert rec["status"] == "APPROVED"
+        assert "approval_token" in rec
+        token = rec["approval_token"]
+        assert len(token) >= 32
+
+        # 4. Target mismatch rejection
+        mismatched = broker.consume(token, action_type="execute_shell", details="rm -rf /tmp/other")
+        assert mismatched is False
+
+        # 5. Single-use consumption with matching details
+        consumed = broker.consume(token, action_type="execute_shell", details="rm -rf /")
+        assert consumed is True
+
+        # 6. Replay attack rejection (already consumed)
+        replayed = broker.consume(token, action_type="execute_shell", details="rm -rf /")
+        assert replayed is False
 
     @pytest.mark.asyncio
     async def test_harness_chat_generates_normalized_events_and_response(self):
@@ -142,3 +158,4 @@ class TestOpenMausGrokBot:
         assert resp_ev.status_code == 200
         ev_data = resp_ev.json()
         assert ev_data["total_events"] > 0
+

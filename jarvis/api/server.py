@@ -38,6 +38,7 @@ from jarvis.api.routes_assistants import router as assistants_router
 from jarvis.api.routes_smart_home import router as smart_home_router
 from jarvis.api.routes_ops import router as ops_router
 from jarvis.api.routes_grok import router as grok_router
+from jarvis.api.routes_workforce import router as workforce_router
 import uuid
 from graph.jarvis_graph import get_jarvis_graph
 
@@ -68,6 +69,8 @@ app.include_router(assistants_router)
 app.include_router(smart_home_router)
 app.include_router(ops_router)
 app.include_router(grok_router)
+app.include_router(workforce_router)
+app.include_router(workforce_router, prefix='/api/v1')
 
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
 

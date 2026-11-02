@@ -11,13 +11,16 @@ Synthesizes the core mechanisms of milind-soni/OpenMausBot:
 from __future__ import annotations
 
 import asyncio
+import hashlib
+import hmac
 import json
 import logging
+import secrets
 import time
 import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, Set
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
 from jarvis.core.logger import get_logger
 from jarvis.core.api_key_rotator import openrouter_rotator, gemini_rotator, groq_rotator
@@ -189,6 +192,7 @@ class OpenMausPermissionBroker:
     """
     Inline permission broker inspired by OpenMausBot.
     Intercepts privileged system actions, pauses execution, and prompts for explicit human approval.
+    Cryptographically binds approval tokens to action, target, and agent with single-use consumption and TTL.
     """
 
     PRIVILEGED_OPERATIONS = {
@@ -201,8 +205,10 @@ class OpenMausPermissionBroker:
         "kill_process",
     }
 
-    def __init__(self):
+    def __init__(self, ttl_seconds: float = 60.0):
+        self.ttl_seconds = ttl_seconds
         self._pending_decisions: Dict[str, Dict[str, Any]] = {}
+        self._token_registry: Dict[str, Dict[str, Any]] = {}
 
     def inspect_action(self, action_type: str, details: str, agent_id: str) -> Tuple[bool, Optional[str]]:
         """
@@ -213,29 +219,80 @@ class OpenMausPermissionBroker:
         if action_type not in self.PRIVILEGED_OPERATIONS:
             return True, None
 
-        decision_id = f"perm_{uuid.uuid4().hex[:10]}"
+        decision_id = f"perm_{secrets.token_hex(8)}"
+        details_hash = hashlib.sha256(details.encode("utf-8")).hexdigest()
+        now = time.time()
         record = {
             "decision_id": decision_id,
             "action_type": action_type,
             "details": details,
+            "details_hash": details_hash,
             "agent_id": agent_id,
             "status": "PENDING",
-            "created_at": time.time(),
+            "created_at": now,
+            "expires_at": now + self.ttl_seconds,
         }
         self._pending_decisions[decision_id] = record
         logger.warning(f"Permission Broker: INTERCEPTED privileged action '{action_type}' from [{agent_id}]")
         return False, decision_id
 
     def resolve(self, decision_id: str, approved: bool) -> bool:
+        """
+        Resolves decision. Generates a secure single-use token if approved.
+        """
         rec = self._pending_decisions.get(decision_id)
         if not rec:
             return False
-        rec["status"] = "APPROVED" if approved else "DENIED"
-        rec["resolved_at"] = time.time()
-        return approved
+
+        now = time.time()
+        if now > rec.get("expires_at", 0):
+            rec["status"] = "EXPIRED"
+            return False
+
+        if approved:
+            rec["status"] = "APPROVED"
+            rec["resolved_at"] = now
+            token = secrets.token_urlsafe(32)
+            rec["approval_token"] = token
+            self._token_registry[token] = {
+                "decision_id": decision_id,
+                "action_type": rec["action_type"],
+                "details_hash": rec["details_hash"],
+                "agent_id": rec["agent_id"],
+                "expires_at": now + self.ttl_seconds,
+                "used": False,
+            }
+            return True
+        else:
+            rec["status"] = "DENIED"
+            rec["resolved_at"] = now
+            return False
+
+    def consume(self, token: Optional[str], action_type: str, details: str) -> bool:
+        """
+        Single-use consumes an approval token. Validates action, details hash, and TTL.
+        Prevents replay attacks.
+        """
+        if not token:
+            return False
+        meta = self._token_registry.get(token)
+        if not meta or meta.get("used"):
+            return False
+        if time.time() > meta.get("expires_at", 0):
+            return False
+        if meta.get("action_type") != action_type:
+            return False
+        details_hash = hashlib.sha256(details.encode("utf-8")).hexdigest()
+        if not hmac.compare_digest(meta.get("details_hash", ""), details_hash):
+            return False
+
+        # Mark single-use consumed
+        meta["used"] = True
+        return True
 
     def get_pending(self) -> List[Dict[str, Any]]:
-        return [v for v in self._pending_decisions.values() if v["status"] == "PENDING"]
+        now = time.time()
+        return [v for v in self._pending_decisions.values() if v["status"] == "PENDING" and now <= v.get("expires_at", 0)]
 
 
 class OpenMausGrokHarness:
@@ -398,3 +455,4 @@ class OpenMausGrokHarness:
 
 # Global Singleton Instance
 openmaus_harness = OpenMausGrokHarness()
+

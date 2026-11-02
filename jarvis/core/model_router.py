@@ -333,11 +333,23 @@ class ModelRouter:
         Tracks token consumption, records costs in CostGovernor, and implements fallbacks.
         """
         start_time = time.time()
+        # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
         try:
-            from jarvis.security.ten_layer_shield import jarvis_security_suite
+            from jarvis.security.ten_layer_shield import jarvis_security_suite, SecurityViolationError
             prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+            if system_prompt:
+                system_prompt = jarvis_security_suite.sanitize_outbound_prompt(system_prompt)
         except Exception as _sec_err:
-            logger.warning(f"Security sanitizer error: {_sec_err}")
+            logger.critical(f"Cloud egress security violation blocked inference: {_sec_err}")
+            return {
+                "task_id": decision.task_id,
+                "status": "security_halt",
+                "error": f"Cloud egress blocked by Zero-Leak Firewall: {_sec_err}",
+                "reply": "Execution halted by Zero-Leak Firewall: outbound prompt contained unredacted secrets or policy violation.",
+                "tokens_used": 0,
+                "cost_usd": 0.0,
+                "duration_ms": round((time.time() - start_time) * 1000, 2),
+            }
 
         if decision.tier == "BYPASS":
             return {

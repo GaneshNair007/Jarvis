@@ -56,3 +56,7 @@ test-results/
 data/calendar/
 data/logs/*.bak*
 data/logs/*.lock
+
+data/*.jsonl
+data/*.key
+data/.*key

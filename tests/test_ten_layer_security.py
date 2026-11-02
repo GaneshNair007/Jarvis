@@ -129,7 +129,7 @@ class TestTenLayerSecuritySuite:
 
     # ── Layer 9: Merkle Audit Trail ───────────────────────────────────────────
     def test_layer9_merkle_audit_integrity(self):
-        audit = MerkleAuditLogger()
+        audit = MerkleAuditLogger(in_memory=True)
         audit.log_event("POLICY_BLOCK", "Blocked access to /etc/shadow")
         audit.log_event("SECRET_REDACT", "Redacted OpenAI key from user turn")
         assert len(audit.chain) == 3  # Genesis + 2 events
@@ -156,6 +156,77 @@ class TestTenLayerSecuritySuite:
         broker.resolve_permission(req2_id, approved=True)
         token = broker.pending_requests[req2_id]["approval_token"]
         assert broker.is_authorized(token) is True
+
+    def test_layer10_token_expiration_and_single_use_consumption(self):
+        broker = InlinePermissionBroker(approval_timeout_sec=0.1)
+        req = broker.request_permission("DELETE_DATABASE", "prod_db", "Emergency purge")
+        req_id = req["request_id"]
+        broker.resolve_permission(req_id, approved=True)
+        token = broker.pending_requests[req_id]["approval_token"]
+
+        # Valid before expiry and matching action/target
+        assert broker.is_authorized(token) is True
+
+        # Single-use consumption works
+        consumed = broker.consume_authorization(token, expected_action="DELETE_DATABASE", target="prod_db")
+        assert consumed is True
+
+        # Replay attack is strictly blocked (already consumed)
+        assert broker.is_authorized(token) is False
+        assert broker.consume_authorization(token, expected_action="DELETE_DATABASE", target="prod_db") is False
+
+        # Expiration test
+        req_exp = broker.request_permission("ACCESS_VAULT", "vault_key", "Test expiry")
+        broker.resolve_permission(req_exp["request_id"], approved=True)
+        exp_token = broker.pending_requests[req_exp["request_id"]]["approval_token"]
+        import time
+        time.sleep(0.15)
+        assert broker.is_authorized(exp_token) is False
+
+    def test_layer9_disk_ledger_persistence_and_tampering(self, tmp_path):
+        ledger_file = tmp_path / "test_merkle.jsonl"
+        audit = MerkleAuditLogger(storage_path=ledger_file)
+        audit.log_event("TEST_EVENT_1", "Audit details 1")
+        audit.log_event("TEST_EVENT_2", "Audit details 2")
+
+        assert ledger_file.exists()
+        assert audit.verify_integrity() is True
+
+        # Reopen from disk in new logger instance
+        audit_reopened = MerkleAuditLogger(storage_path=ledger_file)
+        assert len(audit_reopened.chain) == 3  # Genesis + 2 events
+        assert audit_reopened.verify_integrity() is True
+
+    def test_model_router_fail_closed_on_security_violation(self):
+        from jarvis.core.model_router import ModelRouter, RoutingDecision
+        router = ModelRouter()
+        decision = RoutingDecision(
+            task_id="sec_test_001",
+            tier="TIER_3_CLOUD",
+            provider="openrouter",
+            selected_model="deepseek/deepseek-chat",
+            reason="Testing cloud egress gate",
+            redacted_context="",
+            redactions_made=[],
+            estimated_cost_usd=0.001,
+            requires_approval=False,
+            fallback_models=[],
+        )
+
+        # Execute with an unmasked live key pattern that triggers firewall
+        class MockFailingFirewall:
+            def verify_egress(self, payload):
+                raise SecurityViolationError("Simulated egress leak failure")
+
+        from jarvis.security.ten_layer_shield import jarvis_security_suite
+        original_firewall = jarvis_security_suite.layer3_firewall
+        try:
+            jarvis_security_suite.layer3_firewall = MockFailingFirewall()
+            res = router.execute_inference(decision, prompt="Hello world")
+            assert res["status"] in ("security_halt", "blocked_by_security")
+            assert "blocked" in res["reply"].lower() or "halted" in res["reply"].lower()
+        finally:
+            jarvis_security_suite.layer3_firewall = original_firewall
 
     # ── Master Suite Coordinator ──────────────────────────────────────────────
     def test_master_suite_sanitize_outbound_prompt(self):

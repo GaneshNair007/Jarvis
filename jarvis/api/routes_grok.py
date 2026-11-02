@@ -82,9 +82,12 @@ async def get_pending_permissions():
 async def resolve_permission(decision_id: str, body: PermissionResolutionRequest):
     """Approves or denies an action intercepted by the inline permission broker."""
     success = openmaus_harness.broker.resolve(decision_id, approved=body.approved)
-    if not success and decision_id not in openmaus_harness.broker._pending_decisions:
+    rec = openmaus_harness.broker._pending_decisions.get(decision_id)
+    if not rec:
         raise HTTPException(status_code=404, detail="Decision ID not found")
     return {
         "decision_id": decision_id,
-        "status": "APPROVED" if body.approved else "DENIED",
+        "status": rec["status"],
+        "approval_token": rec.get("approval_token"),
     }
+

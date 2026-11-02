@@ -351,6 +351,16 @@ class GeminiKeyRotator(BaseKeyRotator):
         if not self.is_available:
             return None
 
+        # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
+        try:
+            from jarvis.security.ten_layer_shield import jarvis_security_suite
+            prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+            if system_instruction:
+                system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
+        except Exception as _sec_err:
+            logger.critical(f"Gemini egress firewall blocked inference: {_sec_err}")
+            raise RuntimeError(f"Cloud egress blocked by Zero-Leak Firewall: {_sec_err}") from _sec_err
+
         attempts = max_retries if max_retries is not None else max(len(self.keys) * 2, 2)
         start_time = time.time()
 
@@ -504,6 +514,16 @@ class OpenRouterKeyRotator(BaseKeyRotator):
         if not self.is_available or not prompt:
             return None
 
+        # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
+        try:
+            from jarvis.security.ten_layer_shield import jarvis_security_suite
+            prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+            if system_instruction:
+                system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
+        except Exception as _sec_err:
+            logger.critical(f"Groq egress firewall blocked inference: {_sec_err}")
+            raise RuntimeError(f"Cloud egress blocked by Zero-Leak Firewall: {_sec_err}") from _sec_err
+
         target_model = model or self.default_model
         attempts = max_retries if max_retries is not None else max(len(self.keys), 2)
         start_time = time.time()
@@ -611,6 +631,16 @@ class GroqKeyRotator(BaseKeyRotator):
     ) -> Optional[Dict[str, Any]]:
         if not self.is_available or not prompt:
             return None
+
+        # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
+        try:
+            from jarvis.security.ten_layer_shield import jarvis_security_suite
+            prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+            if system_instruction:
+                system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
+        except Exception as _sec_err:
+            logger.critical(f"Groq egress firewall blocked inference: {_sec_err}")
+            raise RuntimeError(f"Cloud egress blocked by Zero-Leak Firewall: {_sec_err}") from _sec_err
 
         target_model = model or self.default_model
         start_time = time.time()
