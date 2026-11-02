@@ -127,3 +127,24 @@ def test_api_kill_switch():
     resp_off = client.post("/api/v1/kill-switch?active=false")
     assert resp_off.status_code == 200
     assert resp_off.json()["kill_switch_active"] is False
+
+
+def test_api_scheduler_endpoints():
+    # 1. GET /scheduler/status
+    res = client.get("/scheduler/status")
+    assert res.status_code == 200
+    data = res.json()
+    assert data["total_jobs"] == 3
+    assert "career_internship_scout" in [j["job_id"] for j in data["jobs"]]
+
+    # 2. POST /scheduler/trigger/invalid_job
+    bad_res = client.post("/scheduler/trigger/invalid_job_999")
+    assert bad_res.status_code == 404
+
+
+def test_api_workforce_fleet_status():
+    res = client.get("/workforce/fleet")
+    assert res.status_code == 200
+    data = res.json()
+    assert data["total_agents"] == 105
+    assert data["status"] == "ALL_SYSTEMS_OPERATIONAL"
