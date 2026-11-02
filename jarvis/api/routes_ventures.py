@@ -10,6 +10,7 @@ from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
 from jarvis.agents.venture_scout import venture_scout, BusinessIdea
+from jarvis.business.playbook_engine import business_playbook_engine
 
 router = APIRouter(prefix="/ventures", tags=["Venture & Business Scout"])
 
@@ -60,3 +61,49 @@ def get_idea_blueprint(idea_id: str):
         raise HTTPException(status_code=404, detail=str(ve))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/evaluate/{idea_id}")
+def evaluate_idea(idea_id: str):
+    """Evaluates business idea against RTX 4050 compute and assigns 105-agent pod."""
+    evaluation = business_playbook_engine.evaluate_idea_execution(idea_id)
+    if "error" in evaluation:
+        raise HTTPException(status_code=404, detail=evaluation["error"])
+    return evaluation
+
+
+@router.post("/grokbot/leads")
+def grokbot_lead_followup(payload: Dict[str, Any]):
+    """
+    Grok Bot Workflow 01: Follow up with leads without chasing.
+    Drafts personal, review-ready messages without automatic sending.
+    """
+    leads = payload.get("leads", [])
+    company = payload.get("company_name", "Ganesh AI Ops")
+    drafts = business_playbook_engine.run_lead_followup_workflow(leads, company_name=company)
+    return {"total_drafts": len(drafts), "drafts": [d.model_dump() for d in drafts]}
+
+
+@router.post("/grokbot/ad-pulse")
+def grokbot_ad_pulse(payload: Dict[str, Any]):
+    """
+    Grok Bot Workflow 02: Unified daily ad report.
+    Source-verified CTR, CPC, CPA, ROAS and spend summary.
+    """
+    metrics = payload.get("metrics", [])
+    ad_pulse = business_playbook_engine.run_ad_pulse_workflow(metrics)
+    return ad_pulse.model_dump()
+
+
+@router.post("/grokbot/ops-sweep")
+def grokbot_ops_sweep(payload: Dict[str, Any]):
+    """
+    Grok Bot Workflow 03: The Weekly Ops Sweep (Lifesaver Workflow).
+    Audits overdue tasks, stalled leads, campaign flags, and human decision checkpoints.
+    """
+    task_board = payload.get("task_board", [])
+    crm_leads = payload.get("crm_leads", [])
+    ad_reports = payload.get("ad_reports", [])
+    sweep = business_playbook_engine.run_weekly_ops_sweep(task_board, crm_leads, ad_reports)
+    return sweep.model_dump()
+

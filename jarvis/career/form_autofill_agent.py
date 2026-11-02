@@ -20,6 +20,7 @@ from __future__ import annotations
 import re
 import json
 import time
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
@@ -225,6 +226,120 @@ class AutonomousFormFiller:
             essay_answers=essay_answers,
             ready_for_submission=ready,
         )
+
+    def autofill_web_form(
+        self,
+        url: str,
+        headless: bool = True,
+        dry_run: bool = False,
+        allow_submit: bool = False,
+        allow_private: bool = False,
+        screenshot_dir: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Drives an ephemeral Playwright browser session to locate DOM form fields,
+        maps Ganesh Nair's profile to inputs/textareas, types verified values,
+        and strictly pauses at the submit button unless explicit human authorization is granted.
+        """
+        from jarvis.browser.context_manager import BrowserContextManager
+
+        ctx_mgr = BrowserContextManager(headless=headless)
+        filled_records: List[Dict[str, str]] = []
+        submit_button_found = False
+        screenshot_path = ""
+
+        with ctx_mgr.research_context(allow_private=allow_private) as (context, page):
+            page.goto(url)
+            page.wait_for_load_state("domcontentloaded")
+
+            # Collect all inputs and textareas
+            inputs = page.locator("input, textarea").all()
+            for el in inputs:
+                try:
+                    el_type = (el.get_attribute("type") or "text").lower()
+                    el_name = (el.get_attribute("name") or "").lower()
+                    el_id = (el.get_attribute("id") or "").lower()
+                    el_ph = (el.get_attribute("placeholder") or "").lower()
+                    el_label = (el.get_attribute("aria-label") or "").lower()
+
+                    descriptor = f"{el_name} {el_id} {el_ph} {el_label}"
+
+                    val_to_fill = None
+
+                    if el_type in ("text", "email", "tel", "url") or el.evaluate("node => node.tagName.toLowerCase() == 'textarea'"):
+                        if "email" in descriptor or el_type == "email":
+                            val_to_fill = self.profile.email
+                        elif "phone" in descriptor or "mobile" in descriptor or "contact" in descriptor or el_type == "tel":
+                            val_to_fill = self.profile.phone
+                        elif "github" in descriptor:
+                            val_to_fill = self.profile.github_url
+                        elif "linkedin" in descriptor:
+                            val_to_fill = self.profile.linkedin_url
+                        elif "portfolio" in descriptor or "website" in descriptor:
+                            val_to_fill = self.profile.portfolio_url
+                        elif "first" in descriptor:
+                            val_to_fill = self.profile.first_name
+                        elif "last" in descriptor:
+                            val_to_fill = self.profile.last_name
+                        elif "name" in descriptor:
+                            val_to_fill = self.profile.full_name
+                        elif "university" in descriptor or "college" in descriptor:
+                            val_to_fill = self.profile.university
+                        elif "degree" in descriptor or "major" in descriptor:
+                            val_to_fill = self.profile.degree
+                        elif "location" in descriptor or "city" in descriptor:
+                            val_to_fill = self.profile.location
+                        elif el.evaluate("node => node.tagName.toLowerCase() == 'textarea'") or any(
+                            q in descriptor for q in ["why", "project", "experience", "about", "essay"]
+                        ):
+                            val_to_fill = self.generate_essay_answer(descriptor)
+
+                    if val_to_fill and not dry_run:
+                        el.fill(val_to_fill)
+                        filled_records.append({
+                            "element": descriptor.strip(),
+                            "type": el_type,
+                            "value": val_to_fill[:50] + ("..." if len(val_to_fill) > 50 else ""),
+                        })
+                    elif val_to_fill and dry_run:
+                        filled_records.append({
+                            "element": descriptor.strip(),
+                            "type": el_type,
+                            "value": "[DRY RUN PREVIEW] " + val_to_fill[:50],
+                        })
+                except Exception as e:
+                    logger.debug(f"Field fill skipped: {e}")
+
+            # Check for submit buttons
+            submit_candidates = page.locator("button[type='submit'], input[type='submit'], button:has-text('Submit'), button:has-text('Apply')")
+            submit_button_found = submit_candidates.count() > 0
+
+            # Capture evidence screenshot
+            if screenshot_dir:
+                s_dir = Path(screenshot_dir)
+                s_dir.mkdir(parents=True, exist_ok=True)
+                s_file = s_dir / f"form_autofill_{int(time.time())}.png"
+                page.screenshot(path=str(s_file))
+                screenshot_path = str(s_file)
+
+            # Strict Human Gate: only submit if allow_submit is explicitly True
+            submitted = False
+            if submit_button_found and allow_submit and not dry_run:
+                submit_candidates.first.click()
+                submitted = True
+                logger.info(f"Form successfully submitted with human authorization for {url}")
+
+        return {
+            "target_url": url,
+            "candidate": self.profile.full_name,
+            "total_fields_filled": len(filled_records),
+            "fields_filled": filled_records,
+            "submit_button_found": submit_button_found,
+            "submitted": submitted,
+            "human_approval_required": not submitted,
+            "screenshot_evidence": screenshot_path,
+            "status": "submitted" if submitted else "ready_for_human_review",
+        }
 
 
 # Global singleton instance
