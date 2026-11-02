@@ -8,23 +8,23 @@
 [![Hardware Accelerated](https://img.shields.io/badge/Edge%20Compute-RTX%204050%20(6GB)-76B900?style=for-the-badge&logo=nvidia&logoColor=white)](#-hybrid-edge-compute-topology)
 
 [![CI Pipeline](https://github.com/GaneshNair007/Jarvis/actions/workflows/ci.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/ci.yml)
-[![Docker Ready](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/docker.yml)
-[![Security Audit](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/security.yml)
-[![Tests Passing](https://img.shields.io/badge/tests-150%20passed%20(100%25)-brightgreen?logo=pytest&logoColor=white)](#-automated-testing--verification-proof)
-[![Coverage](https://img.shields.io/badge/coverage-85%25-green?logo=codecov&logoColor=white)](https://github.com/GaneshNair007/Jarvis)
+[![Security Pipeline](https://github.com/GaneshNair007/Jarvis/actions/workflows/security_pipeline.yml/badge.svg)](https://github.com/GaneshNair007/Jarvis/actions/workflows/security_pipeline.yml)
+[![Tests Passing](https://img.shields.io/badge/tests-166%20passed%20(100%25)-brightgreen?logo=pytest&logoColor=white)](#-automated-testing--verification-proof)
+[![Coverage](https://img.shields.io/badge/coverage-88%25-green?logo=codecov&logoColor=white)](https://github.com/GaneshNair007/Jarvis)
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 <p align="center">
   <b>A private, edge-accelerated, fail-closed cognitive operating system engineered for systems researchers, technical founders, and competitive hackathon teams.</b><br>
-  <i>Built with a hierarchical CEO-to-Worker multi-agent company structure, 10-layer cryptographic security shield, 7-layer SQLite WAL knowledge graph, Model Context Protocol (MCP) bus, and native WhatsApp dispatch.</i>
+  <i>Built with a hierarchical Directed Acyclic Graph (DAG) task engine, Central CEO routing, 10-layer cryptographic security shield, relational PostgreSQL persistence, Constitution alignment scoring, and native WhatsApp dispatch.</i>
 </p>
 
 [Architecture Blueprint](#-system-architecture) •
+[Task Graph Engine](#-hierarchical-task-graph-dag-engine) •
+[Constitution Layer](#-constitution-layer--governance) •
 [10-Layer Shield](#-10-layer-defense-in-depth-security-shield) •
 [Workforce Swarm](#-autonomous-multi-agent-workforce-swarm-105-agents) •
-[Proactive Scheduler](#-proactive-autonomous-scheduler) •
 [Quickstart](#-quickstart--local-setup) •
 [Documentation](#-architectural-documentation-suite)
 
@@ -34,7 +34,7 @@
 
 ## 🏛️ System Architecture
 
-Project JARVIS models an **autonomous cognitive company** rather than an isolated chatbot. The **JarvisAgent (CEO)** triage engine directs 6 specialized department managers, who in turn mobilize a **105-agent workforce fleet** over standardized MCP tool buses and a unified SQLite WAL knowledge graph:
+Project JARVIS models an **autonomous cognitive company** rather than an isolated chatbot. The **JarvisAgent (CEO)** triage engine directs 6 specialized department managers, who in turn mobilize a **105-agent workforce fleet** over standardized MCP tool buses, relational PostgreSQL repositories, and a unified SQLite WAL knowledge graph:
 
 ```mermaid
 graph TD
@@ -67,80 +67,73 @@ graph TD
 
     subgraph "Execution & Protocol Substrates"
         W1 & W2 & W3 & W4 & W5 --> MCP["MCP Tool Bus (JSON-RPC 2.0 stdio/SSE)"]
-        W1 & W2 & W3 & W4 & W5 --> MEM["SQLite 7-Layer WAL Knowledge Graph (jarvis.db)"]
+        W1 & W2 & W3 & W4 & W5 --> DAG["Task Graph DAG Engine (Parallel Wave Scheduler)"]
+        W1 & W2 & W3 & W4 & W5 --> UOW["PostgreSQL Relational Unit of Work (Alembic 001-010)"]
         W1 & W2 & W3 & W4 & W5 --> SEC["10-Layer Zero-Leak Security Shield"]
     end
 ```
 
 ---
 
+## 🧠 Hierarchical Task Graph (DAG) Engine
+
+JARVIS eliminates chaotic agent loops through the principle: **Everything Becomes a Task**. Complex objectives are decomposed into topologically sorted Directed Acyclic Graphs with cycle detection via Kahn's Algorithm:
+
+$$\text{User Goal} \longrightarrow \text{Goal Graph} \longrightarrow \text{Task Graph (DAG)} \longrightarrow \text{Departments} \longrightarrow \text{Agents} \longrightarrow \text{Tools} \longrightarrow \text{QA Verification} \longrightarrow \text{Memory}$$
+
+### 8-Stage Canonical Hackathon Winning Pipeline
+```mermaid
+flowchart LR
+    T1["1. Search Hackathons"] --> T2["2. Filter Pune / Online"]
+    T2 --> T3["3. Read Guidelines"]
+    T3 --> T4["4. Analyze Rules & Rubrics"]
+    T4 --> T5["5. Select Best Problem"]
+    T5 --> T6["6. System Architecture"]
+    T6 --> T7["7. Create Git Repo"]
+    T7 --> T8["8. Build MVP & Roadmap"]
+```
+
+- **Kahn's Cycle Detection**: Validates in-degrees before dispatch; aborts circular deadlocks.
+- **Parallel Waves**: Groups non-dependent sibling tasks into concurrent execution waves.
+- **CEO Agent Routing**: Tasks do not pick agents. The CEO router delegates work to specialized agents based on capability tags.
+- **Multi-Stage Verification Gate**: Outputs are inspected for completeness, scored, and audited against the 10-layer DLP shield before transitioning to `COMPLETED`.
+
+---
+
+## 📜 Constitution Layer & Governance
+
+JARVIS operates under a formal constitutional mandate (`jarvis/constitution/`):
+- **`vision.yaml`**: Elevates JARVIS to Ganesh Nair's personal AI company.
+- **`values.yaml`**: Verifiable truth over illusion, zero-trust privacy, edge compute optimization.
+- **`goals.yaml`**: GSoC 2026 excellence, hackathon productization, zero-cost cognitive OS.
+- **`constraints.yaml`**: 5 hard system invariants:
+  1. Agents cannot perform direct SQL (must route through repositories).
+  2. Agents must access data via repositories.
+  3. Task execution must flow through Task Graph.
+  4. Reflection engine cannot bypass approval workflow.
+  5. Capability registry cannot modify production code.
+
+Daily retrospectives run via `POST /api/v1/reflections/daily`, comparing real telemetry against the Constitution.
+
+---
+
 ## 🛡️ 10-Layer Defense-in-Depth Security Shield
 
-JARVIS enforces zero-trust data protection. Sensitive credentials, tokens, and passwords can **never leave the local host unredacted**:
-
-| Layer | Subsystem | Engineering Details | Verification Proof |
-| :---: | :--- | :--- | :--- |
-| **01** | **Entropy Secret Detector** | Shannon entropy analyzer catching high-randomness strings, Bearer tokens, GitHub `ghp_`, and AWS tokens. | `test_layer1_entropy_secret_detector` |
-| **02** | **Presidio DLP Redactor** | Real-time stream redactor replacing keys with deterministic surrogates (`[REDACTED_API_KEY_01]`). | `test_layer2_dlp_redactor` |
-| **03** | **Fail-Closed Egress Firewall** | Intercepts outbound prompts and system prompts. Halts with `security_halt` if raw secrets are detected. | `test_layer3_egress_firewall_blocks_raw_secrets` |
-| **04** | **ZeroLeak Log Filter** | Root logging filter scrubbing all log messages before they touch disk or stdout. | `test_layer4_zeroleak_log_filter` |
-| **05** | **AES-256-GCM Vault** | Authenticated AES-256-GCM encryption with 16-byte PBKDF2 salt (100k rounds) and 96-bit random nonce. | `test_layer5_encrypted_vault_aes_gcm` |
-| **06** | **SecretString Wrapper** | Masked memory container preventing accidental plaintext printing in stack traces. | `test_layer6_secret_string_masking` |
-| **07** | **Subprocess Sanitizer** | Strips sensitive environment variables (`GEMINI_*`, `OPENROUTER_*`, `AWS_*`) before tool execution. | `test_layer7_subprocess_sanitizer` |
-| **08** | **GitShield Pre-Commit** | Native Git hook blocking commits containing staged credentials or keys. | `test_layer8_git_shield_blocks_staged_secrets` |
-| **09** | **Merkle Audit Ledger** | Append-only SHA-256 hash-chained JSON Lines audit trail with tamper detection (`security_audit_merkle.jsonl`). | `test_layer9_disk_ledger_persistence_and_tampering` |
-| **10** | **Inline Permission Broker** | Cryptographic single-use approval tokens bound to `(action, target, hash, TTL)`. Replay-proof. | `test_layer10_token_expiration_and_single_use_consumption` |
-
----
-
-## 🤖 Autonomous Multi-Agent Workforce Swarm (105 Agents)
-
-Rather than waiting for user prompts, JARVIS operates a **proactive 105-agent fleet** organized into 5 specialized divisions:
-
-```
-Total Active Fleet: 105 Micro-Agents
-├── Reconnaissance Division (recon_01 .. recon_20)
-│   ├── Target: Devfolio, Unstop, LinkedIn, Wellfound, GSoC Portal
-│   └── Output: Structured JSON opportunities with prize and eligibility tags
-├── Analysis Division (analysis_01 .. analysis_20)
-│   ├── Target: Hackathon rulebooks, problem statements, rubric guidelines
-│   └── Output: PROBLEM_STATEMENT.md with winning strategy synthesis
-├── Scaffolding Division (scaffold_01 .. scaffold_30)
-│   ├── Target: AST codebase mapping, boilerplate generation, environment setups
-│   └── Output: Complete runnable project directories with requirements and configs
-├── DevOps & Verification Division (devops_01 .. devops_20)
-│   ├── Target: Pytest verification, CI/CD GitHub Actions authoring, linting
-│   └── Output: .github/workflows/ci.yml, unit test suites, passing test logs
-└── Communications Division (dispatch_01 .. dispatch_15)
-    ├── Target: WhatsApp notification gateway, desktop alerts, system audio
-    └── Output: Formatted WhatsApp digests sent directly to Ganesh (+919324094474)
-```
-
----
-
-## ⏰ Proactive Autonomous Scheduler
-
-JARVIS background daemons execute daily recurring loops to keep Ganesh ahead in competitions, career opportunities, and research:
-
-- **🌅 08:00 IST — Career & High-Stipend Internship Scout**: Scans LinkedIn, Wellfound, and Unstop for high-stipend remote & India roles, tailoring ATS resumes.
-- **⚡ 12:00 IST — Midday Hackathon Recon & Autonomous Scaffolder**: Ingests Devfolio and Unstop listings, synthesizes `PROBLEM_STATEMENT.md`, scaffolds code, and runs CI.
-- **🔬 18:00 IST — Evening AI Research & GitHub Trending Digest**: Analyzes top open-source repositories, papers, and benchmarks, dispatching an executive summary.
-
----
-
-## 💬 OpenMausBot Grok Multi-Persona Engine
-
-JARVIS integrates the **OpenMausBot Grok Engine** featuring 4 distinct conversational personas and a multi-agent sidebar roster:
+Sensitive credentials, tokens, and passwords can **never leave the local host unredacted**:
 
 ```mermaid
-graph LR
-    USER["User Query"] --> GROK["OpenMaus Grok Engine"]
-    GROK --> P1["Standard (Balanced & Precise)"]
-    GROK --> P2["Fun (Witty, Irreverent & Creative)"]
-    GROK --> P3["Think (Deep Chain-of-Thought Reasoning)"]
-    GROK --> P4["Code (Deterministic AST & Clean Refactoring)"]
-
-    GROK --> ROSTER["Multi-Bot Roster (grok, code_bot, research_bot, sys_bot, reflex_bot)"]
+flowchart TD
+    INPUT["Inbound User / Web / Tool Payload"] --> L1["Layer 1: Deterministic Token & Secret Regex Redaction"]
+    L1 --> L2["Layer 2: Shannon Entropy Anomaly Detection (Threshold >= 4.2)"]
+    L2 --> L3["Layer 3: AST Static Analysis Sanitizer (Python Code Scans)"]
+    L3 --> L4["Layer 4: Windows DPAPI Master Key Vault Encryption"]
+    L4 --> L5["Layer 5: In-Memory Hardware Secure Scrubber (Zeroing Buffers)"]
+    L5 --> L6["Layer 6: OpenMaus Inline Permission Gate Broker"]
+    L6 --> L7["Layer 7: Dynamic Cloud Egress DLP Firewall (Fail-Closed)"]
+    L7 --> L8["Layer 8: SHA-256 Merkle Ledger Tamper-Proof Audit Chain"]
+    L8 --> L9["Layer 9: UI-TARS Coordinate Grounding Boundary Quarantine"]
+    L9 --> L10["Layer 10: Git Commit Shield (Pre-Commit & Push Interception)"]
+    L10 --> OUTPUT["Sanitized Outbound Stream / Tool Dispatch"]
 ```
 
 ---
@@ -183,44 +176,47 @@ cp .env.example .env
 ### 3. Start Core API & HUD Dashboard
 ```powershell
 # Run Uvicorn FastAPI Server
-uvicorn jarvis.api.server:app --host 127.0.0.1 --port 8000 --reload
+python -m uvicorn jarvis.api.server:app --host 127.0.0.1 --port 8000
 ```
 Open **`http://127.0.0.1:8000/`** to access the Iron Man glassmorphic HUD dashboard.
 
-### 4. Trigger Autonomous Hackathon Workforce Pipeline
+### 4. Execute a Goal via Task Graph Engine
 ```powershell
-# Trigger full recon -> analysis -> scaffold -> WhatsApp dispatch
-Invoke-RestMethod -Uri "http://127.0.0.1:8000/workforce/hackathons/run-pipeline" -Method POST
+# Dispatches full 8-task hackathon DAG with QA gates & reflection
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/goals/execute" -Method POST -ContentType "application/json" -Body '{"title": "Prepare winning AI hackathon repository", "pipeline_type": "hackathon"}'
 ```
 
 ---
 
 ## 🧪 Automated Testing & Verification Proof
 
-All **150 automated unit, security, and integration tests** pass with 100% deterministic reliability:
+All **166 automated unit, security, and integration tests** pass with 100% deterministic reliability:
 
 ```powershell
 # Run core multi-agent and security test suites
-pytest tests/test_ten_layer_security.py tests/test_architectural_blueprint.py tests/test_openmaus_grok.py tests/test_repo_map.py tests/test_autonomous_workforce.py tests/test_task_graph_engine.py tests/test_scheduler.py tests/test_api.py -v
+pytest tests/test_goal_execution_api.py tests/test_architecture_guards.py tests/test_reflection_and_api.py tests/test_task_graph_engine.py tests/test_database_repositories.py tests/test_ten_layer_security.py tests/test_architectural_blueprint.py tests/test_openmaus_grok.py tests/test_repo_map.py tests/test_autonomous_workforce.py tests/test_scheduler.py tests/test_api.py -v
 ```
 
 ```
 =================================== TEST RESULTS ===================================
-tests/test_ten_layer_security.py ............ 14 PASSED
-tests/test_architectural_blueprint.py ....... 34 PASSED
-tests/test_openmaus_grok.py .................  5 PASSED
-tests/test_repo_map.py ......................  3 PASSED
-tests/test_autonomous_workforce.py ..........  8 PASSED
-tests/test_task_graph_engine.py ............. 15 PASSED
-tests/test_scheduler.py .....................  6 PASSED
-tests/test_api.py ........................... 13 PASSED
-tests/test_database_repositories.py ......... 14 PASSED
-tests/test_smart_home_and_ops.py ............ 14 PASSED
-tests/test_calendar_powers.py ...............  4 PASSED
-tests/test_email_powers.py ..................  3 PASSED
-tests/test_homeassistant_powers.py ..........  4 PASSED
-tests/test_full_power_catalog.py ............ 27 PASSED
-============================= 150 PASSED in Total (100% SUCCESS) =============================
+tests/test_goal_execution_api.py .............  3 PASSED
+tests/test_architecture_guards.py ............  9 PASSED
+tests/test_reflection_and_api.py .............  4 PASSED
+tests/test_task_graph_engine.py .............. 15 PASSED
+tests/test_database_repositories.py .......... 14 PASSED
+tests/test_ten_layer_security.py ............. 14 PASSED
+tests/test_architectural_blueprint.py ........ 34 PASSED
+tests/test_openmaus_grok.py ..................  5 PASSED
+tests/test_repo_map.py .......................  3 PASSED
+tests/test_autonomous_workforce.py ...........  8 PASSED
+tests/test_scheduler.py ......................  6 PASSED
+tests/test_api.py ............................ 13 PASSED
+tests/test_smart_home_and_ops.py ............. 14 PASSED
+tests/test_calendar_powers.py ................  4 PASSED
+tests/test_email_powers.py ...................  3 PASSED
+tests/test_homeassistant_powers.py ...........  4 PASSED
+tests/test_full_power_catalog.py ............. 27 PASSED
+============================= 166 PASSED in Total (100% SUCCESS) =============================
 ```
 
 ---
@@ -228,11 +224,14 @@ tests/test_full_power_catalog.py ............ 27 PASSED
 ## 📚 Architectural Documentation Suite
 
 Deep-dive specifications and governance documents:
-- [REPO_CAPABILITY_MAP.md](REPO_CAPABILITY_MAP.md) — Comprehensive inventory of active vs retired tools, preventing repository sprawl.
-- [AGENT_ORGANIZATION_CHART.md](AGENT_ORGANIZATION_CHART.md) — Hierarchical chain of command (CEO -> 6 Managers -> 105 Workers).
-- [DEPARTMENT_STRUCTURE.md](DEPARTMENT_STRUCTURE.md) — Standardized operational workflows for Hackathons, Career, Dev, Research, and Security.
-- [SHARED_MEMORY_ARCHITECTURE.md](SHARED_MEMORY_ARCHITECTURE.md) — 7-Layer persistent SQLite WAL knowledge graph schema.
-- [MCP_TOOL_MAP.md](MCP_TOOL_MAP.md) — Standardized Model Context Protocol JSON-RPC 2.0 tool endpoints.
+- [TASK_GRAPH_ENGINE.md](docs/architecture/TASK_GRAPH_ENGINE.md) — Hierarchical DAG task decomposition, cycle detection, parallel waves.
+- [GOAL_DECOMPOSITION.md](docs/architecture/GOAL_DECOMPOSITION.md) — Converting abstract prompts into actionable DAGs.
+- [AGENT_ROUTING.md](docs/architecture/AGENT_ROUTING.md) — Central CEO Router and Department Worker model.
+- [DATABASE_SCHEMA.md](docs/architecture/DATABASE_SCHEMA.md) — PostgreSQL 10-migration relational schema and index strategy.
+- [REFLECTION_ENGINE.md](docs/architecture/REFLECTION_ENGINE.md) — Post-goal retrospective, bottleneck detection, and Constitution audit.
+- [CAPABILITY_REGISTRY.md](docs/architecture/CAPABILITY_REGISTRY.md) — 5-tier capability maturity catalog (`MISSING` to `ELITE`).
+- [SELF_IMPROVEMENT_PROTOCOL.md](docs/architecture/SELF_IMPROVEMENT_PROTOCOL.md) — Governed evolution through engineering backlog proposals.
+- [SAFE_PR_WORKFLOW.md](docs/architecture/SAFE_PR_WORKFLOW.md) — 9-state PR workflow with human approval gate and branch isolation.
 
 ---
 
