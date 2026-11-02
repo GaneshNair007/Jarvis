@@ -47,6 +47,30 @@ from graph.jarvis_graph import get_jarvis_graph
 
 app = FastAPI(title=APP_TITLE, version=APP_VERSION, description=APP_DESCRIPTION)
 
+def print_honest_startup_banner() -> str:
+    """Sprint 1 Trust Fix: Honest Capability Status Banner."""
+    from jarvis.core.capability_guard import capability_guard, CapabilityStatus
+    caps = capability_guard.get_all_status()
+    ollama_str = "ONLINE" if caps.get("ollama") == CapabilityStatus.CONNECTED else "OFFLINE"
+    gmail_str = "CONNECTED" if caps.get("gmail") == CapabilityStatus.CONNECTED else "DISCONNECTED"
+    internet_str = "AVAILABLE" if caps.get("internet") == CapabilityStatus.CONNECTED else "UNAVAILABLE"
+
+    banner = (
+        "\n======================================================================\n"
+        "  JARVIS SYSTEM CAPABILITIES STATUS (Honest Pre-Flight)\n"
+        f"  Ollama:   {ollama_str}\n"
+        f"  Gmail:    {gmail_str}\n"
+        f"  Internet: {internet_str}\n"
+        "======================================================================\n"
+    )
+    print(banner)
+    return banner
+
+
+@app.on_event("startup")
+async def startup_event():
+    print_honest_startup_banner()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_allow_origins,

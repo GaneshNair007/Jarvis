@@ -52,6 +52,7 @@ class RoutingDecision(BaseModel):
     estimated_cost_usd: float
     requires_approval: bool
     fallback_models: List[str] = Field(default_factory=list)
+    metadata: Dict[str, Any] = Field(default_factory=dict)
     timestamp: float = Field(default_factory=time.time)
 
 
@@ -77,6 +78,7 @@ class ModelRouter:
         r"^.*(opportunity radar|career radar|daily pulse|system pulse|weekly sweep).*",
         r"^.*(gmail|check (my )?(email|mail|inbox)|missed (email|mail)|opportunities).*",
         r"^connect (my )?gmail.*",
+        r".*(antigravity|self improve|upgrade yourself|make yourself stronger).*",
         r"^(status|help|who are you|hi|hello|hey|hi jarvis|hey jarvis|hello jarvis)$",
         r"^pwr-\d{3}.*",
         r"^ping\s+.*",
@@ -92,6 +94,7 @@ class ModelRouter:
         r"^youtube\s+(script|title|tags?|brief).*|^video\s+(script|title).*",
         r"^hud(\s+telemetry)?.*|^mission\s+control.*|^threat\s+assessment.*",
         r"^security\s+(scan|posture|report).*|^secret\s+scan.*",
+        r"^.*(connect antigravity|use antigravity|antigravity|make yourself (stronger|better)|self improve|upgrade yourself).*",
     ]
 
     def __init__(self):
@@ -260,19 +263,35 @@ class ModelRouter:
                 self._log_decision(decision)
                 return decision
 
-        # 5. Default Tier 1 Local Reflex (Ollama)
-        decision = RoutingDecision(
-            task_id=request.task_id,
-            tier="TIER_1_LOCAL",
-            provider="ollama",
-            selected_model=settings.ollama_default_model,
-            reason="Tier 1 Local Reflex selected: Standard interaction, task triage, or memory query.",
-            redacted_context=redacted_context,
-            redactions_made=total_redactions,
-            estimated_cost_usd=0.0,
-            requires_approval=False,
-            fallback_models=[settings.vllm_default_model],
-        )
+        # 5. Default Tier 1 Local Reflex (Ollama with honest fallback)
+        if not self.check_ollama_readiness():
+            decision = RoutingDecision(
+                task_id=request.task_id,
+                tier="FALLBACK_CLOUD",
+                provider="openrouter",
+                selected_model="deepseek/deepseek-chat",
+                reason="Ollama offline; routed honestly to cloud fallback.",
+                redacted_context=redacted_context,
+                redactions_made=total_redactions,
+                estimated_cost_usd=0.001,
+                requires_approval=False,
+                fallback_models=[settings.ollama_default_model],
+                metadata={"ollama_online": False},
+            )
+        else:
+            decision = RoutingDecision(
+                task_id=request.task_id,
+                tier="TIER_1_LOCAL",
+                provider="ollama",
+                selected_model=settings.ollama_default_model,
+                reason="Tier 1 Local Reflex selected: Standard interaction, task triage, or memory query.",
+                redacted_context=redacted_context,
+                redactions_made=total_redactions,
+                estimated_cost_usd=0.0,
+                requires_approval=False,
+                fallback_models=[settings.vllm_default_model],
+                metadata={"ollama_online": True},
+            )
         self._log_decision(decision)
         return decision
 

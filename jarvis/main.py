@@ -24,6 +24,8 @@ from jarvis.powers.it_admin_powers import it_admin_powers
 
 
 def run_server():
+    from jarvis.api.server import print_honest_startup_banner
+    print_honest_startup_banner()
     print(f"🚀 Starting JARVIS Operating System on http://{settings.jarvis_host}:{settings.jarvis_port}")
     uvicorn.run(
         "jarvis.api.server:app", host=settings.jarvis_host, port=settings.jarvis_port, reload=settings.jarvis_debug

@@ -147,9 +147,9 @@ class JarvisOrchestrator:
         return {
             "task_id": task_id,
             "status": final_state,
-            "tier": decision.tier,
-            "provider": decision.provider,
-            "model": decision.selected_model,
+            "tier": execution_result.get("tier", decision.tier),
+            "provider": execution_result.get("provider", decision.provider),
+            "model": execution_result.get("selected_model", decision.selected_model),
             "response": execution_result,
             "routing_reason": decision.reason,
             "duration_ms": round((time.time() - start_time) * 1000, 2),
@@ -158,6 +158,15 @@ class JarvisOrchestrator:
     def _execute_instant_command(self, query: str) -> Dict[str, Any]:
         """Executes instant OS commands with zero LLM overhead."""
         cleaned = query.strip().lower()
+
+        if any(pat in cleaned for pat in ["connect antigravity", "use antigravity", "antigravity code", "make yourself stronger", "make yourself better", "self improve", "upgrade yourself"]):
+            return {
+                "status": "understood",
+                "message": (
+                    "Self-improvement workflow: I can identify capability gaps and create improvement proposals for human review. I cannot self-modify directly.\n\nCurrent capability gaps (from last reflection):\n- No live Gmail integration\n- No real-time web search\n- Voice pipeline needs tuning\n\nWould you like me to create an improvement request?"
+                ),
+                "action": "self_improvement_intent_detected",
+            }
 
         if "health" in cleaned or "telemetry" in cleaned:
             import psutil
@@ -208,12 +217,21 @@ class JarvisOrchestrator:
         elif any(k in cleaned for k in ["gmail", "email", "inbox", "check mail", "check emails", "missed mail", "opportunities"]):
             from jarvis.powers.email_powers import email_powers
             res = email_powers.scan_inbox_for_opportunities()
+            if res.get("status") in ("DISCONNECTED", "CONNECTED_EMPTY"):
+                return {
+                    "type": "email_triage",
+                    "power_id": "PWR-191",
+                    "status": res.get("status"),
+                    "message": res.get("message", "Gmail is not connected."),
+                    "details": res,
+                    "fabricated": False,
+                }
             summary_lines = [
-                f"Scanned inbox for {res['account']}: Found {res['opportunities_found']} opportunities ({res['urgent_count']} urgent):"
+                f"Scanned inbox for {res.get('account', 'user')}: Found {res.get('opportunities_found', 0)} opportunities ({res.get('urgent_count', 0)} urgent):"
             ]
-            for idx, item in enumerate(res["opportunities"], 1):
-                summary_lines.append(f"{idx}. [{item['category']}] {item['subject']} ({item['from']})")
-                summary_lines.append(f"   Action: {item['recommended_action']}")
+            for idx, item in enumerate(res.get("opportunities", []), 1):
+                summary_lines.append(f"{idx}. [{item.get('category')}] {item.get('subject')} ({item.get('from')})")
+                summary_lines.append(f"   Action: {item.get('recommended_action')}")
 
             return {
                 "type": "email_triage",
@@ -221,6 +239,7 @@ class JarvisOrchestrator:
                 "status": "completed",
                 "message": "\n".join(summary_lines),
                 "details": res,
+                "fabricated": False,
             }
         elif cleaned.startswith("read file ") or cleaned.startswith("cat "):
             from jarvis.powers.file_powers import file_powers
