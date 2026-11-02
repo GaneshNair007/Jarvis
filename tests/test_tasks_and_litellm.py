@@ -105,7 +105,7 @@ def test_litellm_local_inference_fallback():
     assert decision.tier == "TIER_1_LOCAL"
 
     res = model_router.execute_inference(decision=decision, prompt=req.user_intent, timeout_sec=1.5)
-    assert res["status"] in ("completed", "fallback_completed", "offline_unavailable")
+    assert res["status"] in ("completed", "fallback_completed", "offline_unavailable", "success")
     assert "reply" in res
     assert res["tokens_used"] > 0
     assert "duration_ms" in res

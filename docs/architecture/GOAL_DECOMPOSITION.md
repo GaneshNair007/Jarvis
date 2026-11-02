@@ -95,3 +95,4 @@ Beyond hackathons, JARVIS goal decomposition applies uniformly to all engineerin
    - `Task 2`: Git history scan for leaked tokens.
    - `Task 3`: Migrate secrets into DPAPI encrypted vault.
    - `Task 4`: Re-verify with 10-layer security shield.
+

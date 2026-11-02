@@ -150,3 +150,4 @@ flowchart LR
    - Identifies bottlenecks and failed retries.
    - Extracts actionable architectural opportunities.
    - Persists structured `ReflectionRecord` to `data/reflections.json`.
+

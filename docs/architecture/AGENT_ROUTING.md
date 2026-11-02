@@ -110,3 +110,4 @@ Agents assigned by the CEO operate under the **OpenMaus Permission Broker** (`Op
 - **Read-Only Agents** (`guideline_reader`, `citation_extractor`, `web_scout`): Granted read-only file access and web fetch capabilities without filesystem write or subprocess execution privileges.
 - **Developer Agents** (`backend_developer`, `system_architect`): Permitted to modify repository files, scaffold code, and run sandbox tests within isolated project roots.
 - **Security Agents** (`secret_auditor`, `dlp_sentinel`): Possess administrative inspection rights over memory events and outbound egress payloads to enforce the 10-layer defense shield.
+

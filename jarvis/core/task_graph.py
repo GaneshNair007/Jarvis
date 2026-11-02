@@ -62,9 +62,9 @@ class TaskNode(BaseModel):
         if outputs:
             self.outputs.update(outputs)
 
-    def mark_failed(self, error_message: str) -> None:
+    def mark_failed(self, error_message: str, force: bool = False) -> None:
         self.retry_count += 1
-        if self.retry_count >= self.max_retries:
+        if force or self.retry_count >= self.max_retries:
             self.status = TaskStatus.FAILED
         else:
             self.status = TaskStatus.READY  # Back to ready for retry
@@ -131,10 +131,14 @@ class TaskGraph(BaseModel):
 
         return visited_count != len(self.nodes)
 
+    def has_cycles(self) -> bool:
+        """Alias for is_cyclic."""
+        return self.is_cyclic()
+
     def topological_sort(self) -> List[str]:
         """Returns valid topological execution sequence of task IDs."""
         if self.is_cyclic():
-            raise ValueError(f"TaskGraph for goal '{self.goal_id}' contains a circular dependency cycle!")
+            raise ValueError(f"Graph contains circular dependencies: TaskGraph '{self.goal_id}'")
 
         in_degree = {task_id: 0 for task_id in self.nodes}
         for u in self.nodes:
@@ -243,3 +247,4 @@ class TaskGraph(BaseModel):
             "pending": sum(1 for n in self.nodes.values() if n.status == TaskStatus.PENDING),
             "blocked": sum(1 for n in self.nodes.values() if n.status == TaskStatus.BLOCKED),
         }
+

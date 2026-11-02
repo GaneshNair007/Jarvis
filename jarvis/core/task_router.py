@@ -181,23 +181,28 @@ class TaskRouter:
 
     def _select_worker_agent(self, dept: Department, task: TaskNode) -> str:
         """Heuristic and capability matching of worker agents within a department."""
-        task_text = f"{task.name} {task.description}".lower()
+        tools_str = " ".join(task.tool_requirements).lower()
+        task_text = f"{task.name} {task.description} {tools_str}".lower()
 
         # Department specific heuristics
         if dept.id == "hackathon":
-            if "search" in task_text or "find" in task_text:
+            if "search" in task_text or "find" in task_text or "filter" in task_text:
                 return "hackathon_scout"
-            if "rule" in task_text or "guide" in task_text:
+            if "rule" in task_text or "guide" in task_text or "guideline" in task_text:
                 return "guideline_reader"
-            if "prize" in task_text:
+            if "prize" in task_text or "rubric" in task_text:
                 return "prize_evaluator"
             return "problem_selector"
 
         if dept.id == "engineering":
+            if "ast" in task_text or "mapper" in task_text or "code_map" in task_text:
+                return "ast_code_mapper"
+            if "frontend" in task_text or "ui" in task_text:
+                return "frontend_developer"
+            if "test" in task_text or "verify" in task_text or "pytest" in task_text:
+                return "test_engineer"
             if "architect" in task_text or "design" in task_text:
                 return "system_architect"
-            if "test" in task_text or "verify" in task_text:
-                return "test_engineer"
             if "repo" in task_text or "git" in task_text:
                 return "backend_developer"
             return "backend_developer"
