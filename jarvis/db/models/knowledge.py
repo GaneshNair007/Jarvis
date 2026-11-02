@@ -8,7 +8,7 @@ from __future__ import annotations
 import uuid
 from typing import Any, Dict, List
 import sqlalchemy as sa
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship as sa_relationship
 
 from jarvis.db.models.base import Base, GUID, UniversalJSON
 
@@ -22,13 +22,13 @@ class KnowledgeNodeModel(Base):
     metadata_json: Mapped[Dict[str, Any]] = mapped_column("metadata", UniversalJSON, default=dict, nullable=False)
 
     # Outgoing and incoming edges
-    outgoing_edges: Mapped[List["KnowledgeEdgeModel"]] = relationship(
+    outgoing_edges: Mapped[List["KnowledgeEdgeModel"]] = sa_relationship(
         "KnowledgeEdgeModel",
         foreign_keys="KnowledgeEdgeModel.source_node_id",
         back_populates="source_node",
         cascade="all, delete-orphan",
     )
-    incoming_edges: Mapped[List["KnowledgeEdgeModel"]] = relationship(
+    incoming_edges: Mapped[List["KnowledgeEdgeModel"]] = sa_relationship(
         "KnowledgeEdgeModel",
         foreign_keys="KnowledgeEdgeModel.target_node_id",
         back_populates="target_node",
@@ -50,9 +50,9 @@ class KnowledgeEdgeModel(Base):
     strength: Mapped[float] = mapped_column(sa.Float, default=1.0, nullable=False)
 
     # Relationships
-    source_node: Mapped["KnowledgeNodeModel"] = relationship(
+    source_node: Mapped["KnowledgeNodeModel"] = sa_relationship(
         "KnowledgeNodeModel", foreign_keys=[source_node_id], back_populates="outgoing_edges"
     )
-    target_node: Mapped["KnowledgeNodeModel"] = relationship(
+    target_node: Mapped["KnowledgeNodeModel"] = sa_relationship(
         "KnowledgeNodeModel", foreign_keys=[target_node_id], back_populates="incoming_edges"
     )

@@ -1,7 +1,7 @@
 """
 JARVIS Agent Repository
 Stores workforce roster, dynamic agent provisioning, and lifecycle state tracking
-(created, paused, resumed, retired).
+(created, paused, resumed, retired, active).
 """
 
 from __future__ import annotations
@@ -87,7 +87,7 @@ class AgentRepository(BaseRepository[AgentModel]):
             self.session.add(agent)
 
             lifecycle_state = status.lower()
-            if lifecycle_state not in ("created", "paused", "resumed", "retired"):
+            if lifecycle_state not in ("created", "paused", "resumed", "retired", "active"):
                 lifecycle_state = "updated"
 
             self.record_lifecycle_event(
