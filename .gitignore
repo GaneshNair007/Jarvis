@@ -60,3 +60,5 @@ data/logs/*.lock
 data/*.jsonl
 data/*.key
 data/.*key
+data/scaffolded_projects/
+data/notifications/

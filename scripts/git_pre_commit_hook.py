@@ -9,6 +9,12 @@ import sys
 import subprocess
 from pathlib import Path
 
+# Fix Windows console encoding for UTF-8 output
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 # Add repo root to sys.path
 repo_root = Path(__file__).resolve().parent.parent
 if str(repo_root) not in sys.path:
@@ -26,6 +32,8 @@ def run_pre_commit_audit() -> int:
             ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             check=True,
         )
         staged_files = [f.strip() for f in proc.stdout.splitlines() if f.strip()]
@@ -42,12 +50,14 @@ def run_pre_commit_audit() -> int:
             ["git", "diff", "--cached"],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             check=True,
         )
         diff_text = diff_proc.stdout
     except Exception as e:
         print(f"[JARVIS GitShield] Warning: Could not inspect git diff: {e}", file=sys.stderr)
-        return 0
+        diff_text = ""
 
     # 3. Audit staged diff for newly added secrets
     clean, violations = shield.audit_git_diff(diff_text)
