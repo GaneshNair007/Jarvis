@@ -57,3 +57,4 @@ def standalone_helper(x: int, y: int) -> int:
         map_md = ast_repo_mapper.generate_compact_markdown_map(max_files=10)
         assert len(map_md) > 100
         assert "class" in map_md
+
