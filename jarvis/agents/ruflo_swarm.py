@@ -87,7 +87,7 @@ class RuFloConsensusSwarm:
             rep = self.agent_reputations.get(agent, 0.80)
 
             # Domain specific voting heuristics
-            if "security" in agent:
+            if "sec" in agent or "security" in agent or "shield" in agent:
                 # Security agent checks proposal for risk or leak indicators
                 is_safe = proposal.get("security_verified", True) and "password" not in str(proposal).lower()
                 decision = "APPROVE" if is_safe else "REJECT"
