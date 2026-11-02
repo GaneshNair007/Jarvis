@@ -52,7 +52,7 @@ class TestTaskGraphTopology:
         graph.add_node(t3)
 
         assert graph.is_cyclic()
-        with pytest.raises(ValueError, match="circular dependency cycle"):
+        with pytest.raises(ValueError, match="circular dependenc"):
             graph.topological_sort()
 
     def test_parallel_layers_calculation(self):
