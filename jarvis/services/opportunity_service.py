@@ -59,3 +59,4 @@ class OpportunityService:
     def get_top_internships(self, limit: int = 10) -> List[OpportunityModel]:
         with self.uow_factory() as uow:
             return uow.opportunities.filter_by_type("internship", limit=limit)
+

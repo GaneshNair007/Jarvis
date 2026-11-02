@@ -79,3 +79,4 @@ class MemoryRepository(BaseRepository[MemoryModel]):
         if category:
             query = query.filter(MemoryModel.category == category.lower())
         return query.order_by(MemoryModel.created_at.desc()).limit(limit).all()
+

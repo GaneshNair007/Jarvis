@@ -67,3 +67,4 @@ class GoalRepository(BaseRepository[GoalModel]):
             .filter(GoalModel.status.in_(["PENDING", "RUNNING"]))
             .all()
         )
+

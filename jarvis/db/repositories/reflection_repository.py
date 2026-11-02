@@ -66,3 +66,4 @@ class ReflectionRepository(BaseRepository[ReflectionModel]):
             .order_by(ReflectionModel.created_at.desc())
             .first()
         )
+

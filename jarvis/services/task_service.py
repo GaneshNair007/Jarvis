@@ -121,3 +121,4 @@ class TaskService:
 
                 logger.info(f"Task '{task.name}' ({task.id}) marked COMPLETED.")
             return task
+

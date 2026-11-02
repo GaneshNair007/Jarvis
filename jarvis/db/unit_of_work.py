@@ -157,3 +157,4 @@ class UnitOfWork:
         if self._audits is None:
             self._audits = AuditRepository(self.session)
         return self._audits
+

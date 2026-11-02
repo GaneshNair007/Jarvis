@@ -32,3 +32,4 @@ class AgentLifecycleModel(Base):
 
     # Relationships
     agent: Mapped["AgentModel"] = relationship("AgentModel", back_populates="lifecycles")
+

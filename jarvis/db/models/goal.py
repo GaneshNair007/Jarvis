@@ -38,3 +38,4 @@ class GoalModel(Base, TimestampMixin):
     memories: Mapped[List["MemoryModel"]] = relationship(
         "MemoryModel", back_populates="goal"
     )
+

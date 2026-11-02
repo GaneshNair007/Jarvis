@@ -53,3 +53,4 @@ class BaseRepository(Generic[T]):
         if not self.model_class:
             raise NotImplementedError("model_class must be defined for generic list_all.")
         return self.session.query(self.model_class).limit(limit).all()
+

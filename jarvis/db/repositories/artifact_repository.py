@@ -62,3 +62,4 @@ class ArtifactRepository(BaseRepository[ArtifactModel]):
             .order_by(ArtifactModel.created_at.asc())
             .all()
         )
+

@@ -68,3 +68,4 @@ class TaskModel(Base, TimestampMixin):
         back_populates="depends_on_task",
         cascade="all, delete-orphan",
     )
+

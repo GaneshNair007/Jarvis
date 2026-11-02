@@ -476,3 +476,4 @@ class TestServicesEndToEnd:
 
         completed_goal = goal_service.complete_goal(goal.id)
         assert completed_goal.status == "COMPLETED"
+

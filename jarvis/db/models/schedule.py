@@ -24,3 +24,4 @@ class ScheduleModel(Base):
     last_run: Mapped[Optional[datetime.datetime]] = mapped_column(sa.DateTime(timezone=True), nullable=True)
     next_run: Mapped[Optional[datetime.datetime]] = mapped_column(sa.DateTime(timezone=True), index=True, nullable=True)
     metadata_json: Mapped[Dict[str, Any]] = mapped_column("metadata", UniversalJSON, default=dict, nullable=False)
+

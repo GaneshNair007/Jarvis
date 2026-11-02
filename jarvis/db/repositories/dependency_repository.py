@@ -68,3 +68,4 @@ class DependencyRepository(BaseRepository[TaskDependencyModel]):
             if not parent or parent.status != "COMPLETED":
                 return False
         return True
+

@@ -67,3 +67,4 @@ class ExecutionRepository(BaseRepository[ExecutionModel]):
             .limit(limit)
             .all()
         )
+

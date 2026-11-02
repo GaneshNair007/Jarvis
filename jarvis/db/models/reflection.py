@@ -32,3 +32,4 @@ class ReflectionModel(Base):
 
     # Relationships
     goal: Mapped["GoalModel"] = relationship("GoalModel", back_populates="reflections")
+

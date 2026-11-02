@@ -83,3 +83,4 @@ class OpportunityRepository(BaseRepository[OpportunityModel]):
             .limit(limit)
             .all()
         )
+

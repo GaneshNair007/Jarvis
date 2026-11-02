@@ -126,3 +126,4 @@ Whenever key operations occur in the database, domain events are published:
 - `AgentLifecycleEvent`
 
 Subscribers react asynchronously without coupling core database queries to agent execution logic.
+

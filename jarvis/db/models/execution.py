@@ -35,3 +35,4 @@ class ExecutionModel(Base):
     # Relationships
     task: Mapped["TaskModel"] = relationship("TaskModel", back_populates="executions")
     agent: Mapped[Optional["AgentModel"]] = relationship("AgentModel", back_populates="executions")
+

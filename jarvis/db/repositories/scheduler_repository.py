@@ -81,3 +81,4 @@ class SchedulerRepository(BaseRepository[ScheduleModel]):
                 sched.next_run = next_run
             self.session.add(sched)
         return sched
+

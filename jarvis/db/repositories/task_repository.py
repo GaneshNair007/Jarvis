@@ -175,3 +175,4 @@ class TaskRepository(BaseRepository[TaskModel]):
                         self.session.add(task)
 
         return unblocked
+

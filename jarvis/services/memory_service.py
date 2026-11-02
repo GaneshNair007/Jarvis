@@ -48,3 +48,4 @@ class MemoryService:
         """Retrieves top semantic memories matching the query."""
         with self.uow_factory() as uow:
             return uow.memories.search_memory(term=query, category=category, limit=limit)
+

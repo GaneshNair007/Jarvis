@@ -26,3 +26,4 @@ class TaskDependencyModel(Base):
     depends_on_task: Mapped["TaskModel"] = relationship(
         "TaskModel", foreign_keys=[depends_on_task_id], back_populates="dependents"
     )
+

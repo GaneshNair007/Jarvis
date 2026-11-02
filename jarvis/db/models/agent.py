@@ -32,3 +32,4 @@ class AgentModel(Base, TimestampMixin):
     assignments: Mapped[List["AssignmentModel"]] = relationship("AssignmentModel", back_populates="agent", cascade="all, delete-orphan")
     executions: Mapped[List["ExecutionModel"]] = relationship("ExecutionModel", back_populates="agent")
     lifecycles: Mapped[List["AgentLifecycleModel"]] = relationship("AgentLifecycleModel", back_populates="agent", cascade="all, delete-orphan")
+

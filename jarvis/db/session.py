@@ -67,8 +67,17 @@ ScopedSession = scoped_session(SessionFactory)
 def init_db(target_engine: Optional[sa.Engine] = None) -> None:
     """Initializes all registered database tables in target database."""
     eng = target_engine or engine
+    # Import all models to ensure declarative registration
+    import jarvis.db.models  # noqa: F401
     Base.metadata.create_all(bind=eng)
     logger.info(f"Database schema initialized successfully on '{eng.dialect.name}'.")
+
+
+# Auto-initialize tables for default local-first database
+try:
+    init_db(engine)
+except Exception as e:
+    logger.debug(f"Auto-init table registration deferred: {e}")
 
 
 def get_session() -> Generator[Session, None, None]:
@@ -87,5 +96,6 @@ def create_test_engine(db_url: str = "sqlite:///:memory:") -> sa.Engine:
         connect_args={"check_same_thread": False} if db_url.startswith("sqlite") else {},
         pool_pre_ping=True,
     )
+    import jarvis.db.models  # noqa: F401
     Base.metadata.create_all(bind=test_eng)
     return test_eng

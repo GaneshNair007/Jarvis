@@ -126,3 +126,4 @@ class KnowledgeGraphRepository(BaseRepository[KnowledgeNodeModel]):
             .limit(limit)
             .all()
         )
+

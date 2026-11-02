@@ -31,3 +31,4 @@ class MemoryModel(Base, TimestampMixin):
 
     # Relationships
     goal: Mapped[Optional["GoalModel"]] = relationship("GoalModel", back_populates="memories")
+

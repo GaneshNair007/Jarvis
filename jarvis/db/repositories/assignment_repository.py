@@ -55,3 +55,4 @@ class AssignmentRepository(BaseRepository[AssignmentModel]):
             assignment.completed_at = datetime.datetime.now(datetime.timezone.utc)
             self.session.add(assignment)
         return assignment
+

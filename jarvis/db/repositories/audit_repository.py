@@ -60,3 +60,4 @@ class AuditRepository(BaseRepository[AuditModel]):
         if action:
             query = query.filter(AuditModel.action == action)
         return query.order_by(AuditModel.timestamp.desc()).limit(limit).all()
+

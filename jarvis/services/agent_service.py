@@ -110,3 +110,4 @@ class AgentService:
     def get_active_workforce(self) -> List[AgentModel]:
         with self.uow_factory() as uow:
             return uow.agents.get_available_agents()
+

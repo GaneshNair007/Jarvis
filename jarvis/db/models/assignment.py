@@ -30,3 +30,4 @@ class AssignmentModel(Base):
     # Relationships
     agent: Mapped["AgentModel"] = relationship("AgentModel", back_populates="assignments")
     task: Mapped["TaskModel"] = relationship("TaskModel", back_populates="assignments")
+

@@ -33,3 +33,4 @@ class ArtifactModel(Base):
 
     # Relationships
     task: Mapped[Optional["TaskModel"]] = relationship("TaskModel", back_populates="artifacts")
+

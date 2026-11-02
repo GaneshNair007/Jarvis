@@ -26,3 +26,4 @@ class DepartmentModel(Base, TimestampMixin):
     agents: Mapped[List["AgentModel"]] = relationship(
         "AgentModel", back_populates="department", cascade="all, delete-orphan"
     )
+
