@@ -39,6 +39,7 @@ from jarvis.api.routes_smart_home import router as smart_home_router
 from jarvis.api.routes_ops import router as ops_router
 from jarvis.api.routes_grok import router as grok_router
 from jarvis.api.routes_workforce import router as workforce_router
+from jarvis.api.routes.reflections import router as reflections_router
 import uuid
 from graph.jarvis_graph import get_jarvis_graph
 
@@ -71,6 +72,7 @@ app.include_router(ops_router)
 app.include_router(grok_router)
 app.include_router(workforce_router)
 app.include_router(workforce_router, prefix='/api/v1')
+app.include_router(reflections_router)
 
 
 @app.get("/scheduler/status", tags=["Autonomous Scheduler"])
