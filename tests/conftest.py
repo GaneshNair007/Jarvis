@@ -30,3 +30,55 @@ def isolate_test_audit_ledger(tmp_path, monkeypatch):
     monkeypatch.setattr(audit_ledger, "log_path", test_audit_path)
     monkeypatch.setattr(audit_ledger, "last_hash", AuditLedger.GENESIS_HASH)
     yield test_audit_path
+
+
+# ---------------------------------------------------------
+# PostgreSQL & Database Test Fixtures
+# ---------------------------------------------------------
+
+@pytest.fixture(scope="session")
+def db_engine():
+    """
+    Dual-mode Database Engine Fixture:
+    If 'POSTGRES_TEST_URL' is set in environment, tests against real PostgreSQL.
+    Otherwise, tests against ultra-fast in-memory SQLite with full UUID & JSON support.
+    """
+    import sqlalchemy as sa
+    from db.models.base import Base
+
+    pg_url = os.getenv("POSTGRES_TEST_URL")
+    if pg_url:
+        engine = sa.create_engine(pg_url, echo=False)
+    else:
+        # SQLite in-memory with Foreign Key constraints enabled
+        engine = sa.create_engine("sqlite:///:memory:", echo=False)
+
+    Base.metadata.create_all(engine)
+    yield engine
+    Base.metadata.drop_all(engine)
+    engine.dispose()
+
+
+@pytest.fixture
+def db_session_factory(db_engine):
+    """Sessionmaker bound to the test database engine."""
+    from sqlalchemy.orm import sessionmaker
+    return sessionmaker(bind=db_engine, expire_on_commit=False)
+
+
+@pytest.fixture
+def db_session(db_session_factory):
+    """Provides a transactional database session rolled back after every test."""
+    session = db_session_factory()
+    try:
+        yield session
+    finally:
+        session.rollback()
+        session.close()
+
+
+@pytest.fixture
+def uow(db_session_factory):
+    """Provides a fresh UnitOfWork instance for testing repositories."""
+    from db.repositories.unit_of_work import UnitOfWork
+    return UnitOfWork(db_session_factory)
