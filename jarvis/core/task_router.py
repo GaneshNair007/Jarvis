@@ -134,6 +134,24 @@ class TaskRouter:
             capabilities=["internship_match", "ats_analysis", "profile_optimization", "gsoc_prep"],
         ))
 
+        # 7. Dev Department Alias
+        self.register_department(Department(
+            id="dev",
+            name="Software Development",
+            manager_agent="eng_manager",
+            worker_agents=[
+                "fullstack_engineer",
+                "backend_architect",
+                "code_generator",
+                "backend_developer",
+                "frontend_developer",
+                "system_architect",
+                "ast_code_mapper",
+            ],
+            description="Core software development, microservices, and system architecture.",
+            capabilities=["python_coding", "architecture_design", "create_repo", "build_mvp"],
+        ))
+
     def register_department(self, dept: Department) -> None:
         self.departments[dept.id.lower()] = dept
         for worker in dept.worker_agents:
@@ -179,6 +197,10 @@ class TaskRouter:
         task.assigned_agent = agent_id
         return assignment
 
+    def assign_task(self, task: TaskNode) -> Assignment:
+        """Alias for assign_agent."""
+        return self.assign_agent(task)
+
     def _select_worker_agent(self, dept: Department, task: TaskNode) -> str:
         """Heuristic and capability matching of worker agents within a department."""
         tools_str = " ".join(task.tool_requirements).lower()
@@ -194,7 +216,9 @@ class TaskRouter:
                 return "prize_evaluator"
             return "problem_selector"
 
-        if dept.id == "engineering":
+        if dept.id in ("engineering", "dev"):
+            if "fastapi" in task_text or "rest" in task_text or "fullstack" in task_text:
+                return "fullstack_engineer"
             if "ast" in task_text or "mapper" in task_text or "code_map" in task_text:
                 return "ast_code_mapper"
             if "frontend" in task_text or "ui" in task_text:
