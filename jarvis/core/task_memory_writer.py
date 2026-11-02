@@ -1,7 +1,7 @@
 """
 JARVIS Task Memory Integration Layer
 Every completed task automatically formats and records structured MemoryEvents into
-the persistent long-term SQLite memory graph, ensuring zero state amnesia across restarts.
+the persistent long-term SQLite/PostgreSQL memory graph, ensuring zero state amnesia across restarts.
 """
 
 from __future__ import annotations
@@ -30,7 +30,7 @@ class MemoryEvent(BaseModel):
 class TaskMemoryWriter:
     """
     Subscribes to task completions, extracts distilled semantic knowledge,
-    and writes indexed MemoryEvents into the SQLite long-term memory graph.
+    and writes indexed MemoryEvents into the long-term memory graph.
     """
 
     def __init__(self, backup_storage: str = "data/task_memory_events.json"):
@@ -75,7 +75,7 @@ class TaskMemoryWriter:
         self.events.append(event)
         self._save_backup()
 
-        # Write to SQLite DB Store (Permanent graph storage)
+        # 1. Write to SQLite DB Store (Legacy key-value store)
         try:
             db_store.save_memory(
                 user_id="ganesh",
@@ -85,6 +85,19 @@ class TaskMemoryWriter:
             )
         except Exception as dbe:
             logger.warning(f"SQLite memory write skipped or simulated: {dbe}")
+
+        # 2. Write to Relational Hippocampus (UnitOfWork Memory Repository)
+        try:
+            from jarvis.db.unit_of_work import UnitOfWork
+            with UnitOfWork() as uow:
+                uow.memories.store_memory(
+                    category=category,
+                    content=content,
+                    importance_score=1.0,
+                )
+                uow.commit()
+        except Exception as uowe:
+            logger.debug(f"UnitOfWork memory write skipped: {uowe}")
 
         logger.info(f"TaskMemoryWriter: Recorded memory event for task '{task.task_id}' under category '{category}'")
         return event
@@ -108,15 +121,12 @@ class TaskMemoryWriter:
             return "engineering"
         if "research" in dept:
             return "research"
-        if "career" in dept or "job" in dept:
-            return "career"
-        if "security" in dept:
+        if "sec" in dept:
             return "security"
-        if "ops" in dept:
-            return "operations"
-        return "general"
+        if "career" in dept:
+            return "career"
+        return "operations"
 
 
 # Global Singleton Instance
 task_memory_writer = TaskMemoryWriter()
-
