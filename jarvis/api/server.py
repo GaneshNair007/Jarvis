@@ -72,6 +72,24 @@ app.include_router(grok_router)
 app.include_router(workforce_router)
 app.include_router(workforce_router, prefix='/api/v1')
 
+
+@app.get("/scheduler/status", tags=["Autonomous Scheduler"])
+def get_scheduler_status():
+    from jarvis.core.scheduler import proactive_scheduler
+    return proactive_scheduler.get_status()
+
+
+@app.post("/scheduler/trigger/{job_id}", tags=["Autonomous Scheduler"])
+async def trigger_scheduled_job(job_id: str):
+    from jarvis.core.scheduler import proactive_scheduler
+    try:
+        res = await proactive_scheduler.trigger_job(job_id)
+        return res
+    except ValueError as ve:
+        raise HTTPException(status_code=404, detail=str(ve))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
 
 
