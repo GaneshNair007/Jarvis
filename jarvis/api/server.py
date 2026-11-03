@@ -70,6 +70,19 @@ def print_honest_startup_banner() -> str:
 @app.on_event("startup")
 async def startup_event():
     print_honest_startup_banner()
+    try:
+        from jarvis.core.scheduler import proactive_scheduler
+        proactive_scheduler.start()
+    except Exception as e:
+        logger.warning(f"Could not auto-start proactive scheduler on boot: {e}")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    try:
+        from jarvis.core.scheduler import proactive_scheduler
+        proactive_scheduler.stop()
+    except Exception as e:
+        logger.warning(f"Scheduler shutdown warning: {e}")
 
 app.add_middleware(
     CORSMiddleware,

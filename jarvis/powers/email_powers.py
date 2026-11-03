@@ -18,6 +18,8 @@ from jarvis.core.audit import audit_ledger
 from jarvis.core.logger import get_logger
 from jarvis.core.policy_gate import policy_gate
 from jarvis.core.capability_guard import capability_guard, CapabilityStatus
+from jarvis.core.evidence import TrustResult, Evidence, CapabilityState
+from jarvis.core.trust_layer import trust_layer
 
 logger = get_logger("powers.email")
 
@@ -262,14 +264,18 @@ class EmailPowers:
         # Step 1: Pre-flight capability check
         status = capability_guard.check_gmail()
         if status == CapabilityStatus.DISCONNECTED:
-            return {
+            trust_res = TrustResult.disconnected(
+                "gmail",
+                "Gmail is not connected. Set GMAIL_USER and GMAIL_APP_PASSWORD in .env to connect."
+            )
+            d = trust_res.to_dict()
+            d.update({
                 "power_id": "PWR-191",
                 "status": "DISCONNECTED",
-                "fabricated": False,
                 "opportunities_found": 0,
                 "opportunities": [],
-                "message": "Gmail is not connected. Set GMAIL_USER and GMAIL_APP_PASSWORD in .env to connect.",
-            }
+            })
+            return d
 
         gmail_user = os.getenv("GMAIL_USER") or os.getenv("GMAIL_ADDRESS") or ""
         gmail_pass = os.getenv("GMAIL_APP_PASSWORD") or os.getenv("GMAIL_PASSWORD")

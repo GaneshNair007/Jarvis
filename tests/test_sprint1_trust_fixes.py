@@ -119,3 +119,36 @@ def test_startup_banner_truthfulness():
     assert "Ollama:" in banner
     assert "Gmail:" in banner
     assert "Internet:" in banner
+
+
+def test_trust_result_contract_never_fabricated():
+    from jarvis.core.evidence import TrustResult
+    res = TrustResult.disconnected('gmail', 'Gmail is not connected.')
+    assert res.fabricated is False
+    assert res.success is False
+    assert res.data == {}
+    d = res.to_dict()
+    assert d['fabricated'] is False
+    assert d['capability'] == 'gmail'
+    assert d['status'] == 'disconnected'
+
+
+def test_trust_result_success_demands_evidence():
+    from jarvis.core.evidence import TrustResult, Evidence
+    try:
+        TrustResult.success('gmail', evidence=[], data={})
+        assert False, 'Should have raised assertion error when evidence is empty'
+    except AssertionError:
+        pass
+
+
+def test_trust_layer_blocks_unconnected_capability():
+    from jarvis.core.trust_layer import trust_layer
+    res = trust_layer.execute_with_trust(
+        capability='gmail',
+        action=lambda: {'should': 'not run'},
+        action_name='test_scan'
+    )
+    assert res.success is False
+    assert res.fabricated is False
+    assert res.data == {}

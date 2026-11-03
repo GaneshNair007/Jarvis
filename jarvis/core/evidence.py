@@ -69,28 +69,15 @@ class Evidence:
         }
 
 
-@dataclass
 class TrustResult:
-    """
-    Standard result envelope for every JARVIS action.
-
-    Fields:
-        success      — True only when the action completed with real evidence
-        capability   — Which capability was used (e.g. "gmail", "ollama", "browser")
-        status       — Current state of that capability
-        evidence     — List of Evidence objects proving what happened
-        data         — The actual result payload (empty if success=False)
-        message      — Human-readable status. Honest always.
-        fabricated   — Always False. If True, something is very wrong.
-    """
-    success: bool
-    capability: str
-    status: CapabilityState
-    evidence: List[Evidence]
-    data: Dict[str, Any]
-    message: str
-    fabricated: bool = False            # Hard invariant: always False
-
+    def __init__(self, success: bool, capability: str, status, evidence, data, message, fabricated: bool = False):
+        self.success = success
+        self.capability = capability
+        self.status = status
+        self.evidence = evidence
+        self.data = data
+        self.message = message
+        self.fabricated = fabricated
     def to_dict(self) -> Dict[str, Any]:
         return {
             "success": self.success,
