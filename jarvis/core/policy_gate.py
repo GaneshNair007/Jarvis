@@ -64,6 +64,7 @@ class PolicyGate:
         self.secret_key = settings.jarvis_secret_key.encode("utf-8")
         self.kill_switch_active = False
         self.pending_approvals: Dict[str, Dict[str, Any]] = {}
+        self.consumed_tokens: Set[str] = set()
 
     def trigger_kill_switch(self, reason: str = "Manual emergency stop") -> None:
         """Immediately halts all autonomous execution loops."""
@@ -175,9 +176,19 @@ class PolicyGate:
 
         return False, "Approval token not recognized in pending approvals and missing cryptographic anchor"
 
-    def verify_approval_token(self, task_id: str, power_id: str, payload_hash: str, token: str) -> Tuple[bool, str]:
-        """Validates the cryptographic HMAC signature and expiration of an approval token."""
+    def consume_token(self, token: str) -> None:
+        """Marks an approval token as consumed to prevent replay attacks."""
+        self.consumed_tokens.add(token)
+
+    def verify_approval_token(self, task_id: str, power_id: str, payload_hash: str, token: str, consume: bool = False) -> Tuple[bool, str]:
+        """Validates the cryptographic HMAC signature, single-use validity, and expiration of an approval token."""
         try:
+            if not token or not isinstance(token, str):
+                return False, "Approval token is missing or empty"
+
+            if token in self.consumed_tokens:
+                return False, "Approval token has already been consumed (single-use invariant)"
+
             sig, expiry_str = token.split(".")
             expiry = int(expiry_str)
             if time.time() > expiry:
@@ -187,6 +198,8 @@ class PolicyGate:
             expected_sig = hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
 
             if hmac.compare_digest(sig, expected_sig):
+                if consume:
+                    self.consume_token(token)
                 return True, "Approval token valid and verified"
             return False, "Invalid cryptographic signature on approval token"
         except Exception as e:
@@ -230,7 +243,8 @@ class PolicyGate:
             if not approval_token:
                 # Generate a pending approval request
                 token, expiry = self.generate_approval_token(task_id, power_id, payload_hash)
-                approval_req = {
+                # Store token securely in internal server registry ONLY
+                self.pending_approvals[task_id] = {
                     "task_id": task_id,
                     "power_id": power_id,
                     "payload_hash": payload_hash,
@@ -238,15 +252,23 @@ class PolicyGate:
                     "expires_at": expiry,
                     "action_summary": f"Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})",
                 }
-                self.pending_approvals[task_id] = approval_req
+                # Returned approval_req for caller must NEVER contain the cryptographic secret token!
+                client_approval_req = {
+                    "task_id": task_id,
+                    "power_id": power_id,
+                    "payload_hash": payload_hash,
+                    "approval_required": True,
+                    "expires_at": expiry,
+                    "action_summary": f"Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})",
+                }
                 return (
                     False,
                     f"POLICY REQUIREMENT: Human approval required for {power_id} (Level {privilege_level})",
-                    approval_req,
+                    client_approval_req,
                 )
 
-            # Verify token
-            valid, reason = self.verify_approval_token(task_id, power_id, payload_hash, approval_token)
+            # Verify token and enforce single-use consumption
+            valid, reason = self.verify_approval_token(task_id, power_id, payload_hash, approval_token, consume=True)
             if not valid:
                 return False, f"APPROVAL FAILED: {reason}", None
 

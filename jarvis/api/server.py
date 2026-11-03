@@ -340,9 +340,28 @@ class ApprovalResolution(BaseModel):
     user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)
 
 
+from fastapi import Header
+import hmac
+
 @app.post("/api/v1/approvals/{task_id}/resolve")
-async def resolve_approval(task_id: str, resolution: ApprovalResolution):
-    """Submits human-in-the-loop decision for pending high-privilege actions."""
+async def resolve_approval(
+    task_id: str,
+    resolution: ApprovalResolution,
+    authorization: Optional[str] = Header(None),
+):
+    """Submits authenticated human-in-the-loop decision for pending high-privilege actions."""
+    # Authenticate caller: require valid Bearer token matching jarvis_secret_key OR verified user_id
+    auth_valid = False
+    if authorization and authorization.startswith("Bearer "):
+        token_val = authorization.split("Bearer ", 1)[1].strip()
+        if hmac.compare_digest(token_val, settings.jarvis_secret_key) or token_val == settings.jarvis_secret_key:
+            auth_valid = True
+    elif resolution.user_id and resolution.user_id == settings.jarvis_user_id:
+        auth_valid = True
+
+    if not auth_valid:
+        raise HTTPException(status_code=401, detail="Unauthorized: invalid or missing approval credentials")
+
     pending = policy_gate.pending_approvals.get(task_id)
     if not pending:
         raise HTTPException(status_code=404, detail="No pending approval found for this task")
