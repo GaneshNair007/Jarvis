@@ -77,6 +77,14 @@ class Settings(BaseSettings):
     openrouter_http_timeout_sec: float = Field(default=15.0)
     cloud_gateway_timeout_sec: float = Field(default=45.0)
 
+    # ─── NVIDIA NIM & Cognitum Cloud Providers ──────────────────────────────
+    nvidia_api_key: Optional[str] = Field(default=None)
+    nvidia_base_url: str = Field(default="https://integrate.api.nvidia.com/v1")
+    nvidia_model: str = Field(default="meta/llama-3.1-8b-instruct")
+    cognitum_api_key: Optional[str] = Field(default=None)
+    cognitum_base_url: str = Field(default="https://api.cognitum.one/v1")
+    cognitum_model: str = Field(default="cognitum-auto")
+
     # ─── GitHub Developer Integration ───────────────────────────────────────
     github_default_repo: str = Field(default="GaneshNair007/Jarvis")
     github_api_base_url: str = Field(default="https://api.github.com")
