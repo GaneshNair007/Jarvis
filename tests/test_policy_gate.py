@@ -16,6 +16,8 @@ def test_deny_by_default_on_dangerous_powers():
     assert "approval required" in msg.lower()
     assert req is not None
     assert "token" not in req  # Security Invariant: Token is never leaked in unapproved client response
+    assert req["status"] == "PENDING"
+    assert "approval_id" in req
     assert req.get("approval_required") is True
 
 

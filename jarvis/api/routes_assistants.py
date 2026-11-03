@@ -261,9 +261,17 @@ async def chat_completions(req: ChatCompletionRequest):
         query=user_query,
         task_id=f"chat_{uuid.uuid4().hex[:8]}",
     )
-    reply_text = orchestrator_result.get("outputs", {}).get("response", "JARVIS processed query.")
-    if isinstance(reply_text, dict):
-        reply_text = reply_text.get("message", str(reply_text))
+    resp_data = orchestrator_result.get("response", {})
+    if isinstance(resp_data, dict):
+        reply_text = (
+            resp_data.get("reply")
+            or resp_data.get("message")
+            or resp_data.get("text")
+            or resp_data.get("content")
+            or str(resp_data)
+        )
+    else:
+        reply_text = str(resp_data)
 
     return {
         "id": f"chatcmpl-{uuid.uuid4().hex[:12]}",

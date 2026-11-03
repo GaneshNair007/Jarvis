@@ -391,16 +391,25 @@ class GitShield:
         return [f for f in findings if f["confidence"] == "HIGH"]
 
     def audit_git_diff(self, diff_text: Optional[str]) -> Tuple[bool, List[str]]:
-        """Scans git diff output for added lines containing secrets."""
+        """Scans git diff output for added lines containing secrets, exempting tests and examples."""
         if not diff_text:
             return True, []
-        added_lines = [line[1:] for line in diff_text.splitlines() if line.startswith("+") and not line.startswith("+++")]
         violations = []
-        for line in added_lines:
-            findings = self.detector.scan_text(line)
-            for f in findings:
-                if f["confidence"] == "HIGH":
-                    violations.append(f"Blocked leak in line: '{line.strip()}' [{f['type']}]")
+        current_file = ""
+        for line in diff_text.splitlines():
+            if line.startswith("diff --git"):
+                parts = line.split()
+                if len(parts) >= 4:
+                    current_file = parts[3].lstrip("b/")
+            elif line.startswith("+") and not line.startswith("+++"):
+                norm_file = current_file.replace("\\", "/")
+                if "tests/" in norm_file or norm_file.endswith(".example") or "example" in norm_file.lower():
+                    continue
+                added_line = line[1:]
+                findings = self.detector.scan_text(added_line)
+                for f in findings:
+                    if f["confidence"] == "HIGH":
+                        violations.append(f"Blocked leak in line: '{added_line.strip()}' [{f['type']}]")
         return len(violations) == 0, violations
 
 

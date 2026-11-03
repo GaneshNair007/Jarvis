@@ -37,7 +37,7 @@ class TaskNode(BaseModel):
     assigned_agent: Optional[str] = None
     priority: Priority = Priority.MEDIUM
     status: TaskStatus = TaskStatus.PENDING
-    parent_goal: str
+    parent_goal: str = "root_goal"
     dependencies: List[str] = Field(default_factory=list)
     tool_requirements: List[str] = Field(default_factory=list)
     outputs: Dict[str, Any] = Field(default_factory=dict)

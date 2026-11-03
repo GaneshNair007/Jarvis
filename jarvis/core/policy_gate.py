@@ -9,7 +9,7 @@ import hashlib
 import time
 import uuid
 import datetime
-from typing import Dict, Any, Tuple, Optional, List
+from typing import Dict, Any, Tuple, Optional, List, Set
 from jarvis.config import settings
 
 
@@ -82,18 +82,33 @@ class PolicyGate:
         data_str = str(payload).encode("utf-8")
         return hashlib.sha256(data_str).hexdigest()
 
-    def generate_approval_token(self, task_id: str, power_id: str, payload_hash: str) -> Tuple[str, float]:
-        """Creates an HMAC-SHA256 token valid for the configured approval window."""
+    def generate_approval_token(
+        self,
+        task_id: str,
+        power_id: str,
+        payload_hash: str,
+        user_id: Optional[str] = None,
+    ) -> Tuple[str, float]:
+        """Creates an HMAC-SHA256 token valid for the configured approval window bound to user_id."""
+        effective_user_id = user_id or getattr(settings, "jarvis_user_id", "ganesh")
         expiry = int(time.time() + (settings.approval_token_expiry_minutes * 60))
-        message = f"{task_id}:{power_id}:{payload_hash}:{expiry}".encode("utf-8")
+        message = f"{effective_user_id}:{task_id}:{power_id}:{payload_hash}:{expiry}".encode("utf-8")
         signature = hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
         token = f"{signature}.{expiry}"
         return token, float(expiry)
 
-    def request_approval(self, power_id: str, task_id: str, action_summary: str, payload: Any) -> Dict[str, Any]:
-        """Generates an approval record and token bound to payload hash."""
+    def request_approval(
+        self,
+        power_id: str,
+        task_id: str,
+        action_summary: str,
+        payload: Any,
+        user_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Generates an approval record and token bound to payload hash and user_id."""
         payload_hash = self.hash_payload(payload)
-        token, expires_at = self.generate_approval_token(task_id, power_id, payload_hash)
+        effective_user_id = user_id or getattr(settings, "jarvis_user_id", "ganesh")
+        token, expires_at = self.generate_approval_token(task_id, power_id, payload_hash, user_id=effective_user_id)
         approval_id = f"appr_{uuid.uuid4().hex[:12]}"
         record = {
             "id": approval_id,
@@ -102,6 +117,7 @@ class PolicyGate:
             "power_id": power_id,
             "action_summary": action_summary,
             "payload_hash": payload_hash,
+            "user_id": effective_user_id,
             "token": token,
             "expires_at": expires_at,
             "status": "PENDING",
@@ -120,7 +136,11 @@ class PolicyGate:
             for appr in self.pending_approvals.values():
                 if appr.get("token") == token or appr.get("id") == token or appr.get("approval_id") == token:
                     valid, _ = self.verify_approval_token(
-                        appr["task_id"], appr["power_id"], appr["payload_hash"], appr.get("token", token)
+                        appr["task_id"],
+                        appr["power_id"],
+                        appr["payload_hash"],
+                        appr.get("token", token),
+                        user_id=appr.get("user_id"),
                     )
                     return valid
             return False
@@ -133,10 +153,12 @@ class PolicyGate:
         task_id: Optional[str] = None,
         power_id: Optional[str] = None,
         payload_hash: Optional[str] = None,
+        user_id: Optional[str] = None,
     ) -> Tuple[bool, str]:
         """
         Comprehensive cryptographic verification of an approval token or approval_id.
         1. Checks pending_approvals records by token, approval_id, or task_id.
+           Enforces that pending approval records MUST have status == "APPROVED".
         2. If candidate parameters (task_id, power_id, payload_hash) are provided, verifies direct HMAC signature.
         Returns (is_valid, reason).
         """
@@ -152,16 +174,20 @@ class PolicyGate:
                     continue
                 if payload_hash and appr.get("payload_hash") != payload_hash:
                     continue
+                # Enforce that status must be APPROVED
+                if appr.get("status") != "APPROVED":
+                    return False, f"Approval request {token} has not been approved (status is {appr.get('status')})"
                 return self.verify_approval_token(
                     task_id=appr.get("task_id", task_id or ""),
                     power_id=appr.get("power_id", power_id or ""),
                     payload_hash=appr.get("payload_hash", payload_hash or ""),
                     token=appr.get("token", token),
+                    user_id=user_id or appr.get("user_id"),
                 )
 
         # 2. Direct HMAC verification if task_id, power_id, and payload_hash are provided
         if task_id and power_id and payload_hash:
-            return self.verify_approval_token(task_id, power_id, payload_hash, token)
+            return self.verify_approval_token(task_id, power_id, payload_hash, token, user_id=user_id)
 
         # 3. Direct verification of token format
         try:
@@ -180,30 +206,84 @@ class PolicyGate:
         """Marks an approval token as consumed to prevent replay attacks."""
         self.consumed_tokens.add(token)
 
-    def verify_approval_token(self, task_id: str, power_id: str, payload_hash: str, token: str, consume: bool = False) -> Tuple[bool, str]:
-        """Validates the cryptographic HMAC signature, single-use validity, and expiration of an approval token."""
+    def verify_approval_token(
+        self,
+        task_id: str,
+        power_id: str,
+        payload_hash: str,
+        token: str,
+        consume: bool = False,
+        user_id: Optional[str] = None,
+    ) -> Tuple[bool, str]:
+        """
+        Validates cryptographic HMAC signature, single-use validity, and expiration of an approval token.
+        Supports dual-mode verification:
+        1. 5-tuple: user_id:task_id:power_id:payload_hash:expiry
+        2. Fallback legacy 4-tuple: task_id:power_id:payload_hash:expiry
+        """
         try:
             if not token or not isinstance(token, str):
                 return False, "Approval token is missing or empty"
 
             if token in self.consumed_tokens:
-                return False, "Approval token has already been consumed (single-use invariant)"
+                return False, "Approval token has already been consumed"
 
             sig, expiry_str = token.split(".")
             expiry = int(expiry_str)
             if time.time() > expiry:
                 return False, "Approval token has expired"
 
-            message = f"{task_id}:{power_id}:{payload_hash}:{expiry}".encode("utf-8")
-            expected_sig = hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
+            effective_user_id = user_id or getattr(settings, "jarvis_user_id", "ganesh")
 
-            if hmac.compare_digest(sig, expected_sig):
+            # 1. Primary verification: 5-tuple HMAC bound to user_id
+            msg_v2 = f"{effective_user_id}:{task_id}:{power_id}:{payload_hash}:{expiry}".encode("utf-8")
+            expected_sig_v2 = hmac.new(self.secret_key, msg_v2, hashlib.sha256).hexdigest()
+            if hmac.compare_digest(sig, expected_sig_v2):
                 if consume:
                     self.consume_token(token)
                 return True, "Approval token valid and verified"
+
+            # 2. Backward compatibility fallback: legacy 4-tuple HMAC
+            msg_v1 = f"{task_id}:{power_id}:{payload_hash}:{expiry}".encode("utf-8")
+            expected_sig_v1 = hmac.new(self.secret_key, msg_v1, hashlib.sha256).hexdigest()
+            if hmac.compare_digest(sig, expected_sig_v1):
+                if consume:
+                    self.consume_token(token)
+                return True, "Approval token valid and verified (legacy format)"
+
             return False, "Invalid cryptographic signature on approval token"
         except Exception as e:
             return False, f"Malformed approval token: {str(e)}"
+
+    def resolve_pending_approval(
+        self,
+        task_id: str,
+        approved: bool,
+        user_id: Optional[str] = None,
+    ) -> Tuple[bool, Optional[str]]:
+        """Transitions a pending approval record. If approved, generates/returns the cryptographic approval token."""
+        req = self.pending_approvals.get(task_id)
+        if not req:
+            return False, None
+
+        effective_user_id = user_id or getattr(settings, "jarvis_user_id", "ganesh")
+
+        if not approved:
+            req["status"] = "REJECTED"
+            self.pending_approvals.pop(task_id, None)
+            return False, None
+
+        token = req.get("token")
+        if not token:
+            token, expiry = self.generate_approval_token(
+                task_id, req["power_id"], req["payload_hash"], user_id=effective_user_id
+            )
+            req["token"] = token
+            req["expires_at"] = expiry
+
+        req["status"] = "APPROVED"
+        req["user_id"] = effective_user_id
+        return True, token
 
     def evaluate_execution(
         self,
@@ -212,6 +292,7 @@ class PolicyGate:
         privilege_level: int,
         payload: Dict[str, Any],
         approval_token: Optional[str] = None,
+        user_id: Optional[str] = None,
     ) -> Tuple[bool, str, Optional[Dict[str, Any]]]:
         """
         Deterministic Policy Evaluation:
@@ -225,6 +306,7 @@ class PolicyGate:
             return False, "EXECUTION BLOCKED: Emergency Kill Switch is ACTIVE", None
 
         payload_hash = self.hash_payload(payload)
+        effective_user_id = user_id or getattr(settings, "jarvis_user_id", "ganesh")
 
         # 2. Level 0 & 1 (Reads) - Allow if configured
         if privilege_level <= 1:
@@ -241,25 +323,36 @@ class PolicyGate:
 
         if needs_approval:
             if not approval_token:
-                # Generate a pending approval request
-                token, expiry = self.generate_approval_token(task_id, power_id, payload_hash)
-                # Store token securely in internal server registry ONLY
-                self.pending_approvals[task_id] = {
+                # Generate a pending approval request WITHOUT leaking token to client
+                approval_id = f"appr_{uuid.uuid4().hex[:12]}"
+                token, expiry = self.generate_approval_token(task_id, power_id, payload_hash, user_id=effective_user_id)
+                # Internal server registry holds the generated token awaiting approval
+                pending_record = {
+                    "id": approval_id,
+                    "approval_id": approval_id,
                     "task_id": task_id,
                     "power_id": power_id,
                     "payload_hash": payload_hash,
+                    "user_id": effective_user_id,
                     "token": token,
                     "expires_at": expiry,
+                    "status": "PENDING",
                     "action_summary": f"Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})",
                 }
+                self.pending_approvals[task_id] = pending_record
+                self.pending_approvals[approval_id] = pending_record
+
                 # Returned approval_req for caller must NEVER contain the cryptographic secret token!
                 client_approval_req = {
+                    "approval_id": approval_id,
                     "task_id": task_id,
                     "power_id": power_id,
                     "payload_hash": payload_hash,
+                    "user_id": effective_user_id,
+                    "status": "PENDING",
                     "approval_required": True,
                     "expires_at": expiry,
-                    "action_summary": f"Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})",
+                    "action_summary": pending_record["action_summary"],
                 }
                 return (
                     False,
@@ -267,10 +360,20 @@ class PolicyGate:
                     client_approval_req,
                 )
 
-            # Verify token and enforce single-use consumption
-            valid, reason = self.verify_approval_token(task_id, power_id, payload_hash, approval_token, consume=True)
+            # Single-use consumption check
+            if approval_token in self.consumed_tokens:
+                return False, "APPROVAL FAILED: Approval token has already been consumed", None
+
+            # Verify token with single-use consumption and user binding
+            valid, reason = self.verify_approval_token(
+                task_id, power_id, payload_hash, approval_token, consume=True, user_id=effective_user_id
+            )
             if not valid:
                 return False, f"APPROVAL FAILED: {reason}", None
+
+            # Mark pending record as consumed
+            if task_id in self.pending_approvals:
+                self.pending_approvals[task_id]["status"] = "CONSUMED"
 
         # 4. Allow-list Verifications
         # Directory check
@@ -280,6 +383,12 @@ class PolicyGate:
                 # If strict mode, deny
                 if settings.policy_strict_mode and privilege_level >= 2:
                     return False, f"SECURITY VIOLATION: Path '{target_dir}' is not within allowed directories", None
+
+        # Ensure token is recorded as consumed if an approval_token was provided
+        if approval_token:
+            self.consume_token(approval_token)
+            if task_id in self.pending_approvals:
+                self.pending_approvals[task_id]["status"] = "CONSUMED"
 
         return True, "Policy Gate approved execution", None
 

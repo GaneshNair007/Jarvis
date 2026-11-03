@@ -478,11 +478,20 @@ def model_router(state: JarvisState) -> Dict[str, Any]:
             decision=decision,
             prompt=decision.redacted_context or user_input,
         )
-        content = (
-            result.get("choices", [{}])[0].get("message", {}).get("content", str(result))
-            if isinstance(result, dict)
-            else str(result)
-        )
+        if isinstance(result, dict):
+            choices = result.get("choices")
+            if choices and isinstance(choices, list) and len(choices) > 0:
+                content = choices[0].get("message", {}).get("content", "")
+            else:
+                content = (
+                    result.get("reply")
+                    or result.get("message")
+                    or result.get("text")
+                    or result.get("content")
+                    or str(result)
+                )
+        else:
+            content = str(result)
     except Exception as exc:
         logger.error(f"model_router: inference failed — {exc}")
         content = f"Inference error: {exc}"
@@ -637,9 +646,28 @@ def memory_update(state: JarvisState) -> Dict[str, Any]:
     final_response: str = state.get("final_response", "")
     user_id: str = state.get("user_id") or _settings().jarvis_user_id
 
-    skip_phrases = ("⛔", "Action halted", "Inference error", "Model routing error")
+    skip_phrases = (
+        "⛔",
+        "Action halted",
+        "Inference error",
+        "Model routing error",
+        "AI Backend Unavailable",
+        "Execution failed",
+    )
+    has_errors = (
+        bool(state.get("errors"))
+        or state.get("model_route") == "error"
+        or state.get("status") in ("unavailable", "error", "failed")
+    )
+    is_unavailable = (
+        "status': 'unavailable'" in final_response
+        or '"status": "unavailable"' in final_response
+        or "'status': 'failed'" in final_response
+        or '"status": "failed"' in final_response
+        or any(final_response.startswith(p) for p in skip_phrases)
+    )
     should_write = (
-        bool(user_input) and bool(final_response) and not any(final_response.startswith(p) for p in skip_phrases)
+        bool(user_input) and bool(final_response) and not has_errors and not is_unavailable
     )
 
     if should_write:

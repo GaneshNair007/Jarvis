@@ -219,6 +219,13 @@ class PowerRegistry:
         except Exception as e:
             print(f"[PowerRegistry] Warning: Error loading catalog: {e}")
 
+    def get_handler(self, tool_name: str):
+        """Returns handler function for a registered power if present."""
+        p = self.get_power(tool_name)
+        if isinstance(p, dict):
+            return p.get("handler")
+        return getattr(p, "handler", None)
+
     def get_power(self, power_id: str) -> Optional[Dict[str, Any]]:
         """Retrieves power definition by ID, slug, or name (e.g. 'PWR-001' or 'chat')."""
         if power_id in self.initial_powers:
@@ -254,11 +261,13 @@ class PowerRegistry:
             return True
         return False
 
-    def register_power(self, power: Dict[str, Any]) -> None:
+    def register_power(self, power: Optional[Dict[str, Any]] = None, **kwargs) -> None:
         """Registers a dynamic or integration power."""
-        pid = power.get("power_id") or power.get("name")
+        p = dict(power or {})
+        p.update(kwargs)
+        pid = p.get("power_id") or p.get("name")
         if pid:
-            self.initial_powers[pid] = power
+            self.initial_powers[pid] = p
 
     def list_powers(self) -> List[Dict[str, Any]]:
         """Returns the roster of initial and integration-registered powers."""

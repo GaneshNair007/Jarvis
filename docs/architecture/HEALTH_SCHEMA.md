@@ -193,3 +193,4 @@ In alignment with the **First Law of JARVIS**, the health endpoint never returns
   "host_status": "healthy"
 }
 ```
+

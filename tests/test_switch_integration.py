@@ -50,3 +50,4 @@ def test_switch_broadcast_failover_event():
     assert res.fabricated is False
     assert res.data["status"] == "FAILOVER_BROADCAST_COMPLETE"
     assert "HYDRA FAILOVER" in res.data["summary"]
+

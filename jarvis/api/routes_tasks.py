@@ -15,8 +15,10 @@ from __future__ import annotations
 
 import time
 import uuid
+import hmac
 from typing import Any, Dict, List, Optional
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends, Header, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, APIKeyHeader
 from pydantic import BaseModel, Field
 
 from jarvis.config import settings
@@ -31,6 +33,49 @@ from jarvis.services.goal_service import GoalService
 from jarvis.core.logger import get_logger
 
 logger = get_logger("api.routes_tasks")
+
+admin_token_header = APIKeyHeader(name="X-Admin-Token", auto_error=False)
+bearer_scheme = HTTPBearer(auto_error=False)
+
+
+def verify_admin_user(
+    token_header: Optional[str] = Depends(admin_token_header),
+    bearer_auth: Optional[HTTPAuthorizationCredentials] = Depends(bearer_scheme),
+    user_id_header: Optional[str] = Header(None, alias="X-Jarvis-User-Id"),
+) -> str:
+    """
+    Fail-closed administrator authentication dependency.
+    Validates that the caller holds the administrative secret key
+    and matches the configured authorized user ID.
+    """
+    candidate_token = None
+    if bearer_auth and bearer_auth.credentials:
+        candidate_token = bearer_auth.credentials
+    elif token_header:
+        candidate_token = token_header
+
+    if not candidate_token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication required: Missing admin bearer token or X-Admin-Token header.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    expected_secret = settings.jarvis_secret_key
+    if not hmac.compare_digest(candidate_token.strip(), expected_secret.strip()):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Authorization failed: Invalid administrator secret token.",
+        )
+
+    if user_id_header and user_id_header.strip() != settings.jarvis_user_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Authorization failed: User '{user_id_header}' is not authorized as administrator.",
+        )
+
+    return settings.jarvis_user_id
+
 
 router = APIRouter(tags=["tasks"])
 
@@ -250,8 +295,18 @@ def cancel_task(task_id: str, reason: str = "User requested cancellation"):
 
 
 @router.post("/tasks/{task_id}/approve")
-def approve_task(task_id: str, req: TaskApprovalRequest):
+def approve_task(
+    task_id: str,
+    req: TaskApprovalRequest,
+    admin_user: str = Depends(verify_admin_user),
+):
     """Resolves human approval for high-privilege tasks awaiting authorization."""
+    if req.user_id and req.user_id.strip() != admin_user:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Authorization failed: Approval user '{req.user_id}' does not match authenticated admin '{admin_user}'",
+        )
+
     pending = policy_gate.pending_approvals.get(task_id)
     if not pending:
         raise HTTPException(status_code=404, detail=f"No pending approval found for task '{task_id}'")
@@ -260,7 +315,7 @@ def approve_task(task_id: str, req: TaskApprovalRequest):
         policy_gate.pending_approvals.pop(task_id, None)
         state_machine.transition(task_id, "REJECTED", reason="User denied approval")
         audit_ledger.record(
-            actor=req.user_id,
+            actor=admin_user,
             action="approval_denied",
             target=task_id,
             payload={"notes": req.notes},
@@ -269,9 +324,22 @@ def approve_task(task_id: str, req: TaskApprovalRequest):
         )
         return {"task_id": task_id, "status": "REJECTED", "message": "Approval denied by user."}
 
-    token = pending["token"]
+    token = pending.get("token")
+    if not token:
+        token, expiry = policy_gate.generate_approval_token(
+            task_id=task_id,
+            power_id=pending["power_id"],
+            payload_hash=pending["payload_hash"],
+            user_id=admin_user,
+        )
+        pending["token"] = token
+        pending["expires_at"] = expiry
+
+    pending["status"] = "APPROVED"
+    pending["user_id"] = admin_user
+
     audit_ledger.record(
-        actor=req.user_id,
+        actor=admin_user,
         action="approval_granted",
         target=task_id,
         payload={"notes": req.notes, "token": token[:16] + "..."},

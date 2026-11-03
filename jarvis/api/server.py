@@ -9,9 +9,12 @@ Exposes:
 
 import asyncio
 import time
+import hmac
+import hashlib
 from pathlib import Path
-from typing import Dict, Any, Optional, List
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Body
+from typing import Dict, Any, Optional, List, Tuple
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Body, Depends, Header, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, APIKeyHeader
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -27,6 +30,93 @@ from jarvis.core.audit import audit_ledger
 from jarvis.core.capability_guard import capability_guard
 from jarvis.memory.store import db_store
 from jarvis.powers.it_admin_powers import it_admin_powers
+
+admin_token_header = APIKeyHeader(name="X-Admin-Token", auto_error=False)
+bearer_scheme = HTTPBearer(auto_error=False)
+
+
+def verify_admin_user(
+    token_header: Optional[str] = Depends(admin_token_header),
+    bearer_auth: Optional[HTTPAuthorizationCredentials] = Depends(bearer_scheme),
+    user_id_header: Optional[str] = Header(None, alias="X-Jarvis-User-Id"),
+) -> str:
+    """
+    Fail-closed administrator authentication dependency.
+    Validates that the caller holds the administrative secret key
+    and matches the configured authorized user ID.
+    """
+    candidate_token = None
+    if bearer_auth and bearer_auth.credentials:
+        candidate_token = bearer_auth.credentials
+    elif token_header:
+        candidate_token = token_header
+
+    if not candidate_token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication required: Missing admin bearer token or X-Admin-Token header.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    expected_secret = settings.jarvis_secret_key
+    if not hmac.compare_digest(candidate_token.strip(), expected_secret.strip()):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Authorization failed: Invalid administrator secret token.",
+        )
+
+    if user_id_header and user_id_header.strip() != settings.jarvis_user_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Authorization failed: User '{user_id_header}' is not authorized as administrator.",
+        )
+
+    return settings.jarvis_user_id
+
+
+def generate_expensive_call_token(
+    task_id: str,
+    target_model: str,
+    user_id: str,
+    ttl_minutes: Optional[int] = None,
+) -> Tuple[str, int]:
+    """Generates cryptographic HMAC-SHA256 token authorizing expensive model inference."""
+    ttl = ttl_minutes or settings.approval_token_expiry_minutes
+    expiry = int(time.time() + (ttl * 60))
+    message = f"expensive:{user_id}:{task_id}:{target_model}:{expiry}".encode("utf-8")
+    sig = hmac.new(settings.jarvis_secret_key.encode("utf-8"), message, hashlib.sha256).hexdigest()
+    token = f"exp_hmac_{sig}.{expiry}"
+    return token, expiry
+
+
+def verify_expensive_call_token(
+    token: str,
+    task_id: str,
+    target_model: str,
+    user_id: Optional[str] = None,
+) -> Tuple[bool, str]:
+    """Validates signature, expiration, and payload binding of expensive call token."""
+    if not token or not isinstance(token, str):
+        return False, "Expensive call token is missing or empty"
+    if not token.startswith("exp_hmac_"):
+        return False, "Invalid token format: missing exp_hmac_ prefix"
+
+    raw = token[len("exp_hmac_"):]
+    try:
+        sig, expiry_str = raw.split(".")
+        expiry = int(expiry_str)
+        if time.time() > expiry:
+            return False, "Expensive call token has expired"
+
+        expected_user = user_id or settings.jarvis_user_id
+        message = f"expensive:{expected_user}:{task_id}:{target_model}:{expiry}".encode("utf-8")
+        expected_sig = hmac.new(settings.jarvis_secret_key.encode("utf-8"), message, hashlib.sha256).hexdigest()
+
+        if hmac.compare_digest(sig, expected_sig):
+            return True, "Expensive call token valid and verified"
+        return False, "Invalid cryptographic signature on expensive call token"
+    except Exception as e:
+        return False, f"Malformed expensive call token: {e}"
 from jarvis.api.routes_voice import router as voice_router
 from jarvis.api.routes_browser import router as browser_router
 from jarvis.api.routes_tasks import router as tasks_router
@@ -43,6 +133,7 @@ from jarvis.api.routes_workforce import router as workforce_router
 from jarvis.api.routes.reflections import router as reflections_router
 from jarvis.api.routes_ventures import router as ventures_router
 from jarvis.api.routes_gsoc import router as gsoc_router
+from jarvis.api.routes_opportunities import router as opportunities_router
 import uuid
 from graph.jarvis_graph import get_jarvis_graph
 
@@ -117,6 +208,8 @@ app.include_router(ventures_router)
 app.include_router(ventures_router, prefix="/api/v1")
 app.include_router(gsoc_router)
 app.include_router(gsoc_router, prefix="/api/v1")
+app.include_router(opportunities_router)
+app.include_router(opportunities_router, prefix="/api/v1")
 
 
 @app.get("/scheduler/status", tags=["Autonomous Scheduler"])
@@ -201,11 +294,26 @@ class ExpensiveCallApproval(BaseModel):
 
 
 @app.post("/model/approve-expensive-call")
-async def approve_expensive_call(approval: ExpensiveCallApproval):
+async def approve_expensive_call(
+    approval: ExpensiveCallApproval,
+    admin_user: str = Depends(verify_admin_user),
+):
     """Authorizes an inference call that exceeds default per-task limits."""
     if not approval.approved:
         return {"status": "rejected", "task_id": approval.task_id}
-    return {"status": "approved", "task_id": approval.task_id, "token": f"exp_app_{int(time.time())}"}
+    token, expiry = generate_expensive_call_token(
+        task_id=approval.task_id,
+        target_model=approval.target_model,
+        user_id=admin_user,
+    )
+    return {
+        "status": "approved",
+        "task_id": approval.task_id,
+        "target_model": approval.target_model,
+        "authorized_by": admin_user,
+        "token": token,
+        "expires_at": expiry,
+    }
 
 
 # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -340,27 +448,18 @@ class ApprovalResolution(BaseModel):
     user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)
 
 
-from fastapi import Header
-import hmac
-
 @app.post("/api/v1/approvals/{task_id}/resolve")
 async def resolve_approval(
     task_id: str,
     resolution: ApprovalResolution,
-    authorization: Optional[str] = Header(None),
+    admin_user: str = Depends(verify_admin_user),
 ):
     """Submits authenticated human-in-the-loop decision for pending high-privilege actions."""
-    # Authenticate caller: require valid Bearer token matching jarvis_secret_key OR verified user_id
-    auth_valid = False
-    if authorization and authorization.startswith("Bearer "):
-        token_val = authorization.split("Bearer ", 1)[1].strip()
-        if hmac.compare_digest(token_val, settings.jarvis_secret_key) or token_val == settings.jarvis_secret_key:
-            auth_valid = True
-    elif resolution.user_id and resolution.user_id == settings.jarvis_user_id:
-        auth_valid = True
-
-    if not auth_valid:
-        raise HTTPException(status_code=401, detail="Unauthorized: invalid or missing approval credentials")
+    if resolution.user_id and resolution.user_id.strip() != admin_user:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Authorization failed: Resolution user '{resolution.user_id}' does not match authenticated admin '{admin_user}'",
+        )
 
     pending = policy_gate.pending_approvals.get(task_id)
     if not pending:
@@ -370,7 +469,19 @@ async def resolve_approval(
         policy_gate.pending_approvals.pop(task_id, None)
         return {"task_id": task_id, "status": "REJECTED"}
 
-    token = pending["token"]
+    token = pending.get("token")
+    if not token:
+        token, expiry = policy_gate.generate_approval_token(
+            task_id=task_id,
+            power_id=pending["power_id"],
+            payload_hash=pending["payload_hash"],
+            user_id=admin_user,
+        )
+        pending["token"] = token
+        pending["expires_at"] = expiry
+
+    pending["status"] = "APPROVED"
+    pending["user_id"] = admin_user
     return {"task_id": task_id, "status": "APPROVED", "approval_token": token}
 
 

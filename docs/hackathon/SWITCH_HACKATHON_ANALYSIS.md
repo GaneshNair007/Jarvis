@@ -60,3 +60,4 @@ To win the **$10,000 Grand Prize**, an entry must demonstrate:
 2. **Dynamic Rate-Limit Failover ("Hydra Swarm"):** Seamlessly switching between model providers (Claude -> DeepSeek -> Gemini -> Local Ollama) when rate limits hit, with zero context drop.
 3. **Cryptographic Human Governance:** Interactive approval cards rendered in Discord/Slack with single-use HMAC tokens and Merkle audit logging.
 4. **Verifiable Truth (First Law):** Zero fabricated claims — every action posted to the team chat contains forensic evidence hashes.
+

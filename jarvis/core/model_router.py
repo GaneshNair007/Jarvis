@@ -44,13 +44,13 @@ class RoutingRequest(BaseModel):
 class RoutingDecision(BaseModel):
     task_id: str
     tier: str  # "BYPASS", "TIER_1_LOCAL", "TIER_2_PRIVATE", "TIER_3_CLOUD"
-    provider: str  # "deterministic", "ollama", "vllm", "anthropic", "openai", "google"
-    selected_model: str
-    reason: str
-    redacted_context: str
-    redactions_made: List[Dict[str, Any]]
-    estimated_cost_usd: float
-    requires_approval: bool
+    provider: str = "deterministic"
+    selected_model: str = "default"
+    reason: str = "routed"
+    redacted_context: str = ""
+    redactions_made: List[Dict[str, Any]] = Field(default_factory=list)
+    estimated_cost_usd: float = 0.0
+    requires_approval: bool = False
     fallback_models: List[str] = Field(default_factory=list)
     metadata: Dict[str, Any] = Field(default_factory=dict)
     timestamp: float = Field(default_factory=time.time)
@@ -80,7 +80,10 @@ class ModelRouter:
         r"^connect (my )?gmail.*",
         r".*(antigravity|self improve|upgrade yourself|make yourself stronger).*",
         r"^(status|help|who are you|hi|hello|hey|hi jarvis|hey jarvis|hello jarvis)$",
-        r"^pwr-\d{3}.*",
+        r"^pwr-[a-zA-Z0-9\-_]+.*",
+        r"^.*(grok|openmaus|ask grok|grok bot|grok mode).*",
+        r"^.*(openclaw|claw |obscura|crawl |scrape |browse |search web).*",
+        r"^.*(hackathon pipeline|autonomous workforce|mobilize workforce).*", 
         r"^ping\s+.*",
         r"^traceroute\s+.*",
         r"^dns\s+.*",
@@ -269,7 +272,7 @@ class ModelRouter:
                 task_id=request.task_id,
                 tier="FALLBACK_CLOUD",
                 provider="openrouter",
-                selected_model="deepseek/deepseek-chat",
+                selected_model="openrouter/deepseek/deepseek-chat",
                 reason="Ollama offline; routed honestly to cloud fallback.",
                 redacted_context=redacted_context,
                 redactions_made=total_redactions,
@@ -453,7 +456,7 @@ class ModelRouter:
             model_string = f"openai/{decision.selected_model}"
             api_base = settings.vllm_base_url
             api_key = settings.vllm_api_key
-        elif decision.tier == "TIER_3_CLOUD":
+        elif decision.tier in ("TIER_3_CLOUD", "FALLBACK_CLOUD"):
             # 1. Attempt OpenRouter multi-key rotator
             if "openrouter" in decision.selected_model or not ("claude" in decision.selected_model or "gpt" in decision.selected_model or "gemini" in decision.selected_model):
                 try:
@@ -463,8 +466,8 @@ class ModelRouter:
                             return {
                                 "task_id": decision.task_id,
                                 "status": "success",
-                                "tier": "TIER_3_CLOUD",
-                                "model": or_res.get("model", "deepseek/deepseek-chat"),
+                                "tier": decision.tier,
+                                "model": or_res.get("model", "openrouter/deepseek/deepseek-chat"),
                                 "reply": or_res["reply"],
                                 "tokens_used": or_res.get("tokens_used", len(prompt) // 4),
                                 "cost_usd": 0.0,
@@ -482,7 +485,7 @@ class ModelRouter:
                         return {
                             "task_id": decision.task_id,
                             "status": "success",
-                            "tier": "TIER_3_CLOUD",
+                            "tier": decision.tier,
                             "model": gem_res.get("model", f"google/{gem_model}"),
                             "reply": gem_res["reply"],
                             "tokens_used": len(prompt) // 4 + len(gem_res["reply"]) // 4,
@@ -501,6 +504,10 @@ class ModelRouter:
             elif "gemini" in decision.selected_model:
                 model_string = f"gemini/{decision.selected_model}"
                 api_key = gemini_rotator.get_next_key() or settings.gemini_api_key
+            elif "deepseek" in decision.selected_model or decision.provider == "openrouter":
+                if not model_string.startswith("openrouter/"):
+                    model_string = f"openrouter/{decision.selected_model}"
+                api_key = openrouter_rotator.get_next_key() or settings.openrouter_api_key
 
         try:
             kwargs: Dict[str, Any] = {
@@ -531,7 +538,7 @@ class ModelRouter:
                 cost_usd = 0.0 if decision.tier in ("TIER_1_LOCAL", "TIER_2_PRIVATE") else decision.estimated_cost_usd
 
             # Record in Cost Governor
-            if decision.tier == "TIER_3_CLOUD":
+            if decision.tier in ("TIER_3_CLOUD", "FALLBACK_CLOUD"):
                 self.cost_governor.record_usage(
                     task_id=decision.task_id,
                     model_name=decision.selected_model,

@@ -99,39 +99,42 @@ class ProactiveAutonomousScheduler:
         logger.info(f"Scheduler registered: [{job_id}] '{name}' at {schedule_time_hhmm} daily.")
 
     async def _job_career_scout(self) -> Dict[str, Any]:
-        """08:00 Routine: Scans internships, GSoC orgs, and matches Ganesh's profile."""
-        from jarvis.core.web_recon import web_opportunity_recon
-        from jarvis.powers.whatsapp_dispatcher import whatsapp_dispatcher
+        """08:00 Routine: Proactive Morning Career & LinkedIn Opportunity Briefing for Ganesh."""
+        from jarvis.core.daily_connector import daily_opportunity_connector
 
-        logger.info("Executing 08:00 Career & Internship Scout routine...")
-        opportunities = await web_opportunity_recon.search_live_hackathons(
-            query="internship AI software engineer India 2026",
-            location="India",
-            limit=5,
+        logger.info("Executing 08:00 Proactive Career & LinkedIn Opportunity routine...")
+        opp, trust_res = await daily_opportunity_connector.generate_morning_career_briefing(
+            voice_speak=True,
+            dispatch_whatsapp=True,
+            dispatch_switch=True,
         )
-        digest = whatsapp_dispatcher.format_hackathon_digest(
-            opportunities,
-            candidate_name="Ganesh",
-            title="🌅 MORNING CAREER & INTERNSHIP BRIEFING",
-        )
-        dispatch_res = await whatsapp_dispatcher.send_whatsapp_message(digest)
         return {
             "type": "career_scout",
-            "opportunities_found": len(opportunities),
-            "whatsapp_status": dispatch_res.get("status"),
+            "opp_id": opp.opp_id,
+            "title": opp.title,
+            "spoken_greeting": opp.spoken_greeting,
+            "status": opp.status,
+            "evidence_count": len(trust_res.evidence),
         }
 
     async def _job_hackathon_scout(self) -> Dict[str, Any]:
-        """12:00 Routine: Mobilizes 105-agent workforce for Devfolio/Unstop hackathons."""
-        from jarvis.agents.autonomous_workforce import autonomous_workforce
+        """12:00 Routine: Proactive Midday Hackathon Recon & Autonomous Pipeline Briefing."""
+        from jarvis.core.daily_connector import daily_opportunity_connector
 
-        logger.info("Executing 12:00 Midday Hackathon Workforce Swarm...")
-        result = await autonomous_workforce.run_hackathon_opportunity_pipeline(
-            target_phone="+919324094474",
-            location="India",
-            candidate_name="Ganesh",
+        logger.info("Executing 12:00 Midday Hackathon Autonomous Pipeline routine...")
+        opp, trust_res = await daily_opportunity_connector.generate_midday_hackathon_briefing(
+            voice_speak=True,
+            dispatch_whatsapp=True,
+            dispatch_switch=True,
         )
-        return result
+        return {
+            "type": "hackathon_scout",
+            "opp_id": opp.opp_id,
+            "title": opp.title,
+            "spoken_greeting": opp.spoken_greeting,
+            "status": opp.status,
+            "evidence_count": len(trust_res.evidence),
+        }
 
     async def _job_research_digest(self) -> Dict[str, Any]:
         """18:00 Routine: Aggregates top AI models, trending GitHub repos, and agent papers."""

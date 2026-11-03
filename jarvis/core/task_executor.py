@@ -138,34 +138,53 @@ class TaskExecutor:
         if task.tool_requirements:
             for tool_name in task.tool_requirements:
                 power = power_registry.get_power(tool_name)
-                if power:
-                    handler = power.get("handler") or power_registry.get_handler(tool_name)
-                    if handler:
-                        try:
-                            res = handler(task=task, context=context) if callable(handler) else None
-                            if inspect.iscoroutine(res):
-                                res = await res
-                            tools_executed.append(tool_name)
-                            tool_results[tool_name] = res
-                            evidence_list.append(Evidence(
-                                source=f"power_registry:{tool_name}",
-                                action="execute_power",
-                                payload={"tool": tool_name, "result_type": type(res).__name__},
-                                timestamp=time.time(),
-                                verified=True,
-                            ))
-                        except Exception as e:
-                            logger.error(f"Error executing required tool '{tool_name}': {e}")
-                            return {
-                                "task_id": task.task_id,
-                                "status": "failed",
-                                "error": f"Tool '{tool_name}' execution failed: {e}",
-                                "tools_used": tools_executed,
-                                "evidence": [e.to_dict() for e in evidence_list],
-                                "fabricated": False,
-                            }
-                else:
+                if not power:
                     logger.warning(f"Required tool '{tool_name}' not registered in power_registry.")
+                    return {
+                        "task_id": task.task_id,
+                        "status": "failed",
+                        "reason": "NO_EXECUTABLE_HANDLER",
+                        "error": f"Required tool '{tool_name}' not registered in power_registry.",
+                        "tools_used": tools_executed,
+                        "evidence": [e.to_dict() for e in evidence_list],
+                        "fabricated": False,
+                    }
+                handler = power.get("handler") if isinstance(power, dict) else getattr(power, "handler", None)
+                if not handler:
+                    logger.warning(f"Required tool '{tool_name}' has no executable handler.")
+                    return {
+                        "task_id": task.task_id,
+                        "status": "failed",
+                        "reason": "NO_EXECUTABLE_HANDLER",
+                        "error": f"Required tool '{tool_name}' has no executable handler in power_registry.",
+                        "tools_used": tools_executed,
+                        "evidence": [e.to_dict() for e in evidence_list],
+                        "fabricated": False,
+                    }
+                try:
+                    res = handler(task=task, context=context) if callable(handler) else None
+                    if inspect.iscoroutine(res):
+                        res = await res
+                    tools_executed.append(tool_name)
+                    tool_results[tool_name] = res
+                    evidence_list.append(Evidence(
+                        source=f"power_registry:{tool_name}",
+                        action="execute_power",
+                        data={"tool": tool_name, "result_type": type(res).__name__},
+                        timestamp=time.time(),
+                        verified=True,
+                    ))
+                except Exception as e:
+                    logger.error(f"Error executing required tool '{tool_name}': {e}")
+                    return {
+                        "task_id": task.task_id,
+                        "status": "failed",
+                        "reason": "TOOL_EXECUTION_ERROR",
+                        "error": f"Tool '{tool_name}' execution failed: {e}",
+                        "tools_used": tools_executed,
+                        "evidence": [e.to_dict() for e in evidence_list],
+                        "fabricated": False,
+                    }
 
         # Step 2: If no external tool executed, dispatch to model_router for reasoning
         if not tools_executed:
@@ -181,16 +200,28 @@ class TaskExecutor:
                 task_type="reasoning",
             )
             decision = model_router.route(routing_req)
-            inf_res = model_router.execute_inference(
+            inf_res = await asyncio.to_thread(
+                model_router.execute_inference,
                 decision,
                 prompt,
-                system_prompt=f"You are the {task.assigned_agent or task.department} executing task '{task.name}'. Provide actionable outputs."
+                system_prompt=f"You are the {task.assigned_agent or task.department} executing task '{task.name}'. Provide actionable outputs.",
             )
+            is_failed = inf_res.get("status") in ("unavailable", "error", "failed") or bool(inf_res.get("error"))
+            if is_failed:
+                return {
+                    "task_id": task.task_id,
+                    "status": "failed",
+                    "reason": "NO_EXECUTABLE_HANDLER",
+                    "error": f"Model inference unavailable: {inf_res.get('error', 'unavailable')}",
+                    "tools_used": [],
+                    "evidence": [e.to_dict() for e in evidence_list],
+                    "fabricated": False,
+                }
             reply = inf_res.get("reply") or inf_res.get("text") or "Cognitive execution cycle complete."
             evidence_list.append(Evidence(
                 source=f"model_router:{decision.selected_model}",
                 action="model_inference",
-                payload={"model": decision.selected_model, "tier": decision.tier, "prompt_chars": len(prompt)},
+                data={"model": decision.selected_model, "tier": decision.tier, "prompt_chars": len(prompt)},
                 timestamp=time.time(),
                 verified=True,
             ))

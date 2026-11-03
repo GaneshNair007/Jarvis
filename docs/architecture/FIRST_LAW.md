@@ -141,3 +141,4 @@ flowchart TD
 JARVIS is designed to be an **Autonomous AI Operating System**, not a speculative conversational chatbot. 
 
 By binding every capability to verifiable evidence, JARVIS guarantees that Ganesh Nair and any human operator can trust every notification, automated report, schedule trigger, and codebase modification made by the system.
+
