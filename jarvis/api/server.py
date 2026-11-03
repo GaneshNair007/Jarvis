@@ -24,6 +24,7 @@ from jarvis.core.orchestrator import orchestrator
 from jarvis.core.policy_gate import policy_gate
 from jarvis.core.power_registry import power_registry
 from jarvis.core.audit import audit_ledger
+from jarvis.core.capability_guard import capability_guard
 from jarvis.memory.store import db_store
 from jarvis.powers.it_admin_powers import it_admin_powers
 from jarvis.api.routes_voice import router as voice_router
@@ -311,8 +312,20 @@ async def get_power_detail(power_id: str):
 
 @app.get("/api/v1/system/health")
 async def system_health():
-    """Live host telemetry."""
-    return it_admin_powers.system_health_report()
+    """Authoritative, evidence-backed system health and host telemetry."""
+    evidence_health = capability_guard.get_evidence_health_report()
+    try:
+        host_metrics = it_admin_powers.system_health_report()
+        evidence_health.update({
+            "cpu": host_metrics.get("cpu", {}),
+            "memory": host_metrics.get("memory", {}),
+            "disk": host_metrics.get("disk", {}),
+            "boot_time": host_metrics.get("boot_time"),
+            "host_status": host_metrics.get("status"),
+        })
+    except Exception as e:
+        logger.warning(f"Could not gather host performance telemetry: {e}")
+    return evidence_health
 
 
 @app.get("/api/v1/tasks")

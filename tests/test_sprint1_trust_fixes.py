@@ -152,3 +152,46 @@ def test_trust_layer_blocks_unconnected_capability():
     assert res.success is False
     assert res.fabricated is False
     assert res.data == {}
+
+
+def test_evidence_backed_system_health_report():
+    from jarvis.core.capability_guard import capability_guard
+    health = capability_guard.get_evidence_health_report()
+    
+    assert health["first_law_enforced"] is True
+    assert health["fabricated"] is False
+    
+    # Ollama has evidence list
+    assert "ollama" in health
+    assert health["ollama"]["status"] in ["online", "offline"]
+    assert isinstance(health["ollama"]["evidence"], list)
+    assert len(health["ollama"]["evidence"]) >= 1
+    
+    # Scheduler has status and heartbeat
+    assert "scheduler" in health
+    assert health["scheduler"]["status"] in ["running", "stopped"]
+    assert "heartbeat_count" in health["scheduler"]
+    
+    # Voice has components and classifications
+    assert "voice" in health
+    assert health["voice"]["status"] == "stub"
+    assert health["voice"]["components"]["tts"] == "real"
+    assert health["voice"]["components"]["stt"] == "stub"
+    assert health["voice"]["components"]["wake_word"] == "stub"
+    
+    # Gmail has evidence list
+    assert "gmail" in health
+    assert health["gmail"]["status"] in ["connected", "disconnected"]
+    assert isinstance(health["gmail"]["evidence"], list)
+    assert len(health["gmail"]["evidence"]) >= 1
+
+
+def test_scheduler_heartbeat_tracking():
+    from jarvis.core.scheduler import proactive_scheduler
+    initial_heartbeats = proactive_scheduler.heartbeat_count
+    proactive_scheduler.record_heartbeat()
+    assert proactive_scheduler.heartbeat_count == initial_heartbeats + 1
+    assert proactive_scheduler.last_heartbeat is not None
+    status = proactive_scheduler.get_status()
+    assert status["heartbeat_count"] == initial_heartbeats + 1
+    assert status["last_heartbeat"] is not None

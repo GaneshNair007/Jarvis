@@ -34,3 +34,4 @@
 1. **Acoustic Wake Word:** Install `openwakeword` with pre-trained `hey_jarvis_v0.1.onnx` (~4 MB model, runs in <5ms on CPU).
 2. **STT:** Install `faster-whisper` with `base.en` or `tiny.en` (~75 MB model, ~150ms transcription latency on RTX 4050 or laptop CPU).
 3. **Neural TTS:** Integrate local Kokoro-82M or retain Windows SAPI (0ms network latency, zero cloud dependency).
+

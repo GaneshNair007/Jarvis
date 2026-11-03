@@ -49,6 +49,9 @@ class ProactiveAutonomousScheduler:
         self.jobs: Dict[str, ScheduledJob] = {}
         self._loop_task: Optional[asyncio.Task] = None
         self._is_running = False
+        self.heartbeat_count: int = 0
+        self.last_heartbeat: Optional[float] = None
+        self.started_at: Optional[float] = None
         self._register_default_jobs()
 
     def _register_default_jobs(self) -> None:
@@ -185,6 +188,11 @@ class ProactiveAutonomousScheduler:
             )
             return {"status": "FAILED", "job_id": job_id, "error": str(exc)}
 
+    def record_heartbeat(self) -> None:
+        """Manually or externally tick a heartbeat."""
+        self.heartbeat_count += 1
+        self.last_heartbeat = time.time()
+
     def get_status(self) -> Dict[str, Any]:
         """Returns census and status of all configured scheduled jobs."""
         now_str = datetime.datetime.now().strftime("%H:%M")
@@ -204,14 +212,21 @@ class ProactiveAutonomousScheduler:
             "current_time_hhmm": now_str,
             "total_jobs": len(self.jobs),
             "is_running": self._is_running,
+            "heartbeat_count": self.heartbeat_count,
+            "last_heartbeat": datetime.datetime.fromtimestamp(self.last_heartbeat).isoformat() if self.last_heartbeat else None,
+            "started_at": datetime.datetime.fromtimestamp(self.started_at).isoformat() if self.started_at else None,
             "jobs": job_reports,
         }
 
     async def _run_loop(self) -> None:
         """Internal background polling loop checking current time against schedule."""
         self._is_running = True
-        logger.info("JARVIS Proactive Autonomous Scheduler background daemon started.")
+        self.started_at = time.time()
+        logger.info("[Scheduler] Started — Proactive Autonomous Background Daemon online.")
         while self._is_running:
+            self.heartbeat_count += 1
+            self.last_heartbeat = time.time()
+            logger.info(f"[Scheduler] Heartbeat #{self.heartbeat_count} at {datetime.datetime.fromtimestamp(self.last_heartbeat).isoformat()}")
             try:
                 now = datetime.datetime.now()
                 current_hhmm = now.strftime("%H:%M")
@@ -238,6 +253,10 @@ class ProactiveAutonomousScheduler:
         """Starts background loop if not already running."""
         if not self._is_running:
             self._is_running = True
+            self.started_at = time.time()
+            self.heartbeat_count += 1
+            self.last_heartbeat = time.time()
+            logger.info(f"[Scheduler] Started (initial heartbeat #{self.heartbeat_count})")
             try:
                 loop = asyncio.get_running_loop()
                 self._loop_task = loop.create_task(self._run_loop())
@@ -247,6 +266,7 @@ class ProactiveAutonomousScheduler:
     def stop(self) -> None:
         """Stops background loop gracefully."""
         self._is_running = False
+        logger.info(f"[Scheduler] Stopped after {self.heartbeat_count} total heartbeats.")
         if self._loop_task and not self._loop_task.done():
             self._loop_task.cancel()
 
