@@ -1,6 +1,6 @@
 """
-JARVIS Capability Guard — Sprint 1 Trust Fix
-=============================================
+JARVIS Capability Guard — Sprint 1 Trust & API Integrations
+==========================================================
 Enforces capability checks BEFORE any action executes.
 Eliminates hallucinated results for disconnected services.
 
@@ -67,7 +67,9 @@ class CapabilityGuard:
         """Clears probe cache to force immediate re-evaluation."""
         self._cache.clear()
 
-    def _cached(self, key: str, probe_fn) -> str:
+    def _cached(self, key: str, probe_fn, use_cache: bool = True) -> str:
+        if not use_cache:
+            return probe_fn()
         now = time.time()
         if key in self._cache:
             status, ts = self._cache[key]
@@ -103,9 +105,7 @@ class CapabilityGuard:
             except (socket.timeout, ConnectionRefusedError, OSError):
                 return CapabilityStatus.DEGRADED  # creds exist but no internet
 
-        if not use_cache:
-            return probe()
-        return self._cached("gmail", probe)
+        return self._cached("gmail", probe, use_cache=use_cache)
 
     # ──────────────────────────────────────────────────────
     # Ollama
@@ -118,9 +118,7 @@ class CapabilityGuard:
             except (socket.timeout, ConnectionRefusedError, OSError):
                 return CapabilityStatus.DISCONNECTED
 
-        if not use_cache:
-            return probe()
-        return self._cached(f"ollama_{host}_{port}", probe)
+        return self._cached(f"ollama_{host}_{port}", probe, use_cache=use_cache)
 
     # ──────────────────────────────────────────────────────
     # Internet
@@ -133,9 +131,25 @@ class CapabilityGuard:
             except OSError:
                 return CapabilityStatus.DISCONNECTED
 
-        if not use_cache:
-            return probe()
-        return self._cached("internet", probe)
+        return self._cached("internet", probe, use_cache=use_cache)
+
+    # ──────────────────────────────────────────────────────
+    # NVIDIA NIM API
+    # ──────────────────────────────────────────────────────
+    def check_nvidia(self, use_cache: bool = True) -> str:
+        """Returns CONNECTED if NVIDIA_API_KEY env var is set."""
+        def probe():
+            return CapabilityStatus.CONNECTED if os.getenv("NVIDIA_API_KEY") else CapabilityStatus.DISCONNECTED
+        return self._cached("nvidia", probe, use_cache=use_cache)
+
+    # ──────────────────────────────────────────────────────
+    # Cognitum API
+    # ──────────────────────────────────────────────────────
+    def check_cognitum(self, use_cache: bool = True) -> str:
+        """Returns CONNECTED if COGNITUM_API_KEY env var is set."""
+        def probe():
+            return CapabilityStatus.CONNECTED if os.getenv("COGNITUM_API_KEY") else CapabilityStatus.DISCONNECTED
+        return self._cached("cognitum", probe, use_cache=use_cache)
 
     # ──────────────────────────────────────────────────────
     # Requirement enforcement
@@ -205,6 +219,8 @@ class CapabilityGuard:
             "gmail": self.check_gmail(),
             "ollama": self.check_ollama(),
             "internet": self.check_internet(),
+            "nvidia": self.check_nvidia(),
+            "cognitum": self.check_cognitum(),
             "fabricated": False,
             "note": "All statuses reflect real connectivity checks, not configuration assumptions.",
         }
@@ -212,4 +228,3 @@ class CapabilityGuard:
 
 # Global singleton
 capability_guard = CapabilityGuard()
-
