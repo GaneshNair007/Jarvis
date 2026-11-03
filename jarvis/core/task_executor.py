@@ -150,7 +150,7 @@ class TaskExecutor:
                         "fabricated": False,
                     }
                 handler = power.get("handler") if isinstance(power, dict) else getattr(power, "handler", None)
-                if not handler:
+                if not handler or not callable(handler):
                     logger.warning(f"Required tool '{tool_name}' has no executable handler.")
                     return {
                         "task_id": task.task_id,
@@ -165,6 +165,17 @@ class TaskExecutor:
                     res = handler(task=task, context=context) if callable(handler) else None
                     if inspect.iscoroutine(res):
                         res = await res
+                    if isinstance(res, dict) and (res.get("status") in ("error", "failed") or bool(res.get("error"))):
+                        logger.error(f"Tool '{tool_name}' reported failure: {res}")
+                        return {
+                            "task_id": task.task_id,
+                            "status": "failed",
+                            "reason": "TOOL_EXECUTION_ERROR",
+                            "error": f"Tool '{tool_name}' reported failure: {res.get('error') or res.get('message')}",
+                            "tools_used": tools_executed,
+                            "evidence": [e.to_dict() for e in evidence_list],
+                            "fabricated": False,
+                        }
                     tools_executed.append(tool_name)
                     tool_results[tool_name] = res
                     evidence_list.append(Evidence(
@@ -206,18 +217,31 @@ class TaskExecutor:
                 prompt,
                 system_prompt=f"You are the {task.assigned_agent or task.department} executing task '{task.name}'. Provide actionable outputs.",
             )
-            is_failed = inf_res.get("status") in ("unavailable", "error", "failed") or bool(inf_res.get("error"))
+            reply_candidate = (
+                inf_res.get("reply") or inf_res.get("text") or inf_res.get("content")
+                if isinstance(inf_res, dict)
+                else None
+            )
+            is_failed = (
+                not inf_res
+                or not isinstance(inf_res, dict)
+                or inf_res.get("status") in ("unavailable", "error", "failed")
+                or bool(inf_res.get("error"))
+                or not reply_candidate
+                or not str(reply_candidate).strip()
+            )
             if is_failed:
+                err_detail = (inf_res.get("error") if isinstance(inf_res, dict) else None) or "empty model response"
                 return {
                     "task_id": task.task_id,
                     "status": "failed",
                     "reason": "NO_EXECUTABLE_HANDLER",
-                    "error": f"Model inference unavailable: {inf_res.get('error', 'unavailable')}",
+                    "error": f"Model inference unavailable or empty: {err_detail}",
                     "tools_used": [],
                     "evidence": [e.to_dict() for e in evidence_list],
                     "fabricated": False,
                 }
-            reply = inf_res.get("reply") or inf_res.get("text") or "Cognitive execution cycle complete."
+            reply = str(reply_candidate).strip()
             evidence_list.append(Evidence(
                 source=f"model_router:{decision.selected_model}",
                 action="model_inference",

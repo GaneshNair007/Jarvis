@@ -664,7 +664,9 @@ def memory_update(state: JarvisState) -> Dict[str, Any]:
         or '"status": "unavailable"' in final_response
         or "'status': 'failed'" in final_response
         or '"status": "failed"' in final_response
-        or any(final_response.startswith(p) for p in skip_phrases)
+        or "status': 'error'" in final_response
+        or '"status": "error"' in final_response
+        or any(p in final_response for p in skip_phrases)
     )
     should_write = (
         bool(user_input) and bool(final_response) and not has_errors and not is_unavailable

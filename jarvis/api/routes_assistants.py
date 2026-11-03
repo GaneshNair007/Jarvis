@@ -268,10 +268,12 @@ async def chat_completions(req: ChatCompletionRequest):
             or resp_data.get("message")
             or resp_data.get("text")
             or resp_data.get("content")
-            or str(resp_data)
+            or resp_data.get("error")
         )
+        if not reply_text:
+            reply_text = orchestrator_result.get("error") or "I encountered an error processing your request."
     else:
-        reply_text = str(resp_data)
+        reply_text = str(resp_data) if resp_data else (orchestrator_result.get("error") or "No response generated.")
 
     return {
         "id": f"chatcmpl-{uuid.uuid4().hex[:12]}",
