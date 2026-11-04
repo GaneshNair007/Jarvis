@@ -172,6 +172,11 @@ async def startup_event():
         proactive_scheduler.start()
     except Exception as e:
         logger.warning(f"Could not auto-start proactive scheduler on boot: {e}")
+    try:
+        from jarvis.services.full_autonomy import full_autonomy
+        await full_autonomy.start()
+    except Exception as e:
+        logger.warning(f"Could not auto-start full autonomy service on boot: {e}")
 
 @app.on_event("shutdown")
 async def shutdown_event():
