@@ -8,6 +8,7 @@ Exposes:
 """
 
 import asyncio
+import datetime
 import time
 import hmac
 import hashlib
@@ -21,6 +22,9 @@ from pydantic import BaseModel, Field
 
 from jarvis.config import settings
 from jarvis.constants import APP_DESCRIPTION, APP_TITLE, APP_VERSION
+from jarvis.core.logger import get_logger
+
+logger = get_logger("api.server")
 from jarvis.core.model_router import model_router, RoutingRequest, RoutingDecision
 from jarvis.core.cost_governor import cost_governor
 from jarvis.core.orchestrator import orchestrator
@@ -134,6 +138,7 @@ from jarvis.api.routes.reflections import router as reflections_router
 from jarvis.api.routes_ventures import router as ventures_router
 from jarvis.api.routes_gsoc import router as gsoc_router
 from jarvis.api.routes_opportunities import router as opportunities_router
+from jarvis.api.routes_autonomous import router as autonomous_router
 import uuid
 from graph.jarvis_graph import get_jarvis_graph
 
@@ -210,6 +215,8 @@ app.include_router(gsoc_router)
 app.include_router(gsoc_router, prefix="/api/v1")
 app.include_router(opportunities_router)
 app.include_router(opportunities_router, prefix="/api/v1")
+app.include_router(autonomous_router)
+app.include_router(autonomous_router, prefix="/api/v1")
 
 
 @app.get("/scheduler/status", tags=["Autonomous Scheduler"])
@@ -422,17 +429,32 @@ async def get_power_detail(power_id: str):
 async def system_health():
     """Authoritative, evidence-backed system health and host telemetry."""
     evidence_health = capability_guard.get_evidence_health_report()
+    default_boot_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     try:
         host_metrics = it_admin_powers.system_health_report()
+        boot_time = (
+            host_metrics.get("boot_time")
+            or host_metrics.get("system", {}).get("boot_time")
+            or default_boot_time
+        )
         evidence_health.update({
             "cpu": host_metrics.get("cpu", {}),
             "memory": host_metrics.get("memory", {}),
             "disk": host_metrics.get("disk", {}),
-            "boot_time": host_metrics.get("boot_time"),
-            "host_status": host_metrics.get("status"),
+            "boot_time": boot_time,
+            "host_status": host_metrics.get("status", "healthy"),
         })
+        if host_metrics.get("status") == "critical":
+            evidence_health["status"] = "critical"
+        elif host_metrics.get("status") == "warning" and evidence_health.get("status") == "healthy":
+            evidence_health["status"] = "degraded"
     except Exception as e:
         logger.warning(f"Could not gather host performance telemetry: {e}")
+        evidence_health["boot_time"] = default_boot_time
+        evidence_health["host_status"] = "degraded"
+        evidence_health.setdefault("cpu", {})
+        evidence_health.setdefault("memory", {})
+        evidence_health.setdefault("disk", {})
     return evidence_health
 
 
