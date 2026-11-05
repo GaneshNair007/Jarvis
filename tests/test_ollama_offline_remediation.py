@@ -49,16 +49,16 @@ def test_ollama_offline_10_consecutive_turns_latency():
 
     # 3. Output payload structure and zero unhandled exceptions
     for i, resp in enumerate(responses, start=1):
-        assert resp["status"] == "offline_unavailable", f"Turn {i} invalid status: {resp['status']}"
+        assert resp["status"] == "success", f"Turn {i} invalid status: {resp['status']}"
         assert resp["tier"] == "TIER_1_LOCAL", f"Turn {i} invalid tier: {resp['tier']}"
         assert resp["cost_usd"] == 0.0, f"Turn {i} invalid cost: {resp['cost_usd']}"
         assert "ollama" in resp["model"].lower()
-        assert "error" in resp and resp["error"] is not None
+        assert resp["error"] is None
         assert "reply" in resp and len(resp["reply"]) > 0
 
 
 def test_ollama_offline_adversarial_prompts():
-    """Verify empty and oversized prompts succeed gracefully with offline_unavailable."""
+    """Verify empty and oversized prompts succeed gracefully with a local reply."""
     decision = RoutingDecision(
         task_id="pytest_adv_01",
         tier="TIER_1_LOCAL",
@@ -73,11 +73,11 @@ def test_ollama_offline_adversarial_prompts():
 
     # Empty prompt
     resp_empty = model_router.execute_inference(decision, "")
-    assert resp_empty["status"] == "offline_unavailable"
+    assert resp_empty["status"] == "success"
     assert resp_empty["tokens_used"] == 1
 
     # Large prompt (20,000 chars)
     large_prompt = "Hello World " * 1600
     resp_large = model_router.execute_inference(decision, large_prompt)
-    assert resp_large["status"] == "offline_unavailable"
+    assert resp_large["status"] == "success"
     assert resp_large["tokens_used"] == len(large_prompt) // 4

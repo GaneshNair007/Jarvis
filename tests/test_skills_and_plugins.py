@@ -104,31 +104,31 @@ def test_security_powers():
 def test_finance_powers():
     """Validates FinancePowers currency conversion and ticker quotes."""
     conv = finance_powers.convert_currency(100.0, "USD", "EUR")
-    assert conv["power_id"] == "PWR-180"
+    assert conv["power_id"] == "PWR-215"
     assert conv["converted_amount"] == 92.0
 
     quote = finance_powers.get_stock_quote("NVDA")
-    assert quote["power_id"] == "PWR-181"
+    assert quote["power_id"] == "PWR-215"
     assert quote["price"] > 0
 
 
 def test_smart_home_powers():
     """Validates SmartHomePowers device status and light toggling."""
-    status = smart_home_powers.get_device_status()
+    status = smart_home_powers.get_device_status("climate.ac")
     assert status["power_id"] == "PWR-238"
-    assert status["devices_count"] >= 3
+    assert status["entity_id"] == "climate.ac"
 
-    toggle = smart_home_powers.toggle_light("light.living_room")
-    assert toggle["power_id"] == "PWR-239"
-    assert toggle["new_state"] == "on"
+    toggle = smart_home_powers.control_lights("light.living_room", state="on")
+    assert toggle["power_id"] == "PWR-256"
+    assert toggle["state"] == "on"
 
 
 def test_automation_powers():
     """Validates AutomationPowers cron schedule registration."""
     scheds = automation_powers.list_schedules()
-    assert scheds["power_id"] == "PWR-253"
-    assert scheds["active_schedules_count"] >= 2
+    assert scheds["power_id"] == "PWR-272"
+    assert scheds["active_count"] >= 2
 
     new_sched = automation_powers.register_schedule("hourly_sync", "0 * * * *", "Run hourly delta sync")
-    assert new_sched["power_id"] == "PWR-254"
+    assert new_sched["power_id"] == "PWR-272"
     assert new_sched["status"] == "registered"

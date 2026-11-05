@@ -89,8 +89,10 @@ class SmartHomePowers:
             "devices": self.device_states,
         }
 
-    def get_device_status(self, entity_id: str) -> Dict[str, Any]:
-        """PWR-238: Queries a specific device state."""
+    def get_device_status(self, entity_id: Optional[str] = None) -> Dict[str, Any]:
+        """PWR-238: Queries a specific device state, or all devices when entity_id is omitted."""
+        if entity_id is None:
+            return self.get_all_devices()
         dev = self.device_states.get(entity_id)
         if not dev:
             return {"power_id": "PWR-238", "entity_id": entity_id, "state": "unknown", "error": "Device not found"}

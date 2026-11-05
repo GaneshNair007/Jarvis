@@ -231,7 +231,8 @@ class InstantPowers:
             "format": "mp4",
         }
 
-    def lock_workstation(self) -> Dict[str, Any]:
+    @staticmethod
+    def lock_workstation() -> Dict[str, Any]:
         """PWR-046: Lock operating system workstation immediately."""
         try:
             if os.name == "nt":
@@ -246,9 +247,6 @@ class InstantPowers:
             return {"status": "error", "message": f"Failed to lock workstation: {e}"}
             return {"power_id": "PWR-046", "status": "error", "message": str(e)}
 
-    @staticmethod
-    def get_clipboard() -> Dict[str, Any]:
-        """PWR-038: Read current text content from the OS clipboard."""
     def open_terminal(self, working_dir: str = ".") -> Dict[str, Any]:
         """PWR-047: Open terminal prompt."""
         try:
@@ -302,7 +300,8 @@ class InstantPowers:
             return {"power_id": "PWR-049", "status": "error", "message": str(e)}
 
     # Additional helper
-    def get_clipboard(self) -> Dict[str, Any]:
+    @staticmethod
+    def get_clipboard() -> Dict[str, Any]:
         """Read clipboard."""
         try:
             import tkinter as tk

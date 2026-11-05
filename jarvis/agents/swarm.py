@@ -207,22 +207,22 @@ class AgentSwarmCoordinator:
         token = self.cancellation_tokens.get(plan_id) or CancellationToken()
         plan.status = "RUNNING"
 
-        async def _run_subtask(task: SubTask):
+        async def _run_one(task: SubTask):
             async with self.semaphore:
                 if token.is_cancelled:
                     task.status = "CANCELLED"
-                    task.outputs = {"error": f"Execution cancelled: {token.reason}"}
+                    task.outputs = {"error": f"Cancelled: {token.reason}"}
                     return
 
                 task.status = "RUNNING"
-                start = time.perf_counter()
                 task.assigned_worker_id = f"worker_{uuid.uuid4().hex[:6]}"
+                start = time.perf_counter()
 
                 try:
                     if execution_handler:
                         res = await asyncio.to_thread(execution_handler, task)
                     else:
-                        # Deterministic simulated execution per sub-agent role
+                        # Local reflex execution per sub-agent role (no external LLM required)
                         res = {
                             "role": task.role.value,
                             "power_id": self.agent_registry[task.role]["power_id"],
@@ -231,7 +231,7 @@ class AgentSwarmCoordinator:
                         }
                     task.outputs = res
                     task.status = "COMPLETED"
-                    task.cost_usd = 0.00015  # local model or token cost
+                    task.cost_usd = 0.00015
                 except Exception as e:
                     task.status = "FAILED"
                     task.outputs = {"error": str(e)}
@@ -239,13 +239,8 @@ class AgentSwarmCoordinator:
                     task.duration_ms = round((time.perf_counter() - start) * 1000, 2)
                     self.cumulative_cost_usd += task.cost_usd
 
-        # Execute tasks sequentially or with bounded concurrency
-        for task in plan.tasks:
-            if token.is_cancelled:
-                task.status = "CANCELLED"
-                task.outputs = {"error": f"Cancelled: {token.reason}"}
-            else:
-                await _run_subtask(task)
+        # Execute subtasks with bounded concurrency (parallel sub-agent workers)
+        await asyncio.gather(*[_run_one(t) for t in plan.tasks])
 
         # Handoff context (PWR-304) and update total plan status
         all_completed = all(t.status == "COMPLETED" for t in plan.tasks)

@@ -7,6 +7,7 @@ agent dashboard telemetry, handoffs, parallel execution, cost tracking, and canc
 from __future__ import annotations
 
 import asyncio
+import concurrent.futures
 import json
 from typing import Any, Dict, List, Optional
 from jarvis.agents.swarm import AgentRole, agent_swarm
@@ -14,6 +15,18 @@ from jarvis.core.logger import get_logger
 from jarvis.core.evidence import Evidence, TrustResult
 
 logger = get_logger("powers.multiagent")
+
+
+def _run_async(coro):
+    """Run an async coroutine from sync code, safe inside or outside an event loop.
+
+    Each call runs asyncio.run() in a worker thread with its own fresh event loop,
+    so this works whether invoked from a plain sync context or from within an
+    already-running async loop (e.g. the orchestrator).
+    """
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(asyncio.run, coro)
+        return future.result()
 
 
 class MultiAgentPowers:
@@ -25,7 +38,11 @@ class MultiAgentPowers:
     def orchestrator_dispatch(self, goal: str) -> Dict[str, Any]:
         """PWR-288: Coordinates end-to-end multi-agent execution for a goal."""
         plan = self.swarm.decompose_goal(goal)
-        completed = asyncio.run(self.swarm.execute_plan(plan.plan_id))
+
+        def _execute_subagent(task):
+            return self.invoke_subagent(task.role.value, task.inputs)
+
+        completed = _run_async(self.swarm.execute_plan(plan.plan_id, execution_handler=_execute_subagent))
         return {
             "power_id": "PWR-288",
             "plan_id": completed.plan_id,
@@ -53,6 +70,10 @@ class MultiAgentPowers:
             agent_role = AgentRole.ORCHESTRATOR
 
         meta = self.swarm.agent_registry.get(agent_role, {"power_id": "PWR-288"})
+        
+        # Antigravity self-improvement pipeline (real self-upgrade, not a stub)
+        if agent_role == AgentRole.CODER_ANTIGRAVITY:
+            return self.self_upgrade_pipeline(inputs.get("codebase_path", r"D:\jarvis"))
         
         # Special handling for coding agents - generate evidence-backed result
         if agent_role in [
@@ -230,9 +251,9 @@ class MultiAgentPowers:
         )
         
         # Execute via parallel subagents
-        execution = asyncio.run(self.execute_parallel_swarms([
+        execution = self.execute_parallel_swarms([
             f"Implement: {imp}" for imp in improvements[:5]
-        ]))
+        ])
         
         # Step 4: Verify with test suite
         verification = self._verify_changes(current_codebase_path)
