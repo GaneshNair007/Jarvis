@@ -101,6 +101,18 @@ class JarvisOrchestrator:
                 decision=decision,
                 prompt=decision.redacted_context or query,
             )
+        elif query.strip().lower().startswith("/code") or "write code" in query.lower() or "generate" in query.lower():
+            # Coding task - dispatch through multi-agent swarm
+            self.state_machine.transition(task_id, "RUNNING", reason="Dispatching to multi-agent code generation")
+            from jarvis.powers.multiagent_powers import multiagent_powers
+            execution_result = multiagent_powers.orchestrator_dispatch(f"Code: {query}")
+        elif query.strip().lower().startswith("/upgrade") or "self improve" in query.lower():
+            # Self-upgrade pipeline
+            self.state_machine.transition(task_id, "RUNNING", reason="Executing self-upgrade pipeline")
+            from jarvis.powers.multiagent_powers import multiagent_powers
+            execution_result = multiagent_powers.self_upgrade_pipeline()
+        else:
+            execution_result = {"note": "No matching execution path, returning empty result"}
 
         # Step 4: Verification & Completion
         self.state_machine.transition(task_id, "VERIFYING", reason="Validating execution receipts")

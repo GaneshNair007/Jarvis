@@ -23,6 +23,13 @@ class AgentRole(str, Enum):
     PLANNER = "planner"
     RESEARCHER = "researcher"
     CODER = "coder"
+    CODER_CLAUDE = "coder_claude"
+    CODER_CURSOR = "coder_cursor"
+    CODER_CODEX = "coder_codex"
+    CODER_OPENAI = "coder_openai"
+    CODER_ANTIGRAVITY = "coder_antigravity"
+    CODER_GROKBOT = "coder_grokbot"
+    CODER_OPENALL = "coder_openall"
     FILE_AGENT = "file_agent"
     BROWSER = "browser"
     SYSADMIN = "system_admin"
@@ -90,6 +97,13 @@ class AgentSwarmCoordinator:
             AgentRole.PLANNER: {"power_id": "PWR-289", "description": "Goal decomposition into subtasks"},
             AgentRole.RESEARCHER: {"power_id": "PWR-290", "description": "Web and documentation research"},
             AgentRole.CODER: {"power_id": "PWR-291", "description": "Code generation, refactoring, tests"},
+            AgentRole.CODER_CLAUDE: {"power_id": "PWR-309", "description": "Claude Code integration for code generation"},
+            AgentRole.CODER_CURSOR: {"power_id": "PWR-310", "description": "Cursor integration for code generation"},
+            AgentRole.CODER_CODEX: {"power_id": "PWR-311", "description": "Codex integration for code generation"},
+            AgentRole.CODER_OPENAI: {"power_id": "PWR-312", "description": "OpenAI code completion"},
+            AgentRole.CODER_ANTIGRAVITY: {"power_id": "PWR-313", "description": "Antigravity self-improvement pipeline"},
+            AgentRole.CODER_GROKBOT: {"power_id": "PWR-314", "description": "Grokbot reasoning and code analysis"},
+            AgentRole.CODER_OPENALL: {"power_id": "PWR-315", "description": "OpenAll code models orchestration"},
             AgentRole.FILE_AGENT: {"power_id": "PWR-292", "description": "File operations and directory inspection"},
             AgentRole.BROWSER: {"power_id": "PWR-293", "description": "Browser automation and screen capture"},
             AgentRole.SYSADMIN: {"power_id": "PWR-294", "description": "OS telemetry and system administration"},
