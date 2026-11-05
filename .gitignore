@@ -65,3 +65,6 @@ data/notifications/
 workspace/
 data/reflections.json
 data/task_memory_events.json
+
+# Runtime logs from background launcher
+logs/
