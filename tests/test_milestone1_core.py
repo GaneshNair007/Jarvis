@@ -30,11 +30,13 @@ from core.model_router import ModelRouter
 from graph.jarvis_graph import jarvis_graph
 from graph.nodes import memory_retrieval, policy_check, model_router, memory_update
 
+
 @pytest.fixture
 def client():
     # Reset kill switch before tests
     policy_gate.reset_kill_switch()
     return TestClient(app)
+
 
 # 1. Health endpoint
 def test_health_endpoint(client):
@@ -45,18 +47,17 @@ def test_health_endpoint(client):
     assert data["service"] == "jarvis-core"
     assert "timestamp" in data
 
+
 # 2. Chat endpoint
 def test_chat_endpoint(client):
-    response = client.post("/chat", json={
-        "user_id": "ganesh",
-        "message": "Hello Jarvis, report your active status."
-    })
+    response = client.post("/chat", json={"user_id": "ganesh", "message": "Hello Jarvis, report your active status."})
     assert response.status_code == 200
     data = response.json()
     assert "response" in data
     assert "task_id" in data
     assert "model_route" in data
     assert data["user_id"] == "ganesh"
+
 
 # 3. Memory retrieval
 def test_memory_retrieval():
@@ -65,9 +66,9 @@ def test_memory_retrieval():
     mem0_client.add(
         [
             {"role": "user", "content": "Remember that my server IP is 192.168.1.100"},
-            {"role": "assistant", "content": "Stored server IP"}
+            {"role": "assistant", "content": "Stored server IP"},
         ],
-        user_id=test_user
+        user_id=test_user,
     )
     # Search memory directly
     results = mem0_client.search("server IP", filters={"user_id": test_user})
@@ -90,10 +91,11 @@ def test_memory_retrieval():
         "model_route": "",
         "tool_results": [],
         "final_response": "",
-        "evidence": []
+        "evidence": [],
     }
     node_out = memory_retrieval(state)
     assert len(node_out["retrieved_memories"]) > 0
+
 
 # 4. Memory update
 def test_memory_update():
@@ -113,12 +115,13 @@ def test_memory_update():
         "selected_agents": [],
         "model_route": "",
         "tool_results": [],
-        "evidence": []
+        "evidence": [],
     }
     memory_update(state)
     recalled = mem0_client.search("favorite editor", filters={"user_id": test_user})
     assert len(recalled) > 0
     assert any("Neovim" in r["memory"] for r in recalled)
+
 
 # 5. Policy denial
 def test_policy_denial():
@@ -141,11 +144,12 @@ def test_policy_denial():
         "risk_level": "high",
         "approval_required": True,
         "approval_id": None,
-        "retrieved_memories": []
+        "retrieved_memories": [],
     }
     out = model_router(halt_state)
     assert out["model_route"] == "policy_halt"
     assert "requires explicit human cryptographic approval" in out["final_response"]
+
 
 # 6. Model routing
 def test_model_routing():
@@ -162,29 +166,26 @@ def test_model_routing():
     cloud_route = router.route(task_type="complex_coding", sensitivity="public")
     assert cloud_route == "claude-sonnet"
 
+
 # 7. Local model fallback
 def test_local_model_fallback():
     router = ModelRouter()
     # Call completion with non-existent server / offline endpoint
-    res = router.complete(
-        model="ollama/llama3.1",
-        messages=[{"role": "user", "content": "Ping test"}]
-    )
+    res = router.complete(model="ollama/llama3.1", messages=[{"role": "user", "content": "Ping test"}])
     assert "choices" in res
     assert len(res["choices"]) > 0
     assert "content" in res["choices"][0]["message"]
     assert res["choices"][0]["message"]["content"] != ""
 
+
 # 8. Task creation
 def test_task_creation(client):
-    response = client.post("/tasks", json={
-        "intent": "Run security benchmark diagnostics",
-        "user_id": "ganesh"
-    })
+    response = client.post("/tasks", json={"intent": "Run security benchmark diagnostics", "user_id": "ganesh"})
     assert response.status_code == 200
     data = response.json()
     assert "task_id" in data
     assert data["status"] in ("COMPLETED", "TRIAGED", "PLANNED", "AWAITING_APPROVAL", "RUNNING")
+
 
 # 9. Task cancellation
 def test_task_cancellation(client):
@@ -198,6 +199,7 @@ def test_task_cancellation(client):
     cancel_data = cancel_res.json()
     assert cancel_data["task_id"] == task_id
     assert cancel_data["status"] in ("CANCELLED", "COMPLETED")
+
 
 # 10. Power registry
 def test_power_registry(client):
@@ -223,6 +225,7 @@ def test_power_registry(client):
     assert enable_res.status_code == 200
     assert enable_res.json()["enabled"] is True
 
+
 # 11. Audit logging
 def test_audit_logging(client):
     initial_entries = audit_ledger.get_recent_entries(limit=10)
@@ -231,7 +234,7 @@ def test_audit_logging(client):
         action="TEST_VERIFICATION",
         target="audit_subsystem",
         payload={"check": True},
-        result="SUCCESS"
+        result="SUCCESS",
     )
     # Check GET /audit
     res = client.get("/audit", params={"limit": 5, "verify_chain": True})
@@ -239,6 +242,7 @@ def test_audit_logging(client):
     audit_data = res.json()
     assert len(audit_data["entries"]) > 0
     assert audit_data["chain_integrity"]["valid"] is True
+
 
 # 12. Kill switch
 def test_kill_switch(client):

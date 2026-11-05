@@ -1,0 +1,36 @@
+name: Feature Request
+description: Propose an enhancement, new domain power, or new subsystem capability
+title: "[FEATURE]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please outline the proposed capability and how it aligns with JARVIS's local-first, zero-paid-API design.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement / Motivation
+      description: Is your feature request related to a specific limitation or user requirement?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution / Implementation Approach
+      description: Describe the solution you'd like to see implemented.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative designs, tools, or libraries considered.
+  - type: checkboxes
+    id: zero_api_conformance
+    attributes:
+      label: Architecture Conformance
+      options:
+        - label: This proposed feature functions entirely locally without requiring paid external APIs.
+          required: true
+

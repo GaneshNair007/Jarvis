@@ -22,12 +22,13 @@ from jarvis.api.server import app
 
 client = TestClient(app)
 
+
 def test_store_and_recall_facts():
     """Verifies storing explicit user facts with 100% confidence across layers."""
     fact_id = memory_manager.add_fact(
         layer="SEMANTIC",
         content="User's primary operating system is Windows 11 Enterprise",
-        metadata={"category": "system_env"}
+        metadata={"category": "system_env"},
     )
     assert fact_id.startswith("mem_")
 
@@ -39,6 +40,7 @@ def test_store_and_recall_facts():
     assert target["evidence_count"] == 1
     assert "Windows 11" in target["content"]
 
+
 def test_store_and_filter_hypotheses():
     """Verifies storing inferred patterns as hypotheses with confidence thresholds."""
     hypo_id = memory_manager.add_hypothesis(
@@ -46,7 +48,7 @@ def test_store_and_filter_hypotheses():
         content="User frequently prefers dark mode interfaces after 8 PM",
         confidence=0.85,
         evidence_count=4,
-        metadata={"source": "telemetry_pattern"}
+        metadata={"source": "telemetry_pattern"},
     )
     assert hypo_id.startswith("mem_")
 
@@ -58,6 +60,7 @@ def test_store_and_filter_hypotheses():
     too_high = memory_manager.recall(layer="SEMANTIC", query="dark mode", min_confidence=0.95)
     assert not any(r["id"] == hypo_id for r in too_high)
 
+
 def test_user_correction_promotes_to_directive():
     """Verifies that user corrections with scope='always' are promoted to DIRECTIVE memory."""
     res = correction_engine.record_correction(
@@ -65,7 +68,7 @@ def test_user_correction_promotes_to_directive():
         new_instruction="Always require explicit confirmation token for recursive directory deletion",
         scope="always",
         failure_id="task_fail_99",
-        old_behavior="Attempted unconfirmed directory prune"
+        old_behavior="Attempted unconfirmed directory prune",
     )
 
     assert res["status"] == "ACTIVE"
@@ -74,6 +77,7 @@ def test_user_correction_promotes_to_directive():
 
     directives = memory_manager.get_directives()
     assert any("recursive directory deletion" in d["content"] for d in directives)
+
 
 def test_document_ingestion_and_chunking():
     """Verifies text ingestion, SHA-256 calculation, and idempotency."""
@@ -93,6 +97,7 @@ def test_document_ingestion_and_chunking():
     reingest = document_rag.ingest_text(sample_text, title="architecture_spec.txt")
     assert reingest["id"] == doc_info["id"]
 
+
 def test_pdf_ingestion_and_page_citations():
     """Creates a multi-page PDF, ingests it, and queries with exact page citations."""
     try:
@@ -110,7 +115,9 @@ def test_pdf_ingestion_and_page_citations():
     page1.insert_text((50, 50), "Overview: Iron Man Mark 85 armor capabilities and flight dynamics.", fontsize=12)
     # Page 2
     page2 = doc.new_page()
-    page2.insert_text((50, 50), "Arc Reactor Telemetry: Nanotech energy transfer efficiency reaches 98.4 percent.", fontsize=12)
+    page2.insert_text(
+        (50, 50), "Arc Reactor Telemetry: Nanotech energy transfer efficiency reaches 98.4 percent.", fontsize=12
+    )
     doc.save(str(tmp_path))
     doc.close()
 
@@ -132,23 +139,24 @@ def test_pdf_ingestion_and_page_citations():
         if tmp_path.exists():
             tmp_path.unlink()
 
+
 def test_memory_vault_rest_apis():
     """Tests all Memory Vault REST endpoints via FastAPI TestClient."""
     # 1. POST /api/v1/memory/add
-    add_resp = client.post("/api/v1/memory/add", json={
-        "layer": "PROCEDURAL",
-        "content": "To deploy docker compose: run docker compose up -d",
-        "is_hypothesis": False,
-        "confidence": 1.0
-    })
+    add_resp = client.post(
+        "/api/v1/memory/add",
+        json={
+            "layer": "PROCEDURAL",
+            "content": "To deploy docker compose: run docker compose up -d",
+            "is_hypothesis": False,
+            "confidence": 1.0,
+        },
+    )
     assert add_resp.status_code == 200
     node_id = add_resp.json()["node_id"]
 
     # 2. POST /api/v1/memory/search
-    search_resp = client.post("/api/v1/memory/search", json={
-        "query": "docker compose",
-        "layer": "PROCEDURAL"
-    })
+    search_resp = client.post("/api/v1/memory/search", json={"query": "docker compose", "layer": "PROCEDURAL"})
     assert search_resp.status_code == 200
     assert search_resp.json()["count"] >= 1
 
@@ -158,27 +166,30 @@ def test_memory_vault_rest_apis():
     assert any(m["id"] == node_id for m in list_resp.json()["results"])
 
     # 4. POST /api/v1/memory/correction
-    corr_resp = client.post("/api/v1/memory/correction", json={
-        "user_quote": "Prefer pytest -v over bare pytest",
-        "new_instruction": "Always append -v when executing pytest command suites",
-        "scope": "always"
-    })
+    corr_resp = client.post(
+        "/api/v1/memory/correction",
+        json={
+            "user_quote": "Prefer pytest -v over bare pytest",
+            "new_instruction": "Always append -v when executing pytest command suites",
+            "scope": "always",
+        },
+    )
     assert corr_resp.status_code == 200
     assert corr_resp.json()["status"] == "ACTIVE"
 
     # 5. POST /api/v1/documents/ingest
-    ingest_resp = client.post("/api/v1/documents/ingest", json={
-        "content": "Secret Project PEGASUS: Autonomous drone fleet coordination protocols.",
-        "title": "pegasus_protocol.txt"
-    })
+    ingest_resp = client.post(
+        "/api/v1/documents/ingest",
+        json={
+            "content": "Secret Project PEGASUS: Autonomous drone fleet coordination protocols.",
+            "title": "pegasus_protocol.txt",
+        },
+    )
     assert ingest_resp.status_code == 200
     doc_id = ingest_resp.json()["id"]
 
     # 6. POST /api/v1/documents/query
-    query_resp = client.post("/api/v1/documents/query", json={
-        "query": "drone fleet coordination",
-        "top_k": 3
-    })
+    query_resp = client.post("/api/v1/documents/query", json={"query": "drone fleet coordination", "top_k": 3})
     assert query_resp.status_code == 200
     assert len(query_resp.json()["citations"]) >= 1
     assert "drone fleet" in query_resp.json()["citations"][0]["excerpt"]

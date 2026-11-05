@@ -26,7 +26,7 @@ class CoverLetterGenerator:
         job_title: str,
         company_name: str,
         key_challenges: Optional[List[str]] = None,
-        profile: Optional[UserCareerProfile] = None
+        profile: Optional[UserCareerProfile] = None,
     ) -> CoverLetterArtifact:
         """Drafts a STAR-aligned tailored cover letter."""
         p = profile or UserCareerProfile()
@@ -35,12 +35,14 @@ class CoverLetterGenerator:
 
         challenges_text = ""
         if key_challenges:
-            challenges_text = f"Specifically, addressing {', '.join(key_challenges[:3])} aligns directly with my engineering focus."
+            challenges_text = (
+                f"Specifically, addressing {', '.join(key_challenges[:3])} aligns directly with my engineering focus."
+            )
 
         star_points = [
             f"Architected high-throughput distributed systems scaling to >50k req/s with sub-15ms p99 latency.",
             f"Spearheaded autonomous AI agent pipelines integrating lexical FTS5 and vector indices for millisecond recall.",
-            f"Instituted zero-trust safety gates and automated DLP redaction securing mission-critical workflows."
+            f"Instituted zero-trust safety gates and automated DLP redaction securing mission-critical workflows.",
         ]
 
         star_bullets = "\n".join([f"- **Impact:** {pt}" for pt in star_points])
@@ -70,9 +72,5 @@ Sincerely,
         logger.info(f"Generated tailored cover letter for {job_title} at {company_name}")
 
         return CoverLetterArtifact(
-            letter_id=clean_id,
-            company_name=company_name,
-            content=content,
-            star_points=star_points
+            letter_id=clean_id, company_name=company_name, content=content, star_points=star_points
         )
-

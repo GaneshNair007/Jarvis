@@ -49,19 +49,12 @@ class CareerPowers:
         }
 
     def scan_job_listing(
-        self,
-        job_title: str,
-        company_name: str,
-        description: str,
-        job_url: Optional[str] = None
+        self, job_title: str, company_name: str, description: str, job_url: Optional[str] = None
     ) -> Dict[str, Any]:
         """PWR-329: Job scan and fit scoring (scan.mjs equivalent)."""
         score = _safe_run_async(
             self.service.scan_job(
-                job_title=job_title,
-                company_name=company_name,
-                description=description,
-                job_url=job_url
+                job_title=job_title, company_name=company_name, description=description, job_url=job_url
             )
         )
         return {
@@ -78,17 +71,12 @@ class CareerPowers:
         }
 
     def generate_tailored_resume(
-        self,
-        job_title: str,
-        company_name: str,
-        target_keywords: Optional[List[str]] = None
+        self, job_title: str, company_name: str, target_keywords: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """PWR-330: Tailored ATS resume generation (generate-pdf.mjs equivalent)."""
         resume = _safe_run_async(
             self.service.generate_resume(
-                job_title=job_title,
-                company_name=company_name,
-                target_keywords=target_keywords
+                job_title=job_title, company_name=company_name, target_keywords=target_keywords
             )
         )
         return {
@@ -100,17 +88,12 @@ class CareerPowers:
         }
 
     def generate_cover_letter(
-        self,
-        job_title: str,
-        company_name: str,
-        key_challenges: Optional[List[str]] = None
+        self, job_title: str, company_name: str, key_challenges: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """PWR-331: Tailored cover-letter generation (cover mode equivalent)."""
         cover = _safe_run_async(
             self.service.generate_cover_letter(
-                job_title=job_title,
-                company_name=company_name,
-                key_challenges=key_challenges
+                job_title=job_title, company_name=company_name, key_challenges=key_challenges
             )
         )
         return {
@@ -121,18 +104,9 @@ class CareerPowers:
             "star_points": cover.star_points,
         }
 
-    def research_company_brief(
-        self,
-        company_name: str,
-        domain: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def research_company_brief(self, company_name: str, domain: Optional[str] = None) -> Dict[str, Any]:
         """PWR-332: Company research brief (deep mode equivalent)."""
-        dossier = _safe_run_async(
-            self.service.research_company(
-                company_name=company_name,
-                domain=domain
-            )
-        )
+        dossier = _safe_run_async(self.service.research_company(company_name=company_name, domain=domain))
         return {
             "power_id": "PWR-332",
             "company_name": dossier.company_name,
@@ -144,18 +118,9 @@ class CareerPowers:
             "glassdoor_rating": dossier.glassdoor_rating,
         }
 
-    def find_company_contacts(
-        self,
-        company_name: str,
-        role_title: Optional[str] = None
-    ) -> Dict[str, Any]:
+    def find_company_contacts(self, company_name: str, role_title: Optional[str] = None) -> Dict[str, Any]:
         """PWR-333: Contact finder and outreach draft (contacto equivalent)."""
-        contacts = _safe_run_async(
-            self.service.find_contacts(
-                company_name=company_name,
-                role_title=role_title
-            )
-        )
+        contacts = _safe_run_async(self.service.find_contacts(company_name=company_name, role_title=role_title))
         return {
             "power_id": "PWR-333",
             "company_name": company_name,
@@ -163,19 +128,10 @@ class CareerPowers:
             "contacts": [c.model_dump() for c in contacts],
         }
 
-    def draft_application_email(
-        self,
-        recipient_name: str,
-        company_name: str,
-        role_title: str
-    ) -> Dict[str, Any]:
+    def draft_application_email(self, recipient_name: str, company_name: str, role_title: str) -> Dict[str, Any]:
         """PWR-334: Application email draft (email mode equivalent)."""
         draft = _safe_run_async(
-            self.service.draft_email(
-                recipient_name=recipient_name,
-                company_name=company_name,
-                role_title=role_title
-            )
+            self.service.draft_email(recipient_name=recipient_name, company_name=company_name, role_title=role_title)
         )
         return {
             "power_id": "PWR-334",
@@ -189,24 +145,17 @@ class CareerPowers:
     def analyze_application_pipeline(self) -> Dict[str, Any]:
         """PWR-335: Application pipeline analytics (analyze-patterns equivalent)."""
         stats = self.service.analyze_pipeline()
-        return {
-            "power_id": "PWR-335",
-            **stats
-        }
+        return {"power_id": "PWR-335", **stats}
 
     def interview_prep_and_red_flags(
         self,
         role_title: str,
         company_name: str,
         job_description: Optional[str] = None,
-        focus_tech: Optional[List[str]] = None
+        focus_tech: Optional[List[str]] = None,
     ) -> Dict[str, Any]:
         """PWR-336: Interview prep, STAR scenarios, and red-flag checking."""
-        prep = self.service.prepare_interview(
-            role_title=role_title,
-            company_name=company_name,
-            focus_tech=focus_tech
-        )
+        prep = self.service.prepare_interview(role_title=role_title, company_name=company_name, focus_tech=focus_tech)
         red_flags = []
         if job_description:
             red_flags = self.service.check_red_flags(company_name, job_description)
@@ -222,12 +171,7 @@ class CareerPowers:
         }
 
     def analyze_offer_and_salary_gap(
-        self,
-        company_name: str,
-        role_title: str,
-        base_salary: float,
-        bonus: float = 0.0,
-        equity_annual_val: float = 0.0
+        self, company_name: str, role_title: str, base_salary: float, bonus: float = 0.0, equity_annual_val: float = 0.0
     ) -> Dict[str, Any]:
         """PWR-337: Offer compensation analysis and negotiation script."""
         analysis = self.service.analyze_offer(
@@ -235,7 +179,7 @@ class CareerPowers:
             role_title=role_title,
             base_salary=base_salary,
             bonus=bonus,
-            equity_annual_val=equity_annual_val
+            equity_annual_val=equity_annual_val,
         )
         return {
             "power_id": "PWR-337",

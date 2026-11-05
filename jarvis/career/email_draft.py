@@ -17,11 +17,7 @@ class ApplicationEmailDrafter:
     """Creates tailored email drafts for job submissions and follow-ups."""
 
     def draft_application_email(
-        self,
-        recipient_name: str,
-        company_name: str,
-        role_title: str,
-        profile: Optional[UserCareerProfile] = None
+        self, recipient_name: str, company_name: str, role_title: str, profile: Optional[UserCareerProfile] = None
     ) -> Dict[str, str]:
         """Formats a submission email tailored to the specific role and company."""
         p = profile or UserCareerProfile()
@@ -55,6 +51,5 @@ GitHub: https://github.com/GaneshNair007
             "body": body,
             "recipient_name": recipient_name,
             "company_name": company_name,
-            "role_title": role_title
+            "role_title": role_title,
         }
-

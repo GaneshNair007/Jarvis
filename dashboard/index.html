@@ -1039,6 +1039,34 @@
         </div>
       </div>
 
+      <!-- SMART ROOM & OPS CONTROL QUICKBAR -->
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 8px 0; padding:8px 12px; background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 6px;">
+        <span style="font-size:0.75rem; color:var(--cyan); font-weight:700; width:100%; letter-spacing:0.5px;">⚡ PHYSICAL ROOM & OPS CONTROLLER</span>
+        <button onclick="quickRoomCommand('turn on the AC at 21')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">❄️ AC 21°C</button>
+        <button onclick="quickRoomCommand('turn on the geyser')" style="background:rgba(255,179,0,0.1); border:1px solid var(--amber); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🚿 Geyser (15m Timer)</button>
+        <button onclick="quickRoomCommand('turn on the projector')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📽️ Projector</button>
+        <button onclick="quickRoomCommand('turn off lights')" style="background:rgba(255,255,255,0.05); border:1px solid #666; color:#aaa; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">💡 Lights Off</button>
+        <button onclick="quickRoomCommand('movie night')" style="background:rgba(123,31,162,0.2); border:1px solid #ab47bc; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎬 Movie Night</button>
+        <button onclick="quickRoomCommand('work mode')" style="background:rgba(0,229,255,0.15); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">⚡ Work Focus</button>
+        <button onclick="quickRoomCommand('sleep mode')" style="background:rgba(21,101,192,0.2); border:1px solid #42a5f5; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🌙 Sleep Mode</button>
+        <button onclick="quickRoomCommand('daily pulse')" style="background:rgba(0,200,83,0.1); border:1px solid #00e676; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📊 Daily Pulse</button>
+        <button onclick="quickRoomCommand('opportunity radar')" style="background:rgba(255,214,0,0.1); border:1px solid #ffd600; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎯 Opportunity Radar</button>
+      </div>
+
+      <!-- SMART ROOM & OPS CONTROL QUICKBAR -->
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 8px 0; padding:8px 12px; background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 6px;">
+        <span style="font-size:0.75rem; color:var(--cyan); font-weight:700; width:100%; letter-spacing:0.5px;">⚡ PHYSICAL ROOM & OPS CONTROLLER</span>
+        <button onclick="quickRoomCommand('turn on the AC at 21')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">❄️ AC 21°C</button>
+        <button onclick="quickRoomCommand('turn on the geyser')" style="background:rgba(255,179,0,0.1); border:1px solid var(--amber); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🚿 Geyser (15m Timer)</button>
+        <button onclick="quickRoomCommand('turn on the projector')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📽️ Projector</button>
+        <button onclick="quickRoomCommand('turn off lights')" style="background:rgba(255,255,255,0.05); border:1px solid #666; color:#aaa; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">💡 Lights Off</button>
+        <button onclick="quickRoomCommand('movie night')" style="background:rgba(123,31,162,0.2); border:1px solid #ab47bc; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎬 Movie Night</button>
+        <button onclick="quickRoomCommand('work mode')" style="background:rgba(0,229,255,0.15); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">⚡ Work Focus</button>
+        <button onclick="quickRoomCommand('sleep mode')" style="background:rgba(21,101,192,0.2); border:1px solid #42a5f5; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🌙 Sleep Mode</button>
+        <button onclick="quickRoomCommand('daily pulse')" style="background:rgba(0,200,83,0.1); border:1px solid #00e676; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📊 Daily Pulse</button>
+        <button onclick="quickRoomCommand('opportunity radar')" style="background:rgba(255,214,0,0.1); border:1px solid #ffd600; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎯 Opportunity Radar</button>
+      </div>
+
       <div class="voice-control-box">
         <div style="display: flex; align-items: center; gap: 10px;">
           <button id="mic-btn" class="btn-mic" onclick="toggleMicrophone()">
@@ -1435,7 +1463,9 @@
 
     connectWebSocket();
 
-    // Chat Handler
+    // Chat Handler with Real Multi-Turn Context Memory
+    const chatHistory = [];
+
     async function sendChat() {
       const input = document.getElementById('chat-input');
       const text = input.value.trim();
@@ -1444,11 +1474,15 @@
       appendMessage(text, 'user');
       input.value = '';
 
+      // Prepare context from recent turns
+      const recentContext = chatHistory.slice(-4).map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`).join('\n');
+      chatHistory.push({ role: 'user', content: text });
+
       try {
         const resp = await fetch(`${API_BASE}/api/v1/chat`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: text })
+          body: JSON.stringify({ query: text, context: recentContext })
         });
         const data = await resp.json();
 
@@ -1459,10 +1493,33 @@
           reply = data.message;
         }
 
-        appendMessage(reply, 'jarvis', data.tier);
+        chatHistory.push({ role: 'assistant', content: reply });
+        if (chatHistory.length > 20) chatHistory.shift();
+
+        const badgeTier = data.status === 'FAILED' ? 'UNAVAILABLE' : (data.tier || 'JARVIS');
+        appendMessage(reply, 'jarvis', badgeTier);
         loadAudit();
+
+        // SPEAK BACK THROUGH BROWSER AUDIO
+        if (reply && data.status !== 'FAILED') {
+          speakVoice(reply);
+        }
       } catch (err) {
         appendMessage(`Error: ${err.message}`, 'jarvis', 'ERROR');
+      }
+    }
+
+    function speakVoice(text) {
+      if (!text || !('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        const clean = text.replace(/\[.*?\]/g, '').replace(/[\*\_#`]/g, '').trim();
+        const utter = new SpeechSynthesisUtterance(clean.substring(0, 320));
+        utter.rate = 1.02;
+        utter.pitch = 0.96;
+        window.speechSynthesis.speak(utter);
+      } catch (e) {
+        console.warn("TTS speakVoice error:", e);
       }
     }
 
@@ -1493,29 +1550,51 @@
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognition = new SpeechRecognition();
-      recognition.continuous = false;
+      recognition.continuous = true;
       recognition.interimResults = true;
 
       recognition.onresult = (event) => {
-        const transcript = Array.from(event.results)
-          .map(r => r[0].transcript)
-          .join('');
+        let transcript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        transcript = transcript.trim();
         document.getElementById('voice-transcript').innerText = `"${transcript}"`;
 
-        if (event.results[0].isFinal) {
+        const lower = transcript.toLowerCase();
+        if (lower.includes("hey jarvis") || lower.includes("jarvis")) {
+          // Arc reactor visual glow
+          const arc = document.querySelector('.brand-arc');
+          if (arc) {
+            arc.style.boxShadow = "0 0 35px #00e5ff, 0 0 70px #00e5ff";
+            setTimeout(() => { if (arc) arc.style.boxShadow = ""; }, 2500);
+          }
+          let cmd = lower.replace(/.*(?:hey\s+)?jarvis[,.]?\s*/i, '').trim();
+          if (cmd && event.results[event.results.length - 1].isFinal) {
+            document.getElementById('chat-input').value = cmd;
+            sendChat();
+          }
+        } else if (event.results[event.results.length - 1].isFinal && transcript) {
           document.getElementById('chat-input').value = transcript;
           sendChat();
-          stopMic();
         }
       };
 
-      recognition.onerror = () => stopMic();
-      recognition.onend = () => stopMic();
+      recognition.onerror = (e) => {
+        console.warn("Speech recognition error:", e);
+      };
+      recognition.onend = () => {
+        if (isRecording) {
+          try { recognition.start(); } catch (e) {}
+        } else {
+          stopMic();
+        }
+      };
     }
 
     function toggleMicrophone() {
       if (!recognition) {
-        alert("Web Speech API not supported in this browser. Please use Chrome/Edge or the text console.");
+        alert("Web Speech API not supported in this browser. Please use Chrome or Edge.");
         return;
       }
       if (isRecording) {
@@ -1597,25 +1676,28 @@
         document.getElementById('integrations-total-badge').innerText = data.total || data.integrations.length;
 
         data.integrations.forEach(integ => {
+          const integId = integ.integration_id || integ.id;
           if (integ.enabled) enabledCount++;
           totalPowers += (integ.powers_count || (integ.available_powers ? integ.available_powers.length : 0));
 
           const card = document.createElement('div');
           card.className = 'integration-card';
-          card.id = `card-${integ.id}`;
+          card.id = `card-${integId}`;
 
+          const isConnected = integ.connected || integ.is_connected;
+          let statusLabel = integ.health_status || (isConnected ? 'CONNECTED' : (integ.enabled ? 'ENABLED' : 'CONFIGURED'));
           let statusClass = 'status-disabled';
-          if (integ.kill_switch_active) statusClass = 'status-kill-switched';
-          else if (integ.health_status === 'HEALTHY') statusClass = 'status-healthy';
-          else if (integ.health_status === 'UNCONFIGURED') statusClass = 'status-unconfigured';
+          if (integ.kill_switched || integ.kill_switch_active) statusClass = 'status-kill-switched';
+          else if (isConnected) statusClass = 'status-healthy';
+          else if (integ.enabled) statusClass = 'status-healthy';
 
           card.innerHTML = `
             <div class="integ-top">
               <div>
                 <div class="integ-title">${integ.display_name}</div>
-                <div class="integ-id">${integ.id}</div>
+                <div class="integ-id">${integId}</div>
               </div>
-              <span class="status-badge ${statusClass}">${integ.health_status}</span>
+              <span class="status-badge ${statusClass}">${statusLabel}</span>
             </div>
 
             <div class="integ-desc">${integ.description}</div>
@@ -1623,31 +1705,27 @@
             <div class="integ-meta">
               <span class="meta-chip">📁 ${integ.category}</span>
               <span class="meta-chip">⚡ ${integ.rate_limit_rpm} RPM</span>
-              <span class="meta-chip">${integ.is_connected ? '🟢 Connected' : '⚪ Disconnected'}</span>
+              <span class="meta-chip">${isConnected ? '🟢 Connected' : '⚪ Disconnected'}</span>
               <span class="meta-chip">${integ.enabled ? '✅ Enabled' : '⏸️ Disabled'}</span>
-            </div>
-
-            <div id="setup-box-${integ.id}" class="instructions-box" style="${integ.health_status === 'UNCONFIGURED' ? 'display:block;' : 'display:none;'}">
-              ⚠️ <strong>Missing Credentials:</strong> Configure environment variables to activate full powers.
             </div>
 
             <div class="integ-actions">
               ${integ.enabled ? 
-                `<button class="btn-integ btn-integ-disable" onclick="toggleIntegration('${integ.id}', false)">Disable</button>` :
-                `<button class="btn-integ btn-integ-enable" onclick="toggleIntegration('${integ.id}', true)">Enable</button>`
+                `<button class="btn-integ btn-integ-disable" onclick="toggleIntegration('${integId}', false)">Disable</button>` :
+                `<button class="btn-integ btn-integ-enable" onclick="toggleIntegration('${integId}', true)">Enable</button>`
               }
-              ${integ.is_connected ?
-                `<button class="btn-integ btn-integ-check" onclick="connectIntegration('${integ.id}', false)">Disconnect</button>` :
-                `<button class="btn-integ btn-integ-connect" onclick="connectIntegration('${integ.id}', true)">Connect</button>`
+              ${isConnected ?
+                `<button class="btn-integ btn-integ-check" onclick="connectIntegration('${integId}', false)">Disconnect</button>` :
+                `<button class="btn-integ btn-integ-connect" onclick="connectIntegration('${integId}', true)">Connect</button>`
               }
-              <button class="btn-integ btn-integ-check" onclick="checkIntegrationHealth('${integ.id}')">Health</button>
-              <button class="btn-integ btn-integ-check" onclick="togglePowersDrawer('${integ.id}')">Powers (${integ.powers_count || 0})</button>
-              <button class="btn-integ btn-integ-kill" onclick="killIntegration('${integ.id}')">Kill</button>
+              <button class="btn-integ btn-integ-check" onclick="checkIntegrationHealth('${integId}')">Health</button>
+              <button class="btn-integ btn-integ-check" onclick="togglePowersDrawer('${integId}')">Powers (${integ.powers_count || 0})</button>
+              <button class="btn-integ btn-integ-kill" onclick="killIntegration('${integId}')">Kill</button>
             </div>
 
-            <div id="drawer-${integ.id}" class="powers-drawer">
+            <div id="drawer-${integId}" class="powers-drawer" style="display:none; margin-top:10px; padding:10px; background:rgba(0,0,0,0.4); border-radius:6px;">
               <div style="font-size:0.75rem; color:var(--cyan); margin-bottom:6px; font-weight:600;">AVAILABLE POWERS</div>
-              <div id="powers-list-${integ.id}">Loading powers...</div>
+              <div id="powers-list-${integId}">Loading powers...</div>
             </div>
           `;
 
@@ -1697,6 +1775,7 @@
 
     async function togglePowersDrawer(integId) {
       const drawer = document.getElementById(`drawer-${integId}`);
+      if (!drawer) return;
       if (drawer.style.display === 'block') {
         drawer.style.display = 'none';
         return;
@@ -1709,17 +1788,28 @@
         const data = await resp.json();
         listContainer.innerHTML = '';
         
-        data.powers.forEach(p => {
+        const powers = data.powers || (Array.isArray(data) ? data : []);
+        if (powers.length === 0) {
+          listContainer.innerHTML = '<div style="font-size:0.75rem; color:var(--text-muted);">No individual power bindings exposed.</div>';
+          return;
+        }
+
+        powers.forEach(p => {
           const item = document.createElement('div');
           item.className = 'power-item';
+          item.style.padding = '6px 0';
+          item.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+          const danger = p.danger_level || (p.tier === 2 ? 'high' : (p.tier === 1 ? 'medium' : 'low'));
           item.innerHTML = `
-            <div>
-              <strong>${p.name}</strong> <span style="color:var(--text-muted);">(${p.power_id})</span>
-              <div style="font-size:0.7rem; color:var(--text-muted);">${p.description}</div>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span class="danger-tag danger-${p.danger_level}">${p.danger_level}</span>
-              <button class="btn-dry-run" onclick="executeDryRun('${integId}', '${p.power_id}')">Dry Run</button>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong>${p.name || p.power_name || p.power_id}</strong> <span style="color:var(--cyan); font-size:0.75rem;">(${p.power_id})</span>
+                <div style="font-size:0.7rem; color:var(--text-muted);">${p.description || p.one_line_description || 'Tier ' + (p.tier ?? 0) + ' action'}</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="danger-tag danger-${danger}">${danger}</span>
+                <button class="btn-dry-run" onclick="executeDryRun('${integId}', '${p.power_id}')">Dry Run</button>
+              </div>
             </div>
           `;
           listContainer.appendChild(item);

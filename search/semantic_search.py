@@ -180,9 +180,7 @@ class QdrantSemanticSearch:
                     "with_payload": True,
                 }
                 if source_type:
-                    body["filter"] = {
-                        "must": [{"key": "source_type", "match": {"value": source_type}}]
-                    }
+                    body["filter"] = {"must": [{"key": "source_type", "match": {"value": source_type}}]}
 
                 resp = await client.post(
                     f"{self.qdrant_url}/collections/{self.collection}/points/search",

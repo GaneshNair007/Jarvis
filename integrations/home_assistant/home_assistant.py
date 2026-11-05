@@ -44,8 +44,7 @@ class HomeAssistantIntegration(BaseIntegration):
             display_name="Home Assistant",
             category="smart_home",
             description=(
-                "Control smart home devices via Home Assistant REST API, "
-                "MQTT broker, and Zigbee2MQTT bridge."
+                "Control smart home devices via Home Assistant REST API, MQTT broker, and Zigbee2MQTT bridge."
             ),
             required_credentials=["HA_BASE_URL", "HA_TOKEN"],
             danger_level="medium",
@@ -204,7 +203,8 @@ class HomeAssistantIntegration(BaseIntegration):
     def set_brightness(self, entity_id: str, brightness: int) -> Dict[str, Any]:
         """Set light brightness (0–255)."""
         return self.call_service(
-            "light", "turn_on",
+            "light",
+            "turn_on",
             entity_id=entity_id,
             service_data={"brightness": max(0, min(255, brightness))},
         )
@@ -212,7 +212,8 @@ class HomeAssistantIntegration(BaseIntegration):
     def set_temperature(self, entity_id: str, temperature: float) -> Dict[str, Any]:
         """Set climate target temperature."""
         return self.call_service(
-            "climate", "set_temperature",
+            "climate",
+            "set_temperature",
             entity_id=entity_id,
             service_data={"temperature": temperature},
         )
@@ -226,7 +227,8 @@ class HomeAssistantIntegration(BaseIntegration):
     def trigger_automation(self, automation_entity_id: str) -> Dict[str, Any]:
         """Manually trigger an automation."""
         return self.call_service(
-            "automation", "trigger",
+            "automation",
+            "trigger",
             entity_id=automation_entity_id,
         )
 
@@ -300,7 +302,8 @@ class HomeAssistantIntegration(BaseIntegration):
             result = self._ha_request("GET", "/api/states")
             entities = result.get("data", [])
             zigbee = [
-                e for e in entities
+                e
+                for e in entities
                 if "zigbee" in str(e.get("attributes", {}).get("manufacturer", "")).lower()
                 or "zigbee" in str(e.get("attributes", {}).get("integration", "")).lower()
             ]
@@ -324,12 +327,11 @@ class HomeAssistantIntegration(BaseIntegration):
 
     # ── Internal helpers ──────────────────────────────────────────────────────
 
-    def _ha_request(
-        self, method: str, path: str, data: Optional[Dict] = None
-    ) -> Dict[str, Any]:
+    def _ha_request(self, method: str, path: str, data: Optional[Dict] = None) -> Dict[str, Any]:
         """Make a Home Assistant REST API request."""
         try:
             import httpx
+
             headers = {
                 "Authorization": f"Bearer {self.token}",
                 "Content-Type": "application/json",
@@ -347,6 +349,7 @@ class HomeAssistantIntegration(BaseIntegration):
 
     def _get_credentials(self) -> Dict[str, str]:
         import os
+
         return {
             "HA_BASE_URL": os.environ.get("HA_BASE_URL", ""),
             "HA_TOKEN": os.environ.get("HA_TOKEN", ""),
@@ -360,6 +363,7 @@ class HomeAssistantIntegration(BaseIntegration):
             return False
         try:
             import paho.mqtt.client as mqtt  # type: ignore
+
             client = mqtt.Client()
             client.connect(host, int(creds.get("MQTT_BROKER_PORT", 1883)), keepalive=60)
             client.loop_start()

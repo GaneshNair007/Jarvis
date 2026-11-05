@@ -4,6 +4,7 @@ from typing import List, Dict, Any, Optional
 from litellm import completion
 from jarvis.config import settings
 
+
 class ModelRouter:
     def __init__(self):
         self.local_model = settings.local_model
@@ -20,12 +21,7 @@ class ModelRouter:
 
     def complete(self, model: str, messages: List[Dict[str, Any]], timeout: Optional[float] = 2.0) -> Dict[str, Any]:
         try:
-            return completion(
-                model=model,
-                messages=messages,
-                api_base=self.litellm_base,
-                timeout=timeout
-            )
+            return completion(model=model, messages=messages, api_base=self.litellm_base, timeout=timeout)
         except Exception as e:
             user_content = ""
             memories = ""
@@ -51,18 +47,12 @@ class ModelRouter:
                 reply = f"Processed locally with {model}: {user_content}"
 
             return {
-                "choices": [
-                    {
-                        "message": {
-                            "role": "assistant",
-                            "content": reply
-                        }
-                    }
-                ],
+                "choices": [{"message": {"role": "assistant", "content": reply}}],
                 "model": model,
                 "usage": {"prompt_tokens": 15, "completion_tokens": 20, "total_tokens": 35},
                 "fallback": True,
-                "error": str(e)
+                "error": str(e),
             }
+
 
 router = ModelRouter()

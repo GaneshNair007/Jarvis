@@ -1,0 +1,21 @@
+[run]
+branch = True
+omit =
+    tests/*
+    */site-packages/*
+    .venv/*
+    venv/*
+    vendor/*
+    third_party/*
+    dashboard/*
+    alembic/*
+    migrations/*
+    scripts/*
+    scratch/*
+    .agents/*
+    _upstream/*
+
+[report]
+show_missing = True
+skip_empty = True
+

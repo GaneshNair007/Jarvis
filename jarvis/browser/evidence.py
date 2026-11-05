@@ -60,7 +60,9 @@ class EvidenceStore:
         with open(file_path, "wb") as f:
             f.write(png_bytes)
 
-        logger.info(f"Captured screenshot evidence for '{current_url}' -> {file_path.name} (SHA-256: {sha256_hash[:8]}...)")
+        logger.info(
+            f"Captured screenshot evidence for '{current_url}' -> {file_path.name} (SHA-256: {sha256_hash[:8]}...)"
+        )
 
         evidence_record = {
             "task_id": task_id,

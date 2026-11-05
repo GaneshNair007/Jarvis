@@ -24,11 +24,7 @@ class ResumeGenerator:
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def generate_tailored_resume(
-        self,
-        job_title: str,
-        company_name: str,
-        target_keywords: List[str],
-        profile: Optional[UserCareerProfile] = None
+        self, job_title: str, company_name: str, target_keywords: List[str], profile: Optional[UserCareerProfile] = None
     ) -> ResumeArtifact:
         """Constructs an ATS-optimized resume emphasizing target keywords."""
         p = profile or UserCareerProfile()
@@ -74,6 +70,5 @@ class ResumeGenerator:
             job_id=f"job_{company_name.lower()}",
             file_path=str(pdf_path),
             ats_score=round(ats_score, 1),
-            included_keywords=target_keywords[:10]
+            included_keywords=target_keywords[:10],
         )
-

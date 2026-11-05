@@ -7,6 +7,7 @@ Prevents API ban, 429 throttling, and runaway automation.
 import time
 from typing import Dict, Tuple, Any
 
+
 class IntegrationRateLimiter:
     """Sliding-window token bucket limiter per integration."""
 
@@ -74,8 +75,9 @@ class IntegrationRateLimiter:
             "limit_rpm": rpm,
             "current_rpm": current_calls,
             "utilization_percent": round((current_calls / rpm) * 100, 1),
-            "remaining_calls": max(0, rpm - current_calls)
+            "remaining_calls": max(0, rpm - current_calls),
         }
+
 
 # Global rate limiter instance
 rate_limiter = IntegrationRateLimiter()

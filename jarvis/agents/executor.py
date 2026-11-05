@@ -30,13 +30,14 @@ logger = get_logger("agents.executor")
 @dataclass
 class ExecutionResult:
     """Structured output from a single executor action."""
+
     execution_id: str = field(default_factory=lambda: f"exec_{uuid.uuid4().hex[:8]}")
     action_type: str = ""
-    status: str = "pending"    # pending | success | failed | rejected
+    status: str = "pending"  # pending | success | failed | rejected
     stdout: str = ""
     stderr: str = ""
     return_value: Any = None
-    evidence: Optional[str] = None   # screenshot path or hash
+    evidence: Optional[str] = None  # screenshot path or hash
     duration_ms: float = 0.0
     cost_usd: float = 0.0
 
@@ -122,10 +123,7 @@ class ExecutorAgent:
 
             # ── Audit log ─────────────────────────────────────────────────────
             self._audit(task_id, action_type, result)
-            logger.info(
-                f"ExecutorAgent: exec={exec_id} status={result.status} "
-                f"duration={result.duration_ms}ms"
-            )
+            logger.info(f"ExecutorAgent: exec={exec_id} status={result.status} duration={result.duration_ms}ms")
             return result
 
         except Exception as exc:
@@ -151,15 +149,13 @@ class ExecutorAgent:
         if action_type in high_risk and not approval_token:
             try:
                 from jarvis.core.policy_engine import policy_engine
+
                 decision = policy_engine.evaluate(
                     user_input=str(payload.get("command", action_type)),
                     task_type=action_type,
                 )
                 if decision.tier >= 2:
-                    return False, (
-                        f"Tier {decision.tier} action '{action_type}' requires "
-                        "explicit approval token."
-                    )
+                    return False, (f"Tier {decision.tier} action '{action_type}' requires explicit approval token.")
             except Exception:
                 pass
         return True, ""
@@ -192,9 +188,8 @@ class ExecutorAgent:
         timeout = payload.get("timeout", 30)
 
         import tempfile, os
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".py", delete=False, encoding="utf-8"
-        ) as f:
+
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False, encoding="utf-8") as f:
             f.write(code)
             tmp_path = f.name
 
@@ -224,6 +219,7 @@ class ExecutorAgent:
         try:
             if action == "search":
                 from jarvis.browser.search_wrapper import search_wrapper
+
                 results = search_wrapper.search(payload.get("query", url))
                 return ExecutionResult(
                     status="success",
@@ -232,6 +228,7 @@ class ExecutorAgent:
                 )
             else:
                 from jarvis.browser.url_reader import url_reader
+
                 content = url_reader.read(url)
                 return ExecutionResult(
                     status="success",
@@ -246,6 +243,7 @@ class ExecutorAgent:
 
         try:
             from jarvis.computer.desktop_worker import desktop_worker
+
             if action == "screenshot":
                 result = desktop_worker.take_screenshot()
             elif action == "type":
@@ -266,6 +264,7 @@ class ExecutorAgent:
 
     def _run_file_read(self, payload: Dict[str, Any]) -> ExecutionResult:
         from pathlib import Path
+
         path = Path(payload.get("path", ""))
         try:
             content = path.read_text(encoding="utf-8")
@@ -279,6 +278,7 @@ class ExecutorAgent:
 
     def _run_file_write(self, payload: Dict[str, Any]) -> ExecutionResult:
         from pathlib import Path
+
         path = Path(payload.get("path", ""))
         content = payload.get("content", "")
         try:
@@ -301,6 +301,7 @@ class ExecutorAgent:
         prompt = payload.get("prompt", payload.get("task", str(payload)))
         try:
             from jarvis.core.model_router import model_router, RoutingRequest
+
             req = RoutingRequest(
                 task_id=f"exec_{uuid.uuid4().hex[:6]}",
                 user_intent=prompt,
@@ -310,7 +311,8 @@ class ExecutorAgent:
             result = model_router.execute_inference(decision=decision, prompt=prompt)
             content = (
                 result.get("choices", [{}])[0].get("message", {}).get("content", "")
-                if isinstance(result, dict) else str(result)
+                if isinstance(result, dict)
+                else str(result)
             )
             return ExecutionResult(
                 status="success",
@@ -326,6 +328,7 @@ class ExecutorAgent:
     def _audit(self, task_id: str, action_type: str, result: ExecutionResult):
         try:
             from jarvis.core.audit import audit_ledger
+
             audit_ledger.log_event(
                 event_type="EXECUTOR_ACTION",
                 task_id=task_id,

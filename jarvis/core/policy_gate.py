@@ -12,25 +12,52 @@ import datetime
 from typing import Dict, Any, Tuple, Optional, List
 from jarvis.config import settings
 
+
 class PolicyGate:
     # Privilege Level mappings
     PRIVILEGE_LEVELS = {
-        0: "PUBLIC_READ",       # Web search, public docs
-        1: "LOCAL_READ",        # Reading local files, telemetry
-        2: "LOCAL_WRITE",       # Writing temp drafts, local notes
-        3: "OUTBOUND_COMM",     # Sending emails, posting messages
-        4: "SYSTEM_MODIFY",     # Installing packages, editing configs
-        5: "IRREVERSIBLE_OP"    # Deleting files, code deploy, financial purchase
+        0: "PUBLIC_READ",  # Web search, public docs
+        1: "LOCAL_READ",  # Reading local files, telemetry
+        2: "LOCAL_WRITE",  # Writing temp drafts, local notes
+        3: "OUTBOUND_COMM",  # Sending emails, posting messages
+        4: "SYSTEM_MODIFY",  # Installing packages, editing configs
+        5: "IRREVERSIBLE_OP",  # Deleting files, code deploy, financial purchase
     }
 
     # Powers that strictly require human cryptographic approval
     APPROVAL_REQUIRED_POWERS = {
         # File & System deletions / drops
-        "delete_file", "drop_table", "kill_process", "format_disk",
+        "delete_file",
+        "drop_table",
+        "drop_database",
+        "kill_process",
+        "format_disk",
+        "wipe_system",
         # Outbound comms
-        "send_email", "post_tweet", "submit_form", "send_chat_message",
-        # Financial / deployment
-        "purchase_item", "execute_trade", "deploy_production", "reboot_host"
+        "send_email",
+        "post_tweet",
+        "submit_form",
+        "send_chat_message",
+        # Financial / deployment / lifecycle
+        "purchase_item",
+        "execute_trade",
+        "trade_crypto",
+        "mint_nft",
+        "deploy_production",
+        "reboot_host",
+        "shutdown_host",
+    }
+
+    CRITICAL_POWERS = {
+        "format_disk",
+        "drop_database",
+        "wipe_system",
+        "reboot_host",
+        "shutdown_host",
+        "deploy_production",
+        "execute_trade",
+        "trade_crypto",
+        "mint_nft",
     }
 
     def __init__(self):
@@ -62,34 +89,25 @@ class PolicyGate:
         token = f"{signature}.{expiry}"
         return token, float(expiry)
 
-    def request_approval(
-        self,
-        power_id: str,
-        task_id: str,
-        action_summary: str,
-        payload: Any
-    ) -> Dict[str, Any]:
+    def request_approval(self, power_id: str, task_id: str, action_summary: str, payload: Any) -> Dict[str, Any]:
         """Generates an approval record and token bound to payload hash."""
         payload_hash = self.hash_payload(payload)
         token, expires_at = self.generate_approval_token(task_id, power_id, payload_hash)
         approval_id = f"appr_{uuid.uuid4().hex[:12]}"
-        self.pending_approvals[approval_id] = {
+        record = {
             "id": approval_id,
+            "approval_id": approval_id,
             "task_id": task_id,
             "power_id": power_id,
             "action_summary": action_summary,
             "payload_hash": payload_hash,
             "token": token,
             "expires_at": expires_at,
-            "status": "PENDING"
+            "status": "PENDING",
         }
-        return {
-            "approval_id": approval_id,
-            "task_id": task_id,
-            "power_id": power_id,
-            "token": token,
-            "expires_at": expires_at
-        }
+        self.pending_approvals[approval_id] = record
+        self.pending_approvals[task_id] = record
+        return record
 
     def verify_token(self, token: str) -> bool:
         """Verifies an HMAC approval token's signature and expiration."""
@@ -99,14 +117,63 @@ class PolicyGate:
             if time.time() > expiry:
                 return False
             for appr in self.pending_approvals.values():
-                if appr.get("token") == token:
+                if appr.get("token") == token or appr.get("id") == token or appr.get("approval_id") == token:
                     valid, _ = self.verify_approval_token(
-                        appr["task_id"], appr["power_id"], appr["payload_hash"], token
+                        appr["task_id"], appr["power_id"], appr["payload_hash"], appr.get("token", token)
                     )
                     return valid
-            return len(sig) == 64 and expiry > time.time()
+            return False
         except Exception:
             return False
+
+    def verify_state_approval(
+        self,
+        token: str,
+        task_id: Optional[str] = None,
+        power_id: Optional[str] = None,
+        payload_hash: Optional[str] = None,
+    ) -> Tuple[bool, str]:
+        """
+        Comprehensive cryptographic verification of an approval token or approval_id.
+        1. Checks pending_approvals records by token, approval_id, or task_id.
+        2. If candidate parameters (task_id, power_id, payload_hash) are provided, verifies direct HMAC signature.
+        Returns (is_valid, reason).
+        """
+        if not token or not isinstance(token, str):
+            return False, "Approval token is missing or empty"
+
+        # 1. Search pending_approvals records
+        for appr in list(self.pending_approvals.values()):
+            if appr.get("token") == token or appr.get("id") == token or appr.get("approval_id") == token:
+                if power_id and appr.get("power_id") != power_id:
+                    continue
+                if task_id and appr.get("task_id") != task_id:
+                    continue
+                if payload_hash and appr.get("payload_hash") != payload_hash:
+                    continue
+                return self.verify_approval_token(
+                    task_id=appr.get("task_id", task_id or ""),
+                    power_id=appr.get("power_id", power_id or ""),
+                    payload_hash=appr.get("payload_hash", payload_hash or ""),
+                    token=appr.get("token", token),
+                )
+
+        # 2. Direct HMAC verification if task_id, power_id, and payload_hash are provided
+        if task_id and power_id and payload_hash:
+            return self.verify_approval_token(task_id, power_id, payload_hash, token)
+
+        # 3. Direct verification of token format
+        try:
+            sig, expiry_str = token.split(".")
+            expiry = int(expiry_str)
+            if time.time() > expiry:
+                return False, "Approval token has expired"
+            if len(sig) != 64:
+                return False, "Malformed approval token: invalid signature length"
+        except Exception as exc:
+            return False, f"Malformed approval token: {exc}"
+
+        return False, "Approval token not recognized in pending approvals and missing cryptographic anchor"
 
     def verify_approval_token(self, task_id: str, power_id: str, payload_hash: str, token: str) -> Tuple[bool, str]:
         """Validates the cryptographic HMAC signature and expiration of an approval token."""
@@ -131,7 +198,7 @@ class PolicyGate:
         power_id: str,
         privilege_level: int,
         payload: Dict[str, Any],
-        approval_token: Optional[str] = None
+        approval_token: Optional[str] = None,
     ) -> Tuple[bool, str, Optional[Dict[str, Any]]]:
         """
         Deterministic Policy Evaluation:
@@ -154,9 +221,9 @@ class PolicyGate:
 
         # 3. Check if Power or Privilege Level requires approval
         needs_approval = (
-            privilege_level >= 3 or
-            power_id.lower() in self.APPROVAL_REQUIRED_POWERS or
-            any(danger_kw in power_id.lower() for danger_kw in ["delete", "drop", "deploy", "buy", "send", "kill"])
+            privilege_level >= 3
+            or power_id.lower() in self.APPROVAL_REQUIRED_POWERS
+            or any(danger_kw in power_id.lower() for danger_kw in ["delete", "drop", "deploy", "buy", "send", "kill"])
         )
 
         if needs_approval:
@@ -169,10 +236,14 @@ class PolicyGate:
                     "payload_hash": payload_hash,
                     "token": token,
                     "expires_at": expiry,
-                    "action_summary": f"Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})"
+                    "action_summary": f"Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})",
                 }
                 self.pending_approvals[task_id] = approval_req
-                return False, f"POLICY REQUIREMENT: Human approval required for {power_id} (Level {privilege_level})", approval_req
+                return (
+                    False,
+                    f"POLICY REQUIREMENT: Human approval required for {power_id} (Level {privilege_level})",
+                    approval_req,
+                )
 
             # Verify token
             valid, reason = self.verify_approval_token(task_id, power_id, payload_hash, approval_token)
@@ -189,6 +260,7 @@ class PolicyGate:
                     return False, f"SECURITY VIOLATION: Path '{target_dir}' is not within allowed directories", None
 
         return True, "Policy Gate approved execution", None
+
 
 # Singleton Policy Gate
 policy_gate = PolicyGate()

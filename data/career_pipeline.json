@@ -50,5 +50,18 @@
     "applied_date": "2026-11-04T20:49:02.320282+00:00",
     "notes": [],
     "salary_offered": null
+  },
+  {
+    "application_id": "app_tech_corp_ai_architect",
+    "company_name": "Tech Corp",
+    "job_title": "AI Architect",
+    "job_url": null,
+    "status": "saved",
+    "fit_score": 26.2,
+    "resume_path": null,
+    "cover_letter_path": null,
+    "applied_date": "2026-11-01T19:30:06.178201+00:00",
+    "notes": [],
+    "salary_offered": null
   }
 ]

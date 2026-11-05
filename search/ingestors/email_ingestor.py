@@ -19,7 +19,9 @@ class EmailIngestor(BaseIngestor):
         date_str: Optional[str] = None,
     ) -> bool:
         """Ingest email thread with sender/date metadata."""
-        content = f"Subject: {subject}\nFrom: {sender}\nTo: {', '.join(recipients)}\nDate: {date_str or 'Recent'}\n\n{body}"
+        content = (
+            f"Subject: {subject}\nFrom: {sender}\nTo: {', '.join(recipients)}\nDate: {date_str or 'Recent'}\n\n{body}"
+        )
         doc_id = f"email:{email_id}"
 
         prov = self.build_provenance(

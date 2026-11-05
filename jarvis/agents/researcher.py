@@ -24,6 +24,7 @@ logger = get_logger("agents.researcher")
 @dataclass
 class ResearchResult:
     """A single research finding with provenance."""
+
     source: str
     title: str
     snippet: str
@@ -45,6 +46,7 @@ class ResearchResult:
 @dataclass
 class ResearchReport:
     """Aggregated research output with synthesis."""
+
     report_id: str = field(default_factory=lambda: f"res_{uuid.uuid4().hex[:8]}")
     query: str = ""
     findings: List[ResearchResult] = field(default_factory=list)
@@ -139,8 +141,7 @@ class ResearcherAgent:
 
         duration_ms = round((time.time() - start) * 1000, 2)
         logger.info(
-            f"ResearcherAgent: report={report_id} findings={len(findings)} "
-            f"sources={sources} duration={duration_ms}ms"
+            f"ResearcherAgent: report={report_id} findings={len(findings)} sources={sources} duration={duration_ms}ms"
         )
 
         return ResearchReport(
@@ -157,6 +158,7 @@ class ResearcherAgent:
     def _search_local(self, query: str, user_id: str) -> List[ResearchResult]:
         try:
             from jarvis.memory.mem0_client import mem0_client
+
             results = mem0_client.search(query=query, user_id=user_id, limit=5)
             if isinstance(results, dict):
                 results = results.get("results", [])
@@ -177,6 +179,7 @@ class ResearcherAgent:
     def _search_documents(self, query: str) -> List[ResearchResult]:
         try:
             from jarvis.memory.document_rag import document_rag
+
             results = document_rag.search(query, top_k=5)
             return [
                 ResearchResult(
@@ -194,6 +197,7 @@ class ResearcherAgent:
     def _search_web(self, query: str) -> List[ResearchResult]:
         try:
             from jarvis.browser.search_wrapper import search_wrapper
+
             results = search_wrapper.search(query, max_results=self.MAX_WEB_RESULTS)
             return [
                 ResearchResult(
@@ -212,6 +216,7 @@ class ResearcherAgent:
     def _read_url(self, url: str) -> Optional[ResearchResult]:
         try:
             from jarvis.browser.url_reader import url_reader
+
             content = url_reader.read(url, max_chars=3000)
             if content:
                 return ResearchResult(
@@ -232,12 +237,11 @@ class ResearcherAgent:
             return f"No relevant information found for: {query}"
 
         top = sorted(findings, key=lambda f: f.relevance_score, reverse=True)[:5]
-        snippets = "\n\n".join(
-            f"[{f.source}] {f.title}:\n{f.snippet}" for f in top
-        )
+        snippets = "\n\n".join(f"[{f.source}] {f.title}:\n{f.snippet}" for f in top)
 
         try:
             from jarvis.core.model_router import model_router, RoutingRequest
+
             prompt = (
                 f"Synthesise these research findings into a concise, factual answer "
                 f"for the query: '{query}'\n\nFindings:\n{snippets}"
@@ -251,7 +255,8 @@ class ResearcherAgent:
             result = model_router.execute_inference(decision=decision, prompt=prompt)
             content = (
                 result.get("choices", [{}])[0].get("message", {}).get("content", "")
-                if isinstance(result, dict) else str(result)
+                if isinstance(result, dict)
+                else str(result)
             )
             return content.strip() if content else snippets[:1000]
         except Exception as exc:

@@ -22,6 +22,7 @@ logger = get_logger("agents.planner")
 @dataclass
 class PlanStep:
     """A single atomic step produced by the Planner."""
+
     step_id: str = field(default_factory=lambda: f"step_{uuid.uuid4().hex[:6]}")
     title: str = ""
     description: str = ""
@@ -35,11 +36,12 @@ class PlanStep:
 @dataclass
 class Plan:
     """Structured decomposition of a user goal."""
+
     plan_id: str = field(default_factory=lambda: f"plan_{uuid.uuid4().hex[:8]}")
     goal: str = ""
     steps: List[PlanStep] = field(default_factory=list)
     total_estimated_cost_usd: float = 0.0
-    complexity: str = "low"   # low | medium | high
+    complexity: str = "low"  # low | medium | high
     requires_approval: bool = False
     metadata: Dict[str, Any] = field(default_factory=dict)
 
@@ -78,7 +80,18 @@ class PlannerAgent:
     # Role keywords for heuristic assignment
     _ROLE_HINTS: Dict[str, List[str]] = {
         "researcher": ["research", "search", "find", "look up", "investigate", "read", "browse"],
-        "coder": ["code", "script", "write script", "implement", "fix bug", "refactor", "test", "build", "python", "function"],
+        "coder": [
+            "code",
+            "script",
+            "write script",
+            "implement",
+            "fix bug",
+            "refactor",
+            "test",
+            "build",
+            "python",
+            "function",
+        ],
         "file_agent": ["file", "document", "read file", "write file", "pdf", "ingest"],
         "system_admin": ["docker", "server", "deploy", "restart", "ssh", "monitor", "log"],
         "finance": ["stock", "price", "portfolio", "trade", "balance", "transaction", "crypto"],
@@ -95,6 +108,7 @@ class PlannerAgent:
     def _try_init_llm(self):
         try:
             from jarvis.core.model_router import model_router  # noqa
+
             self._llm_available = True
         except Exception:
             self._llm_available = False
@@ -122,8 +136,7 @@ class PlannerAgent:
         total_cost = sum(s.estimated_cost_usd for s in steps)
         complexity = "high" if len(steps) > 5 else ("medium" if len(steps) > 2 else "low")
         requires_approval = any(
-            kw in goal.lower()
-            for kw in ["delete", "format", "wipe", "deploy", "send email", "transaction"]
+            kw in goal.lower() for kw in ["delete", "format", "wipe", "deploy", "send email", "transaction"]
         )
 
         plan = Plan(
@@ -136,10 +149,7 @@ class PlannerAgent:
             metadata={"user_id": user_id, "context_len": len(context)},
         )
 
-        logger.info(
-            f"PlannerAgent: plan={plan_id} steps={len(steps)} "
-            f"complexity={complexity} cost=${total_cost:.5f}"
-        )
+        logger.info(f"PlannerAgent: plan={plan_id} steps={len(steps)} complexity={complexity} cost=${total_cost:.5f}")
         return plan
 
     # ── Heuristic decomposition ───────────────────────────────────────────────
@@ -151,37 +161,43 @@ class PlannerAgent:
 
         # Step 1: Always start with a research/memory step for non-trivial goals
         if any(kw in goal_lower for kw in ["how", "what", "why", "find", "research", "search"]):
-            steps.append(PlanStep(
-                title="Research & Gather Context",
-                description=f"Search memory and web for context relevant to: {goal}",
-                assigned_role="researcher",
-                estimated_duration_ms=3000,
-                estimated_cost_usd=0.0001,
-            ))
+            steps.append(
+                PlanStep(
+                    title="Research & Gather Context",
+                    description=f"Search memory and web for context relevant to: {goal}",
+                    assigned_role="researcher",
+                    estimated_duration_ms=3000,
+                    estimated_cost_usd=0.0001,
+                )
+            )
 
         # Step 2: Identify primary execution role
         primary_role = self._assign_role(goal_lower)
         prev_ids = [s.step_id for s in steps]
 
-        steps.append(PlanStep(
-            title=f"Execute: {goal[:60]}",
-            description=goal,
-            assigned_role=primary_role,
-            depends_on=prev_ids,
-            estimated_duration_ms=5000,
-            estimated_cost_usd=0.0003,
-        ))
+        steps.append(
+            PlanStep(
+                title=f"Execute: {goal[:60]}",
+                description=goal,
+                assigned_role=primary_role,
+                depends_on=prev_ids,
+                estimated_duration_ms=5000,
+                estimated_cost_usd=0.0003,
+            )
+        )
 
         # Step 3: Add review step for high-stakes operations
         if any(kw in goal_lower for kw in ["deploy", "delete", "send", "publish", "commit"]):
-            steps.append(PlanStep(
-                title="Review & Verify Output",
-                description="Critically review the execution output for correctness and safety.",
-                assigned_role="reviewer_critic",
-                depends_on=[steps[-1].step_id],
-                estimated_duration_ms=1500,
-                estimated_cost_usd=0.0001,
-            ))
+            steps.append(
+                PlanStep(
+                    title="Review & Verify Output",
+                    description="Critically review the execution output for correctness and safety.",
+                    assigned_role="reviewer_critic",
+                    depends_on=[steps[-1].step_id],
+                    estimated_duration_ms=1500,
+                    estimated_cost_usd=0.0001,
+                )
+            )
 
         return steps
 

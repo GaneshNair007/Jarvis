@@ -5,6 +5,7 @@ Automated verification tests for Power Registry & Catalog Integrity.
 from jarvis.core.power_registry import power_registry
 from jarvis.core.validate_powers import validate_catalog
 
+
 def test_powers_catalog_loaded():
     assert power_registry.total_count() == 355
     all_powers = power_registry.list_all_powers()
@@ -21,6 +22,7 @@ def test_powers_catalog_loaded():
     # Check Slug uniqueness
     slugs = [p["slug"] for p in all_powers]
     assert len(slugs) == len(set(slugs)) == 355
+
 
 def test_lookup_variations():
     # Uppercase ID
@@ -41,6 +43,7 @@ def test_lookup_variations():
     # Non-existent
     assert power_registry.get_power("PWR-999") is None
 
+
 def test_ecosystem_repositories_and_formula():
     expected_repos = {
         "atticus-mac",
@@ -53,7 +56,7 @@ def test_ecosystem_repositories_and_formula():
         "open-jarvis",
         "openclaw",
         "openhands",
-        "ui-tars-desktop"
+        "ui-tars-desktop",
     }
     registered_repos = set(power_registry.list_ecosystem_repos())
     assert expected_repos == registered_repos
@@ -68,10 +71,12 @@ def test_ecosystem_repositories_and_formula():
         repo_powers = power_registry.get_powers_by_repo(r)
         assert len(repo_powers) >= 10, f"Repo {r} has fewer than 10 powers: {len(repo_powers)}"
 
+
 def test_search_powers():
     results = power_registry.search_powers("screenshot")
     assert len(results) > 0
     assert any(r.get("power_id") == "PWR-016" for r in results)
+
 
 def test_category_filtering():
     categories = power_registry.list_categories()
@@ -85,6 +90,7 @@ def test_category_filtering():
     # Case-insensitive
     voice_lower = power_registry.get_powers_by_category("voice")
     assert len(voice_lower) == len(voice_powers)
+
 
 def test_catalog_integrity_validation():
     result = validate_catalog()

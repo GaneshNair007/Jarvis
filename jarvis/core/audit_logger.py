@@ -9,6 +9,7 @@ import hashlib
 from typing import Dict, Any, Optional
 from jarvis.core.audit import audit_ledger
 
+
 class AuditLogger:
     """High-level audit logger for recording system events with input/output hashes."""
 
@@ -35,7 +36,7 @@ class AuditLogger:
         cost: float = 0.0,
         latency: float = 0.0,
         result: str = "SUCCESS",
-        error: Optional[str] = None
+        error: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Appends a structured, hash-chained audit record."""
         event_id = f"evt_{uuid.uuid4().hex[:12]}"
@@ -56,8 +57,8 @@ class AuditLogger:
                 "approval_id": approval_id,
                 "cost": cost,
                 "latency": latency,
-                "error": error
-            }
+                "error": error,
+            },
         )
         return record
 
@@ -66,5 +67,6 @@ class AuditLogger:
 
     def verify(self):
         return self.ledger.verify_integrity()
+
 
 audit_logger = AuditLogger()

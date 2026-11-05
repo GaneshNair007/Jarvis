@@ -15,13 +15,7 @@ from pathlib import Path
 import pytest
 
 from scripts.migrate_workflows import extract_metadata, migrate_workflows
-from jarvis.powers import (
-    developer_powers,
-    security_powers,
-    finance_powers,
-    smart_home_powers,
-    automation_powers
-)
+from jarvis.powers import developer_powers, security_powers, finance_powers, smart_home_powers, automation_powers
 
 
 def test_skills_catalog_structure():
@@ -46,10 +40,7 @@ def test_migrate_workflows_logic(tmp_path):
     wf_dir.mkdir(parents=True)
 
     legacy_file = wf_dir / "daily_sync.md"
-    legacy_file.write_text(
-        "# Daily Standup Sync\nCollect team updates and format summary.\n",
-        encoding="utf-8"
-    )
+    legacy_file.write_text("# Daily Standup Sync\nCollect team updates and format summary.\n", encoding="utf-8")
 
     # Run migration
     records = migrate_workflows(workspace_dir=str(tmp_path))
@@ -75,6 +66,7 @@ def test_plugin_manifest_structure():
     plugin_path = Path("plugins/career-ops/plugin.json")
     assert plugin_path.exists()
     import json
+
     data = json.loads(plugin_path.read_text(encoding="utf-8"))
     assert data["name"] == "jarvis-career-ops"
     assert "displayName" in data
@@ -140,4 +132,3 @@ def test_automation_powers():
     new_sched = automation_powers.register_schedule("hourly_sync", "0 * * * *", "Run hourly delta sync")
     assert new_sched["power_id"] == "PWR-254"
     assert new_sched["status"] == "registered"
-

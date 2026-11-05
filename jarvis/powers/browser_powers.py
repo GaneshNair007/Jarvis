@@ -79,7 +79,9 @@ class BrowserPowers:
             try:
                 page.goto(validated_url, wait_until="domcontentloaded")
             except Exception as nav_err:
-                logger.warning(f"Screenshot navigation to {validated_url} encountered error: {nav_err}. Falling back to diagnostic page.")
+                logger.warning(
+                    f"Screenshot navigation to {validated_url} encountered error: {nav_err}. Falling back to diagnostic page."
+                )
                 page.set_content(
                     f"<html><body><h1>Screenshot Capture: {validated_url}</h1><p>Status: Offline / Cached Fallback ({nav_err})</p></body></html>"
                 )

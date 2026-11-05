@@ -14,6 +14,7 @@ from jarvis.voice.stt import stt_engine
 from jarvis.voice.tts import tts_engine
 from jarvis.core.orchestrator import orchestrator
 
+
 class FullDuplexVoicePipeline:
     STATES = ["IDLE", "LISTENING", "PROCESSING", "SPEAKING"]
 
@@ -87,8 +88,9 @@ class FullDuplexVoicePipeline:
             "audio_bytes": wav_bytes,
             "task_id": orch_result.get("task_id"),
             "tier": orch_result.get("tier"),
-            "latency_ms": round(total_latency, 2)
+            "latency_ms": round(total_latency, 2),
         }
+
 
 # Singleton Voice Pipeline
 voice_pipeline = FullDuplexVoicePipeline()

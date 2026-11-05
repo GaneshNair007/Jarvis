@@ -41,6 +41,7 @@ PAPER_TRADING_DB = Path("data/paper_trading.db")
 
 # ── Data models ────────────────────────────────────────────────────────────────
 
+
 @dataclass
 class Position:
     symbol: str
@@ -91,9 +92,9 @@ class FinanceIntegration(BaseIntegration):
                 "Real-time stock/crypto quotes, portfolio tracking, paper trading, "
                 "and ledger accounting via Yahoo Finance and AlphaVantage."
             ),
-            required_credentials=[],   # Yahoo Finance needs no key
+            required_credentials=[],  # Yahoo Finance needs no key
             danger_level="medium",
-            default_approval_tier=0,   # reads are Tier 0
+            default_approval_tier=0,  # reads are Tier 0
             rate_limit_rpm=30,
             cost_model="free",
             data_sensitivity="high",
@@ -142,6 +143,7 @@ class FinanceIntegration(BaseIntegration):
         """
         try:
             import yfinance as yf  # type: ignore
+
             ticker = yf.Ticker(symbol.upper())
             info = ticker.fast_info
             price = getattr(info, "last_price", None) or getattr(info, "regularMarketPrice", None)
@@ -169,26 +171,27 @@ class FinanceIntegration(BaseIntegration):
             logger.warning(f"get_quote({symbol}): {exc}")
             return self._av_quote(symbol)
 
-    def get_historical(
-        self, symbol: str, period: str = "1mo", interval: str = "1d"
-    ) -> Dict[str, Any]:
+    def get_historical(self, symbol: str, period: str = "1mo", interval: str = "1d") -> Dict[str, Any]:
         """Historical OHLCV data. period: 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y."""
         try:
             import yfinance as yf  # type: ignore
+
             ticker = yf.Ticker(symbol.upper())
             hist = ticker.history(period=period, interval=interval)
             if hist.empty:
                 return {"power_id": "PWR-356", "status": "ERROR", "error": "No data"}
             records = []
             for dt, row in hist.iterrows():
-                records.append({
-                    "date": str(dt.date()),
-                    "open": round(float(row["Open"]), 4),
-                    "high": round(float(row["High"]), 4),
-                    "low": round(float(row["Low"]), 4),
-                    "close": round(float(row["Close"]), 4),
-                    "volume": int(row["Volume"]),
-                })
+                records.append(
+                    {
+                        "date": str(dt.date()),
+                        "open": round(float(row["Open"]), 4),
+                        "high": round(float(row["High"]), 4),
+                        "low": round(float(row["Low"]), 4),
+                        "close": round(float(row["Close"]), 4),
+                        "volume": int(row["Volume"]),
+                    }
+                )
             return {
                 "power_id": "PWR-356",
                 "status": "SUCCESS",
@@ -207,6 +210,7 @@ class FinanceIntegration(BaseIntegration):
         """Get fundamental data: P/E, EPS, market cap, revenue, dividend yield."""
         try:
             import yfinance as yf  # type: ignore
+
             ticker = yf.Ticker(symbol.upper())
             info = ticker.info
             return {
@@ -252,6 +256,7 @@ class FinanceIntegration(BaseIntegration):
         """Get crypto price from CoinGecko free API (no key needed)."""
         try:
             import httpx
+
             url = (
                 f"https://api.coingecko.com/api/v3/simple/price"
                 f"?ids={coin_id}&vs_currencies=usd&include_24hr_change=true"
@@ -287,13 +292,12 @@ class FinanceIntegration(BaseIntegration):
         """Simple Moving Average via AlphaVantage."""
         return self._av_indicator("SMA", symbol, {"time_period": period, "series_type": "close"})
 
-    def _av_indicator(
-        self, function: str, symbol: str, extra_params: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def _av_indicator(self, function: str, symbol: str, extra_params: Dict[str, Any]) -> Dict[str, Any]:
         if not self._av_key:
             return {"power_id": "PWR-360", "status": "ERROR", "error": "ALPHAVANTAGE_API_KEY not set"}
         try:
             import httpx
+
             params = {
                 "function": function,
                 "symbol": symbol.upper(),
@@ -321,6 +325,7 @@ class FinanceIntegration(BaseIntegration):
             return {"power_id": "PWR-355", "status": "ERROR", "error": "No quote source available"}
         try:
             import httpx
+
             params = {"function": "GLOBAL_QUOTE", "symbol": symbol, "apikey": self._av_key}
             with httpx.Client(timeout=10) as client:
                 resp = client.get("https://www.alphavantage.co/query", params=params)
@@ -341,9 +346,7 @@ class FinanceIntegration(BaseIntegration):
 
     # ── Paper Trading ─────────────────────────────────────────────────────────
 
-    def paper_buy(
-        self, symbol: str, quantity: float, reason: str = ""
-    ) -> Dict[str, Any]:
+    def paper_buy(self, symbol: str, quantity: float, reason: str = "") -> Dict[str, Any]:
         """
         Simulated market buy order. Tier 2 — requires approval token.
         """
@@ -388,9 +391,7 @@ class FinanceIntegration(BaseIntegration):
             "remaining_cash": round(self._cash_balance, 2),
         }
 
-    def paper_sell(
-        self, symbol: str, quantity: float, reason: str = ""
-    ) -> Dict[str, Any]:
+    def paper_sell(self, symbol: str, quantity: float, reason: str = "") -> Dict[str, Any]:
         """Simulated market sell order. Tier 2 — requires approval token."""
         sym = symbol.upper()
         if sym not in self._portfolio or self._portfolio[sym].quantity < quantity:
@@ -461,9 +462,7 @@ class FinanceIntegration(BaseIntegration):
         try:
             conn = sqlite3.connect(str(PAPER_TRADING_DB))
             cur = conn.cursor()
-            cur.execute(
-                "SELECT * FROM trades ORDER BY timestamp DESC LIMIT ?", (limit,)
-            )
+            cur.execute("SELECT * FROM trades ORDER BY timestamp DESC LIMIT ?", (limit,))
             rows = cur.fetchall()
             conn.close()
             return {
@@ -472,8 +471,13 @@ class FinanceIntegration(BaseIntegration):
                 "count": len(rows),
                 "trades": [
                     {
-                        "order_id": r[0], "action": r[1], "symbol": r[2],
-                        "quantity": r[3], "price": r[4], "reason": r[5], "timestamp": r[6],
+                        "order_id": r[0],
+                        "action": r[1],
+                        "symbol": r[2],
+                        "quantity": r[3],
+                        "price": r[4],
+                        "reason": r[5],
+                        "timestamp": r[6],
                     }
                     for r in rows
                 ],
@@ -499,8 +503,15 @@ class FinanceIntegration(BaseIntegration):
             cur.execute(
                 "INSERT INTO ledger (txn_id, debit, credit, amount, currency, description, timestamp) "
                 "VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (txn_id, debit_account, credit_account, amount, currency,
-                 description, datetime.now(timezone.utc).isoformat()),
+                (
+                    txn_id,
+                    debit_account,
+                    credit_account,
+                    amount,
+                    currency,
+                    description,
+                    datetime.now(timezone.utc).isoformat(),
+                ),
             )
             conn.commit()
             conn.close()
@@ -550,17 +561,13 @@ class FinanceIntegration(BaseIntegration):
         except Exception as exc:
             logger.warning(f"FinanceIntegration: DB init failed — {exc}")
 
-    def _record_trade(
-        self, order_id: str, action: str, symbol: str,
-        quantity: float, price: float, reason: str
-    ):
+    def _record_trade(self, order_id: str, action: str, symbol: str, quantity: float, price: float, reason: str):
         try:
             conn = sqlite3.connect(str(PAPER_TRADING_DB))
             cur = conn.cursor()
             cur.execute(
                 "INSERT OR REPLACE INTO trades VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (order_id, action, symbol, quantity, price, reason,
-                 datetime.now(timezone.utc).isoformat()),
+                (order_id, action, symbol, quantity, price, reason, datetime.now(timezone.utc).isoformat()),
             )
             conn.commit()
             conn.close()

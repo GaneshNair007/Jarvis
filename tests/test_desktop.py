@@ -21,6 +21,7 @@ from jarvis.api.server import app
 
 client = TestClient(app)
 
+
 def test_desktop_screen_size_and_active_window():
     """Verifies screen resolution and active foreground window inspection."""
     width, height = desktop_worker.get_screen_size()
@@ -33,6 +34,7 @@ def test_desktop_screen_size_and_active_window():
     assert "hwnd" in active
     assert "rect" in active
 
+
 def test_desktop_screenshot_checksum_artifact():
     """Verifies that desktop screenshots generate SHA-256 artifacts on disk."""
     evidence = desktop_worker.capture_screen()
@@ -42,18 +44,16 @@ def test_desktop_screenshot_checksum_artifact():
     assert evidence["width"] > 0
     assert evidence["height"] > 0
 
+
 def test_see_act_verify_wait_action():
     """Verifies the See-Act-Verify cycle with pre/post evidence recording."""
-    result = desktop_worker.see_act_verify(
-        action="wait",
-        params={"seconds": 0.05},
-        task_id="test_wait_task"
-    )
+    result = desktop_worker.see_act_verify(action="wait", params={"seconds": 0.05}, task_id="test_wait_task")
     assert result["status"] == "SUCCESS"
     assert result["pre_evidence"]["sha256"] is not None
     assert result["post_evidence"]["sha256"] is not None
     assert "pre_window" in result
     assert "post_window" in result
+
 
 def test_policy_blocks_disallowed_app():
     """Verifies policy rejection when attempting control over an unapproved application."""
@@ -61,13 +61,13 @@ def test_policy_blocks_disallowed_app():
     try:
         desktop_worker.allowed_apps = ["notepad", "calculator"]
         result = desktop_worker.see_act_verify(
-            action="click",
-            params={"target_app": "RansomwareInstaller.exe", "enforce_allowlist": True}
+            action="click", params={"target_app": "RansomwareInstaller.exe", "enforce_allowlist": True}
         )
         assert result["status"] == "POLICY_BLOCKED"
         assert "not in the allowed application roster" in result["reason"]
     finally:
         desktop_worker.allowed_apps = old_allowed
+
 
 def test_emergency_kill_switch_blocks_desktop():
     """Verifies that the emergency kill switch preempts and halts desktop actions."""
@@ -78,6 +78,7 @@ def test_emergency_kill_switch_blocks_desktop():
         assert "Global kill switch is ACTIVE" in str(exc_info.value)
     finally:
         policy_gate.reset_kill_switch()
+
 
 def test_desktop_powers_wrapper():
     """Verifies DesktopPowers interface (PWR-016 to PWR-018)."""
@@ -90,6 +91,7 @@ def test_desktop_powers_wrapper():
     pwr18 = desktop_powers.pwr_018_focus_window("NonExistentWindowXYZ123")
     assert pwr18["focused"] is False
 
+
 def test_desktop_rest_apis():
     """Tests all Desktop REST API routes via FastAPI TestClient."""
     # 1. GET /api/v1/desktop/status
@@ -100,20 +102,15 @@ def test_desktop_rest_apis():
     assert "active_window" in status_data
 
     # 2. POST /api/v1/desktop/task (Safe action)
-    task_resp = client.post("/api/v1/desktop/task", json={
-        "action": "wait",
-        "params": {"seconds": 0.02}
-    })
+    task_resp = client.post("/api/v1/desktop/task", json={"action": "wait", "params": {"seconds": 0.02}})
     assert task_resp.status_code == 200
     task_data = task_resp.json()
     assert task_data["status"] == "SUCCESS"
 
     # 3. POST /api/v1/desktop/task (Requiring Tier 2 Approval)
-    approval_task_resp = client.post("/api/v1/desktop/task", json={
-        "action": "click",
-        "params": {"x": 500, "y": 500},
-        "require_approval": True
-    })
+    approval_task_resp = client.post(
+        "/api/v1/desktop/task", json={"action": "click", "params": {"x": 500, "y": 500}, "require_approval": True}
+    )
     assert approval_task_resp.status_code == 200
     approval_data = approval_task_resp.json()
     assert approval_data["status"] == "AWAITING_APPROVAL"
@@ -121,12 +118,10 @@ def test_desktop_rest_apis():
     task_id = approval_data["task_id"]
 
     # 4. POST /api/v1/desktop/approve
-    approve_resp = client.post("/api/v1/desktop/approve", json={
-        "task_id": task_id,
-        "token": token,
-        "action": "wait",
-        "params": {"seconds": 0.01}
-    })
+    approve_resp = client.post(
+        "/api/v1/desktop/approve",
+        json={"task_id": task_id, "token": token, "action": "wait", "params": {"seconds": 0.01}},
+    )
     assert approve_resp.status_code == 200
     assert approve_resp.json()["status"] == "SUCCESS"
 

@@ -40,15 +40,17 @@ PLUGINS_ROOT = Path(__file__).resolve().parent
 
 # ── Manifest schema ────────────────────────────────────────────────────────────
 
+
 @dataclass
 class PluginManifest:
     """Validated plugin.json contract."""
+
     name: str
     display_name: str
     version: str
     description: str
     plugin_dir: Path
-    entry_point: Optional[str] = None        # e.g. "plugin_main.py"
+    entry_point: Optional[str] = None  # e.g. "plugin_main.py"
     powers: List[str] = field(default_factory=list)
     suggested_prompts: List[str] = field(default_factory=list)
     required_env: List[str] = field(default_factory=list)
@@ -109,15 +111,17 @@ class PluginManifest:
 
 # ── Loaded plugin container ────────────────────────────────────────────────────
 
+
 @dataclass
 class LoadedPlugin:
     """A successfully loaded and initialised plugin."""
+
     plugin_id: str
     manifest: PluginManifest
-    module: Optional[Any]          # the imported Python module (if any)
+    module: Optional[Any]  # the imported Python module (if any)
     loaded_at: float = field(default_factory=time.time)
     load_errors: List[str] = field(default_factory=list)
-    status: str = "active"         # active | disabled | error | unloaded
+    status: str = "active"  # active | disabled | error | unloaded
 
     def call(self, function_name: str, *args, **kwargs) -> Any:
         """Call a function exported by this plugin's module."""
@@ -136,12 +140,16 @@ class LoadedPlugin:
             "status": self.status,
             "loaded_at": self.loaded_at,
             "load_errors": self.load_errors,
-            **{k: v for k, v in self.manifest.to_dict().items()
-               if k not in ("name", "display_name", "version", "description")},
+            **{
+                k: v
+                for k, v in self.manifest.to_dict().items()
+                if k not in ("name", "display_name", "version", "description")
+            },
         }
 
 
 # ── Plugin Loader ─────────────────────────────────────────────────────────────
+
 
 class PluginLoader:
     """
@@ -211,6 +219,7 @@ class PluginLoader:
 
         # ── Check required env ────────────────────────────────────────────────
         import os
+
         missing_env = [e for e in manifest.required_env if not os.environ.get(e)]
         if missing_env:
             msg = f"Missing required env vars: {missing_env}"
@@ -232,15 +241,10 @@ class PluginLoader:
                     # Call setup() if exported
                     if hasattr(module, "setup"):
                         module.setup()
-                    logger.info(
-                        f"PluginLoader: loaded '{manifest.name}' v{manifest.version} "
-                        f"from {module_path.name}"
-                    )
+                    logger.info(f"PluginLoader: loaded '{manifest.name}' v{manifest.version} from {module_path.name}")
                 except Exception as exc:
                     errors.append(f"Module import error: {exc}")
-                    logger.warning(
-                        f"PluginLoader: '{manifest.name}' module load failed — {exc}"
-                    )
+                    logger.warning(f"PluginLoader: '{manifest.name}' module load failed — {exc}")
 
         status = "active" if not errors else ("error" if missing_env else "active")
 
@@ -284,6 +288,7 @@ class PluginLoader:
 
 
 # ── Plugin Registry ────────────────────────────────────────────────────────────
+
 
 class PluginRegistry:
     """
@@ -460,10 +465,7 @@ class PluginRegistry:
                     continue
                 current_mtime = mpath.stat().st_mtime
                 if mtimes.get(pid, 0) != current_mtime:
-                    logger.info(
-                        f"PluginRegistry watcher: change detected in "
-                        f"'{plugin.manifest.name}' — hot-reloading"
-                    )
+                    logger.info(f"PluginRegistry watcher: change detected in '{plugin.manifest.name}' — hot-reloading")
                     try:
                         self.reload_plugin(pid)
                         mtimes[pid] = current_mtime

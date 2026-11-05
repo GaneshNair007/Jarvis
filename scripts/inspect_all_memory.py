@@ -17,6 +17,7 @@ from jarvis.memory.document_rag import document_rag
 from jarvis.memory.store import db_store
 from jarvis.core.audit import audit_ledger
 
+
 def inspect_all():
     print("=" * 85)
     print("      JARVIS PRIVATE MEMORY VAULT: 7-LAYER COGNITIVE AUDIT & RAG INSPECTION")
@@ -45,7 +46,7 @@ def inspect_all():
         rule_name = meta.get("rule_name") or meta.get("origin") or "STANDING_RULE"
         priority = meta.get("priority", "NORMAL")
         print(f"  {idx}. [{rule_name} | Priority: {priority}] (Node: {d['id']})")
-        print(f"     Text: \"{d['content']}\"")
+        print(f'     Text: "{d["content"]}"')
 
     # 3. Inspect SEMANTIC Layer (Facts vs Hypotheses)
     print("\n" + "-" * 85)
@@ -55,8 +56,10 @@ def inspect_all():
     print(f"  Total Semantic Nodes: {len(semantic_nodes)}")
     for idx, s in enumerate(semantic_nodes, 1):
         hypo_label = "HYPOTHESIS" if s["is_hypothesis"] else "VERIFIED_FACT"
-        print(f"  {idx}. [{hypo_label}] Confidence: {s['confidence']:.2f} | Evidence Count: {s['evidence_count']} (Node: {s['id']})")
-        print(f"     Content: \"{s['content']}\"")
+        print(
+            f"  {idx}. [{hypo_label}] Confidence: {s['confidence']:.2f} | Evidence Count: {s['evidence_count']} (Node: {s['id']})"
+        )
+        print(f'     Content: "{s["content"]}"')
 
     # 4. Inspect EPISODIC & RAW Layers
     print("\n" + "-" * 85)
@@ -76,7 +79,9 @@ def inspect_all():
     proc_nodes = memory_manager.recall(layer="PROCEDURAL", limit=10)
     work_nodes = memory_manager.recall(layer="WORKING", limit=10)
     cap_nodes = memory_manager.recall(layer="CAPTURE", limit=10)
-    print(f"  Procedural Skills: {len(proc_nodes)} | Working Scratchpad: {len(work_nodes)} | Capture Events: {len(cap_nodes)}")
+    print(
+        f"  Procedural Skills: {len(proc_nodes)} | Working Scratchpad: {len(work_nodes)} | Capture Events: {len(cap_nodes)}"
+    )
     for p in proc_nodes:
         print(f"    - [PROCEDURAL] (Node: {p['id']}) {p['content']}")
     for w in work_nodes:
@@ -90,8 +95,8 @@ def inspect_all():
     print(f"  Total Active Corrections: {len(corrections)}")
     for idx, c in enumerate(corrections, 1):
         print(f"  {idx}. Correction ID: {c['id']} | Scope: {c['scope']} | Status: {c['status']}")
-        print(f"     User Quote:      \"{c['user_quote']}\"")
-        print(f"     New Instruction: \"{c['new_instruction']}\"")
+        print(f'     User Quote:      "{c["user_quote"]}"')
+        print(f'     New Instruction: "{c["new_instruction"]}"')
 
     # 7. Document Intelligence RAG Ingestion & Citation Queries
     print("\n" + "-" * 85)
@@ -100,13 +105,11 @@ def inspect_all():
     docs = db_store.list_documents(limit=5)
     print(f"  Ingested Documents in Vault: {len(docs)}")
     for d in docs:
-        print(f"    - Doc ID: {d['id']} | File: {d['file_name']} | Pages: {d['total_pages']} | Chunks: {d['total_chunks']} | SHA-256: {d['sha256'][:16]}...")
+        print(
+            f"    - Doc ID: {d['id']} | File: {d['file_name']} | Pages: {d['total_pages']} | Chunks: {d['total_chunks']} | SHA-256: {d['sha256'][:16]}..."
+        )
 
-    queries_to_test = [
-        "HMAC approval tokens",
-        "Global Kill Switch hotkey",
-        "Policy Gate and Cost Governor"
-    ]
+    queries_to_test = ["HMAC approval tokens", "Global Kill Switch hotkey", "Policy Gate and Cost Governor"]
 
     for q in queries_to_test:
         print(f"\n  >> RAG Query: '{q}'")
@@ -118,7 +121,7 @@ def inspect_all():
                 print(f"       Page:   Page {cit['page_number']} (Exact Citation)")
                 print(f"       Score:  {cit['score']}")
                 print(f"       Chunk:  {cit['chunk_id']}")
-                print(f"       Text:   \"{cit['excerpt'].strip()}\"")
+                print(f'       Text:   "{cit["excerpt"].strip()}"')
         else:
             print("     No matching citation found.")
 
@@ -127,10 +130,13 @@ def inspect_all():
     print("  CRYPTOGRAPHIC AUDIT CHAIN VERIFICATION")
     print("-" * 85)
     valid, verified_count, message = audit_ledger.verify_integrity()
-    print(f"  Status:             {'[PASSED] 100% Tamper-Evident Chain Intact' if valid else '[FAILED] Integrity Violated'}")
+    print(
+        f"  Status:             {'[PASSED] 100% Tamper-Evident Chain Intact' if valid else '[FAILED] Integrity Violated'}"
+    )
     print(f"  Total Blocks:       {verified_count} cryptographically signed entries")
     print(f"  Verification Note:  {message}")
     print("=" * 85)
+
 
 if __name__ == "__main__":
     inspect_all()

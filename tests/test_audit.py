@@ -4,6 +4,7 @@ Automated verification tests for Cryptographic Audit Ledger.
 
 from jarvis.core.audit import audit_ledger
 
+
 def test_audit_logging_and_chain_integrity():
     # Log 3 events
     audit_ledger.log_event("TEST_EVENT_1", "task_1", "PWR-001", "SUCCESS", {"input": 1}, {"output": 1})

@@ -4,6 +4,7 @@ Automated verification tests for Privacy Gate DLP & secret redaction.
 
 from jarvis.core.privacy_gate import privacy_gate
 
+
 def test_secret_redaction_patterns():
     text = (
         "OpenAI: sk-abcdefghijklmnopqrstuvwxyz123456\n"
@@ -20,6 +21,7 @@ def test_secret_redaction_patterns():
     assert "[REDACTED_OTP]" in redacted
     assert "[REDACTED_CREDIT_CARD]" in redacted
     assert len(findings) >= 5
+
 
 def test_context_minimization():
     large_text = "start directives " + ("x" * 20000) + " end summary"

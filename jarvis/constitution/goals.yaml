@@ -1,0 +1,22 @@
+# JARVIS Constitution: Strategic Goals
+version: "1.0.0"
+strategic_goals:
+  - id: "gsoc_excellence"
+    title: "Google Summer of Code Qualification & Open Source Leadership"
+    target_date: "2026-Q2"
+    success_criteria:
+      - "High-impact open source pull requests merged into major upstream repositories"
+      - "Polished public engineering profile with verifiable architectural contributions"
+
+  - id: "autonomous_hackathon_dominance"
+    title: "AI Hackathon Pipeline & Productization"
+    target_date: "2026-Q3"
+    success_criteria:
+      - "Full 8-stage automated pipeline from discovery to MVP deployment and presentation synthesis"
+
+  - id: "zero_cost_cognitive_os"
+    title: "Full Cognitive Desktop Assistant on Consumer Hardware"
+    target_date: "2026-Q4"
+    success_criteria:
+      - "Under 300ms voice pipeline latency via Kokoro-TTS and Whisper"
+      - "Zero monthly subscription fees via multi-account key rotation and local compute"

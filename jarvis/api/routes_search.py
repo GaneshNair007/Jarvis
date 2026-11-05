@@ -23,6 +23,7 @@ router = APIRouter(prefix="", tags=["Local Search"])
 
 # ─── Request / Response Schemas ──────────────────────────────────────────────
 
+
 class SearchRequest(BaseModel):
     query: str = Field(..., description="Search query string")
     limit: int = Field(default=10, ge=1, le=100)
@@ -61,6 +62,7 @@ class IngestRepoRequest(BaseModel):
 
 
 # ─── Search Query Endpoints ──────────────────────────────────────────────────
+
 
 @router.post("/search/local")
 async def search_local(req: SearchRequest) -> Dict[str, Any]:
@@ -105,6 +107,7 @@ async def search_research(req: SearchRequest) -> Dict[str, Any]:
 
 
 # ─── Document Ingestion Endpoints ────────────────────────────────────────────
+
 
 @router.post("/search/ingest/file")
 async def ingest_file(req: IngestFileRequest) -> Dict[str, Any]:
@@ -185,6 +188,7 @@ async def ingest_repo(req: IngestRepoRequest) -> Dict[str, Any]:
 async def ingest_folder(req: IngestFolderRequest) -> Dict[str, Any]:
     """Ingest documents from a directory."""
     from pathlib import Path
+
     root = Path(req.folder_path)
     if not root.exists() or not root.is_dir():
         raise HTTPException(status_code=400, detail=f"Folder not found: {req.folder_path}")
@@ -234,6 +238,7 @@ async def ingest_folder(req: IngestFolderRequest) -> Dict[str, Any]:
 
 
 # ─── Corpus Management & Inspection Endpoints ────────────────────────────────
+
 
 @router.post("/search/reindex")
 async def reindex_corpus() -> Dict[str, Any]:

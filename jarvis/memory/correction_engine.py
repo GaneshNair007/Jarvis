@@ -15,6 +15,7 @@ from jarvis.core.audit import audit_ledger
 
 logger = get_logger("correction_engine")
 
+
 class CorrectionEngine:
     """Manages the lifecycle of user behavioral corrections and directives."""
 
@@ -28,7 +29,7 @@ class CorrectionEngine:
         new_instruction: str,
         scope: str = "always",
         failure_id: Optional[str] = None,
-        old_behavior: Optional[str] = None
+        old_behavior: Optional[str] = None,
     ) -> Dict[str, Any]:
         """
         Records a user correction and promotes it into persistent memory
@@ -48,7 +49,7 @@ class CorrectionEngine:
             new_instruction=new_instruction,
             scope=scope_clean,
             failure_id=failure_id,
-            old_behavior=old_behavior
+            old_behavior=old_behavior,
         )
 
         memory_node_id = None
@@ -65,11 +66,11 @@ class CorrectionEngine:
                     "failure_id": failure_id,
                     "old_behavior": old_behavior,
                     "priority": "CRITICAL",
-                    "origin": "user_correction"
+                    "origin": "user_correction",
                 },
                 is_hypothesis=False,
                 confidence=1.0,
-                evidence_count=1
+                evidence_count=1,
             )
         elif scope_clean == "this_project":
             # Persistent procedural skill for this project
@@ -77,13 +78,9 @@ class CorrectionEngine:
             memory_node_id = self.memory.store_memory(
                 layer="PROCEDURAL",
                 content=f"PROJECT WORKFLOW: {new_instruction}",
-                metadata={
-                    "correction_id": correction_id,
-                    "failure_id": failure_id,
-                    "scope": "project"
-                },
+                metadata={"correction_id": correction_id, "failure_id": failure_id, "scope": "project"},
                 is_hypothesis=False,
-                confidence=1.0
+                confidence=1.0,
             )
         else:
             # Task-specific working memory
@@ -91,13 +88,9 @@ class CorrectionEngine:
             memory_node_id = self.memory.store_memory(
                 layer="WORKING",
                 content=f"TASK OVERRIDE: {new_instruction}",
-                metadata={
-                    "correction_id": correction_id,
-                    "failure_id": failure_id,
-                    "scope": "task"
-                },
+                metadata={"correction_id": correction_id, "failure_id": failure_id, "scope": "task"},
                 is_hypothesis=False,
-                confidence=1.0
+                confidence=1.0,
             )
 
         audit_ledger.record(
@@ -109,9 +102,9 @@ class CorrectionEngine:
                 "user_quote": user_quote,
                 "new_instruction": new_instruction,
                 "promoted_layer": promoted_layer,
-                "memory_node_id": memory_node_id
+                "memory_node_id": memory_node_id,
             },
-            result="PROMOTED"
+            result="PROMOTED",
         )
 
         logger.info("Correction %s recorded and promoted to %s memory", correction_id, promoted_layer)
@@ -126,12 +119,13 @@ class CorrectionEngine:
             "status": "ACTIVE",
             "promoted_layer": promoted_layer,
             "memory_node_id": memory_node_id,
-            "created_at": now
+            "created_at": now,
         }
 
     def list_corrections(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Retrieves recent user corrections."""
         return self.store.list_corrections(limit=limit)
+
 
 # Singleton Correction Engine
 correction_engine = CorrectionEngine()

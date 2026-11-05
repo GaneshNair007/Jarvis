@@ -1,0 +1,125 @@
+{
+  "verdict": "CONFIRMED",
+  "benchmark": {
+    "turns": [
+      {
+        "turn": 1,
+        "wall_latency_ms": 83.67620001081377,
+        "internal_duration_ms": 83.69,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      },
+      {
+        "turn": 2,
+        "wall_latency_ms": 0.016400008462369442,
+        "internal_duration_ms": 0.0,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      },
+      {
+        "turn": 3,
+        "wall_latency_ms": 0.006799993570894003,
+        "internal_duration_ms": 0.0,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      },
+      {
+        "turn": 4,
+        "wall_latency_ms": 0.004300032742321491,
+        "internal_duration_ms": 0.0,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      },
+      {
+        "turn": 5,
+        "wall_latency_ms": 0.005399982910603285,
+        "internal_duration_ms": 0.0,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      },
+      {
+        "turn": 6,
+        "wall_latency_ms": 0.0038999714888632298,
+        "internal_duration_ms": 0.0,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      },
+      {
+        "turn": 7,
+        "wall_latency_ms": 0.003600027412176132,
+        "internal_duration_ms": 0.0,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      },
+      {
+        "turn": 8,
+        "wall_latency_ms": 0.003600027412176132,
+        "internal_duration_ms": 0.0,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      },
+      {
+        "turn": 9,
+        "wall_latency_ms": 0.011800031643360853,
+        "internal_duration_ms": 0.0,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      },
+      {
+        "turn": 10,
+        "wall_latency_ms": 0.006599992047995329,
+        "internal_duration_ms": 0.0,
+        "status": "offline_unavailable",
+        "model": "ollama/llama3.1",
+        "error": "Connection refused: Ollama daemon offline at http://localhost:11434"
+      }
+    ],
+    "cold_latency_ms": 83.67620001081377,
+    "cached_latencies_ms": [
+      0.016400008462369442,
+      0.006799993570894003,
+      0.004300032742321491,
+      0.005399982910603285,
+      0.0038999714888632298,
+      0.003600027412176132,
+      0.003600027412176132,
+      0.011800031643360853,
+      0.006599992047995329
+    ],
+    "max_cached_ms": 0.016400008462369442,
+    "mean_cached_ms": 0.006933340854528878,
+    "cold_passed": true,
+    "cached_passed": true
+  },
+  "adversarial": {
+    "empty_prompt": {
+      "latency_ms": 0.01009996049106121,
+      "status": "offline_unavailable",
+      "pass": true
+    },
+    "large_prompt": {
+      "latency_ms": 0.006399990525096655,
+      "status": "offline_unavailable",
+      "pass": true
+    },
+    "concurrency": {
+      "requests": 20,
+      "mean_latency_ms": 0.0012950040400028229,
+      "max_latency_ms": 0.003800028935074806,
+      "pass": true
+    },
+    "ttl_refresh": {
+      "latency_ms": 0.00990001717582345,
+      "pass": true
+    }
+  }
+}

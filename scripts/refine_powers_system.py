@@ -3,12 +3,13 @@ import re
 from pathlib import Path
 from collections import Counter, defaultdict
 
+
 def build_refined_powers_system():
     # Load current master powers
     master_path = Path("config/powers/master_powers_355.json")
     if not master_path.exists():
         master_path = Path("data/powers_catalog.json")
-    
+
     with open(master_path, "r", encoding="utf-8") as f:
         powers = json.load(f)
 
@@ -31,76 +32,114 @@ def build_refined_powers_system():
         "atticus-mac": {
             "source_dir": "repos/atticus-mac",
             "handler_module": "jarvis.powers.instant_local",
-            "primary_file": "repos/atticus-mac/atticus.py"
+            "primary_file": "repos/atticus-mac/atticus.py",
         },
         "browser-use": {
             "source_dir": "repos/browser-use",
             "handler_module": "jarvis.browser.research_worker",
-            "primary_file": "repos/browser-use/browser_use/agent/service.py"
+            "primary_file": "repos/browser-use/browser_use/agent/service.py",
         },
         "career-ops": {
             "source_dir": "repos/career-ops",
             "handler_module": "jarvis.integrations.career_ops",
-            "primary_file": "repos/career-ops/skills"
+            "primary_file": "repos/career-ops/skills",
         },
         "cua": {
             "source_dir": "repos/cua",
             "handler_module": "jarvis.computer.sandbox",
-            "primary_file": "repos/cua/libs/core"
+            "primary_file": "repos/cua/libs/core",
         },
         "hermes-agent": {
             "source_dir": "repos/hermes-agent",
             "handler_module": "jarvis.memory.hermes_vault",
-            "primary_file": "repos/hermes-agent/agent/skills.py"
+            "primary_file": "repos/hermes-agent/agent/skills.py",
         },
         "mcp-servers": {
             "source_dir": "repos/mcp-servers",
             "handler_module": "jarvis.mcp_gateway",
-            "primary_file": "repos/mcp-servers/src"
+            "primary_file": "repos/mcp-servers/src",
         },
         "open-interpreter": {
             "source_dir": "repos/open-interpreter",
             "handler_module": "jarvis.powers.desktop_powers",
-            "primary_file": "repos/open-interpreter/interpreter"
+            "primary_file": "repos/open-interpreter/interpreter",
         },
         "open-jarvis": {
             "source_dir": "repos/open-jarvis",
             "handler_module": "jarvis.graph.jarvis_graph",
-            "primary_file": "repos/open-jarvis/configs"
+            "primary_file": "repos/open-jarvis/configs",
         },
         "openclaw": {
             "source_dir": "repos/openclaw",
             "handler_module": "jarvis.integrations.openclaw",
-            "primary_file": "repos/openclaw/skills"
+            "primary_file": "repos/openclaw/skills",
         },
         "openhands": {
             "source_dir": "repos/openhands",
             "handler_module": "jarvis.powers.developer_powers",
-            "primary_file": "repos/openhands/openhands"
+            "primary_file": "repos/openhands/openhands",
         },
         "ui-tars-desktop": {
             "source_dir": "repos/ui-tars-desktop",
             "handler_module": "jarvis.powers.desktop_powers",
-            "primary_file": "repos/ui-tars-desktop"
-        }
+            "primary_file": "repos/ui-tars-desktop",
+        },
     }
 
     # Core native executable powers
     core_executable_pids = {
         # Voice powers
-        "PWR-001", "PWR-002", "PWR-003", "PWR-004", "PWR-005",
+        "PWR-001",
+        "PWR-002",
+        "PWR-003",
+        "PWR-004",
+        "PWR-005",
         # Desktop / Screen powers
-        "PWR-016", "PWR-017", "PWR-018", "PWR-019", "PWR-020", "PWR-021", "PWR-022", "PWR-023", "PWR-024", "PWR-025", "PWR-026",
+        "PWR-016",
+        "PWR-017",
+        "PWR-018",
+        "PWR-019",
+        "PWR-020",
+        "PWR-021",
+        "PWR-022",
+        "PWR-023",
+        "PWR-024",
+        "PWR-025",
+        "PWR-026",
         # Local search & files
-        "PWR-027", "PWR-028", "PWR-029", "PWR-030", "PWR-031", "PWR-032", "PWR-033",
+        "PWR-027",
+        "PWR-028",
+        "PWR-029",
+        "PWR-030",
+        "PWR-031",
+        "PWR-032",
+        "PWR-033",
         # Browser automation & research
-        "PWR-063", "PWR-064", "PWR-065", "PWR-066", "PWR-067", "PWR-068", "PWR-069", "PWR-070",
+        "PWR-063",
+        "PWR-064",
+        "PWR-065",
+        "PWR-066",
+        "PWR-067",
+        "PWR-068",
+        "PWR-069",
+        "PWR-070",
         # Orchestrator & Task & System
-        "PWR-288", "PWR-289", "PWR-290", "PWR-291", "PWR-292", "PWR-293", "PWR-294", "PWR-295",
+        "PWR-288",
+        "PWR-289",
+        "PWR-290",
+        "PWR-291",
+        "PWR-292",
+        "PWR-293",
+        "PWR-294",
+        "PWR-295",
         # Memory Vault
-        "PWR-320", "PWR-339", "PWR-340",
+        "PWR-320",
+        "PWR-339",
+        "PWR-340",
         # MCP Gateway
-        "PWR-013", "PWR-014", "PWR-345"
+        "PWR-013",
+        "PWR-014",
+        "PWR-345",
     }
 
     refined_powers = []
@@ -117,13 +156,13 @@ def build_refined_powers_system():
     for p in powers:
         pid = p["power_id"]
         orig_name = p["power_name"]
-        
+
         # Apply renaming if in rename list
         name = renames.get((pid, orig_name), orig_name)
 
         # Generate unique slug
         slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
-        
+
         category = p.get("category", "General")
         repos = p.get("contributing_repos", ["openclaw"])
         primary_repo = repos[0] if repos else "openclaw"
@@ -151,10 +190,9 @@ def build_refined_powers_system():
             config_required_count += 1
             handler = repo_sources.get(primary_repo, {}).get("handler_module", "jarvis.integrations")
 
-        source_info = repo_sources.get(primary_repo, {
-            "source_dir": f"repos/{primary_repo}",
-            "primary_file": f"repos/{primary_repo}"
-        })
+        source_info = repo_sources.get(
+            primary_repo, {"source_dir": f"repos/{primary_repo}", "primary_file": f"repos/{primary_repo}"}
+        )
 
         record = dict(p)
         record["power_id"] = pid
@@ -174,22 +212,24 @@ def build_refined_powers_system():
         refined_powers.append(record)
 
         # Build inventory item
-        source_inventory.append({
-            "power_id": pid,
-            "power_name": name,
-            "slug": slug,
-            "category": category,
-            "description": p.get("one_line_description", ""),
-            "source_repo": primary_repo,
-            "contributing_repos": repos,
-            "source_path": source_info.get("primary_file"),
-            "execution_handler": handler,
-            "status": status,
-            "danger_level": record["danger_level"],
-            "approval_required": record["approval_required"],
-            "permissions_required": p.get("permissions_required", "tier_0_read"),
-            "dependencies": p.get("dependencies", "")
-        })
+        source_inventory.append(
+            {
+                "power_id": pid,
+                "power_name": name,
+                "slug": slug,
+                "category": category,
+                "description": p.get("one_line_description", ""),
+                "source_repo": primary_repo,
+                "contributing_repos": repos,
+                "source_path": source_info.get("primary_file"),
+                "execution_handler": handler,
+                "status": status,
+                "danger_level": record["danger_level"],
+                "approval_required": record["approval_required"],
+                "permissions_required": p.get("permissions_required", "tier_0_read"),
+                "dependencies": p.get("dependencies", ""),
+            }
+        )
 
         seen_ids.add(pid)
         seen_names.add(name)
@@ -199,7 +239,9 @@ def build_refined_powers_system():
     print(f"Unique IDs: {len(seen_ids)}")
     print(f"Unique Names: {len(seen_names)}")
     print(f"Unique Slugs: {len(seen_slugs)}")
-    print(f"Executable: {executable_count}, Config-required: {config_required_count}, Reference-only: {reference_only_count}")
+    print(
+        f"Executable: {executable_count}, Config-required: {config_required_count}, Reference-only: {reference_only_count}"
+    )
 
     # Write data/powers_catalog.json
     out_catalog = Path("data/powers_catalog.json")
@@ -227,7 +269,7 @@ def build_refined_powers_system():
             "power_count": count,
             "sample_powers": sample_pids,
             "source_dir": f"repos/{r}",
-            "repo_url": f"https://github.com/{r}"
+            "repo_url": f"https://github.com/{r}",
         }
 
     ecosystem = {
@@ -237,22 +279,23 @@ def build_refined_powers_system():
             "total_repository_associations": sum(repo_counts.values()),
             "single_repo_powers": sum(1 for p in refined_powers if len(p["contributing_repos"]) == 1),
             "multi_repo_powers": sum(1 for p in refined_powers if len(p["contributing_repos"]) > 1),
-            "reconciliation_formula": "Total Associations (427) = 285 (1 repo) + 68*2 (2 repos) + 2*3 (3 repos) = 355 Unique Powers"
+            "reconciliation_formula": "Total Associations (427) = 285 (1 repo) + 68*2 (2 repos) + 2*3 (3 repos) = 355 Unique Powers",
         },
         "total_powers": len(refined_powers),
         "total_repos": len(repo_breakdown),
         "status_distribution": {
             "executable": executable_count,
             "requires_configuration": config_required_count,
-            "reference_only": reference_only_count
+            "reference_only": reference_only_count,
         },
-        "repositories": repo_breakdown
+        "repositories": repo_breakdown,
     }
 
     out_eco = Path("config/powers/ecosystem_composition.json")
     out_eco.write_text(json.dumps(ecosystem, indent=2), encoding="utf-8")
 
     print("SUCCESS: Updated all 4 power catalog files.")
+
 
 if __name__ == "__main__":
     build_refined_powers_system()

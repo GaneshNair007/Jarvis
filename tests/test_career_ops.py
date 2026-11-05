@@ -48,7 +48,7 @@ def test_pwr_329_job_scan_fit_scoring():
         job_title="Principal AI Systems Architect",
         company_name="DeepTech AI",
         description=sample_desc,
-        job_url="https://jobs.example.com/deeptech/101"
+        job_url="https://jobs.example.com/deeptech/101",
     )
 
     assert result["power_id"] == "PWR-329"
@@ -67,7 +67,7 @@ def test_pwr_330_tailored_ats_resume(tmp_path):
     result = career_powers.generate_tailored_resume(
         job_title="Lead Distributed Engineer",
         company_name="ScaleAI Labs",
-        target_keywords=["Distributed Systems", "SQLite FTS5", "FastAPI"]
+        target_keywords=["Distributed Systems", "SQLite FTS5", "FastAPI"],
     )
 
     assert result["power_id"] == "PWR-330"
@@ -81,7 +81,7 @@ def test_pwr_331_cover_letter():
     result = career_powers.generate_cover_letter(
         job_title="Principal Platform Architect",
         company_name="CloudMatrix",
-        key_challenges=["Low latency retrieval", "High concurrency"]
+        key_challenges=["Low latency retrieval", "High concurrency"],
     )
 
     assert result["power_id"] == "PWR-331"
@@ -100,10 +100,7 @@ def test_pwr_332_company_research():
 
 def test_pwr_333_find_contacts():
     """Validates discovery of hiring contacts and outreach drafts."""
-    result = career_powers.find_company_contacts(
-        company_name="Stripe",
-        role_title="Infrastructure Architect"
-    )
+    result = career_powers.find_company_contacts(company_name="Stripe", role_title="Infrastructure Architect")
 
     assert result["power_id"] == "PWR-333"
     assert result["contacts_found"] >= 2
@@ -115,9 +112,7 @@ def test_pwr_333_find_contacts():
 def test_pwr_334_draft_application_email():
     """Validates formal submission email drafting."""
     result = career_powers.draft_application_email(
-        recipient_name="Sarah Connor",
-        company_name="Cyberdyne Systems",
-        role_title="AI Safety Architect"
+        recipient_name="Sarah Connor", company_name="Cyberdyne Systems", role_title="AI Safety Architect"
     )
 
     assert result["power_id"] == "PWR-334"
@@ -130,10 +125,7 @@ def test_pwr_335_pipeline_analytics():
     """Validates tracking and funnel pattern analytics."""
     # Ensure at least one application recorded
     career_powers.service.pipeline_analytics.record_application(
-        company_name="Meta",
-        job_title="Research Scientist",
-        fit_score=88.5,
-        status="screening"
+        company_name="Meta", job_title="Research Scientist", fit_score=88.5, status="screening"
     )
 
     stats = career_powers.analyze_application_pipeline()
@@ -149,7 +141,7 @@ def test_pwr_336_interview_prep_and_red_flags():
     result = career_powers.interview_prep_and_red_flags(
         role_title="Principal AI Engineer",
         company_name="Apex Global",
-        job_description="High-pressure startup environment wearing many hats, rockstar required."
+        job_description="High-pressure startup environment wearing many hats, rockstar required.",
     )
 
     assert result["power_id"] == "PWR-336"
@@ -165,7 +157,7 @@ def test_pwr_337_offer_analysis_and_negotiation():
         role_title="Principal Systems Architect",
         base_salary=210000.0,
         bonus=25000.0,
-        equity_annual_val=40000.0
+        equity_annual_val=40000.0,
     )
 
     assert result["power_id"] == "PWR-337"
@@ -183,11 +175,14 @@ def test_career_rest_api_endpoints(client):
     assert res.json()["power_id"] == "PWR-328"
 
     # 2. POST /api/v1/career/scan
-    res = client.post("/api/v1/career/scan", json={
-        "job_title": "Staff Engineer",
-        "company_name": "Acme",
-        "description": "Python, FastAPI, distributed architectures."
-    })
+    res = client.post(
+        "/api/v1/career/scan",
+        json={
+            "job_title": "Staff Engineer",
+            "company_name": "Acme",
+            "description": "Python, FastAPI, distributed architectures.",
+        },
+    )
     assert res.status_code == 200
     assert res.json()["power_id"] == "PWR-329"
 
@@ -197,13 +192,16 @@ def test_career_rest_api_endpoints(client):
     assert res.json()["power_id"] == "PWR-335"
 
     # 4. POST /api/v1/career/offer-analysis
-    res = client.post("/api/v1/career/offer-analysis", json={
-        "company_name": "Acme",
-        "role_title": "Staff Engineer",
-        "base_salary": 200000.0,
-        "bonus": 20000.0,
-        "equity_annual_val": 30000.0
-    })
+    res = client.post(
+        "/api/v1/career/offer-analysis",
+        json={
+            "company_name": "Acme",
+            "role_title": "Staff Engineer",
+            "base_salary": 200000.0,
+            "bonus": 20000.0,
+            "equity_annual_val": 30000.0,
+        },
+    )
     assert res.status_code == 200
     assert res.json()["power_id"] == "PWR-337"
 
@@ -211,6 +209,7 @@ def test_career_rest_api_endpoints(client):
 def test_orchestrator_career_slash_commands():
     """Validates that orchestrator handles career slash commands instantly without LLM latency."""
     import asyncio
+
     res = asyncio.run(orchestrator.process_user_query("/job-scan Lead AI Architect at ScaleTech"))
     assert res["status"] == "COMPLETED"
     assert res["tier"] == "BYPASS"

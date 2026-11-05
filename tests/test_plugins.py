@@ -15,10 +15,12 @@ import pytest
 
 # ── PluginManifest ─────────────────────────────────────────────────────────────
 
+
 class TestPluginManifest:
     def test_parse_valid_manifest(self, tmp_path):
         """Valid plugin.json should parse into PluginManifest."""
         from plugins.loader import PluginManifest
+
         manifest_data = {
             "name": "test-plugin",
             "displayName": "Test Plugin",
@@ -40,6 +42,7 @@ class TestPluginManifest:
     def test_manifest_defaults(self, tmp_path):
         """Minimal plugin.json should use sensible defaults."""
         from plugins.loader import PluginManifest
+
         manifest_data = {"description": "Minimal plugin"}
         manifest_path = tmp_path / "plugin.json"
         manifest_path.write_text(json.dumps(manifest_data))
@@ -51,6 +54,7 @@ class TestPluginManifest:
     def test_manifest_to_dict(self, tmp_path):
         """PluginManifest.to_dict() produces serialisable output."""
         from plugins.loader import PluginManifest
+
         manifest_data = {"name": "test", "version": "1.0.0", "description": "Test"}
         manifest_path = tmp_path / "plugin.json"
         manifest_path.write_text(json.dumps(manifest_data))
@@ -63,10 +67,12 @@ class TestPluginManifest:
 
 # ── PluginLoader ───────────────────────────────────────────────────────────────
 
+
 class TestPluginLoader:
     def test_discover_finds_plugins(self, tmp_path):
         """discover() finds all subdirs with plugin.json."""
         from plugins.loader import PluginLoader
+
         # Create two plugin dirs
         for name in ["plugin-a", "plugin-b"]:
             d = tmp_path / name
@@ -79,6 +85,7 @@ class TestPluginLoader:
     def test_discover_ignores_hidden_dirs(self, tmp_path):
         """Directories starting with '.' are ignored."""
         from plugins.loader import PluginLoader
+
         hidden = tmp_path / ".hidden"
         hidden.mkdir()
         (hidden / "plugin.json").write_text(json.dumps({"name": "hidden"}))
@@ -89,13 +96,18 @@ class TestPluginLoader:
     def test_load_plugin_without_module(self, tmp_path):
         """Plugin without entry_point loads as metadata-only."""
         from plugins.loader import PluginLoader
+
         plugin_dir = tmp_path / "meta-only"
         plugin_dir.mkdir()
-        (plugin_dir / "plugin.json").write_text(json.dumps({
-            "name": "meta-only",
-            "version": "1.0.0",
-            "description": "Metadata only plugin",
-        }))
+        (plugin_dir / "plugin.json").write_text(
+            json.dumps(
+                {
+                    "name": "meta-only",
+                    "version": "1.0.0",
+                    "description": "Metadata only plugin",
+                }
+            )
+        )
         loader = PluginLoader(plugins_root=tmp_path)
         plugin = loader.load_plugin(plugin_dir / "plugin.json")
         assert plugin.manifest.name == "meta-only"
@@ -105,16 +117,19 @@ class TestPluginLoader:
     def test_load_plugin_with_python_module(self, tmp_path):
         """Plugin with __init__.py gets its module imported."""
         from plugins.loader import PluginLoader
+
         plugin_dir = tmp_path / "py-plugin"
         plugin_dir.mkdir()
-        (plugin_dir / "plugin.json").write_text(json.dumps({
-            "name": "py-plugin",
-            "version": "1.0.0",
-            "description": "Python plugin",
-        }))
-        (plugin_dir / "__init__.py").write_text(
-            "PLUGIN_NAME = 'py-plugin'\ndef setup(): pass\n"
+        (plugin_dir / "plugin.json").write_text(
+            json.dumps(
+                {
+                    "name": "py-plugin",
+                    "version": "1.0.0",
+                    "description": "Python plugin",
+                }
+            )
         )
+        (plugin_dir / "__init__.py").write_text("PLUGIN_NAME = 'py-plugin'\ndef setup(): pass\n")
         loader = PluginLoader(plugins_root=tmp_path)
         plugin = loader.load_plugin(plugin_dir / "plugin.json")
         if plugin.module:  # module loading is best-effort
@@ -123,14 +138,19 @@ class TestPluginLoader:
     def test_load_disabled_plugin(self, tmp_path):
         """Plugin with enabled=false in manifest loads as disabled."""
         from plugins.loader import PluginLoader
+
         plugin_dir = tmp_path / "disabled-plugin"
         plugin_dir.mkdir()
-        (plugin_dir / "plugin.json").write_text(json.dumps({
-            "name": "disabled-plugin",
-            "version": "1.0.0",
-            "description": "Disabled plugin",
-            "enabled": False,
-        }))
+        (plugin_dir / "plugin.json").write_text(
+            json.dumps(
+                {
+                    "name": "disabled-plugin",
+                    "version": "1.0.0",
+                    "description": "Disabled plugin",
+                    "enabled": False,
+                }
+            )
+        )
         loader = PluginLoader(plugins_root=tmp_path)
         plugin = loader.load_plugin(plugin_dir / "plugin.json")
         assert plugin.status == "disabled"
@@ -138,10 +158,13 @@ class TestPluginLoader:
     def test_load_all_returns_list(self, tmp_path):
         """load_all() returns a list of LoadedPlugin objects."""
         from plugins.loader import PluginLoader
+
         for i in range(3):
             d = tmp_path / f"plugin-{i}"
             d.mkdir()
-            (d / "plugin.json").write_text(json.dumps({"name": f"plugin-{i}", "version": "1.0.0", "description": f"Plugin {i}"}))
+            (d / "plugin.json").write_text(
+                json.dumps({"name": f"plugin-{i}", "version": "1.0.0", "description": f"Plugin {i}"})
+            )
         loader = PluginLoader(plugins_root=tmp_path)
         plugins = loader.load_all()
         assert len(plugins) == 3
@@ -149,15 +172,15 @@ class TestPluginLoader:
 
 # ── PluginRegistry ─────────────────────────────────────────────────────────────
 
+
 class TestPluginRegistry:
     def _make_registry(self, tmp_path, plugin_names=("test-plugin",)):
         from plugins.loader import PluginRegistry, PluginLoader
+
         for name in plugin_names:
             d = tmp_path / name
             d.mkdir()
-            (d / "plugin.json").write_text(json.dumps({
-                "name": name, "version": "1.0.0", "description": name
-            }))
+            (d / "plugin.json").write_text(json.dumps({"name": name, "version": "1.0.0", "description": name}))
         registry = PluginRegistry()
         registry._loader = PluginLoader(plugins_root=tmp_path)
         registry._plugins.clear()
@@ -204,6 +227,7 @@ class TestPluginRegistry:
     def test_career_ops_plugin_discoverable(self):
         """The real career-ops plugin shipped in the repo should be loadable."""
         from plugins.loader import PluginLoader
+
         loader = PluginLoader()  # uses actual plugins/ dir
         manifests = loader.discover()
         names = [m.parent.name for m in manifests]
@@ -212,11 +236,10 @@ class TestPluginRegistry:
     def test_career_ops_plugin_manifest_valid(self):
         """career-ops plugin.json should parse without errors."""
         from plugins.loader import PluginLoader, PluginManifest
+
         loader = PluginLoader()
         manifests = loader.discover()
-        career_ops_manifest = next(
-            (m for m in manifests if m.parent.name == "career-ops"), None
-        )
+        career_ops_manifest = next((m for m in manifests if m.parent.name == "career-ops"), None)
         if career_ops_manifest:
             manifest = PluginManifest.from_file(career_ops_manifest)
             assert manifest.name == "jarvis-career-ops"

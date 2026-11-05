@@ -26,4 +26,3 @@ __all__ = [
     "CareerOpsService",
     "career_service",
 ]
-
