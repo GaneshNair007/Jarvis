@@ -34,6 +34,7 @@ class ExecutionReport(BaseModel):
     cancelled_tasks: int
     duration_seconds: float
     reflection: Optional[ReflectionRecord] = None
+    fourth_law_compliant: bool = True  # Fourth Law: reflection record persisted before COMPLETED
     task_results: Dict[str, Any] = Field(default_factory=dict)
     timestamp: str = Field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
 
@@ -187,14 +188,28 @@ class TaskExecutor:
 
         duration = round(time.time() - start_time, 3)
 
-        # Post-Goal Reflection
+        # Post-Goal Reflection (FOURTH LAW: NO MEMORY WITHOUT REFLECTION)
         reflection = self.reflection_engine.reflect_on_goal(graph)
 
         # Compute summary
         completed = sum(1 for n in graph.nodes.values() if n.status == TaskStatus.COMPLETED)
         failed = sum(1 for n in graph.nodes.values() if n.status == TaskStatus.FAILED)
         cancelled = sum(1 for n in graph.nodes.values() if n.status == TaskStatus.CANCELLED)
-        overall_status = TaskStatus.COMPLETED if (completed == len(graph.nodes) and len(graph.nodes) > 0) else TaskStatus.FAILED
+
+        # Fourth Law completion gate (constitution §2, §10.5):
+        # a goal may only be declared COMPLETED once a substantive reflection
+        # record (lessons/failures/successes/gaps) exists in permanent storage.
+        all_tasks_done = completed == len(graph.nodes) and len(graph.nodes) > 0
+        reflection_record = self.reflection_engine.get_reflection(graph.goal_id)
+        fourth_law_ok = bool(reflection_record) if all_tasks_done else True
+        if all_tasks_done and not fourth_law_ok:
+            logger.error(
+                f"FOURTH LAW VIOLATION: Goal '{graph.goal_id}' finished all tasks but no "
+                "reflection record was persisted. Goal marked INCOMPLETE, not COMPLETED."
+            )
+            overall_status = TaskStatus.INCOMPLETE
+        else:
+            overall_status = TaskStatus.COMPLETED if all_tasks_done else TaskStatus.FAILED
 
         report = ExecutionReport(
             goal_id=graph.goal_id,
@@ -205,6 +220,7 @@ class TaskExecutor:
             cancelled_tasks=cancelled,
             duration_seconds=duration,
             reflection=reflection,
+            fourth_law_compliant=fourth_law_ok,
             task_results={tid: n.outputs for tid, n in graph.nodes.items()},
         )
 
