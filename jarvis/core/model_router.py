@@ -21,7 +21,7 @@ from jarvis.config import settings
 from jarvis.core.logger import get_logger
 from jarvis.core.privacy_gate import privacy_gate
 from jarvis.core.cost_governor import cost_governor
-from jarvis.core.api_key_rotator import api_key_rotator, gemini_rotator, openrouter_rotator
+from jarvis.core.api_key_rotator import api_key_rotator, gemini_rotator, openrouter_rotator, nvidia_nim_rotator
 
 logger = get_logger("core.model_router")
 
@@ -313,8 +313,9 @@ class ModelRouter:
                 "openai_available": bool(settings.openai_api_key),
                 "gemini_available": bool(settings.gemini_api_key or gemini_rotator.is_available),
                 "openrouter_available": bool(settings.openrouter_api_key or openrouter_rotator.is_available),
+                "nvidia_nim_available": nvidia_nim_rotator.is_available,
                 "circuit_breakers": {
-                    p: self.cost_governor.is_circuit_open(p) for p in ["anthropic", "openai", "google"]
+                    p: self.cost_governor.is_circuit_open(p) for p in ["anthropic", "openai", "google", "nvidia_nim"]
                 },
                 "key_rotator_summary": api_key_rotator.get_summary(),
             },
@@ -382,6 +383,25 @@ class ModelRouter:
                             }
                 except Exception as _ore:
                     logger.warning(f"OpenRouter inference fallback error: {_ore}")
+
+                # 1b. Try NVIDIA NIM multi-key rotator (OpenAI-compatible frontier gateway)
+                try:
+                    if nvidia_nim_rotator.is_available:
+                        nim_res = nvidia_nim_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                        if nim_res and nim_res.get("reply"):
+                            return {
+                                "task_id": decision.task_id,
+                                "status": "success",
+                                "tier": "TIER_3_CLOUD",
+                                "provider": "nvidia_nim",
+                                "model": nim_res.get("model", nvidia_nim_rotator.default_model),
+                                "reply": nim_res["reply"],
+                                "tokens_used": nim_res.get("tokens_used", len(prompt) // 4),
+                                "cost_usd": 0.0,
+                                "duration_ms": nim_res.get("duration_ms", duration_ms),
+                            }
+                except Exception as _nime:
+                    logger.warning(f"NVIDIA NIM inference fallback error: {_nime}")
 
                 # 2. Try multi-account Gemini key rotator
                 try:
@@ -453,6 +473,26 @@ class ModelRouter:
                             }
                 except Exception as _ore:
                     logger.warning(f"OpenRouter rotator execution error: {_ore}")
+
+            # 1b. Attempt NVIDIA NIM multi-key rotator (OpenAI-compatible frontier gateway)
+            if not ("gemini" in decision.selected_model or "claude" in decision.selected_model or "gpt" in decision.selected_model):
+                try:
+                    if nvidia_nim_rotator.is_available:
+                        nim_res = nvidia_nim_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                        if nim_res and nim_res.get("reply"):
+                            return {
+                                "task_id": decision.task_id,
+                                "status": "success",
+                                "tier": "TIER_3_CLOUD",
+                                "provider": "nvidia_nim",
+                                "model": nim_res.get("model", nvidia_nim_rotator.default_model),
+                                "reply": nim_res["reply"],
+                                "tokens_used": nim_res.get("tokens_used", len(prompt) // 4),
+                                "cost_usd": 0.0,
+                                "duration_ms": nim_res.get("duration_ms", round((time.time() - start_time) * 1000, 2)),
+                            }
+                except Exception as _nime:
+                    logger.warning(f"NVIDIA NIM rotator execution error: {_nime}")
 
             # 2. Attempt Gemini multi-account rotator if Gemini model targeted
             if "gemini" in decision.selected_model and gemini_rotator.is_available:

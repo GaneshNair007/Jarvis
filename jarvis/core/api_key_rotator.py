@@ -698,6 +698,146 @@ class GroqKeyRotator(BaseKeyRotator):
         return None
 
 
+class NvidiaNimKeyRotator(BaseKeyRotator):
+    """
+    Multi-key load-balancing rotator for NVIDIA NIM (build.nvidia.com).
+    OpenAI-compatible /v1/chat/completions endpoint; multiplexes across multiple
+    NVIDIA_API_KEY credentials with automatic 429 failover.
+
+    Key discovery precedence:
+      1. NVIDIA_API_KEYS  (comma-separated multi-key)
+      2. NVIDIA_KEY_1 .. NVIDIA_KEY_5 (numbered)
+      3. NVIDIA_API_KEY   (single primary)
+    """
+
+    def __init__(self, keys: Optional[List[str]] = None):
+        super().__init__(provider="nvidia_nim")
+        self.base_url = os.getenv("NVIDIA_NIM_BASE_URL", "https://integrate.api.nvidia.com/v1")
+        self.default_model = os.getenv("NVIDIA_DEFAULT_MODEL", "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning")
+
+        if keys:
+            for k in keys:
+                self.add_key(k)
+        else:
+            self._discover_keys()
+
+    def _discover_keys(self) -> None:
+        """Discovers keys from environment and settings (never logs raw values)."""
+        discovered: List[str] = []
+
+        # Comma-separated keys
+        multi = os.getenv("NVIDIA_API_KEYS") or getattr(settings, "nvidia_api_keys", None)
+        if multi and isinstance(multi, str):
+            for part in multi.split(","):
+                if part.strip():
+                    discovered.append(part.strip())
+
+        # Numbered keys
+        for var in ["NVIDIA_KEY_1", "NVIDIA_KEY_2", "NVIDIA_KEY_3", "NVIDIA_KEY_4", "NVIDIA_KEY_5"]:
+            val = os.getenv(var)
+            if val and val.strip():
+                discovered.append(val.strip())
+
+        # Single primary key
+        single = os.getenv("NVIDIA_API_KEY") or getattr(settings, "nvidia_api_key", None)
+        if single and isinstance(single, str) and single.strip():
+            discovered.append(single.strip())
+
+        for k in discovered:
+            self.add_key(k)
+
+        logger.info(f"NvidiaNimKeyRotator initialized with {len(self.keys)} keys.")
+
+    def generate_chat_completion(
+        self,
+        prompt: str,
+        system_instruction: str = "You are JARVIS, an autonomous personal AI assistant created for Ganesh Nair. Reply concisely with your signature Iron Man tone.",
+        model: Optional[str] = None,
+        timeout_sec: float = 20.0,
+        max_retries: Optional[int] = None,
+    ) -> Optional[Dict[str, Any]]:
+        """Generates chat completion via NVIDIA NIM with automatic failover across keys."""
+        if not self.is_available or not prompt:
+            return None
+
+        # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
+        try:
+            from jarvis.security.ten_layer_shield import jarvis_security_suite
+            prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+            if system_instruction:
+                system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
+        except Exception as _sec_err:
+            logger.critical(f"NVIDIA egress firewall blocked inference: {_sec_err}")
+            raise RuntimeError(f"Cloud egress blocked by Zero-Leak Firewall: {_sec_err}") from _sec_err
+
+        target_model = model or self.default_model
+        attempts = max_retries if max_retries is not None else max(len(self.keys), 2)
+        start_time = time.time()
+
+        for attempt in range(attempts):
+            api_key = self.get_next_key()
+            if not api_key:
+                break
+
+            tracker = self._trackers[api_key]
+            url = f"{self.base_url.rstrip('/')}/chat/completions"
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            }
+            payload = json.dumps({
+                "model": target_model,
+                "messages": [
+                    {"role": "system", "content": system_instruction},
+                    {"role": "user", "content": prompt},
+                ],
+                "temperature": 0.7,
+                "max_tokens": 1024,
+            }).encode("utf-8")
+
+            req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
+            try:
+                with urllib.request.urlopen(req, timeout=timeout_sec) as resp:
+                    if resp.status == 200:
+                        data = json.loads(resp.read().decode("utf-8"))
+                        choice = data.get("choices", [{}])[0]
+                        message = choice.get("message", {}) or {}
+                        # Reasoning models (e.g. nemotron-3) may place final text
+                        # in content while streaming their chain in reasoning_content.
+                        reply_text = (
+                            (message.get("content") or "").strip()
+                            or (message.get("reasoning_content") or "").strip()
+                            or (choice.get("text") or "").strip()
+                        )
+                        tokens = data.get("usage", {}).get(
+                            "total_tokens", len(prompt) // 4 + len(reply_text) // 4
+                        )
+                        duration_ms = round((time.time() - start_time) * 1000, 2)
+                        tracker.record_success()
+                        return {
+                            "status": "success",
+                            "provider": "nvidia_nim",
+                            "model": target_model,
+                            "reply": reply_text,
+                            "tokens_used": tokens,
+                            "key_used": tracker.redacted_key,  # redacted only, never raw
+                            "duration_ms": duration_ms,
+                        }
+            except urllib.error.HTTPError as e:
+                if e.code == 429:
+                    tracker.record_429(cooldown_seconds=30.0)
+                    continue
+                else:
+                    tracker.record_error()
+                    logger.error(f"NVIDIA NIM HTTP Error {e.code} on key {tracker.redacted_key}. Rotating keys.")
+            except Exception as e:
+                tracker.record_error()
+                logger.warning(f"NVIDIA NIM request error: {e}")
+
+        return None
+
+
 class APIKeyRotatorManager:
     """Unified manager aggregating all provider key rotators."""
 
@@ -705,10 +845,11 @@ class APIKeyRotatorManager:
         self.gemini = GeminiKeyRotator()
         self.openrouter = OpenRouterKeyRotator()
         self.groq = GroqKeyRotator()
+        self.nvidia_nim = NvidiaNimKeyRotator()
 
     @property
     def is_available(self) -> bool:
-        return self.gemini.is_available or self.openrouter.is_available or self.groq.is_available
+        return self.gemini.is_available or self.openrouter.is_available or self.groq.is_available or self.nvidia_nim.is_available
 
     def get_summary(self) -> Dict[str, Any]:
         """Telemetry summary across all providers."""
@@ -716,6 +857,7 @@ class APIKeyRotatorManager:
             "gemini": self.gemini.get_metrics(),
             "openrouter": self.openrouter.get_metrics(),
             "groq": self.groq.get_metrics(),
+            "nvidia_nim": self.nvidia_nim.get_metrics(),
         }
 
 
@@ -724,3 +866,4 @@ api_key_rotator = APIKeyRotatorManager()
 gemini_rotator = api_key_rotator.gemini
 openrouter_rotator = api_key_rotator.openrouter
 groq_rotator = api_key_rotator.groq
+nvidia_nim_rotator = api_key_rotator.nvidia_nim
