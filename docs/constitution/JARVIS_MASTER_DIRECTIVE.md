@@ -1,9 +1,10 @@
 # JARVIS MASTER CONSTITUTION & AUTONOMOUS EXECUTION DIRECTIVE
 
-**Version:** 1.1.0 (consolidated)
+**Version:** 1.2.0 (consolidated; amended)
 **Date:** 2026-11-06
 **Owner:** Ganesh Nair
 **Status:** Constitutional. This document is the single source of truth for JARVIS development. Every future sprint, agent, repository, workflow, and pull request must conform to it.
+**Amendment history:** v1.1.0 consolidation · v1.2.0 — Fourth Law added (NO MEMORY WITHOUT REFLECTION)
 
 Companion machine-readable layer (enforced by code, aligned with this document):
 
@@ -62,7 +63,7 @@ Research → Architecture → Repository → Code → Tests → Deployment
 
 ---
 
-## PART II — THE THREE LAWS
+## PART II — THE FOUR LAWS
 
 ### FIRST LAW — NO EVIDENCE = NO CLAIM
 
@@ -128,6 +129,31 @@ Before any action, check:
 If **not**: fail honestly. Never hallucinate capabilities.
 
 A disconnected connector must produce an honest refusal — never a hallucinated result.
+
+### FOURTH LAW — NO MEMORY WITHOUT REFLECTION
+
+A project is **not complete** until it has produced a verifiable **reflection record** containing:
+
+- Lessons (improvements)
+- Failures
+- Successes
+- Capability gaps (opportunities/improvement requests)
+
+Rules:
+
+1. The reflection record must be written **before** the project, goal, or task is marked `COMPLETED`.
+2. The record must be persisted to permanent memory (long-term memory, § 9.2). **No persistable memory, no completion.**
+3. Every "success" entry in the record must be evidence-backed (First Law). Reflection without evidence is itself a First Law violation.
+4. Records are stored forever and fed into the Learning Model (§ 6.3).
+5. A project that lacks a reflection record is, by definition, **incomplete** — regardless of what any tracker, status flag, or human memory says.
+
+Why: this converts JARVIS from automation into **learning automation**. Completion without reflection is wasted experience. Reflection without memory is theater.
+
+**Runtime enforcement (implemented):**
+
+- `TaskReflectionEngine.reflect_on_goal()` generates and persists the record (`data/reflections.json`) with exactly the mandated fields (`successes`, `failures`, `improvements`, `opportunities`).
+- `TaskExecutor.run()` gates the goal-level `COMPLETED` transition: if no persisted reflection record exists for the goal, the goal is marked `INCOMPLETE` (new honest status) and `fourth_law_compliant=false` is recorded on the `ExecutionReport`.
+- `jarvis/constitution/values.yaml` mirrors the law as `reflection_before_completion`.
 
 ---
 
@@ -518,7 +544,7 @@ If none exist: say so. Do not pretend a report was sent.
 
 #### Phase 9 — Reflection
 
-After completion, answer:
+**Mandatory before completion (Fourth Law).** Before the project can be considered complete, produce and persist the reflection record. After execution, answer:
 
 - What worked?
 - What failed?
@@ -772,6 +798,25 @@ Merge
 
 Reflection transforms execution into learning. Store every reflection forever. See `docs/architecture/SELF_IMPROVEMENT_PROTOCOL.md` and `docs/architecture/SAFE_PR_WORKFLOW.md` for enforcement.
 
+### 10.5 Completion Gate (Fourth Law)
+
+The two gates that jointly define `COMPLETED`:
+
+```
+Execution finished?  ──no──► still running / blocked (honest)
+        │yes
+Tests + QA gate passed?  ──no──► FAILED (honest)
+        │yes
+Reflection record written & persisted?  ──no──► INCOMPLETE (honest, Fourth Law)
+        │yes
+    goal = COMPLETED (evidence-backed)
+```
+
+- `mandatory_verification_gate` (`jarvis/constitution/constraints.yaml`) guards per-task quality; this gate guards goal-level learning.
+- Daily reflection (§ 10.2) must surface any project that reached its end state without a reflection record.
+- Weekly reflection (§ 10.3) reports the count of reflection-less projects — **target: 0**.
+- Runtime: `TaskExecutor.run()` enforces this via the `INCOMPLETE` status and `fourth_law_compliant` report flag.
+
 ---
 
 ## PART XI — CAPABILITY REGISTRY & TRUST COVERAGE METRIC
@@ -820,7 +865,7 @@ Do **not** optimize for: repositories, agents, models, features.
 
 Optimize for:
 
-- Projects completed
+- Projects completed *(a project counts as completed only when the Fourth Law gate has passed: execution + evidence + persisted reflection, § 10.5)*
 - Time saved
 - Opportunities discovered
 - Learning gained
@@ -1016,6 +1061,7 @@ A pull request conforms to this constitution when it satisfies every checked ite
 - [ ] Tests exist and pass before claiming success
 - [ ] Sensitive actions behind human approval (§ 12)
 - [ ] Capability Registry updated if the change adds/removes a capability
+- [ ] Fourth Law honored: reflection record (lessons, failures, successes, capability gaps) is generated **and persisted** before anything is marked COMPLETED (§ 2, § 10.5); no new fake "completion" paths
 - [ ] Trust Coverage not reduced (§ 11.2)
 
 ## APPENDIX B — SOURCE DOCUMENTS
@@ -1028,3 +1074,5 @@ This v1.1 document supersedes and consolidates the following (now redundant) dra
 4. JARVIS Executable Agent Specification (runtime YAML)
 
 They are retained here as Parts I–XIV of this document. Older copies (`JARVIS_MASTER_PLAN.md`, `JARVIS_FINAL_BLUEPRINT.md`, `IRON_MAN_JARVIS_TARGET.md`) remain as historical references and must defer to this file in any conflict.
+
+**v1.2.0 (2026-11-06):** FOURTH LAW — NO MEMORY WITHOUT REFLECTION — amended into Part II, enforced by the `TaskExecutor` Fourth Law gate (INCOMPLETE status, § 10.5), the `reflection_before_completion` value in `jarvis/constitution/values.yaml`, and Appendix A item 8. Change acceptance rationale: completion semantics change only tightens the definition; no existing honest completion path becomes invalid.
