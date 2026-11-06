@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} — Astra Store{% endblock %}
+{% block content %}
+<a href="/">← Back to shop</a>
+<h1>{{ product.name }}</h1>
+<p>{{ product.description }}</p>
+<p class="price">${{ '%.2f'|format(product.price) }}</p>
+<p>{{ product.category }} · {{ product.stock }} in stock</p>
+<button onclick="addToCart({{ product.id }}, '{{ product.name|e }}', {{ product.price }})">Add to cart</button>
+{% endblock %}

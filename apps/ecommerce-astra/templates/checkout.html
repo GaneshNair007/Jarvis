@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Checkout</h1>
+<div id="cart"></div>
+<form id="orderform">
+<label>Name <input name="customer_name" required></label>
+<label>Email <input name="email" type="email" required></label>
+<label>Address <input name="address"></label>
+<button>Place order</button>
+</form>
+<p id="msg"></p>
+<script>
+function renderCart(){const cart=JSON.parse(localStorage.getItem('cart')||'[]');
+document.getElementById('cart').innerHTML=cart.length?cart.map(i=>`<div>${i.name} x ${i.qty} — $${(i.price*i.qty).toFixed(2)}</div>`).join(''):'<p>Cart is empty.</p>';}
+renderCart();
+document.getElementById('orderform').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target);
+const cart=JSON.parse(localStorage.getItem('cart')||'[]');
+const r=await fetch('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customer_name:f.get('customer_name'),email:f.get('email'),address:f.get('address'),items:cart.map(i=>({product_id:i.id,qty:i.qty}))})});
+const d=await r.json();document.getElementById('msg').textContent=r.ok?`Order ${d.id} created! Total $${d.total}.`:`Error: ${JSON.stringify(d)}`;
+if(r.ok){localStorage.removeItem('cart');renderCart();}};
+</script>
+{% endblock %}

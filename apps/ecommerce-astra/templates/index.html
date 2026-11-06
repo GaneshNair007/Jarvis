@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Shop</h1>
+<form method="get" action="/" class="filters">
+<input name="q" placeholder="Search products..." value="{{ q }}">
+<select name="category"><option value="">All categories</option>
+{% for c in categories %}<option {% if category==c %}selected{% endif %}>{{ c }}</option>{% endfor %}</select>
+<button>Filter</button>
+</form>
+<div class="grid">
+{% for p in products %}
+<article class="card"><h3><a href="/product/{{ p.id }}">{{ p.name }}</a></h3>
+<p>{{ p.description }}</p><p class="price">${{ '%.2f'|format(p.price) }}</p>
+<p class="cat">{{ p.category }} · {{ p.stock }} in stock</p>
+<button onclick="addToCart({{ p.id }}, '{{ p.name|e }}', {{ p.price }})">Add to cart</button></article>
+{% else %}<p>No products found.</p>{% endfor %}
+</div>
+{% endblock %}

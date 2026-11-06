@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Order history</h1>
+{% for o in orders %}
+<article class="card"><h3>Order #{{ o.id }}</h3>
+<p>{{ o.customer_name }} · {{ o.email }} · ${{ '%.2f'|format(o.total) }} · {{ o.status }}</p>
+<ul>{% for i in o.items_parsed %}<li>{{ i.name }} x {{ i.qty }} = ${{ i.line_total }}</li>{% endfor %}</ul>
+</article>
+{% else %}<p>No orders yet.</p>{% endfor %}
+{% endblock %}
