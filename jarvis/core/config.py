@@ -15,8 +15,10 @@ from jarvis.core.api_key_rotator import (
     api_key_rotator,
     gemini_rotator,
     openrouter_rotator,
+    nvidia_nim_rotator,
     GeminiKeyRotator,
     OpenRouterKeyRotator,
+    NvidiaNimKeyRotator,
 )
 
 __all__ = [
@@ -25,6 +27,8 @@ __all__ = [
     "api_key_rotator",
     "gemini_rotator",
     "openrouter_rotator",
+    "nvidia_nim_rotator",
     "GeminiKeyRotator",
     "OpenRouterKeyRotator",
+    "NvidiaNimKeyRotator",
 ]
