@@ -336,6 +336,24 @@ class PowerRegistry:
         cat = (p.get('category') or 'General').lower()
         pid = p.get('power_id') or power_id
 
+        # ID-range category overrides: numeric power families are authoritative
+        # when integration-registered catalog entries collide with core blocks
+        # (e.g. Home Assistant PWR-320..327 overwriting the Advanced Iron Man
+        # PWR-308..327 block caused PWR-327 to route into the smart-home branch).
+        try:
+            pid_num = int(pid.split('-', 1)[1])
+        except (IndexError, ValueError):
+            pid_num = -1
+        if pid_num >= 0:
+            for lo, hi, canonical_category in (
+                (308, 327, 'advanced iron man'),
+                (328, 337, 'career-ops'),
+                (338, 355, 'research'),
+            ):
+                if lo <= pid_num <= hi:
+                    cat = canonical_category
+                    break
+
         try:
             # 1. Voice (PWR-001 to PWR-005)
             if 'voice' in cat:
