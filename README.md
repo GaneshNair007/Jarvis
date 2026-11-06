@@ -224,6 +224,8 @@ tests/test_full_power_catalog.py ............. 27 PASSED
 ## 📚 Architectural Documentation Suite
 
 Deep-dive specifications and governance documents:
+
+- [JARVIS_MASTER_DIRECTIVE.md](docs/constitution/JARVIS_MASTER_DIRECTIVE.md) — **Constitution.** The single source of truth: three laws, mission, sprints, autonomous project execution directive, departments, memory, self-improvement protocol, and conformance checklist.
 - [TASK_GRAPH_ENGINE.md](docs/architecture/TASK_GRAPH_ENGINE.md) — Hierarchical DAG task decomposition, cycle detection, parallel waves.
 - [GOAL_DECOMPOSITION.md](docs/architecture/GOAL_DECOMPOSITION.md) — Converting abstract prompts into actionable DAGs.
 - [AGENT_ROUTING.md](docs/architecture/AGENT_ROUTING.md) — Central CEO Router and Department Worker model.
