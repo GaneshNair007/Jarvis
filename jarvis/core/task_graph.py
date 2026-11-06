@@ -20,6 +20,7 @@ class TaskStatus(str, Enum):
     COMPLETED = "completed"
     FAILED = "failed"
     CANCELLED = "cancelled"
+    INCOMPLETE = "incomplete"  # Fourth Law: execution finished but reflection record missing
 
 
 class Priority(str, Enum):
