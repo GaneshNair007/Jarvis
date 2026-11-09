@@ -138,7 +138,7 @@ class ResearchWorker:
                   <body>
                     <h1>{first_item.title}</h1>
                     <h2>Overview</h2>
-                    <p>{first_item.snippet or f'Official documentation reference for {topic}.'}</p>
+                    <p>{first_item.snippet or f"Official documentation reference for {topic}."}</p>
                     <a href="{first_item.url}">Source Documentation Link</a>
                   </body>
                 </html>
@@ -226,7 +226,9 @@ class ResearchWorker:
 
         for i, c in enumerate(citations, 1):
             sec_status = "⚠️ Quarantined (Injection Match)" if c.has_injection_flag else "✅ Clean"
-            lines.append(f"| {i} | **{c.title}** | [{c.url}]({c.url}) | `{c.screenshot_sha256[:16]}...` | {sec_status} |")
+            lines.append(
+                f"| {i} | **{c.title}** | [{c.url}]({c.url}) | `{c.screenshot_sha256[:16]}...` | {sec_status} |"
+            )
 
         lines.extend(["", "## 3. Detailed Syntheses & Key Findings", ""])
 
@@ -239,11 +241,13 @@ class ResearchWorker:
                 lines.append(f"- **Sections Extracted**: {', '.join(c.headings[:4])}")
             lines.append(f"\n**Core Content Summary:**\n{c.summary}\n")
 
-        lines.extend([
-            "---",
-            "## 4. Verification & Provenance Guarantee",
-            "All actions executed in a sandboxed, ephemeral Playwright context with zero credential leakage. "
-            "Visual receipts and raw SHA-256 checksums are registered in the append-only audit ledger.",
-        ])
+        lines.extend(
+            [
+                "---",
+                "## 4. Verification & Provenance Guarantee",
+                "All actions executed in a sandboxed, ephemeral Playwright context with zero credential leakage. "
+                "Visual receipts and raw SHA-256 checksums are registered in the append-only audit ledger.",
+            ]
+        )
 
         return "\n".join(lines)

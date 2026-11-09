@@ -57,8 +57,12 @@ class OpenRouterClient:
         default_model: Optional[str] = None,
         timeout: float = 45.0,
     ):
-        self.api_key = api_key or getattr(settings, "openrouter_api_key", None) or os.environ.get("OPENROUTER_API_KEY", "")
-        self.base_url = (base_url or getattr(settings, "openrouter_base_url", "https://openrouter.ai/api/v1")).rstrip("/")
+        self.api_key = (
+            api_key or getattr(settings, "openrouter_api_key", None) or os.environ.get("OPENROUTER_API_KEY", "")
+        )
+        self.base_url = (base_url or getattr(settings, "openrouter_base_url", "https://openrouter.ai/api/v1")).rstrip(
+            "/"
+        )
         self.default_model = default_model or getattr(settings, "openrouter_default_model", "openrouter/free")
         self.timeout = timeout
         self._cached_free_models: List[str] = []
@@ -180,7 +184,7 @@ class OpenRouterClient:
                                 resp.status_code,
                                 resp.text[:180],
                             )
-                            time.sleep(1.0 * (2 ** attempt))
+                            time.sleep(1.0 * (2**attempt))
                             continue
                         else:
                             last_error = f"HTTP {resp.status_code}: {resp.text[:200]}"
@@ -191,7 +195,9 @@ class OpenRouterClient:
                     logger.warning("OpenRouter exception on %s (attempt %d): %s", candidate, attempt + 1, e)
                     time.sleep(1.0)
 
-        raise RuntimeError(f"OpenRouter free chat completion failed after trying candidates {candidate_models}. Last error: {last_error}")
+        raise RuntimeError(
+            f"OpenRouter free chat completion failed after trying candidates {candidate_models}. Last error: {last_error}"
+        )
 
     def stream_chat(
         self,
@@ -229,7 +235,7 @@ class OpenRouterClient:
                     if not line:
                         continue
                     if line.startswith("data: "):
-                        data_str = line[len("data: "):].strip()
+                        data_str = line[len("data: ") :].strip()
                         if data_str == "[DONE]":
                             break
                         try:

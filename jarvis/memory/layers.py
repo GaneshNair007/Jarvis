@@ -16,6 +16,7 @@ import json
 from typing import Dict, Any, List, Optional
 from jarvis.memory.store import db_store
 
+
 class MemoryLayerManager:
     LAYERS = ["CAPTURE", "RAW", "EPISODIC", "SEMANTIC", "PROCEDURAL", "WORKING", "DIRECTIVE"]
 
@@ -30,7 +31,7 @@ class MemoryLayerManager:
         node_id: Optional[str] = None,
         is_hypothesis: bool = False,
         confidence: float = 1.0,
-        evidence_count: int = 1
+        evidence_count: int = 1,
     ) -> str:
         """Stores a new memory node in the specified cognitive layer with fact/hypothesis metadata."""
         layer_upper = layer.upper()
@@ -43,7 +44,8 @@ class MemoryLayerManager:
         hypo_int = 1 if is_hypothesis else 0
 
         with self.store._get_connection() as conn:
-            conn.execute("""
+            conn.execute(
+                """
             INSERT INTO memory_nodes (id, layer, content, metadata, is_hypothesis, confidence, evidence_count, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
@@ -53,7 +55,9 @@ class MemoryLayerManager:
                 confidence = excluded.confidence,
                 evidence_count = excluded.evidence_count,
                 updated_at = excluded.updated_at
-            """, (node_id, layer_upper, content, meta_str, hypo_int, confidence, evidence_count, now, now))
+            """,
+                (node_id, layer_upper, content, meta_str, hypo_int, confidence, evidence_count, now, now),
+            )
             conn.commit()
 
         return node_id
@@ -61,12 +65,7 @@ class MemoryLayerManager:
     def add_fact(self, layer: str, content: str, metadata: Optional[Dict[str, Any]] = None) -> str:
         """Stores an explicit user statement or verified fact (100% confidence)."""
         return self.store_memory(
-            layer=layer,
-            content=content,
-            metadata=metadata,
-            is_hypothesis=False,
-            confidence=1.0,
-            evidence_count=1
+            layer=layer, content=content, metadata=metadata, is_hypothesis=False, confidence=1.0, evidence_count=1
         )
 
     def add_hypothesis(
@@ -75,7 +74,7 @@ class MemoryLayerManager:
         content: str,
         confidence: float = 0.7,
         evidence_count: int = 1,
-        metadata: Optional[Dict[str, Any]] = None
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> str:
         """Stores an inferred user pattern as a hypothesis requiring confidence and evidence count."""
         return self.store_memory(
@@ -84,7 +83,7 @@ class MemoryLayerManager:
             metadata=metadata,
             is_hypothesis=True,
             confidence=max(0.0, min(1.0, confidence)),
-            evidence_count=max(1, evidence_count)
+            evidence_count=max(1, evidence_count),
         )
 
     def recall(
@@ -93,7 +92,7 @@ class MemoryLayerManager:
         query: Optional[str] = None,
         is_hypothesis: Optional[bool] = None,
         min_confidence: float = 0.0,
-        limit: int = 20
+        limit: int = 20,
     ) -> List[Dict[str, Any]]:
         """Recalls memory nodes filtered by layer, query, hypothesis status, and confidence."""
         sql = "SELECT * FROM memory_nodes WHERE 1=1"
@@ -146,7 +145,7 @@ class MemoryLayerManager:
             content=rule_text,
             metadata={"rule_name": rule_name, "priority": "CRITICAL"},
             is_hypothesis=False,
-            confidence=1.0
+            confidence=1.0,
         )
 
     def get_directives(self) -> List[Dict[str, Any]]:
@@ -156,6 +155,7 @@ class MemoryLayerManager:
     def get_storage_stats(self) -> Dict[str, Any]:
         """Returns storage metrics from the database."""
         return self.store.get_storage_stats()
+
 
 # Singleton Memory Manager
 memory_manager = MemoryLayerManager()

@@ -10,6 +10,7 @@ import wave
 from typing import Dict, Any, Optional
 from jarvis.core.logger import logger
 
+
 class SpeechToText:
     def __init__(self, model_size: str = "base.en"):
         self.model_size = model_size
@@ -19,6 +20,7 @@ class SpeechToText:
     def _init_backend(self) -> None:
         try:
             from faster_whisper import WhisperModel
+
             self._whisper_model = WhisperModel(self.model_size, device="cpu", compute_type="int8")
             logger.info(f"faster-whisper model '{self.model_size}' loaded successfully.")
         except ImportError:
@@ -41,12 +43,7 @@ class SpeechToText:
                 segments, info = self._whisper_model.transcribe(audio_io, beam_size=5)
                 text = " ".join([seg.text for seg in segments]).strip()
                 latency = (time.time() - start_time) * 1000
-                return {
-                    "text": text,
-                    "language": info.language,
-                    "confidence": 0.95,
-                    "latency_ms": round(latency, 2)
-                }
+                return {"text": text, "language": info.language, "confidence": 0.95, "latency_ms": round(latency, 2)}
             except Exception as e:
                 logger.error(f"faster-whisper transcription error: {e}")
 
@@ -71,8 +68,9 @@ class SpeechToText:
             "confidence": 0.90,
             "duration_sec": round(duration_sec, 2),
             "latency_ms": round(latency, 2),
-            "engine": "local_speech_decoder"
+            "engine": "local_speech_decoder",
         }
+
 
 # Singleton Speech to Text
 stt_engine = SpeechToText()

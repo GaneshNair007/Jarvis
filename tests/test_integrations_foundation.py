@@ -30,12 +30,14 @@ from integrations import (
     IntegrationStatus,
 )
 
+
 @pytest.fixture
 def client():
     # Ensure kill switch is reset before each test
     policy_gate.reset_kill_switch()
     integration_registry.reset_all_kill_switches()
     return TestClient(app)
+
 
 # 1. Connection status
 def test_connection_status(client):
@@ -62,6 +64,7 @@ def test_connection_status(client):
     assert con_res.status_code == 200
     assert con_res.json()["connected"] is True
 
+
 # 2. Missing credentials returns setup guide, never fake success
 def test_missing_credentials(client):
     # Ensure GitHub credential is not present
@@ -70,9 +73,7 @@ def test_missing_credentials(client):
     gh.enable()
 
     # Attempt execution without credentials
-    res = client.post("/integrations/github/powers/github.list_repos/execute", json={
-        "params": {}
-    })
+    res = client.post("/integrations/github/powers/github.list_repos/execute", json={"params": {}})
     assert res.status_code == 200
     data = res.json()
     assert data["status"] == "UNCONFIGURED"
@@ -85,11 +86,13 @@ def test_missing_credentials(client):
     assert health_res.status_code == 200
     assert health_res.json()["status"] == IntegrationStatus.UNCONFIGURED.value
 
+
 # 3. Invalid credentials handling
 def test_invalid_credentials():
     is_valid, missing = credential_manager.validate_credentials(["NON_EXISTENT_SECRET_XYZ"])
     assert is_valid is False
     assert "NON_EXISTENT_SECRET_XYZ" in missing
+
 
 # 4. Permission denial & disabled state enforcement
 def test_permission_denial_when_disabled(client):
@@ -97,9 +100,7 @@ def test_permission_denial_when_disabled(client):
     sys_integ.disable()
 
     # Attempt to execute power while integration is disabled
-    res = client.post("/integrations/system_diagnostics/powers/system.health_probe/execute", json={
-        "params": {}
-    })
+    res = client.post("/integrations/system_diagnostics/powers/system.health_probe/execute", json={"params": {}})
     assert res.status_code == 200
     assert res.json()["status"] == "DISABLED"
     assert "disabled" in res.json()["reason"]
@@ -109,36 +110,39 @@ def test_permission_denial_when_disabled(client):
     assert enable_res.status_code == 200
     assert enable_res.json()["enabled"] is True
 
+
 # 5. Approval requirement & frozen content hash
 def test_approval_requirement_and_frozen_hash(client):
     sys_integ = integration_registry.get("system_diagnostics")
     sys_integ.enable()
 
     # Tier 2 action: system.clear_temp_cache requires human approval
-    res = client.post("/integrations/system_diagnostics/powers/system.clear_temp_cache/execute", json={
-        "params": {"target_dir": "scratch/temp_cache"}
-    })
+    res = client.post(
+        "/integrations/system_diagnostics/powers/system.clear_temp_cache/execute",
+        json={"params": {"target_dir": "scratch/temp_cache"}},
+    )
     assert res.status_code == 200
     data = res.json()
     assert data["status"] == "AWAITING_APPROVAL"
     assert data["approval_required"] is True
     assert "approval_id" in data
     assert "content_hash" in data
-    assert len(data["content_hash"]) == 64 # SHA-256 digest
+    assert len(data["content_hash"]) == 64  # SHA-256 digest
 
     # Retrieve the approval token registered for this approval request
     approval_id = data["approval_id"]
     token = policy_gate.pending_approvals[approval_id]["token"]
 
     # Re-execute with approval token
-    approved_res = client.post("/integrations/system_diagnostics/powers/system.clear_temp_cache/execute", json={
-        "params": {"target_dir": "scratch/temp_cache"},
-        "approval_token": token
-    })
+    approved_res = client.post(
+        "/integrations/system_diagnostics/powers/system.clear_temp_cache/execute",
+        json={"params": {"target_dir": "scratch/temp_cache"}, "approval_token": token},
+    )
     assert approved_res.status_code == 200
     app_data = approved_res.json()
     assert app_data["status"] == "SUCCESS"
     assert app_data["result"]["action"] == "purged_scratch_cache"
+
 
 # 6. Rate limiting enforcement
 def test_rate_limiting():
@@ -159,6 +163,7 @@ def test_rate_limiting():
     # Reset
     rate_limiter.reset(test_id)
     assert rate_limiter.record_call(test_id) is True
+
 
 # 7. Retry policy with exponential backoff
 def test_retry_policy():
@@ -182,14 +187,16 @@ def test_retry_policy():
     with pytest.raises(PermissionError):
         policy.execute(unauth_func)
 
+
 # 8. Dry-run mode without external mutations
 def test_dry_run_mode(client):
     sys_integ = integration_registry.get("system_diagnostics")
     sys_integ.enable()
 
-    res = client.post("/integrations/system_diagnostics/powers/system.clear_temp_cache/dry-run", json={
-        "params": {"target_dir": "scratch/logs"}
-    })
+    res = client.post(
+        "/integrations/system_diagnostics/powers/system.clear_temp_cache/dry-run",
+        json={"params": {"target_dir": "scratch/logs"}},
+    )
     assert res.status_code == 200
     plan = res.json()
     assert plan["status"] == "DRY_RUN_READY"
@@ -199,15 +206,14 @@ def test_dry_run_mode(client):
     assert "content_hash" in plan
     assert "simulated_params" in plan
 
+
 # 9. Audit logging of all actions
 def test_audit_logging(client):
     sys_integ = integration_registry.get("system_diagnostics")
     sys_integ.enable()
 
     # Execute health probe
-    client.post("/integrations/system_diagnostics/powers/system.health_probe/execute", json={
-        "params": {}
-    })
+    client.post("/integrations/system_diagnostics/powers/system.health_probe/execute", json={"params": {}})
 
     # Retrieve audit events for this integration
     audit_res = client.get("/integrations/system_diagnostics/audit")
@@ -216,6 +222,7 @@ def test_audit_logging(client):
     assert audit_data["total_events"] > 0
     actions = [e["action"] for e in audit_data["events"]]
     assert any("EXECUTE_system.health_probe" in a for a in actions)
+
 
 # 10. Kill switch immediate halt
 def test_kill_switch(client):
@@ -227,9 +234,7 @@ def test_kill_switch(client):
     assert sys_integ.kill_switched is True
 
     # Any power execution must be blocked immediately
-    res = client.post("/integrations/system_diagnostics/powers/system.health_probe/execute", json={
-        "params": {}
-    })
+    res = client.post("/integrations/system_diagnostics/powers/system.health_probe/execute", json={"params": {}})
     assert res.status_code == 200
     assert res.json()["status"] == "BLOCKED"
     assert "Kill switch is actively triggered" in res.json()["reason"]
@@ -238,21 +243,19 @@ def test_kill_switch(client):
     sys_integ.reset_kill_switch()
     assert sys_integ.kill_switched is False
 
+
 # 11. Sensitive-data redaction in credential manager
 def test_sensitive_data_redaction():
     masked = credential_manager.mask_secret("ghp_9876543210abcdefghij")
     assert masked == "ghp****ghij"
     assert "9876543210" not in masked
 
-    raw_dict = {
-        "user": "ganesh",
-        "api_key": "secret_key_12345678",
-        "nested": {"token": "my_bearer_token_9999"}
-    }
+    raw_dict = {"user": "ganesh", "api_key": "secret_key_12345678", "nested": {"token": "my_bearer_token_9999"}}
     redacted = credential_manager.redact_dict(raw_dict)
     assert redacted["user"] == "ganesh"
     assert "12345678" not in redacted["api_key"]
     assert "bearer_token" not in redacted["nested"]["token"]
+
 
 # 12. Dangerous action blocking & approval verification
 def test_dangerous_action_blocking(client):
@@ -263,18 +266,16 @@ def test_dangerous_action_blocking(client):
     gh.connect()
 
     # Attempting to execute Tier 3 merge_pr without approval
-    res = client.post("/integrations/github/powers/github.merge_pr/execute", json={
-        "params": {"pr_number": 101}
-    })
+    res = client.post("/integrations/github/powers/github.merge_pr/execute", json={"params": {"pr_number": 101}})
     assert res.status_code == 200
     assert res.json()["status"] == "AWAITING_APPROVAL"
     assert res.json()["approval_required"] is True
 
     # Supplying a forged/invalid token
-    invalid_res = client.post("/integrations/github/powers/github.merge_pr/execute", json={
-        "params": {"pr_number": 101},
-        "approval_token": "forged_token_xyz"
-    })
+    invalid_res = client.post(
+        "/integrations/github/powers/github.merge_pr/execute",
+        json={"params": {"pr_number": 101}, "approval_token": "forged_token_xyz"},
+    )
     assert invalid_res.status_code == 200
     assert invalid_res.json()["status"] == "APPROVAL_INVALID"
 

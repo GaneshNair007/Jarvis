@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     """Centralized, typed application settings."""
 
     # ─── Core Application Settings ──────────────────────────────────────────
+    data_dir: Path = Field(default=PROJECT_ROOT / "data", description="Data directory")
     jarvis_env: str = Field(
         default="development",
         description="Environment: development, test, production",
@@ -31,6 +32,22 @@ class Settings(BaseSettings):
     )
     jarvis_user_name: str = Field(default="Ganesh Nair", description="Primary authorized user name")
     jarvis_user_id: str = Field(default="ganesh", description="Primary user ID")
+
+    # JARVIS assistant identity (separate from the owner's personal identity)
+    assistant_email: str = Field(
+        default="jarvis33246146@gmail.com",
+        description="Dedicated JARVIS Google account used for assistant communication",
+    )
+    assistant_display_name: str = Field(default="JARVIS", description="Assistant display name")
+    owner_email: Optional[str] = Field(
+        default=None,
+        description="Owner destination email; must be explicitly configured, never assumed",
+    )
+    owner_display_name: Optional[str] = Field(default=None, description="Owner display name")
+    authorized_recipients: List[str] = Field(
+        default_factory=list,
+        description="Explicit allow-list for outbound email recipients beyond the owner",
+    )
     cors_allow_origins: List[str] = Field(
         default_factory=lambda: ["*"],
         description="Allowed CORS origin domains",
@@ -61,7 +78,13 @@ class Settings(BaseSettings):
     claude_api_key: Optional[str] = Field(default=None)
     openai_api_key: Optional[str] = Field(default=None)
     gemini_api_key: Optional[str] = Field(default=None)
+    gemini_key_account_1: Optional[str] = Field(default=None)
+    gemini_key_account_2: Optional[str] = Field(default=None)
+    gemini_key_account_3: Optional[str] = Field(default=None)
+    gemini_api_keys: Optional[str] = Field(default=None)
     openrouter_api_key: Optional[str] = Field(default=None)
+    openrouter_api_keys: Optional[str] = Field(default=None)
+    mcp_config_path: Path = Field(default=PROJECT_ROOT / "config" / "mcp_servers.json")
     openrouter_base_url: str = Field(default="https://openrouter.ai/api/v1")
     openrouter_default_model: str = Field(default="openrouter/free")
     openrouter_site_url: str = Field(default="https://github.com/GaneshNair007/Jarvis")
@@ -154,9 +177,7 @@ class Settings(BaseSettings):
     )
 
     # ─── Voice Engine Settings ──────────────────────────────────────────────
-    voice_wake_phrases: List[str] = Field(
-        default_factory=lambda: ["hey jarvis", "jarvis", "ok jarvis"]
-    )
+    voice_wake_phrases: List[str] = Field(default_factory=lambda: ["hey jarvis", "jarvis", "ok jarvis"])
     voice_sensitivity: float = Field(default=0.5)
     voice_energy_threshold: float = Field(default=85.0)
     tts_speed: int = Field(default=1)
@@ -175,9 +196,7 @@ class Settings(BaseSettings):
         valid_modes = {"development", "test", "production", "staging"}
         v_clean = v.strip().lower()
         if v_clean not in valid_modes:
-            raise ValueError(
-                f"Invalid JARVIS_ENV '{v}'. Must be one of: {', '.join(sorted(valid_modes))}"
-            )
+            raise ValueError(f"Invalid JARVIS_ENV '{v}'. Must be one of: {', '.join(sorted(valid_modes))}")
         return v_clean
 
     def ensure_directories(self) -> None:

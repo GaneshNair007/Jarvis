@@ -1,0 +1,6 @@
+blank_issues_enabled: false
+contact_links:
+  - name: JARVIS Architecture Documentation
+    url: https://github.com/GaneshNair007/Jarvis/tree/main/docs
+    about: Review architectural guidelines, local search design, and 355-power catalog.
+

@@ -76,12 +76,8 @@ class WebSearchWrapper:
 
         # Find result link anchors: <a class="result__snippet" ...> or <a class="result__url" ...>
         # Match standard DDG html links
-        link_matches = re.findall(
-            r'<a class="result__url" href="([^"]+)">(?:<b>)?([^<]+)(?:</b>)?</a>', html
-        )
-        snippet_matches = re.findall(
-            r'<a class="result__snippet[^"]*"[^>]*>(.*?)</a>', html, re.DOTALL
-        )
+        link_matches = re.findall(r'<a class="result__url" href="([^"]+)">(?:<b>)?([^<]+)(?:</b>)?</a>', html)
+        snippet_matches = re.findall(r'<a class="result__snippet[^"]*"[^>]*>(.*?)</a>', html, re.DOTALL)
 
         for i, (raw_url, title) in enumerate(link_matches[:max_results]):
             # DDG wraps external URLs in /l/?kh=-1&uddg=ENCODED_URL

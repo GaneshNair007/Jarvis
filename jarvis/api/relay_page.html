@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>JARVIS Relay</title>
+<style>
+  :root {
+    --bg: #0b0f14; --panel: #121a22; --line: #1f2c3a;
+    --accent: #4fd1ff; --text: #d7e3ec; --muted: #7d93a6; --err: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    display: flex; flex-direction: column; min-height: 100vh;
+  }
+  header {
+    padding: 14px 16px; border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  header h1 { font-size: 15px; margin: 0; letter-spacing: 2px; color: var(--accent); }
+  #conn { font-size: 11px; color: var(--muted); }
+  main { flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .panel h2 { font-size: 11px; margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  input, button {
+    width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line);
+    background: #0e141b; color: var(--text); font-size: 16px; font-family: inherit;
+  }
+  input:focus { outline: 1px solid var(--accent); }
+  button {
+    background: var(--accent); color: #06222e; font-weight: 700;
+    border: 0; cursor: pointer; margin-top: 8px; letter-spacing: 1px;
+  }
+  button.secondary { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+  button:disabled { opacity: .5; }
+  #log { display: flex; flex-direction: column; gap: 8px; max-height: 45vh; overflow-y: auto; }
+  .msg { padding: 10px; border-radius: 8px; font-size: 14px; line-height: 1.45; white-space: pre-wrap; word-break: break-word; }
+  .msg.user { background: #103448; border: 1px solid #1d5875; align-self: flex-end; max-width: 92%; }
+  .msg.jarvis { background: #141d17; border: 1px solid #24402e; max-width: 96%; }
+  .msg.err { background: #2a1416; border: 1px solid #5a2427; color: #ffb3b3; }
+  .meta { font-size: 10px; color: var(--muted); margin-top: 4px; }
+  #statusline { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>JARVIS&nbsp;RELAY</h1>
+  <span id="conn">not paired</span>
+</header>
+<main>
+  <section class="panel" id="pair-panel">
+    <h2>Pair with laptop</h2>
+    <input id="code" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" maxlength="6">
+    <input id="devname" placeholder="device name" value="phone" style="margin-top:8px">
+    <button id="pair-btn">PAIR</button>
+    <div class="meta" id="pair-msg">On the laptop run: POST /api/v1/relay/pair</div>
+  </section>
+
+  <section class="panel hidden" id="cmd-panel">
+    <h2>Command</h2>
+    <div id="log"></div>
+    <input id="cmd" placeholder="e.g. system health" autocomplete="off">
+    <button id="send-btn">SEND</button>
+    <button id="unpair-btn" class="secondary">UNPAIR</button>
+  </section>
+
+  <section class="panel hidden" id="status-panel">
+    <h2>Status</h2>
+    <div id="statusline">–</div>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const tokenKey = "jarvis_relay_token";
+const nameKey = "jarvis_relay_device";
+
+function setPaired(paired) {
+  $("pair-panel").classList.toggle("hidden", paired);
+  $("cmd-panel").classList.toggle("hidden", !paired);
+  $("status-panel").classList.toggle("hidden", !paired);
+  $("conn").textContent = paired ? "paired" : "not paired";
+}
+
+function addMsg(cls, text, meta) {
+  const div = document.createElement("div");
+  div.className = "msg " + cls;
+  div.textContent = text;
+  if (meta) {
+    const m = document.createElement("div");
+    m.className = "meta";
+    m.textContent = meta;
+    div.appendChild(m);
+  }
+  $("log").appendChild(div);
+  $("log").scrollTop = $("log").scrollHeight;
+}
+
+async function api(path, opts) {
+  const res = await fetch(path, opts);
+  let body = null;
+  try { body = await res.json(); } catch (e) { body = {}; }
+  if (!res.ok) {
+    const detail = body && body.detail;
+    const msg = typeof detail === "string" ? detail
+      : detail && detail.description ? detail.description : res.statusText;
+    throw new Error(msg || ("HTTP " + res.status));
+  }
+  return body;
+}
+
+async function pair() {
+  const code = $("code").value.trim();
+  if (!/^\d{4,8}$/.test(code)) { $("pair-msg").textContent = "Enter the code shown on the laptop."; return; }
+  $("pair-btn").disabled = true;
+  try {
+    const data = await api("/api/v1/relay/exchange", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code, device_name: $("devname").value || "phone" }),
+    });
+    localStorage.setItem(tokenKey, data.token);
+    localStorage.setItem(nameKey, data.device_name || "phone");
+    setPaired(true);
+    refreshStatus();
+  } catch (e) {
+    $("pair-msg").textContent = "Pairing failed: " + e.message;
+  } finally {
+    $("pair-btn").disabled = false;
+  }
+}
+
+async function send() {
+  const command = $("cmd").value.trim();
+  if (!command) return;
+  const token = localStorage.getItem(tokenKey);
+  $("send-btn").disabled = true;
+  addMsg("user", command);
+  $("cmd").value = "";
+  try {
+    const data = await api("/api/v1/relay/command", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+      body: JSON.stringify({ command }),
+    });
+    const ev = data.evidence || {};
+    const desc = data.description || "";
+    const reply = (ev.data && (ev.data.reply || ev.data.reply_preview)) ? (ev.data.reply || ev.data.reply_preview) : desc;
+    addMsg("jarvis", reply, (ev.evidence_id || "") + (data.verdict ? " · " + data.verdict : ""));
+  } catch (e) {
+    if (/invalid token|missing token/i.test(e.message)) {
+      localStorage.removeItem(tokenKey);
+      setPaired(false);
+      $("pair-msg").textContent = "Session expired — pair again.";
+    }
+    addMsg("err", "Error: " + e.message);
+  } finally {
+    $("send-btn").disabled = false;
+    $("cmd").focus();
+  }
+}
+
+async function refreshStatus() {
+  const token = localStorage.getItem(tokenKey);
+  if (!token) return;
+  try {
+    const data = await api("/api/v1/relay/status", {
+      headers: { "Authorization": "Bearer " + token },
+    });
+    const v = (data.relay && data.relay.voice) || {};
+    $("statusline").textContent =
+      "device: " + ((data.device && data.device.device_name) || "?") + "\n" +
+      "commands relayed: " + (data.relay ? data.relay.commands_relayed : "?") + "\n" +
+      "voice daemon: " + (v.running ? "RUNNING (" + (v.state || "") + ")" : "stopped") + "\n" +
+      "mic: " + (v.mic_device_name || "n/a") + (v.mic_live ? " [LIVE]" : " [NOT LIVE]");
+  } catch (e) {
+    $("statusline").textContent = "status error: " + e.message;
+  }
+}
+
+function unpair() {
+  localStorage.removeItem(tokenKey);
+  localStorage.removeItem(nameKey);
+  setPaired(false);
+  $("log").innerHTML = "";
+}
+
+$("pair-btn").addEventListener("click", pair);
+$("send-btn").addEventListener("click", send);
+$("unpair-btn").addEventListener("click", unpair);
+$("cmd").addEventListener("keydown", (e) => { if (e.key === "Enter") send(); });
+$("code").addEventListener("keydown", (e) => { if (e.key === "Enter") pair(); });
+
+if (localStorage.getItem(tokenKey)) {
+  setPaired(true);
+  refreshStatus();
+  setInterval(refreshStatus, 15000);
+}
+</script>
+</body>
+</html>

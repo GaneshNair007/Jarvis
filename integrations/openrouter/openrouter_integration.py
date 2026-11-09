@@ -85,7 +85,7 @@ class OpenRouterIntegration(BaseIntegration):
         """Concrete execution of OpenRouter power actions."""
         power_key = power_id.lower()
         if power_key.startswith("openrouter."):
-            action = power_key[len("openrouter."):]
+            action = power_key[len("openrouter.") :]
         else:
             action = power_key
 

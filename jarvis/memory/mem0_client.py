@@ -15,9 +15,33 @@ from jarvis.core.logger import get_logger
 logger = get_logger("mem0_client")
 
 STOPWORDS = {
-    "what", "is", "my", "the", "a", "an", "in", "on", "at", "of", "for", "to",
-    "and", "or", "tell", "me", "about", "do", "you", "know", "which", "how", "can", "user", "assistant"
+    "what",
+    "is",
+    "my",
+    "the",
+    "a",
+    "an",
+    "in",
+    "on",
+    "at",
+    "of",
+    "for",
+    "to",
+    "and",
+    "or",
+    "tell",
+    "me",
+    "about",
+    "do",
+    "you",
+    "know",
+    "which",
+    "how",
+    "can",
+    "user",
+    "assistant",
 }
+
 
 class LocalMem0Adapter:
     """Zero-dependency local adapter mimicking Mem0 interface using the local SQLite vault."""
@@ -27,7 +51,7 @@ class LocalMem0Adapter:
 
     def search(self, query: str, filters: Optional[Dict[str, Any]] = None, limit: int = 5) -> List[Dict[str, Any]]:
         user_id = (filters or {}).get("user_id", settings.jarvis_user_id)
-        
+
         candidate_scores: Dict[str, int] = {}
         candidate_objects: Dict[str, Dict[str, Any]] = {}
 
@@ -39,10 +63,7 @@ class LocalMem0Adapter:
             candidate_objects[hid] = h
 
         # 2. Tokenized search for salient keywords
-        tokens = [
-            re.sub(r"[^\w]", "", w.lower())
-            for w in query.split()
-        ]
+        tokens = [re.sub(r"[^\w]", "", w.lower()) for w in query.split()]
         tokens = [t for t in tokens if len(t) > 2 and t not in STOPWORDS]
 
         for token in tokens:
@@ -72,7 +93,9 @@ class LocalMem0Adapter:
 
         return [{"id": r["id"], "memory": r["content"], "user_id": user_id} for r in combined]
 
-    def add(self, messages: List[Dict[str, str]], user_id: str = "ganesh", metadata: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
+    def add(
+        self, messages: List[Dict[str, str]], user_id: str = "ganesh", metadata: Optional[Dict[str, Any]] = None
+    ) -> List[Dict[str, Any]]:
         created = []
         user_msg = ""
         asst_msg = ""
@@ -90,7 +113,7 @@ class LocalMem0Adapter:
                 metadata={"user_id": user_id, **(metadata or {})},
                 is_hypothesis=False,
                 confidence=1.0,
-                evidence_count=1
+                evidence_count=1,
             )
             created.append({"id": node_id, "memory": content, "user_id": user_id})
         return created
@@ -102,12 +125,14 @@ class LocalMem0Adapter:
         results = self.memory.recall(layer="SEMANTIC", limit=limit)
         return [{"id": r["id"], "memory": r["content"]} for r in results]
 
+
 def get_mem0_client():
     """Instantiates official Mem0 MemoryClient if API key exists, otherwise local SQLite adapter."""
     api_key = settings.mem0_api_key
     if api_key and api_key != "your_mem0_key" and not api_key.startswith("mock"):
         try:
             from mem0 import MemoryClient
+
             logger.info("Connecting to official Mem0 Cloud Memory service")
             return MemoryClient(api_key=api_key)
         except Exception as e:
@@ -115,6 +140,7 @@ def get_mem0_client():
 
     logger.info("Using local-first Mem0 SQLite adapter")
     return LocalMem0Adapter()
+
 
 # Singleton memory client
 mem0_client = get_mem0_client()

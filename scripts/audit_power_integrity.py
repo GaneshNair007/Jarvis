@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from collections import defaultdict, Counter
 
+
 def audit():
     catalog_path = Path("data/powers_catalog.json")
     if not catalog_path.exists():
@@ -43,6 +44,7 @@ def audit():
     for r, c in repo_counter.most_common():
         print(f"   {r}: {c}")
     print(f"Total repository associations: {total_associations}")
+
 
 if __name__ == "__main__":
     audit()

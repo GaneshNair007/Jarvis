@@ -1,0 +1,24 @@
+{
+  "workspaces": {
+    "jarvis": {
+      "path": "C:\\Users\\Ganesh Nair\\.gemini\\antigravity-ide\\scratch\\jarvis",
+      "aliases": ["jarvis", "jarvis core", "jarvis repo", "jarvis project", "main"]
+    },
+    "switch-ai": {
+      "path": "C:\\Users\\Ganesh Nair\\.gemini\\antigravity-ide\\scratch\\switch-ai",
+      "aliases": ["switch", "switch-ai", "switch ai", "switch console"]
+    },
+    "carbonterra": {
+      "path": "C:\\Users\\Ganesh Nair\\.gemini\\antigravity-ide\\scratch\\carbonterra",
+      "aliases": ["carbonterra", "carbon terra", "carbon"]
+    },
+    "cortex": {
+      "path": "C:\\Users\\Ganesh Nair\\.gemini\\antigravity-ide\\scratch\\CORTEX-CLOUD-AUTOPILOT",
+      "aliases": ["cortex", "cortex cloud", "cortex cloud autopilot"]
+    },
+    "nakama": {
+      "path": "C:\\Users\\Ganesh Nair\\.gemini\\antigravity-ide\\scratch\\nakama",
+      "aliases": ["nakama"]
+    }
+  }
+}

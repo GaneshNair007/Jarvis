@@ -1,0 +1,11 @@
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;color:#111;background:#fafafa}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;background:#111}
+header a{color:#fff;text-decoration:none;margin-right:18px}.logo{font-weight:700;font-size:20px}
+main{max-width:1000px;margin:24px auto;padding:0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{background:#fff;border:1px solid #e3e3e3;border-radius:10px;padding:16px;margin-bottom:16px}
+.price{font-size:20px;font-weight:700}.filters{display:flex;gap:10px;margin:16px 0}
+input,select{padding:8px;border:1px solid #ccc;border-radius:6px}
+button{padding:9px 16px;background:#111;color:#fff;border:0;border-radius:6px;cursor:pointer}
+button:hover{background:#333}label{display:block;margin:12px 0}label input{display:block;width:100%;margin-top:4px}
+footer{text-align:center;color:#888;padding:24px}

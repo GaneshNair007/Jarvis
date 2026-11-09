@@ -120,9 +120,7 @@ class HybridRanker:
         url = item.get("url")
         excerpt = item.get("snippet", "")[:280]
 
-        citation_hash = hashlib.sha256(
-            f"{doc_id}:{title}:{excerpt}".encode()
-        ).hexdigest()[:12]
+        citation_hash = hashlib.sha256(f"{doc_id}:{title}:{excerpt}".encode()).hexdigest()[:12]
 
         return {
             "citation_id": f"cit_{citation_hash}",

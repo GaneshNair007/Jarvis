@@ -8,6 +8,7 @@ from typing import Dict, Any, List, Optional
 from jarvis.core.power_registry import power_registry
 from integrations.base.base_integration import BaseIntegration
 
+
 class IntegrationRegistry:
     """Master registry and lifecycle coordinator for all JARVIS integrations."""
 
@@ -38,7 +39,7 @@ class IntegrationRegistry:
                     "enabled": integration.enabled,
                     "version": "1.0.0",
                     "dependencies": [integration.integration_id],
-                    "test_status": "verified"
+                    "test_status": "verified",
                 }
 
     def unregister(self, integration_id: str) -> bool:
@@ -53,22 +54,24 @@ class IntegrationRegistry:
         """Returns metadata summaries for all registered integrations."""
         results = []
         for iid, item in sorted(self._integrations.items()):
-            results.append({
-                "integration_id": item.integration_id,
-                "display_name": item.display_name,
-                "category": item.category,
-                "description": item.description,
-                "enabled": item.enabled,
-                "connected": item.connected,
-                "kill_switched": item.kill_switched,
-                "danger_level": item.danger_level,
-                "default_approval_tier": item.default_approval_tier,
-                "rate_limit_rpm": item.rate_limit_rpm,
-                "cost_model": item.cost_model,
-                "data_sensitivity": item.data_sensitivity,
-                "powers_count": len(item.list_powers()),
-                "documentation_url": item.documentation_url
-            })
+            results.append(
+                {
+                    "integration_id": item.integration_id,
+                    "display_name": item.display_name,
+                    "category": item.category,
+                    "description": item.description,
+                    "enabled": item.enabled,
+                    "connected": item.connected,
+                    "kill_switched": item.kill_switched,
+                    "danger_level": item.danger_level,
+                    "default_approval_tier": item.default_approval_tier,
+                    "rate_limit_rpm": item.rate_limit_rpm,
+                    "cost_model": item.cost_model,
+                    "data_sensitivity": item.data_sensitivity,
+                    "powers_count": len(item.list_powers()),
+                    "documentation_url": item.documentation_url,
+                }
+            )
         return results
 
     def list_by_category(self, category: str) -> List[Dict[str, Any]]:
@@ -128,10 +131,8 @@ class IntegrationRegistry:
         reports = {}
         for iid, integ in self._integrations.items():
             reports[iid] = integ.health_check().model_dump()
-        return {
-            "total_integrations": len(self._integrations),
-            "reports": reports
-        }
+        return {"total_integrations": len(self._integrations), "reports": reports}
+
 
 # Global Integration Registry singleton
 integration_registry = IntegrationRegistry()

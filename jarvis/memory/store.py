@@ -11,6 +11,7 @@ from typing import Dict, Any, List, Optional
 from pathlib import Path
 from jarvis.config import settings
 
+
 class DatabaseStore:
     def __init__(self, db_path: Optional[Path] = None):
         self.db_path = db_path or settings.db_path
@@ -174,22 +175,31 @@ class DatabaseStore:
 
             conn.commit()
 
-    def save_task(self, task_id: str, title: str, status: str, power_id: str = "", inputs: Any = None, outputs: Any = None) -> None:
+    def save_task(
+        self, task_id: str, title: str, status: str, power_id: str = "", inputs: Any = None, outputs: Any = None
+    ) -> None:
         now = time.time()
         with self._get_connection() as conn:
-            conn.execute("""
+            conn.execute(
+                """
             INSERT INTO tasks (id, title, status, power_id, inputs, outputs, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
                 status = excluded.status,
                 outputs = excluded.outputs,
                 updated_at = excluded.updated_at
-            """, (
-                task_id, title, status, power_id,
-                json.dumps(inputs) if inputs else None,
-                json.dumps(outputs) if outputs else None,
-                now, now
-            ))
+            """,
+                (
+                    task_id,
+                    title,
+                    status,
+                    power_id,
+                    json.dumps(inputs) if inputs else None,
+                    json.dumps(outputs) if outputs else None,
+                    now,
+                    now,
+                ),
+            )
             conn.commit()
 
     def get_task(self, task_id: str) -> Optional[Dict[str, Any]]:
@@ -220,13 +230,16 @@ class DatabaseStore:
         now = time.time()
         meta_str = json.dumps(metadata or {})
         with self._get_connection() as conn:
-            conn.execute("""
+            conn.execute(
+                """
             INSERT INTO documents (id, file_path, file_name, file_type, sha256, total_pages, total_chunks, file_size, metadata, created_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
                 total_chunks = excluded.total_chunks,
                 metadata = excluded.metadata
-            """, (doc_id, file_path, file_name, file_type, sha256, total_pages, total_chunks, file_size, meta_str, now))
+            """,
+                (doc_id, file_path, file_name, file_type, sha256, total_pages, total_chunks, file_size, meta_str, now),
+            )
             conn.commit()
 
     def get_document(self, doc_id: str) -> Optional[Dict[str, Any]]:
@@ -281,34 +294,42 @@ class DatabaseStore:
         now = time.time()
         with self._get_connection() as conn:
             for ch in chunks:
-                conn.execute("""
+                conn.execute(
+                    """
                 INSERT OR REPLACE INTO document_chunks (id, doc_id, page_number, chunk_index, content, metadata, embedding, created_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                """, (
-                    ch["id"],
-                    ch["doc_id"],
-                    ch.get("page_number", 1),
-                    ch.get("chunk_index", 0),
-                    ch["content"],
-                    json.dumps(ch.get("metadata", {})),
-                    ch.get("embedding"),
-                    now
-                ))
+                """,
+                    (
+                        ch["id"],
+                        ch["doc_id"],
+                        ch.get("page_number", 1),
+                        ch.get("chunk_index", 0),
+                        ch["content"],
+                        json.dumps(ch.get("metadata", {})),
+                        ch.get("embedding"),
+                        now,
+                    ),
+                )
             conn.commit()
 
     def get_chunks_for_doc(self, doc_id: str) -> List[Dict[str, Any]]:
         with self._get_connection() as conn:
-            rows = conn.execute("SELECT * FROM document_chunks WHERE doc_id = ? ORDER BY page_number, chunk_index", (doc_id,)).fetchall()
+            rows = conn.execute(
+                "SELECT * FROM document_chunks WHERE doc_id = ? ORDER BY page_number, chunk_index", (doc_id,)
+            ).fetchall()
             return [dict(r) for r in rows]
 
     def get_all_chunks(self, limit: int = 2000) -> List[Dict[str, Any]]:
         with self._get_connection() as conn:
-            rows = conn.execute("""
+            rows = conn.execute(
+                """
             SELECT c.*, d.file_path, d.file_name, d.sha256 
             FROM document_chunks c
             JOIN documents d ON c.doc_id = d.id
             ORDER BY c.created_at DESC LIMIT ?
-            """, (limit,)).fetchall()
+            """,
+                (limit,),
+            ).fetchall()
             return [dict(r) for r in rows]
 
     # User Corrections
@@ -319,14 +340,17 @@ class DatabaseStore:
         new_instruction: str,
         scope: str = "always",
         failure_id: Optional[str] = None,
-        old_behavior: Optional[str] = None
+        old_behavior: Optional[str] = None,
     ) -> None:
         now = time.time()
         with self._get_connection() as conn:
-            conn.execute("""
+            conn.execute(
+                """
             INSERT OR REPLACE INTO corrections (id, failure_id, user_quote, old_behavior, new_instruction, scope, status, created_at)
             VALUES (?, ?, ?, ?, ?, ?, 'ACTIVE', ?)
-            """, (correction_id, failure_id, user_quote, old_behavior, new_instruction, scope, now))
+            """,
+                (correction_id, failure_id, user_quote, old_behavior, new_instruction, scope, now),
+            )
             conn.commit()
 
     def list_corrections(self, limit: int = 50) -> List[Dict[str, Any]]:
@@ -365,6 +389,7 @@ class DatabaseStore:
                 "total_corrections": correction_count,
                 "total_tasks": task_count,
             }
+
 
 # Singleton DB Store
 db_store = DatabaseStore()

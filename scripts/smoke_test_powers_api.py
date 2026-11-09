@@ -5,10 +5,12 @@ Performs full ASGI verification across all 11 repositories.
 
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from fastapi.testclient import TestClient
 from jarvis.api.server import app
+
 
 def run_smoke_test():
     client = TestClient(app)
@@ -59,8 +61,10 @@ def run_smoke_test():
         assert r in p_detail["contributing_repos"]
         assert p_detail["status"] in ["executable", "requires_configuration", "reference_only"]
         assert p_detail["execution_handler"]
-        
-        print(f"  [OK] [{r:16s}] -> {sample_pid}: {p_detail['power_name'][:30]:30s} | Status: {p_detail['status']:22s} | Handler: {p_detail['execution_handler']}")
+
+        print(
+            f"  [OK] [{r:16s}] -> {sample_pid}: {p_detail['power_name'][:30]:30s} | Status: {p_detail['status']:22s} | Handler: {p_detail['execution_handler']}"
+        )
 
     # 4. Verify invalid power lookup
     print("\n[Step 5] Verifying 404 behavior for invalid power ID...")
@@ -80,6 +84,7 @@ def run_smoke_test():
 
     print("\n=== SMOKE TEST RESULT: 100% PASS ===")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(run_smoke_test())

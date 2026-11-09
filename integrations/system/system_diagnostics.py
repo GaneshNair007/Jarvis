@@ -12,6 +12,7 @@ from typing import Dict, Any, List, Optional
 from integrations.base.base_integration import BaseIntegration
 from integrations.base.integration_health import IntegrationStatus, HealthReport
 
+
 class SystemDiagnosticsIntegration(BaseIntegration):
     """Local host telemetry and diagnostics integration."""
 
@@ -21,16 +22,16 @@ class SystemDiagnosticsIntegration(BaseIntegration):
             display_name="System Diagnostics & Telemetry",
             category="IT Administration",
             description="Local host performance telemetry, resource tracking, and temp buffer maintenance.",
-            required_credentials=[], # Local-first zero credential requirement
+            required_credentials=[],  # Local-first zero credential requirement
             required_scopes=["system:read", "system:write"],
             danger_level="medium",
             default_approval_tier=0,
             rate_limit_rpm=120,
             cost_model="free",
             data_sensitivity="low",
-            documentation_url="https://docs.jarvis.internal/integrations/system"
+            documentation_url="https://docs.jarvis.internal/integrations/system",
         )
-        self.connected = True # Always connected locally
+        self.connected = True  # Always connected locally
 
     def connect(self, credentials: Optional[Dict[str, str]] = None) -> bool:
         self.connected = True
@@ -51,7 +52,7 @@ class SystemDiagnosticsIntegration(BaseIntegration):
                 connected=self.connected,
                 enabled=self.enabled,
                 kill_switched=True,
-                errors=["Kill switch active for system diagnostics."]
+                errors=["Kill switch active for system diagnostics."],
             )
 
         try:
@@ -64,7 +65,7 @@ class SystemDiagnosticsIntegration(BaseIntegration):
                 enabled=self.enabled,
                 kill_switched=False,
                 latency_ms=1.2,
-                details={"cpu_percent": cpu, "memory_percent": mem}
+                details={"cpu_percent": cpu, "memory_percent": mem},
             )
         except Exception as e:
             return HealthReport(
@@ -73,7 +74,7 @@ class SystemDiagnosticsIntegration(BaseIntegration):
                 connected=self.connected,
                 enabled=self.enabled,
                 kill_switched=False,
-                errors=[str(e)]
+                errors=[str(e)],
             )
 
     def list_powers(self) -> List[Dict[str, Any]]:
@@ -85,7 +86,7 @@ class SystemDiagnosticsIntegration(BaseIntegration):
                 "triggers": ["system health", "cpu usage", "ram telemetry"],
                 "tier": 0,
                 "approval_required": False,
-                "danger_level": "none"
+                "danger_level": "none",
             },
             {
                 "power_id": "system.disk_diagnostics",
@@ -94,7 +95,7 @@ class SystemDiagnosticsIntegration(BaseIntegration):
                 "triggers": ["disk space", "storage status"],
                 "tier": 0,
                 "approval_required": False,
-                "danger_level": "none"
+                "danger_level": "none",
             },
             {
                 "power_id": "system.clear_temp_cache",
@@ -103,8 +104,8 @@ class SystemDiagnosticsIntegration(BaseIntegration):
                 "triggers": ["clean temp", "purge scratch", "clear cache"],
                 "tier": 2,
                 "approval_required": True,
-                "danger_level": "medium"
-            }
+                "danger_level": "medium",
+            },
         ]
 
     def _execute_power_impl(self, power_id: str, params: Dict[str, Any]) -> Dict[str, Any]:
@@ -113,21 +114,23 @@ class SystemDiagnosticsIntegration(BaseIntegration):
                 "cpu_percent": psutil.cpu_percent(interval=None),
                 "ram_percent": psutil.virtual_memory().percent,
                 "boot_time": psutil.boot_time(),
-                "timestamp": time.time()
+                "timestamp": time.time(),
             }
         elif power_id == "system.disk_diagnostics":
             partitions = []
             for p in psutil.disk_partitions():
                 try:
                     usage = psutil.disk_usage(p.mountpoint)
-                    partitions.append({
-                        "device": p.device,
-                        "mountpoint": p.mountpoint,
-                        "total_gb": round(usage.total / (1024 ** 3), 2),
-                        "used_gb": round(usage.used / (1024 ** 3), 2),
-                        "free_gb": round(usage.free / (1024 ** 3), 2),
-                        "percent": usage.percent
-                    })
+                    partitions.append(
+                        {
+                            "device": p.device,
+                            "mountpoint": p.mountpoint,
+                            "total_gb": round(usage.total / (1024**3), 2),
+                            "used_gb": round(usage.used / (1024**3), 2),
+                            "free_gb": round(usage.free / (1024**3), 2),
+                            "percent": usage.percent,
+                        }
+                    )
                 except Exception:
                     pass
             return {"partitions": partitions}
@@ -139,7 +142,7 @@ class SystemDiagnosticsIntegration(BaseIntegration):
                 "target": target_dir,
                 "cleared_files": 0,
                 "bytes_reclaimed": 0,
-                "status": "COMPLETED"
+                "status": "COMPLETED",
             }
         else:
             raise ValueError(f"Unsupported power '{power_id}' on {self.display_name}")

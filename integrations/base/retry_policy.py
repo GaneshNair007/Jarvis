@@ -8,6 +8,7 @@ import time
 import random
 from typing import Callable, Any, Optional, Set, Type
 
+
 class RetryPolicy:
     """Configurable exponential backoff policy for external service integration calls."""
 
@@ -20,7 +21,7 @@ class RetryPolicy:
         backoff_multiplier: float = 2.0,
         max_delay_sec: float = 10.0,
         jitter: bool = True,
-        retryable_exceptions: Optional[Set[Type[Exception]]] = None
+        retryable_exceptions: Optional[Set[Type[Exception]]] = None,
     ):
         self.max_retries = max_retries
         self.initial_delay_sec = initial_delay_sec
@@ -31,14 +32,17 @@ class RetryPolicy:
             TimeoutError,
             ConnectionError,
             ConnectionResetError,
-            OSError
+            OSError,
         }
 
     def is_retryable(self, error: Exception) -> bool:
         """Determines if an exception is transient and safe to retry."""
         # Policy denial or auth failure must NEVER be retried
         err_msg = str(error).lower()
-        if any(unretryable in err_msg for unretryable in ["unauthorized", "forbidden", "denied", "invalid_grant", "policy_halt"]):
+        if any(
+            unretryable in err_msg
+            for unretryable in ["unauthorized", "forbidden", "denied", "invalid_grant", "policy_halt"]
+        ):
             return False
 
         # Status code checking if available
@@ -51,7 +55,7 @@ class RetryPolicy:
 
     def calculate_delay(self, attempt: int) -> float:
         """Computes exponential backoff delay with optional random jitter."""
-        delay = self.initial_delay_sec * (self.backoff_multiplier ** attempt)
+        delay = self.initial_delay_sec * (self.backoff_multiplier**attempt)
         delay = min(delay, self.max_delay_sec)
         if self.jitter:
             delay = delay * (0.8 + 0.4 * random.random())
@@ -71,6 +75,7 @@ class RetryPolicy:
                 time.sleep(delay)
         if last_error:
             raise last_error
+
 
 # Global standard retry policy
 default_retry_policy = RetryPolicy()

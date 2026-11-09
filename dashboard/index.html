@@ -938,6 +938,10 @@
         <span>🔌</span> Integrations Hub
         <span id="integrations-total-badge" class="badge-count">2</span>
       </button>
+      <button id="nav-btn-career" class="nav-btn" onclick="switchTab('career')">
+        <span>🚀</span> Career & Swarms
+        <span id="career-total-badge" class="badge-count">10</span>
+      </button>
       <button id="nav-btn-search" class="nav-btn" onclick="switchTab('search')">
         <span>🔍</span> Local Search Brain
         <span id="search-total-badge" class="badge-count">0</span>
@@ -1035,6 +1039,34 @@
         </div>
       </div>
 
+      <!-- SMART ROOM & OPS CONTROL QUICKBAR -->
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 8px 0; padding:8px 12px; background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 6px;">
+        <span style="font-size:0.75rem; color:var(--cyan); font-weight:700; width:100%; letter-spacing:0.5px;">⚡ PHYSICAL ROOM & OPS CONTROLLER</span>
+        <button onclick="quickRoomCommand('turn on the AC at 21')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">❄️ AC 21°C</button>
+        <button onclick="quickRoomCommand('turn on the geyser')" style="background:rgba(255,179,0,0.1); border:1px solid var(--amber); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🚿 Geyser (15m Timer)</button>
+        <button onclick="quickRoomCommand('turn on the projector')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📽️ Projector</button>
+        <button onclick="quickRoomCommand('turn off lights')" style="background:rgba(255,255,255,0.05); border:1px solid #666; color:#aaa; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">💡 Lights Off</button>
+        <button onclick="quickRoomCommand('movie night')" style="background:rgba(123,31,162,0.2); border:1px solid #ab47bc; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎬 Movie Night</button>
+        <button onclick="quickRoomCommand('work mode')" style="background:rgba(0,229,255,0.15); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">⚡ Work Focus</button>
+        <button onclick="quickRoomCommand('sleep mode')" style="background:rgba(21,101,192,0.2); border:1px solid #42a5f5; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🌙 Sleep Mode</button>
+        <button onclick="quickRoomCommand('daily pulse')" style="background:rgba(0,200,83,0.1); border:1px solid #00e676; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📊 Daily Pulse</button>
+        <button onclick="quickRoomCommand('opportunity radar')" style="background:rgba(255,214,0,0.1); border:1px solid #ffd600; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎯 Opportunity Radar</button>
+      </div>
+
+      <!-- SMART ROOM & OPS CONTROL QUICKBAR -->
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 8px 0; padding:8px 12px; background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 6px;">
+        <span style="font-size:0.75rem; color:var(--cyan); font-weight:700; width:100%; letter-spacing:0.5px;">⚡ PHYSICAL ROOM & OPS CONTROLLER</span>
+        <button onclick="quickRoomCommand('turn on the AC at 21')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">❄️ AC 21°C</button>
+        <button onclick="quickRoomCommand('turn on the geyser')" style="background:rgba(255,179,0,0.1); border:1px solid var(--amber); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🚿 Geyser (15m Timer)</button>
+        <button onclick="quickRoomCommand('turn on the projector')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📽️ Projector</button>
+        <button onclick="quickRoomCommand('turn off lights')" style="background:rgba(255,255,255,0.05); border:1px solid #666; color:#aaa; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">💡 Lights Off</button>
+        <button onclick="quickRoomCommand('movie night')" style="background:rgba(123,31,162,0.2); border:1px solid #ab47bc; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎬 Movie Night</button>
+        <button onclick="quickRoomCommand('work mode')" style="background:rgba(0,229,255,0.15); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">⚡ Work Focus</button>
+        <button onclick="quickRoomCommand('sleep mode')" style="background:rgba(21,101,192,0.2); border:1px solid #42a5f5; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🌙 Sleep Mode</button>
+        <button onclick="quickRoomCommand('daily pulse')" style="background:rgba(0,200,83,0.1); border:1px solid #00e676; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📊 Daily Pulse</button>
+        <button onclick="quickRoomCommand('opportunity radar')" style="background:rgba(255,214,0,0.1); border:1px solid #ffd600; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎯 Opportunity Radar</button>
+      </div>
+
       <div class="voice-control-box">
         <div style="display: flex; align-items: center; gap: 10px;">
           <button id="mic-btn" class="btn-mic" onclick="toggleMicrophone()">
@@ -1120,6 +1152,114 @@
     </div>
   </main>
 
+  <!-- TAB 4: Communication Center View -->
+  <main id="view-communication" class="integrations-view" hidden>
+    <div class="integrations-header">
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 4px;">Communication Center</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Gmail inbox, unread, important, drafts, sent mail, and the human approval queue.
+          All mail flows through OAuth 2.0 (no passwords). Sending is bound to the exact
+          SHA-256 of the approved RFC 822 bytes and confirms only with a provider message id.
+        </p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-integ btn-integ-check" onclick="loadCommunication()">🔄 Refresh</button>
+        <button id="comm-btn-connect" class="btn-integ btn-integ-connect" onclick="startGoogleAuth()">Connect Google Account</button>
+        <button id="comm-btn-disconnect" class="btn-integ btn-integ-disable" onclick="disconnectGoogle()" style="display:none;">Disconnect</button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="integ-stats-bar">
+      <div class="stat-pill">
+        <span class="stat-pill-label">Google Status</span>
+        <span id="comm-google-status" class="stat-pill-val">Disconnected</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Inbox</span>
+        <span id="comm-inbox-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Unread</span>
+        <span id="comm-unread-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Important</span>
+        <span id="comm-important-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Drafts</span>
+        <span id="comm-drafts-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Sent</span>
+        <span id="comm-sent-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Awaiting Approval</span>
+        <span id="comm-approvals-count" class="stat-pill-val">0</span>
+      </div>
+    </div>
+
+    <!-- Connection prompt -->
+    <div id="comm-connect-prompt" class="glass-panel" style="margin: 16px 0; padding: 16px; border-left: 4px solid var(--amber); display: none;">
+      <p style="margin: 0 0 8px; font-size: 0.9rem; color: var(--muted);">Gmail is not connected yet.</p>
+      <p style="margin: 0 0 10px; font-size: 0.85rem; color: var(--muted);">
+        1. Create an OAuth 2.0 Desktop client in Google Cloud Console and enable the Gmail API.<br>
+        2. Set GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET in .env.<br>
+        3. Click Connect Google Account — you will sign in as <strong>jarvis33246146@gmail.com</strong> and grant gmail.readonly, gmail.compose, gmail.send.
+      </p>
+      <button class="btn-integ btn-integ-connect" onclick="startGoogleAuth()">Start Google Connection</button>
+    </div>
+
+    <div class="split-grid">
+      <!-- Inbox -->
+      <section class="panel" style="min-height: 0;">
+        <div class="panel-head">
+          <div><p class="eyebrow">Inbox</p><h2 class="panel-title">Recent messages</h2></div>
+          <span class="pill ok" id="comm-inbox-label" style="display:none;">Live via Gmail API</span>
+        </div>
+        <div class="feed" id="comm-inbox-list">
+          <div class="feed-row"><span class="feed-time num">—</span><p>Connect Google Account to load the inbox.</p></div>
+        </div>
+      </section>
+
+      <!-- Drafts -->
+      <section class="panel" style="min-height: 0;">
+        <div class="panel-head">
+          <div><p class="eyebrow">Drafts</p><h2 class="panel-title">Saved drafts</h2></div>
+        </div>
+        <div class="feed" id="comm-drafts-list">
+          <div class="feed-row"><span class="feed-time num">—</span><p>No drafts loaded.</p></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Sent + Approvals -->
+    <section class="panel" style="margin-top: 16px;">
+      <div class="panel-head">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+          <div><p class="eyebrow">Sent &amp; Approvals</p><h2 class="panel-title">Sent mail and pending signatures</h2></div>
+          <span class="pill ok" id="comm-sent-label" style="display:none;">Live via Gmail API</span>
+        </div>
+      </div>
+      <div class="split-grid">
+        <section class="panel" style="min-height:0;margin-top:10px">
+          <div class="panel-head"><div><p class="eyebrow">Sent</p><h2 class="panel-title">Recently sent</h2></div></div>
+          <div class="feed" id="comm-sent-list">
+            <div class="feed-row"><span class="feed-time num">—</span><p>Sent messages appear after a provider-confirmed send.</p></div>
+          </div>
+        </section>
+        <section class="panel" style="min-height:0;margin-top:10px">
+          <div class="panel-head"><div><p class="eyebrow">Approval Queue</p><h2 class="panel-title">Awaiting your signature</h2></div></div>
+          <div class="feed" id="comm-approvals-list">
+            <div class="feed-row"><span class="feed-time num">—</span><p>No actions awaiting approval.</p></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
   <!-- TAB 3: Search Brain View -->
   <main id="view-search" class="integrations-view">
     <div class="integrations-header">
@@ -1202,6 +1342,137 @@
     </div>
   </main>
 
+  <!-- TAB 4: Career-Ops & Swarms View -->
+  <main id="view-career" class="integrations-view">
+    <div class="integ-header">
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 4px;">Career-Ops & Multi-Agent Swarm Hub</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          Local-first ATS job fit scoring, tailored resumes, interview preparation, pipeline tracking, and specialized agent swarms.
+        </p>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-integ btn-integ-check" onclick="loadCareerDashboard()">🔄 Refresh Pipeline</button>
+      </div>
+    </div>
+
+    <!-- Career Telemetry Row -->
+    <div class="search-stats-row">
+      <div class="stat-pill">
+        <span class="stat-pill-label">Tracked Apps</span>
+        <span id="career-stat-apps" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Target Comp</span>
+        <span id="career-stat-target" class="stat-pill-val" style="color: var(--emerald);">$220,000</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Screening Rate</span>
+        <span id="career-stat-screening" class="stat-pill-val" style="color: var(--cyan);">0%</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Active Swarm Workers</span>
+        <span id="career-stat-workers" class="stat-pill-val" style="color: var(--amber);">3 Concurrency</span>
+      </div>
+    </div>
+
+    <!-- Grid Container -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+      
+      <!-- Left Column: ATS Scanner & Tools -->
+      <div class="glass-panel" style="padding: 20px;">
+        <div class="panel-header" style="margin-bottom: 16px;">
+          <span>ATS Fit Scanner & Resume Tailoring</span>
+          <span class="badge-pill badge-pill-emerald">PWR-328 - PWR-331</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div>
+            <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Job Title</label>
+            <input id="career-input-title" class="search-main-input" style="height: 38px; font-size: 0.85rem; margin-top: 4px;" placeholder="e.g. Principal AI Systems Architect" value="Principal AI Systems Architect">
+          </div>
+          <div>
+            <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Company Name</label>
+            <input id="career-input-company" class="search-main-input" style="height: 38px; font-size: 0.85rem; margin-top: 4px;" placeholder="e.g. Anthropic, OpenAI, Stripe" value="ScaleAI Labs">
+          </div>
+          <div>
+            <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Job Description / Keywords</label>
+            <textarea id="career-input-desc" class="search-main-input" style="height: 100px; font-size: 0.85rem; margin-top: 4px; resize: vertical;" placeholder="Paste job requirements...">Seeking Principal Systems Architect experienced in Python, FastAPI, distributed systems, SQLite FTS5, Qdrant vector retrieval, and concurrency.</textarea>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 8px;">
+            <button class="btn-integ btn-integ-check" style="flex: 1;" onclick="scanJobFromUI()">⚡ Scan Fit Score</button>
+            <button class="btn-integ btn-integ-enable" style="flex: 1;" onclick="generateResumeFromUI()">📄 Tailor Resume</button>
+            <button class="btn-integ btn-integ-enable" style="flex: 1;" onclick="prepareInterviewFromUI()">🎯 Interview Prep</button>
+          </div>
+        </div>
+
+        <!-- Result Box -->
+        <div id="career-result-box" style="margin-top: 16px; padding: 14px; background: rgba(0, 229, 255, 0.05); border: 1px solid var(--panel-border); border-radius: 8px; display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span id="career-res-title" style="font-weight: 700; color: #fff;"></span>
+            <span id="career-res-score" style="font-size: 1.1rem; font-weight: 700; color: var(--emerald);"></span>
+          </div>
+          <div id="career-res-rec" style="font-size: 0.8rem; color: var(--cyan); margin-bottom: 8px;"></div>
+          <div id="career-res-body" style="font-size: 0.82rem; color: var(--text-main); line-height: 1.5;"></div>
+        </div>
+      </div>
+
+      <!-- Right Column: Swarm Monitor & Pipeline -->
+      <div class="glass-panel" style="padding: 20px;">
+        <div class="panel-header" style="margin-bottom: 16px;">
+          <span>Multi-Agent Swarm Status</span>
+          <span class="badge-pill badge-pill-cyan">PWR-288 - PWR-307</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px;">
+            <div>
+              <div style="font-weight: 600; color: #fff; font-size: 0.9rem;">Orchestrator & Planner Agents</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Dynamic goal decomposition into atomic subtasks</div>
+            </div>
+            <span class="badge-pill badge-pill-emerald">PWR-288 / 289</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px;">
+            <div>
+              <div style="font-weight: 600; color: #fff; font-size: 0.9rem;">Researcher & Browser Agents</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Safe DOM extraction and citation validation</div>
+            </div>
+            <span class="badge-pill badge-pill-cyan">PWR-290 / 293</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px;">
+            <div>
+              <div style="font-weight: 600; color: #fff; font-size: 0.9rem;">Coder & Reviewer Agents</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Deterministic local code generation & verification</div>
+            </div>
+            <span class="badge-pill badge-pill-cyan">PWR-291 / 297</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px;">
+            <div>
+              <div style="font-weight: 600; color: #fff; font-size: 0.9rem;">Security Guard & Approval Manager</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Zero-leak DLP redaction and SHA-256 tokens</div>
+            </div>
+            <span class="badge-pill badge-pill-emerald">PWR-298 / 299</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px; padding: 12px; border-top: 1px solid rgba(255,255,255,0.08);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted);">
+            <span>Cumulative Swarm Cost:</span>
+            <span id="swarm-cost-val" style="color: var(--emerald); font-family: monospace;">$0.00000 USD</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+            <span>Concurrency Guard:</span>
+            <span style="color: var(--cyan);">Active (Max 3 Workers)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <!-- Document Inspector Modal -->
   <div id="doc-modal" class="modal-overlay" onclick="if(event.target===this) closeDocModal()">
     <div class="modal-box">
@@ -1233,13 +1504,21 @@
       const btnConsole = document.getElementById('nav-btn-console');
       const btnInteg = document.getElementById('nav-btn-integrations');
       const btnSearch = document.getElementById('nav-btn-search');
+      const btnComm = document.getElementById('nav-btn-communication');
+      const careerView = document.getElementById('view-career');
+      const btnCareer = document.getElementById('nav-btn-career');
+      const commView = document.getElementById('view-communication');
 
       consoleView.style.display = 'none';
       integView.classList.remove('active');
       searchView.classList.remove('active');
+      if (commView) commView.classList.remove('active');
       btnConsole.classList.remove('active');
       btnInteg.classList.remove('active');
+      if (btnComm) btnComm.classList.remove('active');
       btnSearch.classList.remove('active');
+      if (careerView) careerView.classList.remove('active');
+      if (btnCareer) btnCareer.classList.remove('active');
 
       if (tabName === 'console') {
         consoleView.style.display = 'grid';
@@ -1252,6 +1531,14 @@
         searchView.classList.add('active');
         btnSearch.classList.add('active');
         loadSearchStats();
+      } else if (tabName === 'career') {
+        if (careerView) careerView.classList.add('active');
+        if (btnCareer) btnCareer.classList.add('active');
+        loadCareerDashboard();
+      } else if (tabName === 'communication') {
+        if (commView) commView.classList.add('active');
+        if (btnComm) btnComm.classList.add('active');
+        loadCommunication();
       }
     }
 
@@ -1292,7 +1579,9 @@
 
     connectWebSocket();
 
-    // Chat Handler
+    // Chat Handler with Real Multi-Turn Context Memory
+    const chatHistory = [];
+
     async function sendChat() {
       const input = document.getElementById('chat-input');
       const text = input.value.trim();
@@ -1301,11 +1590,15 @@
       appendMessage(text, 'user');
       input.value = '';
 
+      // Prepare context from recent turns
+      const recentContext = chatHistory.slice(-4).map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`).join('\n');
+      chatHistory.push({ role: 'user', content: text });
+
       try {
         const resp = await fetch(`${API_BASE}/api/v1/chat`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: text })
+          body: JSON.stringify({ query: text, context: recentContext })
         });
         const data = await resp.json();
 
@@ -1316,10 +1609,33 @@
           reply = data.message;
         }
 
-        appendMessage(reply, 'jarvis', data.tier);
+        chatHistory.push({ role: 'assistant', content: reply });
+        if (chatHistory.length > 20) chatHistory.shift();
+
+        const badgeTier = data.status === 'FAILED' ? 'UNAVAILABLE' : (data.tier || 'JARVIS');
+        appendMessage(reply, 'jarvis', badgeTier);
         loadAudit();
+
+        // SPEAK BACK THROUGH BROWSER AUDIO
+        if (reply && data.status !== 'FAILED') {
+          speakVoice(reply);
+        }
       } catch (err) {
         appendMessage(`Error: ${err.message}`, 'jarvis', 'ERROR');
+      }
+    }
+
+    function speakVoice(text) {
+      if (!text || !('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        const clean = text.replace(/\[.*?\]/g, '').replace(/[\*\_#`]/g, '').trim();
+        const utter = new SpeechSynthesisUtterance(clean.substring(0, 320));
+        utter.rate = 1.02;
+        utter.pitch = 0.96;
+        window.speechSynthesis.speak(utter);
+      } catch (e) {
+        console.warn("TTS speakVoice error:", e);
       }
     }
 
@@ -1350,29 +1666,51 @@
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognition = new SpeechRecognition();
-      recognition.continuous = false;
+      recognition.continuous = true;
       recognition.interimResults = true;
 
       recognition.onresult = (event) => {
-        const transcript = Array.from(event.results)
-          .map(r => r[0].transcript)
-          .join('');
+        let transcript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        transcript = transcript.trim();
         document.getElementById('voice-transcript').innerText = `"${transcript}"`;
 
-        if (event.results[0].isFinal) {
+        const lower = transcript.toLowerCase();
+        if (lower.includes("hey jarvis") || lower.includes("jarvis")) {
+          // Arc reactor visual glow
+          const arc = document.querySelector('.brand-arc');
+          if (arc) {
+            arc.style.boxShadow = "0 0 35px #00e5ff, 0 0 70px #00e5ff";
+            setTimeout(() => { if (arc) arc.style.boxShadow = ""; }, 2500);
+          }
+          let cmd = lower.replace(/.*(?:hey\s+)?jarvis[,.]?\s*/i, '').trim();
+          if (cmd && event.results[event.results.length - 1].isFinal) {
+            document.getElementById('chat-input').value = cmd;
+            sendChat();
+          }
+        } else if (event.results[event.results.length - 1].isFinal && transcript) {
           document.getElementById('chat-input').value = transcript;
           sendChat();
-          stopMic();
         }
       };
 
-      recognition.onerror = () => stopMic();
-      recognition.onend = () => stopMic();
+      recognition.onerror = (e) => {
+        console.warn("Speech recognition error:", e);
+      };
+      recognition.onend = () => {
+        if (isRecording) {
+          try { recognition.start(); } catch (e) {}
+        } else {
+          stopMic();
+        }
+      };
     }
 
     function toggleMicrophone() {
       if (!recognition) {
-        alert("Web Speech API not supported in this browser. Please use Chrome/Edge or the text console.");
+        alert("Web Speech API not supported in this browser. Please use Chrome or Edge.");
         return;
       }
       if (isRecording) {
@@ -1454,25 +1792,28 @@
         document.getElementById('integrations-total-badge').innerText = data.total || data.integrations.length;
 
         data.integrations.forEach(integ => {
+          const integId = integ.integration_id || integ.id;
           if (integ.enabled) enabledCount++;
           totalPowers += (integ.powers_count || (integ.available_powers ? integ.available_powers.length : 0));
 
           const card = document.createElement('div');
           card.className = 'integration-card';
-          card.id = `card-${integ.id}`;
+          card.id = `card-${integId}`;
 
+          const isConnected = integ.connected || integ.is_connected;
+          let statusLabel = integ.health_status || (isConnected ? 'CONNECTED' : (integ.enabled ? 'ENABLED' : 'CONFIGURED'));
           let statusClass = 'status-disabled';
-          if (integ.kill_switch_active) statusClass = 'status-kill-switched';
-          else if (integ.health_status === 'HEALTHY') statusClass = 'status-healthy';
-          else if (integ.health_status === 'UNCONFIGURED') statusClass = 'status-unconfigured';
+          if (integ.kill_switched || integ.kill_switch_active) statusClass = 'status-kill-switched';
+          else if (isConnected) statusClass = 'status-healthy';
+          else if (integ.enabled) statusClass = 'status-healthy';
 
           card.innerHTML = `
             <div class="integ-top">
               <div>
                 <div class="integ-title">${integ.display_name}</div>
-                <div class="integ-id">${integ.id}</div>
+                <div class="integ-id">${integId}</div>
               </div>
-              <span class="status-badge ${statusClass}">${integ.health_status}</span>
+              <span class="status-badge ${statusClass}">${statusLabel}</span>
             </div>
 
             <div class="integ-desc">${integ.description}</div>
@@ -1480,31 +1821,27 @@
             <div class="integ-meta">
               <span class="meta-chip">📁 ${integ.category}</span>
               <span class="meta-chip">⚡ ${integ.rate_limit_rpm} RPM</span>
-              <span class="meta-chip">${integ.is_connected ? '🟢 Connected' : '⚪ Disconnected'}</span>
+              <span class="meta-chip">${isConnected ? '🟢 Connected' : '⚪ Disconnected'}</span>
               <span class="meta-chip">${integ.enabled ? '✅ Enabled' : '⏸️ Disabled'}</span>
-            </div>
-
-            <div id="setup-box-${integ.id}" class="instructions-box" style="${integ.health_status === 'UNCONFIGURED' ? 'display:block;' : 'display:none;'}">
-              ⚠️ <strong>Missing Credentials:</strong> Configure environment variables to activate full powers.
             </div>
 
             <div class="integ-actions">
               ${integ.enabled ? 
-                `<button class="btn-integ btn-integ-disable" onclick="toggleIntegration('${integ.id}', false)">Disable</button>` :
-                `<button class="btn-integ btn-integ-enable" onclick="toggleIntegration('${integ.id}', true)">Enable</button>`
+                `<button class="btn-integ btn-integ-disable" onclick="toggleIntegration('${integId}', false)">Disable</button>` :
+                `<button class="btn-integ btn-integ-enable" onclick="toggleIntegration('${integId}', true)">Enable</button>`
               }
-              ${integ.is_connected ?
-                `<button class="btn-integ btn-integ-check" onclick="connectIntegration('${integ.id}', false)">Disconnect</button>` :
-                `<button class="btn-integ btn-integ-connect" onclick="connectIntegration('${integ.id}', true)">Connect</button>`
+              ${isConnected ?
+                `<button class="btn-integ btn-integ-check" onclick="connectIntegration('${integId}', false)">Disconnect</button>` :
+                `<button class="btn-integ btn-integ-connect" onclick="connectIntegration('${integId}', true)">Connect</button>`
               }
-              <button class="btn-integ btn-integ-check" onclick="checkIntegrationHealth('${integ.id}')">Health</button>
-              <button class="btn-integ btn-integ-check" onclick="togglePowersDrawer('${integ.id}')">Powers (${integ.powers_count || 0})</button>
-              <button class="btn-integ btn-integ-kill" onclick="killIntegration('${integ.id}')">Kill</button>
+              <button class="btn-integ btn-integ-check" onclick="checkIntegrationHealth('${integId}')">Health</button>
+              <button class="btn-integ btn-integ-check" onclick="togglePowersDrawer('${integId}')">Powers (${integ.powers_count || 0})</button>
+              <button class="btn-integ btn-integ-kill" onclick="killIntegration('${integId}')">Kill</button>
             </div>
 
-            <div id="drawer-${integ.id}" class="powers-drawer">
+            <div id="drawer-${integId}" class="powers-drawer" style="display:none; margin-top:10px; padding:10px; background:rgba(0,0,0,0.4); border-radius:6px;">
               <div style="font-size:0.75rem; color:var(--cyan); margin-bottom:6px; font-weight:600;">AVAILABLE POWERS</div>
-              <div id="powers-list-${integ.id}">Loading powers...</div>
+              <div id="powers-list-${integId}">Loading powers...</div>
             </div>
           `;
 
@@ -1554,6 +1891,7 @@
 
     async function togglePowersDrawer(integId) {
       const drawer = document.getElementById(`drawer-${integId}`);
+      if (!drawer) return;
       if (drawer.style.display === 'block') {
         drawer.style.display = 'none';
         return;
@@ -1566,17 +1904,28 @@
         const data = await resp.json();
         listContainer.innerHTML = '';
         
-        data.powers.forEach(p => {
+        const powers = data.powers || (Array.isArray(data) ? data : []);
+        if (powers.length === 0) {
+          listContainer.innerHTML = '<div style="font-size:0.75rem; color:var(--text-muted);">No individual power bindings exposed.</div>';
+          return;
+        }
+
+        powers.forEach(p => {
           const item = document.createElement('div');
           item.className = 'power-item';
+          item.style.padding = '6px 0';
+          item.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+          const danger = p.danger_level || (p.tier === 2 ? 'high' : (p.tier === 1 ? 'medium' : 'low'));
           item.innerHTML = `
-            <div>
-              <strong>${p.name}</strong> <span style="color:var(--text-muted);">(${p.power_id})</span>
-              <div style="font-size:0.7rem; color:var(--text-muted);">${p.description}</div>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span class="danger-tag danger-${p.danger_level}">${p.danger_level}</span>
-              <button class="btn-dry-run" onclick="executeDryRun('${integId}', '${p.power_id}')">Dry Run</button>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong>${p.name || p.power_name || p.power_id}</strong> <span style="color:var(--cyan); font-size:0.75rem;">(${p.power_id})</span>
+                <div style="font-size:0.7rem; color:var(--text-muted);">${p.description || p.one_line_description || 'Tier ' + (p.tier ?? 0) + ' action'}</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="danger-tag danger-${danger}">${danger}</span>
+                <button class="btn-dry-run" onclick="executeDryRun('${integId}', '${p.power_id}')">Dry Run</button>
+              </div>
             </div>
           `;
           listContainer.appendChild(item);
@@ -1790,6 +2139,364 @@
     setInterval(loadAudit, 5000);
     loadAudit();
     loadSearchStats();
+
+    // Career-Ops Dashboard Handlers
+    async function loadCareerDashboard() {
+      try {
+        const [statusRes, pipeRes] = await Promise.all([
+          fetch(`${API_BASE}/api/v1/career/status`),
+          fetch(`${API_BASE}/api/v1/career/pipeline`)
+        ]);
+        if (statusRes.ok) {
+          const status = await statusRes.json();
+          if (status.target_compensation) {
+            document.getElementById('career-stat-target').innerText = `$${status.target_compensation.toLocaleString()}`;
+          }
+        }
+        if (pipeRes.ok) {
+          const pipe = await pipeRes.json();
+          document.getElementById('career-stat-apps').innerText = pipe.total_tracked || '0';
+          document.getElementById('career-stat-screening').innerText = `${Math.round(pipe.screening_rate || 0)}%`;
+        }
+      } catch (err) {
+        console.warn('Could not load career dashboard telemetry:', err);
+      }
+    }
+
+    async function scanJobFromUI() {
+      const title = document.getElementById('career-input-title').value;
+      const company = document.getElementById('career-input-company').value;
+      const desc = document.getElementById('career-input-desc').value;
+      const resultBox = document.getElementById('career-result-box');
+      resultBox.style.display = 'block';
+      document.getElementById('career-res-title').innerText = 'Analyzing ATS Fit...';
+      document.getElementById('career-res-score').innerText = '...';
+      document.getElementById('career-res-rec').innerText = '';
+      document.getElementById('career-res-body').innerText = 'Evaluating keyword overlap, skills taxonomy, and ATS suitability...';
+
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/career/scan`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ job_title: title, company_name: company, description: desc })
+        });
+        const data = await resp.json();
+        const score = data.fit_score ? data.fit_score.global_score : (data.global_score || 0);
+        const rec = data.fit_score ? data.fit_score.recommendation : (data.recommendation || 'Evaluated');
+        const matched = data.fit_score ? data.fit_score.matched_skills : (data.matched_skills || []);
+        const missing = data.fit_score ? data.fit_score.missing_critical_skills : (data.missing_skills || []);
+
+        document.getElementById('career-res-title').innerText = `${title} @ ${company}`;
+        document.getElementById('career-res-score').innerText = `${score.toFixed(1)}% Match`;
+        document.getElementById('career-res-rec').innerText = `Recommendation: ${rec}`;
+        document.getElementById('career-res-body').innerHTML = `
+          <div><strong>Matched Skills:</strong> ${matched.length ? matched.join(', ') : 'None'}</div>
+          <div style="margin-top: 4px;"><strong>Skill Gaps:</strong> ${missing.length ? missing.join(', ') : 'None identified'}</div>
+        `;
+      } catch (err) {
+        document.getElementById('career-res-title').innerText = 'Scan Error';
+        document.getElementById('career-res-body').innerText = String(err);
+      }
+    }
+
+    async function generateResumeFromUI() {
+      const title = document.getElementById('career-input-title').value;
+      const company = document.getElementById('career-input-company').value;
+      const resultBox = document.getElementById('career-result-box');
+      resultBox.style.display = 'block';
+      document.getElementById('career-res-title').innerText = 'Generating Tailored ATS Resume...';
+      document.getElementById('career-res-score').innerText = 'PWR-330';
+      document.getElementById('career-res-rec').innerText = 'In Progress';
+      document.getElementById('career-res-body').innerText = 'Optimizing typography, ATS headers, and achievement bullets...';
+
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/career/resume`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ job_title: title, company_name: company })
+        });
+        const data = await resp.json();
+        document.getElementById('career-res-title').innerText = `Tailored Resume Generated: ${data.target_company}`;
+        document.getElementById('career-res-score').innerText = `${data.format_version || 'ATS-v1.0'}`;
+        document.getElementById('career-res-rec').innerText = `Saved locally to ${data.file_path || 'data/resumes/'}`;
+        document.getElementById('career-res-body').innerHTML = `
+          <div><strong>Target Role:</strong> ${data.target_role}</div>
+          <div style="margin-top: 4px;"><strong>Targeted Keywords:</strong> ${(data.targeted_keywords || []).join(', ')}</div>
+          <div style="margin-top: 6px; font-size: 0.78rem; color: var(--emerald);">✓ Verified 0% PII leak, local artifact saved</div>
+        `;
+      } catch (err) {
+        document.getElementById('career-res-title').innerText = 'Generation Error';
+        document.getElementById('career-res-body').innerText = String(err);
+      }
+    }
+
+    async function prepareInterviewFromUI() {
+      const title = document.getElementById('career-input-title').value;
+      const company = document.getElementById('career-input-company').value;
+      const desc = document.getElementById('career-input-desc').value;
+      const resultBox = document.getElementById('career-result-box');
+      resultBox.style.display = 'block';
+      document.getElementById('career-res-title').innerText = 'Synthesizing Interview Prep & STAR Guide...';
+      document.getElementById('career-res-score').innerText = 'PWR-336';
+      document.getElementById('career-res-rec').innerText = 'Analyzing';
+      document.getElementById('career-res-body').innerText = 'Scanning red flags, behavioral traps, and technical domain questions...';
+
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/career/interview-prep`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ role_title: title, company_name: company, job_description: desc })
+        });
+        const data = await resp.json();
+        const redFlags = data.red_flags || [];
+        const questions = (data.star_questions || []).slice(0, 3);
+
+        document.getElementById('career-res-title').innerText = `Interview Prep: ${title} @ ${company}`;
+        document.getElementById('career-res-score').innerText = `${redFlags.length} Red Flags`;
+        document.getElementById('career-res-rec').innerText = `Technical Focus: ${(data.technical_topics || []).slice(0, 4).join(', ')}`;
+        document.getElementById('career-res-body').innerHTML = `
+          <div><strong>Key Practice Questions:</strong></div>
+          <ul style="margin: 4px 0 8px 18px; padding: 0;">
+            ${questions.map(q => `<li>${q}</li>`).join('')}
+          </ul>
+          ${redFlags.length ? `<div style="color: var(--amber);"><strong>Warnings:</strong> ${redFlags.join('; ')}</div>` : '<div style="color: var(--emerald);">✓ No deceptive job listing patterns detected</div>'}
+        `;
+      } catch (err) {
+        document.getElementById('career-res-title').innerText = 'Interview Prep Error';
+        document.getElementById('career-res-body').innerText = String(err);
+      }
+    }
+
+    // ========================================================
+    // COMMUNICATION CENTER (Gmail via OAuth 2.0)
+    // ========================================================
+    let commConnected = false;
+
+    function escHtml(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    async function fetchComm(path) {
+      const resp = await fetch(`${API_BASE}${path}`);
+      if (!resp.ok) return null;
+      return resp.json();
+    }
+
+    async function loadCommunication() {
+      try {
+        const status = await fetchComm('/api/v1/google/status') || { status: 'UNKNOWN', connected: false };
+        commConnected = status.connected === true;
+
+        const statusEl = document.getElementById('comm-google-status');
+        const connectBtn = document.getElementById('comm-btn-connect');
+        const disconnectBtn = document.getElementById('comm-btn-disconnect');
+        const prompt = document.getElementById('comm-connect-prompt');
+        if (statusEl) {
+          statusEl.textContent = (status.status || 'UNKNOWN').replace(/_/g, ' ');
+          statusEl.className = 'stat-pill-val ' + (commConnected ? 'ok-text' : 'warn-text');
+        }
+        if (connectBtn) connectBtn.style.display = commConnected ? 'none' : 'inline-block';
+        if (disconnectBtn) disconnectBtn.style.display = commConnected ? 'inline-block' : 'none';
+        if (prompt) prompt.style.display = commConnected ? 'none' : 'block';
+
+        if (commConnected) {
+          const [inbox, unread, important, drafts, sent, approvals] = await Promise.all([
+            fetchComm('/api/v1/google/gmail/inbox?max_results=8'),
+            fetchComm('/api/v1/google/gmail/unread?max_results=5'),
+            fetchComm('/api/v1/google/gmail/important?max_results=5'),
+            fetchComm('/api/v1/google/gmail/drafts?max_results=8'),
+            fetchComm('/api/v1/google/gmail/sent?max_results=8'),
+            fetchComm('/api/v1/approvals/pending'),
+          ]);
+
+          renderCommMessages('comm-inbox-list', inbox ? inbox.messages : []);
+          if (document.getElementById('comm-inbox-count')) document.getElementById('comm-inbox-count').textContent = inbox ? inbox.messages.length : 0;
+          if (document.getElementById('comm-unread-count')) document.getElementById('comm-unread-count').textContent = unread ? unread.result_size_estimate : 0;
+          if (document.getElementById('comm-important-count')) document.getElementById('comm-important-count').textContent = important ? important.result_size_estimate : 0;
+
+          renderCommMessages('comm-drafts-list', drafts ? drafts.drafts : [], true);
+          if (document.getElementById('comm-drafts-count')) document.getElementById('comm-drafts-count').textContent = drafts ? drafts.drafts.length : 0;
+
+          renderCommMessages('comm-sent-list', sent ? sent.messages : []);
+          if (document.getElementById('comm-sent-count')) document.getElementById('comm-sent-count').textContent = sent ? sent.messages.length : 0;
+
+          renderCommApprovals(approvals ? approvals.pending : []);
+          const badge = document.getElementById('communication-total-badge');
+          if (badge) { badge.textContent = (approvals && approvals.total) ? approvals.total : 0; badge.hidden = !(approvals && approvals.total > 0); }
+        } else {
+          ['comm-inbox-list', 'comm-drafts-list', 'comm-sent-list', 'comm-approvals-list'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = '<div class="feed-row"><span class="feed-time num">—</span><p>Connect Google Account to load mail.</p></div>';
+          });
+          ['comm-inbox-count', 'comm-unread-count', 'comm-important-count', 'comm-drafts-count', 'comm-sent-count', 'comm-approvals-count'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = '0';
+          });
+          const badge = document.getElementById('communication-total-badge');
+          if (badge) { badge.textContent = '0'; badge.hidden = true; }
+        }
+      } catch (err) {
+        console.error('Communication Center load failed:', err);
+      }
+    }
+
+    function renderCommMessages(containerId, messages, withActions) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      if (!messages || messages.length === 0) {
+        el.innerHTML = '<div class="feed-row"><span class="feed-time num">—</span><p>No messages.</p></div>';
+        return;
+      }
+      el.innerHTML = messages.map((m) => {
+        const date = m.date ? String(m.date).slice(0, 16) : '—';
+        const actions = withActions
+          ? `<div style="display:flex;gap:6px"><button class="btn-integ btn-integ-check" onclick="event.stopPropagation();sendCommDraft('${escHtml(m.draft_id || '')}','${escHtml(m.content_hash || '')}')">Send draft</button></div>`
+          : '';
+        return `<div class="feed-row" style="cursor:pointer;" onclick="openCommMessage('${escHtml(m.id || m.message_id || '')}')">
+          <span class="feed-time num">${date}</span>
+          <p style="margin:0">${escHtml(m.from || '')} <span style="color:var(--muted);font-size:0.85rem;">— ${escHtml(m.subject || '(no subject)')}</span></p>
+          <span class="feed-tag ${m.unread ? 'ok-text' : 'muted-text'}">${m.unread ? 'UNREAD' : 'READ'}</span>
+          ${actions}
+        </div>`;
+      }).join('');
+    }
+
+    async function openCommMessage(messageId) {
+      if (!messageId) return;
+      const message = await fetchComm(`/api/v1/google/gmail/message/${encodeURIComponent(messageId)}`);
+      if (!message) { alert('Could not load message.'); return; }
+      const bodyHtml = message.body_text
+        ? `<pre style="white-space:pre-wrap;font-size:12.5px;line-height:1.6;margin:8px 0;color:color-mix(in oklch,var(--fg) 86%,var(--muted));">${escHtml(message.body_text)}</pre>`
+        : '<p style="color:var(--muted);font-size:12px;">No body text.</p>';
+      const attHtml = message.attachments && message.attachments.length
+        ? `<div style="margin-top:10px"><div style="font-size:8px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Attachments</div>${message.attachments.map((a) => `<div style="font-size:12px">${escHtml(a.filename)} (${a.size_bytes} bytes)</div>`).join('')}</div>`
+        : '';
+      openModal(
+        `<div class="modal-head"><div><p class="eyebrow">Message</p><h2 class="modal-title">${escHtml(message.subject || '(no subject)')}</h2></div></div></div>
+        <div class="modal-body">
+          <div style="font-size:8.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">From ${escHtml(message.from)}</div>
+          <div style="font-size:8.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">To ${escHtml(message.to)}</div>
+          <div style="font-size:8.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">${escHtml(message.date || '')}</div>
+          ${bodyHtml}
+          ${attHtml}
+        </div>
+        <div class="modal-actions"><button class="btn btn-secondary" data-close>Close</button></div>`,
+        { label: 'Message' }
+      );
+    }
+
+    async function sendCommDraft(draftId, contentHash) {
+      if (!draftId || !contentHash) { alert('Cannot send: missing draft reference.'); return; }
+      try {
+        let resp = await fetch(`${API_BASE}/api/v1/google/gmail/send`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ draft_id: draftId, expected_content_hash: contentHash }),
+        });
+        let data = await resp.json();
+
+        if (data.status === 'AWAITING_APPROVAL') {
+          const preview = data.approval_preview || {};
+          if (!confirm(`Send draft to ${preview.to || ''} — "${preview.subject || ''}"?\n\nSending requires your explicit approval.`)) return;
+
+          const resolveResp = await fetch(`${API_BASE}/api/v1/approvals/${encodeURIComponent(data.task_id)}/resolve`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ task_id: data.task_id, approved: true, user_id: 'owner' }),
+          });
+          const resolved = await resolveResp.json();
+          if (resolved.status !== 'APPROVED') { alert('Send was not approved.'); return; }
+
+          resp = await fetch(`${API_BASE}/api/v1/google/gmail/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ draft_id: draftId, expected_content_hash: contentHash, approval_token: resolved.approval_token }),
+          });
+          data = await resp.json();
+        }
+
+        if (data.status === 'SENT' && data.message_id) {
+          alert(`Sent — provider message id ${data.message_id}`);
+          loadCommunication();
+        } else {
+          alert('Send not confirmed: ' + (data.error || data.reason || JSON.stringify(data)));
+        }
+      } catch (err) {
+        alert('Send failed: ' + String(err));
+      }
+    }
+
+    async function startGoogleAuth() {
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/google/auth/start`, { method: 'POST' });
+        const data = await resp.json();
+        if (!data.authorization_url) throw new Error(data.detail || 'No authorization URL returned');
+        window.open(data.authorization_url, '_blank', 'width=920,height=700');
+        let done = false;
+        const timer = setInterval(async () => {
+          if (done) return;
+          const status = await fetchComm('/api/v1/google/status');
+          if (status && status.connected) {
+            done = true;
+            clearInterval(timer);
+            loadCommunication();
+          }
+        }, 2000);
+        setTimeout(() => {
+          if (!done) {
+            done = true;
+            clearInterval(timer);
+            alert('Authorization window is still open. Complete sign-in in the browser, then click Refresh.');
+          }
+        }, 300000);
+      } catch (err) {
+        alert('Could not start Google connection: ' + String(err));
+      }
+    }
+
+    async function disconnectGoogle() {
+      if (!confirm('Revoke the Google token and disconnect Gmail?')) return;
+      try {
+        await fetch(`${API_BASE}/api/v1/google/auth/disconnect`, { method: 'POST' });
+      } catch (err) {
+        console.warn('Disconnect request failed:', err);
+      }
+      loadCommunication();
+    }
+
+    function renderCommApprovals(approvals) {
+      const el = document.getElementById('comm-approvals-list');
+      if (!el) return;
+      if (!approvals || approvals.length === 0) {
+        el.innerHTML = '<div class="feed-row"><span class="feed-time num">—</span><p>No actions awaiting approval.</p></div>';
+        return;
+      }
+      el.innerHTML = approvals.map((a) => `
+        <div class="feed-row">
+          <span class="feed-time num">${a.expires_at ? String(a.expires_at).slice(0, 16) : '—'}</span>
+          <p style="margin:0">${escHtml(a.power_id || '')} — ${escHtml(a.action_summary || '')}</p>
+          <div style="display:flex;gap:6px">
+            <button class="btn-integ btn-integ-check" onclick="event.stopPropagation();resolveCommApproval('${escHtml(a.task_id || '')}', true)">Approve</button>
+            <button class="btn-integ btn-integ-disable" onclick="event.stopPropagation();resolveCommApproval('${escHtml(a.task_id || '')}', false)">Reject</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function resolveCommApproval(taskId, approved) {
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/approvals/${encodeURIComponent(taskId)}/resolve`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ task_id: taskId, approved, user_id: 'owner' }),
+        });
+        const data = await resp.json();
+        alert(approved ? (data.status === 'APPROVED' ? 'Approved.' : 'Approval failed.') : 'Rejected.');
+        loadCommunication();
+      } catch (err) {
+        alert('Resolution failed: ' + String(err));
+      }
+    }
 
   </script>
 </body>

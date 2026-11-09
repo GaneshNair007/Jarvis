@@ -1,0 +1,84 @@
+{
+  "verdict": "CONFIRMED",
+  "timestamp": 1793448786.6363692,
+  "ollama_benchmark": {
+    "cold_socket_mean_ms": 31.20764,
+    "cold_socket_max_ms": 54.108,
+    "cold_socket_passed": true,
+    "cached_socket_mean_ms": 0.00055665,
+    "cached_socket_median_ms": 0.0005,
+    "cached_socket_passed": true,
+    "cold_e2e_ms": 23.7434,
+    "cached_e2e_mean_ms": 0.003297979797979798
+  },
+  "audit_benchmark": {
+    "prod_mean_ms": 0.21321647999999999,
+    "prod_median_ms": 0.19845,
+    "prod_p95_ms": 0.30839,
+    "prod_max_ms": 5.7917,
+    "pure_seek_mean_ms": 0.03070912,
+    "pure_seek_median_ms": 0.0312,
+    "pure_seek_p95_ms": 0.04797,
+    "pure_seek_passed": true,
+    "ntfs_open_close_overhead_ms": 0.18250736,
+    "o1_scaling_confirmed": true,
+    "scaling_results": [
+      {
+        "records": 10,
+        "file_size_kb": 4.3291015625,
+        "reverse_seek_us": 204.7596,
+        "reverse_seek_ms": 0.2047596,
+        "naive_readlines_ms": 0.19682,
+        "speedup_factor": 0.9612247728555828
+      },
+      {
+        "records": 100,
+        "file_size_kb": 43.7041015625,
+        "reverse_seek_us": 203.256,
+        "reverse_seek_ms": 0.203256,
+        "naive_readlines_ms": 0.35270999999999997,
+        "speedup_factor": 1.7352993269571377
+      },
+      {
+        "records": 1000,
+        "file_size_kb": 437.4541015625,
+        "reverse_seek_us": 245.9938,
+        "reverse_seek_ms": 0.24599379999999998,
+        "naive_readlines_ms": 1.66716,
+        "speedup_factor": 6.777243979319804
+      },
+      {
+        "records": 2402,
+        "file_size_kb": 1050.8291015625,
+        "reverse_seek_us": 200.4726,
+        "reverse_seek_ms": 0.2004726,
+        "naive_readlines_ms": 3.96617,
+        "speedup_factor": 19.78410017129523
+      },
+      {
+        "records": 10000,
+        "file_size_kb": 4374.9541015625,
+        "reverse_seek_us": 230.5612,
+        "reverse_seek_ms": 0.23056120000000002,
+        "naive_readlines_ms": 13.80848,
+        "speedup_factor": 59.89073616896511
+      },
+      {
+        "records": 50000,
+        "file_size_kb": 21874.9541015625,
+        "reverse_seek_us": 244.272,
+        "reverse_seek_ms": 0.244272,
+        "naive_readlines_ms": 88.8746,
+        "speedup_factor": 363.8345778476453
+      },
+      {
+        "records": 100000,
+        "file_size_kb": 43749.9541015625,
+        "reverse_seek_us": 206.1334,
+        "reverse_seek_ms": 0.2061334,
+        "naive_readlines_ms": 168.35411,
+        "speedup_factor": 816.7240728576737
+      }
+    ]
+  }
+}

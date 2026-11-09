@@ -1,0 +1,7 @@
+File: data/test_briefing.txt
+Project Name: JARVIS
+Designated Port: 8000
+Primary Architect: Ganesh Nair
+Active Database: SQLite FTS5 store
+Status: Operational
+

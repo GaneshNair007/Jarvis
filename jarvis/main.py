@@ -22,28 +22,39 @@ from jarvis.core.audit import audit_ledger
 from jarvis.core.power_registry import power_registry
 from jarvis.powers.it_admin_powers import it_admin_powers
 
+
 def run_server():
     print(f"🚀 Starting JARVIS Operating System on http://{settings.jarvis_host}:{settings.jarvis_port}")
-    uvicorn.run("jarvis.api.server:app", host=settings.jarvis_host, port=settings.jarvis_port, reload=settings.jarvis_debug)
+    uvicorn.run(
+        "jarvis.api.server:app", host=settings.jarvis_host, port=settings.jarvis_port, reload=settings.jarvis_debug
+    )
+
 
 def run_cli_chat(query: str):
     print(f"\n[USER]: {query}")
     result = asyncio.run(orchestrator.process_user_query(query))
     print(f"[JARVIS ({result.get('tier')})]: {json.dumps(result.get('response'), indent=2)}\n")
 
+
 def run_health():
     report = it_admin_powers.system_health_report()
     print("\n══════════════════════ JARVIS SYSTEM HEALTH ══════════════════════")
     print(f"Status      : {report['status'].upper()}")
     print(f"CPU Usage   : {report['cpu']['percent']}% ({report['cpu']['cores_logical']} cores)")
-    print(f"Memory Usage: {report['memory']['percent']}% ({report['memory']['used_gb']} GB / {report['memory']['total_gb']} GB)")
-    print(f"Disk Usage  : {report['disk']['percent']}% ({report['disk']['used_gb']} GB / {report['disk']['total_gb']} GB)")
+    print(
+        f"Memory Usage: {report['memory']['percent']}% ({report['memory']['used_gb']} GB / {report['memory']['total_gb']} GB)"
+    )
+    print(
+        f"Disk Usage  : {report['disk']['percent']}% ({report['disk']['used_gb']} GB / {report['disk']['total_gb']} GB)"
+    )
     print("═════════════════════════════════════════════════════════════════\n")
+
 
 def run_audit_verify():
     valid, count, msg = audit_ledger.verify_integrity()
     status_icon = "✅" if valid else "❌"
     print(f"\n{status_icon} Audit Ledger Verification: {msg}")
+
 
 def run_powers_summary():
     total = power_registry.total_count()
@@ -54,9 +65,11 @@ def run_powers_summary():
         print(f"  - {cat:30}: {p_count} powers")
     print()
 
+
 def run_voice_mode():
     from jarvis.voice.wake import wake_detector
     from jarvis.voice.tts import tts_engine
+
     print("\n🎙️  JARVIS Full-Duplex Voice Mode Active")
     print("Wake word: 'Hey Jarvis' or press Enter for Push-to-Talk. Type 'exit' to quit.\n")
     tts_engine.speak_live("Jarvis voice subsystem online.", async_mode=True)
@@ -77,6 +90,7 @@ def run_voice_mode():
         except (KeyboardInterrupt, EOFError):
             wake_detector.stop_listening()
             break
+
 
 def cli_entrypoint():
     args = sys.argv[1:]
@@ -108,6 +122,7 @@ Usage:
 """)
     else:
         print(f"Unknown command '{args[0]}'. Use: serve, chat, health, audit, powers, voice, --help")
+
 
 if __name__ == "__main__":
     cli_entrypoint()

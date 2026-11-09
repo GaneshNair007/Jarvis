@@ -12,16 +12,36 @@ router = ModelRouter()
 policy = PolicyEngine()
 memory = mem0_client
 
+
 def memory_retrieval(state: JarvisState) -> Dict[str, Any]:
-    memories = memory.search(
-        state.get("user_input", ""),
-        filters={"user_id": state.get("user_id", settings.jarvis_user_id)},
-    )
-    return {
-        "retrieved_memories": [
-            item["memory"] for item in memories if "memory" in item
-        ]
-    }
+    user_id = state.get("user_id", settings.jarvis_user_id)
+    retrieved: List[str] = []
+
+    # 1. Retrieve Canonical Brain Memories (ambient preferences & facts)
+    try:
+        from jarvis.brain.memory.service import brain_memory_service
+
+        canon_mems = brain_memory_service.search_memories(user_id=user_id)
+        for cm in canon_mems:
+            if cm.content not in retrieved:
+                retrieved.append(cm.content)
+    except Exception:
+        pass
+
+    # 2. Retrieve Legacy Mem0 memories
+    try:
+        memories = memory.search(
+            state.get("user_input", ""),
+            filters={"user_id": user_id},
+        )
+        for item in memories:
+            if "memory" in item and item["memory"] not in retrieved:
+                retrieved.append(item["memory"])
+    except Exception:
+        pass
+
+    return {"retrieved_memories": retrieved}
+
 
 def policy_check(state: JarvisState) -> Dict[str, Any]:
     decision = policy.evaluate(
@@ -35,11 +55,12 @@ def policy_check(state: JarvisState) -> Dict[str, Any]:
         "selected_tools": decision.allowed_tools,
     }
 
+
 def model_router(state: JarvisState) -> Dict[str, Any]:
     if state.get("approval_required") and not state.get("approval_id"):
         return {
             "model_route": "policy_halt",
-            "final_response": "Action halted: This operation requires explicit human cryptographic approval."
+            "final_response": "Action halted: This operation requires explicit human cryptographic approval.",
         }
 
     model = router.route(
@@ -66,7 +87,7 @@ def model_router(state: JarvisState) -> Dict[str, Any]:
         action="INFERENCE_COMPLETE",
         target=model,
         payload={"task_id": state.get("task_id"), "input": state.get("user_input")},
-        result="SUCCESS"
+        result="SUCCESS",
     )
 
     return {
@@ -74,19 +95,40 @@ def model_router(state: JarvisState) -> Dict[str, Any]:
         "final_response": content,
     }
 
+
 model_router_node = model_router
+
 
 def memory_update(state: JarvisState) -> Dict[str, Any]:
     user_input = state.get("user_input", "")
     final_response = state.get("final_response", "")
+    user_id = state.get("user_id", settings.jarvis_user_id)
     if user_input and final_response and not final_response.startswith("Action halted"):
-        memory.add(
-            [
-                {"role": "user", "content": user_input},
-                {"role": "assistant", "content": final_response},
-            ],
-            user_id=state.get("user_id", settings.jarvis_user_id),
-        )
+        # 1. Persist to legacy Mem0
+        try:
+            memory.add(
+                [
+                    {"role": "user", "content": user_input},
+                    {"role": "assistant", "content": final_response},
+                ],
+                user_id=user_id,
+            )
+        except Exception:
+            pass
+
+        # 2. Persist to Canonical Brain Memory Service
+        try:
+            from jarvis.brain.memory.service import brain_memory_service
+            from jarvis.brain.schemas import MemoryCategory
+
+            brain_memory_service.store_memory(
+                user_id=user_id,
+                content=f"Q: {user_input} | A: {final_response}",
+                category=MemoryCategory.FACT,
+            )
+        except Exception:
+            pass
     return {}
+
 
 __all__ = ["memory_retrieval", "policy_check", "model_router", "model_router_node", "memory_update"]

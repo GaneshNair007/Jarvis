@@ -1,0 +1,31 @@
+{
+  "company_name": "Anthropic",
+  "domain": "anthropic.com",
+  "summary": "Anthropic is a high-growth technology organization focusing on scalable cloud platforms and intelligent automation.",
+  "culture_signals": [
+    "Engineering-driven, remote-friendly or hybrid cadence",
+    "High autonomy with emphasis on clean system architecture",
+    "Continuous deployment with automated testing standards"
+  ],
+  "tech_stack": [
+    "Python",
+    "FastAPI",
+    "PostgreSQL",
+    "Docker",
+    "Kubernetes",
+    "Redis",
+    "Kafka",
+    "AWS"
+  ],
+  "recent_news": [
+    "Anthropic expands engineering initiatives in AI orchestration and cloud scalability.",
+    "Active hiring across distributed systems and platform infrastructure."
+  ],
+  "leadership": [
+    "VP of Engineering",
+    "Head of AI Infrastructure",
+    "Staff Technical Lead"
+  ],
+  "glassdoor_rating": 4.3,
+  "red_flags": []
+}

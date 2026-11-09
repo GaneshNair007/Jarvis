@@ -1,0 +1,18 @@
+# JARVIS Constitution: Inviolable System Constraints
+version: "1.0.0"
+inviolable_constraints:
+  - id: "no_direct_sql_by_agents"
+    description: "Agents and external LLMs cannot execute raw SQL; all queries must route through the Repository layer."
+    enforcement: "ArchitectureGuard.check_sql_access()"
+
+  - id: "no_direct_main_push"
+    description: "Self-improvement mechanisms and reflection engines cannot directly push or merge to the 'main' branch."
+    enforcement: "SafePRWorkflow.validate_target_branch()"
+
+  - id: "mandatory_verification_gate"
+    description: "No TaskNode may be marked COMPLETED without passing TaskVerifier quality and DLP checks."
+    enforcement: "TaskExecutor.verify_task()"
+
+  - id: "capability_code_isolation"
+    description: "The CapabilityRegistry cannot modify production source code; missing capabilities only emit ImprovementRequests."
+    enforcement: "CapabilityRegistry.safeguard()"

@@ -24,6 +24,7 @@ class SearchCache:
         if target_redis:
             try:
                 import redis
+
                 self.redis_client = redis.Redis.from_url(
                     target_redis, decode_responses=True, socket_timeout=settings.redis_socket_timeout_sec
                 )

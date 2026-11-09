@@ -23,6 +23,7 @@ from integrations.base.rate_limiter import rate_limiter
 from integrations.base.retry_policy import default_retry_policy, RetryPolicy
 from integrations.base.integration_health import IntegrationStatus, HealthReport
 
+
 class BaseIntegration(ABC):
     """Abstract base class for all JARVIS service integrations."""
 
@@ -34,12 +35,12 @@ class BaseIntegration(ABC):
         description: str,
         required_credentials: Optional[List[str]] = None,
         required_scopes: Optional[List[str]] = None,
-        danger_level: str = "low", # low, medium, high, critical
-        default_approval_tier: int = 0, # Tier 0 Observe, 1 Reversible, 2 Outbound/Approval, 3 Destructive/StepUp
+        danger_level: str = "low",  # low, medium, high, critical
+        default_approval_tier: int = 0,  # Tier 0 Observe, 1 Reversible, 2 Outbound/Approval, 3 Destructive/StepUp
         rate_limit_rpm: int = 60,
         cost_model: str = "free",
         data_sensitivity: str = "medium",
-        documentation_url: str = ""
+        documentation_url: str = "",
     ):
         self.integration_id = integration_id
         self.display_name = display_name
@@ -133,7 +134,7 @@ class BaseIntegration(ABC):
         power_id: str,
         params: Dict[str, Any],
         approval_token: Optional[str] = None,
-        context: Optional[Dict[str, Any]] = None
+        context: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """
         Public guarded entrypoint for executing any integration power.
@@ -154,13 +155,13 @@ class BaseIntegration(ABC):
                 action=f"EXECUTE_{power_id}",
                 target=power_id,
                 payload={"params_hash": content_hash},
-                result="BLOCKED_BY_KILL_SWITCH"
+                result="BLOCKED_BY_KILL_SWITCH",
             )
             return {
                 "status": "BLOCKED",
                 "reason": "Execution halted: Kill switch is actively triggered.",
                 "integration_id": self.integration_id,
-                "power_id": power_id
+                "power_id": power_id,
             }
 
         # 2. Enabled Verification
@@ -169,7 +170,7 @@ class BaseIntegration(ABC):
                 "status": "DISABLED",
                 "reason": f"Integration '{self.integration_id}' is disabled. Enable it before executing powers.",
                 "integration_id": self.integration_id,
-                "power_id": power_id
+                "power_id": power_id,
             }
 
         # 3. Credential Verification
@@ -182,7 +183,7 @@ class BaseIntegration(ABC):
                 "missing_credentials": missing_keys,
                 "setup_guide": guide,
                 "integration_id": self.integration_id,
-                "power_id": power_id
+                "power_id": power_id,
             }
 
         # 4. Rate Limiting Check
@@ -193,16 +194,13 @@ class BaseIntegration(ABC):
                 "reason": f"Rate limit reached for '{self.integration_id}'. Back off for {wait_sec} seconds.",
                 "wait_seconds": wait_sec,
                 "integration_id": self.integration_id,
-                "power_id": power_id
+                "power_id": power_id,
             }
 
         # 5. Policy & Approval Evaluation
         power_meta = self._find_power(power_id)
         if not power_meta:
-            return {
-                "status": "ERROR",
-                "reason": f"Unknown power '{power_id}' for integration '{self.integration_id}'."
-            }
+            return {"status": "ERROR", "reason": f"Unknown power '{power_id}' for integration '{self.integration_id}'."}
 
         requires_approval = power_meta.get("approval_required", False)
         danger = power_meta.get("danger_level", self.danger_level)
@@ -210,30 +208,43 @@ class BaseIntegration(ABC):
 
         # Any outbound or destructive action requires explicit token
         if requires_approval or tier >= 2:
+            task_id = f"tsk_{content_hash[:8]}"
             if not approval_token:
-                # Issue approval request
+                # Issue approval request bound to this exact parameter set.
                 req_obj = policy_gate.request_approval(
                     power_id=power_id,
-                    task_id=f"tsk_{content_hash[:8]}",
+                    task_id=task_id,
                     action_summary=f"Execute {power_meta.get('name', power_id)} on {self.display_name}",
-                    payload=params
+                    payload=params,
                 )
-                return {
+                response = {
                     "status": "AWAITING_APPROVAL",
                     "reason": f"Action requires Tier {tier} approval.",
                     "approval_required": True,
                     "approval_id": req_obj["approval_id"],
+                    "task_id": task_id,
                     "content_hash": content_hash,
                     "integration_id": self.integration_id,
-                    "power_id": power_id
+                    "power_id": power_id,
                 }
+                preview = self._approval_preview(power_id, params)
+                if preview is not None:
+                    response["approval_preview"] = preview
+                return response
 
-            # Verify token
-            valid_token = policy_gate.verify_token(approval_token)
+            # Verify the token against the exact current parameters.  A token
+            # issued for different content must not authorize this execution.
+            policy_hash = policy_gate.hash_payload(params)
+            valid_token, invalid_reason = policy_gate.verify_approval_token(
+                task_id=task_id,
+                power_id=power_id,
+                payload_hash=policy_hash,
+                token=approval_token,
+            )
             if not valid_token:
                 return {
                     "status": "APPROVAL_INVALID",
-                    "reason": "Provided approval token is invalid, expired, or tampered."
+                    "reason": f"Provided approval token is invalid, expired, tampered, or bound to different content: {invalid_reason}",
                 }
 
         # 6. Record rate limit call
@@ -247,7 +258,7 @@ class BaseIntegration(ABC):
                 action=f"EXECUTE_{power_id}",
                 target=power_id,
                 payload={"params_hash": content_hash, "duration_ms": duration_ms},
-                result="SUCCESS"
+                result="SUCCESS",
             )
             return {
                 "status": "SUCCESS",
@@ -255,25 +266,16 @@ class BaseIntegration(ABC):
                 "power_id": power_id,
                 "result": result,
                 "content_hash": content_hash,
-                "evidence": {
-                    "timestamp": time.time(),
-                    "duration_ms": duration_ms,
-                    "content_hash": content_hash
-                }
+                "evidence": {"timestamp": time.time(), "duration_ms": duration_ms, "content_hash": content_hash},
             }
         except Exception as e:
             self._record_audit(
                 action=f"EXECUTE_{power_id}",
                 target=power_id,
                 payload={"params_hash": content_hash, "error": str(e)},
-                result="FAILED"
+                result="FAILED",
             )
-            return {
-                "status": "FAILED",
-                "reason": str(e),
-                "integration_id": self.integration_id,
-                "power_id": power_id
-            }
+            return {"status": "FAILED", "reason": str(e), "integration_id": self.integration_id, "power_id": power_id}
 
     def dry_run(self, power_id: str, params: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -299,7 +301,7 @@ class BaseIntegration(ABC):
             "credentials_ready": is_valid,
             "missing_credentials": missing,
             "kill_switch_active": self.kill_switched or policy_gate.is_kill_switch_active(),
-            "expected_outcome": f"Would dispatch '{power_id}' to {self.display_name} with verified content hash."
+            "expected_outcome": f"Would dispatch '{power_id}' to {self.display_name} with verified content hash.",
         }
 
     def audit(self, limit: int = 20) -> List[Dict[str, Any]]:
@@ -307,6 +309,15 @@ class BaseIntegration(ABC):
         return list(reversed(self._audit_log[-limit:]))
 
     # ── Helpers ────────────────────────────────────────────────────────────────
+
+    def _approval_preview(self, power_id: str, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Optional human-readable approval preview supplied by integrations.
+
+        High-impact integrations (for example Gmail sending) override this so
+        the approval center can show the exact account, recipients, subject and
+        body before authorization.  Secrets must never be included.
+        """
+        return None
 
     def _find_power(self, power_id: str) -> Optional[Dict[str, Any]]:
         for p in self.list_powers():
@@ -321,7 +332,7 @@ class BaseIntegration(ABC):
             "action": action,
             "target": target or self.integration_id,
             "payload": credential_manager.redact_dict(payload),
-            "result": result
+            "result": result,
         }
         self._audit_log.append(event)
         audit_ledger.record(
@@ -329,5 +340,5 @@ class BaseIntegration(ABC):
             action=action,
             target=target or self.integration_id,
             payload=event["payload"],
-            result=result
+            result=result,
         )

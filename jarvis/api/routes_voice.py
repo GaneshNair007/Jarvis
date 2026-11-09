@@ -14,9 +14,11 @@ from jarvis.voice.pipeline import voice_pipeline
 
 router = APIRouter(prefix="/api/v1/voice", tags=["Voice"])
 
+
 class SynthesizeRequest(BaseModel):
     text: str
     play_live: bool = False
+
 
 @router.post("/transcribe")
 async def transcribe_audio(file: UploadFile = File(...)):
@@ -25,6 +27,7 @@ async def transcribe_audio(file: UploadFile = File(...)):
     if not audio_bytes:
         raise HTTPException(status_code=400, detail="Empty audio file provided")
     return stt_engine.transcribe(audio_bytes)
+
 
 @router.post("/synthesize")
 async def synthesize_speech(req: SynthesizeRequest):
@@ -36,6 +39,7 @@ async def synthesize_speech(req: SynthesizeRequest):
     wav_bytes = tts_engine.synthesize_to_wav(req.text)
     return Response(content=wav_bytes, media_type="audio/wav")
 
+
 @router.post("/turn")
 async def voice_conversational_turn(file: UploadFile = File(...)):
     """Executes a full voice conversational turn: Audio In -> Audio Out."""
@@ -46,14 +50,16 @@ async def voice_conversational_turn(file: UploadFile = File(...)):
     headers = {
         "X-Jarvis-Transcription": res.get("transcription", ""),
         "X-Jarvis-Reply": res.get("reply_text", "")[:200],
-        "X-Jarvis-Tier": res.get("tier", "")
+        "X-Jarvis-Tier": res.get("tier", ""),
     }
     return Response(content=wav_bytes, media_type="audio/wav", headers=headers)
+
 
 @router.post("/push-to-talk")
 async def trigger_ptt():
     """PWR-002: Immediately triggers push-to-talk wake event."""
     return wake_detector.trigger_push_to_talk(source="web_dashboard")
+
 
 @router.post("/barge-in")
 async def trigger_barge_in():

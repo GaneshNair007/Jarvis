@@ -10,6 +10,7 @@ from integrations.base.integration_health import IntegrationStatus, HealthReport
 from integrations.base.credential_manager import credential_manager
 from jarvis.config import settings
 
+
 class GitHubIntegration(BaseIntegration):
     """Developer integration for GitHub repositories and code workflows."""
 
@@ -26,7 +27,7 @@ class GitHubIntegration(BaseIntegration):
             rate_limit_rpm=30,
             cost_model="free",
             data_sensitivity="high",
-            documentation_url="https://docs.github.com/en/rest"
+            documentation_url="https://docs.github.com/en/rest",
         )
 
     def connect(self, credentials: Optional[Dict[str, str]] = None) -> bool:
@@ -53,7 +54,7 @@ class GitHubIntegration(BaseIntegration):
                 connected=self.connected,
                 enabled=self.enabled,
                 kill_switched=True,
-                errors=["Kill switch active for GitHub."]
+                errors=["Kill switch active for GitHub."],
             )
 
         is_valid, missing = credential_manager.validate_credentials(self.required_credentials)
@@ -65,7 +66,7 @@ class GitHubIntegration(BaseIntegration):
                 enabled=self.enabled,
                 kill_switched=False,
                 errors=[f"Missing credentials: {', '.join(missing)}"],
-                details={"setup_guide": credential_manager.get_setup_guide(self.integration_id)}
+                details={"setup_guide": credential_manager.get_setup_guide(self.integration_id)},
             )
 
         return HealthReport(
@@ -75,7 +76,7 @@ class GitHubIntegration(BaseIntegration):
             enabled=self.enabled,
             kill_switched=False,
             latency_ms=45.0,
-            details={"api_endpoint": "https://api.github.com"}
+            details={"api_endpoint": "https://api.github.com"},
         )
 
     def list_powers(self) -> List[Dict[str, Any]]:
@@ -86,7 +87,7 @@ class GitHubIntegration(BaseIntegration):
                 "description": "Lists repositories owned by or accessible to user",
                 "tier": 0,
                 "approval_required": False,
-                "danger_level": "none"
+                "danger_level": "none",
             },
             {
                 "power_id": "github.search_code",
@@ -94,7 +95,7 @@ class GitHubIntegration(BaseIntegration):
                 "description": "Searches code keywords across repository files",
                 "tier": 0,
                 "approval_required": False,
-                "danger_level": "none"
+                "danger_level": "none",
             },
             {
                 "power_id": "github.create_issue_draft",
@@ -102,7 +103,7 @@ class GitHubIntegration(BaseIntegration):
                 "description": "Creates a local reviewable issue draft without publishing",
                 "tier": 1,
                 "approval_required": False,
-                "danger_level": "low"
+                "danger_level": "low",
             },
             {
                 "power_id": "github.create_issue",
@@ -110,7 +111,7 @@ class GitHubIntegration(BaseIntegration):
                 "description": "Publishes a new issue to target repository",
                 "tier": 2,
                 "approval_required": True,
-                "danger_level": "medium"
+                "danger_level": "medium",
             },
             {
                 "power_id": "github.merge_pr",
@@ -118,8 +119,8 @@ class GitHubIntegration(BaseIntegration):
                 "description": "Merges approved pull request into target branch",
                 "tier": 3,
                 "approval_required": True,
-                "danger_level": "critical"
-            }
+                "danger_level": "critical",
+            },
         ]
 
     def _execute_power_impl(self, power_id: str, params: Dict[str, Any]) -> Dict[str, Any]:
@@ -135,24 +136,22 @@ class GitHubIntegration(BaseIntegration):
             return {
                 "repos": [
                     {"name": repo_name, "full_name": default_repo, "private": True},
-                    {"name": "Antigravity-Core", "full_name": f"{repo_owner}/Antigravity-Core", "private": False}
+                    {"name": "Antigravity-Core", "full_name": f"{repo_owner}/Antigravity-Core", "private": False},
                 ],
-                "count": 2
+                "count": 2,
             }
         elif power_id == "github.search_code":
             query = params.get("query", "")
             return {
                 "query": query,
-                "matches": [
-                    {"file": "jarvis/config.py", "line": 15, "fragment": f"match for {query}"}
-                ]
+                "matches": [{"file": "jarvis/config.py", "line": 15, "fragment": f"match for {query}"}],
             }
         elif power_id == "github.create_issue_draft":
             return {
                 "draft_id": "draft_gh_01",
                 "title": params.get("title", "Issue Title"),
                 "body": params.get("body", "Issue Body"),
-                "status": "DRAFT_READY"
+                "status": "DRAFT_READY",
             }
         elif power_id == "github.create_issue":
             # Outbound action - reached only after Tier 2 cryptographic approval
@@ -161,16 +160,11 @@ class GitHubIntegration(BaseIntegration):
                 "issue_number": 42,
                 "title": params.get("title"),
                 "url": f"https://github.com/{target_repo}/issues/42",
-                "status": "PUBLISHED"
+                "status": "PUBLISHED",
             }
         elif power_id == "github.merge_pr":
             # Destructive action - reached only after Tier 3 step-up approval
             pr_number = params.get("pr_number", 1)
-            return {
-                "pr_number": pr_number,
-                "merged": True,
-                "sha": "7a9b0c1d2e3f",
-                "status": "MERGED"
-            }
+            return {"pr_number": pr_number, "merged": True, "sha": "7a9b0c1d2e3f", "status": "MERGED"}
         else:
             raise ValueError(f"Unknown power '{power_id}' on GitHub integration")

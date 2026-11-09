@@ -8,6 +8,7 @@ from enum import Enum
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
 
+
 class IntegrationStatus(str, Enum):
     HEALTHY = "HEALTHY"
     DEGRADED = "DEGRADED"
@@ -15,6 +16,7 @@ class IntegrationStatus(str, Enum):
     UNCONFIGURED = "UNCONFIGURED"
     KILL_SWITCHED = "KILL_SWITCHED"
     RATE_LIMITED = "RATE_LIMITED"
+
 
 class HealthReport(BaseModel):
     integration_id: str

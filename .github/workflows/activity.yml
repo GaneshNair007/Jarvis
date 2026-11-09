@@ -1,0 +1,87 @@
+name: 📈 Activity & Stats
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'  # Every 12 hours (more green squares!)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    name: 📊 Update Repository Stats
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📊 Generate stats
+        run: |
+          mkdir -p .github/stats
+          
+          echo "# 📈 Repository Activity" > .github/stats/ACTIVITY.md
+          echo "" >> .github/stats/ACTIVITY.md
+          echo "Last updated: $(date)" >> .github/stats/ACTIVITY.md
+          echo "" >> .github/stats/ACTIVITY.md
+          
+          echo "## Commits This Week" >> .github/stats/ACTIVITY.md
+          git log --oneline --since='7 days ago' | wc -l >> .github/stats/ACTIVITY.md
+          echo "" >> .github/stats/ACTIVITY.md
+          
+          echo "## Total Commits" >> .github/stats/ACTIVITY.md
+          git rev-list --count HEAD >> .github/stats/ACTIVITY.md
+          echo "" >> .github/stats/ACTIVITY.md
+          
+          echo "## Contributors" >> .github/stats/ACTIVITY.md
+          git shortlog -sn --all >> .github/stats/ACTIVITY.md
+
+      - name: 💾 Commit stats
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .github/stats/ || true
+          git commit -m "📊 Update activity stats: $(date +%Y-%m-%d)" || exit 0
+          git push
+
+  generate-contributor-graph:
+    name: 🎨 Generate Contributor Graph
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 📊 Contributor stats
+        uses: githubocto/contributor-graph-action@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  daily-quote:
+    name: 💬 Daily Developer Quote
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 💬 Add quote
+        run: |
+          QUOTES=(
+            "Code is poetry 🎨"
+            "AI-powered excellence ⚡"
+            "Building the future 🚀"
+            "Innovation in progress 🧪"
+            "Crafting intelligent solutions 🤖"
+          )
+          RANDOM_QUOTE=${QUOTES[$RANDOM % ${#QUOTES[@]}]}
+          
+          echo "## 💬 Quote of the Day" > .github/DAILY_QUOTE.md
+          echo "$RANDOM_QUOTE" >> .github/DAILY_QUOTE.md
+          echo "" >> .github/DAILY_QUOTE.md
+          echo "_Updated: $(date)_" >> .github/DAILY_QUOTE.md
+
+      - name: 💾 Commit quote
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .github/DAILY_QUOTE.md || true
+          git commit -m "💬 Daily inspiration: $(date +%Y-%m-%d)" || exit 0
+          git push

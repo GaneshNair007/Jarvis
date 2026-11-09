@@ -23,16 +23,20 @@ from integrations import integration_registry
 
 router = APIRouter(tags=["Integrations"])
 
+
 class ConnectRequest(BaseModel):
     credentials: Optional[Dict[str, str]] = Field(default=None, description="Optional runtime credentials")
+
 
 class ExecutePowerRequest(BaseModel):
     params: Dict[str, Any] = Field(default_factory=dict, description="Parameters to pass to the power")
     approval_token: Optional[str] = Field(default=None, description="Cryptographic approval token for Tier 2/3 actions")
     context: Optional[Dict[str, Any]] = Field(default=None, description="Optional task execution context")
 
+
 class DryRunRequest(BaseModel):
     params: Dict[str, Any] = Field(default_factory=dict, description="Parameters to simulate")
+
 
 @router.get("/integrations")
 def list_integrations(category: Optional[str] = None) -> Dict[str, Any]:
@@ -41,10 +45,8 @@ def list_integrations(category: Optional[str] = None) -> Dict[str, Any]:
         items = integration_registry.list_by_category(category)
     else:
         items = integration_registry.list_integrations()
-    return {
-        "total": len(items),
-        "integrations": items
-    }
+    return {"total": len(items), "integrations": items}
+
 
 @router.get("/integrations/{integration_id}")
 def get_integration(integration_id: str) -> Dict[str, Any]:
@@ -68,8 +70,9 @@ def get_integration(integration_id: str) -> Dict[str, Any]:
         "required_credentials": integ.required_credentials,
         "required_scopes": integ.required_scopes,
         "powers": integ.list_powers(),
-        "documentation_url": integ.documentation_url
+        "documentation_url": integ.documentation_url,
     }
+
 
 @router.post("/integrations/{integration_id}/connect")
 def connect_integration(integration_id: str, req: Optional[ConnectRequest] = None) -> Dict[str, Any]:
@@ -82,8 +85,9 @@ def connect_integration(integration_id: str, req: Optional[ConnectRequest] = Non
     return {
         "integration_id": integration_id,
         "connected": connected,
-        "status": "CONNECTED" if connected else "CONNECTION_FAILED"
+        "status": "CONNECTED" if connected else "CONNECTION_FAILED",
     }
+
 
 @router.post("/integrations/{integration_id}/disconnect")
 def disconnect_integration(integration_id: str) -> Dict[str, Any]:
@@ -92,11 +96,8 @@ def disconnect_integration(integration_id: str) -> Dict[str, Any]:
     if not integ:
         raise HTTPException(status_code=404, detail=f"Integration '{integration_id}' not found")
     integ.disconnect()
-    return {
-        "integration_id": integration_id,
-        "connected": False,
-        "status": "DISCONNECTED"
-    }
+    return {"integration_id": integration_id, "connected": False, "status": "DISCONNECTED"}
+
 
 @router.post("/integrations/{integration_id}/enable")
 def enable_integration(integration_id: str) -> Dict[str, Any]:
@@ -106,6 +107,7 @@ def enable_integration(integration_id: str) -> Dict[str, Any]:
         raise HTTPException(status_code=404, detail=f"Integration '{integration_id}' not found")
     return {"integration_id": integration_id, "enabled": True}
 
+
 @router.post("/integrations/{integration_id}/disable")
 def disable_integration(integration_id: str) -> Dict[str, Any]:
     """Disables integration and all associated powers."""
@@ -113,6 +115,7 @@ def disable_integration(integration_id: str) -> Dict[str, Any]:
     if not success:
         raise HTTPException(status_code=404, detail=f"Integration '{integration_id}' not found")
     return {"integration_id": integration_id, "enabled": False}
+
 
 @router.get("/integrations/{integration_id}/health")
 def integration_health(integration_id: str) -> Dict[str, Any]:
@@ -123,6 +126,7 @@ def integration_health(integration_id: str) -> Dict[str, Any]:
     report = integ.health_check()
     return report.model_dump()
 
+
 @router.get("/integrations/{integration_id}/powers")
 def list_integration_powers(integration_id: str) -> Dict[str, Any]:
     """Lists all powers exposed by this integration."""
@@ -130,37 +134,24 @@ def list_integration_powers(integration_id: str) -> Dict[str, Any]:
     if not integ:
         raise HTTPException(status_code=404, detail=f"Integration '{integration_id}' not found")
     powers = integ.list_powers()
-    return {
-        "integration_id": integration_id,
-        "total_powers": len(powers),
-        "powers": powers
-    }
+    return {"integration_id": integration_id, "total_powers": len(powers), "powers": powers}
+
 
 @router.post("/integrations/{integration_id}/powers/{power_id}/execute")
-def execute_integration_power(
-    integration_id: str,
-    power_id: str,
-    req: ExecutePowerRequest
-) -> Dict[str, Any]:
+def execute_integration_power(integration_id: str, power_id: str, req: ExecutePowerRequest) -> Dict[str, Any]:
     """Executes an integration power behind rate limits, kill-switches, and approval gates."""
     integ = integration_registry.get(integration_id)
     if not integ:
         raise HTTPException(status_code=404, detail=f"Integration '{integration_id}' not found")
 
     result = integ.execute_power(
-        power_id=power_id,
-        params=req.params,
-        approval_token=req.approval_token,
-        context=req.context
+        power_id=power_id, params=req.params, approval_token=req.approval_token, context=req.context
     )
     return result
 
+
 @router.post("/integrations/{integration_id}/powers/{power_id}/dry-run")
-def dry_run_integration_power(
-    integration_id: str,
-    power_id: str,
-    req: DryRunRequest
-) -> Dict[str, Any]:
+def dry_run_integration_power(integration_id: str, power_id: str, req: DryRunRequest) -> Dict[str, Any]:
     """Previews action plan, content hash, and approval requirements without mutating state."""
     integ = integration_registry.get(integration_id)
     if not integ:
@@ -169,19 +160,13 @@ def dry_run_integration_power(
     plan = integ.dry_run(power_id=power_id, params=req.params)
     return plan
 
+
 @router.get("/integrations/{integration_id}/audit")
-def integration_audit(
-    integration_id: str,
-    limit: int = Query(20, ge=1, le=100)
-) -> Dict[str, Any]:
+def integration_audit(integration_id: str, limit: int = Query(20, ge=1, le=100)) -> Dict[str, Any]:
     """Retrieves immutable audit trail for actions dispatched through this integration."""
     integ = integration_registry.get(integration_id)
     if not integ:
         raise HTTPException(status_code=404, detail=f"Integration '{integration_id}' not found")
 
     entries = integ.audit(limit=limit)
-    return {
-        "integration_id": integration_id,
-        "total_events": len(entries),
-        "events": entries
-    }
+    return {"integration_id": integration_id, "total_events": len(entries), "events": entries}

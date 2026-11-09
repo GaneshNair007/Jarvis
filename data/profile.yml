@@ -1,0 +1,37 @@
+# JARVIS Career-Ops User Profile
+# Canonical reference for job fit scoring, ATS tailoring, and outreach
+name: "Ganesh Nair"
+title: "Principal AI Systems Architect & Software Engineer"
+email: "nairganesh134@gmail.com"
+location: "San Francisco, CA (or Remote)"
+github: "https://github.com/GaneshNair007"
+linkedin: "https://linkedin.com/in/ganeshnair"
+target_roles:
+  - "Principal AI Engineer"
+  - "Founding Engineer"
+  - "Staff Distributed Systems Architect"
+target_salary_min: 220000
+target_salary_currency: "USD"
+core_skills:
+  - "Python"
+  - "FastAPI"
+  - "Distributed Systems"
+  - "LLM Orchestration"
+  - "LangGraph"
+  - "AsyncIO"
+  - "SQLite FTS5"
+  - "Qdrant"
+  - "Meilisearch"
+  - "Docker"
+  - "Kubernetes"
+  - "High-Throughput Concurrency"
+  - "Playwright"
+  - "PostgreSQL"
+  - "Redis"
+domain_expertise:
+  - "Autonomous Multi-Agent Frameworks"
+  - "Local-First Semantic & Lexical Search Engines"
+  - "Low-Latency Voice & Computer Vision Pipelines"
+  - "Zero-Trust Security & DLP Data Redaction"
+experience_summary: "Over 8 years designing and deploying mission-critical distributed AI systems, private search infrastructure, and autonomous operator agents handling real-time tool orchestration with millisecond latencies."
+
