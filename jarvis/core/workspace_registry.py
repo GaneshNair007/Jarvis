@@ -60,16 +60,16 @@ class WorkspaceRegistry:
             repo_root = str(Path(__file__).resolve().parent.parent.parent)
             loaded_data = {
                 "jarvis": {
-                  "path": repo_root,
-                  "aliases": ["jarvis", "jarvis core", "jarvis repo", "main"],
+                    "path": repo_root,
+                    "aliases": ["jarvis", "jarvis core", "jarvis repo", "main"],
                 },
                 "switch-ai": {
-                  "path": str(Path(repo_root).parent / "switch-ai"),
-                  "aliases": ["switch", "switch-ai", "switch ai", "switch console"],
+                    "path": str(Path(repo_root).parent / "switch-ai"),
+                    "aliases": ["switch", "switch-ai", "switch ai", "switch console"],
                 },
                 "carbonterra": {
-                  "path": str(Path(repo_root).parent / "carbonterra"),
-                  "aliases": ["carbonterra", "carbon terra", "carbon"],
+                    "path": str(Path(repo_root).parent / "carbonterra"),
+                    "aliases": ["carbonterra", "carbon terra", "carbon"],
                 },
             }
 

@@ -16,6 +16,7 @@ import ssl
 import shutil
 import datetime
 import subprocess
+
 try:
     import winreg
 except ImportError:
@@ -75,14 +76,14 @@ class ITAdminPowers:
             "power_id": "PWR-101",
             "power_name": "CPU/RAM/disk monitoring",
             "timestamp": time.time(),
-            "cpu_user": getattr(cpu_times, 'user', 0.0),
-            "cpu_system": getattr(cpu_times, 'system', 0.0),
-            "cpu_idle": getattr(cpu_times, 'idle', 0.0),
+            "cpu_user": getattr(cpu_times, "user", 0.0),
+            "cpu_system": getattr(cpu_times, "system", 0.0),
+            "cpu_idle": getattr(cpu_times, "idle", 0.0),
             "ram_used_percent": ram.percent,
             "swap_used_percent": swap.percent,
             "disk_used_percent": disk.percent,
             "read_bytes": io_counters.read_bytes if io_counters else 0,
-            "write_bytes": io_counters.write_bytes if io_counters else 0
+            "write_bytes": io_counters.write_bytes if io_counters else 0,
         }
 
     @staticmethod
@@ -102,28 +103,28 @@ class ITAdminPowers:
             "free_gb": round(usage.free / (1024**3), 2),
             "free_percent": free_pct,
             "estimated_days_remaining": days_until_exhaustion,
-            "status": "critical" if free_pct < 10 else ("warning" if free_pct < 20 else "healthy")
+            "status": "critical" if free_pct < 10 else ("warning" if free_pct < 20 else "healthy"),
         }
 
     @staticmethod
     def process_analysis(limit: int = 10) -> Dict[str, Any]:
         """PWR-105: Process analysis and CPU/RAM hog detection."""
         processes = []
-        for p in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent', 'status']):
+        for p in psutil.process_iter(["pid", "name", "cpu_percent", "memory_percent", "status"]):
             try:
                 processes.append(p.info)
             except (psutil.NoSuchProcess, psutil.AccessDenied):
                 continue
 
-        top_by_cpu = sorted(processes, key=lambda x: x.get('cpu_percent') or 0, reverse=True)[:limit]
-        top_by_ram = sorted(processes, key=lambda x: x.get('memory_percent') or 0, reverse=True)[:limit]
+        top_by_cpu = sorted(processes, key=lambda x: x.get("cpu_percent") or 0, reverse=True)[:limit]
+        top_by_ram = sorted(processes, key=lambda x: x.get("memory_percent") or 0, reverse=True)[:limit]
 
         return {
             "power_id": "PWR-105",
             "power_name": "Process analysis",
             "total_running_processes": len(processes),
             "top_cpu_consumers": top_by_cpu,
-            "top_ram_consumers": top_by_ram
+            "top_ram_consumers": top_by_ram,
         }
 
     @staticmethod
@@ -137,7 +138,7 @@ class ITAdminPowers:
                 return {
                     "power_id": "PWR-106",
                     "success": False,
-                    "error": f"Cannot terminate protected critical process {name} (PID: {pid})"
+                    "error": f"Cannot terminate protected critical process {name} (PID: {pid})",
                 }
             if force:
                 p.kill()
@@ -148,7 +149,7 @@ class ITAdminPowers:
                 "success": True,
                 "pid": pid,
                 "name": name,
-                "action": "SIGKILL" if force else "SIGTERM"
+                "action": "SIGKILL" if force else "SIGTERM",
             }
         except psutil.NoSuchProcess:
             return {"power_id": "PWR-106", "success": False, "error": f"Process {pid} does not exist"}
@@ -160,15 +161,19 @@ class ITAdminPowers:
         """PWR-117: Docker container monitoring and health verification."""
         try:
             # Check docker CLI or socket
-            res = subprocess.run(["docker", "ps", "--format", "{{.ID}}|{{.Image}}|{{.Status}}|{{.Names}}"],
-                                 capture_output=True, text=True, timeout=3.0)
+            res = subprocess.run(
+                ["docker", "ps", "--format", "{{.ID}}|{{.Image}}|{{.Status}}|{{.Names}}"],
+                capture_output=True,
+                text=True,
+                timeout=3.0,
+            )
             if res.returncode != 0:
                 return {
                     "power_id": "PWR-117",
                     "power_name": "Docker container monitoring",
                     "docker_available": False,
                     "containers": [],
-                    "message": "Docker daemon unavailable or not running"
+                    "message": "Docker daemon unavailable or not running",
                 }
 
             containers = []
@@ -176,19 +181,14 @@ class ITAdminPowers:
                 if line:
                     parts = line.split("|")
                     if len(parts) >= 4:
-                        containers.append({
-                            "id": parts[0],
-                            "image": parts[1],
-                            "status": parts[2],
-                            "name": parts[3]
-                        })
+                        containers.append({"id": parts[0], "image": parts[1], "status": parts[2], "name": parts[3]})
 
             return {
                 "power_id": "PWR-117",
                 "power_name": "Docker container monitoring",
                 "docker_available": True,
                 "total_containers": len(containers),
-                "containers": containers
+                "containers": containers,
             }
         except Exception as e:
             return {
@@ -196,7 +196,7 @@ class ITAdminPowers:
                 "power_name": "Docker container monitoring",
                 "docker_available": False,
                 "containers": [],
-                "message": f"Docker probe failed: {str(e)}"
+                "message": f"Docker probe failed: {str(e)}",
             }
 
     @staticmethod
@@ -214,7 +214,7 @@ class ITAdminPowers:
             "uptime_seconds": uptime_seconds,
             "uptime_human": f"{days}d {hours}h {minutes}m",
             "boot_timestamp": datetime.datetime.fromtimestamp(boot_ts).isoformat(),
-            "status": "online"
+            "status": "online",
         }
 
     @staticmethod
@@ -228,7 +228,7 @@ class ITAdminPowers:
                     not_after_str = cert["notAfter"]
                     # e.g., 'May 15 12:00:00 2027 GMT'
                     expiry = datetime.datetime.strptime(not_after_str, "%b %d %H:%M:%S %Y %Z")
-                    days_left = (expiry - datetime.datetime.utcnow()).days
+                    days_left = (expiry - datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)).days
 
                     return {
                         "power_id": "PWR-121",
@@ -682,7 +682,7 @@ class ITAdminPowers:
                     cert = ssock.getpeercert()
                     not_after = cert.get("notAfter", "")
                     expiry = datetime.datetime.strptime(not_after, "%b %d %H:%M:%S %Y %Z")
-                    days_left = (expiry - datetime.datetime.utcnow()).days
+                    days_left = (expiry - datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)).days
                     return {
                         "power_id": "PWR-120",
                         "status": "success",

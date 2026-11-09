@@ -32,7 +32,7 @@ class DesktopPowers:
             "power_id": "PWR-017",
             "evidence": evidence,
             "text": "Detected desktop environment and active workspace window.",
-            "status": "success"
+            "status": "success",
         }
 
     def screen_qa(self, question: str) -> Dict[str, Any]:
@@ -42,7 +42,7 @@ class DesktopPowers:
             "power_id": "PWR-018",
             "question": question,
             "answer": f"The currently focused window is '{window.get('title', 'Desktop')}'.",
-            "active_window": window
+            "active_window": window,
         }
 
     def pwr_017_capture_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -> Dict[str, Any]:

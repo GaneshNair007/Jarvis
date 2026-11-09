@@ -451,15 +451,16 @@ class CommunicationPowers:
             "results": results,
         }
 
-
-
     # ------------------------------------------------------------------
     # Blueprint Section 25: Hash-Bound Drafts & Direct Alerts
     # ------------------------------------------------------------------
-    def draft_message(self, channel: str, recipient: str, content: str, subject: Optional[str] = None) -> Dict[str, Any]:
+    def draft_message(
+        self, channel: str, recipient: str, content: str, subject: Optional[str] = None
+    ) -> Dict[str, Any]:
         """PWR-209 / PWR-052: Drafts a message and binds it to a frozen content hash."""
         import hashlib
         import time
+
         raw_token = f"{channel}:{recipient}:{content}:{time.time()}"
         draft_hash = hashlib.sha256(raw_token.encode("utf-8")).hexdigest()[:16]
 

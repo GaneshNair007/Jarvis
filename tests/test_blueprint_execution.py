@@ -18,6 +18,7 @@ from jarvis.core.audit import audit_ledger
 
 client = TestClient(app)
 
+
 def test_first_30_powers_complete_execution():
     # 1. Text chat interface
     res_chat = client.post("/api/v1/chat", json={"query": "Hello Jarvis"})
@@ -117,7 +118,9 @@ def test_first_30_powers_complete_execution():
     assert expl["total_files"] > 0
 
     # 24. Bug diagnosis
-    bug = developer_powers.diagnose_bug("Traceback (most recent call last):\n  File 'test.py', line 1\nZeroDivisionError: division by zero")
+    bug = developer_powers.diagnose_bug(
+        "Traceback (most recent call last):\n  File 'test.py', line 1\nZeroDivisionError: division by zero"
+    )
     assert bug["power_id"] == "PWR-164"
     assert "ZeroDivisionError" in bug["detected_error_type"]
 

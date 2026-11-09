@@ -22,8 +22,9 @@ ALLOWED_JOB_DOMAINS = {
     "glassdoor.com",
     "github.com",
     "wellfound.com",
-    "ycombinator.com"
+    "ycombinator.com",
 }
+
 
 class CareerOpsIntegration:
     def __init__(self, workspace_dir: str = "data/career"):
@@ -50,11 +51,11 @@ class CareerOpsIntegration:
             return {
                 "power_id": "PWR-329",
                 "success": False,
-                "error": f"URL '{job_url}' rejected by SSRF security gate. Must be from an authorized job domain."
+                "error": f"URL '{job_url}' rejected by SSRF security gate. Must be from an authorized job domain.",
             }
 
         logger.info(f"Scanning job URL: {job_url}")
-        
+
         # Deterministic simulation/offline fallback
         score_result = {
             "power_id": "PWR-329",
@@ -62,16 +63,12 @@ class CareerOpsIntegration:
             "role_title": "AI Platform Engineer",
             "company": "Autonomous Systems Ltd",
             "global_score": 4.5,
-            "rubric": {
-                "skills_match": 4.8,
-                "experience_fit": 4.2,
-                "culture_fit": 4.5
-            },
+            "rubric": {"skills_match": 4.8, "experience_fit": 4.2, "culture_fit": 4.5},
             "matched_keywords": ["Python", "FastAPI", "Docker", "LangGraph", "LLM"],
             "missing_keywords": ["Kubernetes Operator"],
-            "status": "ready"
+            "status": "ready",
         }
-        
+
         # Save to pipeline
         self._record_application(score_result)
         return score_result
@@ -89,7 +86,7 @@ class CareerOpsIntegration:
             "resume_path": str(pdf_path),
             "status": "generated",
             "ats_compatibility_score": 96.5,
-            "truthfulness_verified": True
+            "truthfulness_verified": True,
         }
 
     def generate_cover_letter(self, job_url: str) -> Dict[str, Any]:
@@ -101,12 +98,7 @@ class CareerOpsIntegration:
             "and robust FastAPI architectures, I am eager to contribute to your mission.\n\n"
             "Sincerely,\nGanesh Nair"
         )
-        return {
-            "power_id": "PWR-331",
-            "job_url": job_url,
-            "cover_letter_text": content,
-            "requires_approval": True
-        }
+        return {"power_id": "PWR-331", "job_url": job_url, "cover_letter_text": content, "requires_approval": True}
 
     def company_research(self, company: str) -> Dict[str, Any]:
         """PWR-332: /company-research <company> - Synthesizes strategy, culture, and tech stack."""
@@ -116,7 +108,7 @@ class CareerOpsIntegration:
             "company": clean_company,
             "culture_summary": "Engineering-first, asynchronous-friendly culture prioritizing local autonomy and reliability.",
             "tech_stack": ["Python", "PyTorch", "FastAPI", "PostgreSQL", "Docker"],
-            "recent_milestones": "Series B funding closed; scaling distributed agent workflows."
+            "recent_milestones": "Series B funding closed; scaling distributed agent workflows.",
         }
 
     def find_contact(self, company: str, role: str = "Engineering Manager") -> Dict[str, Any]:
@@ -126,7 +118,7 @@ class CareerOpsIntegration:
             "company": company,
             "target_role": role,
             "recommended_contact": f"{role} Lead @ {company}",
-            "linkedin_outreach_draft": f"Hi! I saw your openings for AI Platform Engineers at {company}. My background in autonomous Python systems aligns well. Would love to connect!"
+            "linkedin_outreach_draft": f"Hi! I saw your openings for AI Platform Engineers at {company}. My background in autonomous Python systems aligns well. Would love to connect!",
         }
 
     def analyze_applications(self) -> Dict[str, Any]:
@@ -135,12 +127,8 @@ class CareerOpsIntegration:
         return {
             "power_id": "PWR-335",
             "total_tracked_applications": len(apps),
-            "stages": {
-                "saved": len(apps),
-                "in_review": 1,
-                "interviewing": 1
-            },
-            "average_fit_score": 4.5
+            "stages": {"saved": len(apps), "in_review": 1, "interviewing": 1},
+            "average_fit_score": 4.5,
         }
 
     def interview_prep(self, question: Optional[str] = None) -> Dict[str, Any]:
@@ -153,8 +141,8 @@ class CareerOpsIntegration:
                 "situation": "High tail latency in production under 10k concurrent requests.",
                 "task": "Isolate bottleneck and eliminate lock contention in persistent store.",
                 "action": "Implemented connection pooling, read replicas, and local-first memory cache.",
-                "result": "p99 latency dropped by 84%; zero data corruption or unapproved actions."
-            }
+                "result": "p99 latency dropped by 84%; zero data corruption or unapproved actions.",
+            },
         }
 
     def analyze_offer(self, offer_text: str, target_salary: Optional[int] = None) -> Dict[str, Any]:
@@ -164,8 +152,8 @@ class CareerOpsIntegration:
             "offer_analysis": "Base compensation meets market percentile. Review bonus vesting cadence.",
             "negotiation_points": [
                 "Request remote equipment stipend",
-                "Align performance review cycle to 6-month schedule"
-            ]
+                "Align performance review cycle to 6-month schedule",
+            ],
         }
 
     def _record_application(self, app_data: Dict[str, Any]) -> None:
@@ -181,5 +169,6 @@ class CareerOpsIntegration:
             return json.loads(self.applications_db.read_text(encoding="utf-8"))
         except Exception:
             return []
+
 
 career_ops_integration = CareerOpsIntegration()

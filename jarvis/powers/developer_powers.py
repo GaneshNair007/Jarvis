@@ -682,8 +682,6 @@ class DeveloperPowers:
         except Exception as e:
             return {"power_id": "PWR-178", "status": "error", "message": str(e)}
 
-
-
     # ------------------------------------------------------------------
     # Blueprint Section 25 Developer Powers
     # ------------------------------------------------------------------
@@ -775,6 +773,7 @@ class DeveloperPowers:
             "power_id": "PWR-164",
             "power_name": "Bug diagnosis",
             "error_type": error_type,
+            "detected_error_type": error_type,
             "root_cause_candidate": last_line,
             "stack_depth": len(lines),
             "affected_files": files_mentioned[:5],
