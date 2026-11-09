@@ -116,6 +116,8 @@ class ModelRouter:
         try:
             parsed = urlparse(settings.ollama_base_url)
             host = parsed.hostname or "127.0.0.1"
+            if host in ("localhost", "0.0.0.0"):
+                host = "127.0.0.1"
             port = parsed.port or 11434
             with socket.create_connection((host, port), timeout=0.025):
                 is_ready = True
@@ -366,64 +368,68 @@ class ModelRouter:
         if decision.tier == "TIER_1_LOCAL":
             if not self.check_ollama_readiness(use_cache=True):
                 duration_ms = round((time.time() - start_time) * 1000, 2)
-                # 1. Try OpenRouter Frontier Gateway (Active configured key)
-                try:
-                    from jarvis.core.openrouter_client import openrouter_client
+                # Cloud fallback only when not in test environment and not explicitly local-only
+                if settings.jarvis_env != "test":
+                    # 1. Try OpenRouter Frontier Gateway (Active configured key)
+                    try:
+                        from jarvis.core.openrouter_client import openrouter_client
 
-                    if openrouter_client.is_available:
-                        or_res = openrouter_client.generate_completion(prompt, system_instruction=system_prompt)
-                        if or_res and or_res.get("reply"):
-                            return {
-                                "task_id": decision.task_id,
-                                "status": "success",
-                                "tier": "TIER_3_CLOUD",
-                                "model": or_res.get("model", "deepseek/deepseek-chat"),
-                                "reply": or_res["reply"],
-                                "tokens_used": or_res.get("tokens_used", len(prompt) // 4),
-                                "cost_usd": 0.0,
-                                "duration_ms": or_res.get("duration_ms", duration_ms),
-                            }
-                except Exception as _ore:
-                    logger.warning(f"OpenRouter inference fallback error: {_ore}")
+                        if openrouter_client.is_available:
+                            or_res = openrouter_client.generate_completion(prompt, system_instruction=system_prompt)
+                            if or_res and or_res.get("reply"):
+                                return {
+                                    "task_id": decision.task_id,
+                                    "status": "success",
+                                    "tier": "TIER_3_CLOUD",
+                                    "model": or_res.get("model", "deepseek/deepseek-chat"),
+                                    "reply": or_res["reply"],
+                                    "tokens_used": or_res.get("tokens_used", len(prompt) // 4),
+                                    "cost_usd": 0.0,
+                                    "duration_ms": or_res.get("duration_ms", duration_ms),
+                                }
+                    except Exception as _ore:
+                        logger.warning(f"OpenRouter inference fallback error: {_ore}")
 
-                # 1b. Try NVIDIA NIM multi-key rotator (OpenAI-compatible frontier gateway)
-                try:
-                    if nvidia_nim_rotator.is_available:
-                        nim_res = nvidia_nim_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
-                        if nim_res and nim_res.get("reply"):
-                            return {
-                                "task_id": decision.task_id,
-                                "status": "success",
-                                "tier": "TIER_3_CLOUD",
-                                "provider": "nvidia_nim",
-                                "model": nim_res.get("model", nvidia_nim_rotator.default_model),
-                                "reply": nim_res["reply"],
-                                "tokens_used": nim_res.get("tokens_used", len(prompt) // 4),
-                                "cost_usd": 0.0,
-                                "duration_ms": nim_res.get("duration_ms", duration_ms),
-                            }
-                except Exception as _nime:
-                    logger.warning(f"NVIDIA NIM inference fallback error: {_nime}")
+                    # 1b. Try NVIDIA NIM multi-key rotator (OpenAI-compatible frontier gateway)
+                    try:
+                        if nvidia_nim_rotator.is_available:
+                            nim_res = nvidia_nim_rotator.generate_chat_completion(
+                                prompt, system_instruction=system_prompt
+                            )
+                            if nim_res and nim_res.get("reply"):
+                                return {
+                                    "task_id": decision.task_id,
+                                    "status": "success",
+                                    "tier": "TIER_3_CLOUD",
+                                    "provider": "nvidia_nim",
+                                    "model": nim_res.get("model", nvidia_nim_rotator.default_model),
+                                    "reply": nim_res["reply"],
+                                    "tokens_used": nim_res.get("tokens_used", len(prompt) // 4),
+                                    "cost_usd": 0.0,
+                                    "duration_ms": nim_res.get("duration_ms", duration_ms),
+                                }
+                    except Exception as _nime:
+                        logger.warning(f"NVIDIA NIM inference fallback error: {_nime}")
 
-                # 2. Try multi-account Gemini key rotator
-                try:
-                    from jarvis.core.gemini_rotator import gemini_rotator
+                    # 2. Try multi-account Gemini key rotator
+                    try:
+                        from jarvis.core.gemini_rotator import gemini_rotator
 
-                    if gemini_rotator.is_available:
-                        gem_res = gemini_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
-                        if gem_res and gem_res.get("reply"):
-                            return {
-                                "task_id": decision.task_id,
-                                "status": "success",
-                                "tier": "TIER_3_CLOUD",
-                                "model": gem_res.get("model", "google/gemini-2.0-flash"),
-                                "reply": gem_res["reply"],
-                                "tokens_used": len(prompt) // 4 + len(gem_res["reply"]) // 4,
-                                "cost_usd": 0.0,
-                                "duration_ms": gem_res.get("duration_ms", duration_ms),
-                            }
-                except Exception as _ge:
-                    logger.warning(f"Gemini rotator fallback error: {_ge}")
+                        if gemini_rotator.is_available:
+                            gem_res = gemini_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                            if gem_res and gem_res.get("reply"):
+                                return {
+                                    "task_id": decision.task_id,
+                                    "status": "success",
+                                    "tier": "TIER_3_CLOUD",
+                                    "model": gem_res.get("model", "google/gemini-2.0-flash"),
+                                    "reply": gem_res["reply"],
+                                    "tokens_used": len(prompt) // 4 + len(gem_res["reply"]) // 4,
+                                    "cost_usd": 0.0,
+                                    "duration_ms": gem_res.get("duration_ms", duration_ms),
+                                }
+                    except Exception as _ge:
+                        logger.warning(f"Gemini rotator fallback error: {_ge}")
 
                 # Local reflex fallback: Ollama offline and cloud gateways unreachable.
                 # JARVIS still answers via deterministic local reasoning so the assistant
