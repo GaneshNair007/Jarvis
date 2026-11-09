@@ -6,8 +6,6 @@ multi-channel alerts, message scheduling, contact management, and templates.
 
 from __future__ import annotations
 
-import hashlib
-import hmac
 import json
 import os
 import subprocess
@@ -30,7 +28,6 @@ _CONTACTS_FILE = _DATA_DIR / "contacts.json"
 _TEMPLATES_DIR = _DATA_DIR / "templates"
 _NOTIFICATION_LOG = _DATA_DIR / "notification_log.json"
 _SCHEDULED_DIR = _DATA_DIR / "scheduled_messages"
-_HMAC_SECRET = os.environ.get("JARVIS_HMAC_SECRET", "jarvis-default-secret-change-me")
 
 
 class CommunicationPowers:
@@ -182,60 +179,38 @@ class CommunicationPowers:
             return {"power_id": "PWR-205", "status": "error", "error": str(exc)}
 
     # ------------------------------------------------------------------
-    # PWR-206: Send Email (requires approval)
+    # PWR-206: Send Email (legacy entrypoint, no false success)
     # ------------------------------------------------------------------
     def send_email(self, draft_path: str, approval_token: Optional[str] = None) -> Dict[str, Any]:
-        """PWR-206: Send email. Requires HMAC approval token."""
+        """PWR-206: Legacy send entrypoint.
+
+        This power previously moved a local ``.eml`` into a sent folder and
+        reported ``dispatched`` without any provider delivery.  It no longer
+        performs delivery and never claims success.  Use PWR-052
+        (``email_powers.send_email``), which binds approval to the SHA-256 of
+        the exact RFC 822 bytes and returns ``SENT`` only after Gmail confirms
+        a provider message id.
+        """
         dp = Path(draft_path)
         if not dp.exists():
             return {
                 "power_id": "PWR-206",
-                "status": "error",
+                "success": False,
+                "status": "NOT_SENT",
                 "error": f"Draft not found: {draft_path}",
             }
 
-        # Verify approval token
-        if not approval_token:
-            return {
-                "power_id": "PWR-206",
-                "status": "approval_required",
-                "message": "Email sending requires an HMAC approval token. "
-                           "Use PWR-344 (hash_bound_approval) with action='send_email' "
-                           f"and payload='{draft_path}' to generate one.",
-                "draft_path": draft_path,
-            }
-
-        expected = hmac.new(
-            _HMAC_SECRET.encode(),
-            f"send_email:{draft_path}".encode(),
-            hashlib.sha256,
-        ).hexdigest()
-        if not hmac.compare_digest(approval_token, expected):
-            return {
-                "power_id": "PWR-206",
-                "status": "error",
-                "error": "Invalid approval token.",
-            }
-
-        # In production this would use smtplib. For now, mark as dispatched.
-        content = dp.read_text(encoding="utf-8")
-        sent_dir = _DATA_DIR / "sent"
-        sent_dir.mkdir(parents=True, exist_ok=True)
-        sent_path = sent_dir / dp.name.replace("draft_", "sent_")
-        dp.rename(sent_path)
-
-        entry = {
-            "channel": "email",
-            "draft": dp.name,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-        }
-        self._append_notification_log(entry)
-
         return {
             "power_id": "PWR-206",
-            "status": "dispatched",
-            "sent_path": str(sent_path),
-            "note": "Email moved to sent folder. SMTP delivery not configured.",
+            "success": False,
+            "status": "NOT_SENT",
+            "draft_path": str(dp),
+            "delegate_power": "PWR-052",
+            "message": (
+                "No message was sent. Email delivery requires approval bound to the "
+                "exact content hash and a provider-confirmed message id. Use PWR-052 "
+                "(email_powers.send_email) with a policy-gate approval token."
+            ),
         }
 
     # ------------------------------------------------------------------

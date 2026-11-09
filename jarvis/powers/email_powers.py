@@ -5,7 +5,6 @@ cryptographic SHA-256 draft integrity, and policy-gated sending.
 """
 
 from __future__ import annotations
-import os
 
 from email.message import EmailMessage
 from email.utils import formatdate, make_msgid
@@ -22,11 +21,26 @@ logger = get_logger("powers.email")
 
 
 class EmailPowers:
-    """Implementations for email drafting and Tier-2 gated sending."""
+    """Implementations for email drafting and Tier-2 gated sending.
 
-    def __init__(self, outbox_dir: Optional[Path] = None):
+    Delivery is performed exclusively through the Gmail integration (OAuth 2.0).
+    A local ``.eml`` file move is never reported as a sent email.  ``SENT`` is
+    returned only when Gmail confirms a provider message id.
+    """
+
+    def __init__(self, outbox_dir: Optional[Path] = None, gmail_client: Any = None):
         self.outbox_dir = outbox_dir or (settings.data_dir / "outbox")
         self.outbox_dir.mkdir(parents=True, exist_ok=True)
+        self._gmail_client = gmail_client
+
+    @property
+    def gmail_client(self) -> Any:
+        """Lazily construct the real Gmail API client (never at import time)."""
+        if self._gmail_client is None:
+            from integrations.google.gmail_api import GoogleApiClient
+
+            self._gmail_client = GoogleApiClient()
+        return self._gmail_client
 
     def draft_email(
         self,
@@ -127,18 +141,65 @@ class EmailPowers:
                 "draft_path": str(p),
             }
 
-        # Approved: Simulate or deliver through configured local SMTP
-        logger.info(f"Verified approval token for sending draft {p.name}. Dispatching email.")
+        # Approved.  Delivery must be confirmed by a real provider.
+        from integrations.google.gmail_api import GmailApiError
+
+        try:
+            provider_result = self.gmail_client.send_raw_message(
+                raw_bytes=raw_bytes,
+                expected_content_hash=content_hash,
+            )
+        except GmailApiError as exc:
+            logger.warning("Gmail delivery not confirmed for draft %s: %s", p.name, exc.error)
+            return {
+                "power_id": "PWR-052",
+                "success": False,
+                "status": "NOT_SENT",
+                "error": f"Gmail delivery not confirmed: {exc}",
+                "reason": exc.description or exc.error,
+                "draft_sha256": content_hash,
+                "draft_path": str(p),
+                "provider_message_id": None,
+                "setup_command": "python -m integrations.google.oauth_flow connect",
+            }
+        except Exception as exc:  # never claim success on an unknown failure
+            logger.warning("Email dispatch failed for draft %s (%s)", p.name, type(exc).__name__)
+            return {
+                "power_id": "PWR-052",
+                "success": False,
+                "status": "NOT_SENT",
+                "error": f"Email dispatch failed ({type(exc).__name__})",
+                "draft_sha256": content_hash,
+                "draft_path": str(p),
+                "provider_message_id": None,
+            }
+
+        message_id = provider_result.get("message_id") if isinstance(provider_result, dict) else None
+        if not message_id:
+            return {
+                "power_id": "PWR-052",
+                "success": False,
+                "status": "NOT_SENT",
+                "error": "The provider did not return a message id; delivery is unconfirmed.",
+                "draft_sha256": content_hash,
+                "draft_path": str(p),
+                "provider_message_id": None,
+            }
 
         audit_ledger.record(
             actor="EmailPowers",
             action="SEND_EMAIL",
             target=str(p),
-            payload={"sha256": content_hash, "task_id": task_id},
+            payload={
+                "sha256": content_hash,
+                "task_id": task_id,
+                "provider": provider_result.get("provider", "gmail"),
+                "message_id": message_id,
+            },
             result="SUCCESS",
         )
 
-        # Move to sent/ archive
+        # Archive only after the provider confirmed the message id.
         sent_dir = p.parent / "sent"
         sent_dir.mkdir(parents=True, exist_ok=True)
         dest = sent_dir / p.name
@@ -148,6 +209,10 @@ class EmailPowers:
             "power_id": "PWR-052",
             "success": True,
             "status": "SENT",
+            "provider": provider_result.get("provider", "gmail"),
+            "message_id": message_id,
+            "provider_message_id": message_id,
+            "thread_id": provider_result.get("thread_id"),
             "archive_path": str(dest),
             "sha256": content_hash,
         }
@@ -235,44 +300,53 @@ class EmailPowers:
         query: str = "opportunity OR offer OR interview OR internship OR hackathon",
         limit: int = 10,
     ) -> Dict[str, Any]:
-        """PWR-191 & PWR-192: Connects to Gmail via IMAP or scans local incoming mailbox
-        for career opportunities, hackathon invitations, and critical academic deadlines.
+        """PWR-191 & PWR-192: Scan the Gmail account (OAuth 2.0) for opportunities.
+
+        There is no IMAP or app-password path.  If Gmail is not connected, the
+        local ``data/inbox/*.eml`` store is scanned as an explicitly labelled
+        fallback.  Email content is always treated as untrusted external data.
         """
-        gmail_user = os.getenv("GMAIL_USER") or os.getenv("GMAIL_ADDRESS") or "nairganesh134@gmail.com"
-        gmail_pass = os.getenv("GMAIL_APP_PASSWORD") or os.getenv("GMAIL_PASSWORD")
-
-        live_sync = False
         parsed_emails: List[Dict[str, Any]] = []
+        live_sync = False
+        source = "local_inbox"
 
-        # 1. Attempt live IMAP connection if password is configured
-        if gmail_pass:
-            try:
-                import imaplib
-                import email
-
-                mail = imaplib.IMAP4_SSL("imap.gmail.com", 993)
-                mail.login(gmail_user, gmail_pass)
-                mail.select("INBOX")
-                status, data = mail.search(None, 'ALL')
-                if status == "OK" and data[0]:
-                    mail_ids = data[0].split()[-limit:]
-                    for mid in reversed(mail_ids):
-                        _, msg_data = mail.fetch(mid, "(RFC822)")
-                        if msg_data and msg_data[0]:
-                            raw_msg = msg_data[0][1]
-                            msg = email.message_from_bytes(raw_msg)
-                            parsed_emails.append(self._parse_email_obj(msg, f"gmail_{mid.decode()}"))
-                    live_sync = True
-                mail.close()
-                mail.logout()
-            except Exception as e:
-                logger.warning(f"Live Gmail IMAP error: {e}; falling back to local inbox store.")
+        # 1. Real Gmail read through the official API (OAuth 2.0).
+        try:
+            listing = self.gmail_client.list_messages(
+                query=query,
+                max_results=limit,
+                include_metadata=False,
+            )
+            live_sync = True
+            source = "gmail_oauth"
+            for stub in listing.get("messages", []):
+                message_id = stub.get("id")
+                if not message_id:
+                    continue
+                detail = self.gmail_client.get_message(message_id)
+                parsed_emails.append(
+                    {
+                        "id": detail.get("id") or message_id,
+                        "from": detail.get("from", ""),
+                        "subject": detail.get("subject", ""),
+                        "date": detail.get("date", ""),
+                        "body": detail.get("body_text", ""),
+                    }
+                )
+        except Exception as exc:
+            # Missing credentials / disconnected account / transient API error:
+            # fall back to the local store and report the truth.
+            logger.info(
+                "Gmail inbox scan unavailable (%s); using local inbox fallback.",
+                type(exc).__name__,
+            )
 
         # 2. Local incoming store fallback (data/inbox/*.eml)
-        if not parsed_emails:
+        if not parsed_emails and not live_sync:
             target_inbox = Path(inbox_dir) if inbox_dir else (settings.data_dir / "inbox")
             if target_inbox.exists():
                 import email
+
                 for eml in sorted(target_inbox.glob("*.eml"), reverse=True)[:limit]:
                     try:
                         raw = eml.read_bytes()
@@ -285,21 +359,20 @@ class EmailPowers:
         opportunities: List[Dict[str, Any]] = []
         for em in parsed_emails:
             subj = em["subject"].lower()
-            sender = em["from"].lower()
             body = em["body"].lower()
 
             if "interview" in subj or "shortlist" in subj:
                 cat = "Interview Shortlist"
                 urgency = "HIGH (Action Required)"
-                action = "Reply with preferred technical interview time slots (Tue-Thu 2-6 PM IST)"
+                action = "Review the message and reply with available interview slots."
             elif "hackathon" in subj or "contest" in subj:
                 cat = "Hackathon Invitation"
                 urgency = "MEDIUM (Upcoming Briefing)"
-                action = "Confirm team registration and attend Friday briefing"
+                action = "Confirm team registration and review the event brief."
             elif "urgent" in subj or "assignment" in subj or "deadline" in subj or "submission" in subj:
                 cat = "Academic / Project Deadline"
                 urgency = "CRITICAL"
-                action = "Submit project capstone report and repo zip by Nov 8"
+                action = "Review the deadline and submit the required material."
             else:
                 cat = "General Opportunity"
                 urgency = "NORMAL"
@@ -314,16 +387,29 @@ class EmailPowers:
                 "urgency": urgency,
                 "recommended_action": action,
                 "snippet": em["body"][:250] + ("..." if len(em["body"]) > 250 else ""),
+                "content_trust": "UNTRUSTED_EXTERNAL_DATA",
             })
+
+        if live_sync:
+            setup_note = "Live Gmail sync active through OAuth 2.0."
+        else:
+            setup_note = (
+                "Gmail is not connected. Scanned the local data/inbox store only. "
+                "Run `python -m integrations.google.oauth_flow connect` to authorize "
+                "the assistant account (OAuth 2.0, no password or app password)."
+            )
 
         return {
             "power_id": "PWR-191",
-            "account": gmail_user,
+            "account": settings.assistant_email,
+            "auth_method": "oauth2" if live_sync else "local_inbox",
+            "source": source,
             "live_sync_active": live_sync,
             "opportunities_found": len(opportunities),
             "urgent_count": sum(1 for o in opportunities if "HIGH" in o["urgency"] or "CRITICAL" in o["urgency"]),
             "opportunities": opportunities,
-            "setup_note": "Connected via local inbox. To enable live Gmail IMAP background auto-sync, add GMAIL_APP_PASSWORD to your .env file." if not live_sync else "Live Gmail sync active.",
+            "content_trust": "UNTRUSTED_EXTERNAL_DATA",
+            "setup_note": setup_note,
         }
 
 

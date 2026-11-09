@@ -35,6 +35,7 @@ from jarvis.api.routes_tasks import router as tasks_router
 from jarvis.api.routes_memory import router as memory_router
 from jarvis.api.routes_desktop import router as desktop_router
 from jarvis.api.routes_integrations import router as integrations_router
+from jarvis.api.routes_google import router as google_router
 from jarvis.api.routes_search import router as search_router
 from jarvis.api.routes_career import router as career_router
 from jarvis.api.routes_assistants import router as assistants_router
@@ -84,6 +85,7 @@ app.include_router(memory_router, prefix="/api/v1")
 app.include_router(desktop_router)
 app.include_router(integrations_router)
 app.include_router(integrations_router, prefix="/api/v1")
+app.include_router(google_router)
 app.include_router(search_router)
 app.include_router(search_router, prefix="/api/v1")
 app.include_router(career_router)

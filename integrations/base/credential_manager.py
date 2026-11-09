@@ -5,9 +5,91 @@ Credentials are read strictly from environment variables or local secure vault.
 Never commits secrets, never logs secrets in plaintext, and provides clear setup instructions when missing.
 """
 
+import json
 import os
 import re
+import uuid
+from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
+
+
+def dpapi_protect(data: bytes, description: str = "JARVIS protected secret") -> bytes:
+    """Encrypt bytes with Windows DPAPI (current-user scope).
+
+    DPAPI binds the ciphertext to the Windows user profile.  Copying the file
+    to another account or machine does not reveal the plaintext.
+    """
+    try:
+        import win32crypt
+    except ImportError as exc:  # pragma: no cover - Windows-only dependency
+        raise RuntimeError("Windows DPAPI is unavailable (pywin32 not installed)") from exc
+    return win32crypt.CryptProtectData(data, description, None, None, None, 0)
+
+
+def dpapi_unprotect(data: bytes) -> bytes:
+    """Decrypt a Windows DPAPI blob created by :func:`dpapi_protect`."""
+    try:
+        import win32crypt
+    except ImportError as exc:  # pragma: no cover - Windows-only dependency
+        raise RuntimeError("Windows DPAPI is unavailable (pywin32 not installed)") from exc
+    _description, plaintext = win32crypt.CryptUnprotectData(data, None, None, None, 0)
+    return plaintext
+
+
+class DpapiFileStore:
+    """Atomic JSON store whose payload is encrypted with Windows DPAPI.
+
+    Used for OAuth tokens.  The file never contains a plaintext refresh token,
+    access token or client secret.
+    """
+
+    def __init__(self, base_dir: Path):
+        self.base_dir = Path(base_dir)
+
+    def _path(self, name: str) -> Path:
+        safe = re.sub(r"[^A-Za-z0-9_.-]+", "_", name)
+        return self.base_dir / f"{safe}.bin"
+
+    def save(self, name: str, payload: Dict[str, Any]) -> Path:
+        self.base_dir.mkdir(parents=True, exist_ok=True)
+        plaintext = json.dumps(payload, sort_keys=True).encode("utf-8")
+        ciphertext = dpapi_protect(plaintext, f"JARVIS secret: {name}")
+        path = self._path(name)
+        tmp = path.with_name(f"{path.name}.{os.getpid()}.{uuid.uuid4().hex[:8]}.tmp")
+        try:
+            with open(tmp, "wb") as fh:
+                fh.write(ciphertext)
+                fh.flush()
+                os.fsync(fh.fileno())
+            os.replace(tmp, path)
+        finally:
+            try:
+                if tmp.exists():
+                    tmp.unlink()
+            except OSError:
+                pass
+        return path
+
+    def load(self, name: str) -> Optional[Dict[str, Any]]:
+        path = self._path(name)
+        if not path.exists():
+            return None
+        try:
+            ciphertext = path.read_bytes()
+            plaintext = dpapi_unprotect(ciphertext)
+            data = json.loads(plaintext.decode("utf-8"))
+            return data if isinstance(data, dict) else None
+        except Exception:
+            # Never log the ciphertext or decrypted payload.
+            return None
+
+    def delete(self, name: str) -> bool:
+        path = self._path(name)
+        try:
+            path.unlink()
+            return True
+        except FileNotFoundError:
+            return False
 
 
 class CredentialManager:
@@ -17,7 +99,12 @@ class CredentialManager:
         "google": {
             "required_vars": ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"],
             "setup_url": "https://console.cloud.google.com/apis/credentials",
-            "instructions": "Create an OAuth 2.0 Client ID in Google Cloud Console, enable Drive/Calendar/Gmail APIs, and export GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.",
+            "instructions": "Create an OAuth 2.0 Client ID (Desktop app) in Google Cloud Console, enable the Gmail API, and export GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET. Never use a Google password or app password.",
+        },
+        "google_gmail": {
+            "required_vars": ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"],
+            "setup_url": "https://console.cloud.google.com/apis/credentials",
+            "instructions": "Enable the Gmail API, create an OAuth 2.0 Client ID of type 'Desktop app', add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to .env, then run the JARVIS Google connection wizard to grant gmail.readonly, gmail.compose and gmail.send.",
         },
         "meta": {
             "required_vars": ["META_APP_ID", "META_APP_SECRET", "META_ACCESS_TOKEN"],

@@ -32,6 +32,22 @@ class Settings(BaseSettings):
     )
     jarvis_user_name: str = Field(default="Ganesh Nair", description="Primary authorized user name")
     jarvis_user_id: str = Field(default="ganesh", description="Primary user ID")
+
+    # JARVIS assistant identity (separate from the owner's personal identity)
+    assistant_email: str = Field(
+        default="jarvis33246146@gmail.com",
+        description="Dedicated JARVIS Google account used for assistant communication",
+    )
+    assistant_display_name: str = Field(default="JARVIS", description="Assistant display name")
+    owner_email: Optional[str] = Field(
+        default=None,
+        description="Owner destination email; must be explicitly configured, never assumed",
+    )
+    owner_display_name: Optional[str] = Field(default=None, description="Owner display name")
+    authorized_recipients: List[str] = Field(
+        default_factory=list,
+        description="Explicit allow-list for outbound email recipients beyond the owner",
+    )
     cors_allow_origins: List[str] = Field(
         default_factory=lambda: ["*"],
         description="Allowed CORS origin domains",

@@ -1152,6 +1152,114 @@
     </div>
   </main>
 
+  <!-- TAB 4: Communication Center View -->
+  <main id="view-communication" class="integrations-view" hidden>
+    <div class="integrations-header">
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 4px;">Communication Center</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Gmail inbox, unread, important, drafts, sent mail, and the human approval queue.
+          All mail flows through OAuth 2.0 (no passwords). Sending is bound to the exact
+          SHA-256 of the approved RFC 822 bytes and confirms only with a provider message id.
+        </p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-integ btn-integ-check" onclick="loadCommunication()">🔄 Refresh</button>
+        <button id="comm-btn-connect" class="btn-integ btn-integ-connect" onclick="startGoogleAuth()">Connect Google Account</button>
+        <button id="comm-btn-disconnect" class="btn-integ btn-integ-disable" onclick="disconnectGoogle()" style="display:none;">Disconnect</button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="integ-stats-bar">
+      <div class="stat-pill">
+        <span class="stat-pill-label">Google Status</span>
+        <span id="comm-google-status" class="stat-pill-val">Disconnected</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Inbox</span>
+        <span id="comm-inbox-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Unread</span>
+        <span id="comm-unread-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Important</span>
+        <span id="comm-important-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Drafts</span>
+        <span id="comm-drafts-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Sent</span>
+        <span id="comm-sent-count" class="stat-pill-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-label">Awaiting Approval</span>
+        <span id="comm-approvals-count" class="stat-pill-val">0</span>
+      </div>
+    </div>
+
+    <!-- Connection prompt -->
+    <div id="comm-connect-prompt" class="glass-panel" style="margin: 16px 0; padding: 16px; border-left: 4px solid var(--amber); display: none;">
+      <p style="margin: 0 0 8px; font-size: 0.9rem; color: var(--muted);">Gmail is not connected yet.</p>
+      <p style="margin: 0 0 10px; font-size: 0.85rem; color: var(--muted);">
+        1. Create an OAuth 2.0 Desktop client in Google Cloud Console and enable the Gmail API.<br>
+        2. Set GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET in .env.<br>
+        3. Click Connect Google Account — you will sign in as <strong>jarvis33246146@gmail.com</strong> and grant gmail.readonly, gmail.compose, gmail.send.
+      </p>
+      <button class="btn-integ btn-integ-connect" onclick="startGoogleAuth()">Start Google Connection</button>
+    </div>
+
+    <div class="split-grid">
+      <!-- Inbox -->
+      <section class="panel" style="min-height: 0;">
+        <div class="panel-head">
+          <div><p class="eyebrow">Inbox</p><h2 class="panel-title">Recent messages</h2></div>
+          <span class="pill ok" id="comm-inbox-label" style="display:none;">Live via Gmail API</span>
+        </div>
+        <div class="feed" id="comm-inbox-list">
+          <div class="feed-row"><span class="feed-time num">—</span><p>Connect Google Account to load the inbox.</p></div>
+        </div>
+      </section>
+
+      <!-- Drafts -->
+      <section class="panel" style="min-height: 0;">
+        <div class="panel-head">
+          <div><p class="eyebrow">Drafts</p><h2 class="panel-title">Saved drafts</h2></div>
+        </div>
+        <div class="feed" id="comm-drafts-list">
+          <div class="feed-row"><span class="feed-time num">—</span><p>No drafts loaded.</p></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Sent + Approvals -->
+    <section class="panel" style="margin-top: 16px;">
+      <div class="panel-head">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+          <div><p class="eyebrow">Sent &amp; Approvals</p><h2 class="panel-title">Sent mail and pending signatures</h2></div>
+          <span class="pill ok" id="comm-sent-label" style="display:none;">Live via Gmail API</span>
+        </div>
+      </div>
+      <div class="split-grid">
+        <section class="panel" style="min-height:0;margin-top:10px">
+          <div class="panel-head"><div><p class="eyebrow">Sent</p><h2 class="panel-title">Recently sent</h2></div></div>
+          <div class="feed" id="comm-sent-list">
+            <div class="feed-row"><span class="feed-time num">—</span><p>Sent messages appear after a provider-confirmed send.</p></div>
+          </div>
+        </section>
+        <section class="panel" style="min-height:0;margin-top:10px">
+          <div class="panel-head"><div><p class="eyebrow">Approval Queue</p><h2 class="panel-title">Awaiting your signature</h2></div></div>
+          <div class="feed" id="comm-approvals-list">
+            <div class="feed-row"><span class="feed-time num">—</span><p>No actions awaiting approval.</p></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
   <!-- TAB 3: Search Brain View -->
   <main id="view-search" class="integrations-view">
     <div class="integrations-header">
@@ -1396,14 +1504,18 @@
       const btnConsole = document.getElementById('nav-btn-console');
       const btnInteg = document.getElementById('nav-btn-integrations');
       const btnSearch = document.getElementById('nav-btn-search');
+      const btnComm = document.getElementById('nav-btn-communication');
       const careerView = document.getElementById('view-career');
       const btnCareer = document.getElementById('nav-btn-career');
+      const commView = document.getElementById('view-communication');
 
       consoleView.style.display = 'none';
       integView.classList.remove('active');
       searchView.classList.remove('active');
+      if (commView) commView.classList.remove('active');
       btnConsole.classList.remove('active');
       btnInteg.classList.remove('active');
+      if (btnComm) btnComm.classList.remove('active');
       btnSearch.classList.remove('active');
       if (careerView) careerView.classList.remove('active');
       if (btnCareer) btnCareer.classList.remove('active');
@@ -1423,6 +1535,10 @@
         if (careerView) careerView.classList.add('active');
         if (btnCareer) btnCareer.classList.add('active');
         loadCareerDashboard();
+      } else if (tabName === 'communication') {
+        if (commView) commView.classList.add('active');
+        if (btnComm) btnComm.classList.add('active');
+        loadCommunication();
       }
     }
 
@@ -2148,6 +2264,237 @@
       } catch (err) {
         document.getElementById('career-res-title').innerText = 'Interview Prep Error';
         document.getElementById('career-res-body').innerText = String(err);
+      }
+    }
+
+    // ========================================================
+    // COMMUNICATION CENTER (Gmail via OAuth 2.0)
+    // ========================================================
+    let commConnected = false;
+
+    function escHtml(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    async function fetchComm(path) {
+      const resp = await fetch(`${API_BASE}${path}`);
+      if (!resp.ok) return null;
+      return resp.json();
+    }
+
+    async function loadCommunication() {
+      try {
+        const status = await fetchComm('/api/v1/google/status') || { status: 'UNKNOWN', connected: false };
+        commConnected = status.connected === true;
+
+        const statusEl = document.getElementById('comm-google-status');
+        const connectBtn = document.getElementById('comm-btn-connect');
+        const disconnectBtn = document.getElementById('comm-btn-disconnect');
+        const prompt = document.getElementById('comm-connect-prompt');
+        if (statusEl) {
+          statusEl.textContent = (status.status || 'UNKNOWN').replace(/_/g, ' ');
+          statusEl.className = 'stat-pill-val ' + (commConnected ? 'ok-text' : 'warn-text');
+        }
+        if (connectBtn) connectBtn.style.display = commConnected ? 'none' : 'inline-block';
+        if (disconnectBtn) disconnectBtn.style.display = commConnected ? 'inline-block' : 'none';
+        if (prompt) prompt.style.display = commConnected ? 'none' : 'block';
+
+        if (commConnected) {
+          const [inbox, unread, important, drafts, sent, approvals] = await Promise.all([
+            fetchComm('/api/v1/google/gmail/inbox?max_results=8'),
+            fetchComm('/api/v1/google/gmail/unread?max_results=5'),
+            fetchComm('/api/v1/google/gmail/important?max_results=5'),
+            fetchComm('/api/v1/google/gmail/drafts?max_results=8'),
+            fetchComm('/api/v1/google/gmail/sent?max_results=8'),
+            fetchComm('/api/v1/approvals/pending'),
+          ]);
+
+          renderCommMessages('comm-inbox-list', inbox ? inbox.messages : []);
+          if (document.getElementById('comm-inbox-count')) document.getElementById('comm-inbox-count').textContent = inbox ? inbox.messages.length : 0;
+          if (document.getElementById('comm-unread-count')) document.getElementById('comm-unread-count').textContent = unread ? unread.result_size_estimate : 0;
+          if (document.getElementById('comm-important-count')) document.getElementById('comm-important-count').textContent = important ? important.result_size_estimate : 0;
+
+          renderCommMessages('comm-drafts-list', drafts ? drafts.drafts : [], true);
+          if (document.getElementById('comm-drafts-count')) document.getElementById('comm-drafts-count').textContent = drafts ? drafts.drafts.length : 0;
+
+          renderCommMessages('comm-sent-list', sent ? sent.messages : []);
+          if (document.getElementById('comm-sent-count')) document.getElementById('comm-sent-count').textContent = sent ? sent.messages.length : 0;
+
+          renderCommApprovals(approvals ? approvals.pending : []);
+          const badge = document.getElementById('communication-total-badge');
+          if (badge) { badge.textContent = (approvals && approvals.total) ? approvals.total : 0; badge.hidden = !(approvals && approvals.total > 0); }
+        } else {
+          ['comm-inbox-list', 'comm-drafts-list', 'comm-sent-list', 'comm-approvals-list'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = '<div class="feed-row"><span class="feed-time num">—</span><p>Connect Google Account to load mail.</p></div>';
+          });
+          ['comm-inbox-count', 'comm-unread-count', 'comm-important-count', 'comm-drafts-count', 'comm-sent-count', 'comm-approvals-count'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = '0';
+          });
+          const badge = document.getElementById('communication-total-badge');
+          if (badge) { badge.textContent = '0'; badge.hidden = true; }
+        }
+      } catch (err) {
+        console.error('Communication Center load failed:', err);
+      }
+    }
+
+    function renderCommMessages(containerId, messages, withActions) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      if (!messages || messages.length === 0) {
+        el.innerHTML = '<div class="feed-row"><span class="feed-time num">—</span><p>No messages.</p></div>';
+        return;
+      }
+      el.innerHTML = messages.map((m) => {
+        const date = m.date ? String(m.date).slice(0, 16) : '—';
+        const actions = withActions
+          ? `<div style="display:flex;gap:6px"><button class="btn-integ btn-integ-check" onclick="event.stopPropagation();sendCommDraft('${escHtml(m.draft_id || '')}','${escHtml(m.content_hash || '')}')">Send draft</button></div>`
+          : '';
+        return `<div class="feed-row" style="cursor:pointer;" onclick="openCommMessage('${escHtml(m.id || m.message_id || '')}')">
+          <span class="feed-time num">${date}</span>
+          <p style="margin:0">${escHtml(m.from || '')} <span style="color:var(--muted);font-size:0.85rem;">— ${escHtml(m.subject || '(no subject)')}</span></p>
+          <span class="feed-tag ${m.unread ? 'ok-text' : 'muted-text'}">${m.unread ? 'UNREAD' : 'READ'}</span>
+          ${actions}
+        </div>`;
+      }).join('');
+    }
+
+    async function openCommMessage(messageId) {
+      if (!messageId) return;
+      const message = await fetchComm(`/api/v1/google/gmail/message/${encodeURIComponent(messageId)}`);
+      if (!message) { alert('Could not load message.'); return; }
+      const bodyHtml = message.body_text
+        ? `<pre style="white-space:pre-wrap;font-size:12.5px;line-height:1.6;margin:8px 0;color:color-mix(in oklch,var(--fg) 86%,var(--muted));">${escHtml(message.body_text)}</pre>`
+        : '<p style="color:var(--muted);font-size:12px;">No body text.</p>';
+      const attHtml = message.attachments && message.attachments.length
+        ? `<div style="margin-top:10px"><div style="font-size:8px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Attachments</div>${message.attachments.map((a) => `<div style="font-size:12px">${escHtml(a.filename)} (${a.size_bytes} bytes)</div>`).join('')}</div>`
+        : '';
+      openModal(
+        `<div class="modal-head"><div><p class="eyebrow">Message</p><h2 class="modal-title">${escHtml(message.subject || '(no subject)')}</h2></div></div></div>
+        <div class="modal-body">
+          <div style="font-size:8.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">From ${escHtml(message.from)}</div>
+          <div style="font-size:8.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">To ${escHtml(message.to)}</div>
+          <div style="font-size:8.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">${escHtml(message.date || '')}</div>
+          ${bodyHtml}
+          ${attHtml}
+        </div>
+        <div class="modal-actions"><button class="btn btn-secondary" data-close>Close</button></div>`,
+        { label: 'Message' }
+      );
+    }
+
+    async function sendCommDraft(draftId, contentHash) {
+      if (!draftId || !contentHash) { alert('Cannot send: missing draft reference.'); return; }
+      try {
+        let resp = await fetch(`${API_BASE}/api/v1/google/gmail/send`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ draft_id: draftId, expected_content_hash: contentHash }),
+        });
+        let data = await resp.json();
+
+        if (data.status === 'AWAITING_APPROVAL') {
+          const preview = data.approval_preview || {};
+          if (!confirm(`Send draft to ${preview.to || ''} — "${preview.subject || ''}"?\n\nSending requires your explicit approval.`)) return;
+
+          const resolveResp = await fetch(`${API_BASE}/api/v1/approvals/${encodeURIComponent(data.task_id)}/resolve`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ task_id: data.task_id, approved: true, user_id: 'owner' }),
+          });
+          const resolved = await resolveResp.json();
+          if (resolved.status !== 'APPROVED') { alert('Send was not approved.'); return; }
+
+          resp = await fetch(`${API_BASE}/api/v1/google/gmail/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ draft_id: draftId, expected_content_hash: contentHash, approval_token: resolved.approval_token }),
+          });
+          data = await resp.json();
+        }
+
+        if (data.status === 'SENT' && data.message_id) {
+          alert(`Sent — provider message id ${data.message_id}`);
+          loadCommunication();
+        } else {
+          alert('Send not confirmed: ' + (data.error || data.reason || JSON.stringify(data)));
+        }
+      } catch (err) {
+        alert('Send failed: ' + String(err));
+      }
+    }
+
+    async function startGoogleAuth() {
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/google/auth/start`, { method: 'POST' });
+        const data = await resp.json();
+        if (!data.authorization_url) throw new Error(data.detail || 'No authorization URL returned');
+        window.open(data.authorization_url, '_blank', 'width=920,height=700');
+        let done = false;
+        const timer = setInterval(async () => {
+          if (done) return;
+          const status = await fetchComm('/api/v1/google/status');
+          if (status && status.connected) {
+            done = true;
+            clearInterval(timer);
+            loadCommunication();
+          }
+        }, 2000);
+        setTimeout(() => {
+          if (!done) {
+            done = true;
+            clearInterval(timer);
+            alert('Authorization window is still open. Complete sign-in in the browser, then click Refresh.');
+          }
+        }, 300000);
+      } catch (err) {
+        alert('Could not start Google connection: ' + String(err));
+      }
+    }
+
+    async function disconnectGoogle() {
+      if (!confirm('Revoke the Google token and disconnect Gmail?')) return;
+      try {
+        await fetch(`${API_BASE}/api/v1/google/auth/disconnect`, { method: 'POST' });
+      } catch (err) {
+        console.warn('Disconnect request failed:', err);
+      }
+      loadCommunication();
+    }
+
+    function renderCommApprovals(approvals) {
+      const el = document.getElementById('comm-approvals-list');
+      if (!el) return;
+      if (!approvals || approvals.length === 0) {
+        el.innerHTML = '<div class="feed-row"><span class="feed-time num">—</span><p>No actions awaiting approval.</p></div>';
+        return;
+      }
+      el.innerHTML = approvals.map((a) => `
+        <div class="feed-row">
+          <span class="feed-time num">${a.expires_at ? String(a.expires_at).slice(0, 16) : '—'}</span>
+          <p style="margin:0">${escHtml(a.power_id || '')} — ${escHtml(a.action_summary || '')}</p>
+          <div style="display:flex;gap:6px">
+            <button class="btn-integ btn-integ-check" onclick="event.stopPropagation();resolveCommApproval('${escHtml(a.task_id || '')}', true)">Approve</button>
+            <button class="btn-integ btn-integ-disable" onclick="event.stopPropagation();resolveCommApproval('${escHtml(a.task_id || '')}', false)">Reject</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function resolveCommApproval(taskId, approved) {
+      try {
+        const resp = await fetch(`${API_BASE}/api/v1/approvals/${encodeURIComponent(taskId)}/resolve`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ task_id: taskId, approved, user_id: 'owner' }),
+        });
+        const data = await resp.json();
+        alert(approved ? (data.status === 'APPROVED' ? 'Approved.' : 'Approval failed.') : 'Rejected.');
+        loadCommunication();
+      } catch (err) {
+        alert('Resolution failed: ' + String(err));
       }
     }
 

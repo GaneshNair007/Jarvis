@@ -208,30 +208,43 @@ class BaseIntegration(ABC):
 
         # Any outbound or destructive action requires explicit token
         if requires_approval or tier >= 2:
+            task_id = f"tsk_{content_hash[:8]}"
             if not approval_token:
-                # Issue approval request
+                # Issue approval request bound to this exact parameter set.
                 req_obj = policy_gate.request_approval(
                     power_id=power_id,
-                    task_id=f"tsk_{content_hash[:8]}",
+                    task_id=task_id,
                     action_summary=f"Execute {power_meta.get('name', power_id)} on {self.display_name}",
                     payload=params,
                 )
-                return {
+                response = {
                     "status": "AWAITING_APPROVAL",
                     "reason": f"Action requires Tier {tier} approval.",
                     "approval_required": True,
                     "approval_id": req_obj["approval_id"],
+                    "task_id": task_id,
                     "content_hash": content_hash,
                     "integration_id": self.integration_id,
                     "power_id": power_id,
                 }
+                preview = self._approval_preview(power_id, params)
+                if preview is not None:
+                    response["approval_preview"] = preview
+                return response
 
-            # Verify token
-            valid_token = policy_gate.verify_token(approval_token)
+            # Verify the token against the exact current parameters.  A token
+            # issued for different content must not authorize this execution.
+            policy_hash = policy_gate.hash_payload(params)
+            valid_token, invalid_reason = policy_gate.verify_approval_token(
+                task_id=task_id,
+                power_id=power_id,
+                payload_hash=policy_hash,
+                token=approval_token,
+            )
             if not valid_token:
                 return {
                     "status": "APPROVAL_INVALID",
-                    "reason": "Provided approval token is invalid, expired, or tampered.",
+                    "reason": f"Provided approval token is invalid, expired, tampered, or bound to different content: {invalid_reason}",
                 }
 
         # 6. Record rate limit call
@@ -296,6 +309,15 @@ class BaseIntegration(ABC):
         return list(reversed(self._audit_log[-limit:]))
 
     # ── Helpers ────────────────────────────────────────────────────────────────
+
+    def _approval_preview(self, power_id: str, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Optional human-readable approval preview supplied by integrations.
+
+        High-impact integrations (for example Gmail sending) override this so
+        the approval center can show the exact account, recipients, subject and
+        body before authorization.  Secrets must never be included.
+        """
+        return None
 
     def _find_power(self, power_id: str) -> Optional[Dict[str, Any]]:
         for p in self.list_powers():
