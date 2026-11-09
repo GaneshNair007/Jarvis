@@ -365,9 +365,7 @@ class GmailIntegration(BaseIntegration):
             body = str(params.get("body") or "")
             expected_hash = str(params.get("expected_content_hash") or params.get("content_hash") or "").strip()
             if not to or not subject or not expected_hash:
-                raise GmailApiError(
-                    "to, subject and expected_content_hash are required", status_code=400
-                )
+                raise GmailApiError("to, subject and expected_content_hash are required", status_code=400)
             return self.api.send_message(
                 to=to,
                 subject=subject,

@@ -50,8 +50,24 @@ def test_workflow_01_lead_followup():
 
 def test_workflow_02_ad_pulse():
     campaigns = [
-        {"campaign_name": "Google Search - AI Agents", "channel": "google", "spend_usd": 450.0, "impressions": 12000, "clicks": 450, "conversions": 18, "revenue_usd": 1800.0},
-        {"campaign_name": "LinkedIn - B2B Founders", "channel": "linkedin", "spend_usd": 800.0, "impressions": 5000, "clicks": 30, "conversions": 1, "revenue_usd": 200.0},
+        {
+            "campaign_name": "Google Search - AI Agents",
+            "channel": "google",
+            "spend_usd": 450.0,
+            "impressions": 12000,
+            "clicks": 450,
+            "conversions": 18,
+            "revenue_usd": 1800.0,
+        },
+        {
+            "campaign_name": "LinkedIn - B2B Founders",
+            "channel": "linkedin",
+            "spend_usd": 800.0,
+            "impressions": 5000,
+            "clicks": 30,
+            "conversions": 1,
+            "revenue_usd": 200.0,
+        },
     ]
     pulse = playbook_engine.run_ad_pulse_workflow(metrics=campaigns)
     assert isinstance(pulse, GrokbotAdPulse)
@@ -63,14 +79,28 @@ def test_workflow_02_ad_pulse():
 
 def test_workflow_03_weekly_ops_sweep():
     task_board = [
-        {"task_id": "T1", "name": "Deploy landing page", "status": "overdue", "owner": "scaffold_01", "due_date": "yesterday"},
+        {
+            "task_id": "T1",
+            "name": "Deploy landing page",
+            "status": "overdue",
+            "owner": "scaffold_01",
+            "due_date": "yesterday",
+        },
         {"task_id": "T2", "name": "Run unit tests", "status": "completed", "owner": "devops_01", "due_date": "today"},
     ]
     crm_leads = [
         {"lead_id": "L10", "name": "Amit Verma", "company": "CloudMatrix", "days_stalled": 6, "status": "waiting"},
     ]
     ad_reports = [
-        {"campaign_name": "Meta Ads Retargeting", "channel": "meta", "spend_usd": 300.0, "impressions": 2000, "clicks": 10, "conversions": 0, "revenue_usd": 0.0},
+        {
+            "campaign_name": "Meta Ads Retargeting",
+            "channel": "meta",
+            "spend_usd": 300.0,
+            "impressions": 2000,
+            "clicks": 10,
+            "conversions": 0,
+            "revenue_usd": 0.0,
+        },
     ]
     sweep = playbook_engine.run_weekly_ops_sweep(task_board=task_board, crm_leads=crm_leads, ad_reports=ad_reports)
     assert isinstance(sweep, GrokbotWeeklyOpsSweep)

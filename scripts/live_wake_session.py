@@ -7,6 +7,7 @@ Wake word path is FULLY REAL:
 Run this, then SAY "Hey Jarvis" out loud. Everything the daemon hears,
 scores, and decides is written to evidence file - honesty by construction.
 """
+
 import json
 import sys
 import time
@@ -47,8 +48,15 @@ def main() -> int:
 
     init = daemon.start(use_microphone=True)
     print("=== JARVIS ALWAYS-ON LISTENING (%.0fs) ===" % duration, flush=True)
-    print("MIC:", init.get("mic_device_name"), "| rate:", init.get("mic_capture_rate"),
-          "| mic_live:", init.get("mic_live"), flush=True)
+    print(
+        "MIC:",
+        init.get("mic_device_name"),
+        "| rate:",
+        init.get("mic_capture_rate"),
+        "| mic_live:",
+        init.get("mic_live"),
+        flush=True,
+    )
     print("SAY IT NOW: 'Hey Jarvis' - I will reply out loud when I hear you.", flush=True)
 
     end = time.time() + duration
@@ -56,9 +64,14 @@ def main() -> int:
     while time.time() < end:
         time.sleep(2)
         h = daemon.health()
-        line = ("t=%4.0fs state=%s score>0.1=%d wakes=%d cmds=%d last=%r"
-                % (time.time() - started, h["state"], len(gate_scores), h["wake_count"],
-                   h["command_count"], h["last_command"][:40]))
+        line = "t=%4.0fs state=%s score>0.1=%d wakes=%d cmds=%d last=%r" % (
+            time.time() - started,
+            h["state"],
+            len(gate_scores),
+            h["wake_count"],
+            h["command_count"],
+            h["last_command"][:40],
+        )
         print(line, flush=True)
 
     daemon.stop()
@@ -84,16 +97,26 @@ def main() -> int:
         "gate_scores_above_0.1": gate_scores[:80],
         "wake_evidence": [
             {"source": e.get("source"), "data": e.get("data")}
-            for e in daemon.evidence_log if "wake" in str(e.get("source", ""))
+            for e in daemon.evidence_log
+            if "wake" in str(e.get("source", ""))
         ],
     }
     import os
+
     os.makedirs(os.path.dirname(EVIDENCE_PATH), exist_ok=True)
     with open(EVIDENCE_PATH, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, default=str)
-    print("SESSION DONE:", json.dumps({k: report[k] for k in (
-        "wake_count", "acoustic_wake_count", "command_count",
-        "last_transcript", "last_reply")}, default=str)[:400], flush=True)
+    print(
+        "SESSION DONE:",
+        json.dumps(
+            {
+                k: report[k]
+                for k in ("wake_count", "acoustic_wake_count", "command_count", "last_transcript", "last_reply")
+            },
+            default=str,
+        )[:400],
+        flush=True,
+    )
     print("EVIDENCE:", EVIDENCE_PATH, flush=True)
     return 0
 

@@ -34,4 +34,3 @@ async def get_daily_system_pulse():
 async def get_weekly_ops_sweep():
     """Reviews overdue tasks, stalled leads, and sets top 3 weekly priorities."""
     return weekly_ops_sweep.run()
-

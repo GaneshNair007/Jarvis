@@ -1,4 +1,5 @@
 """Queries the default capture device mute state and master volume via Core Audio (ctypes COM)."""
+
 import ctypes
 from ctypes import POINTER, byref, c_float, c_void_p, c_wchar_p
 
@@ -27,6 +28,7 @@ def guid(s):
             ("Data3", ctypes.c_ushort),
             ("Data4", ctypes.c_ubyte * 8),
         ]
+
     g = GUID()
     ole32.CLSIDFromString(c_wchar_p(s), ctypes.byref(g))
     return g
@@ -49,9 +51,9 @@ def main():
     dev = c_void_p()
     enum_vtbl = ctypes.cast(enumerator, POINTER(c_void_p))[0]
     enum_funcs = ctypes.cast(enum_vtbl, POINTER(c_void_p))
-    get_default = ctypes.WINFUNCTYPE(
-        ctypes.c_long, c_void_p, ctypes.c_int, ctypes.c_int, POINTER(c_void_p)
-    )(enum_funcs[4])
+    get_default = ctypes.WINFUNCTYPE(ctypes.c_long, c_void_p, ctypes.c_int, ctypes.c_int, POINTER(c_void_p))(
+        enum_funcs[4]
+    )
     hr = get_default(enumerator, eCapture, eMultimedia, byref(dev))
     if hr != 0 or not dev:
         raise RuntimeError(f"GetDefaultAudioEndpoint failed: {hr:#x}")
@@ -60,9 +62,9 @@ def main():
     vol = c_void_p()
     dev_vtbl = ctypes.cast(dev, POINTER(c_void_p))[0]
     dev_funcs = ctypes.cast(dev_vtbl, POINTER(c_void_p))
-    activate = ctypes.WINFUNCTYPE(
-        ctypes.c_long, c_void_p, c_void_p, ctypes.c_ulong, c_void_p, POINTER(c_void_p)
-    )(dev_funcs[3])
+    activate = ctypes.WINFUNCTYPE(ctypes.c_long, c_void_p, c_void_p, ctypes.c_ulong, c_void_p, POINTER(c_void_p))(
+        dev_funcs[3]
+    )
     g = guid(IID_IAudioEndpointVolume)
     hr = activate(dev, ctypes.addressof(g), CLSCTX_ALL, None, byref(vol))
     if hr != 0 or not vol:

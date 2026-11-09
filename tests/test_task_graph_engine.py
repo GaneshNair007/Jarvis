@@ -29,9 +29,25 @@ class TestTaskGraphTopology:
 
     def test_linear_dag_and_topological_sort(self):
         graph = TaskGraph(goal_id="goal_linear")
-        t1 = TaskNode(task_id="t1", name="Task 1", description="Step 1", department="engineering", parent_goal="goal_linear")
-        t2 = TaskNode(task_id="t2", name="Task 2", description="Step 2", department="engineering", parent_goal="goal_linear", dependencies=["t1"])
-        t3 = TaskNode(task_id="t3", name="Task 3", description="Step 3", department="engineering", parent_goal="goal_linear", dependencies=["t2"])
+        t1 = TaskNode(
+            task_id="t1", name="Task 1", description="Step 1", department="engineering", parent_goal="goal_linear"
+        )
+        t2 = TaskNode(
+            task_id="t2",
+            name="Task 2",
+            description="Step 2",
+            department="engineering",
+            parent_goal="goal_linear",
+            dependencies=["t1"],
+        )
+        t3 = TaskNode(
+            task_id="t3",
+            name="Task 3",
+            description="Step 3",
+            department="engineering",
+            parent_goal="goal_linear",
+            dependencies=["t2"],
+        )
 
         graph.add_node(t1)
         graph.add_node(t2)
@@ -43,9 +59,30 @@ class TestTaskGraphTopology:
 
     def test_cycle_detection_via_kahns_algorithm(self):
         graph = TaskGraph(goal_id="goal_cyclic")
-        t1 = TaskNode(task_id="t1", name="Task 1", description="Step 1", department="engineering", parent_goal="goal_cyclic", dependencies=["t3"])
-        t2 = TaskNode(task_id="t2", name="Task 2", description="Step 2", department="engineering", parent_goal="goal_cyclic", dependencies=["t1"])
-        t3 = TaskNode(task_id="t3", name="Task 3", description="Step 3", department="engineering", parent_goal="goal_cyclic", dependencies=["t2"])
+        t1 = TaskNode(
+            task_id="t1",
+            name="Task 1",
+            description="Step 1",
+            department="engineering",
+            parent_goal="goal_cyclic",
+            dependencies=["t3"],
+        )
+        t2 = TaskNode(
+            task_id="t2",
+            name="Task 2",
+            description="Step 2",
+            department="engineering",
+            parent_goal="goal_cyclic",
+            dependencies=["t1"],
+        )
+        t3 = TaskNode(
+            task_id="t3",
+            name="Task 3",
+            description="Step 3",
+            department="engineering",
+            parent_goal="goal_cyclic",
+            dependencies=["t2"],
+        )
 
         graph.add_node(t1)
         graph.add_node(t2)
@@ -59,9 +96,30 @@ class TestTaskGraphTopology:
         """Diamond graph: t1 -> (t2_a, t2_b) -> t3"""
         graph = TaskGraph(goal_id="goal_diamond")
         t1 = TaskNode(task_id="t1", name="Root", description="Start", department="research", parent_goal="goal_diamond")
-        t2a = TaskNode(task_id="t2a", name="Branch A", description="Scout A", department="research", parent_goal="goal_diamond", dependencies=["t1"])
-        t2b = TaskNode(task_id="t2b", name="Branch B", description="Scout B", department="research", parent_goal="goal_diamond", dependencies=["t1"])
-        t3 = TaskNode(task_id="t3", name="Join", description="Synthesize", department="engineering", parent_goal="goal_diamond", dependencies=["t2a", "t2b"])
+        t2a = TaskNode(
+            task_id="t2a",
+            name="Branch A",
+            description="Scout A",
+            department="research",
+            parent_goal="goal_diamond",
+            dependencies=["t1"],
+        )
+        t2b = TaskNode(
+            task_id="t2b",
+            name="Branch B",
+            description="Scout B",
+            department="research",
+            parent_goal="goal_diamond",
+            dependencies=["t1"],
+        )
+        t3 = TaskNode(
+            task_id="t3",
+            name="Join",
+            description="Synthesize",
+            department="engineering",
+            parent_goal="goal_diamond",
+            dependencies=["t2a", "t2b"],
+        )
 
         for t in [t1, t2a, t2b, t3]:
             graph.add_node(t)
@@ -119,27 +177,30 @@ class TestTaskVerifier:
 
     def test_verifier_rejects_empty_outputs(self):
         verifier = TaskVerifier()
-        task = TaskNode(task_id="t1", name="Empty Task", description="Sample", department="engineering", parent_goal="g1")
+        task = TaskNode(
+            task_id="t1", name="Empty Task", description="Sample", department="engineering", parent_goal="g1"
+        )
         result = verifier.verify_task(task, {})
         assert not result.passed
         assert "empty" in result.comments.lower()
 
     def test_verifier_rejects_error_status(self):
         verifier = TaskVerifier()
-        task = TaskNode(task_id="t1", name="Error Task", description="Sample", department="engineering", parent_goal="g1")
+        task = TaskNode(
+            task_id="t1", name="Error Task", description="Sample", department="engineering", parent_goal="g1"
+        )
         result = verifier.verify_task(task, {"error": "Connection timed out", "status": "error"})
         assert not result.passed
         assert "explicit error" in result.comments.lower()
 
     def test_verifier_dlp_shield_catches_credential_leak(self):
         verifier = TaskVerifier()
-        task = TaskNode(task_id="t_sec", name="Leak Task", description="Sample", department="security", parent_goal="g1")
+        task = TaskNode(
+            task_id="t_sec", name="Leak Task", description="Sample", department="security", parent_goal="g1"
+        )
         # Construct dynamically so static pre-commit scanner is not tripped by committed source code
         leak_secret = "pass" + "word = 'MockSuperSecretPassword123'"
-        leaky_output = {
-            "result": f"Simulated user error containing {leak_secret}",
-            "status": "success"
-        }
+        leaky_output = {"result": f"Simulated user error containing {leak_secret}", "status": "success"}
         result = verifier.verify_task(task, leaky_output)
         assert not result.passed
         assert result.score == 0.0
@@ -153,7 +214,7 @@ class TestTaskVerifier:
             description="Generates system design",
             department="engineering",
             tool_requirements=["ast_mapper"],
-            parent_goal="g1"
+            parent_goal="g1",
         )
         valid_output = {
             "architecture": "Microservices with Task Graph DAG",
@@ -172,14 +233,16 @@ class TestTaskScheduler:
         scheduler = TaskScheduler(max_concurrency=2)
         graph = TaskGraph(goal_id="goal_conc")
         for i in range(4):
-            graph.add_node(TaskNode(
-                task_id=f"t{i}",
-                name=f"Task {i}",
-                description=f"Desc {i}",
-                department="research",
-                parent_goal="goal_conc",
-                priority=Priority.MEDIUM,
-            ))
+            graph.add_node(
+                TaskNode(
+                    task_id=f"t{i}",
+                    name=f"Task {i}",
+                    description=f"Desc {i}",
+                    department="research",
+                    parent_goal="goal_conc",
+                    priority=Priority.MEDIUM,
+                )
+            )
 
         ready = scheduler.get_dispatchable_tasks(graph)
         assert len(ready) == 2  # Capped at max_concurrency 2
@@ -197,8 +260,22 @@ class TestTaskScheduler:
     def test_retry_and_cascade_cancellation(self):
         scheduler = TaskScheduler(max_concurrency=5)
         graph = TaskGraph(goal_id="goal_fail")
-        t_fail = TaskNode(task_id="tf", name="Failing Task", description="Desc", department="ops", parent_goal="goal_fail", max_retries=2)
-        t_child = TaskNode(task_id="tc", name="Child Task", description="Desc", department="ops", parent_goal="goal_fail", dependencies=["tf"])
+        t_fail = TaskNode(
+            task_id="tf",
+            name="Failing Task",
+            description="Desc",
+            department="ops",
+            parent_goal="goal_fail",
+            max_retries=2,
+        )
+        t_child = TaskNode(
+            task_id="tc",
+            name="Child Task",
+            description="Desc",
+            department="ops",
+            parent_goal="goal_fail",
+            dependencies=["tf"],
+        )
 
         graph.add_node(t_fail)
         graph.add_node(t_child)
@@ -232,7 +309,7 @@ class TestMemoryWriterAndReflection:
             department="engineering",
             assigned_agent="backend_developer",
             parent_goal="goal_hack_01",
-            outputs={"repo_url": "https://github.com/GaneshNair007/hackathon-winner", "status": "completed"}
+            outputs={"repo_url": "https://github.com/GaneshNair007/hackathon-winner", "status": "completed"},
         )
 
         event = writer.record_task_memory(task)
@@ -247,7 +324,14 @@ class TestMemoryWriterAndReflection:
         engine = TaskReflectionEngine(storage_path=refl_file)
 
         graph = TaskGraph(goal_id="goal_reflection_test")
-        t1 = TaskNode(task_id="t1", name="Task 1", description="Desc", department="hackathon", assigned_agent="hackathon_scout", parent_goal="goal_reflection_test")
+        t1 = TaskNode(
+            task_id="t1",
+            name="Task 1",
+            description="Desc",
+            department="hackathon",
+            assigned_agent="hackathon_scout",
+            parent_goal="goal_reflection_test",
+        )
         t1.mark_completed(outputs={"opportunity": "Expand into healthcare domain with AI agents."})
         graph.add_node(t1)
 
@@ -317,21 +401,55 @@ class TestEndToEndHackathonPipeline:
         # Custom handler simulating real stage-specific outputs
         async def hackathon_task_runner(task: TaskNode, context: Dict[str, Any]) -> Dict[str, Any]:
             if task.task_id == "t1":
-                return {"hackathons_found": ["Pune AI Summit Hackathon", "Global Agentic AI Hackathon"], "tools_used": ["web_search"], "status": "success"}
+                return {
+                    "hackathons_found": ["Pune AI Summit Hackathon", "Global Agentic AI Hackathon"],
+                    "tools_used": ["web_search"],
+                    "status": "success",
+                }
             elif task.task_id == "t2":
-                return {"selected_city": "Pune", "target_event": "Pune AI Summit Hackathon", "tools_used": ["data_filter"], "status": "success"}
+                return {
+                    "selected_city": "Pune",
+                    "target_event": "Pune AI Summit Hackathon",
+                    "tools_used": ["data_filter"],
+                    "status": "success",
+                }
             elif task.task_id == "t3":
-                return {"guidelines": "Autonomous Multi-Agent Systems on Edge / Desktop", "tools_used": ["doc_parser"], "status": "success"}
+                return {
+                    "guidelines": "Autonomous Multi-Agent Systems on Edge / Desktop",
+                    "tools_used": ["doc_parser"],
+                    "status": "success",
+                }
             elif task.task_id == "t4":
-                return {"rubrics": {"innovation": 40, "technical_depth": 40, "presentation": 20}, "tools_used": ["deep_reasoner"], "status": "success"}
+                return {
+                    "rubrics": {"innovation": 40, "technical_depth": 40, "presentation": 20},
+                    "tools_used": ["deep_reasoner"],
+                    "status": "success",
+                }
             elif task.task_id == "t5":
-                return {"selected_problem": "Autonomous Task Graph Engine with 10-Layer Security", "tools_used": ["decision_matrix"], "opportunity": "Publish as open standard", "status": "success"}
+                return {
+                    "selected_problem": "Autonomous Task Graph Engine with 10-Layer Security",
+                    "tools_used": ["decision_matrix"],
+                    "opportunity": "Publish as open standard",
+                    "status": "success",
+                }
             elif task.task_id == "t6":
-                return {"architecture": "Hierarchical TaskGraph DAG + OpenMaus Grok + Kokoro TTS", "tools_used": ["ast_mapper"], "status": "success"}
+                return {
+                    "architecture": "Hierarchical TaskGraph DAG + OpenMaus Grok + Kokoro TTS",
+                    "tools_used": ["ast_mapper"],
+                    "status": "success",
+                }
             elif task.task_id == "t7":
-                return {"repo_created": "https://github.com/GaneshNair007/Jarvis", "tools_used": ["git_cli"], "status": "success"}
+                return {
+                    "repo_created": "https://github.com/GaneshNair007/Jarvis",
+                    "tools_used": ["git_cli"],
+                    "status": "success",
+                }
             elif task.task_id == "t8":
-                return {"roadmap": ["Phase 1: DAG Engine", "Phase 2: UI-TARS Grounding", "Phase 3: Hardware Local"], "tools_used": ["roadmap_generator"], "status": "success"}
+                return {
+                    "roadmap": ["Phase 1: DAG Engine", "Phase 2: UI-TARS Grounding", "Phase 3: Hardware Local"],
+                    "tools_used": ["roadmap_generator"],
+                    "status": "success",
+                }
             return {"status": "success"}
 
         report = await executor.run(graph, handler=hackathon_task_runner, timeout=30.0)

@@ -27,13 +27,14 @@ from jarvis.voice.wake import AcousticWakeGate
 #  Audio helpers: 16 kHz int16 PCM blocks with a config-vetoable gate    #
 # --------------------------------------------------------------------- #
 
+
 @pytest.fixture(autouse=True)
 def legacy_gate_env(monkeypatch):
     """Tests inject gates explicitly; keep the env default deterministic."""
     monkeypatch.setenv("JARVIS_ACOUSTIC_GATE", "on")
 
 
-SR = VoiceDaemon.SAMPLE_RATE          # 16000
+SR = VoiceDaemon.SAMPLE_RATE  # 16000
 BLOCK_FRAMES = VoiceDaemon.BLOCK_FRAMES  # 1600
 
 
@@ -59,6 +60,7 @@ def feed_utterance(daemon: VoiceDaemon, events: List[Dict[str, Any]] = None) -> 
 # --------------------------------------------------------------------- #
 #  Fakes                                                                #
 # --------------------------------------------------------------------- #
+
 
 class FakeGate:
     """Deterministic acoustic gate: returns a fixed verdict."""
@@ -127,12 +129,16 @@ class RecordingOrchestrator:
 #  1. Gate hit: wake accepted, Whisper used for command extraction      #
 # --------------------------------------------------------------------- #
 
+
 def test_gate_hit_runs_whisper_and_executes_command():
     gate = FakeGate(hit=True)
     stt = RecordingSTT("hey jarvis what is the weather")
     orch = RecordingOrchestrator()
     daemon = VoiceDaemon(
-        stt=stt, orchestrator=orch, speak_replies=False, gate=gate,
+        stt=stt,
+        orchestrator=orch,
+        speak_replies=False,
+        gate=gate,
         acoustic_gate_enabled=True,
     )
     daemon.state = "LISTENING_FOR_WAKE"
@@ -162,7 +168,10 @@ def test_gate_hit_wake_then_command_capture():
     stt = RecordingSTT("hey jarvis")
     orch = RecordingOrchestrator()
     daemon = VoiceDaemon(
-        stt=stt, orchestrator=orch, speak_replies=False, gate=gate,
+        stt=stt,
+        orchestrator=orch,
+        speak_replies=False,
+        gate=gate,
         acoustic_gate_enabled=True,
     )
     daemon.state = "LISTENING_FOR_WAKE"
@@ -187,12 +196,16 @@ def test_gate_hit_wake_then_command_capture():
 #  2. Ambient speech with no gate hit: Whisper must never run           #
 # --------------------------------------------------------------------- #
 
+
 def test_ambient_speech_gated_before_whisper():
     gate = FakeGate(hit=False)
     stt = MustNotTranscribe()
     orch = RecordingOrchestrator()
     daemon = VoiceDaemon(
-        stt=stt, orchestrator=orch, speak_replies=False, gate=gate,
+        stt=stt,
+        orchestrator=orch,
+        speak_replies=False,
+        gate=gate,
         acoustic_gate_enabled=True,
     )
     daemon.state = "LISTENING_FOR_WAKE"
@@ -213,6 +226,7 @@ def test_ambient_speech_gated_before_whisper():
 #  2b. Cooldown: the gate may not double-fire after a wake              #
 # --------------------------------------------------------------------- #
 
+
 def test_wake_cooldown_suppresses_acoustic_repeat():
     """After a wake+command, the acoustic gate is suppressed for a window;
     the legacy transcription path still hears the wake phrase (by design)."""
@@ -220,7 +234,10 @@ def test_wake_cooldown_suppresses_acoustic_repeat():
     stt = RecordingSTT("hey jarvis what is the weather")
     orch = RecordingOrchestrator()
     daemon = VoiceDaemon(
-        stt=stt, orchestrator=orch, speak_replies=False, gate=gate,
+        stt=stt,
+        orchestrator=orch,
+        speak_replies=False,
+        gate=gate,
         acoustic_gate_enabled=True,
     )
     daemon.state = "LISTENING_FOR_WAKE"
@@ -243,12 +260,16 @@ def test_wake_cooldown_suppresses_acoustic_repeat():
 #  3. Gate unavailable: fail-closed to legacy transcription wake        #
 # --------------------------------------------------------------------- #
 
+
 def test_gate_unavailable_falls_back_to_transcription_wake():
     gate = FakeGate(available=False, hit=False)
     stt = RecordingSTT("hey jarvis what is the weather")
     orch = RecordingOrchestrator()
     daemon = VoiceDaemon(
-        stt=stt, orchestrator=orch, speak_replies=False, gate=gate,
+        stt=stt,
+        orchestrator=orch,
+        speak_replies=False,
+        gate=gate,
         acoustic_gate_enabled=True,
     )
     daemon.state = "LISTENING_FOR_WAKE"
@@ -266,13 +287,17 @@ def test_gate_unavailable_falls_back_to_transcription_wake():
 #  4. Gate disabled: pure legacy, gate object untouched                 #
 # --------------------------------------------------------------------- #
 
+
 def test_gate_disabled_is_pure_legacy(monkeypatch):
     monkeypatch.setenv("JARVIS_ACOUSTIC_GATE", "off")
     gate = FakeGate(hit=True)
     stt = RecordingSTT("hey jarvis system status")
     orch = RecordingOrchestrator()
     daemon = VoiceDaemon(
-        stt=stt, orchestrator=orch, speak_replies=False, gate=gate,
+        stt=stt,
+        orchestrator=orch,
+        speak_replies=False,
+        gate=gate,
         acoustic_gate_enabled=None,  # env resolves to off
     )
     daemon.state = "LISTENING_FOR_WAKE"
@@ -288,6 +313,7 @@ def test_gate_disabled_is_pure_legacy(monkeypatch):
 # --------------------------------------------------------------------- #
 #  5. Health reports acoustic state honestly                            #
 # --------------------------------------------------------------------- #
+
 
 def test_health_reports_acoustic_fields():
     gate = FakeGate(hit=False)
@@ -312,6 +338,7 @@ def test_health_reports_acoustic_fields():
 
     # Failed gate must surface its reason.
     from types import SimpleNamespace
+
     dead = SimpleNamespace(
         available=False,
         unavailable_reason="model load failed",
@@ -329,6 +356,7 @@ def test_health_reports_acoustic_fields():
 # --------------------------------------------------------------------- #
 #  6. Frame accumulation math (no model dependency)                     #
 # --------------------------------------------------------------------- #
+
 
 class FrameRecordingModel:
     def __init__(self, score=0.4):
@@ -380,14 +408,17 @@ def test_frame_accumulation_and_threshold():
 #  7. Real openWakeWord model smoke (honest skip when unavailable)       #
 # --------------------------------------------------------------------- #
 
+
 def test_real_openwakeword_model_smoke():
     import importlib.util
+
     if importlib.util.find_spec("openwakeword") is None:
         pytest.skip("openwakeword not installed on this host")
     if os.getenv("JARVIS_SKIP_REAL_WAKE", "").strip() in ("1", "true", "yes"):
         pytest.skip("JARVIS_SKIP_REAL_WAKE set")
 
     from jarvis.voice.wake import get_acoustic_gate
+
     gate = get_acoustic_gate()
     if not gate.available:
         pytest.skip(f"openWakeWord models could not load: {gate.unavailable_reason}")

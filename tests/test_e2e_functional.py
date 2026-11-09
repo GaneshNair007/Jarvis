@@ -27,6 +27,7 @@ from jarvis.powers.multiagent_powers import multiagent_powers
 #  Speak: TTS produces real audio                                       #
 # --------------------------------------------------------------------- #
 
+
 def test_tts_speaks_real_audio():
     """JARVIS can speak: synthesize_to_wav returns valid WAV audio bytes."""
     wav = tts_engine.synthesize_to_wav("JARVIS online. Systems functional.")
@@ -42,6 +43,7 @@ def test_tts_speaks_real_audio():
 # --------------------------------------------------------------------- #
 #  Think & Act: offline local-heuristic reasoning                       #
 # --------------------------------------------------------------------- #
+
 
 def test_think_offline_returns_helpful_reply():
     """With no LLM backend, JARVIS still reasons via local reflex (success, not unavailable)."""
@@ -67,6 +69,7 @@ def test_think_offline_returns_helpful_reply():
 #  Code: subagent dispatch returns Evidence-backed result               #
 # --------------------------------------------------------------------- #
 
+
 def test_coding_subagent_returns_evidence_backed_result():
     """A coding subagent executes a task and returns Evidence + TrustResult."""
     res = multiagent_powers.invoke_subagent("coder", {"task": "Write a function to ping a host"})
@@ -81,6 +84,7 @@ def test_coding_subagent_returns_evidence_backed_result():
 #  Antigravity: self-improvement pipeline                               #
 # --------------------------------------------------------------------- #
 
+
 def test_antigravity_self_upgrade_pipeline():
     """CODER_ANTIGRAVITY routes to the real self_upgrade_pipeline (PWR-310)."""
     res = multiagent_powers.invoke_subagent("coder_antigravity", {"codebase_path": "D:\\jarvis"})
@@ -94,6 +98,7 @@ def test_antigravity_self_upgrade_pipeline():
 # --------------------------------------------------------------------- #
 #  Subagents: parallel multi-task execution through the swarm           #
 # --------------------------------------------------------------------- #
+
 
 def test_swarm_runs_multiple_subagents_in_parallel():
     """The swarm decomposes a coding goal and runs subtasks in parallel."""
@@ -116,9 +121,11 @@ def test_swarm_runs_multiple_subagents_in_parallel():
 #  Orchestrator: instant command + code dispatch end-to-end             #
 # --------------------------------------------------------------------- #
 
+
 def test_orchestrator_executes_instant_command():
     """The orchestrator routes 'system health' to BYPASS and COMPLETES it."""
     import asyncio
+
     res = asyncio.run(orchestrator.process_user_query("system health"))
     assert res["status"] == "COMPLETED"
     assert res["tier"] == "BYPASS"
@@ -128,6 +135,7 @@ def test_orchestrator_executes_instant_command():
 def test_orchestrator_routes_code_to_subagents():
     """A '/code' goal dispatches through the multi-agent swarm (PWR-288)."""
     import asyncio
+
     res = asyncio.run(orchestrator.process_user_query("/code write a hello world function"))
     assert res["status"] == "COMPLETED"
     assert res["response"]["power_id"] == "PWR-288"

@@ -28,4 +28,3 @@ class AuditModel(Base):
         index=True,
         nullable=False,
     )
-

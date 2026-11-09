@@ -99,8 +99,7 @@ class DictationPowers:
             "status": "stub",
             "audio_path": audio_path,
             "message": (
-                "Whisper CLI not found. Install with `pip install openai-whisper` "
-                "to enable local audio transcription."
+                "Whisper CLI not found. Install with `pip install openai-whisper` to enable local audio transcription."
             ),
             "transcript": None,
         }
@@ -158,9 +157,7 @@ class DictationPowers:
     # ------------------------------------------------------------------
     # PWR-053  Tone Transform
     # ------------------------------------------------------------------
-    def tone_transform(
-        self, text: str, target_tone: str
-    ) -> Dict[str, Any]:
+    def tone_transform(self, text: str, target_tone: str) -> Dict[str, Any]:
         """PWR-053: Transform text to a different tone (formal/casual/technical)."""
         tone = target_tone.lower().strip()
         original_word_count = len(text.split())
@@ -244,9 +241,7 @@ class DictationPowers:
     # ------------------------------------------------------------------
     # PWR-055  Summarise Text
     # ------------------------------------------------------------------
-    def summarize_text(
-        self, text: str, max_words: int = 100
-    ) -> Dict[str, Any]:
+    def summarize_text(self, text: str, max_words: int = 100) -> Dict[str, Any]:
         """PWR-055: Produce an extractive summary of the given text."""
         sentences = re.split(r"(?<=[.!?])\s+", text.strip())
         summary_sentences: List[str] = []
@@ -271,9 +266,7 @@ class DictationPowers:
     # ------------------------------------------------------------------
     # PWR-056  Expand Text
     # ------------------------------------------------------------------
-    def expand_text(
-        self, text: str, target_words: int = 500
-    ) -> Dict[str, Any]:
+    def expand_text(self, text: str, target_words: int = 500) -> Dict[str, Any]:
         """PWR-056: Expand bullet points or short text into a longer draft."""
         lines = [ln.strip() for ln in text.strip().splitlines() if ln.strip()]
         paragraphs: List[str] = []
@@ -307,9 +300,7 @@ class DictationPowers:
     # ------------------------------------------------------------------
     # PWR-057  Translate Text
     # ------------------------------------------------------------------
-    def translate_text(
-        self, text: str, target_lang: str
-    ) -> Dict[str, Any]:
+    def translate_text(self, text: str, target_lang: str) -> Dict[str, Any]:
         """PWR-057: Translate text to a target language (placeholder)."""
         return {
             "power_id": "PWR-057",
@@ -326,9 +317,7 @@ class DictationPowers:
     # ------------------------------------------------------------------
     # PWR-058  Text to Speech
     # ------------------------------------------------------------------
-    def text_to_speech(
-        self, text: str, voice: str = "default"
-    ) -> Dict[str, Any]:
+    def text_to_speech(self, text: str, voice: str = "default") -> Dict[str, Any]:
         """PWR-058: Dispatch text-to-speech synthesis."""
         # Attempt Windows SAPI via PowerShell
         if os.name == "nt":
@@ -370,9 +359,7 @@ class DictationPowers:
     # ------------------------------------------------------------------
     # PWR-059  Format as Email
     # ------------------------------------------------------------------
-    def format_as_email(
-        self, text: str, recipient: str
-    ) -> Dict[str, Any]:
+    def format_as_email(self, text: str, recipient: str) -> Dict[str, Any]:
         """PWR-059: Format raw text as a professional email."""
         # Extract a subject from the first line or first 60 chars
         first_line = text.strip().split("\n")[0][:60]
@@ -400,9 +387,7 @@ class DictationPowers:
     # ------------------------------------------------------------------
     # PWR-060  Format as Report
     # ------------------------------------------------------------------
-    def format_as_report(
-        self, text: str, title: str
-    ) -> Dict[str, Any]:
+    def format_as_report(self, text: str, title: str) -> Dict[str, Any]:
         """PWR-060: Format raw text as a structured report."""
         paragraphs = [p.strip() for p in text.strip().split("\n\n") if p.strip()]
         if not paragraphs:
@@ -442,24 +427,28 @@ class DictationPowers:
 
         # Repeated words
         for match in re.finditer(r"\b(\w+)\s+\1\b", text, re.IGNORECASE):
-            issues.append({
-                "type": "repeated_word",
-                "word": match.group(1),
-                "position": str(match.start()),
-                "suggestion": f"Remove duplicate '{match.group(1)}'.",
-            })
+            issues.append(
+                {
+                    "type": "repeated_word",
+                    "word": match.group(1),
+                    "position": str(match.start()),
+                    "suggestion": f"Remove duplicate '{match.group(1)}'.",
+                }
+            )
 
         # Very long sentences (>40 words)
         sentences = re.split(r"(?<=[.!?])\s+", text)
         for idx, sent in enumerate(sentences):
             wc = len(sent.split())
             if wc > 40:
-                issues.append({
-                    "type": "long_sentence",
-                    "sentence_index": str(idx),
-                    "word_count": str(wc),
-                    "suggestion": "Consider splitting this sentence for readability.",
-                })
+                issues.append(
+                    {
+                        "type": "long_sentence",
+                        "sentence_index": str(idx),
+                        "word_count": str(wc),
+                        "suggestion": "Consider splitting this sentence for readability.",
+                    }
+                )
 
         # Passive voice indicators
         passive_patterns = [
@@ -467,12 +456,14 @@ class DictationPowers:
         ]
         for pat in passive_patterns:
             for match in re.finditer(pat, text, re.IGNORECASE):
-                issues.append({
-                    "type": "possible_passive_voice",
-                    "fragment": match.group(0),
-                    "position": str(match.start()),
-                    "suggestion": "Consider using active voice.",
-                })
+                issues.append(
+                    {
+                        "type": "possible_passive_voice",
+                        "fragment": match.group(0),
+                        "position": str(match.start()),
+                        "suggestion": "Consider using active voice.",
+                    }
+                )
 
         return {
             "power_id": "PWR-061",
@@ -516,11 +507,7 @@ class DictationPowers:
 
         # Flesch Reading Ease
         if word_count > 0 and sentence_count > 0:
-            flesch = (
-                206.835
-                - 1.015 * (word_count / sentence_count)
-                - 84.6 * (total_syllables / word_count)
-            )
+            flesch = 206.835 - 1.015 * (word_count / sentence_count) - 84.6 * (total_syllables / word_count)
             flesch = round(max(0.0, min(flesch, 100.0)), 1)
         else:
             flesch = 0.0

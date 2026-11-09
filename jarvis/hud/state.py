@@ -6,6 +6,7 @@ process. Deliberately tiny and side-effect-safe:
   half-written file;
 - anything unparseable or stale (>30 s) is treated as "hide".
 """
+
 import json
 import os
 import time

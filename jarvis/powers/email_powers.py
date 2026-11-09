@@ -244,7 +244,6 @@ class EmailPowers:
             "drafts": drafts,
         }
 
-
     def _parse_email_obj(self, msg: Any, mail_id: str) -> Dict[str, Any]:
         """Helper to extract headers and body text from email.message.EmailMessage."""
         from email.header import decode_header
@@ -378,17 +377,19 @@ class EmailPowers:
                 urgency = "NORMAL"
                 action = "Review message"
 
-            opportunities.append({
-                "source_id": em["id"],
-                "from": em["from"],
-                "subject": em["subject"],
-                "date": em["date"],
-                "category": cat,
-                "urgency": urgency,
-                "recommended_action": action,
-                "snippet": em["body"][:250] + ("..." if len(em["body"]) > 250 else ""),
-                "content_trust": "UNTRUSTED_EXTERNAL_DATA",
-            })
+            opportunities.append(
+                {
+                    "source_id": em["id"],
+                    "from": em["from"],
+                    "subject": em["subject"],
+                    "date": em["date"],
+                    "category": cat,
+                    "urgency": urgency,
+                    "recommended_action": action,
+                    "snippet": em["body"][:250] + ("..." if len(em["body"]) > 250 else ""),
+                    "content_trust": "UNTRUSTED_EXTERNAL_DATA",
+                }
+            )
 
         if live_sync:
             setup_note = "Live Gmail sync active through OAuth 2.0."
@@ -414,4 +415,3 @@ class EmailPowers:
 
 
 email_powers = EmailPowers()
-

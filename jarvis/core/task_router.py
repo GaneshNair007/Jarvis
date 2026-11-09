@@ -44,113 +44,127 @@ class TaskRouter:
 
     def _initialize_default_departments(self):
         # 1. Hackathon Department
-        self.register_department(Department(
-            id="hackathon",
-            name="Hackathon & Innovation",
-            manager_agent="hackathon_manager",
-            worker_agents=[
-                "hackathon_scout",
-                "guideline_reader",
-                "problem_selector",
-                "prize_evaluator",
-            ],
-            description="Scouts, analyzes, and coordinates winning strategies for technical hackathons.",
-            capabilities=["search_hackathons", "analyze_guidelines", "evaluate_prizes", "select_problem"],
-        ))
+        self.register_department(
+            Department(
+                id="hackathon",
+                name="Hackathon & Innovation",
+                manager_agent="hackathon_manager",
+                worker_agents=[
+                    "hackathon_scout",
+                    "guideline_reader",
+                    "problem_selector",
+                    "prize_evaluator",
+                ],
+                description="Scouts, analyzes, and coordinates winning strategies for technical hackathons.",
+                capabilities=["search_hackathons", "analyze_guidelines", "evaluate_prizes", "select_problem"],
+            )
+        )
 
         # 2. Engineering Department
-        self.register_department(Department(
-            id="engineering",
-            name="Software Engineering & Systems",
-            manager_agent="eng_manager",
-            worker_agents=[
-                "system_architect",
-                "backend_developer",
-                "frontend_developer",
-                "test_engineer",
-                "ast_code_mapper",
-            ],
-            description="Designs architecture, implements code, writes test suites, and refactors repos.",
-            capabilities=["architecture_design", "create_repo", "build_mvp", "run_tests", "ast_analysis"],
-        ))
+        self.register_department(
+            Department(
+                id="engineering",
+                name="Software Engineering & Systems",
+                manager_agent="eng_manager",
+                worker_agents=[
+                    "system_architect",
+                    "backend_developer",
+                    "frontend_developer",
+                    "test_engineer",
+                    "ast_code_mapper",
+                ],
+                description="Designs architecture, implements code, writes test suites, and refactors repos.",
+                capabilities=["architecture_design", "create_repo", "build_mvp", "run_tests", "ast_analysis"],
+            )
+        )
 
         # 3. Research & Intelligence Department
-        self.register_department(Department(
-            id="research",
-            name="Research & Intelligence",
-            manager_agent="research_manager",
-            worker_agents=[
-                "web_scout",
-                "citation_extractor",
-                "competitive_analyst",
-                "deep_reasoner",
-            ],
-            description="Deep web search, documentation synthesis, and technical feasibility studies.",
-            capabilities=["web_search", "browse_page", "extract_citations", "deep_research"],
-        ))
+        self.register_department(
+            Department(
+                id="research",
+                name="Research & Intelligence",
+                manager_agent="research_manager",
+                worker_agents=[
+                    "web_scout",
+                    "citation_extractor",
+                    "competitive_analyst",
+                    "deep_reasoner",
+                ],
+                description="Deep web search, documentation synthesis, and technical feasibility studies.",
+                capabilities=["web_search", "browse_page", "extract_citations", "deep_research"],
+            )
+        )
 
         # 4. Operations & Infrastructure Department
-        self.register_department(Department(
-            id="operations",
-            name="Systems & Infrastructure Operations",
-            manager_agent="ops_manager",
-            worker_agents=[
-                "sysadmin_worker",
-                "network_probe",
-                "sandbox_controller",
-                "daemon_supervisor",
-            ],
-            description="Monitors host health, runs local subshells, and manages background daemons.",
-            capabilities=["system_health", "execute_shell", "port_check", "process_monitor"],
-        ))
+        self.register_department(
+            Department(
+                id="operations",
+                name="Systems & Infrastructure Operations",
+                manager_agent="ops_manager",
+                worker_agents=[
+                    "sysadmin_worker",
+                    "network_probe",
+                    "sandbox_controller",
+                    "daemon_supervisor",
+                ],
+                description="Monitors host health, runs local subshells, and manages background daemons.",
+                capabilities=["system_health", "execute_shell", "port_check", "process_monitor"],
+            )
+        )
 
         # 5. Security & Compliance Department
-        self.register_department(Department(
-            id="security",
-            name="Cybersecurity & Secret Protection",
-            manager_agent="security_manager",
-            worker_agents=[
-                "dlp_auditor",
-                "permission_gate_agent",
-                "entropy_secret_scanner",
-                "merkle_integrity_auditor",
-            ],
-            description="Enforces 10-layer DLP shield, audits secret leakage, and checks privileges.",
-            capabilities=["dlp_scan", "permission_broker", "entropy_scan", "merkle_audit"],
-        ))
+        self.register_department(
+            Department(
+                id="security",
+                name="Cybersecurity & Secret Protection",
+                manager_agent="security_manager",
+                worker_agents=[
+                    "dlp_auditor",
+                    "permission_gate_agent",
+                    "entropy_secret_scanner",
+                    "merkle_integrity_auditor",
+                ],
+                description="Enforces 10-layer DLP shield, audits secret leakage, and checks privileges.",
+                capabilities=["dlp_scan", "permission_broker", "entropy_scan", "merkle_audit"],
+            )
+        )
 
         # 6. Career & Opportunities Department
-        self.register_department(Department(
-            id="career",
-            name="Career & Professional Growth",
-            manager_agent="career_manager",
-            worker_agents=[
-                "internship_scout",
-                "ats_resume_optimizer",
-                "interview_evaluator",
-                "gsoc_mentor_liaison",
-            ],
-            description="Tracks high-value internships, optimizes GitHub profiles, and prepares for GSoC.",
-            capabilities=["internship_match", "ats_analysis", "profile_optimization", "gsoc_prep"],
-        ))
+        self.register_department(
+            Department(
+                id="career",
+                name="Career & Professional Growth",
+                manager_agent="career_manager",
+                worker_agents=[
+                    "internship_scout",
+                    "ats_resume_optimizer",
+                    "interview_evaluator",
+                    "gsoc_mentor_liaison",
+                ],
+                description="Tracks high-value internships, optimizes GitHub profiles, and prepares for GSoC.",
+                capabilities=["internship_match", "ats_analysis", "profile_optimization", "gsoc_prep"],
+            )
+        )
 
         # 7. Dev Department Alias
-        self.register_department(Department(
-            id="dev",
-            name="Software Development",
-            manager_agent="eng_manager",
-            worker_agents=[
-                "fullstack_engineer",
-                "backend_architect",
-                "code_generator",
-                "backend_developer",
-                "frontend_developer",
-                "system_architect",
-                "ast_code_mapper",
-            ],
-            description="Core software development, microservices, and system architecture.",
-            capabilities=["python_coding", "architecture_design", "create_repo", "build_mvp"],
-        ))
+        self.register_department(
+            Department(
+                id="dev",
+                name="Software Development",
+                manager_agent="eng_manager",
+                worker_agents=[
+                    "fullstack_engineer",
+                    "backend_architect",
+                    "code_generator",
+                    "backend_developer",
+                    "frontend_developer",
+                    "system_architect",
+                    "ast_code_mapper",
+                ],
+                description="Core software development, microservices, and system architecture.",
+                capabilities=["python_coding", "architecture_design", "create_repo", "build_mvp"],
+            )
+        )
 
     def register_department(self, dept: Department) -> None:
         self.departments[dept.id.lower()] = dept

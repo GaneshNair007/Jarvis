@@ -16,7 +16,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class ReflectionRepository(BaseRepository[ReflectionModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, ReflectionModel)
 
@@ -45,12 +44,7 @@ class ReflectionRepository(BaseRepository[ReflectionModel]):
         return refl
 
     def get_reflections(self, limit: int = 10) -> List[ReflectionModel]:
-        return (
-            self.session.query(ReflectionModel)
-            .order_by(ReflectionModel.created_at.desc())
-            .limit(limit)
-            .all()
-        )
+        return self.session.query(ReflectionModel).order_by(ReflectionModel.created_at.desc()).limit(limit).all()
 
     def get_goal_reflections(self, goal_id: uuid.UUID) -> List[ReflectionModel]:
         return (
@@ -61,9 +55,4 @@ class ReflectionRepository(BaseRepository[ReflectionModel]):
         )
 
     def get_latest_reflection(self) -> Optional[ReflectionModel]:
-        return (
-            self.session.query(ReflectionModel)
-            .order_by(ReflectionModel.created_at.desc())
-            .first()
-        )
-
+        return self.session.query(ReflectionModel).order_by(ReflectionModel.created_at.desc()).first()

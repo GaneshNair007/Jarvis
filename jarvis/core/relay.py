@@ -45,8 +45,8 @@ class DeviceRelay:
         self._orchestrator = orchestrator
         self._clock = clock or time.time
         self._lock = threading.RLock()  # re-entrant: _record() is called while holding it
-        self._pairing: Dict[str, Dict[str, Any]] = {}   # code -> {expires_at, device_hint}
-        self._tokens: Dict[str, Dict[str, Any]] = {}    # token -> {device_id, device_name, created_at}
+        self._pairing: Dict[str, Dict[str, Any]] = {}  # code -> {expires_at, device_hint}
+        self._tokens: Dict[str, Dict[str, Any]] = {}  # token -> {device_id, device_name, created_at}
         self._failed_exchanges: List[float] = []
         self.command_count = 0
         self.evidence_log: List[Dict[str, Any]] = []

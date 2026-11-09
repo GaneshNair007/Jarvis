@@ -49,6 +49,7 @@ def cmd_status(args):
     _print_header("System Health & Fleet Status")
 
     import psutil
+
     cpu = psutil.cpu_percent(interval=None)
     ram = psutil.virtual_memory().percent
     print(f"[+] Host Telemetry   : CPU: {cpu}% | RAM: {ram}%")
@@ -81,6 +82,7 @@ def cmd_goal(args):
 
     # 2. Decompose Goal
     from jarvis.api.routes_tasks import _decompose_goal_to_dag
+
     graph = _decompose_goal_to_dag(goal_id_str, args.title, "", args.pipeline)
     print(f"[OK] Decomposed into {len(graph.nodes)} Task Nodes across parallel execution waves.")
 
@@ -129,15 +131,17 @@ def cmd_reflect(args):
     _print_header("Daily Retrospective & Constitution Audit")
     engine = ReflectionEngine()
     dummy_graph = TaskGraph(goal_id="daily_cli_audit")
-    dummy_graph.add_node(TaskNode(
-        task_id="t_audit",
-        name="System Audit Task",
-        description="Verify system integrity",
-        department="security",
-        parent_goal="daily_cli_audit",
-        status=TaskStatus.COMPLETED,
-        outputs={"status": "completed", "opportunity": "Publish open standard"},
-    ))
+    dummy_graph.add_node(
+        TaskNode(
+            task_id="t_audit",
+            name="System Audit Task",
+            description="Verify system integrity",
+            department="security",
+            parent_goal="daily_cli_audit",
+            status=TaskStatus.COMPLETED,
+            outputs={"status": "completed", "opportunity": "Publish open standard"},
+        )
+    )
 
     report = engine.generate_reflection(dummy_graph)
     print(f"Constitution Adherence Score : {report.constitution_score.overall_score} / 1.0")
@@ -213,7 +217,12 @@ def main():
     # goal
     p_goal = subparsers.add_parser("goal", help="Execute a goal via the Task Graph Engine")
     p_goal.add_argument("title", type=str, help="Goal title or intention")
-    p_goal.add_argument("--pipeline", type=str, default="hackathon", choices=["hackathon", "engineering", "research", "security", "auto"])
+    p_goal.add_argument(
+        "--pipeline",
+        type=str,
+        default="hackathon",
+        choices=["hackathon", "engineering", "research", "security", "auto"],
+    )
     p_goal.add_argument("--priority", type=str, default="HIGH", choices=["CRITICAL", "HIGH", "MEDIUM", "LOW"])
     p_goal.set_defaults(func=cmd_goal)
 
@@ -223,7 +232,9 @@ def main():
 
     # capabilities
     p_caps = subparsers.add_parser("capabilities", help="List system capabilities and maturity levels")
-    p_caps.add_argument("--level", type=str, default=None, choices=["ELITE", "ADVANCED", "BASIC", "EXPERIMENTAL", "MISSING"])
+    p_caps.add_argument(
+        "--level", type=str, default=None, choices=["ELITE", "ADVANCED", "BASIC", "EXPERIMENTAL", "MISSING"]
+    )
     p_caps.set_defaults(func=cmd_capabilities)
 
     # backlog

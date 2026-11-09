@@ -26,7 +26,9 @@ logger = get_logger("core.voice_stream")
 class AudioStreamBuffer:
     """Thread-safe ring buffer for streaming raw PCM audio chunks."""
 
-    def __init__(self, max_duration_sec: float = 30.0, sample_rate: int = 16000, channels: int = 1, sample_width: int = 2):
+    def __init__(
+        self, max_duration_sec: float = 30.0, sample_rate: int = 16000, channels: int = 1, sample_width: int = 2
+    ):
         self.sample_rate = sample_rate
         self.channels = channels
         self.sample_width = sample_width  # 16-bit = 2 bytes
@@ -102,7 +104,12 @@ class FasterWhisperSTT:
         """Attempts to load faster-whisper CTranslate2 model if available."""
         try:
             from faster_whisper import WhisperModel
-            self._model = WhisperModel(self.model_size, device="cuda" if self._has_cuda() else "cpu", compute_type="float16" if self._has_cuda() else "int8")
+
+            self._model = WhisperModel(
+                self.model_size,
+                device="cuda" if self._has_cuda() else "cpu",
+                compute_type="float16" if self._has_cuda() else "int8",
+            )
             self._is_ready = True
             logger.info(f"FasterWhisperSTT initialized ({self.model_size}).")
         except Exception as e:
@@ -112,6 +119,7 @@ class FasterWhisperSTT:
     def _has_cuda(self) -> bool:
         try:
             import torch
+
             return bool(torch.cuda.is_available())
         except Exception:
             return False
@@ -138,6 +146,7 @@ class FasterWhisperSTT:
         if self._is_ready and self._model:
             try:
                 import numpy as np
+
                 audio_np = np.frombuffer(pcm_bytes, dtype=np.int16).astype(np.float32) / 32768.0
                 segments, info = self._model.transcribe(audio_np, beam_size=1, language="en")
                 text = " ".join([seg.text for seg in segments]).strip()
@@ -180,6 +189,7 @@ class KokoroTTS:
         """Initializes Kokoro ONNX / PyTorch engine if available."""
         try:
             import kokoro
+
             self._model = kokoro.KPipeline(lang_code="a")
             self._is_ready = True
             logger.info("KokoroTTS pipeline initialized successfully.")
@@ -203,6 +213,7 @@ class KokoroTTS:
                 for _, _, audio in generator:
                     all_audio.append(audio)
                 import numpy as np
+
                 combined = np.concatenate(all_audio)
                 pcm_bytes = (combined * 32767).astype(np.int16).tobytes()
                 duration_ms = round((time.perf_counter() - start) * 1000, 2)

@@ -18,7 +18,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class TaskRepository(BaseRepository[TaskModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, TaskModel)
 
@@ -87,11 +86,7 @@ class TaskRepository(BaseRepository[TaskModel]):
         )
 
     def get_tasks_by_graph(self, task_graph_id: uuid.UUID) -> List[TaskModel]:
-        return (
-            self.session.query(TaskModel)
-            .filter(TaskModel.task_graph_id == task_graph_id)
-            .all()
-        )
+        return self.session.query(TaskModel).filter(TaskModel.task_graph_id == task_graph_id).all()
 
     def get_ready_tasks(self, task_graph_id: Optional[uuid.UUID] = None) -> List[TaskModel]:
         query = self.session.query(TaskModel).filter(TaskModel.status == "READY")
@@ -143,11 +138,7 @@ class TaskRepository(BaseRepository[TaskModel]):
         unblocked: List[TaskModel] = []
         for task in candidate_tasks:
             # Query dependencies of this task
-            deps = (
-                self.session.query(TaskDependencyModel)
-                .filter(TaskDependencyModel.task_id == task.id)
-                .all()
-            )
+            deps = self.session.query(TaskDependencyModel).filter(TaskDependencyModel.task_id == task.id).all()
 
             if not deps:
                 # No dependencies -> immediately unblocked
@@ -175,4 +166,3 @@ class TaskRepository(BaseRepository[TaskModel]):
                         self.session.add(task)
 
         return unblocked
-

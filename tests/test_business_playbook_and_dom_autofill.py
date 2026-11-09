@@ -104,7 +104,15 @@ class TestBusinessPlaybookEngine:
             {"lead_id": "L2", "name": "Jordan", "company": "Cloud Inc", "days_stalled": 1},
         ]
         ads = [
-            {"campaign_name": "Test Ad", "channel": "meta", "spend_usd": 100.0, "impressions": 1000, "clicks": 5, "conversions": 0, "revenue_usd": 0.0}
+            {
+                "campaign_name": "Test Ad",
+                "channel": "meta",
+                "spend_usd": 100.0,
+                "impressions": 1000,
+                "clicks": 5,
+                "conversions": 0,
+                "revenue_usd": 0.0,
+            }
         ]
 
         sweep = business_playbook_engine.run_weekly_ops_sweep(tasks, leads, ads)
@@ -162,6 +170,7 @@ class TestVenturesAndGrokbotAPI:
     def client(self):
         from fastapi.testclient import TestClient
         from jarvis.api.server import app
+
         return TestClient(app)
 
     def test_api_list_ideas(self, client):
@@ -179,21 +188,36 @@ class TestVenturesAndGrokbotAPI:
         assert "RTX 4050" in data["hardware_feasibility"]["target_device"]
 
     def test_api_grokbot_leads(self, client):
-        resp = client.post("/ventures/grokbot/leads", json={
-            "leads": [{"lead_id": "L1", "name": "John Doe", "company": "Acme Inc", "status": "new"}],
-            "company_name": "JARVIS Automation",
-        })
+        resp = client.post(
+            "/ventures/grokbot/leads",
+            json={
+                "leads": [{"lead_id": "L1", "name": "John Doe", "company": "Acme Inc", "status": "new"}],
+                "company_name": "JARVIS Automation",
+            },
+        )
         assert resp.status_code == 200
         data = resp.json()
         assert data["total_drafts"] == 1
         assert data["drafts"][0]["approval_required"] is True
 
     def test_api_grokbot_ad_pulse(self, client):
-        resp = client.post("/ventures/grokbot/ad-pulse", json={
-            "metrics": [{"campaign_name": "Test", "channel": "google", "spend_usd": 100, "impressions": 1000, "clicks": 50, "conversions": 5, "revenue_usd": 200}],
-        })
+        resp = client.post(
+            "/ventures/grokbot/ad-pulse",
+            json={
+                "metrics": [
+                    {
+                        "campaign_name": "Test",
+                        "channel": "google",
+                        "spend_usd": 100,
+                        "impressions": 1000,
+                        "clicks": 50,
+                        "conversions": 5,
+                        "revenue_usd": 200,
+                    }
+                ],
+            },
+        )
         assert resp.status_code == 200
         data = resp.json()
         assert data["total_spend_usd"] == 100.0
         assert data["total_conversions"] == 5
-

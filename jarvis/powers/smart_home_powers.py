@@ -173,7 +173,8 @@ class SmartHomePowers:
             "input_source": media["input_source"],
             "volume": media["volume"],
             "muted": media["muted"],
-            "feedback": f"{media['name']} is {media['state']}" + (f" on {media['input_source']}." if media["state"] == "on" else "."),
+            "feedback": f"{media['name']} is {media['state']}"
+            + (f" on {media['input_source']}." if media["state"] == "on" else "."),
         }
 
     def control_plug(

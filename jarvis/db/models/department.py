@@ -6,11 +6,15 @@ Defines organizational boundaries and management divisions.
 from __future__ import annotations
 
 import uuid
-from typing import List
+from typing import TYPE_CHECKING, List
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from jarvis.db.models.base import Base, GUID, UniversalJSON, TimestampMixin
+
+
+if TYPE_CHECKING:
+    from jarvis.db.models.agent import AgentModel
 
 
 class DepartmentModel(Base, TimestampMixin):
@@ -26,4 +30,3 @@ class DepartmentModel(Base, TimestampMixin):
     agents: Mapped[List["AgentModel"]] = relationship(
         "AgentModel", back_populates="department", cascade="all, delete-orphan"
     )
-

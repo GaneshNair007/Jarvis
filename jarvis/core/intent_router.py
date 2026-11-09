@@ -80,7 +80,11 @@ class FastIntentRouter:
         (r"^(?:list\s+(?:directory|files|folder)|dir|ls)\s*([^\n\r]*)$", "filesystem", "list_directory"),
         (r"^(?:git\s+status|git\s+log|git\s+diff|git\s+branch|git\s+commit).*", "git", "git_command"),
         (r"^(?:remember|save\s+to\s+memory|recall|query\s+memory)\s+([^\n\r]+)$", "memory", "memory_store"),
-        (r"^(?:think\s+step\s+by\s+step|sequential\s+thinking|decompose\s+problem).*", "sequential-thinking", "sequential_thinking"),
+        (
+            r"^(?:think\s+step\s+by\s+step|sequential\s+thinking|decompose\s+problem).*",
+            "sequential-thinking",
+            "sequential_thinking",
+        ),
     ]
 
     # 3. GUI Visual Grounding / UI-TARS action patterns
@@ -96,24 +100,31 @@ class FastIntentRouter:
 
     # 4. Cloud Reasoning keywords (complex software engineering, deep architecture, multi-turn synthesis)
     CLOUD_REASONING_KEYWORDS = {
-        "architect", "refactor", "synthesize", "design system", "deep research",
-        "benchmark analysis", "multi-file", "abstract base class", "trade-off analysis",
-        "implement algorithm", "analyze codebase", "comprehensive report", "security audit"
+        "architect",
+        "refactor",
+        "synthesize",
+        "design system",
+        "deep research",
+        "benchmark analysis",
+        "multi-file",
+        "abstract base class",
+        "trade-off analysis",
+        "implement algorithm",
+        "analyze codebase",
+        "comprehensive report",
+        "security audit",
     }
 
     def __init__(self):
         # Precompile regexes for <0.1ms evaluation
         self._compiled_macros = [
-            (re.compile(pattern, re.IGNORECASE), tag, req_confirm)
-            for pattern, tag, req_confirm in self.MACRO_PATTERNS
+            (re.compile(pattern, re.IGNORECASE), tag, req_confirm) for pattern, tag, req_confirm in self.MACRO_PATTERNS
         ]
         self._compiled_mcp = [
-            (re.compile(pattern, re.IGNORECASE), srv, tool)
-            for pattern, srv, tool in self.MCP_TOOL_PATTERNS
+            (re.compile(pattern, re.IGNORECASE), srv, tool) for pattern, srv, tool in self.MCP_TOOL_PATTERNS
         ]
         self._compiled_gui = [
-            (re.compile(pattern, re.IGNORECASE), action)
-            for pattern, action in self.GUI_ACTION_PATTERNS
+            (re.compile(pattern, re.IGNORECASE), action) for pattern, action in self.GUI_ACTION_PATTERNS
         ]
 
     def triage(self, query: str, context: Optional[str] = None) -> IntentTriageResult:

@@ -60,7 +60,11 @@ class AutomationPowers:
         return {"power_id": "PWR-271", "workflow_id": wf_id, "name": name, "steps_count": len(steps), "status": "built"}
 
     def pwr_272_cron_scheduler(
-        self, action: str = "list", name: Optional[str] = None, cron_expr: Optional[str] = None, payload: Optional[Dict[str, Any]] = None
+        self,
+        action: str = "list",
+        name: Optional[str] = None,
+        cron_expr: Optional[str] = None,
+        payload: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """PWR-272: Cron sidecar schedule management."""
         if action == "register" and name and cron_expr:
@@ -82,6 +86,7 @@ class AutomationPowers:
             "subscribed_handler": handler_power_id,
             "status": "listening",
         }
+
     def pwr_274_webhook_receiver(self, endpoint_slug: str, target_workflow: str) -> Dict[str, Any]:
         """PWR-274: Generates authenticated webhook ingestion URL."""
         wh_token = f"wh_{uuid.uuid4().hex[:12]}"
@@ -92,7 +97,6 @@ class AutomationPowers:
             "secret_token": wh_token,
             "target_workflow": target_workflow,
         }
-        return {"power_id": "PWR-254", "schedule_id": clean_name, "cron": cron, "status": "registered"}
 
     def pwr_275_multistep_execution(self, workflow_id: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """PWR-275: Executes a compiled multi-step workflow sequentially."""
@@ -196,12 +200,15 @@ class AutomationPowers:
             "power_id": "PWR-284",
             "kill_switch_active": self.kill_switch_active,
             "background_tasks_halted": engage,
-            "message": "EMERGENCY FREEZE ENGAGED: All autonomous operations halted." if engage else "Kill switch disengaged.",
+            "message": "EMERGENCY FREEZE ENGAGED: All autonomous operations halted."
+            if engage
+            else "Kill switch disengaged.",
         }
 
     def pwr_285_audit_trail(self, limit: int = 20) -> Dict[str, Any]:
         """PWR-285: Verifies cryptographic audit chain integrity for automated jobs."""
         from jarvis.core.audit import audit_ledger
+
         return {
             "power_id": "PWR-285",
             "audit_chain_valid": audit_ledger.verify_chain_integrity(),

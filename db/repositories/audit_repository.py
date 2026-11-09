@@ -37,9 +37,5 @@ class AuditRepository(BaseRepository[AuditEventModel]):
         return self.create(event)
 
     def list_recent(self, limit: int = 50) -> List[AuditEventModel]:
-        stmt = (
-            sa.select(AuditEventModel)
-            .order_by(AuditEventModel.created_at.desc())
-            .limit(limit)
-        )
+        stmt = sa.select(AuditEventModel).order_by(AuditEventModel.created_at.desc()).limit(limit)
         return list(self.session.scalars(stmt).all())

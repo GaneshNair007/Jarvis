@@ -25,7 +25,7 @@ from jarvis.security.ten_layer_shield import GitShield
 
 def run_pre_commit_audit() -> int:
     shield = GitShield()
-    
+
     # 1. Get list of staged files
     try:
         proc = subprocess.run(
@@ -61,7 +61,7 @@ def run_pre_commit_audit() -> int:
 
     # 3. Audit staged diff for newly added secrets
     clean, violations = shield.audit_git_diff(diff_text)
-    
+
     # 4. Audit staged file contents directly (excluding examples/tests marked as safe)
     for filename in staged_files:
         filepath = repo_root / filename
@@ -76,7 +76,9 @@ def run_pre_commit_audit() -> int:
 
     if violations:
         print("\n" + "=" * 80, file=sys.stderr)
-        print("🛑 [JARVIS GitShield] COMMIT REJECTED: Sensitive credentials detected in staged changes!", file=sys.stderr)
+        print(
+            "🛑 [JARVIS GitShield] COMMIT REJECTED: Sensitive credentials detected in staged changes!", file=sys.stderr
+        )
         print("=" * 80, file=sys.stderr)
         for v in violations:
             print(f"  • {v}", file=sys.stderr)

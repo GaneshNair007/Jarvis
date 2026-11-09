@@ -21,11 +21,7 @@ class GoalRepository(BaseRepository[GoalModel]):
         """Fetch goal eagerly with associated tasks."""
         if isinstance(goal_id, str):
             goal_id = uuid.UUID(goal_id)
-        stmt = (
-            sa.select(GoalModel)
-            .where(GoalModel.id == goal_id)
-            .options(joinedload(GoalModel.tasks))
-        )
+        stmt = sa.select(GoalModel).where(GoalModel.id == goal_id).options(joinedload(GoalModel.tasks))
         return self.session.scalars(stmt).unique().first()
 
     def get_by_status(self, status: str) -> List[GoalModel]:

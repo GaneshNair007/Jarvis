@@ -65,7 +65,9 @@ class TaskVerifier:
         high_risk = [f for f in findings if f["confidence"] == "HIGH"]
         if high_risk:
             score = 0.0
-            comments.append(f"CRITICAL SECURITY REJECTION: Output contains unredacted credentials ({len(high_risk)} leaks detected)")
+            comments.append(
+                f"CRITICAL SECURITY REJECTION: Output contains unredacted credentials ({len(high_risk)} leaks detected)"
+            )
 
         # 3. Tool Requirement Validation Check
         if task.tool_requirements:
@@ -94,10 +96,11 @@ class TaskVerifier:
             checks_performed=checks,
         )
 
-        logger.info(f"TaskVerifier: Task '{task.task_id}' -> Passed={res.passed} Score={res.score} Reviewer={reviewer_agent}")
+        logger.info(
+            f"TaskVerifier: Task '{task.task_id}' -> Passed={res.passed} Score={res.score} Reviewer={reviewer_agent}"
+        )
         return res
 
 
 # Global Singleton Instance
 task_verifier = TaskVerifier()
-

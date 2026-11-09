@@ -87,7 +87,9 @@ class TaskReflectionEngine:
                 retried_tasks += 1
 
         if retried_tasks > 0 and failed_tasks == 0:
-            improvements.append(f"{retried_tasks} task(s) required retries before succeeding; refine initial prompt templates.")
+            improvements.append(
+                f"{retried_tasks} task(s) required retries before succeeding; refine initial prompt templates."
+            )
 
         if completed_tasks == total_tasks and total_tasks > 0:
             successes.append(f"Goal '{graph.goal_id}' achieved 100% completion across all {total_tasks} DAG nodes.")
@@ -112,7 +114,9 @@ class TaskReflectionEngine:
 
         self.reflections[graph.goal_id] = record
         self._save_storage()
-        logger.info(f"TaskReflectionEngine: Generated reflection for goal '{graph.goal_id}' (Completion={metrics['completion_rate']}%)")
+        logger.info(
+            f"TaskReflectionEngine: Generated reflection for goal '{graph.goal_id}' (Completion={metrics['completion_rate']}%)"
+        )
         return record
 
     def get_reflection(self, goal_id: str) -> Optional[ReflectionRecord]:
@@ -124,4 +128,3 @@ class TaskReflectionEngine:
 
 # Global Singleton Instance
 task_reflection = TaskReflectionEngine()
-

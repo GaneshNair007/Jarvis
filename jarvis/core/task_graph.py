@@ -214,8 +214,7 @@ class TaskGraph(BaseModel):
             elif node.status == TaskStatus.BLOCKED:
                 # Re-check if blockers resolved
                 deps_satisfied = all(
-                    self.nodes.get(d) and self.nodes[d].status == TaskStatus.COMPLETED
-                    for d in node.dependencies
+                    self.nodes.get(d) and self.nodes[d].status == TaskStatus.COMPLETED for d in node.dependencies
                 )
                 if deps_satisfied:
                     node.mark_ready()
@@ -248,4 +247,3 @@ class TaskGraph(BaseModel):
             "pending": sum(1 for n in self.nodes.values() if n.status == TaskStatus.PENDING),
             "blocked": sum(1 for n in self.nodes.values() if n.status == TaskStatus.BLOCKED),
         }
-

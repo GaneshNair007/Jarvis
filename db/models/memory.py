@@ -5,11 +5,15 @@ SQLAlchemy 2.x Memory Model
 from __future__ import annotations
 
 import uuid
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Dict, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.models.base import Base, GUID, UniversalJSON, TimestampMixin
+
+
+if TYPE_CHECKING:
+    from db.models.goal import GoalModel
 
 
 class MemoryModel(Base, TimestampMixin):

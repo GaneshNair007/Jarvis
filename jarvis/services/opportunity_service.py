@@ -17,7 +17,6 @@ logger = get_logger("services.opportunity")
 
 
 class OpportunityService:
-
     def __init__(self, uow_factory=UnitOfWork):
         self.uow_factory = uow_factory
 
@@ -42,13 +41,15 @@ class OpportunityService:
             )
             uow.commit()
 
-            event_bus.publish(OpportunityDiscoveredEvent(
-                opportunity_id=str(opp.id),
-                opportunity_type=opp.opportunity_type,
-                title=opp.title,
-                score=opp.score,
-                source=opp.source,
-            ))
+            event_bus.publish(
+                OpportunityDiscoveredEvent(
+                    opportunity_id=str(opp.id),
+                    opportunity_type=opp.opportunity_type,
+                    title=opp.title,
+                    score=opp.score,
+                    source=opp.source,
+                )
+            )
             logger.info(f"Opportunity discovered: '{title}' [{opportunity_type}] (Score: {score})")
             return opp
 
@@ -59,4 +60,3 @@ class OpportunityService:
     def get_top_internships(self, limit: int = 10) -> List[OpportunityModel]:
         with self.uow_factory() as uow:
             return uow.opportunities.filter_by_type("internship", limit=limit)
-

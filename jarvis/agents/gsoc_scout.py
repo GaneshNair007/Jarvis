@@ -208,7 +208,7 @@ class GSoCContributorScout:
 
 Hello @maintainers,
 
-I would love to take on this issue! I am preparing for **Google Summer of Code (GSoC 2026)** and actively contributing to open-source systems in {', '.join(issue.tech_tags[:3])}.
+I would love to take on this issue! I am preparing for **Google Summer of Code (GSoC 2026)** and actively contributing to open-source systems in {", ".join(issue.tech_tags[:3])}.
 
 #### 1. Analysis of Root Cause
 Based on my investigation of `{issue.repo_name}`, the current implementation lacks comprehensive handling of this edge case, resulting in potential degradation under specific runtime topologies.

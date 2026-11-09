@@ -16,7 +16,9 @@ router = APIRouter(prefix="/gsoc", tags=["GSoC Contributor Scout & Open Source"]
 
 @router.get("/organizations")
 def get_curated_organizations(
-    language: Optional[str] = Query(None, description="Filter organizations by primary programming language (e.g. Python, Go)"),
+    language: Optional[str] = Query(
+        None, description="Filter organizations by primary programming language (e.g. Python, Go)"
+    ),
 ):
     """Lists premier Google Summer of Code (GSoC) organizations aligned with Ganesh's stack."""
     orgs = gsoc_scout.list_curated_organizations(language_filter=language)

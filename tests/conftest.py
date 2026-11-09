@@ -36,6 +36,7 @@ def isolate_test_audit_ledger(tmp_path, monkeypatch):
 # PostgreSQL & Database Test Fixtures
 # ---------------------------------------------------------
 
+
 @pytest.fixture(scope="session")
 def db_engine():
     """
@@ -63,6 +64,7 @@ def db_engine():
 def db_session_factory(db_engine):
     """Sessionmaker bound to the test database engine."""
     from sqlalchemy.orm import sessionmaker
+
     return sessionmaker(bind=db_engine, expire_on_commit=False)
 
 
@@ -81,4 +83,5 @@ def db_session(db_session_factory):
 def uow(db_session_factory):
     """Provides a fresh UnitOfWork instance for testing repositories."""
     from db.repositories.unit_of_work import UnitOfWork
+
     return UnitOfWork(db_session_factory)

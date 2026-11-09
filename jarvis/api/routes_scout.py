@@ -49,6 +49,7 @@ async def trigger_autonomous_scout(body: TriggerScoutRequest):
 async def get_latest_opportunities():
     """Returns curated opportunities and active hackathon targets."""
     from jarvis.core.obscura_browser import obscura_browser
+
     opps = await obscura_browser.search_opportunities("AI hackathon India 2026 GSoC", limit=5)
     analyzed = hackathon_scout_swarm.analyst.evaluate_opportunities(opps)
     return {

@@ -83,7 +83,7 @@ def _feed_speech(daemon: VoiceDaemon, pcm: bytes, block_ms: int = 100):
     block_bytes = VoiceDaemon.SAMPLE_RATE * 2 * block_ms // 1000
     events = []
     for i in range(0, len(pcm), block_bytes):
-        events.extend(daemon.feed(pcm[i:i + block_bytes]))
+        events.extend(daemon.feed(pcm[i : i + block_bytes]))
     silence_block = bytes(block_bytes)
     idle_rounds = int((VoiceDaemon.SILENCE_END_SEC * 1000 / block_ms) + 3)
     for _ in range(idle_rounds):
@@ -143,9 +143,7 @@ def test_end_to_end_hey_jarvis_wake_and_command():
     events = _feed_speech(daemon, spoken_pcm)
 
     # Real whisper must transcribe the wake phrase
-    assert daemon.wake_count == 1, (
-        f"Wake phrase not detected. last_transcript={daemon.last_transcript!r}"
-    )
+    assert daemon.wake_count == 1, f"Wake phrase not detected. last_transcript={daemon.last_transcript!r}"
 
     # Command extracted from same utterance and executed through orchestrator
     assert len(orch.calls) == 1, f"Expected 1 orchestrator call, got {orch.calls}"
@@ -260,8 +258,16 @@ def test_health_status_reports_real_telemetry():
 
     health = daemon.health()
     for key in (
-        "running", "state", "wake_phrases", "wake_count", "command_count",
-        "error_count", "last_transcript", "evidence_count", "stt_backend", "tts_backend",
+        "running",
+        "state",
+        "wake_phrases",
+        "wake_count",
+        "command_count",
+        "error_count",
+        "last_transcript",
+        "evidence_count",
+        "stt_backend",
+        "tts_backend",
     ):
         assert key in health, f"Missing health field: {key}"
     assert health["stt_backend"] == "faster-whisper"
@@ -334,14 +340,10 @@ def test_select_input_device_prefers_live_shared_mode_device():
     from jarvis.voice.daemon import select_input_device
 
     probe = [
-        {"index": 3, "name": "WDM-KS Glitchy", "hostapi": "Windows WDM-KS",
-         "status": "glitch", "mean": 18000.0},
-        {"index": 7, "name": "WDM-KS Dropouts", "hostapi": "Windows WDM-KS",
-         "status": "glitch", "mean": 240.0},
-        {"index": 1, "name": "Microphone Array", "hostapi": "MME",
-         "status": "silent", "mean": 0.2},
-        {"index": 5, "name": "Good Mic", "hostapi": "Windows WASAPI",
-         "status": "live", "mean": 320.0},
+        {"index": 3, "name": "WDM-KS Glitchy", "hostapi": "Windows WDM-KS", "status": "glitch", "mean": 18000.0},
+        {"index": 7, "name": "WDM-KS Dropouts", "hostapi": "Windows WDM-KS", "status": "glitch", "mean": 240.0},
+        {"index": 1, "name": "Microphone Array", "hostapi": "MME", "status": "silent", "mean": 0.2},
+        {"index": 5, "name": "Good Mic", "hostapi": "Windows WASAPI", "status": "live", "mean": 320.0},
     ]
     chosen = select_input_device(explicit=None, probe=probe)
     assert chosen["device"] == 5

@@ -100,7 +100,9 @@ class GoalService:
                         )
 
             uow.commit()
-            logger.info(f"Persisted DAG '{graph.goal_id}' with {len(graph.nodes)} tasks into TaskGraph ({db_graph.id}).")
+            logger.info(
+                f"Persisted DAG '{graph.goal_id}' with {len(graph.nodes)} tasks into TaskGraph ({db_graph.id})."
+            )
             return db_graph.id
 
     def complete_goal(self, goal_id: uuid.UUID) -> Optional[GoalModel]:
@@ -108,11 +110,12 @@ class GoalService:
             goal = uow.goals.update_status(goal_id, "COMPLETED")
             if goal:
                 tasks = uow.tasks.session.query(uow.tasks.model_class).filter_by(goal_id=goal_id).all()
-                event_bus.publish(GoalCompletedEvent(
-                    goal_id=str(goal.id),
-                    title=goal.title,
-                    total_tasks=len(tasks),
-                ))
+                event_bus.publish(
+                    GoalCompletedEvent(
+                        goal_id=str(goal.id),
+                        title=goal.title,
+                        total_tasks=len(tasks),
+                    )
+                )
             uow.commit()
             return goal
-

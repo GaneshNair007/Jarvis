@@ -7,11 +7,15 @@ from __future__ import annotations
 
 import datetime
 import uuid
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Dict, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from jarvis.db.models.base import Base, GUID, UniversalJSON
+
+
+if TYPE_CHECKING:
+    from jarvis.db.models.task import TaskModel
 
 
 class ArtifactModel(Base):
@@ -33,4 +37,3 @@ class ArtifactModel(Base):
 
     # Relationships
     task: Mapped[Optional["TaskModel"]] = relationship("TaskModel", back_populates="artifacts")
-

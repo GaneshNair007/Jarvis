@@ -30,11 +30,13 @@ from cryptography.exceptions import InvalidTag
 # Layer 6: Memory-Safe Ephemeral Secret Container (Zeroizing / Redacted Repr)
 # ==============================================================================
 
+
 class SecretString:
     """
     Wraps sensitive credentials in memory. Overrides __repr__, __str__, and serialization
     so secrets are NEVER printed, logged, or serialized into JSON payloads.
     """
+
     def __init__(self, secret: str):
         self._raw = str(secret)
 
@@ -66,11 +68,13 @@ class SecretString:
 # Layer 1: High-Entropy Secret & Credential Scanner (TruffleHog / Detect-Secrets)
 # ==============================================================================
 
+
 class EntropySecretDetector:
     """
     Layer 1: Scans text for high-entropy secrets, API tokens, passwords, and private keys.
     Combines Shannon entropy calculation with 80+ credential signatures.
     """
+
     KNOWN_SECRET_PATTERNS = [
         # AI / Cloud Providers
         ("OpenRouter API Key", re.compile(r"sk-or-v1-[a-zA-Z0-9_-]{20,80}")),
@@ -81,10 +85,18 @@ class EntropySecretDetector:
         ("AWS Access Key", re.compile(r"(?:AKIA|ABIA|ACCA|ASIA)[0-9A-Z]{16}")),
         ("Generic Bearer Token", re.compile(r"(?i)bearer\s+(?!\[REDACTED)[a-zA-Z0-9_\-\.]{24,}")),
         # Passwords & Credentials in key-value pairs (requires explicit quotes to avoid false positives on code identifiers)
-        ("Password Assignment", re.compile(r"(?i)(?<!['\"])\b(?:password|passwd|pwd|secret|api_key|apikey|token|auth_token)\b(?!['\"])\s*(?:[:=]|\s)\s*['\"](?!\[REDACTED)([^'\"\n\r]{6,})['\"]")),
+        (
+            "Password Assignment",
+            re.compile(
+                r"(?i)(?<!['\"])\b(?:password|passwd|pwd|secret|api_key|apikey|token|auth_token)\b(?!['\"])\s*(?:[:=]|\s)\s*['\"](?!\[REDACTED)([^'\"\n\r]{6,})['\"]"
+            ),
+        ),
         # Private Keys & Certificates
         ("RSA Private Key", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----")),
-        ("Database Connection URI", re.compile(r"(?i)(?:postgres|postgresql|mysql|mongodb|redis):\/\/[a-zA-Z0-9_-]+:[^@\s]+@[a-zA-Z0-9\._-]+")),
+        (
+            "Database Connection URI",
+            re.compile(r"(?i)(?:postgres|postgresql|mysql|mongodb|redis):\/\/[a-zA-Z0-9_-]+:[^@\s]+@[a-zA-Z0-9\._-]+"),
+        ),
     ]
 
     @staticmethod
@@ -115,14 +127,16 @@ class EntropySecretDetector:
                 matched_val = match.group(1) if match.groups() else match.group(0)
                 if "REDACTED" in full_match or "REDACTED" in matched_val:
                     continue
-                findings.append({
-                    "type": secret_type,
-                    "match": matched_val,
-                    "start": match.start(),
-                    "end": match.end(),
-                    "entropy": round(self.calculate_shannon_entropy(matched_val), 2),
-                    "confidence": "HIGH",
-                })
+                findings.append(
+                    {
+                        "type": secret_type,
+                        "match": matched_val,
+                        "start": match.start(),
+                        "end": match.end(),
+                        "entropy": round(self.calculate_shannon_entropy(matched_val), 2),
+                        "confidence": "HIGH",
+                    }
+                )
 
         # 2. High-Entropy Isolated Word Scanning (> 4.3 entropy for strings >= 20 chars)
         words = re.findall(r"[a-zA-Z0-9_\-]{20,}", text)
@@ -132,14 +146,16 @@ class EntropySecretDetector:
             if not any(f["match"] == w for f in findings):
                 ent = self.calculate_shannon_entropy(w)
                 if ent >= 4.3:
-                    findings.append({
-                        "type": "High-Entropy Secret Candidate",
-                        "match": w,
-                        "start": text.find(w),
-                        "end": text.find(w) + len(w),
-                        "entropy": round(ent, 2),
-                        "confidence": "MEDIUM",
-                    })
+                    findings.append(
+                        {
+                            "type": "High-Entropy Secret Candidate",
+                            "match": w,
+                            "start": text.find(w),
+                            "end": text.find(w) + len(w),
+                            "entropy": round(ent, 2),
+                            "confidence": "MEDIUM",
+                        }
+                    )
 
         return findings
 
@@ -148,11 +164,13 @@ class EntropySecretDetector:
 # Layer 2: Dynamic Data Loss Prevention (DLP) Redactor (Presidio Pattern)
 # ==============================================================================
 
+
 class PresidioDLPRedactor:
     """
     Layer 2: Real-time DLP redaction engine. Replaces passwords and API keys with
     deterministic surrogate tokens ([REDACTED_API_KEY_01]) before prompts leave the host.
     """
+
     def __init__(self, detector: Optional[EntropySecretDetector] = None):
         self.detector = detector or EntropySecretDetector()
 
@@ -189,11 +207,13 @@ class PresidioDLPRedactor:
 # Layer 3: Outbound Cloud Egress Firewall
 # ==============================================================================
 
+
 class CloudEgressFirewall:
     """
     Layer 3: Intercepts all payloads destined for cloud model providers (Gemini, OpenRouter).
     Strictly forbids unmasked passwords, secrets, or raw keys from leaving local loopback.
     """
+
     def __init__(self, detector: Optional[EntropySecretDetector] = None):
         self.detector = detector or EntropySecretDetector()
 
@@ -216,11 +236,13 @@ class CloudEgressFirewall:
 # Layer 4: Zero-Leak Logging & Stream Sanitizer
 # ==============================================================================
 
+
 class ZeroLeakLogFilter(logging.Filter):
     """
     Layer 4: Intercepts all log records emitted across the system and scrubs secrets
     before they touch disk files, stdout, or logging collectors.
     """
+
     def __init__(self):
         super().__init__()
         self.redactor = PresidioDLPRedactor()
@@ -235,9 +257,7 @@ class ZeroLeakLogFilter(logging.Filter):
                     clean_args[k] = self.redactor.redact(str(v))[0] if isinstance(v, str) else v
                 record.args = clean_args
             elif isinstance(record.args, tuple):
-                record.args = tuple(
-                    self.redactor.redact(str(a))[0] if isinstance(a, str) else a for a in record.args
-                )
+                record.args = tuple(self.redactor.redact(str(a))[0] if isinstance(a, str) else a for a in record.args)
         return True
 
 
@@ -245,12 +265,14 @@ class ZeroLeakLogFilter(logging.Filter):
 # Layer 5: Encrypted Local Secret Vault (AES-256-GCM / PBKDF2)
 # ==============================================================================
 
+
 class EncryptedVault:
     """
     Layer 5: Local authenticated encryption for secrets at rest using AES-256-GCM
     derived from a machine-local master key via PBKDF2-HMAC-SHA256 (100,000 rounds).
     Provides genuine cryptographic confidentiality and authenticated integrity.
     """
+
     def __init__(self, master_password: Optional[str] = None, key_file_path: Optional[Union[str, Path]] = None):
         if master_password:
             self.master_password = master_password
@@ -330,7 +352,9 @@ class EncryptedVault:
                 kdf_key = hashlib.pbkdf2_hmac("sha256", self.master_password.encode(), static_salt, 100_000, dklen=32)
                 actual_tag = hmac.new(kdf_key, iv + cipher_bytes, hashlib.sha256).digest()[:16]
                 if not hmac.compare_digest(expected_tag, actual_tag):
-                    raise SecurityViolationError("Vault decryption failed: Authentication tag mismatch (tampering detected)")
+                    raise SecurityViolationError(
+                        "Vault decryption failed: Authentication tag mismatch (tampering detected)"
+                    )
                 key_stream = hashlib.sha256(kdf_key + iv).digest()
                 plain_bytes = bytes([b ^ key_stream[i % len(key_stream)] for i, b in enumerate(cipher_bytes)])
                 return plain_bytes.decode("utf-8")
@@ -341,19 +365,32 @@ class EncryptedVault:
         except InvalidTag:
             raise SecurityViolationError("Vault decryption failed: Authentication tag mismatch (tampering detected)")
         except Exception as exc:
-            raise SecurityViolationError(f"Vault decryption failed: Authentication tag mismatch or corrupted data ({exc})") from exc
+            raise SecurityViolationError(
+                f"Vault decryption failed: Authentication tag mismatch or corrupted data ({exc})"
+            ) from exc
 
 
 # ==============================================================================
 # Layer 7: Subprocess Environment Sanitizer
 # ==============================================================================
 
+
 class SubprocessSanitizer:
     """
     Layer 7: Purges sensitive environment variables before spawning shell commands
     or external tools, preventing untrusted subprocesses from reading API keys.
     """
-    SENSITIVE_ENV_PREFIXES = ("GEMINI_", "OPENROUTER_", "OPENAI_", "ANTHROPIC_", "GITHUB_TOKEN", "AWS_", "SECRET", "PASSWORD")
+
+    SENSITIVE_ENV_PREFIXES = (
+        "GEMINI_",
+        "OPENROUTER_",
+        "OPENAI_",
+        "ANTHROPIC_",
+        "GITHUB_TOKEN",
+        "AWS_",
+        "SECRET",
+        "PASSWORD",
+    )
 
     @classmethod
     def get_sanitized_env(cls, custom_allowlist: Optional[Set[str]] = None) -> Dict[str, str]:
@@ -374,11 +411,13 @@ class SubprocessSanitizer:
 # Layer 8: Pre-Commit & Git Staging Shield (GitLeaks / TruffleHog Pattern)
 # ==============================================================================
 
+
 class GitShield:
     """
     Layer 8: Pre-commit scanner that checks staged git files for secrets.
     Blocks any commit that attempts to include unencrypted credentials.
     """
+
     def __init__(self, detector: Optional[EntropySecretDetector] = None):
         self.detector = detector or EntropySecretDetector()
 
@@ -394,7 +433,9 @@ class GitShield:
         """Scans git diff output for added lines containing secrets."""
         if not diff_text:
             return True, []
-        added_lines = [line[1:] for line in diff_text.splitlines() if line.startswith("+") and not line.startswith("+++")]
+        added_lines = [
+            line[1:] for line in diff_text.splitlines() if line.startswith("+") and not line.startswith("+++")
+        ]
         violations = []
         for line in added_lines:
             findings = self.detector.scan_text(line)
@@ -408,15 +449,19 @@ class GitShield:
 # Layer 9: Cryptographic Merkle Audit Trail
 # ==============================================================================
 
+
 class MerkleAuditLogger:
     """
     Layer 9: Append-only cryptographic audit chain for all security events.
     Every redaction, block, and access request is linked by SHA-256 hash.
     Persisted to an append-only JSON Lines ledger with tamper detection.
     """
+
     def __init__(self, storage_path: Optional[Union[str, Path]] = None, in_memory: bool = False):
         self.in_memory = in_memory
-        self.storage_path = Path(storage_path) if storage_path else (None if in_memory else Path("data/security_audit_merkle.jsonl"))
+        self.storage_path = (
+            Path(storage_path) if storage_path else (None if in_memory else Path("data/security_audit_merkle.jsonl"))
+        )
         self.chain: List[Dict[str, Any]] = []
         self._load_or_genesis()
 
@@ -504,6 +549,7 @@ class MerkleAuditLogger:
 # Layer 10: Inline Permission Broker (OpenMausBot Pattern)
 # ==============================================================================
 
+
 class InlinePermissionBroker:
     """
     Layer 10: Human-in-the-Loop permission broker. Intercepts privileged operations
@@ -511,15 +557,14 @@ class InlinePermissionBroker:
     and requires cryptographic human approval tokens before execution.
     Guarantees single-use token consumption, TTL expiration, and action/target binding.
     """
+
     def __init__(self, approval_timeout_sec: float = 60.0):
         self.approval_timeout_sec = approval_timeout_sec
         self.pending_requests: Dict[str, Dict[str, Any]] = {}
         self.approved_tokens: Set[str] = set()
         self.token_registry: Dict[str, Dict[str, Any]] = {}
 
-    def request_permission(
-        self, action: str, target: str, reason: str, agent_id: str = "agent"
-    ) -> Dict[str, Any]:
+    def request_permission(self, action: str, target: str, reason: str, agent_id: str = "agent") -> Dict[str, Any]:
         """Generates inline approval card for human user confirmation."""
         request_id = f"perm_req_{secrets.token_hex(8)}"
         target_hash = hashlib.sha256(target.encode("utf-8")).hexdigest()
@@ -612,8 +657,10 @@ class InlinePermissionBroker:
 # Master 10-Layer Security Suite Coordinator
 # ==============================================================================
 
+
 class SecurityViolationError(Exception):
     """Raised when a security policy or data leak check fails."""
+
     pass
 
 
@@ -622,6 +669,7 @@ class TenLayerSecuritySuite:
     Unified 10-Layer Security Coordinator for Project JARVIS.
     Protects user passwords, credentials, and tokens across every operational lifecycle.
     """
+
     def __init__(self):
         self.layer1_detector = EntropySecretDetector()
         self.layer2_redactor = PresidioDLPRedactor(self.layer1_detector)
@@ -637,7 +685,9 @@ class TenLayerSecuritySuite:
         """Runs prompt through Layer 1, 2, and 3 before sending to any cloud LLM."""
         clean_text, redaction_map = self.layer2_redactor.redact(prompt)
         if redaction_map:
-            self.layer9_audit.log_event("PROMPT_REDACTION", f"Redacted {len(redaction_map)} sensitive secrets from prompt")
+            self.layer9_audit.log_event(
+                "PROMPT_REDACTION", f"Redacted {len(redaction_map)} sensitive secrets from prompt"
+            )
         # Ensure egress firewall permits the outbound text
         self.layer3_firewall.verify_egress(clean_text)
         return clean_text

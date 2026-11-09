@@ -144,10 +144,15 @@ def api_create_order(payload: OrderCreate):
         qty = int(it.get("qty", 1))
         line_total = r["price"] * qty
         total += line_total
-        enriched.append({
-            "product_id": r["id"], "name": r["name"],
-            "price": r["price"], "qty": qty, "line_total": round(line_total, 2),
-        })
+        enriched.append(
+            {
+                "product_id": r["id"],
+                "name": r["name"],
+                "price": r["price"],
+                "qty": qty,
+                "line_total": round(line_total, 2),
+            }
+        )
     if payload.total is not None:
         total = payload.total
     ts = time.time()
@@ -193,10 +198,17 @@ def home(request: Request, q: Optional[str] = None, category: Optional[str] = No
     rows = con.execute(query + " ORDER BY id", params).fetchall()
     cats = [r[0] for r in con.execute("SELECT DISTINCT category FROM products").fetchall()]
     con.close()
-    return templates.TemplateResponse(request, "index.html", {
-        "request": request, "products": [row_to_product(r) for r in rows],
-        "categories": cats, "q": q or "", "category": category or "",
-    })
+    return templates.TemplateResponse(
+        request,
+        "index.html",
+        {
+            "request": request,
+            "products": [row_to_product(r) for r in rows],
+            "categories": cats,
+            "q": q or "",
+            "category": category or "",
+        },
+    )
 
 
 @app.get("/product/{pid}", response_class=HTMLResponse)
@@ -219,9 +231,12 @@ def orders_page(request: Request):
     con = db()
     rows = con.execute("SELECT * FROM orders ORDER BY id DESC").fetchall()
     con.close()
-    return templates.TemplateResponse(request, "orders.html", {"request": request, "orders": [row_to_order(r) for r in rows]})
+    return templates.TemplateResponse(
+        request, "orders.html", {"request": request, "orders": [row_to_order(r) for r in rows]}
+    )
 
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", "8000")))

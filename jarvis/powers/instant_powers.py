@@ -29,6 +29,7 @@ class InstantPowers:
     @staticmethod
     def lock_workstation() -> Dict[str, Any]:
         """PWR-035: Lock the local operating system workstation."""
+
     """Implementations for all 23 Instant Local Command capabilities (PWR-027 to PWR-049)."""
 
     def launch_app(self, app_name: str) -> Dict[str, Any]:
@@ -50,9 +51,17 @@ class InstantPowers:
         """PWR-028: Close an application by process name."""
         try:
             if os.name == "nt":
-                cmd = f"taskkill /f /im {app_name}.exe" if not app_name.endswith(".exe") else f"taskkill /f /im {app_name}"
+                cmd = (
+                    f"taskkill /f /im {app_name}.exe"
+                    if not app_name.endswith(".exe")
+                    else f"taskkill /f /im {app_name}"
+                )
                 res = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-                return {"power_id": "PWR-028", "status": "closed" if res.returncode == 0 else "not_found", "app": app_name}
+                return {
+                    "power_id": "PWR-028",
+                    "status": "closed" if res.returncode == 0 else "not_found",
+                    "app": app_name,
+                }
             else:
                 subprocess.run(["pkill", "-f", app_name], check=False)
                 return {"power_id": "PWR-028", "status": "closed", "app": app_name}
@@ -63,6 +72,7 @@ class InstantPowers:
         """PWR-029: Switch focus to active application window."""
         try:
             from jarvis.powers.screen_powers import screen_powers
+
             return screen_powers.focus_window(app_name)
         except Exception:
             return {"power_id": "PWR-029", "status": "switched", "target": app_name}
@@ -218,6 +228,7 @@ class InstantPowers:
         """PWR-044: Instant full-display screenshot capture."""
         try:
             from jarvis.powers.screen_powers import screen_powers
+
             return screen_powers.capture_region()
         except Exception:
             return {"power_id": "PWR-044", "status": "captured", "path": "latest_screenshot.png"}
@@ -294,6 +305,7 @@ class InstantPowers:
         try:
             if os.name == "nt":
                 import ctypes
+
                 ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 7)
             return {"power_id": "PWR-049", "status": "emptied"}
         except Exception as e:
@@ -321,7 +333,11 @@ class InstantPowers:
         allowed_apps = DEFAULT_APP_COMMANDS
         cmd = allowed_apps.get(app_name.lower().strip())
         if not cmd:
-            return {"power_id": "PWR-027", "status": "error", "message": f"Application '{app_name}' is not in the allowed application list"}
+            return {
+                "power_id": "PWR-027",
+                "status": "error",
+                "message": f"Application '{app_name}' is not in the allowed application list",
+            }
 
         try:
             subprocess.Popen([cmd], shell=(os.name == "nt"))

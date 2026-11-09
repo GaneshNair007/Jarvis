@@ -16,7 +16,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class SchedulerRepository(BaseRepository[ScheduleModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, ScheduleModel)
 
@@ -81,4 +80,3 @@ class SchedulerRepository(BaseRepository[ScheduleModel]):
                 sched.next_run = next_run
             self.session.add(sched)
         return sched
-

@@ -16,7 +16,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class AssignmentRepository(BaseRepository[AssignmentModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, AssignmentModel)
 
@@ -34,19 +33,11 @@ class AssignmentRepository(BaseRepository[AssignmentModel]):
 
     def active_assignments(self) -> List[AssignmentModel]:
         """Returns all assignments currently pending or in-progress."""
-        return (
-            self.session.query(AssignmentModel)
-            .filter(AssignmentModel.completed_at.is_(None))
-            .all()
-        )
+        return self.session.query(AssignmentModel).filter(AssignmentModel.completed_at.is_(None)).all()
 
     def completed_assignments(self) -> List[AssignmentModel]:
         """Returns all completed assignments."""
-        return (
-            self.session.query(AssignmentModel)
-            .filter(AssignmentModel.completed_at.isnot(None))
-            .all()
-        )
+        return self.session.query(AssignmentModel).filter(AssignmentModel.completed_at.isnot(None)).all()
 
     def complete_assignment(self, assignment_id: uuid.UUID) -> Optional[AssignmentModel]:
         """Marks assignment as completed with UTC timestamp."""
@@ -55,4 +46,3 @@ class AssignmentRepository(BaseRepository[AssignmentModel]):
             assignment.completed_at = datetime.datetime.now(datetime.timezone.utc)
             self.session.add(assignment)
         return assignment
-

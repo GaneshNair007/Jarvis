@@ -39,8 +39,12 @@ def test_product_detail():
 
 def test_create_order_and_history():
     p = client.get("/api/products/1").json()
-    payload = {"customer_name": "Test User", "email": "t@example.com",
-               "address": "1 Way", "items": [{"product_id": p["id"], "qty": 2}]}
+    payload = {
+        "customer_name": "Test User",
+        "email": "t@example.com",
+        "address": "1 Way",
+        "items": [{"product_id": p["id"], "qty": 2}],
+    }
     r = client.post("/api/orders", json=payload)
     assert r.status_code == 201, r.text
     oid = r.json()["id"]

@@ -89,7 +89,9 @@ class KeyHealth:
             "consecutive_failures": self.consecutive_failures,
             "in_cooldown": not self.is_available(now),
             "cooldown_remaining_sec": max(0.0, round(self.cooldown_until - now, 2)),
-            "last_used_sec_ago": max(0.0, round(now - self.last_used_timestamp, 2)) if self.last_used_timestamp else None,
+            "last_used_sec_ago": max(0.0, round(now - self.last_used_timestamp, 2))
+            if self.last_used_timestamp
+            else None,
         }
 
     def __repr__(self) -> str:
@@ -205,6 +207,7 @@ class GeminiKeyRotator(BaseKeyRotator):
         self.key_cycle = itertools.cycle(self.valid_keys) if self.valid_keys else None
         try:
             from google import genai
+
             for k in self.valid_keys:
                 if k not in self.clients:
                     try:
@@ -237,6 +240,7 @@ class GeminiKeyRotator(BaseKeyRotator):
 
         try:
             from google import genai
+
             client = genai.Client(api_key=selected_key)
             self.clients[selected_key] = client
             return client
@@ -286,9 +290,7 @@ class GeminiKeyRotator(BaseKeyRotator):
 
             try:
                 if hasattr(client, "models") and hasattr(client.models, "generate_content"):
-                    response = client.models.generate_content(
-                        model=model, contents=contents, config=config
-                    )
+                    response = client.models.generate_content(model=model, contents=contents, config=config)
                     if tracker:
                         tracker.record_success()
                     return response
@@ -312,8 +314,12 @@ class GeminiKeyRotator(BaseKeyRotator):
 
         # Account-based variables (Architectural blueprint)
         for var in [
-            "GEMINI_KEY_ACCOUNT_1", "GEMINI_KEY_ACCOUNT_2", "GEMINI_KEY_ACCOUNT_3",
-            "GEMINI_KEY_1", "GEMINI_KEY_2", "GEMINI_KEY_3",
+            "GEMINI_KEY_ACCOUNT_1",
+            "GEMINI_KEY_ACCOUNT_2",
+            "GEMINI_KEY_ACCOUNT_3",
+            "GEMINI_KEY_1",
+            "GEMINI_KEY_2",
+            "GEMINI_KEY_3",
         ]:
             val = os.getenv(var)
             if val and val.strip():
@@ -354,6 +360,7 @@ class GeminiKeyRotator(BaseKeyRotator):
         # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
         try:
             from jarvis.security.ten_layer_shield import jarvis_security_suite
+
             prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
             if system_instruction:
                 system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
@@ -407,23 +414,20 @@ class GeminiKeyRotator(BaseKeyRotator):
             # Native HTTP fallback (robust urllib)
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
             headers = {"Content-Type": "application/json"}
-            payload = json.dumps({
-                "contents": [{"parts": [{"text": prompt}]}],
-                "systemInstruction": {"parts": [{"text": system_instruction}]},
-                "generationConfig": {"temperature": 0.7, "maxOutputTokens": 1024},
-            }).encode("utf-8")
+            payload = json.dumps(
+                {
+                    "contents": [{"parts": [{"text": prompt}]}],
+                    "systemInstruction": {"parts": [{"text": system_instruction}]},
+                    "generationConfig": {"temperature": 0.7, "maxOutputTokens": 1024},
+                }
+            ).encode("utf-8")
 
             req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
             try:
                 with urllib.request.urlopen(req, timeout=timeout_sec) as resp:
                     if resp.status == 200:
                         data = json.loads(resp.read().decode("utf-8"))
-                        text = (
-                            data.get("candidates", [{}])[0]
-                            .get("content", {})
-                            .get("parts", [{}])[0]
-                            .get("text", "")
-                        )
+                        text = data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
                         tracker.record_success()
                         return {
                             "status": "success",
@@ -517,6 +521,7 @@ class OpenRouterKeyRotator(BaseKeyRotator):
         # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
         try:
             from jarvis.security.ten_layer_shield import jarvis_security_suite
+
             prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
             if system_instruction:
                 system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
@@ -541,15 +546,17 @@ class OpenRouterKeyRotator(BaseKeyRotator):
                 "HTTP-Referer": self.site_url,
                 "X-Title": self.site_title,
             }
-            payload = json.dumps({
-                "model": target_model,
-                "messages": [
-                    {"role": "system", "content": system_instruction},
-                    {"role": "user", "content": prompt},
-                ],
-                "temperature": 0.7,
-                "max_tokens": 1024,
-            }).encode("utf-8")
+            payload = json.dumps(
+                {
+                    "model": target_model,
+                    "messages": [
+                        {"role": "system", "content": system_instruction},
+                        {"role": "user", "content": prompt},
+                    ],
+                    "temperature": 0.7,
+                    "max_tokens": 1024,
+                }
+            ).encode("utf-8")
 
             req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
             try:
@@ -586,8 +593,6 @@ class OpenRouterKeyRotator(BaseKeyRotator):
                 logger.warning(f"OpenRouter request error: {e}")
 
         return None
-
-
 
 
 class GroqKeyRotator(BaseKeyRotator):
@@ -635,6 +640,7 @@ class GroqKeyRotator(BaseKeyRotator):
         # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
         try:
             from jarvis.security.ten_layer_shield import jarvis_security_suite
+
             prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
             if system_instruction:
                 system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
@@ -656,15 +662,17 @@ class GroqKeyRotator(BaseKeyRotator):
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json",
             }
-            payload = json.dumps({
-                "model": target_model,
-                "messages": [
-                    {"role": "system", "content": system_instruction},
-                    {"role": "user", "content": prompt},
-                ],
-                "temperature": 0.7,
-                "max_tokens": 1024,
-            }).encode("utf-8")
+            payload = json.dumps(
+                {
+                    "model": target_model,
+                    "messages": [
+                        {"role": "system", "content": system_instruction},
+                        {"role": "user", "content": prompt},
+                    ],
+                    "temperature": 0.7,
+                    "max_tokens": 1024,
+                }
+            ).encode("utf-8")
 
             req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
             try:
@@ -763,6 +771,7 @@ class NvidiaNimKeyRotator(BaseKeyRotator):
         # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
         try:
             from jarvis.security.ten_layer_shield import jarvis_security_suite
+
             prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
             if system_instruction:
                 system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
@@ -786,15 +795,17 @@ class NvidiaNimKeyRotator(BaseKeyRotator):
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             }
-            payload = json.dumps({
-                "model": target_model,
-                "messages": [
-                    {"role": "system", "content": system_instruction},
-                    {"role": "user", "content": prompt},
-                ],
-                "temperature": 0.7,
-                "max_tokens": 1024,
-            }).encode("utf-8")
+            payload = json.dumps(
+                {
+                    "model": target_model,
+                    "messages": [
+                        {"role": "system", "content": system_instruction},
+                        {"role": "user", "content": prompt},
+                    ],
+                    "temperature": 0.7,
+                    "max_tokens": 1024,
+                }
+            ).encode("utf-8")
 
             req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
             try:
@@ -810,9 +821,7 @@ class NvidiaNimKeyRotator(BaseKeyRotator):
                             or (message.get("reasoning_content") or "").strip()
                             or (choice.get("text") or "").strip()
                         )
-                        tokens = data.get("usage", {}).get(
-                            "total_tokens", len(prompt) // 4 + len(reply_text) // 4
-                        )
+                        tokens = data.get("usage", {}).get("total_tokens", len(prompt) // 4 + len(reply_text) // 4)
                         duration_ms = round((time.time() - start_time) * 1000, 2)
                         tracker.record_success()
                         return {
@@ -849,7 +858,12 @@ class APIKeyRotatorManager:
 
     @property
     def is_available(self) -> bool:
-        return self.gemini.is_available or self.openrouter.is_available or self.groq.is_available or self.nvidia_nim.is_available
+        return (
+            self.gemini.is_available
+            or self.openrouter.is_available
+            or self.groq.is_available
+            or self.nvidia_nim.is_available
+        )
 
     def get_summary(self) -> Dict[str, Any]:
         """Telemetry summary across all providers."""

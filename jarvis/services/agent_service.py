@@ -50,11 +50,13 @@ class AgentService:
             uow.commit()
 
             # Broadcast lifecycle event
-            event_bus.publish(AgentLifecycleEvent(
-                agent_id=str(agent.id),
-                state="created",
-                reason=f"Dynamically spawned agent [{agent_key}] for department [{department_name}].",
-            ))
+            event_bus.publish(
+                AgentLifecycleEvent(
+                    agent_id=str(agent.id),
+                    state="created",
+                    reason=f"Dynamically spawned agent [{agent_key}] for department [{department_name}].",
+                )
+            )
 
             # Initialize live Redis state
             redis_state_store.set_agent_status(
@@ -73,11 +75,13 @@ class AgentService:
         with self.uow_factory() as uow:
             agent = uow.agents.update_status(agent_id, "PAUSED", reason=reason)
             if agent:
-                event_bus.publish(AgentLifecycleEvent(
-                    agent_id=str(agent.id),
-                    state="paused",
-                    reason=reason,
-                ))
+                event_bus.publish(
+                    AgentLifecycleEvent(
+                        agent_id=str(agent.id),
+                        state="paused",
+                        reason=reason,
+                    )
+                )
             uow.commit()
             return agent
 
@@ -86,11 +90,13 @@ class AgentService:
         with self.uow_factory() as uow:
             agent = uow.agents.update_status(agent_id, "ACTIVE", reason="Resumed to active fleet")
             if agent:
-                event_bus.publish(AgentLifecycleEvent(
-                    agent_id=str(agent.id),
-                    state="resumed",
-                    reason="Resumed to active fleet",
-                ))
+                event_bus.publish(
+                    AgentLifecycleEvent(
+                        agent_id=str(agent.id),
+                        state="resumed",
+                        reason="Resumed to active fleet",
+                    )
+                )
             uow.commit()
             return agent
 
@@ -99,15 +105,16 @@ class AgentService:
         with self.uow_factory() as uow:
             agent = uow.agents.update_status(agent_id, "RETIRED", reason=reason)
             if agent:
-                event_bus.publish(AgentLifecycleEvent(
-                    agent_id=str(agent.id),
-                    state="retired",
-                    reason=reason,
-                ))
+                event_bus.publish(
+                    AgentLifecycleEvent(
+                        agent_id=str(agent.id),
+                        state="retired",
+                        reason=reason,
+                    )
+                )
             uow.commit()
             return agent
 
     def get_active_workforce(self) -> List[AgentModel]:
         with self.uow_factory() as uow:
             return uow.agents.get_available_agents()
-

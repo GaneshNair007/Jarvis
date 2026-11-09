@@ -69,10 +69,10 @@ class ArchitectAgent:
         # 1. Generate PROBLEM_STATEMENT.md
         problem_statement_content = f"""# {title} — Autonomous Solution Blueprint
 **Target Challenge:** {title}  
-**Portal / Source:** {opportunity.get('url', 'N/A')}  
-**Mode / Location:** {opportunity.get('mode', 'India / Hybrid')}  
-**Scored Relevance:** {opportunity.get('relevance_score', 95)}% (Analyzed by JARVIS Swarm)  
-**Date Created:** {time.strftime('%Y-%m-%d %H:%M:%S')}
+**Portal / Source:** {opportunity.get("url", "N/A")}  
+**Mode / Location:** {opportunity.get("mode", "India / Hybrid")}  
+**Scored Relevance:** {opportunity.get("relevance_score", 95)}% (Analyzed by JARVIS Swarm)  
+**Date Created:** {time.strftime("%Y-%m-%d %H:%M:%S")}
 
 ---
 

@@ -42,16 +42,18 @@ class CandidateProfile(BaseModel):
     linkedin_url: str = "https://www.linkedin.com/in/ganesh-nair-8ab1a5378/"
     github_url: str = "https://github.com/GaneshNair007"
     portfolio_url: str = "https://github.com/GaneshNair007/Jarvis"
-    core_skills: List[str] = Field(default_factory=lambda: [
-        "Autonomous Multi-Agent Systems",
-        "Python (Asyncio, FastAPI)",
-        "Model Context Protocol (FastMCP)",
-        "PyTorch & Computer Vision (OpenCV)",
-        "AES-256-GCM Hardware Vaults",
-        "Abstract Syntax Tree (AST) Code Mapping",
-        "Distributed Task Graph Scheduling",
-        "NVIDIA RTX 4050 Edge ML Inference",
-    ])
+    core_skills: List[str] = Field(
+        default_factory=lambda: [
+            "Autonomous Multi-Agent Systems",
+            "Python (Asyncio, FastAPI)",
+            "Model Context Protocol (FastMCP)",
+            "PyTorch & Computer Vision (OpenCV)",
+            "AES-256-GCM Hardware Vaults",
+            "Abstract Syntax Tree (AST) Code Mapping",
+            "Distributed Task Graph Scheduling",
+            "NVIDIA RTX 4050 Edge ML Inference",
+        ]
+    )
     hardware: str = "NVIDIA GeForce RTX 4050 (6GB VRAM) Laptop GPU"
 
 
@@ -116,7 +118,9 @@ class AutonomousFormFiller:
             "fit_score": score,
             "recommendation": recommendation,
             "matched_skills": matched_skills,
-            "showcase_project": "Project JARVIS (105-Agent Autonomous Operating System)" if "agent" in combined_text or "ai" in combined_text else "AURA / AgriKavach",
+            "showcase_project": "Project JARVIS (105-Agent Autonomous Operating System)"
+            if "agent" in combined_text or "ai" in combined_text
+            else "AURA / AgriKavach",
             "candidate_name": self.profile.full_name,
         }
 
@@ -184,7 +188,12 @@ class AutonomousFormFiller:
             # Contact
             elif "email" in label_clean:
                 filled_fields[fid] = self.profile.email
-            elif "phone" in label_clean or "mobile" in label_clean or "contact" in label_clean or "whatsapp" in label_clean:
+            elif (
+                "phone" in label_clean
+                or "mobile" in label_clean
+                or "contact" in label_clean
+                or "whatsapp" in label_clean
+            ):
                 filled_fields[fid] = self.profile.phone
             elif "city" in label_clean or "location" in label_clean or "address" in label_clean:
                 filled_fields[fid] = self.profile.location
@@ -206,7 +215,9 @@ class AutonomousFormFiller:
                 filled_fields[fid] = self.profile.graduation_year
 
             # Subjective essay questions
-            elif f.field_type == "textarea" or any(w in label_clean for w in ["why", "tell us", "describe", "experience", "about yourself", "project"]):
+            elif f.field_type == "textarea" or any(
+                w in label_clean for w in ["why", "tell us", "describe", "experience", "about yourself", "project"]
+            ):
                 essay = self.generate_essay_answer(f.label)
                 filled_fields[fid] = essay
                 essay_answers[f.label] = essay
@@ -266,10 +277,17 @@ class AutonomousFormFiller:
 
                     val_to_fill = None
 
-                    if el_type in ("text", "email", "tel", "url") or el.evaluate("node => node.tagName.toLowerCase() == 'textarea'"):
+                    if el_type in ("text", "email", "tel", "url") or el.evaluate(
+                        "node => node.tagName.toLowerCase() == 'textarea'"
+                    ):
                         if "email" in descriptor or el_type == "email":
                             val_to_fill = self.profile.email
-                        elif "phone" in descriptor or "mobile" in descriptor or "contact" in descriptor or el_type == "tel":
+                        elif (
+                            "phone" in descriptor
+                            or "mobile" in descriptor
+                            or "contact" in descriptor
+                            or el_type == "tel"
+                        ):
                             val_to_fill = self.profile.phone
                         elif "github" in descriptor:
                             val_to_fill = self.profile.github_url
@@ -296,22 +314,28 @@ class AutonomousFormFiller:
 
                     if val_to_fill and not dry_run:
                         el.fill(val_to_fill)
-                        filled_records.append({
-                            "element": descriptor.strip(),
-                            "type": el_type,
-                            "value": val_to_fill[:50] + ("..." if len(val_to_fill) > 50 else ""),
-                        })
+                        filled_records.append(
+                            {
+                                "element": descriptor.strip(),
+                                "type": el_type,
+                                "value": val_to_fill[:50] + ("..." if len(val_to_fill) > 50 else ""),
+                            }
+                        )
                     elif val_to_fill and dry_run:
-                        filled_records.append({
-                            "element": descriptor.strip(),
-                            "type": el_type,
-                            "value": "[DRY RUN PREVIEW] " + val_to_fill[:50],
-                        })
+                        filled_records.append(
+                            {
+                                "element": descriptor.strip(),
+                                "type": el_type,
+                                "value": "[DRY RUN PREVIEW] " + val_to_fill[:50],
+                            }
+                        )
                 except Exception as e:
                     logger.debug(f"Field fill skipped: {e}")
 
             # Check for submit buttons
-            submit_candidates = page.locator("button[type='submit'], input[type='submit'], button:has-text('Submit'), button:has-text('Apply')")
+            submit_candidates = page.locator(
+                "button[type='submit'], input[type='submit'], button:has-text('Submit'), button:has-text('Apply')"
+            )
             submit_button_found = submit_candidates.count() > 0
 
             # Capture evidence screenshot

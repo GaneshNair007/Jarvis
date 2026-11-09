@@ -111,23 +111,26 @@ class WebOpportunityRecon:
         # 1. Attempt SearXNG query if active
         try:
             from search.searxng_client import SearXNGClient
+
             searx = SearXNGClient()
             if await searx.is_healthy():
                 searx_results = await searx.search(f"{query} {location}", limit=limit)
                 for item in searx_results:
-                    results.append({
-                        "id": f"web_{abs(hash(item['url'])) % 10000}",
-                        "title": item["title"],
-                        "organization": "Web Discovery",
-                        "location": location,
-                        "mode": "Online / Verified",
-                        "domain": "AI / Software Development",
-                        "url": item["url"],
-                        "deadline": "Check official site",
-                        "prize_pool": "TBD",
-                        "recommended_problem": item.get("snippet", "AI Solution Challenge"),
-                        "match_score": 0.88,
-                    })
+                    results.append(
+                        {
+                            "id": f"web_{abs(hash(item['url'])) % 10000}",
+                            "title": item["title"],
+                            "organization": "Web Discovery",
+                            "location": location,
+                            "mode": "Online / Verified",
+                            "domain": "AI / Software Development",
+                            "url": item["url"],
+                            "deadline": "Check official site",
+                            "prize_pool": "TBD",
+                            "recommended_problem": item.get("snippet", "AI Solution Challenge"),
+                            "match_score": 0.88,
+                        }
+                    )
         except Exception as exc:
             logger.debug(f"SearXNG live search not reachable ({exc}), utilizing resilient curated pipeline.")
 

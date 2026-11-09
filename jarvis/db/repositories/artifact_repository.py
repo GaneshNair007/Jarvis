@@ -18,7 +18,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class ArtifactRepository(BaseRepository[ArtifactModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, ArtifactModel)
 
@@ -62,4 +61,3 @@ class ArtifactRepository(BaseRepository[ArtifactModel]):
             .order_by(ArtifactModel.created_at.asc())
             .all()
         )
-

@@ -25,9 +25,17 @@ class GapDetector:
 
     def __init__(self, known_capabilities: Set[str] = None):
         self.known_capabilities = known_capabilities or {
-            "web_search", "ast_mapper", "git_cli", "data_filter",
-            "doc_parser", "deep_reasoner", "decision_matrix", "roadmap_generator",
-            "pytest", "dlp_scan", "system_health"
+            "web_search",
+            "ast_mapper",
+            "git_cli",
+            "data_filter",
+            "doc_parser",
+            "deep_reasoner",
+            "decision_matrix",
+            "roadmap_generator",
+            "pytest",
+            "dlp_scan",
+            "system_health",
         }
 
     def detect_gaps(self, graph: TaskGraph) -> List[CapabilityGap]:
@@ -46,32 +54,38 @@ class GapDetector:
             if node.status == TaskStatus.FAILED:
                 err = node.metadata.get("last_error", "")
                 if "timeout" in err.lower():
-                    gaps.append(CapabilityGap(
-                        gap_type="TIMEOUT",
-                        name=f"Execution Timeout in {node.name}",
-                        description=f"Task '{node.name}' timed out repeatedly: {err}",
-                        affected_tasks=[task_id],
-                        suggested_capability=f"optimize_{node.department}_pipeline",
-                        severity="HIGH",
-                    ))
+                    gaps.append(
+                        CapabilityGap(
+                            gap_type="TIMEOUT",
+                            name=f"Execution Timeout in {node.name}",
+                            description=f"Task '{node.name}' timed out repeatedly: {err}",
+                            affected_tasks=[task_id],
+                            suggested_capability=f"optimize_{node.department}_pipeline",
+                            severity="HIGH",
+                        )
+                    )
                 elif "unredacted" in err.lower() or "security" in err.lower():
-                    gaps.append(CapabilityGap(
-                        gap_type="SECURITY_DLP_VIOLATION",
-                        name=f"DLP Leak Prevention in {node.name}",
-                        description=f"Task '{node.name}' failed DLP quality gate.",
-                        affected_tasks=[task_id],
-                        suggested_capability="enhanced_dlp_prefilter",
-                        severity="CRITICAL",
-                    ))
+                    gaps.append(
+                        CapabilityGap(
+                            gap_type="SECURITY_DLP_VIOLATION",
+                            name=f"DLP Leak Prevention in {node.name}",
+                            description=f"Task '{node.name}' failed DLP quality gate.",
+                            affected_tasks=[task_id],
+                            suggested_capability="enhanced_dlp_prefilter",
+                            severity="CRITICAL",
+                        )
+                    )
 
         for missing_tool, task_ids in missing_tools.items():
-            gaps.append(CapabilityGap(
-                gap_type="MISSING_TOOL",
-                name=f"Missing Tool: {missing_tool}",
-                description=f"Required tool '{missing_tool}' is not registered in system capability registry.",
-                affected_tasks=task_ids,
-                suggested_capability=f"tool_integration_{missing_tool}",
-                severity="HIGH" if len(task_ids) > 1 else "MEDIUM",
-            ))
+            gaps.append(
+                CapabilityGap(
+                    gap_type="MISSING_TOOL",
+                    name=f"Missing Tool: {missing_tool}",
+                    description=f"Required tool '{missing_tool}' is not registered in system capability registry.",
+                    affected_tasks=task_ids,
+                    suggested_capability=f"tool_integration_{missing_tool}",
+                    severity="HIGH" if len(task_ids) > 1 else "MEDIUM",
+                )
+            )
 
         return gaps

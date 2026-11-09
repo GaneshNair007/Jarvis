@@ -15,7 +15,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class GoalRepository(BaseRepository[GoalModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, GoalModel)
 
@@ -62,9 +61,4 @@ class GoalRepository(BaseRepository[GoalModel]):
 
     def get_active_goals(self) -> List[GoalModel]:
         """Returns all goals currently in PENDING or RUNNING status."""
-        return (
-            self.session.query(GoalModel)
-            .filter(GoalModel.status.in_(["PENDING", "RUNNING"]))
-            .all()
-        )
-
+        return self.session.query(GoalModel).filter(GoalModel.status.in_(["PENDING", "RUNNING"])).all()

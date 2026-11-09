@@ -40,6 +40,7 @@ class InMemoryStateStore:
             if pattern == "*" or pattern == "agent:*":
                 return list(self._store.keys())
             import fnmatch
+
             return fnmatch.filter(list(self._store.keys()), pattern)
 
 
@@ -59,6 +60,7 @@ class RedisAgentStateStore:
     def _connect(self) -> None:
         try:
             import redis
+
             client = redis.from_url(self.redis_url, decode_responses=True, socket_timeout=1.0)
             client.ping()
             self.client = client
@@ -163,4 +165,3 @@ class RedisAgentStateStore:
 
 # Global Singleton Redis State Store
 redis_state_store = RedisAgentStateStore()
-

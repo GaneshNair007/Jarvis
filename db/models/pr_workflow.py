@@ -5,11 +5,15 @@ SQLAlchemy 2.x Safe PR Workflow Model
 from __future__ import annotations
 
 import uuid
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.models.base import Base, GUID, TimestampMixin
+
+
+if TYPE_CHECKING:
+    from db.models.improvement import ImprovementRequestModel
 
 
 class PRWorkflowModel(Base, TimestampMixin):

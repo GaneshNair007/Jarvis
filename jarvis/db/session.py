@@ -69,6 +69,7 @@ def init_db(target_engine: Optional[sa.Engine] = None) -> None:
     eng = target_engine or engine
     # Import all models to ensure declarative registration
     import jarvis.db.models  # noqa: F401
+
     Base.metadata.create_all(bind=eng)
     logger.info(f"Database schema initialized successfully on '{eng.dialect.name}'.")
 
@@ -97,5 +98,6 @@ def create_test_engine(db_url: str = "sqlite:///:memory:") -> sa.Engine:
         pool_pre_ping=True,
     )
     import jarvis.db.models  # noqa: F401
+
     Base.metadata.create_all(bind=test_eng)
     return test_eng

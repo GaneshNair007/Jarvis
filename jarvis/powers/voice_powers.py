@@ -3,6 +3,7 @@ JARVIS Voice & Audio Interaction Powers (PWR-001 to PWR-005)
 Wake word detection, speech-to-text, text-to-speech, voice profiles,
 and interrupt handling for the JARVIS voice pipeline.
 """
+
 from __future__ import annotations
 
 import os
@@ -53,7 +54,9 @@ class VoicePowers:
 
             result = subprocess.run(
                 ["tasklist", "/FO", "CSV", "/NH"],
-                capture_output=True, text=True, timeout=5,
+                capture_output=True,
+                text=True,
+                timeout=5,
             )
             running = result.stdout.lower()
 
@@ -77,9 +80,8 @@ class VoicePowers:
                     "farms available, but no VoiceDaemon is currently listening"
                 )
             else:
-                message = (
-                    "No wake word listener running; acoustic gate "
-                    + ("armed" if acoustic["installed"] else "not installed")
+                message = "No wake word listener running; acoustic gate " + (
+                    "armed" if acoustic["installed"] else "not installed"
                 )
 
             return {
@@ -147,7 +149,9 @@ class VoicePowers:
 
                 proc = subprocess.run(
                     ["powershell", "-NoProfile", "-Command", ps_script],
-                    capture_output=True, text=True, timeout=30,
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
                 )
                 text = proc.stdout.strip() or "<no speech detected>"
                 return {
@@ -209,7 +213,8 @@ class VoicePowers:
             )
             self._tts_process = subprocess.Popen(
                 ["powershell", "-NoProfile", "-Command", ps_cmd],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
             )
             self._tts_process.wait(timeout=60)
             return {
@@ -243,7 +248,9 @@ class VoicePowers:
             )
             proc = subprocess.run(
                 ["powershell", "-NoProfile", "-Command", ps_script],
-                capture_output=True, text=True, timeout=10,
+                capture_output=True,
+                text=True,
+                timeout=10,
             )
             available = "profile_available" in proc.stdout
             return {
@@ -277,7 +284,9 @@ class VoicePowers:
             # Also kill any lingering PowerShell SAPI processes
             result = subprocess.run(
                 ["tasklist", "/FI", "IMAGENAME eq powershell.exe", "/FO", "CSV", "/NH"],
-                capture_output=True, text=True, timeout=5,
+                capture_output=True,
+                text=True,
+                timeout=5,
             )
             # We won't aggressively kill all PowerShells — only our tracked one
 

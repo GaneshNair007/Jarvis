@@ -16,7 +16,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class ExecutionRepository(BaseRepository[ExecutionModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, ExecutionModel)
 
@@ -67,4 +66,3 @@ class ExecutionRepository(BaseRepository[ExecutionModel]):
             .limit(limit)
             .all()
         )
-

@@ -53,6 +53,7 @@ class TestVentureScout:
         """Verifies FastAPI REST endpoints for business idea scouting."""
         from fastapi.testclient import TestClient
         from jarvis.api.server import app
+
         client = TestClient(app)
 
         res = client.get("/ventures/ideas?limit=5")

@@ -22,10 +22,7 @@ from jarvis.core.logger import get_logger
 
 logger = get_logger("powers.research_derived")
 
-_DATA_DIR = Path(os.environ.get(
-    "JARVIS_DATA_DIR",
-    Path(__file__).resolve().parents[2] / "data"
-))
+_DATA_DIR = Path(os.environ.get("JARVIS_DATA_DIR", Path(__file__).resolve().parents[2] / "data"))
 _SHORTCUTS_FILE = _DATA_DIR / "shortcuts.json"
 _TIME_LEDGER_FILE = _DATA_DIR / "time_ledger.json"
 _HMAC_SECRET = os.environ.get("JARVIS_HMAC_SECRET", "jarvis-default-secret-change-me")
@@ -43,16 +40,16 @@ class ResearchDerivedPowers:
 
         # Keyword-to-power mapping heuristics
         tool_map: Dict[str, List[str]] = {
-            "email":    ["PWR-205 (draft_email)", "PWR-206 (send_email)"],
+            "email": ["PWR-205 (draft_email)", "PWR-206 (send_email)"],
             "schedule": ["PWR-208 (schedule_message)", "PWR-160 (calendar)"],
-            "file":     ["PWR-100 (file_read)", "PWR-101 (file_write)"],
-            "search":   ["PWR-120 (web_search)", "PWR-121 (local_search)"],
-            "stock":    ["PWR-215 (stock_quote)", "PWR-181 (get_stock_quote)"],
-            "expense":  ["PWR-230 (expense_log)", "PWR-231 (expense_summary)"],
-            "deploy":   ["PWR-300 (git_status)", "PWR-310 (docker_build)"],
-            "notify":   ["PWR-203 (desktop_notification)", "PWR-202 (telegram)"],
-            "convert":  ["PWR-180 (convert_currency)", "PWR-218 (currency_convert)"],
-            "backup":   ["PWR-140 (backup_create)", "PWR-353 (rollback_plan)"],
+            "file": ["PWR-100 (file_read)", "PWR-101 (file_write)"],
+            "search": ["PWR-120 (web_search)", "PWR-121 (local_search)"],
+            "stock": ["PWR-215 (stock_quote)", "PWR-181 (get_stock_quote)"],
+            "expense": ["PWR-230 (expense_log)", "PWR-231 (expense_summary)"],
+            "deploy": ["PWR-300 (git_status)", "PWR-310 (docker_build)"],
+            "notify": ["PWR-203 (desktop_notification)", "PWR-202 (telegram)"],
+            "convert": ["PWR-180 (convert_currency)", "PWR-218 (currency_convert)"],
+            "backup": ["PWR-140 (backup_create)", "PWR-353 (rollback_plan)"],
             "security": ["PWR-344 (hash_bound_approval)", "PWR-345 (verify_approval)"],
         }
 
@@ -75,9 +72,7 @@ class ResearchDerivedPowers:
     # ------------------------------------------------------------------
     # PWR-339: Retry with Backoff
     # ------------------------------------------------------------------
-    def retry_with_backoff(
-        self, func: Callable[..., Any], max_retries: int = 3, **kwargs: Any
-    ) -> Dict[str, Any]:
+    def retry_with_backoff(self, func: Callable[..., Any], max_retries: int = 3, **kwargs: Any) -> Dict[str, Any]:
         """PWR-339: Exponential backoff retry wrapper.
 
         Parameters
@@ -101,10 +96,13 @@ class ResearchDerivedPowers:
                 }
             except Exception as exc:
                 last_error = str(exc)
-                wait = min(2 ** attempt, 30)
+                wait = min(2**attempt, 30)
                 logger.warning(
                     "PWR-339 attempt %d/%d failed: %s — retrying in %ds",
-                    attempt, max_retries, last_error, wait,
+                    attempt,
+                    max_retries,
+                    last_error,
+                    wait,
                 )
                 time.sleep(wait)
 
@@ -152,9 +150,7 @@ class ResearchDerivedPowers:
                 "created_at": datetime.now(timezone.utc).isoformat(),
             }
             shortcuts.append(entry)
-            _SHORTCUTS_FILE.write_text(
-                json.dumps(shortcuts, indent=2), encoding="utf-8"
-            )
+            _SHORTCUTS_FILE.write_text(json.dumps(shortcuts, indent=2), encoding="utf-8")
             return {
                 "power_id": "PWR-341",
                 "status": "success",
@@ -191,9 +187,7 @@ class ResearchDerivedPowers:
     # ------------------------------------------------------------------
     # PWR-343: Context Window Optimizer
     # ------------------------------------------------------------------
-    def context_window_optimizer(
-        self, messages: List[Dict[str, str]], max_tokens: int = 120_000
-    ) -> Dict[str, Any]:
+    def context_window_optimizer(self, messages: List[Dict[str, str]], max_tokens: int = 120_000) -> Dict[str, Any]:
         """PWR-343: Trims context to fit token limits.
 
         Uses a simple heuristic of ~4 chars per token.
@@ -244,9 +238,7 @@ class ResearchDerivedPowers:
         """PWR-344: Generate HMAC-bound approval token for an action."""
         try:
             message = f"{action}:{payload}"
-            token = hmac.new(
-                _HMAC_SECRET.encode(), message.encode(), hashlib.sha256
-            ).hexdigest()
+            token = hmac.new(_HMAC_SECRET.encode(), message.encode(), hashlib.sha256).hexdigest()
             return {
                 "power_id": "PWR-344",
                 "status": "success",
@@ -263,9 +255,7 @@ class ResearchDerivedPowers:
         """PWR-345: Verify HMAC approval token."""
         try:
             message = f"{action}:{payload}"
-            expected = hmac.new(
-                _HMAC_SECRET.encode(), message.encode(), hashlib.sha256
-            ).hexdigest()
+            expected = hmac.new(_HMAC_SECRET.encode(), message.encode(), hashlib.sha256).hexdigest()
             valid = hmac.compare_digest(token, expected)
             return {
                 "power_id": "PWR-345",
@@ -283,10 +273,7 @@ class ResearchDerivedPowers:
         """PWR-346: Add provenance stamp to content."""
         stamp_id = str(uuid.uuid4())[:8]
         ts = datetime.now(timezone.utc).isoformat()
-        stamped = (
-            f"{content}\n\n---\n"
-            f"[Source: {source} | Stamp: {stamp_id} | {ts}]"
-        )
+        stamped = f"{content}\n\n---\n[Source: {source} | Stamp: {stamp_id} | {ts}]"
         return {
             "power_id": "PWR-346",
             "status": "success",
@@ -308,14 +295,12 @@ class ResearchDerivedPowers:
         score = 0.75  # baseline
 
         # Hedge words reduce confidence
-        hedges = ["maybe", "perhaps", "might", "possibly", "i think",
-                  "not sure", "uncertain", "could be", "it depends"]
+        hedges = ["maybe", "perhaps", "might", "possibly", "i think", "not sure", "uncertain", "could be", "it depends"]
         hedge_count = sum(1 for h in hedges if h in text)
         score -= hedge_count * 0.08
 
         # Specificity markers increase confidence
-        specifics = ["because", "specifically", "according to", "data shows",
-                     "measured", "verified", "confirmed"]
+        specifics = ["because", "specifically", "according to", "data shows", "measured", "verified", "confirmed"]
         spec_count = sum(1 for s in specifics if s in text)
         score += spec_count * 0.05
 
@@ -336,9 +321,7 @@ class ResearchDerivedPowers:
     # ------------------------------------------------------------------
     # PWR-348: Fallback Chain
     # ------------------------------------------------------------------
-    def fallback_chain(
-        self, primary: Callable[..., Any], fallbacks: List[Callable[..., Any]]
-    ) -> Dict[str, Any]:
+    def fallback_chain(self, primary: Callable[..., Any], fallbacks: List[Callable[..., Any]]) -> Dict[str, Any]:
         """PWR-348: Try primary, fall through fallbacks on failure."""
         chain = [primary] + fallbacks
         errors: List[str] = []
@@ -369,20 +352,24 @@ class ResearchDerivedPowers:
     # ------------------------------------------------------------------
     def task_decomposer(self, complex_task: str) -> Dict[str, Any]:
         """PWR-349: Break task into subtasks via heuristic analysis."""
-        parts = [s.strip() for s in complex_task.replace(" and ", "\n").replace(
-            " then ", "\n").replace(", ", "\n").split("\n") if s.strip()]
+        parts = [
+            s.strip()
+            for s in complex_task.replace(" and ", "\n").replace(" then ", "\n").replace(", ", "\n").split("\n")
+            if s.strip()
+        ]
 
         subtasks = []
         for i, part in enumerate(parts, 1):
-            subtasks.append({
-                "id": f"SUB-{i:03d}",
-                "description": part,
-                "estimated_complexity": (
-                    "high" if len(part.split()) > 12 else
-                    "medium" if len(part.split()) > 5 else "low"
-                ),
-                "dependencies": [f"SUB-{i-1:03d}"] if i > 1 else [],
-            })
+            subtasks.append(
+                {
+                    "id": f"SUB-{i:03d}",
+                    "description": part,
+                    "estimated_complexity": (
+                        "high" if len(part.split()) > 12 else "medium" if len(part.split()) > 5 else "low"
+                    ),
+                    "dependencies": [f"SUB-{i - 1:03d}"] if i > 1 else [],
+                }
+            )
 
         return {
             "power_id": "PWR-349",
@@ -427,10 +414,7 @@ class ResearchDerivedPowers:
         return {
             "power_id": "PWR-350",
             "status": "success",
-            "waves": [
-                {"wave": i + 1, "tasks": [t.get("id", "") for t in w]}
-                for i, w in enumerate(waves)
-            ],
+            "waves": [{"wave": i + 1, "tasks": [t.get("id", "") for t in w]} for i, w in enumerate(waves)],
             "total_waves": len(waves),
             "max_parallelism": max(len(w) for w in waves) if waves else 0,
         }
@@ -449,9 +433,7 @@ class ResearchDerivedPowers:
             status = r.get("status", "unknown")
             if status in ("success", "ok"):
                 success_count += 1
-                merged_data[task_id] = {
-                    k: v for k, v in r.items() if k not in ("id", "status")
-                }
+                merged_data[task_id] = {k: v for k, v in r.items() if k not in ("id", "status")}
             else:
                 errors.append(f"{task_id}: {r.get('error', status)}")
 
@@ -517,18 +499,13 @@ class ResearchDerivedPowers:
     def rollback_plan(self, action: str) -> Dict[str, Any]:
         """PWR-353: Generate rollback steps for an action."""
         rollback_templates: Dict[str, List[str]] = {
-            "file_write":    ["Restore file from backup", "Verify file integrity"],
-            "file_delete":   ["Restore from recycle bin or backup", "Verify restoration"],
-            "deploy":        ["Revert to previous deployment", "Run health checks",
-                              "Notify team of rollback"],
-            "database":      ["Restore from snapshot", "Verify data consistency",
-                              "Run integrity checks"],
-            "config_change": ["Restore previous config", "Restart affected services",
-                              "Verify service health"],
-            "email_send":    ["Send correction/retraction email",
-                              "Log incident for audit"],
-            "install":       ["Uninstall package", "Restore previous version",
-                              "Verify system stability"],
+            "file_write": ["Restore file from backup", "Verify file integrity"],
+            "file_delete": ["Restore from recycle bin or backup", "Verify restoration"],
+            "deploy": ["Revert to previous deployment", "Run health checks", "Notify team of rollback"],
+            "database": ["Restore from snapshot", "Verify data consistency", "Run integrity checks"],
+            "config_change": ["Restore previous config", "Restart affected services", "Verify service health"],
+            "email_send": ["Send correction/retraction email", "Log incident for audit"],
+            "install": ["Uninstall package", "Restore previous version", "Verify system stability"],
         }
 
         action_lower = action.lower()
@@ -551,9 +528,7 @@ class ResearchDerivedPowers:
             "power_id": "PWR-353",
             "status": "success",
             "action": action,
-            "rollback_steps": [
-                {"step": i, "description": s} for i, s in enumerate(steps, 1)
-            ],
+            "rollback_steps": [{"step": i, "description": s} for i, s in enumerate(steps, 1)],
         }
 
     # ------------------------------------------------------------------
@@ -574,12 +549,11 @@ class ResearchDerivedPowers:
                 "logged_at": datetime.now(timezone.utc).isoformat(),
             }
             ledger.append(entry)
-            _TIME_LEDGER_FILE.write_text(
-                json.dumps(ledger, indent=2), encoding="utf-8"
-            )
+            _TIME_LEDGER_FILE.write_text(json.dumps(ledger, indent=2), encoding="utf-8")
 
             total_today = sum(
-                e["duration_min"] for e in ledger
+                e["duration_min"]
+                for e in ledger
                 if e["logged_at"][:10] == datetime.now(timezone.utc).strftime("%Y-%m-%d")
             )
             return {
@@ -598,9 +572,17 @@ class ResearchDerivedPowers:
         """PWR-355: Flag if query asks for estimate, enforce 'measure don't estimate'."""
         q = query.lower()
         estimate_signals = [
-            "estimate", "guess", "approximate", "roughly", "ballpark",
-            "how long will", "how much time", "when will it be done",
-            "predict", "forecast time", "how many hours",
+            "estimate",
+            "guess",
+            "approximate",
+            "roughly",
+            "ballpark",
+            "how long will",
+            "how much time",
+            "when will it be done",
+            "predict",
+            "forecast time",
+            "how many hours",
         ]
 
         triggered = [s for s in estimate_signals if s in q]

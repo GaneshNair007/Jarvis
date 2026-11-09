@@ -24,7 +24,6 @@ def client():
 
 
 class TestOpenMausGrokBot:
-
     def test_grok_persona_modes_exist_and_distinct(self):
         """Verifies that all 4 Grok modes have distinct, character-rich system instructions."""
         assert len(GROK_PERSONAS) == 4
@@ -158,4 +157,3 @@ class TestOpenMausGrokBot:
         assert resp_ev.status_code == 200
         ev_data = resp_ev.json()
         assert ev_data["total_events"] > 0
-

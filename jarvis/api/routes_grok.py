@@ -90,4 +90,3 @@ async def resolve_permission(decision_id: str, body: PermissionResolutionRequest
         "status": rec["status"],
         "approval_token": rec.get("approval_token"),
     }
-

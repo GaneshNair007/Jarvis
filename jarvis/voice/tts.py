@@ -24,9 +24,7 @@ class TextToSpeech:
     def __init__(self, voice_speed: Optional[int] = None, volume: Optional[int] = None):
         self.voice_speed = voice_speed if voice_speed is not None else settings.tts_speed
         self.volume = volume if volume is not None else settings.tts_volume
-        self.elevenlabs_api_key = os.getenv(
-            "ELEVENLABS_API_KEY", getattr(settings, "elevenlabs_api_key", None)
-        )
+        self.elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY", getattr(settings, "elevenlabs_api_key", None))
         self.elevenlabs_voice_id = os.getenv(
             "ELEVENLABS_VOICE_ID", getattr(settings, "elevenlabs_voice_id", "21m00Tcm4TlvDq8ikWAM")
         )
@@ -58,14 +56,16 @@ class TextToSpeech:
             "Content-Type": "application/json",
             "Accept": "audio/mpeg",
         }
-        payload = json.dumps({
-            "text": text,
-            "model_id": "eleven_monolingual_v1",
-            "voice_settings": {
-                "stability": 0.5,
-                "similarity_boost": 0.75,
-            },
-        }).encode("utf-8")
+        payload = json.dumps(
+            {
+                "text": text,
+                "model_id": "eleven_monolingual_v1",
+                "voice_settings": {
+                    "stability": 0.5,
+                    "similarity_boost": 0.75,
+                },
+            }
+        ).encode("utf-8")
 
         req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
         try:

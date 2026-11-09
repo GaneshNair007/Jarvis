@@ -100,11 +100,13 @@ class NetworkingPowers:
                 # Windows: "  1    <1 ms    <1 ms    <1 ms  192.168.1.1"
                 hop_match = re.match(r"\s*(\d+)\s+(.+?)\s+([\d.]+)\s*$", line)
                 if hop_match:
-                    hops.append({
-                        "hop": int(hop_match.group(1)),
-                        "ip": hop_match.group(3),
-                        "timing": hop_match.group(2).strip(),
-                    })
+                    hops.append(
+                        {
+                            "hop": int(hop_match.group(1)),
+                            "ip": hop_match.group(3),
+                            "timing": hop_match.group(2).strip(),
+                        }
+                    )
 
             return {
                 "power_id": "PWR-128",
@@ -499,11 +501,13 @@ class NetworkingPowers:
                     line,
                 )
                 if match:
-                    entries.append({
-                        "ip": match.group(1),
-                        "mac": match.group(2),
-                        "type": match.group(3),
-                    })
+                    entries.append(
+                        {
+                            "ip": match.group(1),
+                            "mac": match.group(2),
+                            "type": match.group(3),
+                        }
+                    )
 
             return {
                 "power_id": "PWR-138",
@@ -540,17 +544,19 @@ class NetworkingPowers:
                         if ":" in local_addr:
                             sep_idx = local_addr.rfind(":")
                             addr = local_addr[:sep_idx]
-                            port_str = local_addr[sep_idx + 1:]
+                            port_str = local_addr[sep_idx + 1 :]
                             try:
                                 port_num = int(port_str)
                             except ValueError:
                                 port_num = port_str
-                            listeners.append({
-                                "protocol": parts[0],
-                                "local_address": addr,
-                                "port": port_num,
-                                "state": "LISTENING",
-                            })
+                            listeners.append(
+                                {
+                                    "protocol": parts[0],
+                                    "local_address": addr,
+                                    "port": port_num,
+                                    "state": "LISTENING",
+                                }
+                            )
 
             return {
                 "power_id": "PWR-139",
@@ -609,17 +615,19 @@ class NetworkingPowers:
 
             nic_stats: List[Dict[str, Any]] = []
             for nic, c in per_nic.items():
-                nic_stats.append({
-                    "interface": nic,
-                    "bytes_sent": c.bytes_sent,
-                    "bytes_recv": c.bytes_recv,
-                    "packets_sent": c.packets_sent,
-                    "packets_recv": c.packets_recv,
-                    "errin": c.errin,
-                    "errout": c.errout,
-                    "dropin": c.dropin,
-                    "dropout": c.dropout,
-                })
+                nic_stats.append(
+                    {
+                        "interface": nic,
+                        "bytes_sent": c.bytes_sent,
+                        "bytes_recv": c.bytes_recv,
+                        "packets_sent": c.packets_sent,
+                        "packets_recv": c.packets_recv,
+                        "errin": c.errin,
+                        "errout": c.errout,
+                        "dropin": c.dropin,
+                        "dropout": c.dropout,
+                    }
+                )
 
             return {
                 "power_id": "PWR-141",

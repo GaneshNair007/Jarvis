@@ -17,8 +17,12 @@ def upgrade() -> None:
     op.create_table(
         "improvement_requests",
         sa.Column("id", sa.UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
-        sa.Column("reflection_id", sa.UUID(as_uuid=True), sa.ForeignKey("reflections.id", ondelete="SET NULL"), nullable=True),
-        sa.Column("capability_id", sa.UUID(as_uuid=True), sa.ForeignKey("capabilities.id", ondelete="SET NULL"), nullable=True),
+        sa.Column(
+            "reflection_id", sa.UUID(as_uuid=True), sa.ForeignKey("reflections.id", ondelete="SET NULL"), nullable=True
+        ),
+        sa.Column(
+            "capability_id", sa.UUID(as_uuid=True), sa.ForeignKey("capabilities.id", ondelete="SET NULL"), nullable=True
+        ),
         sa.Column("title", sa.String(255), nullable=False),
         sa.Column("description", sa.Text, nullable=False),
         sa.Column("category", sa.String(50), nullable=False, server_default="architecture"),

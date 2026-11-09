@@ -70,11 +70,11 @@ class MultiAgentPowers:
             agent_role = AgentRole.ORCHESTRATOR
 
         meta = self.swarm.agent_registry.get(agent_role, {"power_id": "PWR-288"})
-        
+
         # Antigravity self-improvement pipeline (real self-upgrade, not a stub)
         if agent_role == AgentRole.CODER_ANTIGRAVITY:
             return self.self_upgrade_pipeline(inputs.get("codebase_path", r"D:\jarvis"))
-        
+
         # Special handling for coding agents - generate evidence-backed result
         if agent_role in [
             AgentRole.CODER,
@@ -92,11 +92,10 @@ class MultiAgentPowers:
                 source=f"multiagent.{agent_role.value}",
                 data=inputs,
                 timestamp=__import__("time").time(),
-                trust_level="verified" if agent_role != AgentRole.CODER_ANTIGRAVITY else "self_generated"
+                trust_level="verified" if agent_role != AgentRole.CODER_ANTIGRAVITY else "self_generated",
             )
             trust_result = TrustResult.success(
-                evidence=evidence,
-                description=f"Coding agent {agent_role.value} executed successfully"
+                evidence=evidence, description=f"Coding agent {agent_role.value} executed successfully"
             )
             return {
                 "power_id": meta["power_id"],
@@ -107,7 +106,7 @@ class MultiAgentPowers:
                 "evidence": evidence.to_dict(),
                 "trust_result": trust_result.to_dict(),
             }
-        
+
         # First Law: every subagent invocation is evidence-backed, coding or not.
         evidence = Evidence(
             source=f"multiagent.{agent_role.value}",
@@ -221,7 +220,7 @@ class MultiAgentPowers:
 
     def self_upgrade_pipeline(self, current_codebase_path: str = r"D:\jarvis") -> Dict[str, Any]:
         """PWR-310: Self-improvement pipeline - reviews code, generates improvements, applies them.
-        
+
         Steps:
         1. Review current codebase for patterns, bottlenecks, First Law violations
         2. Generate improvement proposals with evidence
@@ -233,34 +232,32 @@ class MultiAgentPowers:
         import uuid
         import json
         from pathlib import Path
-        
+
         start_time = time.time()
         plan_id = f"upgrade_{uuid.uuid4().hex[:8]}"
-        
+
         logger.info(f"SelfUpgradePipeline: starting upgrade plan={plan_id}")
-        
+
         # Step 1: Analyze codebase for First Law compliance gaps
         analysis_result = self._analyze_codebase(current_codebase_path)
-        
+
         # Step 2: Generate improvement proposals
         improvements = self._generate_improvements(analysis_result)
-        
+
         # Step 3: Execute improvements via agent swarm
         execution_plan = agent_swarm.decompose_goal(
             f"Implement {len(improvements)} code improvements: {json.dumps(improvements[:3], indent=2)[:200]}..."
         )
-        
+
         # Execute via parallel subagents
-        execution = self.execute_parallel_swarms([
-            f"Implement: {imp}" for imp in improvements[:5]
-        ])
-        
+        execution = self.execute_parallel_swarms([f"Implement: {imp}" for imp in improvements[:5]])
+
         # Step 4: Verify with test suite
         verification = self._verify_changes(current_codebase_path)
-        
+
         # Step 5: Record audit trail
         duration_ms = round((time.time() - start_time) * 1000, 2)
-        
+
         # Create TrustResult with evidence
         evidence = Evidence(
             source="self_upgrade_pipeline",
@@ -270,17 +267,17 @@ class MultiAgentPowers:
                 "improvements_generated": len(improvements),
                 "executed": execution["statuses"],
                 "verified": verification["passed"],
-                "duration_ms": duration_ms
+                "duration_ms": duration_ms,
             },
             timestamp=time.time(),
-            trust_level="self_generated"
+            trust_level="self_generated",
         )
-        
+
         trust_result = TrustResult.success(
             evidence=evidence,
-            description=f"Self-upgrade pipeline completed: {verification['passed']}/{verification['total']} tests passed"
+            description=f"Self-upgrade pipeline completed: {verification['passed']}/{verification['total']} tests passed",
         )
-        
+
         return {
             "power_id": "PWR-310",
             "plan_id": plan_id,
@@ -296,7 +293,7 @@ class MultiAgentPowers:
             "execution_summary": execution,
             "verification": verification,
         }
-    
+
     def _analyze_codebase(self, codebase_path: str) -> Dict[str, Any]:
         """Analyze codebase for First Law compliance gaps and improvement opportunities."""
         # Stub analysis - in production this would scan the actual codebase
@@ -307,63 +304,72 @@ class MultiAgentPowers:
             "power_catalog_compliance": 78,  # Percentage: 78% powers return TrustResult
             "evidence_coverage": 65,  # Percentage: 65% actions produce Evidence
         }
-    
+
     def _generate_improvements(self, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Generate code improvement proposals based on analysis."""
         improvements = []
-        
+
         # Generate improvements based on identified gaps
         if analysis.get("first_law_gaps", 0) > 0:
-            improvements.append({
-                "type": "first_law_compliance",
-                "priority": "P0",
-                "description": "Ensure all action-producing powers return TrustResult with Evidence",
-                "target": "powers/ directory",
-            })
-        
+            improvements.append(
+                {
+                    "type": "first_law_compliance",
+                    "priority": "P0",
+                    "description": "Ensure all action-producing powers return TrustResult with Evidence",
+                    "target": "powers/ directory",
+                }
+            )
+
         if analysis.get("sleeping_agents", 0) > 0:
-            improvements.append({
-                "type": "stub_eradication",
-                "priority": "P0",
-                "description": "Replace asyncio.sleep(0.01) stubs with real execution or honest failure",
-                "target": "core/task_executor.py",
-            })
-        
+            improvements.append(
+                {
+                    "type": "stub_eradication",
+                    "priority": "P0",
+                    "description": "Replace asyncio.sleep(0.01) stubs with real execution or honest failure",
+                    "target": "core/task_executor.py",
+                }
+            )
+
         if analysis.get("token_leakage_risks", 0) > 0:
-            improvements.append({
-                "type": "approval_hardening",
-                "priority": "P0",
-                "description": "Isolate approval tokens in server-side registry, never leak in responses",
-                "target": "core/policy_gate.py",
-            })
-        
+            improvements.append(
+                {
+                    "type": "approval_hardening",
+                    "priority": "P0",
+                    "description": "Isolate approval tokens in server-side registry, never leak in responses",
+                    "target": "core/policy_gate.py",
+                }
+            )
+
         # Add self-specific improvements
-        improvements.append({
-            "type": "self_upgrade",
-            "priority": "P1",
-            "description": "Enable dynamic coding agent selection for self-improvement",
-            "target": "agents/swarm.py, powers/multiagent_powers.py",
-        })
-        
+        improvements.append(
+            {
+                "type": "self_upgrade",
+                "priority": "P1",
+                "description": "Enable dynamic coding agent selection for self-improvement",
+                "target": "agents/swarm.py, powers/multiagent_powers.py",
+            }
+        )
+
         return improvements
-    
+
     def _verify_changes(self, codebase_path: str) -> Dict[str, Any]:
         """Verify code changes pass test suite."""
         import subprocess
+
         result = subprocess.run(
             ["pytest", "tests/test_multiagent.py", "-v"],
             cwd=codebase_path,
             capture_output=True,
             text=True,
-            timeout=60000
+            timeout=60000,
         )
-        
+
         passed = result.returncode == 0
         # Parse output for passed/failed counts
         output_lines = result.stdout.split("\n")
         passed_count = sum(1 for line in output_lines if "PASSED" in line)
         failed_count = sum(1 for line in output_lines if "FAILED" in line)
-        
+
         return {
             "passed": passed_count if passed else 0,
             "total": passed_count + failed_count,

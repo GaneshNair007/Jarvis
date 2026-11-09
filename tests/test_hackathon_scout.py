@@ -16,7 +16,6 @@ from jarvis.agents.hackathon_scout import (
 
 
 class TestObscuraAndHackathonScout:
-
     @pytest.mark.asyncio
     async def test_obscura_browser_search_and_fallback(self):
         """Verifies Obscura search returns structured opportunities with titles, URLs, and snippets."""
@@ -30,7 +29,10 @@ class TestObscuraAndHackathonScout:
     def test_analyst_agent_scoring(self):
         """Verifies analyst agent prioritizes high-relevance AI/Systems opportunities."""
         raw = [
-            {"title": "Global AI Autonomous Agent Challenge", "snippet": "Build multi-agent Python FastAPI pipelines with PyTorch GPU acceleration."},
+            {
+                "title": "Global AI Autonomous Agent Challenge",
+                "snippet": "Build multi-agent Python FastAPI pipelines with PyTorch GPU acceleration.",
+            },
             {"title": "Beginner HTML Static Webpage Design Contest", "snippet": "Create static CSS stylesheets."},
         ]
         analyst = AnalystAgent()

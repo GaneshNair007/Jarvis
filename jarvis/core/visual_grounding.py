@@ -28,6 +28,7 @@ logger = get_logger("core.visual_grounding")
 @dataclass
 class RestrictedZone:
     """Designates a protected screen boundary that blocks or gates automation clicks."""
+
     name: str
     norm_xmin: float
     norm_ymin: float
@@ -37,10 +38,7 @@ class RestrictedZone:
     description: str = ""
 
     def contains(self, norm_x: float, norm_y: float) -> bool:
-        return (
-            self.norm_xmin <= norm_x <= self.norm_xmax
-            and self.norm_ymin <= norm_y <= self.norm_ymax
-        )
+        return self.norm_xmin <= norm_x <= self.norm_xmax and self.norm_ymin <= norm_y <= self.norm_ymax
 
 
 class VisualAction(BaseModel):
@@ -68,21 +66,30 @@ class VisualGroundingEngine:
         # Top-right window close button (accidental app termination guard)
         RestrictedZone(
             name="top_right_system_close",
-            norm_xmin=975, norm_ymin=0, norm_xmax=1000, norm_ymax=40,
+            norm_xmin=975,
+            norm_ymin=0,
+            norm_xmax=1000,
+            norm_ymax=40,
             severity="prompt_user",
             description="Window close button region",
         ),
         # Windows Start button / Taskbar critical system corner
         RestrictedZone(
             name="taskbar_system_privilege",
-            norm_xmin=0, norm_ymin=960, norm_xmax=50, norm_ymax=1000,
+            norm_xmin=0,
+            norm_ymin=960,
+            norm_xmax=50,
+            norm_ymax=1000,
             severity="prompt_user",
             description="Start menu administrative area",
         ),
         # Common UAC / elevated credential dialog center zone
         RestrictedZone(
             name="uac_prompt_shield",
-            norm_xmin=400, norm_ymin=450, norm_xmax=600, norm_ymax=550,
+            norm_xmin=400,
+            norm_ymin=450,
+            norm_xmax=600,
+            norm_ymax=550,
             severity="critical",
             description="Elevated Administrator prompt sensitive zone",
         ),
@@ -97,6 +104,7 @@ class VisualGroundingEngine:
     def _detect_screen_width(self) -> int:
         try:
             import ctypes
+
             user32 = ctypes.windll.user32
             return int(user32.GetSystemMetrics(0))
         except Exception:
@@ -105,6 +113,7 @@ class VisualGroundingEngine:
     def _detect_screen_height(self) -> int:
         try:
             import ctypes
+
             user32 = ctypes.windll.user32
             return int(user32.GetSystemMetrics(1))
         except Exception:
@@ -196,7 +205,9 @@ class VisualGroundingEngine:
             act_type = m.group(1).lower()
             coords = _extract_coords(m.group(2))
             if coords:
-                ordered_actions.append((m.start(), VisualAction(action_type=act_type, norm_x=coords[0], norm_y=coords[1])))
+                ordered_actions.append(
+                    (m.start(), VisualAction(action_type=act_type, norm_x=coords[0], norm_y=coords[1]))
+                )
 
         # 2. Match type(content='...') or type(text='...')
         type_matches = re.finditer(
@@ -232,13 +243,18 @@ class VisualGroundingEngine:
             re.IGNORECASE,
         )
         for m in drag_matches:
-            ordered_actions.append((m.start(), VisualAction(
-                action_type="drag",
-                norm_x=float(m.group(1)),
-                norm_y=float(m.group(2)),
-                drag_to_norm_x=float(m.group(3)),
-                drag_to_norm_y=float(m.group(4)),
-            )))
+            ordered_actions.append(
+                (
+                    m.start(),
+                    VisualAction(
+                        action_type="drag",
+                        norm_x=float(m.group(1)),
+                        norm_y=float(m.group(2)),
+                        drag_to_norm_x=float(m.group(3)),
+                        drag_to_norm_y=float(m.group(4)),
+                    ),
+                )
+            )
 
         ordered_actions.sort(key=lambda item: item[0])
         return [act for _, act in ordered_actions]
@@ -275,6 +291,7 @@ class VisualGroundingEngine:
         timestamp = time.time()
         try:
             from PIL import ImageGrab
+
             screenshot = ImageGrab.grab()
             w, h = screenshot.size
             if save_path:
@@ -329,6 +346,7 @@ class VisualGroundingEngine:
         if not dry_run:
             try:
                 import pyautogui
+
                 if action.action_type == "click" and abs_x is not None and abs_y is not None:
                     pyautogui.click(abs_x, abs_y)
                 elif action.action_type == "double_click" and abs_x is not None and abs_y is not None:

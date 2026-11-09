@@ -3,6 +3,7 @@ JARVIS File & Document Powers (PWR-082 to PWR-099)
 Read, write, search, compare, archive, and analyse files including
 PDF, CSV, Excel, JSON, and general filesystem operations.
 """
+
 from __future__ import annotations
 
 import csv
@@ -248,7 +249,9 @@ class FilePowers:
                         "status": "error",
                         "message": f"Column '{filter_col}' not found. Available: {reader.fieldnames}",
                     }
-                matches = [row for row in reader if row.get(filter_col, "").strip().lower() == filter_val.strip().lower()]
+                matches = [
+                    row for row in reader if row.get(filter_col, "").strip().lower() == filter_val.strip().lower()
+                ]
 
             return {
                 "power_id": "PWR-087",
@@ -279,11 +282,13 @@ class FilePowers:
                 sheets_info: List[Dict[str, Any]] = []
                 for name in wb.sheetnames:
                     ws = wb[name]
-                    sheets_info.append({
-                        "name": name,
-                        "rows": ws.max_row,
-                        "columns": ws.max_column,
-                    })
+                    sheets_info.append(
+                        {
+                            "name": name,
+                            "rows": ws.max_row,
+                            "columns": ws.max_column,
+                        }
+                    )
                 wb.close()
                 return {
                     "power_id": "PWR-088",
@@ -620,6 +625,7 @@ class FilePowers:
 # ===================================================================== #
 #  Module-level helpers                                                  #
 # ===================================================================== #
+
 
 def _is_numeric(val: str) -> bool:
     """Check if a string looks numeric."""

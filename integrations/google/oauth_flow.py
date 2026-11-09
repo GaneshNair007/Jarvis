@@ -294,9 +294,7 @@ class GoogleOAuthFlow:
             session.close()
 
     def status(self) -> Dict[str, Any]:
-        is_valid, missing = credential_manager.validate_credentials(
-            ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"]
-        )
+        is_valid, missing = credential_manager.validate_credentials(["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"])
         if not is_valid:
             return {
                 "status": "UNCONFIGURED",

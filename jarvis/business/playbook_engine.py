@@ -145,7 +145,9 @@ class BusinessPlaybookEngine:
         scored: List[tuple[int, BusinessIdea]] = []
 
         for idea in self._ideas_cache.values():
-            corpus = f"{idea.title} {idea.domain} {idea.problem_statement} {idea.solution_statement} {idea.toolkit}".lower()
+            corpus = (
+                f"{idea.title} {idea.domain} {idea.problem_statement} {idea.solution_statement} {idea.toolkit}".lower()
+            )
             matches = sum(1 for tok in q_tokens if tok in corpus)
             if matches > 0:
                 scored.append((matches, idea))
@@ -172,7 +174,7 @@ class BusinessPlaybookEngine:
         toolkit_lower = idea.toolkit.lower()
         requires_vision = any(k in toolkit_lower for k in ["video", "image", "capcut", "canva", "vision"])
         requires_audio = any(k in toolkit_lower for k in ["podcast", "audio", "voice", "descript"])
-        
+
         local_gpu_load = "Low (<1.5 GB VRAM)"
         if requires_vision and requires_audio:
             local_gpu_load = "Moderate (~3.8 GB VRAM - Kokoro-TTS + Faster-Whisper on RTX 4050)"
@@ -294,7 +296,9 @@ class BusinessPlaybookEngine:
             cpa = (rec.spend_usd / rec.conversions) if rec.conversions > 0 else 999.0
             ctr = (rec.clicks / rec.impressions * 100) if rec.impressions > 0 else 0.0
             if cpa > 50.0 or ctr < 1.0:
-                flagged.append(f"{rec.campaign_name} ({rec.channel}): High CPA (${round(cpa, 2)}) or Low CTR ({round(ctr, 2)}%)")
+                flagged.append(
+                    f"{rec.campaign_name} ({rec.channel}): High CPA (${round(cpa, 2)}) or Low CTR ({round(ctr, 2)}%)"
+                )
 
         summary = (
             f"📊 DAILY AD PULSE REPORT\n"
@@ -356,7 +360,11 @@ class BusinessPlaybookEngine:
         # 5. Top 3 priorities
         priorities = [
             {"rank": "1", "action": "Clear highest-value overdue client commitment", "owner": "Operations Lead"},
-            {"rank": "2", "action": "Review & dispatch personalized drafts for stalled leads", "owner": "Growth Specialist"},
+            {
+                "rank": "2",
+                "action": "Review & dispatch personalized drafts for stalled leads",
+                "owner": "Growth Specialist",
+            },
             {"rank": "3", "action": "Optimize or pause underperforming ad campaigns", "owner": "Media Buyer"},
         ]
 

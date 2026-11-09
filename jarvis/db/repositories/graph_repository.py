@@ -17,7 +17,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class KnowledgeGraphRepository(BaseRepository[KnowledgeNodeModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, KnowledgeNodeModel)
 
@@ -97,11 +96,7 @@ class KnowledgeGraphRepository(BaseRepository[KnowledgeNodeModel]):
                 continue
 
             current = path[-1]
-            edges = (
-                self.session.query(KnowledgeEdgeModel)
-                .filter(KnowledgeEdgeModel.source_node_id == current)
-                .all()
-            )
+            edges = self.session.query(KnowledgeEdgeModel).filter(KnowledgeEdgeModel.source_node_id == current).all()
 
             for e in edges:
                 if e.target_node_id == end_node_id:
@@ -126,4 +121,3 @@ class KnowledgeGraphRepository(BaseRepository[KnowledgeNodeModel]):
             .limit(limit)
             .all()
         )
-

@@ -89,6 +89,7 @@ class TaskMemoryWriter:
         # 2. Write to Relational Hippocampus (UnitOfWork Memory Repository)
         try:
             from jarvis.db.unit_of_work import UnitOfWork
+
             with UnitOfWork() as uow:
                 uow.memories.store_memory(
                     category=category,
@@ -102,7 +103,9 @@ class TaskMemoryWriter:
         logger.info(f"TaskMemoryWriter: Recorded memory event for task '{task.task_id}' under category '{category}'")
         return event
 
-    def query_memories(self, category: Optional[str] = None, keyword: Optional[str] = None, limit: int = 50) -> List[MemoryEvent]:
+    def query_memories(
+        self, category: Optional[str] = None, keyword: Optional[str] = None, limit: int = 50
+    ) -> List[MemoryEvent]:
         """Queries recorded memory events with category and keyword filtering."""
         results = self.events
         if category:

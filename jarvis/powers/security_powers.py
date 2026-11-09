@@ -83,11 +83,28 @@ class SecurityPowers:
                 "private_key": r"-----BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY-----",
                 "connection_string": r"(?i)(mongodb|postgres|mysql|redis)://\S+",
             }
-            skip_dirs = {".git", "__pycache__", "node_modules", ".venv", "venv",
-                         "dist", "build", ".tox"}
-            scan_exts = {".py", ".js", ".ts", ".json", ".yaml", ".yml", ".toml",
-                         ".cfg", ".ini", ".env", ".sh", ".bat", ".ps1", ".xml",
-                         ".conf", ".properties", ".tf", ".tfvars", ""}
+            skip_dirs = {".git", "__pycache__", "node_modules", ".venv", "venv", "dist", "build", ".tox"}
+            scan_exts = {
+                ".py",
+                ".js",
+                ".ts",
+                ".json",
+                ".yaml",
+                ".yml",
+                ".toml",
+                ".cfg",
+                ".ini",
+                ".env",
+                ".sh",
+                ".bat",
+                ".ps1",
+                ".xml",
+                ".conf",
+                ".properties",
+                ".tf",
+                ".tfvars",
+                "",
+            }
 
             findings: List[Dict[str, Any]] = []
             files_scanned = 0
@@ -105,18 +122,21 @@ class SecurityPowers:
                             for line_no, line in enumerate(fh, 1):
                                 for secret_type, regex in patterns.items():
                                     if re.search(regex, line):
-                                        findings.append({
-                                            "file": os.path.relpath(fp, directory),
-                                            "line": line_no,
-                                            "type": secret_type,
-                                            "preview": line.strip()[:80] + "...",
-                                        })
+                                        findings.append(
+                                            {
+                                                "file": os.path.relpath(fp, directory),
+                                                "line": line_no,
+                                                "type": secret_type,
+                                                "preview": line.strip()[:80] + "...",
+                                            }
+                                        )
                                         break  # one finding per line
                     except (OSError, UnicodeDecodeError):
                         pass
 
             return {
-                "power_id": "PWR-144", "status": "success",
+                "power_id": "PWR-144",
+                "status": "success",
                 "files_scanned": files_scanned,
                 "finding_count": len(findings),
                 "findings": findings[:200],
@@ -134,9 +154,11 @@ class SecurityPowers:
         try:
             algo = algorithm.lower()
             if algo not in hashlib.algorithms_available:
-                return {"power_id": "PWR-145", "status": "error",
-                        "message": f"Unsupported algorithm: {algorithm}. "
-                                   f"Available: {sorted(hashlib.algorithms_available)}"}
+                return {
+                    "power_id": "PWR-145",
+                    "status": "error",
+                    "message": f"Unsupported algorithm: {algorithm}. Available: {sorted(hashlib.algorithms_available)}",
+                }
             h = hashlib.new(algo)
             with open(file_path, "rb") as f:
                 while True:
@@ -146,14 +168,15 @@ class SecurityPowers:
                     h.update(chunk)
             file_size = os.path.getsize(file_path)
             return {
-                "power_id": "PWR-145", "status": "success",
-                "file": file_path, "algorithm": algo,
+                "power_id": "PWR-145",
+                "status": "success",
+                "file": file_path,
+                "algorithm": algo,
                 "hash": h.hexdigest(),
                 "file_size_bytes": file_size,
             }
         except FileNotFoundError:
-            return {"power_id": "PWR-145", "status": "error",
-                    "message": f"File not found: {file_path}"}
+            return {"power_id": "PWR-145", "status": "error", "message": f"File not found: {file_path}"}
         except Exception as e:
             return {"power_id": "PWR-145", "status": "error", "message": str(e)}
 
@@ -167,8 +190,10 @@ class SecurityPowers:
             computed = result["hash"]
             match = computed.lower() == expected_hash.lower()
             return {
-                "power_id": "PWR-146", "status": "success",
-                "file": file_path, "algorithm": algorithm,
+                "power_id": "PWR-146",
+                "status": "success",
+                "file": file_path,
+                "algorithm": algorithm,
                 "computed_hash": computed,
                 "expected_hash": expected_hash,
                 "match": match,
@@ -190,8 +215,9 @@ class SecurityPowers:
                 "has_lower": bool(re.search(r"[a-z]", password)),
                 "has_digit": bool(re.search(r"\d", password)),
                 "has_special": bool(re.search(r"[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>/?]", password)),
-                "no_common_patterns": not bool(re.search(
-                    r"(password|123456|qwerty|admin|letmein|welcome|monkey|dragon)", password.lower())),
+                "no_common_patterns": not bool(
+                    re.search(r"(password|123456|qwerty|admin|letmein|welcome|monkey|dragon)", password.lower())
+                ),
             }
             score = sum(checks.values())
             if score >= 6:
@@ -216,9 +242,12 @@ class SecurityPowers:
                 suggestions.append("Avoid common password patterns")
 
             return {
-                "power_id": "PWR-147", "status": "success",
-                "strength": strength, "score": f"{score}/6",
-                "checks": checks, "suggestions": suggestions,
+                "power_id": "PWR-147",
+                "status": "success",
+                "strength": strength,
+                "score": f"{score}/6",
+                "checks": checks,
+                "suggestions": suggestions,
             }
         except Exception as e:
             return {"power_id": "PWR-147", "status": "error", "message": str(e)}
@@ -227,8 +256,7 @@ class SecurityPowers:
         """PWR-148: Generate a cryptographically secure random password."""
         try:
             if length < 8:
-                return {"power_id": "PWR-148", "status": "error",
-                        "message": "Password length must be at least 8"}
+                return {"power_id": "PWR-148", "status": "error", "message": "Password length must be at least 8"}
             alphabet = string.ascii_letters + string.digits + "!@#$%^&*()-_=+"
             # Ensure at least one of each category
             password = [
@@ -247,8 +275,10 @@ class SecurityPowers:
             generated = "".join(pw_list)
 
             return {
-                "power_id": "PWR-148", "status": "success",
-                "password": generated, "length": length,
+                "power_id": "PWR-148",
+                "status": "success",
+                "password": generated,
+                "length": length,
                 "entropy_bits": round(len(generated) * 6.5, 1),
             }
         except Exception as e:
@@ -262,13 +292,13 @@ class SecurityPowers:
         """PWR-149: Placeholder for file encryption (requires cryptography package)."""
         try:
             if not os.path.isfile(file_path):
-                return {"power_id": "PWR-149", "status": "error",
-                        "message": f"File not found: {file_path}"}
+                return {"power_id": "PWR-149", "status": "error", "message": f"File not found: {file_path}"}
             return {
-                "power_id": "PWR-149", "status": "dispatched",
+                "power_id": "PWR-149",
+                "status": "dispatched",
                 "file": file_path,
                 "message": "File encryption dispatched. Install 'cryptography' package "
-                           "and implement Fernet-based encryption for production use.",
+                "and implement Fernet-based encryption for production use.",
                 "file_size_bytes": os.path.getsize(file_path),
             }
         except Exception as e:
@@ -278,13 +308,13 @@ class SecurityPowers:
         """PWR-150: Placeholder for file decryption (requires cryptography package)."""
         try:
             if not os.path.isfile(file_path):
-                return {"power_id": "PWR-150", "status": "error",
-                        "message": f"File not found: {file_path}"}
+                return {"power_id": "PWR-150", "status": "error", "message": f"File not found: {file_path}"}
             return {
-                "power_id": "PWR-150", "status": "dispatched",
+                "power_id": "PWR-150",
+                "status": "dispatched",
                 "file": file_path,
                 "message": "File decryption dispatched. Install 'cryptography' package "
-                           "and implement Fernet-based decryption for production use.",
+                "and implement Fernet-based decryption for production use.",
             }
         except Exception as e:
             return {"power_id": "PWR-150", "status": "error", "message": str(e)}
@@ -303,13 +333,16 @@ class SecurityPowers:
             )
             res = subprocess.run(
                 ["powershell", "-NoProfile", "-Command", ps_script],
-                capture_output=True, text=True, timeout=30,
+                capture_output=True,
+                text=True,
+                timeout=30,
             )
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(res.stdout if res.stdout else "[]")
 
             return {
-                "power_id": "PWR-151", "status": "success",
+                "power_id": "PWR-151",
+                "status": "success",
                 "output_path": output_path,
                 "size_bytes": os.path.getsize(output_path),
                 "message": "Audit log exported successfully",
@@ -322,7 +355,9 @@ class SecurityPowers:
         try:
             res = subprocess.run(
                 ["icacls", os.path.abspath(directory)],
-                capture_output=True, text=True, timeout=15,
+                capture_output=True,
+                text=True,
+                timeout=15,
             )
             entries: List[Dict[str, str]] = []
             for line in res.stdout.strip().splitlines():
@@ -338,6 +373,7 @@ class SecurityPowers:
                     try:
                         # On Windows, check if file is read-only
                         import stat
+
                         st = os.stat(fp)
                         if st.st_mode & stat.S_IWOTH:
                             world_writable.append(os.path.relpath(fp, directory))
@@ -346,7 +382,8 @@ class SecurityPowers:
                 break  # Only top-level for performance
 
             return {
-                "power_id": "PWR-152", "status": "success",
+                "power_id": "PWR-152",
+                "status": "success",
                 "directory": os.path.abspath(directory),
                 "acl_entries": entries[:50],
                 "world_writable_count": len(world_writable),
@@ -364,7 +401,9 @@ class SecurityPowers:
         try:
             res = subprocess.run(
                 ["netsh", "advfirewall", "show", "allprofiles", "state"],
-                capture_output=True, text=True, timeout=15,
+                capture_output=True,
+                text=True,
+                timeout=15,
             )
             profiles: Dict[str, str] = {}
             current_profile = ""
@@ -378,7 +417,8 @@ class SecurityPowers:
 
             all_on = all(v.upper() == "ON" for v in profiles.values()) if profiles else False
             return {
-                "power_id": "PWR-153", "status": "success",
+                "power_id": "PWR-153",
+                "status": "success",
                 "firewall_enabled": all_on,
                 "profiles": profiles,
             }
@@ -404,7 +444,9 @@ class SecurityPowers:
             )
             res = subprocess.run(
                 ["powershell", "-NoProfile", "-Command", ps_script],
-                capture_output=True, text=True, timeout=30,
+                capture_output=True,
+                text=True,
+                timeout=30,
             )
             try:
                 data = json.loads(res.stdout) if res.stdout.strip() else {}
@@ -415,7 +457,8 @@ class SecurityPowers:
                 return {"power_id": "PWR-154", "status": "error", "message": data["error"]}
 
             return {
-                "power_id": "PWR-154", "status": "success",
+                "power_id": "PWR-154",
+                "status": "success",
                 "defender": data,
             }
         except Exception as e:
@@ -431,7 +474,9 @@ class SecurityPowers:
             )
             res = subprocess.run(
                 ["powershell", "-NoProfile", "-Command", ps_script],
-                capture_output=True, text=True, timeout=15,
+                capture_output=True,
+                text=True,
+                timeout=15,
             )
             try:
                 certs = json.loads(res.stdout) if res.stdout.strip() else []
@@ -441,7 +486,8 @@ class SecurityPowers:
                 certs = []
 
             return {
-                "power_id": "PWR-155", "status": "success",
+                "power_id": "PWR-155",
+                "status": "success",
                 "cert_count": len(certs),
                 "certificates": certs[:100],
             }
@@ -457,16 +503,20 @@ class SecurityPowers:
         try:
             # Search recent commits for secret-like patterns
             res = subprocess.run(
-                ["git", "log", "--all", "-p", "--max-count=50",
-                 "-S", "AKIA", "--oneline"],
-                cwd=repo_path, capture_output=True, text=True, timeout=30,
+                ["git", "log", "--all", "-p", "--max-count=50", "-S", "AKIA", "--oneline"],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                timeout=30,
             )
             aws_findings = res.stdout.strip().splitlines() if res.stdout.strip() else []
 
             res2 = subprocess.run(
-                ["git", "log", "--all", "-p", "--max-count=50",
-                 "-S", "sk-", "--oneline"],
-                cwd=repo_path, capture_output=True, text=True, timeout=30,
+                ["git", "log", "--all", "-p", "--max-count=50", "-S", "sk-", "--oneline"],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                timeout=30,
             )
             api_findings = res2.stdout.strip().splitlines() if res2.stdout.strip() else []
 
@@ -475,7 +525,8 @@ class SecurityPowers:
                 all_findings.append({"commit_ref": line.strip()[:120]})
 
             return {
-                "power_id": "PWR-156", "status": "success",
+                "power_id": "PWR-156",
+                "status": "success",
                 "repo": os.path.abspath(repo_path),
                 "finding_count": len(all_findings),
                 "findings": all_findings,
@@ -492,6 +543,7 @@ class SecurityPowers:
         """PWR-157: List active network connections (like netstat)."""
         try:
             import psutil
+
             connections: List[Dict[str, Any]] = []
             for conn in psutil.net_connections(kind="inet"):
                 try:
@@ -501,18 +553,21 @@ class SecurityPowers:
                             proc_name = psutil.Process(conn.pid).name()
                         except (psutil.NoSuchProcess, psutil.AccessDenied):
                             proc_name = "unknown"
-                    connections.append({
-                        "local_addr": f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else "",
-                        "remote_addr": f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else "",
-                        "status": conn.status,
-                        "pid": conn.pid,
-                        "process": proc_name,
-                    })
+                    connections.append(
+                        {
+                            "local_addr": f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else "",
+                            "remote_addr": f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else "",
+                            "status": conn.status,
+                            "pid": conn.pid,
+                            "process": proc_name,
+                        }
+                    )
                 except Exception:
                     pass
 
             return {
-                "power_id": "PWR-157", "status": "success",
+                "power_id": "PWR-157",
+                "status": "success",
                 "connection_count": len(connections),
                 "connections": connections[:100],
             }
@@ -523,11 +578,24 @@ class SecurityPowers:
         """PWR-158: Check for processes with suspicious characteristics."""
         try:
             import psutil
+
             suspicious: List[Dict[str, Any]] = []
             suspicious_names = {
-                "mimikatz", "pwdump", "procdump", "lazagne", "keylogger",
-                "netcat", "nc", "ncat", "reverse", "meterpreter", "cobaltstrike",
-                "empire", "bloodhound", "rubeus", "certutil",
+                "mimikatz",
+                "pwdump",
+                "procdump",
+                "lazagne",
+                "keylogger",
+                "netcat",
+                "nc",
+                "ncat",
+                "reverse",
+                "meterpreter",
+                "cobaltstrike",
+                "empire",
+                "bloodhound",
+                "rubeus",
+                "certutil",
             }
 
             for proc in psutil.process_iter(["pid", "name", "exe", "cmdline", "username"]):
@@ -558,18 +626,21 @@ class SecurityPowers:
                         flags.append("hidden_powershell")
 
                     if flags:
-                        suspicious.append({
-                            "pid": info["pid"],
-                            "name": info["name"],
-                            "exe": info.get("exe", ""),
-                            "username": info.get("username", ""),
-                            "flags": flags,
-                        })
+                        suspicious.append(
+                            {
+                                "pid": info["pid"],
+                                "name": info["name"],
+                                "exe": info.get("exe", ""),
+                                "username": info.get("username", ""),
+                                "flags": flags,
+                            }
+                        )
                 except (psutil.NoSuchProcess, psutil.AccessDenied):
                     pass
 
             return {
-                "power_id": "PWR-158", "status": "success",
+                "power_id": "PWR-158",
+                "status": "success",
                 "suspicious_count": len(suspicious),
                 "processes": suspicious[:50],
                 "safe": len(suspicious) == 0,
@@ -601,21 +672,22 @@ class SecurityPowers:
                     mod_time = datetime.datetime.fromtimestamp(os.path.getmtime(env_file))
                     age_days = (datetime.datetime.now() - mod_time).days
                     with open(env_file, "r", encoding="utf-8", errors="replace") as f:
-                        key_count = sum(1 for line in f
-                                        if line.strip() and not line.startswith("#")
-                                        and "=" in line)
-                    findings.append({
-                        "file": env_file,
-                        "last_modified": mod_time.strftime("%Y-%m-%d"),
-                        "age_days": age_days,
-                        "key_count": key_count,
-                        "rotation_recommended": age_days > 90,
-                    })
+                        key_count = sum(1 for line in f if line.strip() and not line.startswith("#") and "=" in line)
+                    findings.append(
+                        {
+                            "file": env_file,
+                            "last_modified": mod_time.strftime("%Y-%m-%d"),
+                            "age_days": age_days,
+                            "key_count": key_count,
+                            "rotation_recommended": age_days > 90,
+                        }
+                    )
                 except OSError:
                     pass
 
             return {
-                "power_id": "PWR-159", "status": "success",
+                "power_id": "PWR-159",
+                "status": "success",
                 "env_files_found": len(env_files),
                 "findings": findings,
                 "action_needed": any(f.get("rotation_recommended") for f in findings),
@@ -671,10 +743,7 @@ class SecurityPowers:
 
             report["security_score"] = max(0, score)
             report["grade"] = (
-                "A" if score >= 90 else
-                "B" if score >= 75 else
-                "C" if score >= 60 else
-                "D" if score >= 40 else "F"
+                "A" if score >= 90 else "B" if score >= 75 else "C" if score >= 60 else "D" if score >= 40 else "F"
             )
             report["issues"] = issues
             report["issue_count"] = len(issues)

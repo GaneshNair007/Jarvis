@@ -17,7 +17,9 @@ def upgrade() -> None:
     op.create_table(
         "memories",
         sa.Column("id", sa.UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
-        sa.Column("source_task_id", sa.UUID(as_uuid=True), sa.ForeignKey("tasks.id", ondelete="SET NULL"), nullable=True),
+        sa.Column(
+            "source_task_id", sa.UUID(as_uuid=True), sa.ForeignKey("tasks.id", ondelete="SET NULL"), nullable=True
+        ),
         sa.Column("goal_id", sa.UUID(as_uuid=True), sa.ForeignKey("goals.id", ondelete="SET NULL"), nullable=True),
         sa.Column("category", sa.String(50), nullable=False),  # e.g. "engineering", "hackathon", "security"
         sa.Column("content", postgresql.JSONB(astext_type=sa.Text()), nullable=False),

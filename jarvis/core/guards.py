@@ -19,6 +19,7 @@ logger = get_logger("core.guards")
 
 class ArchitectureViolationError(Exception):
     """Raised when an architectural boundary or inviolable guardrail is breached."""
+
     pass
 
 

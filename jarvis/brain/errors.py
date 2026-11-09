@@ -125,7 +125,10 @@ def classify_error(
     elif any(k in err_str for k in ("budget", "usage limit", "circuit breaker", "max cost", "rate limit exceeded")):
         code = CognitiveErrorCode.AI_USAGE_LIMIT
         recoverable = False
-    elif any(k in err_str for k in ("insufficient evidence", "missing evidence", "unverified", "no memories found", "empty search")):
+    elif any(
+        k in err_str
+        for k in ("insufficient evidence", "missing evidence", "unverified", "no memories found", "empty search")
+    ):
         code = CognitiveErrorCode.INSUFFICIENT_EVIDENCE
         recoverable = True
     elif any(
@@ -165,7 +168,7 @@ def get_remediation_strategy(error: CognitiveError) -> Dict[str, Any]:
     """
     code = error.code
     if code == CognitiveErrorCode.TRANSIENT_NETWORK.value:
-        backoff_sec = min(2 ** error.retry_count, 8)
+        backoff_sec = min(2**error.retry_count, 8)
         return {
             "action": "retry_act",
             "target_node": "act",

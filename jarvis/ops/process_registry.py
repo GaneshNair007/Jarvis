@@ -166,8 +166,8 @@ class ProcessRegistry:
         role_patterns: Optional[Dict[str, str]] = None,
         process_factory: Any = psutil.Process,
     ):
-        self.registry_path = Path(registry_path) if registry_path else (
-            settings.data_dir / "runtime" / "process_registry.json"
+        self.registry_path = (
+            Path(registry_path) if registry_path else (settings.data_dir / "runtime" / "process_registry.json")
         )
         self.lock_path = self.registry_path.with_suffix(".lock")
         self.repo_root = Path(repo_root) if repo_root else PROJECT_ROOT
@@ -212,9 +212,7 @@ class ProcessRegistry:
             "updated_at": time.time(),
             "records": [r.to_dict() for r in records],
         }
-        tmp = self.registry_path.with_name(
-            f"{self.registry_path.name}.{os.getpid()}.{uuid.uuid4().hex[:8]}.tmp"
-        )
+        tmp = self.registry_path.with_name(f"{self.registry_path.name}.{os.getpid()}.{uuid.uuid4().hex[:8]}.tmp")
         try:
             with open(tmp, "w", encoding="utf-8") as fh:
                 json.dump(payload, fh, indent=2, sort_keys=True)
@@ -294,9 +292,7 @@ class ProcessRegistry:
         details = self._process_details(pid)
         if not details:
             return None
-        if not self._matches_role(
-            role, details["cmdline"], details["name"], details.get("cwd")
-        ):
+        if not self._matches_role(role, details["cmdline"], details["name"], details.get("cwd")):
             return None
         return ProcessRecord(
             instance_id=uuid.uuid4().hex,
@@ -618,9 +614,7 @@ class ProcessRegistry:
             "already_stopped": already,
             "skipped": skipped,
             "failed": failed,
-            "success": not failed and not any(
-                s.get("reason", "").startswith("refused") for s in skipped
-            ),
+            "success": not failed and not any(s.get("reason", "").startswith("refused") for s in skipped),
             "checked_at": time.time(),
         }
 

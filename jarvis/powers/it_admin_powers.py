@@ -96,26 +96,36 @@ class ITAdminPowers:
         try:
             ps_result = subprocess.run(
                 ["docker", "ps", "-a", "--format", "{{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}"],
-                capture_output=True, text=True, timeout=15,
+                capture_output=True,
+                text=True,
+                timeout=15,
             )
             if ps_result.returncode != 0:
-                return {"power_id": "PWR-100", "status": "error",
-                        "message": ps_result.stderr.strip() or "Docker not available"}
+                return {
+                    "power_id": "PWR-100",
+                    "status": "error",
+                    "message": ps_result.stderr.strip() or "Docker not available",
+                }
 
             containers: List[Dict[str, str]] = []
             for line in ps_result.stdout.strip().splitlines():
                 parts = line.split("\t")
                 if len(parts) >= 4:
-                    containers.append({
-                        "id": parts[0], "name": parts[1],
-                        "status": parts[2], "image": parts[3],
-                    })
+                    containers.append(
+                        {
+                            "id": parts[0],
+                            "name": parts[1],
+                            "status": parts[2],
+                            "image": parts[3],
+                        }
+                    )
 
             # Gather stats for running containers
             stats_result = subprocess.run(
-                ["docker", "stats", "--no-stream", "--format",
-                 "{{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}"],
-                capture_output=True, text=True, timeout=15,
+                ["docker", "stats", "--no-stream", "--format", "{{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}"],
+                capture_output=True,
+                text=True,
+                timeout=15,
             )
             stats_map: Dict[str, Dict[str, str]] = {}
             if stats_result.returncode == 0:
@@ -130,12 +140,13 @@ class ITAdminPowers:
                 c["memory_usage"] = s.get("memory", "N/A")
 
             return {
-                "power_id": "PWR-100", "status": "success",
-                "container_count": len(containers), "containers": containers,
+                "power_id": "PWR-100",
+                "status": "success",
+                "container_count": len(containers),
+                "containers": containers,
             }
         except FileNotFoundError:
-            return {"power_id": "PWR-100", "status": "error",
-                    "message": "Docker CLI not found on PATH"}
+            return {"power_id": "PWR-100", "status": "error", "message": "Docker CLI not found on PATH"}
         except Exception as e:
             return {"power_id": "PWR-100", "status": "error", "message": str(e)}
 
@@ -145,17 +156,20 @@ class ITAdminPowers:
         try:
             res = subprocess.run(
                 ["docker", "logs", "--tail", str(lines), container],
-                capture_output=True, text=True, timeout=15,
+                capture_output=True,
+                text=True,
+                timeout=15,
             )
             output = res.stdout or res.stderr
             return {
-                "power_id": "PWR-101", "status": "success",
-                "container": container, "lines_requested": lines,
+                "power_id": "PWR-101",
+                "status": "success",
+                "container": container,
+                "lines_requested": lines,
                 "logs": output[-5000:],  # cap to 5 KB
             }
         except FileNotFoundError:
-            return {"power_id": "PWR-101", "status": "error",
-                    "message": "Docker CLI not found on PATH"}
+            return {"power_id": "PWR-101", "status": "error", "message": "Docker CLI not found on PATH"}
         except Exception as e:
             return {"power_id": "PWR-101", "status": "error", "message": str(e)}
 
@@ -165,20 +179,26 @@ class ITAdminPowers:
         try:
             res = subprocess.run(
                 ["docker", "restart", container],
-                capture_output=True, text=True, timeout=30,
+                capture_output=True,
+                text=True,
+                timeout=30,
             )
             return {
-                "power_id": "PWR-102", "status": "success" if res.returncode == 0 else "error",
+                "power_id": "PWR-102",
+                "status": "success" if res.returncode == 0 else "error",
                 "container": container,
                 "output": (res.stdout or res.stderr).strip(),
                 "approval_required": True,
             }
         except FileNotFoundError:
-            return {"power_id": "PWR-102", "status": "error",
-                    "message": "Docker CLI not found on PATH", "approval_required": True}
+            return {
+                "power_id": "PWR-102",
+                "status": "error",
+                "message": "Docker CLI not found on PATH",
+                "approval_required": True,
+            }
         except Exception as e:
-            return {"power_id": "PWR-102", "status": "error", "message": str(e),
-                    "approval_required": True}
+            return {"power_id": "PWR-102", "status": "error", "message": str(e), "approval_required": True}
 
     # ------------------------------------------------------------------
     # Windows Service Management (PWR-105 to PWR-106)
@@ -193,8 +213,7 @@ class ITAdminPowers:
                 cmd.append(service_name)
             res = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
             if res.returncode != 0:
-                return {"power_id": "PWR-105", "status": "error",
-                        "message": res.stderr.strip() or res.stdout.strip()}
+                return {"power_id": "PWR-105", "status": "error", "message": res.stderr.strip() or res.stdout.strip()}
 
             services: List[Dict[str, str]] = []
             current: Dict[str, str] = {}
@@ -214,7 +233,8 @@ class ITAdminPowers:
                 services.append(current)
 
             return {
-                "power_id": "PWR-105", "status": "success",
+                "power_id": "PWR-105",
+                "status": "success",
                 "service_count": len(services),
                 "services": services[:100],  # cap output
             }
@@ -227,23 +247,27 @@ class ITAdminPowers:
         try:
             stop = subprocess.run(
                 ["sc", "stop", service_name],
-                capture_output=True, text=True, timeout=30,
+                capture_output=True,
+                text=True,
+                timeout=30,
             )
             time.sleep(2)
             start = subprocess.run(
                 ["sc", "start", service_name],
-                capture_output=True, text=True, timeout=30,
+                capture_output=True,
+                text=True,
+                timeout=30,
             )
             return {
-                "power_id": "PWR-106", "status": "success" if start.returncode == 0 else "error",
+                "power_id": "PWR-106",
+                "status": "success" if start.returncode == 0 else "error",
                 "service_name": service_name,
                 "stop_output": stop.stdout.strip(),
                 "start_output": start.stdout.strip(),
                 "approval_required": True,
             }
         except Exception as e:
-            return {"power_id": "PWR-106", "status": "error", "message": str(e),
-                    "approval_required": True}
+            return {"power_id": "PWR-106", "status": "error", "message": str(e), "approval_required": True}
 
     # ------------------------------------------------------------------
     # Disk Management (PWR-110, PWR-112)
@@ -258,21 +282,24 @@ class ITAdminPowers:
             for p in partitions:
                 try:
                     usage = psutil.disk_usage(p.mountpoint)
-                    drives.append({
-                        "device": p.device,
-                        "mountpoint": p.mountpoint,
-                        "fstype": p.fstype,
-                        "total_gb": round(usage.total / (1024**3), 2),
-                        "used_gb": round(usage.used / (1024**3), 2),
-                        "free_gb": round(usage.free / (1024**3), 2),
-                        "percent": usage.percent,
-                    })
+                    drives.append(
+                        {
+                            "device": p.device,
+                            "mountpoint": p.mountpoint,
+                            "fstype": p.fstype,
+                            "total_gb": round(usage.total / (1024**3), 2),
+                            "used_gb": round(usage.used / (1024**3), 2),
+                            "free_gb": round(usage.free / (1024**3), 2),
+                            "percent": usage.percent,
+                        }
+                    )
                 except PermissionError:
-                    drives.append({"device": p.device, "mountpoint": p.mountpoint,
-                                   "error": "Permission denied"})
+                    drives.append({"device": p.device, "mountpoint": p.mountpoint, "error": "Permission denied"})
             return {
-                "power_id": "PWR-110", "status": "success",
-                "drive_count": len(drives), "drives": drives,
+                "power_id": "PWR-110",
+                "status": "success",
+                "drive_count": len(drives),
+                "drives": drives,
             }
         except Exception as e:
             return {"power_id": "PWR-110", "status": "error", "message": str(e)}
@@ -306,14 +333,17 @@ class ITAdminPowers:
                 except (OSError, PermissionError):
                     pass
                 total_size += dir_size
-                cleanup_items.append({
-                    "directory": target_dir,
-                    "file_count": file_count,
-                    "size_mb": round(dir_size / (1024**2), 2),
-                })
+                cleanup_items.append(
+                    {
+                        "directory": target_dir,
+                        "file_count": file_count,
+                        "size_mb": round(dir_size / (1024**2), 2),
+                    }
+                )
 
             return {
-                "power_id": "PWR-112", "status": "success",
+                "power_id": "PWR-112",
+                "status": "success",
                 "total_reclaimable_mb": round(total_size / (1024**2), 2),
                 "locations": cleanup_items,
             }
@@ -332,19 +362,22 @@ class ITAdminPowers:
             for p in psutil.process_iter(["pid", "name", "cpu_percent", "memory_percent", "status"]):
                 try:
                     info = p.info
-                    procs.append({
-                        "pid": info["pid"],
-                        "name": info["name"],
-                        "cpu_percent": info.get("cpu_percent", 0.0) or 0.0,
-                        "memory_percent": round(info.get("memory_percent", 0.0) or 0.0, 2),
-                        "status": info.get("status", "unknown"),
-                    })
+                    procs.append(
+                        {
+                            "pid": info["pid"],
+                            "name": info["name"],
+                            "cpu_percent": info.get("cpu_percent", 0.0) or 0.0,
+                            "memory_percent": round(info.get("memory_percent", 0.0) or 0.0, 2),
+                            "status": info.get("status", "unknown"),
+                        }
+                    )
                 except (psutil.NoSuchProcess, psutil.AccessDenied):
                     pass
 
             procs.sort(key=lambda x: x["cpu_percent"] + x["memory_percent"], reverse=True)
             return {
-                "power_id": "PWR-115", "status": "success",
+                "power_id": "PWR-115",
+                "status": "success",
                 "total_processes": len(procs),
                 "top_processes": procs[:top_n],
             }
@@ -363,20 +396,29 @@ class ITAdminPowers:
                 for p in alive:
                     p.kill()
             return {
-                "power_id": "PWR-116", "status": "success",
-                "pid": pid, "name": proc_name,
+                "power_id": "PWR-116",
+                "status": "success",
+                "pid": pid,
+                "name": proc_name,
                 "message": f"Process {proc_name} (PID {pid}) terminated",
                 "approval_required": True,
             }
         except psutil.NoSuchProcess:
-            return {"power_id": "PWR-116", "status": "error",
-                    "message": f"No process with PID {pid}", "approval_required": True}
+            return {
+                "power_id": "PWR-116",
+                "status": "error",
+                "message": f"No process with PID {pid}",
+                "approval_required": True,
+            }
         except psutil.AccessDenied:
-            return {"power_id": "PWR-116", "status": "error",
-                    "message": f"Access denied for PID {pid}", "approval_required": True}
+            return {
+                "power_id": "PWR-116",
+                "status": "error",
+                "message": f"Access denied for PID {pid}",
+                "approval_required": True,
+            }
         except Exception as e:
-            return {"power_id": "PWR-116", "status": "error", "message": str(e),
-                    "approval_required": True}
+            return {"power_id": "PWR-116", "status": "error", "message": str(e), "approval_required": True}
 
     # ------------------------------------------------------------------
     # Event Logs & System Info (PWR-118 to PWR-126)
@@ -394,9 +436,12 @@ class ITAdminPowers:
             )
             res = subprocess.run(
                 ["powershell", "-NoProfile", "-Command", ps_script],
-                capture_output=True, text=True, timeout=30,
+                capture_output=True,
+                text=True,
+                timeout=30,
             )
             import json
+
             try:
                 events = json.loads(res.stdout) if res.stdout.strip() else []
                 if isinstance(events, dict):
@@ -405,9 +450,12 @@ class ITAdminPowers:
                 events = [{"raw": res.stdout[:3000]}]
 
             return {
-                "power_id": "PWR-118", "status": "success",
-                "keyword": keyword, "source": source,
-                "event_count": len(events), "events": events[:count],
+                "power_id": "PWR-118",
+                "status": "success",
+                "keyword": keyword,
+                "source": source,
+                "event_count": len(events),
+                "events": events[:count],
             }
         except Exception as e:
             return {"power_id": "PWR-118", "status": "error", "message": str(e)}
@@ -418,10 +466,8 @@ class ITAdminPowers:
         try:
             programs: List[Dict[str, str]] = []
             reg_paths = [
-                (winreg.HKEY_CURRENT_USER,
-                 r"Software\Microsoft\Windows\CurrentVersion\Run"),
-                (winreg.HKEY_LOCAL_MACHINE,
-                 r"Software\Microsoft\Windows\CurrentVersion\Run"),
+                (winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Run"),
+                (winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows\CurrentVersion\Run"),
             ]
             for hive, path in reg_paths:
                 try:
@@ -430,10 +476,13 @@ class ITAdminPowers:
                     while True:
                         try:
                             name, value, _ = winreg.EnumValue(key, i)
-                            programs.append({
-                                "name": name, "command": value,
-                                "location": f"{'HKCU' if hive == winreg.HKEY_CURRENT_USER else 'HKLM'}\\{path}",
-                            })
+                            programs.append(
+                                {
+                                    "name": name,
+                                    "command": value,
+                                    "location": f"{'HKCU' if hive == winreg.HKEY_CURRENT_USER else 'HKLM'}\\{path}",
+                                }
+                            )
                             i += 1
                         except OSError:
                             break
@@ -448,12 +497,15 @@ class ITAdminPowers:
             )
             if os.path.isdir(startup_folder):
                 for f in os.listdir(startup_folder):
-                    programs.append({"name": f, "command": os.path.join(startup_folder, f),
-                                     "location": "Startup Folder"})
+                    programs.append(
+                        {"name": f, "command": os.path.join(startup_folder, f), "location": "Startup Folder"}
+                    )
 
             return {
-                "power_id": "PWR-119", "status": "success",
-                "count": len(programs), "programs": programs,
+                "power_id": "PWR-119",
+                "status": "success",
+                "count": len(programs),
+                "programs": programs,
             }
         except Exception as e:
             return {"power_id": "PWR-119", "status": "error", "message": str(e)}
@@ -470,8 +522,10 @@ class ITAdminPowers:
                     expiry = datetime.datetime.strptime(not_after, "%b %d %H:%M:%S %Y %Z")
                     days_left = (expiry - datetime.datetime.utcnow()).days
                     return {
-                        "power_id": "PWR-120", "status": "success",
-                        "host": host, "port": port,
+                        "power_id": "PWR-120",
+                        "status": "success",
+                        "host": host,
+                        "port": port,
                         "subject": dict(x[0] for x in cert.get("subject", [])),
                         "issuer": dict(x[0] for x in cert.get("issuer", [])),
                         "expires_at": expiry.strftime("%Y-%m-%d %H:%M:%S"),
@@ -479,8 +533,7 @@ class ITAdminPowers:
                         "warning": days_left < 30,
                     }
         except Exception as e:
-            return {"power_id": "PWR-120", "status": "error", "host": host,
-                    "message": str(e)}
+            return {"power_id": "PWR-120", "status": "error", "host": host, "message": str(e)}
 
     @staticmethod
     def system_uptime() -> Dict[str, Any]:
@@ -494,7 +547,8 @@ class ITAdminPowers:
             hours, remainder = divmod(delta.seconds, 3600)
             minutes, seconds = divmod(remainder, 60)
             return {
-                "power_id": "PWR-121", "status": "success",
+                "power_id": "PWR-121",
+                "status": "success",
                 "boot_time": boot_dt.strftime("%Y-%m-%d %H:%M:%S"),
                 "uptime_str": f"{days}d {hours}h {minutes}m {seconds}s",
                 "uptime_seconds": int(delta.total_seconds()),
@@ -508,12 +562,9 @@ class ITAdminPowers:
         try:
             programs: List[Dict[str, str]] = []
             reg_paths = [
-                (winreg.HKEY_LOCAL_MACHINE,
-                 r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"),
-                (winreg.HKEY_LOCAL_MACHINE,
-                 r"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"),
-                (winreg.HKEY_CURRENT_USER,
-                 r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"),
+                (winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"),
+                (winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"),
+                (winreg.HKEY_CURRENT_USER, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"),
             ]
             seen = set()
             for hive, path in reg_paths:
@@ -540,8 +591,7 @@ class ITAdminPowers:
                                 publisher = winreg.QueryValueEx(subkey, "Publisher")[0]
                             except OSError:
                                 pass
-                            programs.append({"name": name, "version": version,
-                                             "publisher": publisher})
+                            programs.append({"name": name, "version": version, "publisher": publisher})
                             winreg.CloseKey(subkey)
                         except OSError:
                             pass
@@ -551,8 +601,10 @@ class ITAdminPowers:
 
             programs.sort(key=lambda x: x["name"].lower())
             return {
-                "power_id": "PWR-122", "status": "success",
-                "count": len(programs), "programs": programs,
+                "power_id": "PWR-122",
+                "status": "success",
+                "count": len(programs),
+                "programs": programs,
             }
         except Exception as e:
             return {"power_id": "PWR-122", "status": "error", "message": str(e)}
@@ -561,19 +613,33 @@ class ITAdminPowers:
     def environment_variables() -> Dict[str, Any]:
         """PWR-123: List environment variables with secrets masked."""
         try:
-            secret_keywords = {"key", "secret", "token", "password", "passwd",
-                               "credential", "auth", "api_key", "apikey", "private"}
+            secret_keywords = {
+                "key",
+                "secret",
+                "token",
+                "password",
+                "passwd",
+                "credential",
+                "auth",
+                "api_key",
+                "apikey",
+                "private",
+            }
             env_vars: List[Dict[str, str]] = []
             for k, v in sorted(os.environ.items()):
                 is_sensitive = any(s in k.lower() for s in secret_keywords)
-                env_vars.append({
-                    "name": k,
-                    "value": "****REDACTED****" if is_sensitive else v,
-                    "sensitive": is_sensitive,
-                })
+                env_vars.append(
+                    {
+                        "name": k,
+                        "value": "****REDACTED****" if is_sensitive else v,
+                        "sensitive": is_sensitive,
+                    }
+                )
             return {
-                "power_id": "PWR-123", "status": "success",
-                "count": len(env_vars), "variables": env_vars,
+                "power_id": "PWR-123",
+                "status": "success",
+                "count": len(env_vars),
+                "variables": env_vars,
             }
         except Exception as e:
             return {"power_id": "PWR-123", "status": "error", "message": str(e)}
@@ -583,9 +649,10 @@ class ITAdminPowers:
         """PWR-124: GPU/display driver information via WMIC."""
         try:
             res = subprocess.run(
-                ["wmic", "path", "Win32_VideoController", "get",
-                 "Name,DriverVersion,AdapterRAM,Status", "/format:csv"],
-                capture_output=True, text=True, timeout=15,
+                ["wmic", "path", "Win32_VideoController", "get", "Name,DriverVersion,AdapterRAM,Status", "/format:csv"],
+                capture_output=True,
+                text=True,
+                timeout=15,
             )
             drivers: List[Dict[str, str]] = []
             lines = [l.strip() for l in res.stdout.strip().splitlines() if l.strip()]
@@ -598,8 +665,10 @@ class ITAdminPowers:
                         drivers.append(entry)
 
             return {
-                "power_id": "PWR-124", "status": "success",
-                "gpu_count": len(drivers), "drivers": drivers,
+                "power_id": "PWR-124",
+                "status": "success",
+                "gpu_count": len(drivers),
+                "drivers": drivers,
             }
         except Exception as e:
             return {"power_id": "PWR-124", "status": "error", "message": str(e)}
@@ -623,22 +692,26 @@ class ITAdminPowers:
             )
             res = subprocess.run(
                 ["powershell", "-NoProfile", "-Command", ps_script],
-                capture_output=True, text=True, timeout=60,
+                capture_output=True,
+                text=True,
+                timeout=60,
             )
             import json
+
             try:
                 updates = json.loads(res.stdout) if res.stdout.strip() else []
                 if isinstance(updates, dict):
                     if "error" in updates:
-                        return {"power_id": "PWR-125", "status": "error",
-                                "message": updates["error"]}
+                        return {"power_id": "PWR-125", "status": "error", "message": updates["error"]}
                     updates = [updates]
             except json.JSONDecodeError:
                 updates = []
 
             return {
-                "power_id": "PWR-125", "status": "success",
-                "pending_count": len(updates), "pending_updates": updates[:50],
+                "power_id": "PWR-125",
+                "status": "success",
+                "pending_count": len(updates),
+                "pending_updates": updates[:50],
             }
         except Exception as e:
             return {"power_id": "PWR-125", "status": "error", "message": str(e)}
@@ -659,13 +732,14 @@ class ITAdminPowers:
                     fp = os.path.join(minidump_dir, f)
                     try:
                         stat = os.stat(fp)
-                        dumps.append({
-                            "file": f,
-                            "path": fp,
-                            "size_kb": round(stat.st_size / 1024, 2),
-                            "created": datetime.datetime.fromtimestamp(
-                                stat.st_ctime).strftime("%Y-%m-%d %H:%M:%S"),
-                        })
+                        dumps.append(
+                            {
+                                "file": f,
+                                "path": fp,
+                                "size_kb": round(stat.st_size / 1024, 2),
+                                "created": datetime.datetime.fromtimestamp(stat.st_ctime).strftime("%Y-%m-%d %H:%M:%S"),
+                            }
+                        )
                     except OSError:
                         pass
 
@@ -673,18 +747,20 @@ class ITAdminPowers:
             if os.path.isfile(full_dump):
                 try:
                     stat = os.stat(full_dump)
-                    dumps.append({
-                        "file": "MEMORY.DMP",
-                        "path": full_dump,
-                        "size_mb": round(stat.st_size / (1024**2), 2),
-                        "created": datetime.datetime.fromtimestamp(
-                            stat.st_ctime).strftime("%Y-%m-%d %H:%M:%S"),
-                    })
+                    dumps.append(
+                        {
+                            "file": "MEMORY.DMP",
+                            "path": full_dump,
+                            "size_mb": round(stat.st_size / (1024**2), 2),
+                            "created": datetime.datetime.fromtimestamp(stat.st_ctime).strftime("%Y-%m-%d %H:%M:%S"),
+                        }
+                    )
                 except OSError:
                     pass
 
             return {
-                "power_id": "PWR-126", "status": "success",
+                "power_id": "PWR-126",
+                "status": "success",
                 "dump_count": len(dumps),
                 "recent_dumps": dumps,
                 "has_recent_crashes": len(dumps) > 0,

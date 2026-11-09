@@ -1,4 +1,5 @@
 """Iron Man app-connection fast-path tests (match + execute, spawner-injected)."""
+
 import os
 import time
 from typing import Any, Dict, List
@@ -46,8 +47,13 @@ class FakeGate:
         self.unavailable_reason = ""
 
     def gate(self, block) -> Dict[str, Any]:
-        return {"wake": self.hit, "score": 0.83 if self.hit else 0.12,
-                "source": "acoustic", "threshold": 0.5, "timestamp": time.time()}
+        return {
+            "wake": self.hit,
+            "score": 0.83 if self.hit else 0.12,
+            "source": "acoustic",
+            "threshold": 0.5,
+            "timestamp": time.time(),
+        }
 
     def reset(self) -> None:
         pass
@@ -69,34 +75,37 @@ class RecordingOrchestrator:
 
     async def process_user_query(self, query: str):
         self.calls.append(query)
-        return {"task_id": f"tsk_{len(self.calls)}", "status": "COMPLETED",
-                "response": {"message": "orchestrated"}}
+        return {"task_id": f"tsk_{len(self.calls)}", "status": "COMPLETED", "response": {"message": "orchestrated"}}
 
 
 # --------------------------------------------------------------------- #
 #  Intent matcher: positive cases                                        #
 # --------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("text,expected_kind,expected", [
-    ("open antigravity", "launch", "antigravity"),
-    ("launch antigravity", "launch", "antigravity"),
-    ("open antigravity ide", "launch", "antigravity_ide"),
-    ("open antigravity-ide", "launch", "antigravity_ide"),
-    ("start Antigravity.", "launch", "antigravity"),
-    ("fire up opencode", "launch", "opencode"),
-    ("open open code", "launch", "opencode"),
-    ("open Open Code!", "launch", "opencode"),
-    ("open chrome", "launch", "chrome"),
-    ("open vs code", "launch", "vscode"),
-    ("open terminal", "launch", "terminal"),
-    ("ask opencode to fix the failing test", "delegate", "opencode"),
-    ("tell opencode to refactor daemon.py", "delegate", "opencode"),
-    ("tell my opencode to add a hisch test", "delegate", "opencode"),
-    ("ask antigravity to audit the boot path", "delegate", "antigravity"),
-    ("tell antigravity ide to restructure the sprint", "delegate", "antigravity_ide"),
-    ("ask antigravity-ide to plan sprint 4", "delegate", "antigravity_ide"),
-    ("run opencode in D:\\jarvis", "opencode_in", "opencode_in"),
-])
+
+@pytest.mark.parametrize(
+    "text,expected_kind,expected",
+    [
+        ("open antigravity", "launch", "antigravity"),
+        ("launch antigravity", "launch", "antigravity"),
+        ("open antigravity ide", "launch", "antigravity_ide"),
+        ("open antigravity-ide", "launch", "antigravity_ide"),
+        ("start Antigravity.", "launch", "antigravity"),
+        ("fire up opencode", "launch", "opencode"),
+        ("open open code", "launch", "opencode"),
+        ("open Open Code!", "launch", "opencode"),
+        ("open chrome", "launch", "chrome"),
+        ("open vs code", "launch", "vscode"),
+        ("open terminal", "launch", "terminal"),
+        ("ask opencode to fix the failing test", "delegate", "opencode"),
+        ("tell opencode to refactor daemon.py", "delegate", "opencode"),
+        ("tell my opencode to add a hisch test", "delegate", "opencode"),
+        ("ask antigravity to audit the boot path", "delegate", "antigravity"),
+        ("tell antigravity ide to restructure the sprint", "delegate", "antigravity_ide"),
+        ("ask antigravity-ide to plan sprint 4", "delegate", "antigravity_ide"),
+        ("run opencode in D:\\jarvis", "opencode_in", "opencode_in"),
+    ],
+)
 def test_intent_matcher_positive(text, expected_kind, expected):
     intent = match_app_intent(text)
     assert intent is not None, f"no intent matched for {text!r}"
@@ -110,17 +119,20 @@ def test_intent_matcher_positive(text, expected_kind, expected):
         assert intent["path"] == "D:\\jarvis"
 
 
-@pytest.mark.parametrize("text", [
-    "what is the weather today",
-    "system health",
-    "open the pod bay doors",
-    "ask john to call me",
-    "open",
-    "",
-    "open antigravity now please",
-    "tell me a joke",
-    "restart the deployment",
-])
+@pytest.mark.parametrize(
+    "text",
+    [
+        "what is the weather today",
+        "system health",
+        "open the pod bay doors",
+        "ask john to call me",
+        "open",
+        "",
+        "open antigravity now please",
+        "tell me a joke",
+        "restart the deployment",
+    ],
+)
 def test_intent_matcher_negative(text):
     assert match_app_intent(text) is None
 
@@ -141,6 +153,7 @@ def test_antigravity_task_extraction():
 # --------------------------------------------------------------------- #
 #  Launchers with injected spawner (no real process is started)         #
 # --------------------------------------------------------------------- #
+
 
 class SpawnRecorder:
     def __init__(self):
@@ -177,8 +190,7 @@ def test_launch_in_console_starts_visible_terminal():
 
 def test_opencode_delegate_builds_headless_invocation():
     rec = SpawnRecorder()
-    result = opencode_delegate("fix the flaky test", workdir="D:\\jarvis",
-                               auto_approve=True, spawner=rec)
+    result = opencode_delegate("fix the flaky test", workdir="D:\\jarvis", auto_approve=True, spawner=rec)
     assert result["ok"] is True
     assert result["log"].endswith(".log")
     assert "opencode" in result["log"].replace("\\", "/") or "opencode" in result["log"].replace("/", "\\")
@@ -201,6 +213,7 @@ def test_antigravity_delegate_launches_and_preloads(monkeypatch):
 def test_antigravity_project_folder_arg_included():
     rec = SpawnRecorder()
     import os as _os
+
     launch_app("antigravity", args=[r"D:\jarvis"], spawner=rec)
     assert rec.calls[0][-1] == r"D:\jarvis"
 
@@ -209,8 +222,10 @@ def test_antigravity_project_folder_arg_included():
 #  End-to-end: wake -> app intent executes WITHOUT the orchestrator      #
 # --------------------------------------------------------------------- #
 
+
 def test_wake_with_open_command_launches_app_not_orchestrator(tmp_path, monkeypatch):
     import jarvis.hud.state as hud_state
+
     monkeypatch.setattr(hud_state, "HUD_STATE_PATH", tmp_path / "daemon_state.json")
     launched = {}
 
@@ -221,6 +236,7 @@ def test_wake_with_open_command_launches_app_not_orchestrator(tmp_path, monkeypa
     monkeypatch.setattr(app_connector, "launch_app", fake_launch_app)
 
     from jarvis.voice.daemon import VoiceDaemon
+
     gate = FakeGate(hit=True)
     stt = RecordingSTT("hey jarvis open antigravity")
     orch = RecordingOrchestrator()
@@ -239,6 +255,7 @@ def test_wake_with_open_command_launches_app_not_orchestrator(tmp_path, monkeypa
 
 def test_wake_with_tell_delegate_opencode(tmp_path, monkeypatch):
     import jarvis.hud.state as hud_state
+
     monkeypatch.setattr(hud_state, "HUD_STATE_PATH", tmp_path / "daemon_state.json")
     delegated = {}
 
@@ -249,6 +266,7 @@ def test_wake_with_tell_delegate_opencode(tmp_path, monkeypatch):
     monkeypatch.setattr(app_connector, "opencode_delegate", fake_delegate)
 
     from jarvis.voice.daemon import VoiceDaemon
+
     gate = FakeGate(hit=True)
     stt = RecordingSTT("hey jarvis tell opencode to fix the flaky test")
     orch = RecordingOrchestrator()
@@ -265,10 +283,12 @@ def test_wake_with_tell_delegate_opencode(tmp_path, monkeypatch):
 
 def test_wake_app_intents_off_falls_through_to_orchestrator(tmp_path, monkeypatch):
     import jarvis.hud.state as hud_state
+
     monkeypatch.setattr(hud_state, "HUD_STATE_PATH", tmp_path / "daemon_state.json")
     monkeypatch.setenv("JARVIS_APP_INTENTS", "off")
 
     from jarvis.voice.daemon import VoiceDaemon
+
     gate = FakeGate(hit=True)
     stt = RecordingSTT("hey jarvis open antigravity")
     orch = RecordingOrchestrator()
@@ -282,21 +302,24 @@ def test_wake_app_intents_off_falls_through_to_orchestrator(tmp_path, monkeypatc
 
 def test_hud_state_file_written_through_wake_cycle(tmp_path, monkeypatch):
     import jarvis.hud.state as hud_state
+
     state_file = tmp_path / "daemon_state.json"
     monkeypatch.setattr(hud_state, "HUD_STATE_PATH", state_file)
-    monkeypatch.setattr(app_connector, "launch_app",
-                        lambda app, args=None, spawner=None: {"ok": True, "app": app, "pid": 1})
+    monkeypatch.setattr(
+        app_connector, "launch_app", lambda app, args=None, spawner=None: {"ok": True, "app": app, "pid": 1}
+    )
 
     from jarvis.voice.daemon import VoiceDaemon
+
     gate = FakeGate(hit=True)
     stt = RecordingSTT("hey jarvis open antigravity")
-    daemon = VoiceDaemon(stt=stt, orchestrator=RecordingOrchestrator(),
-                         speak_replies=False, gate=gate)
+    daemon = VoiceDaemon(stt=stt, orchestrator=RecordingOrchestrator(), speak_replies=False, gate=gate)
     daemon.state = "LISTENING_FOR_WAKE"
 
     feed_utterance(daemon)
 
     import json
+
     data = json.loads(state_file.read_text(encoding="utf-8"))
     # final stage of the cycle: wake -> PROCESSING -> SPEAKING -> (timer fires later)
     assert data["state"] == "SPEAKING"

@@ -30,4 +30,3 @@ class OpportunityModel(Base):
         index=True,
         nullable=False,
     )
-

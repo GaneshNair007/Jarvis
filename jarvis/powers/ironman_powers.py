@@ -269,4 +269,3 @@ class IronManPowers:
 
 # Global Singleton Instance
 ironman_powers = IronManPowers()
-

@@ -174,7 +174,12 @@ class ProactiveAutonomousScheduler:
                 "SCHEDULED_JOB_SUCCESS",
                 f"Job '{job_id}' completed cleanly in {round(time.time() - start_ts, 2)}s",
             )
-            return {"status": "SUCCESS", "job_id": job_id, "duration_sec": round(time.time() - start_ts, 3), "result": result}
+            return {
+                "status": "SUCCESS",
+                "job_id": job_id,
+                "duration_sec": round(time.time() - start_ts, 3),
+                "result": result,
+            }
         except Exception as exc:
             job.last_status = "FAILED"
             job.last_error = str(exc)
@@ -190,16 +195,20 @@ class ProactiveAutonomousScheduler:
         now_str = datetime.datetime.now().strftime("%H:%M")
         job_reports = []
         for job in self.jobs.values():
-            job_reports.append({
-                "job_id": job.job_id,
-                "name": job.name,
-                "schedule_time": job.schedule_time_hhmm,
-                "enabled": job.enabled,
-                "last_run": datetime.datetime.fromtimestamp(job.last_run_timestamp).isoformat() if job.last_run_timestamp else None,
-                "last_status": job.last_status,
-                "run_count": job.run_count,
-                "last_error": job.last_error,
-            })
+            job_reports.append(
+                {
+                    "job_id": job.job_id,
+                    "name": job.name,
+                    "schedule_time": job.schedule_time_hhmm,
+                    "enabled": job.enabled,
+                    "last_run": datetime.datetime.fromtimestamp(job.last_run_timestamp).isoformat()
+                    if job.last_run_timestamp
+                    else None,
+                    "last_status": job.last_status,
+                    "run_count": job.run_count,
+                    "last_error": job.last_error,
+                }
+            )
         return {
             "current_time_hhmm": now_str,
             "total_jobs": len(self.jobs),

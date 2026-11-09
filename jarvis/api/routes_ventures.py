@@ -106,4 +106,3 @@ def grokbot_ops_sweep(payload: Dict[str, Any]):
     ad_reports = payload.get("ad_reports", [])
     sweep = business_playbook_engine.run_weekly_ops_sweep(task_board, crm_leads, ad_reports)
     return sweep.model_dump()
-

@@ -49,6 +49,7 @@ from jarvis.api.routes_gsoc import router as gsoc_router
 import uuid
 from graph.jarvis_graph import get_jarvis_graph
 
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     """Register this API process in the validated lifecycle registry."""
@@ -94,7 +95,7 @@ app.include_router(smart_home_router)
 app.include_router(ops_router)
 app.include_router(grok_router)
 app.include_router(workforce_router)
-app.include_router(workforce_router, prefix='/api/v1')
+app.include_router(workforce_router, prefix="/api/v1")
 app.include_router(reflections_router)
 app.include_router(ventures_router)
 app.include_router(ventures_router, prefix="/api/v1")
@@ -105,12 +106,14 @@ app.include_router(gsoc_router, prefix="/api/v1")
 @app.get("/scheduler/status", tags=["Autonomous Scheduler"])
 def get_scheduler_status():
     from jarvis.core.scheduler import proactive_scheduler
+
     return proactive_scheduler.get_status()
 
 
 @app.post("/scheduler/trigger/{job_id}", tags=["Autonomous Scheduler"])
 async def trigger_scheduled_job(job_id: str):
     from jarvis.core.scheduler import proactive_scheduler
+
     try:
         res = await proactive_scheduler.trigger_job(job_id)
         return res
@@ -118,6 +121,7 @@ async def trigger_scheduled_job(job_id: str):
         raise HTTPException(status_code=404, detail=str(ve))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
 

@@ -6,12 +6,18 @@ so JARVIS dynamically spawns worker agents on-demand instead of keeping 100+ idl
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import datetime
 import uuid
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from jarvis.db.models.base import Base, GUID
+
+
+if TYPE_CHECKING:
+    from jarvis.db.models.agent import AgentModel
 
 
 class AgentLifecycleModel(Base):
@@ -32,4 +38,3 @@ class AgentLifecycleModel(Base):
 
     # Relationships
     agent: Mapped["AgentModel"] = relationship("AgentModel", back_populates="lifecycles")
-

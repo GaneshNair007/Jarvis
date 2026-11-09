@@ -25,7 +25,13 @@ def upgrade() -> None:
         sa.Column("target_date", sa.DateTime(timezone=True), nullable=True),
         sa.Column("metadata", postgresql.JSONB(astext_type=sa.Text()), nullable=False, server_default="{}"),
         sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
-        sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), onupdate=sa.text("now()"), nullable=False),
+        sa.Column(
+            "updated_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            onupdate=sa.text("now()"),
+            nullable=False,
+        ),
     )
     op.create_index("ix_goals_status", "goals", ["status"])
     op.create_index("ix_goals_priority", "goals", ["priority"])

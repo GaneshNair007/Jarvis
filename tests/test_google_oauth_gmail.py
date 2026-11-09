@@ -243,9 +243,9 @@ def test_exchange_code_sends_pkce_verifier_and_persists_redacted_token():
     assert form["grant_type"] == "authorization_code"
     assert form["code"] == "auth-code"
     verifier = form["code_verifier"]
-    recomputed = base64.urlsafe_b64encode(
-        hashlib.sha256(verifier.encode("ascii")).digest()
-    ).rstrip(b"=").decode("ascii")
+    recomputed = (
+        base64.urlsafe_b64encode(hashlib.sha256(verifier.encode("ascii")).digest()).rstrip(b"=").decode("ascii")
+    )
     assert recomputed == challenge
 
     stored = store.load("google")
@@ -259,9 +259,7 @@ def test_exchange_code_sends_pkce_verifier_and_persists_redacted_token():
 
 
 def test_exchange_code_rejects_replayed_state():
-    transport = FakeOAuthTransport(
-        {"https://oauth2.googleapis.com/token": {"access_token": "a", "refresh_token": "r"}}
-    )
+    transport = FakeOAuthTransport({"https://oauth2.googleapis.com/token": {"access_token": "a", "refresh_token": "r"}})
     mgr = _oauth(transport=transport)
     auth = _authorization(mgr)
     mgr.exchange_code("google", "code", auth["state"], "cid", "secret")
@@ -345,10 +343,14 @@ def test_dpapi_store_encrypts_at_rest(tmp_path):
 
 def test_list_messages_parses_metadata_and_account(monkeypatch):
     transport = FakeGmailTransport()
-    transport.route("GET", "/gmail/v1/users/me/messages", {
-        "messages": [{"id": "m1", "threadId": "thread-1"}],
-        "resultSizeEstimate": 1,
-    })
+    transport.route(
+        "GET",
+        "/gmail/v1/users/me/messages",
+        {
+            "messages": [{"id": "m1", "threadId": "thread-1"}],
+            "resultSizeEstimate": 1,
+        },
+    )
     transport.route("GET", "/gmail/v1/users/me/messages/m1", _full_message())
     transport.route("GET", "/gmail/v1/users/me/profile", {"emailAddress": "jarvis33246146@gmail.com"})
     client, _oauth_mgr = _gmail_client(monkeypatch, transport)
@@ -484,9 +486,7 @@ def test_send_draft_returns_real_provider_id(monkeypatch):
 
 
 def test_send_message_refuses_changed_content(monkeypatch):
-    transport = FakeGmailTransport().route(
-        "POST", "/gmail/v1/users/me/messages/send", {"id": "sent-1"}
-    )
+    transport = FakeGmailTransport().route("POST", "/gmail/v1/users/me/messages/send", {"id": "sent-1"})
     client, _ = _gmail_client(monkeypatch, transport)
 
     with pytest.raises(GmailApiError):

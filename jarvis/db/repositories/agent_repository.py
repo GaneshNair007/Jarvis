@@ -18,7 +18,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class AgentRepository(BaseRepository[AgentModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, AgentModel)
 
@@ -65,18 +64,10 @@ class AgentRepository(BaseRepository[AgentModel]):
         return self.session.query(AgentModel).filter(AgentModel.agent_key == agent_key.lower()).first()
 
     def get_department_agents(self, department_id: uuid.UUID) -> List[AgentModel]:
-        return (
-            self.session.query(AgentModel)
-            .filter(AgentModel.department_id == department_id)
-            .all()
-        )
+        return self.session.query(AgentModel).filter(AgentModel.department_id == department_id).all()
 
     def get_available_agents(self) -> List[AgentModel]:
-        return (
-            self.session.query(AgentModel)
-            .filter(AgentModel.status == "ACTIVE")
-            .all()
-        )
+        return self.session.query(AgentModel).filter(AgentModel.status == "ACTIVE").all()
 
     def update_status(self, agent_id: uuid.UUID, status: str, reason: str = "") -> Optional[AgentModel]:
         """Transitions agent state (e.g. ACTIVE -> PAUSED / RETIRED) and writes lifecycle record."""

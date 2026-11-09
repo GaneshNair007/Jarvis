@@ -102,9 +102,11 @@ class JarvisOrchestrator:
         # (checked before LLM tiers so /code and /upgrade always reach subagents).
         if query.strip().lower().startswith("/code") or "write code" in query.lower() or "generate" in query.lower():
             from jarvis.powers.multiagent_powers import multiagent_powers
+
             execution_result = multiagent_powers.orchestrator_dispatch(f"Code: {query}")
         elif query.strip().lower().startswith("/upgrade") or "self improve" in query.lower():
             from jarvis.powers.multiagent_powers import multiagent_powers
+
             execution_result = multiagent_powers.self_upgrade_pipeline()
         elif decision.tier == "BYPASS":
             # Instant command execution
@@ -126,14 +128,18 @@ class JarvisOrchestrator:
             execution_result = {"note": "No matching execution path, returning empty result"}
 
         # Step 4: Verification & Completion (Honest State)
-        is_failed = execution_result.get("status") in ("unavailable", "error", "failed") or bool(execution_result.get("error"))
+        is_failed = execution_result.get("status") in ("unavailable", "error", "failed") or bool(
+            execution_result.get("error")
+        )
         final_state = "FAILED" if is_failed else "COMPLETED"
 
         self.state_machine.transition(task_id, "VERIFYING", reason="Validating execution receipts")
         self.state_machine.transition(
             task_id,
             final_state,
-            reason="Execution failed: " + str(execution_result.get("error", "unavailable")) if is_failed else "Task finished successfully"
+            reason="Execution failed: " + str(execution_result.get("error", "unavailable"))
+            if is_failed
+            else "Task finished successfully",
         )
         self.store.save_task(
             task_id,
@@ -196,8 +202,23 @@ class JarvisOrchestrator:
                 "action": "lock_workstation",
                 "message": "Workstation lock requested.",
             }
-        elif any(k in cleaned for k in ["ac", "air condition", "projector", "geyser", "light", "lamp", "movie night", "work mode", "sleep mode", "morning wake"]):
+        elif any(
+            k in cleaned
+            for k in [
+                "ac",
+                "air condition",
+                "projector",
+                "geyser",
+                "light",
+                "lamp",
+                "movie night",
+                "work mode",
+                "sleep mode",
+                "morning wake",
+            ]
+        ):
             from jarvis.powers.smart_home_powers import smart_home_powers
+
             res = smart_home_powers.process_voice_command(query)
             if res.get("status") != "unhandled":
                 return {
@@ -209,15 +230,22 @@ class JarvisOrchestrator:
                 }
         elif "opportunity radar" in cleaned or "career radar" in cleaned or "leads" in cleaned:
             from jarvis.routines.ops_workflows import opportunity_radar
+
             return opportunity_radar.run()
         elif "daily pulse" in cleaned or "system pulse" in cleaned:
             from jarvis.routines.ops_workflows import daily_system_pulse
+
             return daily_system_pulse.run()
         elif "weekly sweep" in cleaned:
             from jarvis.routines.ops_workflows import weekly_ops_sweep
+
             return weekly_ops_sweep.run()
-        elif any(k in cleaned for k in ["gmail", "email", "inbox", "check mail", "check emails", "missed mail", "opportunities"]):
+        elif any(
+            k in cleaned
+            for k in ["gmail", "email", "inbox", "check mail", "check emails", "missed mail", "opportunities"]
+        ):
             from jarvis.powers.email_powers import email_powers
+
             res = email_powers.scan_inbox_for_opportunities()
             summary_lines = [
                 f"Scanned inbox for {res['account']}: Found {res['opportunities_found']} opportunities ({res['urgent_count']} urgent):"
@@ -235,6 +263,7 @@ class JarvisOrchestrator:
             }
         elif cleaned.startswith("read file ") or cleaned.startswith("cat "):
             from jarvis.powers.file_powers import file_powers
+
             fp = cleaned.replace("read file", "").replace("cat", "").strip()
             return file_powers.read_file(fp)
         elif cleaned.startswith("pwr-"):
@@ -244,39 +273,50 @@ class JarvisOrchestrator:
             return self.registry.execute_power(pid)
         elif cleaned.startswith("ping "):
             from jarvis.powers.networking_powers import networking_powers
+
             host = cleaned.replace("ping", "").strip() or "127.0.0.1"
             return networking_powers.ping(host)
         elif cleaned.startswith("speedtest") or "speed test" in cleaned:
             from jarvis.powers.networking_powers import networking_powers
+
             return networking_powers.speed_test_estimate()
         elif cleaned.startswith("check internet"):
             from jarvis.powers.networking_powers import networking_powers
+
             return networking_powers.check_internet()
         elif cleaned.startswith("stock ") or "stock quote" in cleaned:
             from jarvis.powers.finance_powers import finance_powers
+
             sym = cleaned.replace("stock quote", "").replace("stock", "").strip() or "NVDA"
             return finance_powers.pwr_215_stock_watchlist(sym)
         elif "market briefing" in cleaned:
             from jarvis.powers.finance_powers import finance_powers
+
             return finance_powers.pwr_222_market_briefing()
         elif "portfolio" in cleaned:
             from jarvis.powers.finance_powers import finance_powers
+
             return finance_powers.pwr_224_portfolio_journal()
         elif "hud" in cleaned or "mission control" in cleaned:
             from jarvis.powers.ironman_powers import ironman_powers
+
             return ironman_powers.mission_control_hud()
         elif "threat assessment" in cleaned:
             from jarvis.powers.ironman_powers import ironman_powers
+
             return ironman_powers.threat_assessment()
         elif "security posture" in cleaned or "security scan" in cleaned:
             from jarvis.powers.security_powers import security_powers
+
             return security_powers.security_posture_report()
         elif cleaned.startswith("youtube script ") or cleaned.startswith("video script "):
             from jarvis.powers.youtube_powers import youtube_powers
+
             topic = cleaned.replace("youtube script", "").replace("video script", "").strip() or "AI OS"
             return youtube_powers.generate_video_script(topic)
         elif any(w in cleaned for w in ["who are you", "what can you do", "help"]):
             from jarvis.core.model_router import model_router
+
             return {
                 "type": "assistant_info",
                 "message": model_router._generate_heuristic_response(query),

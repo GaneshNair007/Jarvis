@@ -158,7 +158,9 @@ class TestPolicyGateTier3Adversarial:
             # Must halt at policy node: policy_tier == 3, approval_required == True, final_response == None
             assert result.get("policy_tier") == 3, f"Query '{query}' failed to assign Tier 3"
             assert result.get("approval_required") is True, f"Query '{query}' did not require approval"
-            assert result.get("final_response") is None, f"Query '{query}' leaked to act and executed: {result.get('final_response')}"
+            assert result.get("final_response") is None, (
+                f"Query '{query}' leaked to act and executed: {result.get('final_response')}"
+            )
             assert result.get("model_route") is None, f"Query '{query}' invoked model routing"
 
     def test_tier3_dangerous_power_names_deterministic_halt(self):

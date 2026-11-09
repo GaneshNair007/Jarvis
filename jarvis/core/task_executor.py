@@ -246,8 +246,8 @@ class TaskExecutor:
         if loop.is_running():
             # If already inside an event loop, create a new loop in a thread or run
             import nest_asyncio
+
             nest_asyncio.apply()
             return loop.run_until_complete(self.run(graph, handler=handler, timeout=timeout))
         else:
             return loop.run_until_complete(self.run(graph, handler=handler, timeout=timeout))
-

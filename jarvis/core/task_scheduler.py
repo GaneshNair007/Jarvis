@@ -66,10 +66,14 @@ class TaskScheduler:
 
         node.mark_running(agent_id=agent_id)
         self.running_tasks.add(task_id)
-        logger.info(f"Task '{task_id}' ({node.name}) marked RUNNING with agent [{node.assigned_agent}]. Active running: {len(self.running_tasks)}")
+        logger.info(
+            f"Task '{task_id}' ({node.name}) marked RUNNING with agent [{node.assigned_agent}]. Active running: {len(self.running_tasks)}"
+        )
         return node
 
-    def mark_completed(self, graph: TaskGraph, task_id: str, outputs: Optional[Dict[str, Any]] = None) -> Optional[TaskNode]:
+    def mark_completed(
+        self, graph: TaskGraph, task_id: str, outputs: Optional[Dict[str, Any]] = None
+    ) -> Optional[TaskNode]:
         """
         Transitions a task to COMPLETED, unblocks downstream dependent tasks,
         and releases concurrency slot.
@@ -141,4 +145,3 @@ class TaskScheduler:
             if node.status in (TaskStatus.PENDING, TaskStatus.READY, TaskStatus.RUNNING, TaskStatus.BLOCKED):
                 return False
         return True
-

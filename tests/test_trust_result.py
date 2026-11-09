@@ -15,6 +15,7 @@ from jarvis.core.evidence import Evidence, TrustResult
 #  Core semantics                                                        #
 # --------------------------------------------------------------------- #
 
+
 def test_evidence_serialization_roundtrip():
     ev = Evidence(source="unit.test", data={"answer": 42}, trust_level="verified")
     d = ev.to_dict()
@@ -65,6 +66,7 @@ def test_first_law_rejects_empty_evidence_source():
 #  Adoption: multiagent powers (PWR-288..308)                            #
 # --------------------------------------------------------------------- #
 
+
 def test_multiagent_coding_subagent_returns_trustresult():
     from jarvis.powers.multiagent_powers import MultiAgentPowers
 
@@ -93,14 +95,14 @@ def test_multiagent_generic_subagent_also_adopted():
 #  Adoption: cross-device relay                                          #
 # --------------------------------------------------------------------- #
 
+
 @pytest.mark.asyncio
 async def test_relay_returns_trustresult_for_commands():
     from jarvis.core.relay import DeviceRelay
 
     class Orch:
         async def process_user_query(self, q):
-            return {"task_id": "t1", "status": "COMPLETED",
-                    "response": {"message": "ok"}}
+            return {"task_id": "t1", "status": "COMPLETED", "response": {"message": "ok"}}
 
     relay = DeviceRelay(orchestrator=Orch())
     token = relay.exchange_code(relay.create_pairing_code()["code"])["token"]
@@ -118,6 +120,7 @@ async def test_relay_returns_trustresult_for_commands():
 # --------------------------------------------------------------------- #
 #  Adoption: model -> PDF pipeline (PWR-316)                             #
 # --------------------------------------------------------------------- #
+
 
 def test_doc_pipeline_returns_trustresult(tmp_path):
     from jarvis.core.doc_pipeline import DocPipeline

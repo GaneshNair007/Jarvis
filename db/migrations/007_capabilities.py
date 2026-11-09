@@ -18,7 +18,9 @@ def upgrade() -> None:
         "capabilities",
         sa.Column("id", sa.UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
         sa.Column("name", sa.String(100), unique=True, nullable=False),
-        sa.Column("level", sa.String(30), nullable=False, server_default="EXPERIMENTAL"),  # MISSING, EXPERIMENTAL, BASIC, ADVANCED, ELITE
+        sa.Column(
+            "level", sa.String(30), nullable=False, server_default="EXPERIMENTAL"
+        ),  # MISSING, EXPERIMENTAL, BASIC, ADVANCED, ELITE
         sa.Column("category", sa.String(50), nullable=False, server_default="general"),
         sa.Column("description", sa.Text, nullable=False, server_default=""),
         sa.Column("required_tools", postgresql.JSONB(astext_type=sa.Text()), nullable=False, server_default="[]"),

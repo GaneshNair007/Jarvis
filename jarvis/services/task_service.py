@@ -101,13 +101,15 @@ class TaskService:
                 uow.commit()
 
                 # Publish domain event
-                event_bus.publish(TaskCompletedEvent(
-                    task_id=str(task.id),
-                    task_name=task.name,
-                    department=task.department,
-                    agent_id=task.assigned_agent or "unassigned",
-                    outputs=outputs,
-                ))
+                event_bus.publish(
+                    TaskCompletedEvent(
+                        task_id=str(task.id),
+                        task_name=task.name,
+                        department=task.department,
+                        agent_id=task.assigned_agent or "unassigned",
+                        outputs=outputs,
+                    )
+                )
 
                 # Update live Redis state
                 if task.assigned_agent:
@@ -121,4 +123,3 @@ class TaskService:
 
                 logger.info(f"Task '{task.name}' ({task.id}) marked COMPLETED.")
             return task
-

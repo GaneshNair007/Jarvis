@@ -135,13 +135,10 @@ def humanize_text(text: str) -> str:
 # Markdown -> ReportLab renderer                                               #
 # --------------------------------------------------------------------------- #
 
+
 def _inline_markup(text: str) -> str:
     """Converts markdown inline syntax to ReportLab paragraph markup."""
-    t = (
-        text.replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
-    )
+    t = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     t = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t)
     t = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"<i>\1</i>", t)
     t = re.sub(r"`([^`]+)`", r'<font face="Courier">\1</font>', t)
@@ -155,19 +152,29 @@ def _markdown_to_flowables(markdown_text: str) -> List[Any]:
     from reportlab.platypus import Paragraph, Spacer, ListFlowable, ListItem, Preformatted
 
     styles = {
-        "h1": ParagraphStyle("h1", fontName="Helvetica-Bold", fontSize=18, leading=23,
-                             spaceAfter=6, spaceBefore=10, textColor="#10243a"),
-        "h2": ParagraphStyle("h2", fontName="Helvetica-Bold", fontSize=14, leading=18,
-                             spaceAfter=5, spaceBefore=9, textColor="#183b57"),
-        "h3": ParagraphStyle("h3", fontName="Helvetica-Bold", fontSize=11.5, leading=15,
-                             spaceAfter=4, spaceBefore=7, textColor="#234b6b"),
-        "body": ParagraphStyle("body", fontName="Helvetica", fontSize=10.5, leading=15,
-                               spaceAfter=6, textColor="#1a1a1a"),
-        "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=10.5, leading=15,
-                                 textColor="#1a1a1a"),
-        "code": ParagraphStyle("code", fontName="Courier", fontSize=9, leading=12,
-                               backColor="#f2f4f6", borderPadding=6, spaceAfter=6,
-                               textColor="#222222"),
+        "h1": ParagraphStyle(
+            "h1", fontName="Helvetica-Bold", fontSize=18, leading=23, spaceAfter=6, spaceBefore=10, textColor="#10243a"
+        ),
+        "h2": ParagraphStyle(
+            "h2", fontName="Helvetica-Bold", fontSize=14, leading=18, spaceAfter=5, spaceBefore=9, textColor="#183b57"
+        ),
+        "h3": ParagraphStyle(
+            "h3", fontName="Helvetica-Bold", fontSize=11.5, leading=15, spaceAfter=4, spaceBefore=7, textColor="#234b6b"
+        ),
+        "body": ParagraphStyle(
+            "body", fontName="Helvetica", fontSize=10.5, leading=15, spaceAfter=6, textColor="#1a1a1a"
+        ),
+        "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=10.5, leading=15, textColor="#1a1a1a"),
+        "code": ParagraphStyle(
+            "code",
+            fontName="Courier",
+            fontSize=9,
+            leading=12,
+            backColor="#f2f4f6",
+            borderPadding=6,
+            spaceAfter=6,
+            textColor="#222222",
+        ),
     }
 
     flow: List[Any] = []
@@ -187,8 +194,7 @@ def _markdown_to_flowables(markdown_text: str) -> List[Any]:
     def flush_bullets() -> None:
         if bullet_buf:
             items = [ListItem(Paragraph(_inline_markup(b), styles["bullet"])) for b in bullet_buf]
-            flow.append(ListFlowable(items, bulletType="bullet", start="•",
-                                     leftIndent=14, bulletFontSize=9))
+            flow.append(ListFlowable(items, bulletType="bullet", start="•", leftIndent=14, bulletFontSize=9))
             flow.append(Spacer(1, 4))
             bullet_buf.clear()
 
@@ -251,6 +257,7 @@ def _markdown_to_flowables(markdown_text: str) -> List[Any]:
 
     if not flow:
         from reportlab.platypus import Paragraph
+
         flow.append(Paragraph("(empty document)", styles["body"]))
     return flow
 
@@ -319,6 +326,7 @@ def _pdf_contains_text(raw: bytes, needle: str) -> bool:
 # --------------------------------------------------------------------------- #
 # End-to-end pipeline (PWR-316)                                                #
 # --------------------------------------------------------------------------- #
+
 
 class DocPipeline:
     """Model output -> humanized markdown -> verified PDF -> TrustResult."""
@@ -395,9 +403,7 @@ class DocPipeline:
                     evidence=ev,
                     description=f"PDF written and verified: {info['path']} ({info['pages']} pages)",
                 )
-            return TrustResult.fail(
-                evidence=ev, description=f"PDF verification failed: {checks}"
-            )
+            return TrustResult.fail(evidence=ev, description=f"PDF verification failed: {checks}")
         except Exception as exc:
             ev = Evidence(
                 source="doc_pipeline.model_to_pdf",

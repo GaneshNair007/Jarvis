@@ -6,20 +6,31 @@ from __future__ import annotations
 
 import datetime
 import uuid
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Dict, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.models.base import Base, GUID, UniversalJSON
 
 
+if TYPE_CHECKING:
+    from db.models.agent import AgentModel
+    from db.models.task import TaskModel
+
+
 class ExecutionModel(Base):
     __tablename__ = "executions"
 
     id: Mapped[uuid.UUID] = mapped_column(GUID, primary_key=True, default=uuid.uuid4)
-    task_id: Mapped[uuid.UUID] = mapped_column(GUID, sa.ForeignKey("tasks.id", ondelete="CASCADE"), index=True, nullable=False)
-    agent_id: Mapped[Optional[uuid.UUID]] = mapped_column(GUID, sa.ForeignKey("agents.id", ondelete="SET NULL"), index=True, nullable=True)
-    goal_id: Mapped[uuid.UUID] = mapped_column(GUID, sa.ForeignKey("goals.id", ondelete="CASCADE"), index=True, nullable=False)
+    task_id: Mapped[uuid.UUID] = mapped_column(
+        GUID, sa.ForeignKey("tasks.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    agent_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        GUID, sa.ForeignKey("agents.id", ondelete="SET NULL"), index=True, nullable=True
+    )
+    goal_id: Mapped[uuid.UUID] = mapped_column(
+        GUID, sa.ForeignKey("goals.id", ondelete="CASCADE"), index=True, nullable=False
+    )
     status: Mapped[str] = mapped_column(sa.String(20), default="RUNNING", index=True, nullable=False)
     started_at: Mapped[datetime.datetime] = mapped_column(
         sa.DateTime(timezone=True),

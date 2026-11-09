@@ -123,4 +123,3 @@ async def trigger_room_scene(req: SceneRequest):
 async def parse_smart_room_voice(req: VoiceCommandRequest):
     """Parses natural voice utterances into smart room actions."""
     return smart_home_powers.process_voice_command(req.transcript)
-

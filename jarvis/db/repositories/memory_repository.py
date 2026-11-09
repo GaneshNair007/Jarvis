@@ -15,7 +15,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class MemoryRepository(BaseRepository[MemoryModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, MemoryModel)
 
@@ -79,4 +78,3 @@ class MemoryRepository(BaseRepository[MemoryModel]):
         if category:
             query = query.filter(MemoryModel.category == category.lower())
         return query.order_by(MemoryModel.created_at.desc()).limit(limit).all()
-

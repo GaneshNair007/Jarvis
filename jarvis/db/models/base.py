@@ -18,6 +18,7 @@ class GUID(TypeDecorator):
     """Platform-independent GUID/UUID type.
     Uses PostgreSQL's native UUID type, falls back to CHAR(36) string on SQLite.
     """
+
     impl = CHAR
     cache_ok = True
 
@@ -54,6 +55,7 @@ class UniversalJSON(TypeDecorator):
     """Platform-independent JSON type.
     Uses PostgreSQL JSONB for indexing, falls back to standard JSON on SQLite.
     """
+
     impl = sa.JSON
     cache_ok = True
 
@@ -80,4 +82,3 @@ class TimestampMixin:
         onupdate=lambda: datetime.datetime.now(datetime.timezone.utc),
         nullable=False,
     )
-

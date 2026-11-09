@@ -16,7 +16,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class DependencyRepository(BaseRepository[TaskDependencyModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, TaskDependencyModel)
 
@@ -43,19 +42,11 @@ class DependencyRepository(BaseRepository[TaskDependencyModel]):
 
     def get_dependencies(self, task_id: uuid.UUID) -> List[TaskDependencyModel]:
         """Returns all parent tasks that the given task depends on."""
-        return (
-            self.session.query(TaskDependencyModel)
-            .filter(TaskDependencyModel.task_id == task_id)
-            .all()
-        )
+        return self.session.query(TaskDependencyModel).filter(TaskDependencyModel.task_id == task_id).all()
 
     def get_downstream_tasks(self, task_id: uuid.UUID) -> List[TaskDependencyModel]:
         """Returns all child tasks that depend on the given task."""
-        return (
-            self.session.query(TaskDependencyModel)
-            .filter(TaskDependencyModel.depends_on_task_id == task_id)
-            .all()
-        )
+        return self.session.query(TaskDependencyModel).filter(TaskDependencyModel.depends_on_task_id == task_id).all()
 
     def dependency_satisfied(self, task_id: uuid.UUID) -> bool:
         """Returns True if 100% of the tasks this task depends on are COMPLETED."""
@@ -68,4 +59,3 @@ class DependencyRepository(BaseRepository[TaskDependencyModel]):
             if not parent or parent.status != "COMPLETED":
                 return False
         return True
-

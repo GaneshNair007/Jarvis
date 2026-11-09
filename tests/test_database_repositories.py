@@ -26,15 +26,31 @@ from sqlalchemy.orm import Session, sessionmaker
 from jarvis.db.session import create_test_engine, Base
 from jarvis.db.unit_of_work import UnitOfWork
 from jarvis.db.models import (
-    GoalModel, TaskModel, TaskGraphModel, TaskDependencyModel,
-    DepartmentModel, AgentModel, AssignmentModel, ExecutionModel,
-    MemoryModel, ReflectionModel, OpportunityModel, ArtifactModel,
-    ScheduleModel, AuditModel, KnowledgeNodeModel, KnowledgeEdgeModel,
-    AgentLifecycleModel
+    GoalModel,
+    TaskModel,
+    TaskGraphModel,
+    TaskDependencyModel,
+    DepartmentModel,
+    AgentModel,
+    AssignmentModel,
+    ExecutionModel,
+    MemoryModel,
+    ReflectionModel,
+    OpportunityModel,
+    ArtifactModel,
+    ScheduleModel,
+    AuditModel,
+    KnowledgeNodeModel,
+    KnowledgeEdgeModel,
+    AgentLifecycleModel,
 )
 from jarvis.db.events import (
-    event_bus, TaskCreatedEvent, TaskCompletedEvent,
-    GoalCompletedEvent, OpportunityDiscoveredEvent, AgentLifecycleEvent
+    event_bus,
+    TaskCreatedEvent,
+    TaskCompletedEvent,
+    GoalCompletedEvent,
+    OpportunityDiscoveredEvent,
+    AgentLifecycleEvent,
 )
 from jarvis.db.redis_state import RedisAgentStateStore
 from jarvis.core.task_graph import TaskGraph, TaskNode, Priority
@@ -59,8 +75,10 @@ def test_db_session():
 @pytest.fixture
 def uow_factory(test_db_session):
     """Provides UnitOfWork bound to test session."""
+
     def _factory():
         return UnitOfWork(session=test_db_session)
+
     return _factory
 
 
@@ -133,12 +151,20 @@ class TestDAGDependenciesAndUnblockedQuery:
             uow.flush()
 
             t1 = uow.tasks.create_task(
-                task_graph_id=graph.id, goal_id=goal.id, task_key="t1",
-                name="Root Task", description="", department="research",
+                task_graph_id=graph.id,
+                goal_id=goal.id,
+                task_key="t1",
+                name="Root Task",
+                description="",
+                department="research",
             )
             t2 = uow.tasks.create_task(
-                task_graph_id=graph.id, goal_id=goal.id, task_key="t2",
-                name="Dependent Task", description="", department="engineering",
+                task_graph_id=graph.id,
+                goal_id=goal.id,
+                task_key="t2",
+                name="Dependent Task",
+                description="",
+                department="engineering",
             )
             uow.flush()
 
@@ -222,8 +248,12 @@ class TestExecutionRepository:
             goal = uow.goals.create_goal(title="Tool Goal")
             graph = uow.tasks.create_task_graph(goal_id=goal.id)
             task = uow.tasks.create_task(
-                task_graph_id=graph.id, goal_id=goal.id, task_key="t_tool",
-                name="Run Obscura", description="", department="research",
+                task_graph_id=graph.id,
+                goal_id=goal.id,
+                task_key="t_tool",
+                name="Run Obscura",
+                description="",
+                department="research",
             )
             uow.commit()
             task_id = task.id
@@ -369,8 +399,12 @@ class TestKnowledgeGraphRepository:
             n_fastapi = uow.knowledge.create_node(node_type="framework", name="FastAPI")
             uow.flush()
 
-            uow.knowledge.create_edge(source_node_id=n_ganesh.id, target_node_id=n_python.id, relationship="KNOWS", strength=1.0)
-            uow.knowledge.create_edge(source_node_id=n_python.id, target_node_id=n_fastapi.id, relationship="POWERS", strength=0.9)
+            uow.knowledge.create_edge(
+                source_node_id=n_ganesh.id, target_node_id=n_python.id, relationship="KNOWS", strength=1.0
+            )
+            uow.knowledge.create_edge(
+                source_node_id=n_python.id, target_node_id=n_fastapi.id, relationship="POWERS", strength=0.9
+            )
             uow.commit()
 
             ganesh_id = n_ganesh.id
@@ -450,7 +484,14 @@ class TestServicesEndToEnd:
         # 2. Decompose into TaskGraph
         graph = TaskGraph(goal_id=str(goal.id))
         t1 = TaskNode(task_id="t1", name="Step 1", description="Init", department="research", parent_goal=str(goal.id))
-        t2 = TaskNode(task_id="t2", name="Step 2", description="Code", department="engineering", parent_goal=str(goal.id), dependencies=["t1"])
+        t2 = TaskNode(
+            task_id="t2",
+            name="Step 2",
+            description="Code",
+            department="engineering",
+            parent_goal=str(goal.id),
+            dependencies=["t1"],
+        )
         graph.add_node(t1)
         graph.add_node(t2)
 
@@ -476,4 +517,3 @@ class TestServicesEndToEnd:
 
         completed_goal = goal_service.complete_goal(goal.id)
         assert completed_goal.status == "COMPLETED"
-

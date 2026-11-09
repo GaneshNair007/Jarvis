@@ -32,6 +32,7 @@ class WorkflowState(str, Enum):
 
 class SecurityViolationError(Exception):
     """Raised when an autonomous agent attempts an unauthorized push or bypasses human gates."""
+
     pass
 
 
@@ -76,7 +77,9 @@ class SafePRWorkflowManager:
         """Enforces rigorous state machine progression and quality gates."""
         allowed = self.ALLOWED_TRANSITIONS.get(current_state, [])
         if next_state not in allowed:
-            raise ValueError(f"Illegal workflow transition: Cannot move from {current_state.value} to {next_state.value}.")
+            raise ValueError(
+                f"Illegal workflow transition: Cannot move from {current_state.value} to {next_state.value}."
+            )
 
         # Security review check
         if next_state == WorkflowState.AWAITING_APPROVAL:

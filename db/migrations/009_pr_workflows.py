@@ -17,7 +17,12 @@ def upgrade() -> None:
     op.create_table(
         "pr_workflows",
         sa.Column("id", sa.UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
-        sa.Column("improvement_request_id", sa.UUID(as_uuid=True), sa.ForeignKey("improvement_requests.id", ondelete="CASCADE"), nullable=False),
+        sa.Column(
+            "improvement_request_id",
+            sa.UUID(as_uuid=True),
+            sa.ForeignKey("improvement_requests.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
         sa.Column("branch_name", sa.String(150), nullable=False),
         sa.Column("target_branch", sa.String(100), nullable=False, server_default="main"),
         sa.Column("pr_number", sa.Integer, nullable=True),

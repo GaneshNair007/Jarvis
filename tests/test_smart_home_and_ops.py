@@ -27,6 +27,7 @@ def client():
 # 1. Voice & TTS Tests
 # ==========================================
 
+
 def test_tts_synthesize_wav():
     """Verifies TTS generates non-empty audio bytes with graceful fallback."""
     wav = tts_engine.synthesize_to_wav("Jarvis online.")
@@ -50,6 +51,7 @@ def test_tts_elevenlabs_graceful_fallback(monkeypatch):
 # ==========================================
 # 2. Smart Home Room Control Tests
 # ==========================================
+
 
 def test_smart_home_devices_query():
     devices = smart_home_powers.get_all_devices()
@@ -85,9 +87,7 @@ def test_plug_geyser_safety_timer():
 
 
 def test_light_control_rgb():
-    res = smart_home_powers.control_lights(
-        "light.ambient_rgb", state="on", brightness=50, rgb_color=[0, 229, 255]
-    )
+    res = smart_home_powers.control_lights("light.ambient_rgb", state="on", brightness=50, rgb_color=[0, 229, 255])
     assert res["power_id"] == "PWR-256"
     assert res["state"] == "on"
     assert res["brightness"] == 50
@@ -126,6 +126,7 @@ def test_voice_command_dispatch():
 # 3. Operational Workflows Tests
 # ==========================================
 
+
 def test_opportunity_radar():
     res = opportunity_radar.run()
     assert res["workflow"] == "opportunity_radar"
@@ -151,6 +152,7 @@ def test_weekly_ops_sweep():
 # ==========================================
 # 4. REST API Endpoint Tests
 # ==========================================
+
 
 def test_api_smarthome_endpoints(client):
     # GET devices
@@ -191,4 +193,3 @@ def test_api_ops_endpoints(client):
     r3 = client.get("/api/v1/ops/weekly-sweep")
     assert r3.status_code == 200
     assert r3.json()["workflow"] == "weekly_ops_sweep"
-

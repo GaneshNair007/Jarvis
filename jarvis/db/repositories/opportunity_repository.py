@@ -16,7 +16,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class OpportunityRepository(BaseRepository[OpportunityModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, OpportunityModel)
 
@@ -46,21 +45,11 @@ class OpportunityRepository(BaseRepository[OpportunityModel]):
 
     def get_top_opportunities(self, limit: int = 10) -> List[OpportunityModel]:
         """Returns opportunities ranked by highest relevance score."""
-        return (
-            self.session.query(OpportunityModel)
-            .order_by(OpportunityModel.score.desc())
-            .limit(limit)
-            .all()
-        )
+        return self.session.query(OpportunityModel).order_by(OpportunityModel.score.desc()).limit(limit).all()
 
     def get_recent_opportunities(self, limit: int = 10) -> List[OpportunityModel]:
         """Returns newest opportunities discovered."""
-        return (
-            self.session.query(OpportunityModel)
-            .order_by(OpportunityModel.discovered_at.desc())
-            .limit(limit)
-            .all()
-        )
+        return self.session.query(OpportunityModel).order_by(OpportunityModel.discovered_at.desc()).limit(limit).all()
 
     def get_best_hackathons(self, min_score: float = 0.75, limit: int = 10) -> List[OpportunityModel]:
         """Filters high-value hackathons."""
@@ -83,4 +72,3 @@ class OpportunityRepository(BaseRepository[OpportunityModel]):
             .limit(limit)
             .all()
         )
-

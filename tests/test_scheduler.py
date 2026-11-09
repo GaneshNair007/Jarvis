@@ -44,7 +44,10 @@ async def test_manual_trigger_hackathon_scout(scheduler):
         "status": "COMPLETED",
         "top_hackathon": "Smart India Hackathon 2026",
     }
-    with patch("jarvis.agents.autonomous_workforce.autonomous_workforce.run_hackathon_opportunity_pipeline", AsyncMock(return_value=mock_res)):
+    with patch(
+        "jarvis.agents.autonomous_workforce.autonomous_workforce.run_hackathon_opportunity_pipeline",
+        AsyncMock(return_value=mock_res),
+    ):
         result = await scheduler.trigger_job("hackathon_scout")
         assert result["status"] == "SUCCESS"
         assert result["result"]["top_hackathon"] == "Smart India Hackathon 2026"
@@ -53,7 +56,10 @@ async def test_manual_trigger_hackathon_scout(scheduler):
 
 @pytest.mark.asyncio
 async def test_manual_trigger_research_digest(scheduler):
-    with patch("jarvis.powers.whatsapp_dispatcher.whatsapp_dispatcher.send_whatsapp_message", AsyncMock(return_value={"status": "SENT"})):
+    with patch(
+        "jarvis.powers.whatsapp_dispatcher.whatsapp_dispatcher.send_whatsapp_message",
+        AsyncMock(return_value={"status": "SENT"}),
+    ):
         result = await scheduler.trigger_job("ai_research_digest")
         assert result["status"] == "SUCCESS"
         assert result["result"]["whatsapp_status"] == "SENT"

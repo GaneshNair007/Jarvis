@@ -262,9 +262,9 @@ class OAuthManager:
             params["prompt"] = "consent"
             params["include_granted_scopes"] = "true"
         if verifier:
-            challenge = base64.urlsafe_b64encode(
-                hashlib.sha256(verifier.encode("ascii")).digest()
-            ).rstrip(b"=").decode("ascii")
+            challenge = (
+                base64.urlsafe_b64encode(hashlib.sha256(verifier.encode("ascii")).digest()).rstrip(b"=").decode("ascii")
+            )
             params["code_challenge"] = challenge
             params["code_challenge_method"] = "S256"
         for key, value in (extra_params or {}).items():
@@ -414,8 +414,7 @@ class OAuthManager:
         scopes = str(response.get("scope") or "").split()
         token = {
             "access_token": access_token,
-            "refresh_token": response.get("refresh_token")
-            or (existing or {}).get("refresh_token"),
+            "refresh_token": response.get("refresh_token") or (existing or {}).get("refresh_token"),
             "token_type": response.get("token_type", "Bearer"),
             "expires_at": now + max(expires_in, 0),
             "obtained_at": now,

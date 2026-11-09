@@ -605,13 +605,19 @@ def reflect(state: JarvisState) -> Dict[str, Any]:
 
     if errors:
         last_error_dict = errors[-1]
-        c_err = CognitiveError(**last_error_dict) if isinstance(last_error_dict, dict) else classify_error(last_error_dict)
+        c_err = (
+            CognitiveError(**last_error_dict) if isinstance(last_error_dict, dict) else classify_error(last_error_dict)
+        )
         remediation = get_remediation_strategy(c_err)
 
         if reflection_count > 3:
             scratchpad += f"\n[Reflect] Max reflections (3) exceeded. Terminating with permanent failure."
             final_response = f"Operation failed after 3 recovery attempts: {c_err.message}"
-            errors.append(classify_error("Max reflection count exceeded", context={"reflection_count": reflection_count}).model_dump())
+            errors.append(
+                classify_error(
+                    "Max reflection count exceeded", context={"reflection_count": reflection_count}
+                ).model_dump()
+            )
         elif remediation["can_retry"]:
             scratchpad += f"\n[Reflect] Attempt {reflection_count}/3: Remediating via {remediation['action']} targeting {remediation['target_node']}."
         else:

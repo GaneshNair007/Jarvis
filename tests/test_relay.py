@@ -52,6 +52,7 @@ def relay():
 #  Unit: pairing lifecycle                                               #
 # --------------------------------------------------------------------- #
 
+
 def test_pairing_code_is_six_digits_and_single_use(relay):
     pair = relay.create_pairing_code(ttl_sec=60)
     assert len(pair["code"]) == 6 and pair["code"].isdigit()
@@ -109,6 +110,7 @@ def test_authenticate_and_revoke(relay):
 #  Unit: TrustResult-backed execution                                    #
 # --------------------------------------------------------------------- #
 
+
 @pytest.mark.asyncio
 async def test_execute_command_success_returns_trustresult(relay):
     pair = relay.create_pairing_code()
@@ -165,6 +167,7 @@ def test_status_reports_real_counts(relay):
 #  API: TestClient end-to-end                                            #
 # --------------------------------------------------------------------- #
 
+
 @pytest.fixture()
 def client():
     app = FastAPI()
@@ -218,9 +221,7 @@ def test_api_pair_exchange_command_flow(client, paired_token):
     assert body["evidence"]["data"]["reply"].startswith("System health")
 
     # 4) Status endpoint works with the same token
-    res = client.get(
-        "/api/v1/relay/status", headers={"Authorization": f"Bearer {token}"}
-    )
+    res = client.get("/api/v1/relay/status", headers={"Authorization": f"Bearer {token}"})
     assert res.status_code == 200
     status = res.json()
     assert status["device"]["device_name"] == "pixel"

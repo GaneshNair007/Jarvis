@@ -45,6 +45,7 @@ GOOGLE_CALLBACK_URI = "http://127.0.0.1:8000/api/v1/google/auth/callback"
 
 # ── OAuth ────────────────────────────────────────────────────────────────────
 
+
 class AuthStartRequest(BaseModel):
     redirect_uri: Optional[str] = Field(
         default=None,
@@ -61,11 +62,7 @@ async def google_status() -> Dict[str, Any]:
 @router.post("/api/v1/google/auth/start")
 async def google_auth_start(req: Optional[AuthStartRequest] = None) -> Dict[str, Any]:
     """Generate the state+PKCE authorization URL for the dedicated JARVIS account."""
-    redirect_uri = (
-        req.redirect_uri
-        if req and req.redirect_uri
-        else GOOGLE_CALLBACK_URI
-    )
+    redirect_uri = req.redirect_uri if req and req.redirect_uri else GOOGLE_CALLBACK_URI
     auth = google_flow.build_authorization(redirect_uri)
     return {
         "authorization_url": auth["authorization_url"],
@@ -138,6 +135,7 @@ async def google_auth_disconnect() -> Dict[str, Any]:
 
 # ── Gmail data (Communication Center) ────────────────────────────────────────
 
+
 def _require_connected() -> None:
     if not gmail_integration.connected or not gmail_integration.oauth.is_connected("google"):
         raise HTTPException(
@@ -165,33 +163,25 @@ async def gmail_inbox(
     label_ids: Optional[str] = Query(default=None),
 ):
     _require_connected()
-    return gmail_integration.api.list_messages(
-        query=query, max_results=max_results, label_ids=_label_param(label_ids)
-    )
+    return gmail_integration.api.list_messages(query=query, max_results=max_results, label_ids=_label_param(label_ids))
 
 
 @router.get("/api/v1/google/gmail/unread")
 async def gmail_unread(max_results: int = Query(default=10, ge=1, le=100)):
     _require_connected()
-    return gmail_integration.api.list_messages(
-        query="is:unread", max_results=max_results, label_ids=["UNREAD"]
-    )
+    return gmail_integration.api.list_messages(query="is:unread", max_results=max_results, label_ids=["UNREAD"])
 
 
 @router.get("/api/v1/google/gmail/important")
 async def gmail_important(max_results: int = Query(default=10, ge=1, le=100)):
     _require_connected()
-    return gmail_integration.api.list_messages(
-        query="is:important", max_results=max_results, label_ids=["IMPORTANT"]
-    )
+    return gmail_integration.api.list_messages(query="is:important", max_results=max_results, label_ids=["IMPORTANT"])
 
 
 @router.get("/api/v1/google/gmail/sent")
 async def gmail_sent(max_results: int = Query(default=10, ge=1, le=100)):
     _require_connected()
-    return gmail_integration.api.list_messages(
-        query="in:sent", max_results=max_results, label_ids=["SENT"]
-    )
+    return gmail_integration.api.list_messages(query="in:sent", max_results=max_results, label_ids=["SENT"])
 
 
 @router.get("/api/v1/google/gmail/drafts")
@@ -238,9 +228,7 @@ class SendMessageRequest(BaseModel):
     to: str = ""
     subject: str = ""
     body: str = ""
-    draft_id: Optional[str] = Field(
-        default=None, description="Send a previously created draft instead of composing"
-    )
+    draft_id: Optional[str] = Field(default=None, description="Send a previously created draft instead of composing")
     expected_content_hash: Optional[str] = Field(
         default=None,
         description="SHA-256 of the exact RFC 822 bytes approved by the owner",

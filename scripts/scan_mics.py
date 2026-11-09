@@ -1,4 +1,5 @@
 """Probes default sample rates and records at each device's native rate."""
+
 import sounddevice as sd
 import numpy as np
 

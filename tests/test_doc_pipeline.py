@@ -94,9 +94,7 @@ def test_render_markdown_to_pdf_produces_verifiable_pdf(tmp_path):
 
 def test_model_to_pdf_end_to_end_returns_success_trustresult(tmp_path):
     pipeline = DocPipeline()
-    trust = pipeline.model_to_pdf(
-        SAMPLE_MODEL_OUTPUT, output_dir=tmp_path, title="Q3 Report"
-    )
+    trust = pipeline.model_to_pdf(SAMPLE_MODEL_OUTPUT, output_dir=tmp_path, title="Q3 Report")
 
     assert isinstance(trust, TrustResult)
     assert trust.verdict == "success"
@@ -116,9 +114,7 @@ def test_model_to_pdf_end_to_end_returns_success_trustresult(tmp_path):
 
 def test_model_to_pdf_can_skip_humanizer(tmp_path):
     pipeline = DocPipeline()
-    trust = pipeline.model_to_pdf(
-        "# Plain Doc\n\nJust a test.", output_dir=tmp_path, humanize=False
-    )
+    trust = pipeline.model_to_pdf("# Plain Doc\n\nJust a test.", output_dir=tmp_path, humanize=False)
     assert trust.verdict == "success"
     assert trust.evidence.data["humanized"] is False
 

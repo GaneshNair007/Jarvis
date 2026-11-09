@@ -337,6 +337,7 @@ class ModelRouter:
         # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
         try:
             from jarvis.security.ten_layer_shield import jarvis_security_suite, SecurityViolationError
+
             prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
             if system_prompt:
                 system_prompt = jarvis_security_suite.sanitize_outbound_prompt(system_prompt)
@@ -368,6 +369,7 @@ class ModelRouter:
                 # 1. Try OpenRouter Frontier Gateway (Active configured key)
                 try:
                     from jarvis.core.openrouter_client import openrouter_client
+
                     if openrouter_client.is_available:
                         or_res = openrouter_client.generate_completion(prompt, system_instruction=system_prompt)
                         if or_res and or_res.get("reply"):
@@ -406,6 +408,7 @@ class ModelRouter:
                 # 2. Try multi-account Gemini key rotator
                 try:
                     from jarvis.core.gemini_rotator import gemini_rotator
+
                     if gemini_rotator.is_available:
                         gem_res = gemini_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
                         if gem_res and gem_res.get("reply"):
@@ -456,7 +459,11 @@ class ModelRouter:
             api_key = settings.vllm_api_key
         elif decision.tier == "TIER_3_CLOUD":
             # 1. Attempt OpenRouter multi-key rotator
-            if "openrouter" in decision.selected_model or not ("claude" in decision.selected_model or "gpt" in decision.selected_model or "gemini" in decision.selected_model):
+            if "openrouter" in decision.selected_model or not (
+                "claude" in decision.selected_model
+                or "gpt" in decision.selected_model
+                or "gemini" in decision.selected_model
+            ):
                 try:
                     if openrouter_rotator.is_available:
                         or_res = openrouter_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
@@ -475,7 +482,11 @@ class ModelRouter:
                     logger.warning(f"OpenRouter rotator execution error: {_ore}")
 
             # 1b. Attempt NVIDIA NIM multi-key rotator (OpenAI-compatible frontier gateway)
-            if not ("gemini" in decision.selected_model or "claude" in decision.selected_model or "gpt" in decision.selected_model):
+            if not (
+                "gemini" in decision.selected_model
+                or "claude" in decision.selected_model
+                or "gpt" in decision.selected_model
+            ):
                 try:
                     if nvidia_nim_rotator.is_available:
                         nim_res = nvidia_nim_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
@@ -498,7 +509,9 @@ class ModelRouter:
             if "gemini" in decision.selected_model and gemini_rotator.is_available:
                 try:
                     gem_model = decision.selected_model.replace("gemini/", "")
-                    gem_res = gemini_rotator.generate_chat_completion(prompt, system_instruction=system_prompt, model=gem_model)
+                    gem_res = gemini_rotator.generate_chat_completion(
+                        prompt, system_instruction=system_prompt, model=gem_model
+                    )
                     if gem_res and gem_res.get("reply"):
                         return {
                             "task_id": decision.task_id,
@@ -591,7 +604,6 @@ class ModelRouter:
                 "error": str(e),
             }
 
-
     def _generate_heuristic_response(self, prompt: str) -> str:
         p = prompt.lower().strip()
         if any(w in p for w in ["hi", "hello", "hey", "who are you"]):
@@ -616,6 +628,7 @@ class ModelRouter:
                 "To enable unlimited open-ended LLM conversation, you can launch Ollama on your RTX 4050 ('ollama serve') "
                 "or set your free Gemini API keys."
             )
+
 
 # Singleton Model Router
 model_router = ModelRouter()

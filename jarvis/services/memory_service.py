@@ -16,7 +16,6 @@ logger = get_logger("services.memory")
 
 
 class MemoryService:
-
     def __init__(self, uow_factory=UnitOfWork):
         self.uow_factory = uow_factory
 
@@ -48,4 +47,3 @@ class MemoryService:
         """Retrieves top semantic memories matching the query."""
         with self.uow_factory() as uow:
             return uow.memories.search_memory(term=query, category=category, limit=limit)
-

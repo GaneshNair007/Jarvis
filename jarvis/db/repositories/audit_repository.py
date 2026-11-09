@@ -16,7 +16,6 @@ from jarvis.db.repositories.base import BaseRepository
 
 
 class AuditRepository(BaseRepository[AuditModel]):
-
     def __init__(self, session: Session):
         super().__init__(session, AuditModel)
 
@@ -41,12 +40,7 @@ class AuditRepository(BaseRepository[AuditModel]):
         return event
 
     def get_recent_audits(self, limit: int = 50) -> List[AuditModel]:
-        return (
-            self.session.query(AuditModel)
-            .order_by(AuditModel.timestamp.desc())
-            .limit(limit)
-            .all()
-        )
+        return self.session.query(AuditModel).order_by(AuditModel.timestamp.desc()).limit(limit).all()
 
     def search_audits(
         self,
@@ -60,4 +54,3 @@ class AuditRepository(BaseRepository[AuditModel]):
         if action:
             query = query.filter(AuditModel.action == action)
         return query.order_by(AuditModel.timestamp.desc()).limit(limit).all()
-

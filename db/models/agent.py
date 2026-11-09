@@ -5,11 +5,16 @@ SQLAlchemy 2.x Agent Model
 from __future__ import annotations
 
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.models.base import Base, GUID, UniversalJSON, TimestampMixin
+
+if TYPE_CHECKING:
+    from db.models.assignment import AssignmentModel
+    from db.models.department import DepartmentModel
+    from db.models.execution import ExecutionModel
 
 
 class AgentModel(Base, TimestampMixin):
@@ -27,5 +32,7 @@ class AgentModel(Base, TimestampMixin):
 
     # Relationships
     department: Mapped[Optional["DepartmentModel"]] = relationship("DepartmentModel", back_populates="agents")
-    assignments: Mapped[List["AssignmentModel"]] = relationship("AssignmentModel", back_populates="agent", cascade="all, delete-orphan")
+    assignments: Mapped[List["AssignmentModel"]] = relationship(
+        "AssignmentModel", back_populates="agent", cascade="all, delete-orphan"
+    )
     executions: Mapped[List["ExecutionModel"]] = relationship("ExecutionModel", back_populates="agent")

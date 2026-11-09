@@ -31,7 +31,9 @@ def upgrade() -> None:
     op.create_table(
         "tasks",
         sa.Column("id", sa.UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
-        sa.Column("task_graph_id", sa.UUID(as_uuid=True), sa.ForeignKey("task_graphs.id", ondelete="CASCADE"), nullable=False),
+        sa.Column(
+            "task_graph_id", sa.UUID(as_uuid=True), sa.ForeignKey("task_graphs.id", ondelete="CASCADE"), nullable=False
+        ),
         sa.Column("goal_id", sa.UUID(as_uuid=True), sa.ForeignKey("goals.id", ondelete="CASCADE"), nullable=False),
         sa.Column("task_key", sa.String(100), nullable=False),  # e.g. "task_01"
         sa.Column("name", sa.String(255), nullable=False),
@@ -58,7 +60,9 @@ def upgrade() -> None:
         "task_dependencies",
         sa.Column("id", sa.UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
         sa.Column("task_id", sa.UUID(as_uuid=True), sa.ForeignKey("tasks.id", ondelete="CASCADE"), nullable=False),
-        sa.Column("depends_on_task_id", sa.UUID(as_uuid=True), sa.ForeignKey("tasks.id", ondelete="CASCADE"), nullable=False),
+        sa.Column(
+            "depends_on_task_id", sa.UUID(as_uuid=True), sa.ForeignKey("tasks.id", ondelete="CASCADE"), nullable=False
+        ),
         sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
     )
     op.create_index("ix_task_dependencies_task_id", "task_dependencies", ["task_id"])

@@ -152,12 +152,12 @@ class OpportunityNotifier:
             clean_title = title.replace('"', '`"')
             clean_msg = message.replace('"', '`"').replace("\n", " ")[:160]
             ps_script = (
-                f'[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null; '
-                f'$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); '
+                f"[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null; "
+                f"$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); "
                 f'$textNodes = $template.GetElementsByTagName("text"); '
                 f'$textNodes.Item(0).AppendChild($template.CreateTextNode("{clean_title}")) | Out-Null; '
                 f'$textNodes.Item(1).AppendChild($template.CreateTextNode("{clean_msg}")) | Out-Null; '
-                f'$toast = [Windows.UI.Notifications.ToastNotification]::new($template); '
+                f"$toast = [Windows.UI.Notifications.ToastNotification]::new($template); "
                 f'[Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("JARVIS OS").Show($toast);'
             )
             subprocess.run(

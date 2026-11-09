@@ -76,22 +76,27 @@ class AcousticWakeGate:
                 raise FileNotFoundError(f"no onnx wake models packaged under {pkg_root}")
             load_paths = jarvis_paths or onnx_paths
             self._model = Model(wakeword_models=load_paths, inference_framework="onnx")
-            self.model_names = [
-                str(name)
-                for name in getattr(self._model, "model_names", {}).keys()
-            ] if hasattr(self._model, "model_names") else []
+            self.model_names = (
+                [str(name) for name in getattr(self._model, "model_names", {}).keys()]
+                if hasattr(self._model, "model_names")
+                else []
+            )
             if not self.model_names:
                 self.model_names = [Path(p).stem for p in load_paths]
             self.available = True
             self.unavailable_reason = ""
-            logger.info(f"AcousticWakeGate: openWakeWord models loaded {self.model_names or '(default set)'} "
-                        f"files={len(load_paths)} threshold={self.threshold}")
+            logger.info(
+                f"AcousticWakeGate: openWakeWord models loaded {self.model_names or '(default set)'} "
+                f"files={len(load_paths)} threshold={self.threshold}"
+            )
         except Exception as exc:
             self._model = None
             self.available = False
             self.unavailable_reason = str(exc)[:200]
-            logger.warning(f"AcousticWakeGate unavailable ({self.unavailable_reason}). "
-                           "Falling back to transcription-based wake detection.")
+            logger.warning(
+                f"AcousticWakeGate unavailable ({self.unavailable_reason}). "
+                "Falling back to transcription-based wake detection."
+            )
         return self.available
 
     def gate(self, pcm: bytes) -> Dict[str, Any]:

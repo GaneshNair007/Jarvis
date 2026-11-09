@@ -31,7 +31,9 @@ class TaskRepository(BaseRepository[TaskModel]):
             stmt = stmt.where(TaskModel.goal_id == goal_id)
         return self.session.scalars(stmt).first()
 
-    def update_status(self, task_id: uuid.UUID | str, status: str, outputs: Optional[dict] = None) -> Optional[TaskModel]:
+    def update_status(
+        self, task_id: uuid.UUID | str, status: str, outputs: Optional[dict] = None
+    ) -> Optional[TaskModel]:
         task = self.get_by_id(task_id)
         if task:
             task.status = status

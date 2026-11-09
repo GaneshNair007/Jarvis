@@ -7,11 +7,17 @@ from __future__ import annotations
 
 import datetime
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from jarvis.db.models.base import Base, GUID, UniversalJSON, TimestampMixin
+
+
+if TYPE_CHECKING:
+    from jarvis.db.models.memory import MemoryModel
+    from jarvis.db.models.reflection import ReflectionModel
+    from jarvis.db.models.task import TaskGraphModel, TaskModel
 
 
 class GoalModel(Base, TimestampMixin):
@@ -29,13 +35,8 @@ class GoalModel(Base, TimestampMixin):
     task_graphs: Mapped[List["TaskGraphModel"]] = relationship(
         "TaskGraphModel", back_populates="goal", cascade="all, delete-orphan"
     )
-    tasks: Mapped[List["TaskModel"]] = relationship(
-        "TaskModel", back_populates="goal", cascade="all, delete-orphan"
-    )
+    tasks: Mapped[List["TaskModel"]] = relationship("TaskModel", back_populates="goal", cascade="all, delete-orphan")
     reflections: Mapped[List["ReflectionModel"]] = relationship(
         "ReflectionModel", back_populates="goal", cascade="all, delete-orphan"
     )
-    memories: Mapped[List["MemoryModel"]] = relationship(
-        "MemoryModel", back_populates="goal"
-    )
-
+    memories: Mapped[List["MemoryModel"]] = relationship("MemoryModel", back_populates="goal")

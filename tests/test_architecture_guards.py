@@ -74,7 +74,9 @@ class TestArchitectureGuards:
             "app/main.py",
         ]
         for target in forbidden_targets:
-            with pytest.raises(ArchitectureViolationError, match="Missing capabilities can only emit ImprovementRequests"):
+            with pytest.raises(
+                ArchitectureViolationError, match="Missing capabilities can only emit ImprovementRequests"
+            ):
                 ArchitectureGuard.check_capability_registry_write(target)
 
     def test_validate_system_invariants_auditor(self):

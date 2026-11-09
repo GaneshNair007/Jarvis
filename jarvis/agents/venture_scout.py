@@ -71,7 +71,9 @@ class VentureScout:
         for idea in self.ideas:
             if domain and domain.lower() not in idea.domain.lower():
                 continue
-            searchable = f"{idea.title} {idea.domain} {idea.target_buyer} {idea.problem_statement} {idea.toolkit}".lower()
+            searchable = (
+                f"{idea.title} {idea.domain} {idea.target_buyer} {idea.problem_statement} {idea.toolkit}".lower()
+            )
             if not q or q in searchable:
                 matched.append(idea)
         return matched[:limit]
@@ -89,7 +91,9 @@ class VentureScout:
         - Hardware: RTX 4050 (6GB VRAM) -> Boosts local speech, vision, and agentic workflows.
         - Cost Constraint: Zero software subscriptions -> Prefers open-source toolkits.
         """
-        user_skills = [s.lower() for s in (skills or ["python", "fastapi", "ai agents", "automation", "local llm", "voice"])]
+        user_skills = [
+            s.lower() for s in (skills or ["python", "fastapi", "ai agents", "automation", "local llm", "voice"])
+        ]
         scored = []
 
         for idea in self.ideas:
@@ -106,7 +110,9 @@ class VentureScout:
                     score += 0.08
 
             # GPU advantage: Edge AI, audio, transcription, automation
-            if has_gpu and any(k in text for k in ["voice", "audio", "video", "screen", "transcription", "desktop", "local"]):
+            if has_gpu and any(
+                k in text for k in ["voice", "audio", "video", "screen", "transcription", "desktop", "local"]
+            ):
                 score += 0.15
 
             # Lean startup budget preference

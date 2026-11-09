@@ -71,3 +71,6 @@ logs/
 
 # Machine-specific validated process registry (PIDs, creation times)
 data/runtime/
+
+data/career/
+

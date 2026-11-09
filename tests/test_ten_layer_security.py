@@ -23,7 +23,6 @@ from jarvis.security.ten_layer_shield import (
 
 
 class TestTenLayerSecuritySuite:
-
     # ── Layer 1: High-Entropy Secret & Key Scanner ─────────────────────────────
     def test_layer1_detects_api_keys_and_passwords(self):
         detector = EntropySecretDetector()
@@ -180,6 +179,7 @@ class TestTenLayerSecuritySuite:
         broker.resolve_permission(req_exp["request_id"], approved=True)
         exp_token = broker.pending_requests[req_exp["request_id"]]["approval_token"]
         import time
+
         time.sleep(0.15)
         assert broker.is_authorized(exp_token) is False
 
@@ -199,6 +199,7 @@ class TestTenLayerSecuritySuite:
 
     def test_model_router_fail_closed_on_security_violation(self):
         from jarvis.core.model_router import ModelRouter, RoutingDecision
+
         router = ModelRouter()
         decision = RoutingDecision(
             task_id="sec_test_001",
@@ -219,6 +220,7 @@ class TestTenLayerSecuritySuite:
                 raise SecurityViolationError("Simulated egress leak failure")
 
         from jarvis.security.ten_layer_shield import jarvis_security_suite
+
         original_firewall = jarvis_security_suite.layer3_firewall
         try:
             jarvis_security_suite.layer3_firewall = MockFailingFirewall()

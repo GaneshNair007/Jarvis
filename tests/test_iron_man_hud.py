@@ -1,4 +1,5 @@
 """Iron Man HUD state bridge tests (pure JSON — no GUI required)."""
+
 import json
 import time
 
@@ -54,14 +55,17 @@ def test_is_stale_helper():
     assert is_stale({"ts": "garbage"}) is True
 
 
-@pytest.mark.parametrize("state,expected", [
-    ("LISTENING_FOR_WAKE", False),
-    ("IDLE", False),
-    ("CAPTURING_COMMAND", True),
-    ("PROCESSING", True),
-    ("SPEAKING", True),
-    ("", False),
-    (None, False),
-])
+@pytest.mark.parametrize(
+    "state,expected",
+    [
+        ("LISTENING_FOR_WAKE", False),
+        ("IDLE", False),
+        ("CAPTURING_COMMAND", True),
+        ("PROCESSING", True),
+        ("SPEAKING", True),
+        ("", False),
+        (None, False),
+    ],
+)
 def test_should_show(state, expected):
     assert should_show(state) is expected

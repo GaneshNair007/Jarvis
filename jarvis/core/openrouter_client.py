@@ -48,6 +48,7 @@ class OpenRouterClient:
         # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
         try:
             from jarvis.security.ten_layer_shield import jarvis_security_suite
+
             prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
             if system_instruction:
                 system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
@@ -64,15 +65,17 @@ class OpenRouterClient:
             "X-Title": self.site_title,
         }
 
-        payload = json.dumps({
-            "model": target_model,
-            "messages": [
-                {"role": "system", "content": system_instruction},
-                {"role": "user", "content": prompt},
-            ],
-            "temperature": 0.7,
-            "max_tokens": 1024,
-        }).encode("utf-8")
+        payload = json.dumps(
+            {
+                "model": target_model,
+                "messages": [
+                    {"role": "system", "content": system_instruction},
+                    {"role": "user", "content": prompt},
+                ],
+                "temperature": 0.7,
+                "max_tokens": 1024,
+            }
+        ).encode("utf-8")
 
         start_time = time.time()
         req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
@@ -99,7 +102,9 @@ class OpenRouterClient:
             logger.error(f"OpenRouter HTTP Error {e.code}: {err_body}")
             # If 404 on model, attempt fallback to deepseek-chat
             if e.code == 404 and target_model != "deepseek/deepseek-chat":
-                return self.generate_completion(prompt, system_instruction, model="deepseek/deepseek-chat", timeout_sec=timeout_sec)
+                return self.generate_completion(
+                    prompt, system_instruction, model="deepseek/deepseek-chat", timeout_sec=timeout_sec
+                )
         except Exception as e:
             logger.warning(f"OpenRouter request error: {e}")
 
@@ -107,4 +112,3 @@ class OpenRouterClient:
 
 
 openrouter_client = OpenRouterClient()
-

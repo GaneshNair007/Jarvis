@@ -145,7 +145,7 @@ def probe_input_devices(
             if chunk.size == 0:
                 continue
             total_windows += 1
-            if float(np.sqrt((chunk ** 2).mean())) > 5.0:
+            if float(np.sqrt((chunk**2).mean())) > 5.0:
                 nonzero += 1
         nonzero_frac = (nonzero / total_windows) if total_windows else 0.0
 
@@ -163,7 +163,7 @@ def probe_input_devices(
             # Additive honesty: a NONZERO mean is a working microphone in a
             # quiet room (usable for wake listening); exact digital silence
             # with peak==0 is muted/hidden hardware (not usable).
-            entry["usable"] = (mean > 0.0)
+            entry["usable"] = mean > 0.0
         elif mean >= max_mean or clipped_frac >= max_clipped_frac:
             entry["status"] = "glitch"
         elif nonzero_frac < min_nonzero_window_frac:
@@ -215,7 +215,8 @@ def select_input_device(
         probe = probe_input_devices()
 
     usable = [
-        e for e in probe
+        e
+        for e in probe
         if (e.get("status") == "live" or e.get("usable") is True)
         and not any(tag in (e.get("name") or "").lower() for tag in ("stereo mix", "pc speaker"))
     ]
@@ -358,6 +359,7 @@ class VoiceDaemon:
     def stt(self) -> Any:
         if self._stt is None:
             from jarvis.voice.stt import stt_engine
+
             self._stt = stt_engine
         return self._stt
 
@@ -365,6 +367,7 @@ class VoiceDaemon:
     def tts(self) -> Any:
         if self._tts is None:
             from jarvis.voice.tts import tts_engine
+
             self._tts = tts_engine
         return self._tts
 
@@ -372,6 +375,7 @@ class VoiceDaemon:
     def orchestrator(self) -> Any:
         if self._orchestrator is None:
             from jarvis.core.orchestrator import orchestrator as orch
+
             self._orchestrator = orch
         return self._orchestrator
 
@@ -379,6 +383,7 @@ class VoiceDaemon:
     def wake(self) -> Any:
         if self._wake is None:
             from jarvis.voice.wake import wake_detector
+
             self._wake = wake_detector
         return self._wake
 
@@ -388,6 +393,7 @@ class VoiceDaemon:
         loading openWakeWord is deferred until real audio hits the gate."""
         if self._gate is None:
             from jarvis.voice.wake import get_acoustic_gate
+
             self._gate = get_acoustic_gate()
         return self._gate
 
@@ -469,7 +475,9 @@ class VoiceDaemon:
 
         if intent["kind"] == "launch":
             res = launch_app(intent["app"])
-            reply = f"Opened {intent['app'].replace('_', ' ')}." if res.get("ok") else res.get("error", "Launch failed.")
+            reply = (
+                f"Opened {intent['app'].replace('_', ' ')}." if res.get("ok") else res.get("error", "Launch failed.")
+            )
         elif intent["kind"] == "opencode_in":
             path = intent["path"]
             if not os.path.isdir(path):
@@ -478,6 +486,7 @@ class VoiceDaemon:
             else:
                 # Interactive coding session: visible console, fresh opencode.
                 from jarvis.automation.app_connector import launch_in_console
+
                 res = launch_in_console("opencode", args=[path])
                 reply = f"OpenCode session opening in {path}." if res.get("ok") else res.get("error", "opencode failed")
         elif intent["kind"] == "delegate" and intent["agent"] == "opencode":
@@ -485,7 +494,11 @@ class VoiceDaemon:
             reply = "OpenCode is on it." if res.get("ok") else res.get("error", "opencode failed")
         elif intent["kind"] == "delegate":
             res = antigravity_delegate(intent["task"], agent=intent["agent"])
-            reply = f"Antigravity open. Task on your clipboard — Ctrl+V in the agent panel." if res.get("ok") else res.get("error", "Antigravity failed")
+            reply = (
+                f"Antigravity open. Task on your clipboard — Ctrl+V in the agent panel."
+                if res.get("ok")
+                else res.get("error", "Antigravity failed")
+            )
         else:
             return None
 
@@ -493,8 +506,10 @@ class VoiceDaemon:
         self._record_evidence(
             source="voice_daemon.app_task",
             data={
-                "intent": intent, "result_ok": ok,
-                "pid": res.get("pid"), "log": res.get("log"),
+                "intent": intent,
+                "result_ok": ok,
+                "pid": res.get("pid"),
+                "log": res.get("log"),
                 "error": res.get("error"),
             },
         )
@@ -510,6 +525,7 @@ class VoiceDaemon:
         """Cheap availability probe (no model load): is openwakeword importable?"""
         try:
             import importlib.util
+
             return importlib.util.find_spec("openwakeword") is not None
         except Exception:
             return False
@@ -564,6 +580,7 @@ class VoiceDaemon:
 
     def _record_evidence(self, source: str, data: Dict[str, Any]) -> Dict[str, Any]:
         from jarvis.core.evidence import Evidence
+
         evidence = Evidence(source=source, data=data, timestamp=time.time(), trust_level="verified")
         record = evidence.to_dict()
         with self._stats_lock:
@@ -587,7 +604,7 @@ class VoiceDaemon:
         total = 0
         count = len(pcm) // 2
         for i in range(count):
-            val = int.from_bytes(pcm[i * 2:i * 2 + 2], "little", signed=True)
+            val = int.from_bytes(pcm[i * 2 : i * 2 + 2], "little", signed=True)
             total += abs(val)
         return total / max(count, 1)
 
@@ -615,7 +632,7 @@ class VoiceDaemon:
         for phrase in sorted(self.wake_phrases, key=len, reverse=True):
             idx = low.find(phrase)
             if idx >= 0:
-                remainder = text[idx + len(phrase):]
+                remainder = text[idx + len(phrase) :]
                 return remainder.strip(" ,.!?;:")
         return ""
 
@@ -699,10 +716,7 @@ class VoiceDaemon:
 
         total_blocks = self._speech_blocks + self._silence_blocks
         command_maxed = self.state == "CAPTURING_COMMAND" and total_blocks >= self.MAX_COMMAND_BLOCKS
-        utterance_end = (
-            self._silence_blocks >= self.SILENCE_END_BLOCKS
-            or command_maxed
-        )
+        utterance_end = self._silence_blocks >= self.SILENCE_END_BLOCKS or command_maxed
 
         if not utterance_end:
             return events
@@ -836,7 +850,9 @@ class VoiceDaemon:
 
         reply_data = orch_result.get("response", {})
         if isinstance(reply_data, dict):
-            reply_text = reply_data.get("message") or reply_data.get("reply") or reply_data.get("type") or str(reply_data)
+            reply_text = (
+                reply_data.get("message") or reply_data.get("reply") or reply_data.get("type") or str(reply_data)
+            )
         else:
             reply_text = str(reply_data)
 
@@ -1024,10 +1040,7 @@ class VoiceDaemon:
                 "pid": uuid.uuid4().hex[:8],
             },
         )
-        logger.info(
-            f"VoiceDaemon started (mic={mic_opened}, state={self.state}, "
-            f"wake_phrases={self.wake_phrases})"
-        )
+        logger.info(f"VoiceDaemon started (mic={mic_opened}, state={self.state}, wake_phrases={self.wake_phrases})")
         return self.health()
 
     def stop(self) -> Dict[str, Any]:
@@ -1075,14 +1088,16 @@ class VoiceDaemon:
                 "acoustic_gate_engine": "openwakeword-onnx" if self._gate_ready() else None,
                 "acoustic_gate_model": (
                     (self._gate.model_names or ["(default set)"])[0]
-                    if self._gate is not None and self._gate_ready() else None
+                    if self._gate is not None and self._gate_ready()
+                    else None
                 ),
                 "acoustic_gate_threshold": (
                     self._gate.threshold if self._gate is not None and self._gate_ready() else None
                 ),
                 "acoustic_gate_unavailable_reason": (
-                    (self._gate.unavailable_reason or None) if self._gate is not None
-                    and not self._gate_ready() and self._gate_enabled else None
+                    (self._gate.unavailable_reason or None)
+                    if self._gate is not None and not self._gate_ready() and self._gate_enabled
+                    else None
                 ),
                 "acoustic_wake_count": self.acoustic_wake_count,
                 "gated_utterance_count": self.gated_utterance_count,
@@ -1112,8 +1127,7 @@ def main() -> None:  # pragma: no cover - interactive entrypoint
     claim, existing = process_registry.claim_role("voice_daemon")
     if claim == "EXISTING" and existing is not None:
         print(
-            f"[JARVIS Voice Daemon] another instance is already running "
-            f"(pid {existing.pid}); this launch is a no-op."
+            f"[JARVIS Voice Daemon] another instance is already running (pid {existing.pid}); this launch is a no-op."
         )
         return
     if claim == "NO_MATCH":

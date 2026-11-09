@@ -30,17 +30,15 @@ router = APIRouter(prefix="/api/v1", tags=["Reflections & Capabilities"])
 # Pydantic V2 Schemas with OpenAPI Examples
 # ---------------------------------------------------------
 
+
 class ReflectionCreateRequest(BaseModel):
     goal_id: str = Field(..., description="Target Goal UUID or identifier to reflect upon")
-    include_constitution_audit: bool = Field(default=True, description="Whether to compare against Constitution pillars")
+    include_constitution_audit: bool = Field(
+        default=True, description="Whether to compare against Constitution pillars"
+    )
 
     model_config = {
-        "json_schema_extra": {
-            "example": {
-                "goal_id": "goal_hackathon_pune_2026",
-                "include_constitution_audit": True
-            }
-        }
+        "json_schema_extra": {"example": {"goal_id": "goal_hackathon_pune_2026", "include_constitution_audit": True}}
     }
 
 
@@ -66,7 +64,7 @@ class ReflectionResponse(BaseModel):
                 "improvements": ["Synthesize DAG topology into reusable skill."],
                 "opportunities": ["Opportunity from Select Best Problem: Publish as open standard."],
                 "constitution_alignment_score": 0.98,
-                "metrics": {"total_tasks": 8, "completed_tasks": 8, "completion_rate": 100.0}
+                "metrics": {"total_tasks": 8, "completed_tasks": 8, "completion_rate": 100.0},
             }
         }
     }
@@ -88,7 +86,7 @@ class ImprovementCreateRequest(BaseModel):
                 "description": "Integrate 0-1000 coordinate visual grounding for desktop element clicks.",
                 "category": "capability",
                 "priority": "HIGH",
-                "proposed_changes": {"tool_name": "ui_tars_click", "action": "register_capability"}
+                "proposed_changes": {"tool_name": "ui_tars_click", "action": "register_capability"},
             }
         }
     }
@@ -114,7 +112,7 @@ class ImprovementResponse(BaseModel):
                 "priority": "HIGH",
                 "status": "PROPOSED",
                 "proposed_changes": {"tool_name": "ui_tars_click"},
-                "created_at": "2026-11-02T16:35:00Z"
+                "created_at": "2026-11-02T16:35:00Z",
             }
         }
     }
@@ -138,7 +136,7 @@ class CapabilityResponse(BaseModel):
                 "category": "engineering",
                 "description": "Parses repository AST and generates symbol and call graphs.",
                 "required_tools": ["ast_mapper", "tree_sitter"],
-                "success_rate": 0.98
+                "success_rate": 0.98,
             }
         }
     }
@@ -184,20 +182,23 @@ _engine = ReflectionEngine()
 # API Endpoints
 # ---------------------------------------------------------
 
+
 @router.post("/reflections", response_model=ReflectionResponse, status_code=status.HTTP_201_CREATED)
 async def create_reflection(payload: ReflectionCreateRequest):
     """Generates and stores a new post-goal reflection."""
     graph = TaskGraph(goal_id=payload.goal_id)
     # Synthesize dummy node for goal if empty
-    graph.add_node(TaskNode(
-        task_id="t_root",
-        name="Goal Pipeline",
-        description="Execution trace for goal",
-        department="engineering",
-        parent_goal=payload.goal_id,
-        status=TaskStatus.COMPLETED,
-        outputs={"status": "completed", "opportunity": "Synthesize reusable skill"},
-    ))
+    graph.add_node(
+        TaskNode(
+            task_id="t_root",
+            name="Goal Pipeline",
+            description="Execution trace for goal",
+            department="engineering",
+            parent_goal=payload.goal_id,
+            status=TaskStatus.COMPLETED,
+            outputs={"status": "completed", "opportunity": "Synthesize reusable skill"},
+        )
+    )
 
     report = _engine.generate_reflection(graph)
     refl_id = str(uuid.uuid4())
@@ -256,7 +257,9 @@ async def create_improvement(payload: ImprovementCreateRequest):
 
 
 @router.get("/capabilities", response_model=List[CapabilityResponse])
-async def list_capabilities(level: Optional[str] = Query(None, description="MISSING, EXPERIMENTAL, BASIC, ADVANCED, ELITE")):
+async def list_capabilities(
+    level: Optional[str] = Query(None, description="MISSING, EXPERIMENTAL, BASIC, ADVANCED, ELITE"),
+):
     """Lists system capabilities, optionally filtered by maturity level."""
     caps = list(_capabilities_db.values())
     if level:

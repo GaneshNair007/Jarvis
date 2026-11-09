@@ -207,7 +207,9 @@ class TestFastIntentRouter:
     def test_cloud_reasoning_triage(self):
         router = FastIntentRouter()
 
-        res_arch = router.triage("architect a distributed cognitive control architecture with asynchronous state machines")
+        res_arch = router.triage(
+            "architect a distributed cognitive control architecture with asynchronous state machines"
+        )
         assert res_arch.intent_category == IntentCategory.CLOUD_REASONING
         assert res_arch.target_subsystem == SubsystemDestination.CLOUD_ROTATOR
 
@@ -280,11 +282,15 @@ class TestMCPSubstrate:
         assert "Architect" in search_res["content"][0]["text"]
 
         # Sequential thinking
-        think_res = client.call_tool("sequential-thinking", "sequentialthinking", {
-            "thought": "Decomposing GUI action coordinates",
-            "thoughtNumber": 1,
-            "totalThoughts": 3,
-        })
+        think_res = client.call_tool(
+            "sequential-thinking",
+            "sequentialthinking",
+            {
+                "thought": "Decomposing GUI action coordinates",
+                "thoughtNumber": 1,
+                "totalThoughts": 3,
+            },
+        )
         assert think_res.get("isError") is False
         assert "Decomposing GUI action coordinates" in think_res["content"][0]["text"]
 
@@ -420,7 +426,7 @@ class TestVoiceStreamPipeline:
     def test_audio_buffer_overflow_eviction(self):
         # 0.1s max duration at 16000 samples/sec * 2 bytes = 3200 bytes max
         buffer = AudioStreamBuffer(max_duration_sec=0.1, sample_rate=16000)
-        large_chunk = b"\xFF" * 5000
+        large_chunk = b"\xff" * 5000
         buffer.write_chunk(large_chunk)
 
         assert buffer.size_bytes <= buffer.max_bytes
@@ -491,11 +497,15 @@ class TestBlueprintExtendedAPI:
                 def generate_content(self, model, contents, config=None):
                     self.parent.calls += 1
                     if self.parent.calls == 1:
+
                         class RateLimitError(Exception):
                             code = 429
+
                         raise RateLimitError("Rate limit 429")
+
                     class Resp:
                         text = "Synthesized response from Account 2"
+
                     return Resp()
 
             @property
@@ -512,6 +522,7 @@ class TestBlueprintExtendedAPI:
 
     def test_jarvis_core_config_wiring(self):
         import jarvis.core.config as core_config
+
         assert hasattr(core_config, "settings")
         assert hasattr(core_config, "api_key_rotator")
         assert hasattr(core_config, "gemini_rotator")

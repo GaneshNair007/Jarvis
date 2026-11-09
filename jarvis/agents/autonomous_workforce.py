@@ -72,7 +72,9 @@ class AutonomousWorkforceSwarm:
         for i in range(1, 21):
             aid = f"analysis_{i:02d}"
             name = f"ProblemAnalyzer-{i:02d}"
-            desc = "Parses hackathon guidelines, evaluates Ganesh's skill alignment, and synthesizes PROBLEM_STATEMENT.md"
+            desc = (
+                "Parses hackathon guidelines, evaluates Ganesh's skill alignment, and synthesizes PROBLEM_STATEMENT.md"
+            )
             self.agents[aid] = SwarmAgentSpec(aid, name, "ANALYSIS", desc)
 
         # 3. Scaffolding Fleet (30 agents)
@@ -170,11 +172,11 @@ class AutonomousWorkforceSwarm:
         problem_file.write_text(problem_md, encoding="utf-8")
 
         # Scaffold starter code
-        starter_code = f"""# {top_hackathon.get('title', 'Hackathon Project')}
+        starter_code = f"""# {top_hackathon.get("title", "Hackathon Project")}
 # Scaffolded autonomously by Project JARVIS for {candidate_name}
 
 def main():
-    print("Project initialized for {top_hackathon.get('title')}")
+    print("Project initialized for {top_hackathon.get("title")}")
     print("Zero-Leak Security & Local RTX 4050 Inference Active.")
 
 if __name__ == '__main__':

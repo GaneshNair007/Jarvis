@@ -76,14 +76,20 @@ class ObscuraBrowserClient:
                 title = title_match.group(1).strip() if title_match else "No Title"
 
                 # Strip script and style tags
-                cleaned_html = re.sub(r"<(script|style|noscript|svg)[^>]*>.*?</\1>", " ", html, flags=re.DOTALL | re.IGNORECASE)
+                cleaned_html = re.sub(
+                    r"<(script|style|noscript|svg)[^>]*>.*?</\1>", " ", html, flags=re.DOTALL | re.IGNORECASE
+                )
                 # Strip remaining HTML tags
                 plain_text = re.sub(r"<[^>]+>", " ", cleaned_html)
                 plain_text = re.sub(r"\s+", " ", plain_text).strip()
 
                 # Extract hyperlinks
                 links = []
-                for m in re.finditer(r'<a\s+(?:[^>]*?\s+)?href=["\'](https?://[^"\']+)["\'][^>]*>(.*?)</a>', html, re.IGNORECASE | re.DOTALL):
+                for m in re.finditer(
+                    r'<a\s+(?:[^>]*?\s+)?href=["\'](https?://[^"\']+)["\'][^>]*>(.*?)</a>',
+                    html,
+                    re.IGNORECASE | re.DOTALL,
+                ):
                     href = m.group(1)
                     anchor_text = re.sub(r"<[^>]+>", "", m.group(2)).strip()
                     if anchor_text and len(anchor_text) < 120 and href not in [l["href"] for l in links]:
@@ -134,12 +140,14 @@ class ObscuraBrowserClient:
                     )
                     for raw_url, raw_snip in snippets[:limit]:
                         clean_snip = re.sub(r"<[^>]+>", "", raw_snip).strip()
-                        results.append({
-                            "title": clean_snip[:80] + "...",
-                            "snippet": clean_snip,
-                            "url": raw_url,
-                            "source": "duckduckgo_stealth",
-                        })
+                        results.append(
+                            {
+                                "title": clean_snip[:80] + "...",
+                                "snippet": clean_snip,
+                                "url": raw_url,
+                                "source": "duckduckgo_stealth",
+                            }
+                        )
         except Exception as e:
             logger.debug(f"DuckDuckGo search error: {e}")
 

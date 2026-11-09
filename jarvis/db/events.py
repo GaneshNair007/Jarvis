@@ -104,4 +104,3 @@ class EventBus:
 
 # Global Singleton Event Bus
 event_bus = EventBus()
-

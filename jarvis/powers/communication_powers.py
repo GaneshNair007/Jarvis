@@ -19,10 +19,7 @@ from jarvis.core.logger import get_logger
 
 logger = get_logger("powers.communication")
 
-_DATA_DIR = Path(os.environ.get(
-    "JARVIS_DATA_DIR",
-    Path(__file__).resolve().parents[2] / "data"
-))
+_DATA_DIR = Path(os.environ.get("JARVIS_DATA_DIR", Path(__file__).resolve().parents[2] / "data"))
 _OUTBOX_DIR = _DATA_DIR / "outbox"
 _CONTACTS_FILE = _DATA_DIR / "contacts.json"
 _TEMPLATES_DIR = _DATA_DIR / "templates"
@@ -129,7 +126,9 @@ class CommunicationPowers:
         try:
             result = subprocess.run(
                 ["powershell", "-NoProfile", "-Command", ps_script],
-                capture_output=True, text=True, timeout=10,
+                capture_output=True,
+                text=True,
+                timeout=10,
             )
             ok = result.returncode == 0
 
@@ -277,13 +276,13 @@ class CommunicationPowers:
                     "power_id": "PWR-209",
                     "status": "success",
                     "matches": [],
-                    "note": f"Contacts file not found at {_CONTACTS_FILE}. "
-                            "Create it with a JSON array of objects.",
+                    "note": f"Contacts file not found at {_CONTACTS_FILE}. Create it with a JSON array of objects.",
                 }
             contacts = json.loads(_CONTACTS_FILE.read_text(encoding="utf-8"))
             query = name.lower()
             matches = [
-                c for c in contacts
+                c
+                for c in contacts
                 if query in c.get("name", "").lower()
                 or query in c.get("email", "").lower()
                 or query in c.get("phone", "").lower()

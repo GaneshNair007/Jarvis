@@ -52,7 +52,9 @@ class ImprovementGenerator:
                 description=bottleneck,
                 category="performance",
                 priority="MEDIUM",
-                proposed_changes={"action_required": "Refine agent prompts, increase timeouts, or optimize tool calling."},
+                proposed_changes={
+                    "action_required": "Refine agent prompts, increase timeouts, or optimize tool calling."
+                },
             )
             proposals.append(prop)
 

@@ -39,7 +39,9 @@ class MCPServerConfig(BaseModel):
 
 class JSONRPCMessage:
     @staticmethod
-    def build_request(method: str, params: Optional[Dict[str, Any]] = None, req_id: Optional[Union[str, int]] = None) -> Dict[str, Any]:
+    def build_request(
+        method: str, params: Optional[Dict[str, Any]] = None, req_id: Optional[Union[str, int]] = None
+    ) -> Dict[str, Any]:
         msg_id = req_id if req_id is not None else str(uuid.uuid4())
         req = {
             "jsonrpc": "2.0",
@@ -51,7 +53,9 @@ class JSONRPCMessage:
         return req
 
     @staticmethod
-    def build_response(req_id: Union[str, int], result: Any = None, error: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    def build_response(
+        req_id: Union[str, int], result: Any = None, error: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         res: Dict[str, Any] = {"jsonrpc": "2.0", "id": req_id}
         if error:
             res["error"] = error
@@ -125,7 +129,9 @@ class StdioMCPTransport:
             for req_id, ev in self._pending_requests.items():
                 ev.set()
 
-    def send_request(self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0) -> Dict[str, Any]:
+    def send_request(
+        self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0
+    ) -> Dict[str, Any]:
         """Sends a JSON-RPC request and waits for corresponding response."""
         if not self._running or not self.process or not self.process.stdin:
             raise RuntimeError("MCP stdio process is not running.")
@@ -182,7 +188,9 @@ class SSEMCPTransport:
     def __init__(self, url: str):
         self.url = url
 
-    def send_request(self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0) -> Dict[str, Any]:
+    def send_request(
+        self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0
+    ) -> Dict[str, Any]:
         """Posts JSON-RPC request to HTTP/SSE endpoint."""
         import urllib.request
 
@@ -307,29 +315,73 @@ class MCPClient:
         """Built-in tool manifests conforming to official MCP server specifications."""
         if server_name == "filesystem":
             return [
-                {"name": "read_file", "description": "Read file contents", "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}}}},
-                {"name": "write_file", "description": "Write file contents", "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}, "content": {"type": "string"}}}},
-                {"name": "list_directory", "description": "List files in directory", "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}}}},
+                {
+                    "name": "read_file",
+                    "description": "Read file contents",
+                    "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}}},
+                },
+                {
+                    "name": "write_file",
+                    "description": "Write file contents",
+                    "inputSchema": {
+                        "type": "object",
+                        "properties": {"path": {"type": "string"}, "content": {"type": "string"}},
+                    },
+                },
+                {
+                    "name": "list_directory",
+                    "description": "List files in directory",
+                    "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}}},
+                },
             ]
         elif server_name == "memory":
             return [
-                {"name": "create_entities", "description": "Create entities in knowledge graph", "inputSchema": {"type": "object", "properties": {"entities": {"type": "array"}}}},
-                {"name": "create_relations", "description": "Create relations between entities", "inputSchema": {"type": "object", "properties": {"relations": {"type": "array"}}}},
-                {"name": "search_nodes", "description": "Search knowledge graph nodes", "inputSchema": {"type": "object", "properties": {"query": {"type": "string"}}}},
+                {
+                    "name": "create_entities",
+                    "description": "Create entities in knowledge graph",
+                    "inputSchema": {"type": "object", "properties": {"entities": {"type": "array"}}},
+                },
+                {
+                    "name": "create_relations",
+                    "description": "Create relations between entities",
+                    "inputSchema": {"type": "object", "properties": {"relations": {"type": "array"}}},
+                },
+                {
+                    "name": "search_nodes",
+                    "description": "Search knowledge graph nodes",
+                    "inputSchema": {"type": "object", "properties": {"query": {"type": "string"}}},
+                },
             ]
         elif server_name == "git":
             return [
                 {"name": "git_status", "description": "Check git repository status", "inputSchema": {"type": "object"}},
-                {"name": "git_log", "description": "View recent git commits", "inputSchema": {"type": "object", "properties": {"max_count": {"type": "integer"}}}},
+                {
+                    "name": "git_log",
+                    "description": "View recent git commits",
+                    "inputSchema": {"type": "object", "properties": {"max_count": {"type": "integer"}}},
+                },
                 {"name": "git_diff", "description": "View uncommitted changes", "inputSchema": {"type": "object"}},
             ]
         elif server_name == "sequential-thinking":
             return [
-                {"name": "sequentialthinking", "description": "Dynamic problem decomposition step", "inputSchema": {"type": "object", "properties": {"thought": {"type": "string"}, "thoughtNumber": {"type": "integer"}, "totalThoughts": {"type": "integer"}}}},
+                {
+                    "name": "sequentialthinking",
+                    "description": "Dynamic problem decomposition step",
+                    "inputSchema": {
+                        "type": "object",
+                        "properties": {
+                            "thought": {"type": "string"},
+                            "thoughtNumber": {"type": "integer"},
+                            "totalThoughts": {"type": "integer"},
+                        },
+                    },
+                },
             ]
         return []
 
-    def call_tool(self, server_name: str, tool_name: str, arguments: Dict[str, Any], timeout: float = 10.0) -> Dict[str, Any]:
+    def call_tool(
+        self, server_name: str, tool_name: str, arguments: Dict[str, Any], timeout: float = 10.0
+    ) -> Dict[str, Any]:
         """
         Executes a tool on the designated MCP server.
         Falls back cleanly to reference handlers if external process is unavailable.
@@ -343,7 +395,9 @@ class MCPClient:
                 res = transport.send_request("tools/call", {"name": tool_name, "arguments": arguments}, timeout=timeout)
                 return res
             except Exception as e:
-                logger.warning(f"MCP live call '{tool_name}' on '{server_name}' failed: {e}. Falling back to reference runner.")
+                logger.warning(
+                    f"MCP live call '{tool_name}' on '{server_name}' failed: {e}. Falling back to reference runner."
+                )
 
         if self.simulated_fallback:
             return self._execute_reference_tool(server_name, tool_name, arguments)
@@ -360,13 +414,19 @@ class MCPClient:
                     with open(target_path, "r", encoding="utf-8", errors="ignore") as f:
                         return {"content": [{"type": "text", "text": f.read()}], "isError": False}
                 elif path_str in self._mock_storage["files"]:
-                    return {"content": [{"type": "text", "text": self._mock_storage["files"][path_str]}], "isError": False}
+                    return {
+                        "content": [{"type": "text", "text": self._mock_storage["files"][path_str]}],
+                        "isError": False,
+                    }
                 return {"content": [{"type": "text", "text": f"Error: File not found {target_path}"}], "isError": True}
 
             elif tool == "write_file":
                 content = args.get("content", "")
                 self._mock_storage["files"][path_str] = content
-                return {"content": [{"type": "text", "text": f"Successfully wrote {len(content)} bytes to {path_str}"}], "isError": False}
+                return {
+                    "content": [{"type": "text", "text": f"Successfully wrote {len(content)} bytes to {path_str}"}],
+                    "isError": False,
+                }
 
             elif tool == "list_directory":
                 if target_path.exists() and target_path.is_dir():
@@ -378,7 +438,10 @@ class MCPClient:
             if tool == "create_entities":
                 entities = args.get("entities", [])
                 self._mock_storage["memory"].extend(entities)
-                return {"content": [{"type": "text", "text": f"Created {len(entities)} memory entities."}], "isError": False}
+                return {
+                    "content": [{"type": "text", "text": f"Created {len(entities)} memory entities."}],
+                    "isError": False,
+                }
             elif tool == "search_nodes":
                 q = args.get("query", "").lower()
                 matches = [e for e in self._mock_storage["memory"] if q in str(e).lower()]
@@ -386,9 +449,20 @@ class MCPClient:
 
         elif server == "git":
             if tool == "git_status":
-                return {"content": [{"type": "text", "text": "On branch main\nNothing to commit, working tree clean"}], "isError": False}
+                return {
+                    "content": [{"type": "text", "text": "On branch main\nNothing to commit, working tree clean"}],
+                    "isError": False,
+                }
             elif tool == "git_log":
-                return {"content": [{"type": "text", "text": "commit 10e0785 (HEAD -> main)\nAuthor: Ganesh Nair\nDate: Recent\n\n    Architectural blueprint integration"}], "isError": False}
+                return {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "commit 10e0785 (HEAD -> main)\nAuthor: Ganesh Nair\nDate: Recent\n\n    Architectural blueprint integration",
+                        }
+                    ],
+                    "isError": False,
+                }
 
         elif server == "sequential-thinking":
             thought = args.get("thought", "")

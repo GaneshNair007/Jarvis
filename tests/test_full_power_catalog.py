@@ -31,39 +31,58 @@ class TestFullPowerCatalog:
         # Check key domain presences
         cats_lower = [c.lower() for c in categories]
         expected_keywords = [
-            "voice", "screen", "instant", "dictation", "browser",
-            "file", "it admin", "network", "security", "developer",
-            "productivity", "communication", "finance", "youtube",
-            "smart", "automation", "multi-agent", "iron man", "career", "research"
+            "voice",
+            "screen",
+            "instant",
+            "dictation",
+            "browser",
+            "file",
+            "it admin",
+            "network",
+            "security",
+            "developer",
+            "productivity",
+            "communication",
+            "finance",
+            "youtube",
+            "smart",
+            "automation",
+            "multi-agent",
+            "iron man",
+            "career",
+            "research",
         ]
         for kw in expected_keywords:
             assert any(kw in c for c in cats_lower), f"Missing category matching keyword: {kw}"
 
-    @pytest.mark.parametrize("power_id,kwargs,expected_keys", [
-        ("PWR-001", {}, ["power_id", "status"]),
-        ("PWR-016", {}, ["power_id", "title"]),
-        ("PWR-027", {"app_name": "notepad"}, ["power_id", "status"]),
-        ("PWR-053", {"text": "need this done ASAP", "target_tone": "formal"}, ["power_id", "transformed_text"]),
-        ("PWR-063", {"query": "AI architecture"}, ["power_id", "results"]),
-        ("PWR-082", {"path": "README.md"}, ["power_id", "status"]),
-        ("PWR-100", {}, ["power_id", "status"]),
-        ("PWR-127", {"host": "127.0.0.1", "count": 1}, ["power_id", "status"]),
-        ("PWR-147", {"password": "Password123!"}, ["power_id", "strength"]),
-        ("PWR-162", {"pattern": "Jarvis", "directory": "jarvis"}, ["power_id", "status"]),
-        ("PWR-185", {}, ["power_id", "events"]),
-        ("PWR-191", {}, ["power_id", "opportunities"]),
-        ("PWR-209", {"name": "Ganesh"}, ["power_id", "status"]),
-        ("PWR-215", {"symbol": "NVDA"}, ["power_id", "price"]),
-        ("PWR-222", {}, ["power_id", "indices"]),
-        ("PWR-237", {"topic": "AI Operating System"}, ["power_id", "script"]),
-        ("PWR-256", {"state": "on"}, ["power_id", "state"]),
-        ("PWR-272", {}, ["power_id", "active_count"]),
-        ("PWR-288", {"goal": "Run system diagnostic"}, ["power_id", "status"]),
-        ("PWR-308", {"goal": "Check screen layout"}, ["power_id", "status"]),
-        ("PWR-327", {}, ["power_id", "status", "persona"]),
-        ("PWR-328", {}, ["power_id", "status"]),
-        ("PWR-338", {"task_description": "Analyze system logs"}, ["power_id", "suggested_tools"]),
-    ])
+    @pytest.mark.parametrize(
+        "power_id,kwargs,expected_keys",
+        [
+            ("PWR-001", {}, ["power_id", "status"]),
+            ("PWR-016", {}, ["power_id", "title"]),
+            ("PWR-027", {"app_name": "notepad"}, ["power_id", "status"]),
+            ("PWR-053", {"text": "need this done ASAP", "target_tone": "formal"}, ["power_id", "transformed_text"]),
+            ("PWR-063", {"query": "AI architecture"}, ["power_id", "results"]),
+            ("PWR-082", {"path": "README.md"}, ["power_id", "status"]),
+            ("PWR-100", {}, ["power_id", "status"]),
+            ("PWR-127", {"host": "127.0.0.1", "count": 1}, ["power_id", "status"]),
+            ("PWR-147", {"password": "Password123!"}, ["power_id", "strength"]),
+            ("PWR-162", {"pattern": "Jarvis", "directory": "jarvis"}, ["power_id", "status"]),
+            ("PWR-185", {}, ["power_id", "events"]),
+            ("PWR-191", {}, ["power_id", "opportunities"]),
+            ("PWR-209", {"name": "Ganesh"}, ["power_id", "status"]),
+            ("PWR-215", {"symbol": "NVDA"}, ["power_id", "price"]),
+            ("PWR-222", {}, ["power_id", "indices"]),
+            ("PWR-237", {"topic": "AI Operating System"}, ["power_id", "script"]),
+            ("PWR-256", {"state": "on"}, ["power_id", "state"]),
+            ("PWR-272", {}, ["power_id", "active_count"]),
+            ("PWR-288", {"goal": "Run system diagnostic"}, ["power_id", "status"]),
+            ("PWR-308", {"goal": "Check screen layout"}, ["power_id", "status"]),
+            ("PWR-327", {}, ["power_id", "status", "persona"]),
+            ("PWR-328", {}, ["power_id", "status"]),
+            ("PWR-338", {"task_description": "Analyze system logs"}, ["power_id", "suggested_tools"]),
+        ],
+    )
     def test_representative_power_execution(self, power_id, kwargs, expected_keys):
         """Verifies that representative powers across all domains execute cleanly."""
         res = power_registry.execute_power(power_id, **kwargs)

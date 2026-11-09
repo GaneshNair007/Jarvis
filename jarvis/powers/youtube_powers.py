@@ -23,9 +23,7 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-237  Generate Video Script
     # ------------------------------------------------------------------
-    def generate_video_script(
-        self, topic: str, style: str = "educational"
-    ) -> Dict[str, Any]:
+    def generate_video_script(self, topic: str, style: str = "educational") -> Dict[str, Any]:
         """PWR-237: Generate a structured 3-act video script (hook → body → CTA)."""
         style = style.lower().strip()
         style_hooks = {
@@ -63,9 +61,7 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-238  Generate Titles
     # ------------------------------------------------------------------
-    def generate_titles(
-        self, topic: str, count: int = 10
-    ) -> Dict[str, Any]:
+    def generate_titles(self, topic: str, count: int = 10) -> Dict[str, Any]:
         """PWR-238: Generate high-CTR YouTube title variants."""
         templates = [
             "{topic} — Everything You Need to Know in {year}",
@@ -82,9 +78,7 @@ class YouTubePowers:
             "Is {topic} Worth It? Honest Review",
         ]
         year = str(datetime.date.today().year)
-        titles = [
-            t.format(topic=topic, year=year) for t in templates[:count]
-        ]
+        titles = [t.format(topic=topic, year=year) for t in templates[:count]]
         return {
             "power_id": "PWR-238",
             "status": "success",
@@ -96,9 +90,7 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-239  Generate Description
     # ------------------------------------------------------------------
-    def generate_description(
-        self, topic: str, keywords: Optional[List[str]] = None
-    ) -> Dict[str, Any]:
+    def generate_description(self, topic: str, keywords: Optional[List[str]] = None) -> Dict[str, Any]:
         """PWR-239: Generate an SEO-optimized YouTube video description."""
         kw_list = keywords or [topic.lower()]
         kw_line = ", ".join(kw_list)
@@ -134,19 +126,32 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-240  Generate Tags
     # ------------------------------------------------------------------
-    def generate_tags(
-        self, topic: str, max_tags: int = 30
-    ) -> Dict[str, Any]:
+    def generate_tags(self, topic: str, max_tags: int = 30) -> Dict[str, Any]:
         """PWR-240: Generate a search-optimized tag list for a YouTube video."""
         base = topic.lower().strip()
         words = base.split()
         tags: List[str] = [base]
         suffixes = [
-            "tutorial", "explained", "guide", "for beginners",
-            "tips", "tricks", "review", "how to", "best practices",
-            "2024", "2025", "2026", "masterclass", "course",
-            "step by step", "deep dive", "crash course",
-            "pros and cons", "vs", "walkthrough",
+            "tutorial",
+            "explained",
+            "guide",
+            "for beginners",
+            "tips",
+            "tricks",
+            "review",
+            "how to",
+            "best practices",
+            "2024",
+            "2025",
+            "2026",
+            "masterclass",
+            "course",
+            "step by step",
+            "deep dive",
+            "crash course",
+            "pros and cons",
+            "vs",
+            "walkthrough",
         ]
         for suffix in suffixes:
             tags.append(f"{base} {suffix}")
@@ -192,18 +197,22 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-242  Content Calendar
     # ------------------------------------------------------------------
-    def content_calendar(
-        self, niche: str, weeks: int = 4
-    ) -> Dict[str, Any]:
+    def content_calendar(self, niche: str, weeks: int = 4) -> Dict[str, Any]:
         """PWR-242: Generate a weekly content schedule."""
         day_slots = ["Monday", "Wednesday", "Friday"]
         content_types = [
-            "Deep-dive tutorial", "Quick tip / Short",
-            "Listicle / Top N", "Behind the scenes",
-            "Q&A / Community response", "Case study",
-            "Tool review", "Trending reaction",
-            "Collaboration idea", "Challenge video",
-            "Myth-busting", "Comparison / vs",
+            "Deep-dive tutorial",
+            "Quick tip / Short",
+            "Listicle / Top N",
+            "Behind the scenes",
+            "Q&A / Community response",
+            "Case study",
+            "Tool review",
+            "Trending reaction",
+            "Collaboration idea",
+            "Challenge video",
+            "Myth-busting",
+            "Comparison / vs",
         ]
         calendar: List[Dict[str, Any]] = []
         idx = 0
@@ -213,11 +222,13 @@ class YouTubePowers:
             week_entries: List[Dict[str, str]] = []
             for day_name in day_slots:
                 ct = content_types[idx % len(content_types)]
-                week_entries.append({
-                    "day": day_name,
-                    "content_type": ct,
-                    "suggested_topic": f"{niche}: {ct}",
-                })
+                week_entries.append(
+                    {
+                        "day": day_name,
+                        "content_type": ct,
+                        "suggested_topic": f"{niche}: {ct}",
+                    }
+                )
                 idx += 1
             calendar.append({"week": week, "week_of": str(week_start), "slots": week_entries})
 
@@ -244,8 +255,12 @@ class YouTubePowers:
                 "Provide an API key via YOUTUBE_API_KEY env var to enable live data."
             ),
             "suggested_metrics": [
-                "subscriber_count", "avg_views_per_video", "upload_frequency",
-                "top_performing_topics", "engagement_rate", "average_video_length",
+                "subscriber_count",
+                "avg_views_per_video",
+                "upload_frequency",
+                "top_performing_topics",
+                "engagement_rate",
+                "average_video_length",
             ],
         }
 
@@ -285,16 +300,44 @@ class YouTubePowers:
     def video_outline(self, topic: str) -> Dict[str, Any]:
         """PWR-245: Generate a detailed section-by-section video outline."""
         outline = [
-            {"timestamp": "0:00", "section": "Cold Open / Hook", "notes": f"Grab attention with a bold claim about {topic}."},
-            {"timestamp": "0:15", "section": "Intro & Channel Branding", "notes": "Quick intro, ask viewers to subscribe."},
-            {"timestamp": "0:45", "section": "Why This Matters", "notes": f"Explain the relevance of {topic} right now."},
-            {"timestamp": "2:00", "section": "Background / Context", "notes": "Set the stage with necessary background info."},
-            {"timestamp": "3:30", "section": "Main Point 1", "notes": f"First major insight or step regarding {topic}."},
+            {
+                "timestamp": "0:00",
+                "section": "Cold Open / Hook",
+                "notes": f"Grab attention with a bold claim about {topic}.",
+            },
+            {
+                "timestamp": "0:15",
+                "section": "Intro & Channel Branding",
+                "notes": "Quick intro, ask viewers to subscribe.",
+            },
+            {
+                "timestamp": "0:45",
+                "section": "Why This Matters",
+                "notes": f"Explain the relevance of {topic} right now.",
+            },
+            {
+                "timestamp": "2:00",
+                "section": "Background / Context",
+                "notes": "Set the stage with necessary background info.",
+            },
+            {
+                "timestamp": "3:30",
+                "section": "Main Point 1",
+                "notes": f"First major insight or step regarding {topic}.",
+            },
             {"timestamp": "5:00", "section": "Main Point 2", "notes": "Second key point with examples or data."},
             {"timestamp": "6:30", "section": "Main Point 3", "notes": "Third key point or counter-argument."},
             {"timestamp": "8:00", "section": "Common Mistakes / Pitfalls", "notes": "What to avoid."},
-            {"timestamp": "9:00", "section": "Summary & Key Takeaway", "notes": "Recap the single most important lesson."},
-            {"timestamp": "9:30", "section": "Call to Action & Outro", "notes": "Like, subscribe, comment prompt. Tease next video."},
+            {
+                "timestamp": "9:00",
+                "section": "Summary & Key Takeaway",
+                "notes": "Recap the single most important lesson.",
+            },
+            {
+                "timestamp": "9:30",
+                "section": "Call to Action & Outro",
+                "notes": "Like, subscribe, comment prompt. Tease next video.",
+            },
         ]
         return {
             "power_id": "PWR-245",
@@ -308,9 +351,7 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-246  Hook Generator
     # ------------------------------------------------------------------
-    def hook_generator(
-        self, topic: str, count: int = 5
-    ) -> Dict[str, Any]:
+    def hook_generator(self, topic: str, count: int = 5) -> Dict[str, Any]:
         """PWR-246: Generate opening hook variants for a video."""
         templates = [
             f"What if I told you everything you know about {topic} is wrong?",
@@ -355,9 +396,7 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-248  Comment Reply Drafts
     # ------------------------------------------------------------------
-    def comment_reply_drafts(
-        self, comments: List[str]
-    ) -> Dict[str, Any]:
+    def comment_reply_drafts(self, comments: List[str]) -> Dict[str, Any]:
         """PWR-248: Draft reply templates for viewer comments."""
         drafts: List[Dict[str, str]] = []
         for comment in comments:
@@ -367,7 +406,9 @@ class YouTubePowers:
             elif "?" in comment:
                 reply = "Great question! I'll cover this in more detail in an upcoming video — stay tuned!"
             elif any(w in comment.lower() for w in ["wrong", "disagree", "bad", "hate"]):
-                reply = "I appreciate the feedback! Would love to hear your perspective — what would you suggest instead?"
+                reply = (
+                    "I appreciate the feedback! Would love to hear your perspective — what would you suggest instead?"
+                )
             else:
                 reply = "Thanks for watching and leaving a comment! 🎉"
             drafts.append({"original_comment": comment, "suggested_reply": reply})
@@ -388,9 +429,21 @@ class YouTubePowers:
             "format": "vertical 9:16",
             "sections": [
                 {"time": "0-5s", "label": "HOOK", "script": f"One thing about {topic} that blew my mind…"},
-                {"time": "5-15s", "label": "CONTEXT", "script": f"Most people think {topic} works like this… but it doesn't."},
-                {"time": "15-40s", "label": "VALUE", "script": f"Here's what actually matters about {topic}. [Show key point with on-screen text.]"},
-                {"time": "40-50s", "label": "PROOF", "script": "And the results speak for themselves. [Show data / result.]"},
+                {
+                    "time": "5-15s",
+                    "label": "CONTEXT",
+                    "script": f"Most people think {topic} works like this… but it doesn't.",
+                },
+                {
+                    "time": "15-40s",
+                    "label": "VALUE",
+                    "script": f"Here's what actually matters about {topic}. [Show key point with on-screen text.]",
+                },
+                {
+                    "time": "40-50s",
+                    "label": "PROOF",
+                    "script": "And the results speak for themselves. [Show data / result.]",
+                },
                 {"time": "50-60s", "label": "CTA", "script": "Follow for more and comment 'YES' if you want part 2!"},
             ],
         }
@@ -404,9 +457,7 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-250  Playlist Organizer
     # ------------------------------------------------------------------
-    def playlist_organizer(
-        self, videos: List[str]
-    ) -> Dict[str, Any]:
+    def playlist_organizer(self, videos: List[str]) -> Dict[str, Any]:
         """PWR-250: Group video titles into logical playlist buckets."""
         # Simple keyword-clustering heuristic
         buckets: Dict[str, List[str]] = {}
@@ -416,10 +467,7 @@ class YouTubePowers:
             key = words[0].capitalize() if words else "General"
             buckets.setdefault(key, []).append(title)
 
-        playlists = [
-            {"playlist_name": f"{key} Series", "videos": vids}
-            for key, vids in buckets.items()
-        ]
+        playlists = [{"playlist_name": f"{key} Series", "videos": vids} for key, vids in buckets.items()]
         return {
             "power_id": "PWR-250",
             "status": "success",
@@ -431,9 +479,7 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-251  Analytics Summary
     # ------------------------------------------------------------------
-    def analytics_summary(
-        self, data: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+    def analytics_summary(self, data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """PWR-251: Summarise channel analytics data."""
         if data is None:
             return {
@@ -444,8 +490,12 @@ class YouTubePowers:
                     "'views', 'subscribers', 'watch_hours', 'top_videos' for a summary."
                 ),
                 "template_keys": [
-                    "views", "subscribers", "watch_hours",
-                    "top_videos", "ctr", "avg_view_duration",
+                    "views",
+                    "subscribers",
+                    "watch_hours",
+                    "top_videos",
+                    "ctr",
+                    "avg_view_duration",
                 ],
             }
 
@@ -483,9 +533,7 @@ class YouTubePowers:
     # ------------------------------------------------------------------
     # PWR-252  Collaboration Pitch
     # ------------------------------------------------------------------
-    def collab_pitch(
-        self, creator: str, topic: str
-    ) -> Dict[str, Any]:
+    def collab_pitch(self, creator: str, topic: str) -> Dict[str, Any]:
         """PWR-252: Draft a collaboration pitch to another creator."""
         pitch = (
             f"Hey {creator}! 👋\n\n"
@@ -516,9 +564,21 @@ class YouTubePowers:
             {"platform": "YouTube Shorts", "format": "60s vertical clip of the best moment", "effort": "low"},
             {"platform": "TikTok", "format": "Re-edit Shorts clip with trending audio", "effort": "low"},
             {"platform": "Instagram Reels", "format": "Same vertical clip with captions overlay", "effort": "low"},
-            {"platform": "Twitter / X", "format": "Thread summarising key points with a link to the full video", "effort": "medium"},
-            {"platform": "LinkedIn", "format": "Professional angle write-up with embedded video link", "effort": "medium"},
-            {"platform": "Blog / Newsletter", "format": "Long-form article expanding on video content", "effort": "high"},
+            {
+                "platform": "Twitter / X",
+                "format": "Thread summarising key points with a link to the full video",
+                "effort": "medium",
+            },
+            {
+                "platform": "LinkedIn",
+                "format": "Professional angle write-up with embedded video link",
+                "effort": "medium",
+            },
+            {
+                "platform": "Blog / Newsletter",
+                "format": "Long-form article expanding on video content",
+                "effort": "high",
+            },
             {"platform": "Podcast", "format": "Audio-only version with additional commentary", "effort": "medium"},
             {"platform": "Pinterest", "format": "Infographic pin summarising key data points", "effort": "medium"},
         ]
@@ -538,7 +598,11 @@ class YouTubePowers:
         checklist = [
             {"requirement": "1,000 subscribers", "threshold": 1000, "metric": "subscribers"},
             {"requirement": "4,000 public watch hours (last 12 months)", "threshold": 4000, "metric": "watch_hours"},
-            {"requirement": "OR 10M Shorts views (last 90 days)", "threshold": 10_000_000, "metric": "shorts_views_90d"},
+            {
+                "requirement": "OR 10M Shorts views (last 90 days)",
+                "threshold": 10_000_000,
+                "metric": "shorts_views_90d",
+            },
             {"requirement": "Linked AdSense account", "metric": "adsense_linked", "threshold": True},
             {"requirement": "No active Community Guidelines strikes", "metric": "cg_strikes", "threshold": 0},
             {"requirement": "2-Step Verification enabled", "metric": "two_step_verification", "threshold": True},

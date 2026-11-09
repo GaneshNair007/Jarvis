@@ -16,6 +16,7 @@ Voice grammar (checked in this order, before the orchestrator):
   "ask opencode to fix x"                  → opencode delegate
   "tell antigravity to plan x"             → antigravity open + clipboard
 """
+
 import os
 import re
 import shutil
@@ -47,11 +48,18 @@ APP_TABLE: Dict[str, Dict[str, Any]] = {
         "exe_fallbacks": [os.path.join(APPDATA, r"npm\opencode")],
         "title_hint": "opencode",
     },
-    "chrome":   {"exe_fallbacks": [os.path.join(LOCALAPPDATA, r"Google\Chrome\Application\chrome.exe")], "which": "chrome", "title_hint": "chrome"},
-    "spotify":  {"exe_fallbacks": [os.path.join(LOCALAPPDATA, r"Microsoft\WindowsApps\Spotify.exe")], "title_hint": "spotify"},
-    "vscode":   {"which": "code", "title_hint": "Visual Studio Code"},
-    "code":     {"which": "code", "title_hint": "Visual Studio Code"},
-    "notepad":  {"which": "notepad", "title_hint": "Notepad"},
+    "chrome": {
+        "exe_fallbacks": [os.path.join(LOCALAPPDATA, r"Google\Chrome\Application\chrome.exe")],
+        "which": "chrome",
+        "title_hint": "chrome",
+    },
+    "spotify": {
+        "exe_fallbacks": [os.path.join(LOCALAPPDATA, r"Microsoft\WindowsApps\Spotify.exe")],
+        "title_hint": "spotify",
+    },
+    "vscode": {"which": "code", "title_hint": "Visual Studio Code"},
+    "code": {"which": "code", "title_hint": "Visual Studio Code"},
+    "notepad": {"which": "notepad", "title_hint": "Notepad"},
     "explorer": {"which": "explorer", "title_hint": "Explorer"},
     "terminal": {"which": "wt", "title_hint": "Terminal"},
 }
@@ -151,6 +159,7 @@ def match_app_intent(command: str) -> Optional[Dict[str, Any]]:
 #  Executors (side effects; injectable spawn for tests)                   #
 # --------------------------------------------------------------------- #
 
+
 def _silent_spawn(argv: List[str]) -> int:
     """Detached, window-hidden launch; returns pid (0 on failure)."""
     try:
@@ -169,8 +178,9 @@ def _silent_spawn(argv: List[str]) -> int:
         return 0
 
 
-def launch_in_console(alias_id: str, args: Optional[List[str]] = None,
-                      spawner: Callable[[List[str]], int] = None) -> Dict[str, Any]:
+def launch_in_console(
+    alias_id: str, args: Optional[List[str]] = None, spawner: Callable[[List[str]], int] = None
+) -> Dict[str, Any]:
     """Interactive session in a VISIBLE console (for TUIs the user drives)."""
     exe = _resolve_executable(alias_id)
     if not exe:
@@ -182,8 +192,9 @@ def launch_in_console(alias_id: str, args: Optional[List[str]] = None,
     return {"ok": bool(pid), "app": alias_id, "argv": argv, "pid": pid}
 
 
-def launch_app(alias_id: str, args: Optional[List[str]] = None,
-               spawner: Callable[[List[str]], int] = _silent_spawn) -> Dict[str, Any]:
+def launch_app(
+    alias_id: str, args: Optional[List[str]] = None, spawner: Callable[[List[str]], int] = _silent_spawn
+) -> Dict[str, Any]:
     exe = _resolve_executable(alias_id)
     if not exe:
         return {"ok": False, "error": f"app '{alias_id}' not found on this host", "app": alias_id}
@@ -199,22 +210,25 @@ def set_clipboard(text: str) -> bool:
     """Windows clipboard via PowerShell -EncodedCommand (quoting-safe)."""
     import base64
 
-    encoded = base64.b64encode(
-        f"Set-Clipboard -Value @'\n{text}\n'@".encode("utf-16le")
-    ).decode("ascii")
+    encoded = base64.b64encode(f"Set-Clipboard -Value @'\n{text}\n'@".encode("utf-16le")).decode("ascii")
     try:
         subprocess.run(
             ["powershell", "-NoProfile", "-EncodedCommand", encoded],
-            timeout=15, check=False, capture_output=True,
+            timeout=15,
+            check=False,
+            capture_output=True,
         )
         return True
     except Exception:
         return False
 
 
-def opencode_delegate(task: str, workdir: Optional[str] = None,
-                      auto_approve: bool = True,
-                      spawner: Callable[[List[str]], int] = _silent_spawn) -> Dict[str, Any]:
+def opencode_delegate(
+    task: str,
+    workdir: Optional[str] = None,
+    auto_approve: bool = True,
+    spawner: Callable[[List[str]], int] = _silent_spawn,
+) -> Dict[str, Any]:
     """Headless delegate: runs `opencode run [--auto] "<task>"` detached, logged."""
     exe = _resolve_executable("opencode")
     if not exe:
@@ -235,14 +249,22 @@ def opencode_delegate(task: str, workdir: Optional[str] = None,
         return {"ok": False, "error": "opencode delegate failed to launch", "argv": argv2}
     logger.info(f"opencode delegate started (pid {pid}) log={log_path}")
     return {
-        "ok": True, "agent": "opencode", "task": task, "workdir": cwd,
-        "auto_approve": auto_approve, "log": str(log_path), "pid": pid,
+        "ok": True,
+        "agent": "opencode",
+        "task": task,
+        "workdir": cwd,
+        "auto_approve": auto_approve,
+        "log": str(log_path),
+        "pid": pid,
     }
 
 
-def antigravity_delegate(task: str, project: Optional[str] = None,
-                         agent: str = "antigravity",
-                         spawner: Callable[[List[str]], int] = _silent_spawn) -> Dict[str, Any]:
+def antigravity_delegate(
+    task: str,
+    project: Optional[str] = None,
+    agent: str = "antigravity",
+    spawner: Callable[[List[str]], int] = _silent_spawn,
+) -> Dict[str, Any]:
     """Launches Antigravity + puts the task on the clipboard (no public API).
 
     Honest contract: we OPEN the app and PRE-LOAD the clipboard; the user
@@ -256,13 +278,16 @@ def antigravity_delegate(task: str, project: Optional[str] = None,
             args = [cleaned]
     launched = launch_app(agent, args, spawner=spawner)
     clipped = set_clipboard(task)
-    launched.update({
-        "agent": agent,
-        "task": task,
-        "clipboard": clipped,
-        "task_preloaded": clipped,
-        "handoff": "task on clipboard - Ctrl+V in the Antigravity agent panel" if clipped
-                   else "app launched - copy the task manually",
-    })
+    launched.update(
+        {
+            "agent": agent,
+            "task": task,
+            "clipboard": clipped,
+            "task_preloaded": clipped,
+            "handoff": "task on clipboard - Ctrl+V in the Antigravity agent panel"
+            if clipped
+            else "app launched - copy the task manually",
+        }
+    )
     launched["ok"] = bool(launched.get("ok"))
     return launched

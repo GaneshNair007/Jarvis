@@ -367,12 +367,14 @@ class ScreenPowers:
             img = None
             try:
                 from PIL import ImageGrab
+
                 if region:
                     img = ImageGrab.grab(bbox=region)
                 else:
                     img = ImageGrab.grab()
             except ImportError:
                 import mss
+
                 with mss.mss() as sct:
                     if region:
                         monitor = {
@@ -386,6 +388,7 @@ class ScreenPowers:
                     screenshot = sct.grab(monitor)
                     # Convert to PIL for pytesseract
                     from PIL import Image
+
                     img = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
 
             if img is None:
@@ -516,19 +519,21 @@ class ScreenPowers:
                             pid = ctypes.wintypes.DWORD()
                             user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
 
-                            windows.append({
-                                "hwnd": hwnd,
-                                "title": title,
-                                "pid": pid.value,
-                                "rect": {
-                                    "left": rect.left,
-                                    "top": rect.top,
-                                    "right": rect.right,
-                                    "bottom": rect.bottom,
-                                    "width": rect.right - rect.left,
-                                    "height": rect.bottom - rect.top,
-                                },
-                            })
+                            windows.append(
+                                {
+                                    "hwnd": hwnd,
+                                    "title": title,
+                                    "pid": pid.value,
+                                    "rect": {
+                                        "left": rect.left,
+                                        "top": rect.top,
+                                        "right": rect.right,
+                                        "bottom": rect.bottom,
+                                        "width": rect.right - rect.left,
+                                        "height": rect.bottom - rect.top,
+                                    },
+                                }
+                            )
                 return True
 
             user32.EnumWindows(WNDENUMPROC(enum_callback), 0)

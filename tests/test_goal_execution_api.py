@@ -20,6 +20,7 @@ def setup_database_schema():
 @pytest.fixture(autouse=True)
 def setup_test_db():
     from jarvis.db.session import init_db
+
     init_db()
 
 

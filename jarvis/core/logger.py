@@ -19,6 +19,7 @@ def setup_logger(name: str = "jarvis") -> logging.Logger:
     # Attach ZeroLeakLogFilter to eradicate secret leaks across console and file logs
     try:
         from jarvis.security.ten_layer_shield import ZeroLeakLogFilter
+
         leak_filter = ZeroLeakLogFilter()
     except Exception:
         leak_filter = None

@@ -12,7 +12,6 @@ Classes:
     TrustResult: Verdict (success/fail) with associated Evidence + description.
 """
 
-
 from __future__ import annotations
 
 import time
@@ -44,9 +43,7 @@ class Evidence:
         return {
             "evidence_id": self.evidence_id,
             "source": self.source,
-            "data": (
-                self.data.to_dict() if hasattr(self.data, "to_dict") else self.data
-            ),
+            "data": (self.data.to_dict() if hasattr(self.data, "to_dict") else self.data),
             "timestamp": self.timestamp,
             "trust_level": self.trust_level,
         }

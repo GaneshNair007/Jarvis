@@ -18,6 +18,7 @@ class ASTRepoMapper:
     Parses codebases into an Abstract Syntax Tree (AST) structural map.
     Identifies exported symbols, classes, functions, and inheritance hierarchies.
     """
+
     EXCLUDE_DIRS = {
         ".git",
         "__pycache__",
@@ -59,25 +60,31 @@ class ASTRepoMapper:
                 methods = []
                 for item in node.body:
                     if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                        methods.append({
-                            "name": item.name,
-                            "args": self._format_args(item.args),
-                            "is_async": isinstance(item, ast.AsyncFunctionDef),
-                            "docstring": ast.get_docstring(item),
-                        })
-                result["classes"].append({
-                    "name": node.name,
-                    "bases": bases,
-                    "methods": methods,
-                    "docstring": ast.get_docstring(node),
-                })
+                        methods.append(
+                            {
+                                "name": item.name,
+                                "args": self._format_args(item.args),
+                                "is_async": isinstance(item, ast.AsyncFunctionDef),
+                                "docstring": ast.get_docstring(item),
+                            }
+                        )
+                result["classes"].append(
+                    {
+                        "name": node.name,
+                        "bases": bases,
+                        "methods": methods,
+                        "docstring": ast.get_docstring(node),
+                    }
+                )
             elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                result["functions"].append({
-                    "name": node.name,
-                    "args": self._format_args(node.args),
-                    "is_async": isinstance(node, ast.AsyncFunctionDef),
-                    "docstring": ast.get_docstring(node),
-                })
+                result["functions"].append(
+                    {
+                        "name": node.name,
+                        "args": self._format_args(node.args),
+                        "is_async": isinstance(node, ast.AsyncFunctionDef),
+                        "docstring": ast.get_docstring(node),
+                    }
+                )
 
         return result
 
@@ -146,4 +153,3 @@ class ASTRepoMapper:
 
 # Global Singleton Instance
 ast_repo_mapper = ASTRepoMapper()
-

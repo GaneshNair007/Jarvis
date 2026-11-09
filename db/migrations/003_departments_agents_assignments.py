@@ -33,7 +33,9 @@ def upgrade() -> None:
         "agents",
         sa.Column("id", sa.UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
         sa.Column("agent_key", sa.String(100), unique=True, nullable=False),  # e.g. "ast_code_mapper"
-        sa.Column("department_id", sa.UUID(as_uuid=True), sa.ForeignKey("departments.id", ondelete="SET NULL"), nullable=True),
+        sa.Column(
+            "department_id", sa.UUID(as_uuid=True), sa.ForeignKey("departments.id", ondelete="SET NULL"), nullable=True
+        ),
         sa.Column("name", sa.String(150), nullable=False),
         sa.Column("role", sa.String(100), nullable=False),
         sa.Column("status", sa.String(20), nullable=False, server_default="ACTIVE"),
@@ -51,7 +53,9 @@ def upgrade() -> None:
         sa.Column("id", sa.UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
         sa.Column("task_id", sa.UUID(as_uuid=True), sa.ForeignKey("tasks.id", ondelete="CASCADE"), nullable=False),
         sa.Column("agent_id", sa.UUID(as_uuid=True), sa.ForeignKey("agents.id", ondelete="CASCADE"), nullable=False),
-        sa.Column("department_id", sa.UUID(as_uuid=True), sa.ForeignKey("departments.id", ondelete="SET NULL"), nullable=True),
+        sa.Column(
+            "department_id", sa.UUID(as_uuid=True), sa.ForeignKey("departments.id", ondelete="SET NULL"), nullable=True
+        ),
         sa.Column("status", sa.String(20), nullable=False, server_default="ASSIGNED"),
         sa.Column("assigned_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
         sa.Column("completed_at", sa.DateTime(timezone=True), nullable=True),

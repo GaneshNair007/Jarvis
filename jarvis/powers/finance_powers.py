@@ -16,6 +16,7 @@ logger = get_logger("powers.finance")
 
 class FinancePowers:
     """Implementations for Finance and Market domain capabilities."""
+
     """Implementations for all 22 Finance and Market capabilities (PWR-215 to PWR-236)."""
 
     def __init__(self):
@@ -208,8 +209,7 @@ class FinancePowers:
         """PWR-228: Calculates single-asset and sector portfolio concentration."""
         current_val = sum(p["shares"] * p["current_price"] for p in self.portfolio)
         breakdown = {
-            p["symbol"]: f"{round((p['shares'] * p['current_price'] / current_val) * 100, 1)}%"
-            for p in self.portfolio
+            p["symbol"]: f"{round((p['shares'] * p['current_price'] / current_val) * 100, 1)}%" for p in self.portfolio
         }
         return {
             "power_id": "PWR-228",

@@ -103,7 +103,9 @@ def build_mime_message(
         filename = item.get("filename") or path.name
         mime_type = item.get("mime_type") or "application/octet-stream"
         maintype, _, subtype = mime_type.partition("/")
-        msg.add_attachment(raw, maintype=maintype or "application", subtype=subtype or "octet-stream", filename=filename)
+        msg.add_attachment(
+            raw, maintype=maintype or "application", subtype=subtype or "octet-stream", filename=filename
+        )
         attachment_meta.append(
             {
                 "filename": filename,
@@ -268,9 +270,7 @@ def parse_raw_mime(raw_bytes: bytes) -> Dict[str, Any]:
                     part.get_content_charset() or "utf-8", errors="replace"
                 )
     else:
-        body_text = (msg.get_payload(decode=True) or b"").decode(
-            msg.get_content_charset() or "utf-8", errors="replace"
-        )
+        body_text = (msg.get_payload(decode=True) or b"").decode(msg.get_content_charset() or "utf-8", errors="replace")
 
     return {
         "from": msg.get("From", ""),

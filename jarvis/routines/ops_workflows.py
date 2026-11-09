@@ -80,18 +80,20 @@ class OpportunityRadarWorkflow:
                 suggested_action = "Monitor status"
                 needs_attention = False
 
-            classified_items.append({
-                "id": opp_id,
-                "company": company,
-                "role": role,
-                "status": status,
-                "fit_score": fit_score,
-                "days_since_interaction": days_active,
-                "urgency_classification": urgency,
-                "needs_attention": needs_attention,
-                "suggested_action": suggested_action,
-                "draft_follow_up": draft_msg,
-            })
+            classified_items.append(
+                {
+                    "id": opp_id,
+                    "company": company,
+                    "role": role,
+                    "status": status,
+                    "fit_score": fit_score,
+                    "days_since_interaction": days_active,
+                    "urgency_classification": urgency,
+                    "needs_attention": needs_attention,
+                    "suggested_action": suggested_action,
+                    "draft_follow_up": draft_msg,
+                }
+            )
 
         action_required_count = sum(1 for item in classified_items if item["needs_attention"])
 
@@ -120,6 +122,7 @@ class DailySystemPulseWorkflow:
         gpu_info = {"cuda_available": False, "gpu_name": "N/A", "vram_free_gb": 0.0}
         try:
             import torch
+
             if torch.cuda.is_available():
                 gpu_info = {
                     "cuda_available": True,
@@ -133,7 +136,9 @@ class DailySystemPulseWorkflow:
         # 3. Anomalies
         anomalies = []
         if disk.free / (1024**3) < 10.0:
-            anomalies.append(f"Storage alert: Drive C: has only {round(disk.free / (1024**3), 2)} GB free (< 10GB threshold).")
+            anomalies.append(
+                f"Storage alert: Drive C: has only {round(disk.free / (1024**3), 2)} GB free (< 10GB threshold)."
+            )
         if cpu_percent > 85.0:
             anomalies.append(f"High CPU utilization: {cpu_percent}%.")
         if mem.percent > 85.0:
@@ -149,9 +154,7 @@ class DailySystemPulseWorkflow:
         ]
 
         # 5. Top 3 items to investigate
-        top_investigations = (
-            anomalies[:3] if anomalies else ["All systems healthy. No immediate anomalies detected."]
-        )
+        top_investigations = anomalies[:3] if anomalies else ["All systems healthy. No immediate anomalies detected."]
 
         return {
             "workflow": "daily_system_pulse",
@@ -180,9 +183,7 @@ class WeeklyOpsSweepWorkflow:
         radar = OpportunityRadarWorkflow().run(days_threshold=7)
         pulse = DailySystemPulseWorkflow().run()
 
-        stalled_items = [
-            item for item in radar.get("items", []) if item.get("needs_attention")
-        ]
+        stalled_items = [item for item in radar.get("items", []) if item.get("needs_attention")]
 
         priorities = [
             "Review and approve stalled internship and hackathon follow-ups in Opportunity Radar.",

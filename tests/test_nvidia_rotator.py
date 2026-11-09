@@ -64,10 +64,12 @@ class TestNvidiaNimKeyDiscovery:
 
 class TestNvidiaNimFailover:
     def _fake_success_response(self):
-        resp = json.dumps({
-            "choices": [{"message": {"content": "JARVIS online. Verified."}}],
-            "usage": {"total_tokens": 42},
-        }).encode("utf-8")
+        resp = json.dumps(
+            {
+                "choices": [{"message": {"content": "JARVIS online. Verified."}}],
+                "usage": {"total_tokens": 42},
+            }
+        ).encode("utf-8")
 
         class FakeResp:
             status = 200

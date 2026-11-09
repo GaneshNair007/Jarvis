@@ -354,23 +354,27 @@ class TestCognitiveNodes:
 
     def test_act_halts_unapproved_tier2(self):
         """act node generates policy halt response when approval is required but missing."""
-        out = act({
-            "goal": "delete production database",
-            "approval_required": True,
-            "approval_id": None,
-            "policy_reason": "Tier 2 destructive operation",
-        })
+        out = act(
+            {
+                "goal": "delete production database",
+                "approval_required": True,
+                "approval_id": None,
+                "policy_reason": "Tier 2 destructive operation",
+            }
+        )
         assert out["model_route"] == "policy_halt"
         assert "⛔" in out["final_response"]
         assert "explicit human cryptographic approval" in out["final_response"]
 
     def test_verify_produces_evidence_item(self):
         """verify node validates execution output and produces EvidenceItem."""
-        out = verify({
-            "goal": "What is 2 + 2?",
-            "final_response": "4",
-            "plan": [{"step_id": "s1", "status": "pending"}],
-        })
+        out = verify(
+            {
+                "goal": "What is 2 + 2?",
+                "final_response": "4",
+                "plan": [{"step_id": "s1", "status": "pending"}],
+            }
+        )
         assert out["confidence"] == 1.0
         assert len(out["evidence"]) == 1
         assert out["plan"][0]["status"] == "completed"
@@ -391,11 +395,13 @@ class TestCognitiveNodes:
     def test_remember_skips_policy_halt(self):
         """remember node skips long-term memory write when execution halted."""
         with patch("graph.nodes._mem0") as mock_mem0:
-            out = remember({
-                "user_input": "dangerous action",
-                "final_response": "⛔ Action halted: Tier 2 requires approval",
-                "user_id": "ganesh",
-            })
+            out = remember(
+                {
+                    "user_input": "dangerous action",
+                    "final_response": "⛔ Action halted: Tier 2 requires approval",
+                    "user_id": "ganesh",
+                }
+            )
         assert out["memory_written"] is False
         mock_mem0.return_value.add.assert_not_called()
 

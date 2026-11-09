@@ -92,7 +92,11 @@ class RuFloConsensusSwarm:
                 is_safe = proposal.get("security_verified", True) and "password" not in str(proposal).lower()
                 decision = "APPROVE" if is_safe else "REJECT"
                 conf = 0.99
-                rationale = "Zero credential leaks or unauthorized privilege escalation detected." if is_safe else "Security guardrail violation."
+                rationale = (
+                    "Zero credential leaks or unauthorized privilege escalation detected."
+                    if is_safe
+                    else "Security guardrail violation."
+                )
             elif "devops" in agent or "qa" in agent:
                 tests_pass = proposal.get("tests_passed", True)
                 decision = "APPROVE" if tests_pass else "REJECT"
@@ -118,7 +122,9 @@ class RuFloConsensusSwarm:
                 weighted_against += rep * conf
 
         score = weighted_for / max(total_weight, 0.001)
-        quorum_met = len(votes) >= 3 and (score >= self.quorum_threshold or (weighted_against / max(total_weight, 0.001)) >= self.quorum_threshold)
+        quorum_met = len(votes) >= 3 and (
+            score >= self.quorum_threshold or (weighted_against / max(total_weight, 0.001)) >= self.quorum_threshold
+        )
 
         if quorum_met and score >= self.quorum_threshold:
             outcome = "CONSENSUS_APPROVED"

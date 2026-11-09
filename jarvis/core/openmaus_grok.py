@@ -32,9 +32,9 @@ logger = get_logger("core.openmaus_grok")
 
 class GrokMode(str, Enum):
     STANDARD = "standard"  # Truthful, insightful, concise, Hitchhiker's Guide tone
-    FUN = "fun"            # Witty, sarcastic, playful humor, unfiltered banter
-    THINK = "think"        # Deep analytical reasoning, chain-of-thought, mathematical rigor
-    CODE = "code"          # Ruthlessly efficient senior engineer, AST and test-driven
+    FUN = "fun"  # Witty, sarcastic, playful humor, unfiltered banter
+    THINK = "think"  # Deep analytical reasoning, chain-of-thought, mathematical rigor
+    CODE = "code"  # Ruthlessly efficient senior engineer, AST and test-driven
 
 
 GROK_PERSONAS = {
@@ -104,67 +104,77 @@ class OpenMausAgentRoster:
 
     def _initialize_default_roster(self):
         # 1. Grok Bot (Flagship Reasoning & Conversational Agent)
-        self.register_bot(BotProfile(
-            bot_id="grok",
-            name="Grok",
-            avatar="⚡",
-            title="Chief Cognitive AI & Truth Engine",
-            description="Witty, insightful, unfiltered general intelligence with Hitchhiker's Guide flair.",
-            default_mode=GrokMode.STANDARD,
-            system_instruction=GROK_PERSONAS[GrokMode.STANDARD],
-            allowed_tools=["web_search", "memory_query", "intent_triage", "screen_inspect"],
-        ))
+        self.register_bot(
+            BotProfile(
+                bot_id="grok",
+                name="Grok",
+                avatar="⚡",
+                title="Chief Cognitive AI & Truth Engine",
+                description="Witty, insightful, unfiltered general intelligence with Hitchhiker's Guide flair.",
+                default_mode=GrokMode.STANDARD,
+                system_instruction=GROK_PERSONAS[GrokMode.STANDARD],
+                allowed_tools=["web_search", "memory_query", "intent_triage", "screen_inspect"],
+            )
+        )
 
         # 2. Code Bot (Autonomous Systems Software Engineer)
-        self.register_bot(BotProfile(
-            bot_id="code_bot",
-            name="CodeMaus",
-            avatar="💻",
-            title="Senior Systems & AST Engineer",
-            description="Specialized in multi-file refactoring, AST repo mapping, unit testing, and git automation.",
-            default_mode=GrokMode.CODE,
-            system_instruction=GROK_PERSONAS[GrokMode.CODE],
-            allowed_tools=["ast_repo_map", "run_tests", "git_status", "git_commit", "file_edit"],
-        ))
+        self.register_bot(
+            BotProfile(
+                bot_id="code_bot",
+                name="CodeMaus",
+                avatar="💻",
+                title="Senior Systems & AST Engineer",
+                description="Specialized in multi-file refactoring, AST repo mapping, unit testing, and git automation.",
+                default_mode=GrokMode.CODE,
+                system_instruction=GROK_PERSONAS[GrokMode.CODE],
+                allowed_tools=["ast_repo_map", "run_tests", "git_status", "git_commit", "file_edit"],
+            )
+        )
 
         # 3. Research Bot (Deep Search & Fact Extraction)
-        self.register_bot(BotProfile(
-            bot_id="research_bot",
-            name="ScoutMaus",
-            avatar="🔍",
-            title="Deep Research & Fact Investigator",
-            description="Explores web sources, extracts documentation, verifies empirical claims, and cites sources.",
-            default_mode=GrokMode.THINK,
-            system_instruction=GROK_PERSONAS[GrokMode.THINK],
-            allowed_tools=["web_search", "browse_page", "extract_citations", "crawl4ai"],
-        ))
+        self.register_bot(
+            BotProfile(
+                bot_id="research_bot",
+                name="ScoutMaus",
+                avatar="🔍",
+                title="Deep Research & Fact Investigator",
+                description="Explores web sources, extracts documentation, verifies empirical claims, and cites sources.",
+                default_mode=GrokMode.THINK,
+                system_instruction=GROK_PERSONAS[GrokMode.THINK],
+                allowed_tools=["web_search", "browse_page", "extract_citations", "crawl4ai"],
+            )
+        )
 
         # 4. System Ops Bot (Subprocess & Infrastructure Guardian)
-        self.register_bot(BotProfile(
-            bot_id="sys_bot",
-            name="OpsMaus",
-            avatar="🛡️",
-            title="Infrastructure & Sandbox Controller",
-            description="Monitors host telemetry, manages background daemons, and supervises system security.",
-            default_mode=GrokMode.STANDARD,
-            system_instruction=(
-                "You are OpsMaus, the infrastructure guardian of Project JARVIS. "
-                "You inspect system health, verify running daemons, and safely triage host operations."
-            ),
-            allowed_tools=["system_health", "process_list", "network_ping", "port_check"],
-        ))
+        self.register_bot(
+            BotProfile(
+                bot_id="sys_bot",
+                name="OpsMaus",
+                avatar="🛡️",
+                title="Infrastructure & Sandbox Controller",
+                description="Monitors host telemetry, manages background daemons, and supervises system security.",
+                default_mode=GrokMode.STANDARD,
+                system_instruction=(
+                    "You are OpsMaus, the infrastructure guardian of Project JARVIS. "
+                    "You inspect system health, verify running daemons, and safely triage host operations."
+                ),
+                allowed_tools=["system_health", "process_list", "network_ping", "port_check"],
+            )
+        )
 
         # 5. Reflex Bot (Instant Local Macro Engine)
-        self.register_bot(BotProfile(
-            bot_id="reflex_bot",
-            name="ReflexMaus",
-            avatar="⚡",
-            title="Sub-15ms Local Intent Reflex",
-            description="Ultra-low latency instant command dispatcher running local deterministic bypass macros.",
-            default_mode=GrokMode.STANDARD,
-            system_instruction="Instant deterministic command dispatcher for desktop macros.",
-            allowed_tools=["lock_screen", "clipboard_copy", "launch_app", "media_control"],
-        ))
+        self.register_bot(
+            BotProfile(
+                bot_id="reflex_bot",
+                name="ReflexMaus",
+                avatar="⚡",
+                title="Sub-15ms Local Intent Reflex",
+                description="Ultra-low latency instant command dispatcher running local deterministic bypass macros.",
+                default_mode=GrokMode.STANDARD,
+                system_instruction="Instant deterministic command dispatcher for desktop macros.",
+                allowed_tools=["lock_screen", "clipboard_copy", "launch_app", "media_control"],
+            )
+        )
 
     def register_bot(self, profile: BotProfile) -> None:
         self.bots[profile.bot_id] = profile
@@ -292,7 +302,9 @@ class OpenMausPermissionBroker:
 
     def get_pending(self) -> List[Dict[str, Any]]:
         now = time.time()
-        return [v for v in self._pending_decisions.values() if v["status"] == "PENDING" and now <= v.get("expires_at", 0)]
+        return [
+            v for v in self._pending_decisions.values() if v["status"] == "PENDING" and now <= v.get("expires_at", 0)
+        ]
 
 
 class OpenMausGrokHarness:
@@ -371,9 +383,7 @@ class OpenMausGrokHarness:
         # Try Groq Cloud (500+ tok/s) if available
         if groq_rotator.is_available:
             try:
-                groq_res = groq_rotator.generate_chat_completion(
-                    sanitized_prompt, system_instruction=sys_prompt
-                )
+                groq_res = groq_rotator.generate_chat_completion(sanitized_prompt, system_instruction=sys_prompt)
                 if groq_res and groq_res.get("reply"):
                     reply_text = groq_res["reply"]
                     model_name = groq_res.get("model", "llama-3.3-70b-versatile")
@@ -384,9 +394,7 @@ class OpenMausGrokHarness:
         # Try OpenRouter (e.g. DeepSeek / Grok-2) if Groq not used
         if not reply_text and openrouter_rotator.is_available:
             try:
-                or_res = openrouter_rotator.generate_chat_completion(
-                    sanitized_prompt, system_instruction=sys_prompt
-                )
+                or_res = openrouter_rotator.generate_chat_completion(sanitized_prompt, system_instruction=sys_prompt)
                 if or_res and or_res.get("reply"):
                     reply_text = or_res["reply"]
                     model_name = or_res.get("model", "deepseek/deepseek-chat")
@@ -397,9 +405,7 @@ class OpenMausGrokHarness:
         # Try Gemini Rotator if needed
         if not reply_text and gemini_rotator.is_available:
             try:
-                gem_res = gemini_rotator.generate_chat_completion(
-                    sanitized_prompt, system_instruction=sys_prompt
-                )
+                gem_res = gemini_rotator.generate_chat_completion(sanitized_prompt, system_instruction=sys_prompt)
                 if gem_res and gem_res.get("reply"):
                     reply_text = gem_res["reply"]
                     model_name = gem_res.get("model", "gemini-2.5-pro")
@@ -455,4 +461,3 @@ class OpenMausGrokHarness:
 
 # Global Singleton Instance
 openmaus_harness = OpenMausGrokHarness()
-
