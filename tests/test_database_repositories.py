@@ -335,7 +335,7 @@ class TestOpportunityAndSchedulerRepositories:
                 title="Global Agent Hackathon",
                 source="Devpost",
                 score=0.95,
-                justification="Agent track with \$50k prize",
+                justification="Agent track with $50k prize",
             )
             uow.opportunities.record_opportunity(
                 opportunity_type="internship",
