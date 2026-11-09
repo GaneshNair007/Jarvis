@@ -1,7 +1,7 @@
 # Stops JARVIS background processes started by start_jarvis_background.vbs
-# Kills only processes whose command line references the JARVIS server or voice daemon.
+# Kills only processes whose command line references the JARVIS server, voice daemon or HUD overlay.
 $ErrorActionPreference = 'SilentlyContinue'
-$pattern = 'jarvis\.voice\.daemon|uvicorn jarvis\.api\.server'
+$pattern = 'jarvis\.voice\.daemon|uvicorn jarvis\.api\.server|jarvis\.hud\.overlay'
 $killed = @()
 Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -and $_.CommandLine -match $pattern } | ForEach-Object {
     try {

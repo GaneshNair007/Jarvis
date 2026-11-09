@@ -418,6 +418,93 @@ class VoiceDaemon:
             return False
         return self._gate_ready()
 
+    # ------------------------------------------------------------------ #
+    #  Iron Man HUD bridge + app-connection intents                       #
+    # ------------------------------------------------------------------ #
+
+    def _write_hud_state(self, source: str = "") -> None:
+        """Drops a tiny state file the always-on HUD overlay polls. Cosmetic
+        path: every failure is swallowed, never logged, never raised."""
+        try:
+            from jarvis.hud.state import write_hud_state
+
+            with self._stats_lock:
+                payload = {
+                    "state": self.state,
+                    "source": source,
+                    "wake_at": self.last_wake_ts,
+                    "wake_count": self.wake_count,
+                    "command_count": self.command_count,
+                    "last_command": self.last_command,
+                    "last_transcript": self.last_transcript,
+                    "last_reply": self.last_reply,
+                }
+            write_hud_state(payload)
+        except Exception:
+            pass
+
+    def _run_app_intent(self, command: str) -> Optional[Dict[str, Any]]:
+        """Fast-path app-connection intents (launch / delegate) without the LLM.
+
+        Returns a result dict shaped like the orchestrator output, or None to
+        fall through to the orchestrator (also on any failure — never fragile).
+        """
+        if os.getenv("JARVIS_APP_INTENTS", "on").strip().lower() in ("0", "off", "false", "no"):
+            return None
+        try:
+            from jarvis.automation.app_connector import (
+                match_app_intent,
+                launch_app,
+                opencode_delegate,
+                antigravity_delegate,
+            )
+        except Exception:
+            return None
+        try:
+            intent = match_app_intent(command)
+        except Exception:
+            return None
+        if not intent:
+            return None
+
+        if intent["kind"] == "launch":
+            res = launch_app(intent["app"])
+            reply = f"Opened {intent['app'].replace('_', ' ')}." if res.get("ok") else res.get("error", "Launch failed.")
+        elif intent["kind"] == "opencode_in":
+            path = intent["path"]
+            if not os.path.isdir(path):
+                res = {"ok": False, "error": f"'{path}' is not a folder on this host"}
+                reply = res["error"]
+            else:
+                # Interactive coding session: visible console, fresh opencode.
+                from jarvis.automation.app_connector import launch_in_console
+                res = launch_in_console("opencode", args=[path])
+                reply = f"OpenCode session opening in {path}." if res.get("ok") else res.get("error", "opencode failed")
+        elif intent["kind"] == "delegate" and intent["agent"] == "opencode":
+            res = opencode_delegate(intent["task"], auto_approve=True)
+            reply = "OpenCode is on it." if res.get("ok") else res.get("error", "opencode failed")
+        elif intent["kind"] == "delegate":
+            res = antigravity_delegate(intent["task"], agent=intent["agent"])
+            reply = f"Antigravity open. Task on your clipboard — Ctrl+V in the agent panel." if res.get("ok") else res.get("error", "Antigravity failed")
+        else:
+            return None
+
+        ok = bool(res.get("ok"))
+        self._record_evidence(
+            source="voice_daemon.app_task",
+            data={
+                "intent": intent, "result_ok": ok,
+                "pid": res.get("pid"), "log": res.get("log"),
+                "error": res.get("error"),
+            },
+        )
+        return {
+            "task_id": f"app_{int(time.time())}",
+            "status": "COMPLETED" if ok else "FAILED",
+            "response": {"message": reply},
+            "app_intent": True,
+        }
+
     @staticmethod
     def openwakeword_installed() -> bool:
         """Cheap availability probe (no model load): is openwakeword importable?"""
@@ -563,6 +650,7 @@ class VoiceDaemon:
                 self._reset_buffer()
                 self.state = "LISTENING_FOR_WAKE"
                 self._sleep_gate()  # suppress TTS-echo activation remnants
+                self._write_hud_state("barge_in")
                 event = {"type": "barge_in", "energy": round(energy, 1), "timestamp": now}
                 self._emit(event, events)
             return events
@@ -686,6 +774,13 @@ class VoiceDaemon:
                 events.extend(self._execute_command(command, trigger="wake_with_command", wake_transcript=text))
             else:
                 self.state = "CAPTURING_COMMAND"
+                self._write_hud_state("capture")
+                if self._speak_replies:
+                    try:
+                        # Iron Man acknowledgment: short, spoken, on the wake.
+                        self.tts.speak_live("Yes?", async_mode=True)
+                    except Exception:
+                        pass
                 event = {
                     "type": "wake_detected",
                     "source": "acoustic" if acoustic_only else "transcription",
@@ -706,31 +801,38 @@ class VoiceDaemon:
         self.state = "PROCESSING"
         with self._stats_lock:
             self.last_command = command
+        self._write_hud_state("processing")
         start = time.time()
 
-        try:
+        # Fast-path: app-connection intents (launch / delegate) need no LLM.
+        app_outcome = self._run_app_intent(command)
+        if app_outcome is not None:
+            orch_result = app_outcome
+        else:
             try:
-                orch_result = asyncio.run(self.orchestrator.process_user_query(command))
-            except RuntimeError as loop_err:
-                if "running event loop" not in str(loop_err):
-                    raise
-                loop = asyncio.new_event_loop()
                 try:
-                    orch_result = loop.run_until_complete(self.orchestrator.process_user_query(command))
-                finally:
-                    loop.close()
-        except Exception as exc:
-            with self._stats_lock:
-                self.error_count += 1
-            self.state = "LISTENING_FOR_WAKE"
-            self._sleep_gate()
-            self._record_evidence(
-                source="voice_daemon.command",
-                data={"command": command, "status": "error", "error": str(exc)},
-            )
-            event = {"type": "command_failed", "command": command, "error": str(exc)}
-            self._emit(event, events)
-            return events
+                    orch_result = asyncio.run(self.orchestrator.process_user_query(command))
+                except RuntimeError as loop_err:
+                    if "running event loop" not in str(loop_err):
+                        raise
+                    loop = asyncio.new_event_loop()
+                    try:
+                        orch_result = loop.run_until_complete(self.orchestrator.process_user_query(command))
+                    finally:
+                        loop.close()
+            except Exception as exc:
+                with self._stats_lock:
+                    self.error_count += 1
+                self.state = "LISTENING_FOR_WAKE"
+                self._sleep_gate()
+                self._write_hud_state("command_failed")
+                self._record_evidence(
+                    source="voice_daemon.command",
+                    data={"command": command, "status": "error", "error": str(exc)},
+                )
+                event = {"type": "command_failed", "command": command, "error": str(exc)}
+                self._emit(event, events)
+                return events
 
         reply_data = orch_result.get("response", {})
         if isinstance(reply_data, dict):
@@ -755,6 +857,7 @@ class VoiceDaemon:
 
         self.state = "SPEAKING"
         self._sleep_gate()  # speaking window: gate idle, clear activation remnants
+        self._write_hud_state("speaking")
         if self._speak_replies and reply_text:
             try:
                 self.tts.speak_live(reply_text, async_mode=True)
@@ -786,6 +889,7 @@ class VoiceDaemon:
         if self.state == "SPEAKING":
             self.state = "LISTENING_FOR_WAKE"
             self._sleep_gate()
+            self._write_hud_state("listening")
 
     def _reset_buffer(self) -> None:
         self._buffer.clear()
@@ -844,6 +948,7 @@ class VoiceDaemon:
         self._running_flag.set()
         self.state = "LISTENING_FOR_WAKE"
         self._sleep_gate(0.0)  # fresh start: arm the gate immediately
+        self._write_hud_state("start")
         self.started_at = time.time()
 
         self._worker = threading.Thread(target=self._worker_loop, name="jarvis-voice-worker", daemon=True)
@@ -940,6 +1045,7 @@ class VoiceDaemon:
         self._worker = None
         self.state = "IDLE"
         self._reset_buffer()
+        self._write_hud_state("stop")
         self._gate_hit_in_utterance = False
         if self._gate is not None:
             try:
