@@ -68,3 +68,6 @@ data/task_memory_events.json
 
 # Runtime logs from background launcher
 logs/
+
+# Machine-specific validated process registry (PIDs, creation times)
+data/runtime/

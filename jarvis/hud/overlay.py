@@ -185,7 +185,16 @@ class JarvisHUD:
 
 
 def main() -> None:
-    JarvisHUD().run()
+    from jarvis.ops.process_registry import process_registry
+
+    claim, existing = process_registry.claim_role("hud_overlay")
+    if claim == "EXISTING" and existing is not None:
+        print(f"[JARVIS HUD] another HUD instance is already running (pid {existing.pid}); exiting.")
+        return
+    try:
+        JarvisHUD().run()
+    finally:
+        process_registry.release("hud_overlay")
 
 
 if __name__ == "__main__":

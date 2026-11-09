@@ -9,6 +9,7 @@ Exposes:
 
 import asyncio
 import time
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Body
@@ -25,6 +26,7 @@ from jarvis.core.policy_gate import policy_gate
 from jarvis.core.power_registry import power_registry
 from jarvis.core.audit import audit_ledger
 from jarvis.memory.store import db_store
+from jarvis.ops.process_registry import process_registry
 from jarvis.powers.it_admin_powers import it_admin_powers
 from jarvis.api.routes_voice import router as voice_router
 from jarvis.api.routes_relay import router as relay_router
@@ -46,7 +48,22 @@ from jarvis.api.routes_gsoc import router as gsoc_router
 import uuid
 from graph.jarvis_graph import get_jarvis_graph
 
-app = FastAPI(title=APP_TITLE, version=APP_VERSION, description=APP_DESCRIPTION)
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    """Register this API process in the validated lifecycle registry."""
+    process_registry.register_current("api_server")
+    try:
+        yield
+    finally:
+        process_registry.release("api_server")
+
+
+app = FastAPI(
+    title=APP_TITLE,
+    version=APP_VERSION,
+    description=APP_DESCRIPTION,
+    lifespan=lifespan,
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -280,6 +297,16 @@ async def system_health():
     return it_admin_powers.system_health_report()
 
 
+@app.get("/api/v1/system/processes")
+async def system_processes():
+    """Validated lifecycle health for the API server, voice daemon and HUD.
+
+    Status is derived from live OS process identity (PID + creation time +
+    command line), not from configuration files or optimistic flags.
+    """
+    return process_registry.health()
+
+
 @app.get("/api/v1/tasks")
 async def list_tasks(limit: int = 50):
     """Inspects recent task state machine executions."""
@@ -373,8 +400,19 @@ async def chat_root(req: RootChatPayload):
 
 @app.get("/health")
 async def health_root():
-    """Health check endpoint confirming Jarvis core services."""
-    return {"status": "healthy", "service": "jarvis-core", "version": "1.0.0", "timestamp": time.time()}
+    """Health check endpoint confirming Jarvis core services.
+
+    ``processes`` reports the actual state of the API server, voice daemon and
+    HUD so callers can distinguish "this HTTP endpoint answered" from "the
+    whole local system is running".
+    """
+    return {
+        "status": "healthy",
+        "service": "jarvis-core",
+        "version": "1.0.0",
+        "timestamp": time.time(),
+        "processes": process_registry.summary(),
+    }
 
 
 class RootKillSwitchPayload(BaseModel):

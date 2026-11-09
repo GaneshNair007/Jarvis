@@ -19,6 +19,7 @@ def test_all_startup_scripts_exist():
         "start_jarvis.bat",
         "stop_jarvis.bat",
         "stop_jarvis.ps1",
+        "stop_all_jarvis.ps1",
         "install_jarvis_startup.ps1",
     ):
         assert (SCRIPTS / name).is_file(), f"missing script: {name}"
@@ -45,13 +46,24 @@ def test_bat_launcher_references_real_entrypoints():
     assert "127.0.0.1" in bat
 
 
-def test_stop_script_targets_only_jarvis_processes():
+def test_stop_script_stops_voice_daemon_only():
+    """Directive contract: stop_jarvis.ps1 stops the voice daemon, not the API/HUD."""
     ps1 = (SCRIPTS / "stop_jarvis.ps1").read_text(encoding="utf-8", errors="replace")
-    # Patterns are regex-escaped in the script itself.
-    assert "jarvis\\.voice\\.daemon" in ps1 or "jarvis.voice.daemon" in ps1
-    assert "uvicorn jarvis.api.server" in ps1 or "uvicorn jarvis\\.api\\.server" in ps1
-    assert "Stop-Process" in ps1
-    # Must be a filtered kill, never a blanket python kill
+    assert "jarvis.ops.process_registry" in ps1
+    assert "stop --role voice_daemon" in ps1
+    assert "uvicorn" not in ps1.lower(), "voice-only stop must not target the API server"
+    assert "--role hud_overlay" not in ps1
+    assert "stop --all" not in ps1
+    # Must never be a blanket python kill
+    assert "Stop-Process -Name python" not in ps1
+    assert "taskkill /IM python" not in ps1
+    assert "Get-Process python" not in ps1
+
+
+def test_stop_all_script_targets_every_jarvis_role():
+    ps1 = (SCRIPTS / "stop_all_jarvis.ps1").read_text(encoding="utf-8", errors="replace")
+    assert "jarvis.ops.process_registry stop --all" in ps1
+    assert "all_required_running" in ps1
     assert "Stop-Process -Name python" not in ps1
     assert "taskkill /IM python" not in ps1
 
@@ -62,6 +74,7 @@ def test_powershell_scripts_parse_cleanly():
     parser = r"""
 $files = @(
   'scripts\stop_jarvis.ps1',
+  'scripts\stop_all_jarvis.ps1',
   'scripts\install_jarvis_startup.ps1'
 )
 $failed = $false

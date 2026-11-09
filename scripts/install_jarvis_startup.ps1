@@ -17,5 +17,5 @@ $dest = Join-Path $StartupDir $LauncherName
 Copy-Item -LiteralPath $source -Destination $dest -Force
 Write-Host "Installed JARVIS background startup:"
 Write-Host "  $dest"
-Write-Host "It will launch at next sign-in (server + always-on voice daemon)."
+Write-Host "It will launch at next sign-in (API server + always-on voice daemon + HUD)."
 Write-Host "To remove: Remove-Item `"$dest`""

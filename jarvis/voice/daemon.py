@@ -1107,14 +1107,30 @@ voice_daemon = VoiceDaemon()
 
 def main() -> None:  # pragma: no cover - interactive entrypoint
     """Entry point for `python -m jarvis.voice.daemon` background service."""
+    from jarvis.ops.process_registry import process_registry
+
+    claim, existing = process_registry.claim_role("voice_daemon")
+    if claim == "EXISTING" and existing is not None:
+        print(
+            f"[JARVIS Voice Daemon] another instance is already running "
+            f"(pid {existing.pid}); this launch is a no-op."
+        )
+        return
+    if claim == "NO_MATCH":
+        # Unusual launch path (for example an embedded interpreter).  The
+        # daemon may still run, but it cannot claim a validated registry slot.
+        print("[JARVIS Voice Daemon] launch path does not match the registry signature; running unregistered.")
+
     daemon = VoiceDaemon()
-    health = daemon.start(use_microphone=True)
-    print(f"[JARVIS Voice Daemon] {health}")
     try:
+        health = daemon.start(use_microphone=True)
+        print(f"[JARVIS Voice Daemon] {health}")
         while daemon.running:
             time.sleep(1.0)
     except KeyboardInterrupt:
         daemon.stop()
+    finally:
+        process_registry.release("voice_daemon")
 
 
 if __name__ == "__main__":  # pragma: no cover

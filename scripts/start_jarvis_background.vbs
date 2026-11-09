@@ -15,15 +15,15 @@ If Not fso.FolderExists(logDir) Then fso.CreateFolder(logDir)
 shell.CurrentDirectory = repo
 
 ' 1) FastAPI server (relay + dashboard + REST) on 127.0.0.1:8000
-cmd = "cmd /c cd /d """ & repo & """ && pythonw -m uvicorn jarvis.api.server:app --host 127.0.0.1 --port 8000 >> """ & logDir & "\server.log""" 2>&1"
+cmd = "cmd /c cd /d """ & repo & """ && pythonw -m uvicorn jarvis.api.server:app --host 127.0.0.1 --port 8000 >> """ & logDir & "\server.log"" 2>&1"
 shell.Run cmd, 0, False
 
 ' 2) Always-on "Hey Jarvis" voice daemon
-cmd = "cmd /c cd /d """ & repo & """ && pythonw -m jarvis.voice.daemon >> """ & logDir & "\voice_daemon.log""" 2>&1"
+cmd = "cmd /c cd /d """ & repo & """ && pythonw -m jarvis.voice.daemon >> """ & logDir & "\voice_daemon.log"" 2>&1"
 shell.Run cmd, 0, False
 
 ' 3) Iron Man HUD overlay (polling process; shows on wake, quiet otherwise)
-cmd = "cmd /c cd /d """ & repo & """ && pythonw -m jarvis.hud.overlay >> """ & logDir & "\hud_overlay.log""" 2>&1"
+cmd = "cmd /c cd /d """ & repo & """ && pythonw -m jarvis.hud.overlay >> """ & logDir & "\hud_overlay.log"" 2>&1"
 shell.Run cmd, 0, False
 
 ' 4) Record what we started for stop_jarvis.ps1 diagnostics
