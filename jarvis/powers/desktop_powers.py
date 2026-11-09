@@ -24,9 +24,9 @@ class DesktopPowers:
         return self.get_active_window()
 
     def capture_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -> Dict[str, Any]:
-        """PWR-017 / PWR-016: Captures screen region with SHA-256 evidence artifact."""
+        """PWR-016 / PWR-017: Captures screen region with SHA-256 evidence artifact."""
         res = desktop_worker.capture_screen(region=region)
-        res["power_id"] = "PWR-017"
+        res["power_id"] = "PWR-016"
         return res
 
     def pwr_017_capture_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -> Dict[str, Any]:
