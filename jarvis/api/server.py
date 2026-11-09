@@ -35,6 +35,10 @@ from jarvis.api.routes_integrations import router as integrations_router
 from jarvis.api.routes_search import router as search_router
 import uuid
 from graph.jarvis_graph import jarvis_graph
+from jarvis.powers.developer_powers import developer_powers
+from jarvis.powers.productivity_powers import productivity_powers
+from jarvis.powers.communication_powers import communication_powers
+from jarvis.integrations.career_ops import career_ops_integration
 
 app = FastAPI(
     title=APP_TITLE,
@@ -394,6 +398,134 @@ async def inspect_audit(limit: int = 50, verify_chain: bool = False):
         "entries": entries,
         "chain_integrity": chain_status
     }
+
+# ══════════════════════════════════════════════════════════════════════════════
+# BLUEPRINT SECTION 22, 25 & PART B: PRODUCTIVITY, DEV, COMM & CAREER-OPS
+# ══════════════════════════════════════════════════════════════════════════════
+
+@app.get("/api/v1/productivity/briefing")
+async def get_daily_briefing():
+    """PWR-009 / PWR-185: Morning and Daily briefing generation."""
+    return productivity_powers.daily_briefing()
+
+@app.get("/api/v1/productivity/tasks")
+async def get_productivity_tasks():
+    """PWR-010: Task manager - lists tracked tasks."""
+    return productivity_powers.task_manager(action="list")
+
+@app.post("/api/v1/productivity/tasks")
+async def add_productivity_task(payload: Dict[str, Any] = Body(...)):
+    """PWR-010: Task manager - creates new priority task."""
+    title = payload.get("title", "")
+    priority = payload.get("priority", "P1")
+    return productivity_powers.task_manager(action="add", title=title, priority=priority)
+
+@app.get("/api/v1/productivity/reminders")
+async def get_productivity_reminders():
+    """PWR-011: Reminder engine - lists active reminders."""
+    return productivity_powers.reminder_engine(action="list")
+
+@app.post("/api/v1/productivity/reminders")
+async def add_productivity_reminder(payload: Dict[str, Any] = Body(...)):
+    """PWR-011: Reminder engine - creates reminder."""
+    text = payload.get("text", "")
+    due = payload.get("due")
+    return productivity_powers.reminder_engine(action="add", text=text, due=due)
+
+@app.get("/api/v1/productivity/calendar")
+async def get_productivity_calendar():
+    """PWR-012: Calendar integration - lists upcoming schedule."""
+    return productivity_powers.calendar_power(action="list")
+
+@app.get("/api/v1/developer/explain")
+async def explain_codebase(target_dir: str = "."):
+    """PWR-162: Scans and explains repository code structure."""
+    return developer_powers.explain_codebase(target_dir=target_dir)
+
+@app.get("/api/v1/developer/git")
+async def run_git_op(action: str = "status"):
+    """PWR-173: Executes safe Git status, log, branch, or diff queries."""
+    return developer_powers.git_operations(action=action)
+
+@app.post("/api/v1/developer/diagnose")
+async def diagnose_error(payload: Dict[str, Any] = Body(...)):
+    """PWR-164: Parses stack trace and returns root cause triage."""
+    trace = payload.get("stack_trace", "")
+    return developer_powers.diagnose_bug(stack_trace=trace)
+
+@app.get("/api/v1/developer/cicd")
+async def get_cicd_status():
+    """PWR-177: Inspects CI/CD workflows and verification status."""
+    return developer_powers.ci_cd_monitoring()
+
+@app.post("/api/v1/communication/draft")
+async def draft_comm_message(payload: Dict[str, Any] = Body(...)):
+    """PWR-209: Message drafting with frozen hash-bound approval."""
+    channel = payload.get("channel", "email")
+    recipient = payload.get("recipient", "")
+    content = payload.get("content", "")
+    subject = payload.get("subject")
+    return communication_powers.draft_message(channel=channel, recipient=recipient, content=content, subject=subject)
+
+@app.post("/api/v1/communication/telegram/alert")
+async def send_telegram_alert(payload: Dict[str, Any] = Body(...)):
+    """PWR-203: Telegram notifications and alerts."""
+    text = payload.get("text", "")
+    priority = payload.get("priority", "normal")
+    return communication_powers.telegram_alert(text=text, priority=priority)
+
+@app.post("/api/v1/communication/discord/notify")
+async def send_discord_notify(payload: Dict[str, Any] = Body(...)):
+    """PWR-204: Discord webhook notifications."""
+    title = payload.get("title", "")
+    desc = payload.get("description", "")
+    return communication_powers.discord_notification(title=title, description=desc)
+
+@app.post("/api/v1/career-ops/scan")
+async def career_ops_scan(payload: Dict[str, Any] = Body(...)):
+    """PWR-329: Career-Ops /job-scan <URL> with SSRF protection."""
+    url = payload.get("job_url", "")
+    return career_ops_integration.scan_job(job_url=url)
+
+@app.post("/api/v1/career-ops/generate-resume")
+async def career_ops_resume(payload: Dict[str, Any] = Body(...)):
+    """PWR-330: Career-Ops /generate-resume <job-url> ATS-friendly PDF."""
+    url = payload.get("job_url", "")
+    return career_ops_integration.generate_resume(job_url=url)
+
+@app.post("/api/v1/career-ops/generate-cover")
+async def career_ops_cover(payload: Dict[str, Any] = Body(...)):
+    """PWR-331: Career-Ops /generate-cover <job-url>."""
+    url = payload.get("job_url", "")
+    return career_ops_integration.generate_cover_letter(job_url=url)
+
+@app.get("/api/v1/career-ops/company-research")
+async def career_ops_company(company: str):
+    """PWR-332: Career-Ops /company-research <company>."""
+    return career_ops_integration.company_research(company=company)
+
+@app.get("/api/v1/career-ops/find-contact")
+async def career_ops_contact(company: str, role: str = "Recruiter"):
+    """PWR-333: Career-Ops /find-contact <company> [role]."""
+    return career_ops_integration.find_contact(company=company, role=role)
+
+@app.get("/api/v1/career-ops/analyze-applications")
+async def career_ops_analytics():
+    """PWR-335: Career-Ops /analyze-applications."""
+    return career_ops_integration.analyze_applications()
+
+@app.post("/api/v1/career-ops/interview-prep")
+async def career_ops_interview(payload: Dict[str, Any] = Body(...)):
+    """PWR-336: Career-Ops /interview-prep [question]."""
+    question = payload.get("question")
+    return career_ops_integration.interview_prep(question=question)
+
+@app.post("/api/v1/career-ops/analyze-offer")
+async def career_ops_offer(payload: Dict[str, Any] = Body(...)):
+    """PWR-337: Career-Ops /analyze-offer."""
+    offer_text = payload.get("offer_text", "")
+    target = payload.get("target_salary")
+    return career_ops_integration.analyze_offer(offer_text=offer_text, target_salary=target)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # WEBSOCKET STREAM FOR IRON MAN HUD

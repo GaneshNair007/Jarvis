@@ -39,6 +39,7 @@ data/artifacts/screenshots/*.png
 data/*.db
 data/*.db-wal
 data/*.db-shm
+data/career/
 
 # External Cloned Ecosystem Repositories
 repos/
