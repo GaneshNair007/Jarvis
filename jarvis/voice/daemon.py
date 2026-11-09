@@ -66,18 +66,23 @@ def probe_input_devices(
 ) -> List[Dict[str, Any]]:
     """Records a short sample from every input device and classifies it.
 
-    Status meanings (First Law - measured, not assumed):
+    Measured with the SAME mechanism the daemon uses (sounddevice InputStream
+    callbacks), because several Realtek devices on this host pass a one-shot
+    `sd.rec` sample yet deliver ZERO live callbacks (12/20 measured on this
+    machine). Status meanings (First Law - measured, not assumed):
       live   - sustained acoustic signal (noise floor >= min_mean, no dropouts,
                no full-scale glitching) -> safe for wake-word listening
-      silent - stream opens but carries digital silence (muted/hidden mic)
+      silent - stream delivers but carries near-digital silence (muted mic)
       glitch - full-scale noise or intermittent dropouts (driver fault)
-      error  - device could not be opened
+      error  - device could not be opened OR never delivers callbacks
     """
     results: List[Dict[str, Any]] = []
     if np is None:  # pragma: no cover
         return results
     try:
         import sounddevice as sd
+        import queue as _queue
+        import time as _time
     except Exception as exc:  # pragma: no cover
         logger.warning(f"probe_input_devices: sounddevice unavailable: {exc}")
         return results
@@ -93,30 +98,42 @@ def probe_input_devices(
             "hostapi": sd.query_hostapis(info.get("hostapi", 0)).get("name", ""),
             "default_rate": int(info.get("default_samplerate", 16000)),
         }
-        rate = 16000
+        # Probe at the rate the daemon would actually use (native), because
+        # MME opens differ from WDM/WASAPI restrictions across this host.
+        rate = entry["default_rate"]
+        if rate < 8000:
+            rate = 16000
+        chunks: List[bytes] = []
+        cb_hits = 0
+
+        def _probe_cb(indata, frames, time_info, status):
+            nonlocal cb_hits
+            cb_hits += 1
+            chunks.append(bytes(indata))
+
         audio = None
-        for attempt_rate in (16000, entry["default_rate"]):
-            try:
-                rec = sd.rec(
-                    int(duration_sec * attempt_rate),
-                    samplerate=attempt_rate,
-                    channels=1,
-                    dtype="int16",
-                    device=idx,
-                )
-                sd.wait()
-                audio = rec.flatten()
-                rate = attempt_rate
-                break
-            except Exception:
-                continue
-        if audio is None or audio.size == 0:
+        try:
+            with sd.InputStream(
+                samplerate=rate,
+                channels=1,
+                dtype="int16",
+                device=idx,
+                blocksize=max(1, int(rate * 0.1)),
+                callback=_probe_cb,
+            ):
+                _time.sleep(duration_sec)
+            if cb_hits > 0:
+                audio = b"".join(chunks)
+        except Exception:
+            audio = None
+
+        if audio is None or len(audio) < 2:
             entry["status"] = "error"
-            entry["error"] = "open_failed"
+            entry["error"] = "open_failed" if cb_hits == 0 else "no_callbacks"
             results.append(entry)
             continue
 
-        samples = audio.astype(np.float32)
+        samples = np.frombuffer(audio, dtype=np.int16).astype(np.float32)
         mean = float(np.mean(np.abs(samples)))
         peak = float(np.max(np.abs(samples)))
         clipped_frac = float(np.mean(np.abs(samples) > 30000))
@@ -143,6 +160,10 @@ def probe_input_devices(
         )
         if mean < min_mean:
             entry["status"] = "silent"
+            # Additive honesty: a NONZERO mean is a working microphone in a
+            # quiet room (usable for wake listening); exact digital silence
+            # with peak==0 is muted/hidden hardware (not usable).
+            entry["usable"] = (mean > 0.0)
         elif mean >= max_mean or clipped_frac >= max_clipped_frac:
             entry["status"] = "glitch"
         elif nonzero_frac < min_nonzero_window_frac:
@@ -193,11 +214,26 @@ def select_input_device(
     if probe is None:
         probe = probe_input_devices()
 
-    live = [e for e in probe if e.get("status") == "live"]
-    if live:
-        # Prefer stable shared-mode host APIs over exclusive WDM-KS.
-        shared = [e for e in live if e.get("hostapi") in ("MME", "Windows DirectSound", "Windows WASAPI")]
-        chosen = (shared or live)[0]
+    usable = [
+        e for e in probe
+        if (e.get("status") == "live" or e.get("usable") is True)
+        and not any(tag in (e.get("name") or "").lower() for tag in ("stereo mix", "pc speaker"))
+    ]
+    if usable:
+        # Intent-first selection (measured on this host): the physically
+        # present far-field device is the Realtek "Microphone Array"; its MME
+        # alias accepted 16 kHz but stalled, while native-rate capture flows
+        # clean - the daemon resamples to 16 kHz in its callback.
+        def rank(entry: Dict[str, Any]) -> tuple:
+            name_l = (entry.get("name") or "").lower()
+            tier = 0 if "array" in name_l else (1 if name_l.startswith("microphone") else 2)
+            return (tier, -(entry.get("mean") or 0.0), entry.get("index", 0))
+
+        ranked = sorted(usable, key=rank)
+        head_api = ranked[0].get("hostapi", "")
+        tier = [e for e in ranked if e.get("hostapi") == head_api] or ranked
+        shared = [e for e in tier if e.get("hostapi") in ("MME", "Windows DirectSound", "Windows WASAPI")]
+        chosen = (shared or tier or ranked)[0]
         return {
             "device": chosen["index"],
             "name": chosen.get("name", ""),
@@ -259,6 +295,8 @@ class VoiceDaemon:
         speak_replies: bool = True,
         mic_device: Optional[int] = None,
         probe_devices: bool = True,
+        gate: Any = None,
+        acoustic_gate_enabled: Optional[bool] = None,
     ):
         self.state = "IDLE"
         self.running = False
@@ -276,6 +314,16 @@ class VoiceDaemon:
         self._speak_replies = speak_replies
         self._mic_device = mic_device
         self._probe_devices = probe_devices
+        self._gate = gate  # injectable for tests; lazily resolves to the global acoustic gate
+        if acoustic_gate_enabled is None:
+            # Env lever: JARVIS_ACOUSTIC_GATE=off restores the pure legacy wake
+            # path (useful for deterministic test runs / constrained hosts).
+            env_val = os.getenv("JARVIS_ACOUSTIC_GATE", "on").strip().lower()
+            acoustic_gate_enabled = env_val not in ("0", "off", "false", "no", "disabled")
+        self._gate_enabled = bool(acoustic_gate_enabled)
+        self._gate_hit_in_utterance = False
+        self._last_gate_score = 0.0
+        self._gate_cooldown_until: float = 0.0
         self._capture_rate = self.SAMPLE_RATE
         self._mic_info: Dict[str, Any] = {"device": None, "name": "", "live": False, "source": "not_started"}
 
@@ -291,6 +339,8 @@ class VoiceDaemon:
         self._utterance_active = False
 
         self.wake_count = 0
+        self.acoustic_wake_count = 0
+        self.gated_utterance_count = 0
         self.command_count = 0
         self.error_count = 0
         self.last_wake_ts: Optional[float] = None
@@ -331,6 +381,95 @@ class VoiceDaemon:
             from jarvis.voice.wake import wake_detector
             self._wake = wake_detector
         return self._wake
+
+    @property
+    def gate(self) -> Any:
+        """Acoustic wake gate. Resolves to the process-wide singleton on first use;
+        loading openWakeWord is deferred until real audio hits the gate."""
+        if self._gate is None:
+            from jarvis.voice.wake import get_acoustic_gate
+            self._gate = get_acoustic_gate()
+        return self._gate
+
+    def _gate_ready(self) -> bool:
+        """True when the acoustic gate is enabled and actually loaded/available.
+
+        Every failure mode (disabled, not installed, model load failed) lands
+        here as False, which restores the legacy transcription-based wake path
+        (Whisper on every utterance). Fail-closed, never silent.
+        """
+        if not self._gate_enabled:
+            return False
+        if self._gate is None:
+            return False  # not loaded yet: legacy path until audio arrives
+        try:
+            return bool(self._gate.available)
+        except Exception:
+            return False
+
+    def _gate_ready_for_listening(self) -> bool:
+        """Gate armed AND actively scoring right now.
+
+        During the post-wake cooldown the acoustic gate is deliberately muted;
+        the utterance short-circuit that skips Whisper must not treat that
+        window as "gate listening" — transcription fallback covers it instead.
+        """
+        if time.time() < self._gate_cooldown_until:
+            return False
+        return self._gate_ready()
+
+    @staticmethod
+    def openwakeword_installed() -> bool:
+        """Cheap availability probe (no model load): is openwakeword importable?"""
+        try:
+            import importlib.util
+            return importlib.util.find_spec("openwakeword") is not None
+        except Exception:
+            return False
+
+    def _run_gate(self, block: bytes) -> Optional[Dict[str, Any]]:
+        """Feeds one block through the acoustic gate, lazily loading it on first use.
+
+        Returns the gate event dict when the gate is armed, or None when the
+        legacy transcription path applies (gate disabled/unavailable/failed).
+        """
+        now = time.time()
+        if not self._gate_enabled:
+            return None
+        if now < self._gate_cooldown_until:
+            # Post-wake suppression window (prevents model state re-triggering).
+            return None
+        if self._gate is None:
+            try:
+                _ = self.gate  # first-use resolve: loads openWakeWord once
+            except Exception as exc:
+                logger.warning(f"Acoustic wake gate init failed ({exc}); using transcription-based wake.")
+                self._gate_enabled = False
+                return None
+        if not self._gate_ready():
+            return None
+        try:
+            event = self._gate.gate(block)
+        except Exception as exc:
+            logger.warning(f"Acoustic gate error: {exc}")
+            return None
+        if str(event.get("source") or "") != "acoustic":
+            return None
+        return event
+
+    def _sleep_gate(self, seconds: float = 2.5) -> None:
+        """Post-wake suppression: cooldown window + clearing model state.
+
+        After a wake or command the openWakeWord model still carries the
+        phrase's smoothed activation; without this reset it can instantly
+        re-trigger when the daemon returns to LISTENING_FOR_WAKE.
+        """
+        self._gate_cooldown_until = time.time() + seconds
+        if self._gate is not None:
+            try:
+                self._gate.reset()
+            except Exception:
+                pass
 
     # ------------------------------------------------------------------ #
     #  Evidence helpers                                                   #
@@ -423,6 +562,7 @@ class VoiceDaemon:
                     pass
                 self._reset_buffer()
                 self.state = "LISTENING_FOR_WAKE"
+                self._sleep_gate()  # suppress TTS-echo activation remnants
                 event = {"type": "barge_in", "energy": round(energy, 1), "timestamp": now}
                 self._emit(event, events)
             return events
@@ -430,12 +570,33 @@ class VoiceDaemon:
         if self.state == "PROCESSING":
             return events
 
+        # Acoustic wake gate: scored on EVERY block while listening (speech and
+        # silence). Required by the model's behavior: "hey jarvis" scores climb
+        # through the phrase and persist across trailing frames, so the verdict
+        # lands on post-phrase frames (measured: 0.93-0.9986 on trailing
+        # silence). The low-power win over legacy is skipping Whisper, not
+        # skipping frames. Barge-in suppression is inherent: while SPEAKING/
+        # PROCESSING the gate is not fed at all.
+        if self.state == "LISTENING_FOR_WAKE":
+            gate_event = self._run_gate(block)
+            if gate_event is not None:
+                score = float(gate_event.get("score") or 0.0)
+                if score > self._last_gate_score:
+                    self._last_gate_score = score
+                if gate_event.get("wake"):
+                    self._gate_hit_in_utterance = True
+                    self._record_evidence(
+                        source="voice_daemon.acoustic_wake_frame",
+                        data={"score": score, "threshold": gate_event.get("threshold")},
+                    )
+
         if is_speech:
             if not self._utterance_active:
                 self._utterance_active = True
                 self._speech_blocks = 0
                 self._silence_blocks = 0
                 self._buffer.clear()
+                self._gate_hit_in_utterance = False
             self._speech_blocks += 1
             self._silence_blocks = 0
             self._buffer.extend(block)
@@ -459,6 +620,17 @@ class VoiceDaemon:
             return events
 
         if self._speech_blocks >= self.MIN_SPEECH_BLOCKS or command_maxed:
+            if (
+                self.state == "LISTENING_FOR_WAKE"
+                and self._gate_ready_for_listening()
+                and not self._gate_hit_in_utterance
+            ):
+                # Acoustic gate armed and this utterance scored below threshold:
+                # ambient speech never reaches Whisper (the low-power path).
+                with self._stats_lock:
+                    self.gated_utterance_count += 1
+                self._reset_buffer()
+                return events
             pcm = bytes(self._buffer)
             self._reset_buffer()
             events.extend(self._handle_utterance(pcm))
@@ -472,25 +644,51 @@ class VoiceDaemon:
         text = (result.get("text") or "").strip()
         with self._stats_lock:
             self.last_transcript = text
-        if not text:
+        if not text and not (self.state == "LISTENING_FOR_WAKE" and self._gate_hit_in_utterance):
             return events
 
         if self.state == "LISTENING_FOR_WAKE":
-            if not any(p in text.lower() for p in self.wake_phrases):
+            gate_hit = self._gate_hit_in_utterance
+            self._gate_hit_in_utterance = False
+            phrase_match = any(p in text.lower() for p in self.wake_phrases)
+            if not phrase_match and not gate_hit:
                 return events
+
+            acoustic_only = gate_hit and not phrase_match
             self.wake_count += 1
+            if gate_hit:
+                self.acoustic_wake_count += 1
             self.last_wake_ts = time.time()
-            self._record_evidence(
-                source="voice_daemon.wake",
-                data={"transcript": text, "confidence": result.get("confidence", 0.0)},
-            )
-            command = self._strip_wake(text)
+            if phrase_match:
+                self._record_evidence(
+                    source="voice_daemon.wake",
+                    data={
+                        "transcript": text,
+                        "confidence": result.get("confidence", 0.0),
+                        "acoustic_confirmed": bool(gate_hit),
+                        "source": "transcription+acoustic" if gate_hit else "transcription",
+                    },
+                )
+            else:
+                self._record_evidence(
+                    source="voice_daemon.wake_acoustic",
+                    data={
+                        "transcript": text,
+                        "acoustic_score": self._last_gate_score,
+                        "confidence": result.get("confidence", 0.0),
+                        "source": "acoustic",
+                    },
+                )
+            if self._gate_ready():
+                self._sleep_gate()  # clear model state so the phrase can't re-trigger
+            command = self._strip_wake(text) if phrase_match else text
             if command:
                 events.extend(self._execute_command(command, trigger="wake_with_command", wake_transcript=text))
             else:
                 self.state = "CAPTURING_COMMAND"
                 event = {
                     "type": "wake_detected",
+                    "source": "acoustic" if acoustic_only else "transcription",
                     "transcript": text,
                     "timestamp": self.last_wake_ts,
                 }
@@ -525,6 +723,7 @@ class VoiceDaemon:
             with self._stats_lock:
                 self.error_count += 1
             self.state = "LISTENING_FOR_WAKE"
+            self._sleep_gate()
             self._record_evidence(
                 source="voice_daemon.command",
                 data={"command": command, "status": "error", "error": str(exc)},
@@ -555,6 +754,7 @@ class VoiceDaemon:
         )
 
         self.state = "SPEAKING"
+        self._sleep_gate()  # speaking window: gate idle, clear activation remnants
         if self._speak_replies and reply_text:
             try:
                 self.tts.speak_live(reply_text, async_mode=True)
@@ -585,6 +785,7 @@ class VoiceDaemon:
     def _end_speaking(self) -> None:
         if self.state == "SPEAKING":
             self.state = "LISTENING_FOR_WAKE"
+            self._sleep_gate()
 
     def _reset_buffer(self) -> None:
         self._buffer.clear()
@@ -642,6 +843,7 @@ class VoiceDaemon:
 
         self._running_flag.set()
         self.state = "LISTENING_FOR_WAKE"
+        self._sleep_gate(0.0)  # fresh start: arm the gate immediately
         self.started_at = time.time()
 
         self._worker = threading.Thread(target=self._worker_loop, name="jarvis-voice-worker", daemon=True)
@@ -657,22 +859,21 @@ class VoiceDaemon:
                 self._mic_info = selection
                 device = selection.get("device")
 
-                # Resolve a capture rate the selected device accepts.
+                # Resolve a capture rate the selected device accepts. Measured on
+                # this host (First Law evidence): opening directly at 16 kHz on
+                # 44.1/48 kHz-native devices produced stream status errors and
+                # delayed delivery, while native-rate capture flows clean -
+                # so capture at the device's native rate and resample to 16 kHz
+                # in the callback (pipelines and tests inject 16k PCM directly).
                 capture_rate = self.SAMPLE_RATE
                 if device is not None:
                     try:
                         dev_info = sd.query_devices(device)
                         native = int(dev_info.get("default_samplerate", self.SAMPLE_RATE) or self.SAMPLE_RATE)
+                        if native in (44100, 48000, 96000, 22050, 24000):
+                            capture_rate = native
                     except Exception:
-                        native = self.SAMPLE_RATE
-                    # Prefer 16 kHz (whisper native); fall back to device native rate.
-                    try:
-                        sd.check_input_settings(
-                            device=device, channels=self.CHANNELS, dtype="int16", samplerate=self.SAMPLE_RATE
-                        )
                         capture_rate = self.SAMPLE_RATE
-                    except Exception:
-                        capture_rate = native
 
                 self._capture_rate = capture_rate
                 block_frames = max(1, int(capture_rate * self.BLOCK_MS // 1000))
@@ -739,6 +940,12 @@ class VoiceDaemon:
         self._worker = None
         self.state = "IDLE"
         self._reset_buffer()
+        self._gate_hit_in_utterance = False
+        if self._gate is not None:
+            try:
+                self._gate.reset()
+            except Exception:
+                pass
         self._record_evidence(source="voice_daemon.stopped", data={"state": "IDLE"})
         logger.info("VoiceDaemon stopped.")
         return self.health()
@@ -756,6 +963,24 @@ class VoiceDaemon:
                 "mic_capture_rate": self._capture_rate,
                 "wake_phrases": self.wake_phrases,
                 "wake_count": self.wake_count,
+                "acoustic_gate_enabled": self._gate_enabled,
+                "acoustic_gate_installed": self.openwakeword_installed(),
+                "acoustic_gate_armed": self._gate_ready(),
+                "acoustic_gate_engine": "openwakeword-onnx" if self._gate_ready() else None,
+                "acoustic_gate_model": (
+                    (self._gate.model_names or ["(default set)"])[0]
+                    if self._gate is not None and self._gate_ready() else None
+                ),
+                "acoustic_gate_threshold": (
+                    self._gate.threshold if self._gate is not None and self._gate_ready() else None
+                ),
+                "acoustic_gate_unavailable_reason": (
+                    (self._gate.unavailable_reason or None) if self._gate is not None
+                    and not self._gate_ready() and self._gate_enabled else None
+                ),
+                "acoustic_wake_count": self.acoustic_wake_count,
+                "gated_utterance_count": self.gated_utterance_count,
+                "last_acoustic_score": self._last_gate_score,
                 "command_count": self.command_count,
                 "error_count": self.error_count,
                 "last_wake_ts": self.last_wake_ts,

@@ -22,13 +22,35 @@ class VoicePowers:
     #  PWR-001 — Wake Word Status                                         #
     # ------------------------------------------------------------------ #
     def wake_word_status(self) -> Dict[str, Any]:
-        """PWR-001: Returns wake word engine status (active/inactive, engine type)."""
+        """PWR-001: Returns wake word engine status (active/inactive, engine type).
+
+        Honest by design: `active` means a listener process is actually running
+        (legacy process probe). The acoustic (openWakeWord) layer is reported
+        separately as installed/armed so the status never gets faked.
+        """
+        # 1. Acoustic layer (openWakeWord): installed? armed/loaded?
+        acoustic: Dict[str, Any] = {"engine": "openwakeword", "installed": False, "armed": False}
         try:
-            # Attempt to detect a running wake-word engine
+            import importlib.util
+
+            acoustic["installed"] = importlib.util.find_spec("openwakeword") is not None
+            if acoustic["installed"]:
+                from jarvis.voice.wake import get_acoustic_gate
+
+                gate = get_acoustic_gate()
+                acoustic["armed"] = bool(gate.available)
+                acoustic["threshold"] = gate.threshold if gate.available else None
+                acoustic["models"] = list(gate.model_names) if gate.available else []
+                if not gate.available:
+                    acoustic["unavailable_reason"] = gate.unavailable_reason
+        except Exception as exc:
+            acoustic["error"] = str(exc)[:200]
+
+        try:
+            # Legacy process probe: is a wake-word listener running right now?
             engine_type = "unknown"
             active = False
 
-            # Check for common wake-word processes
             result = subprocess.run(
                 ["tasklist", "/FO", "CSV", "/NH"],
                 capture_output=True, text=True, timeout=5,
@@ -45,12 +67,28 @@ class VoicePowers:
                 engine_type = "vosk"
                 active = True
 
+            # The acoustic gate itself is not a listener process; report it honestly.
+            if active:
+                message = f"Interactive wake word listener running ({engine_type})"
+            elif acoustic["installed"] and acoustic["armed"]:
+                engine_type = "openwakeword"
+                message = (
+                    "Acoustic wake gate armed (openWakeWord/onnx, 'hey jarvis' model) - "
+                    "farms available, but no VoiceDaemon is currently listening"
+                )
+            else:
+                message = (
+                    "No wake word listener running; acoustic gate "
+                    + ("armed" if acoustic["installed"] else "not installed")
+                )
+
             return {
                 "power_id": "PWR-001",
                 "status": "success",
                 "active": active,
                 "engine_type": engine_type,
-                "message": f"Wake word engine {'active' if active else 'inactive'} ({engine_type})",
+                "acoustic_gate": acoustic,
+                "message": message,
             }
         except Exception as e:
             return {
@@ -58,6 +96,7 @@ class VoicePowers:
                 "status": "error",
                 "active": False,
                 "engine_type": "unknown",
+                "acoustic_gate": acoustic,
                 "message": f"Could not query wake word status: {e}",
             }
 
