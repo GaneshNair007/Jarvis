@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794294324365,
+  "lastUpdate": 1794295455705,
   "repoUrl": "https://github.com/GaneshNair007/Jarvis",
   "entries": {
     "Benchmark": [
@@ -52,6 +52,58 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.000003874688447136216",
             "extra": "mean: 47.56875431865335 usec\nrounds: 4689"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nairganesh134@gmail.com",
+            "name": "GaneshNair007",
+            "username": "GaneshNair007"
+          },
+          "committer": {
+            "email": "nairganesh134@gmail.com",
+            "name": "GaneshNair007",
+            "username": "GaneshNair007"
+          },
+          "distinct": true,
+          "id": "0281bab2107660570424508ad7ab7f616a380c97",
+          "message": "fix(coverage): guard coverage comment against dependabot token and add adversarial challenger tests",
+          "timestamp": "2026-11-10T12:52:30+05:30",
+          "tree_id": "bc31b0dc284fc6c1d6bb7cd6195d1a5b56d51a85",
+          "url": "https://github.com/GaneshNair007/Jarvis/commit/0281bab2107660570424508ad7ab7f616a380c97"
+        },
+        "date": 1794295454610,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_benchmarks.py::test_benchmark_policy_gate_read",
+            "value": 738473.8007530337,
+            "unit": "iter/sec",
+            "range": "stddev: 5.127622733717229e-7",
+            "extra": "mean: 1.3541441808501316 usec\nrounds: 56013"
+          },
+          {
+            "name": "tests/test_benchmarks.py::test_benchmark_policy_gate_destructive_action",
+            "value": 202278.05617207737,
+            "unit": "iter/sec",
+            "range": "stddev: 8.694927185460338e-7",
+            "extra": "mean: 4.9436899826113745 usec\nrounds: 30637"
+          },
+          {
+            "name": "tests/test_benchmarks.py::test_benchmark_desktop_screen_size",
+            "value": 11741937.438028032,
+            "unit": "iter/sec",
+            "range": "stddev: 8.04747776902927e-9",
+            "extra": "mean: 85.1648209911873 nsec\nrounds: 118681"
+          },
+          {
+            "name": "tests/test_benchmarks.py::test_benchmark_audit_hash",
+            "value": 12198.765318629507,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000007250488969985413",
+            "extra": "mean: 81.97550931427763 usec\nrounds: 5046"
           }
         ]
       }
