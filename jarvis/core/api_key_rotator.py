@@ -548,7 +548,7 @@ class OpenRouterKeyRotator(BaseKeyRotator):
                     {"role": "user", "content": prompt},
                 ],
                 "temperature": 0.7,
-                "max_tokens": 1024,
+                "max_tokens": 200,
             }).encode("utf-8")
 
             req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
@@ -573,6 +573,36 @@ class OpenRouterKeyRotator(BaseKeyRotator):
                 if e.code == 429:
                     tracker.record_429(cooldown_seconds=45.0)
                     continue
+                elif e.code == 402:
+                    try:
+                        retry_payload = json.dumps({
+                            "model": target_model,
+                            "messages": [
+                                {"role": "system", "content": system_instruction[:200]},
+                                {"role": "user", "content": prompt[:300]},
+                            ],
+                            "temperature": 0.7,
+                            "max_tokens": 120,
+                        }).encode("utf-8")
+                        retry_req = urllib.request.Request(url, data=retry_payload, headers=headers, method="POST")
+                        with urllib.request.urlopen(retry_req, timeout=timeout_sec) as r_resp:
+                            if r_resp.status == 200:
+                                r_data = json.loads(r_resp.read().decode("utf-8"))
+                                r_choice = r_data.get("choices", [{}])[0]
+                                r_reply = r_choice.get("message", {}).get("content", "").strip()
+                                r_tokens = r_data.get("usage", {}).get("total_tokens", len(prompt) // 4 + len(r_reply) // 4)
+                                tracker.record_success()
+                                return {
+                                    "status": "success",
+                                    "model": target_model,
+                                    "reply": r_reply,
+                                    "tokens_used": r_tokens,
+                                    "key_used": tracker.redacted_key,
+                                    "duration_ms": round((time.time() - start_time) * 1000, 2),
+                                }
+                    except Exception as _r_err:
+                        logger.warning(f"OpenRouter 402 compact retry error: {_r_err}")
+                    tracker.record_error()
                 elif e.code == 404 and target_model != "deepseek/deepseek-chat":
                     # Fall back to deepseek-chat on 404
                     return self.generate_chat_completion(

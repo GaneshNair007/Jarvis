@@ -68,7 +68,13 @@ class JarvisOrchestrator:
         if any(k in q for k in ["open", "close", "launch", "file", "folder", "desktop", "screenshot", "window", "notepad"]):
             roles.append("desktop")
 
-        if not roles:
+        # Conversational / greeting queries do not invoke external subagents
+        conv_words = {"hi", "hello", "hey", "greetings", "howdy", "sup", "yo"}
+        tokens = {w.strip("!?,.") for w in q.split()}
+        if tokens & conv_words and not any(k in q for k in ["search", "research", "browse", "code", "python", "script", "hackathon", "gsoc", "internship", "job"]):
+            return []
+
+        if not roles and any(w in q for w in ["search", "find", "lookup", "google", "browse", "paper", "investigate", "tell me about"]):
             roles.append("researcher")
 
         # 8. Reviewer / Verifier Agent: Always bound for Stage 5 verification

@@ -12,6 +12,16 @@ from logging.handlers import RotatingFileHandler
 from jarvis.config import settings
 
 
+class SafeSafeRotatingFileHandler(RotatingFileHandler):
+    """RotatingFileHandler that safely ignores Windows multi-process file locking during rollover."""
+    def doRollover(self):
+        try:
+            super().doRollover()
+        except (PermissionError, OSError):
+            pass
+
+
+
 def setup_logger(name: str = "jarvis") -> logging.Logger:
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG if settings.jarvis_debug else logging.INFO)

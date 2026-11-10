@@ -394,6 +394,17 @@ async def chat_endpoint(req: ChatRequest):
         sensitivity_level=req.sensitivity_level,
         approval_token=req.approval_token,
     )
+    
+    # Extract articulate assistant response for any frontend interface
+    final_text = (
+        result.get("final_reply")
+        or (result.get("response") if isinstance(result.get("response"), str) else (result.get("response", {}).get("reply") if isinstance(result.get("response"), dict) else None))
+        or result.get("message")
+        or "At your service, sir."
+    )
+    result["reply"] = final_text
+    result["message"] = final_text
+    result["final_reply"] = final_text
     return result
 
 

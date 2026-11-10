@@ -1786,17 +1786,27 @@
         const data = await resp.json();
 
         // Extract Assistant Reply
-        let reply = "Task processed.";
-        let agentUsed = "JARVIS Orchestrator";
-        if (data.reply) {
+        let reply = "At your service, sir.";
+        let agentUsed = "JARVIS";
+        if (data.final_reply) {
+          reply = data.final_reply;
+        } else if (data.reply) {
           reply = data.reply;
         } else if (data.message) {
           reply = data.message;
+        } else if (data.response && typeof data.response === 'string') {
+          reply = data.response;
+        } else if (data.response && data.response.reply) {
+          reply = data.response.reply;
         } else if (typeof data === 'string') {
           reply = data;
         }
 
-        if (data.assigned_agent) agentUsed = data.assigned_agent;
+        if (data.selected_specialists && data.selected_specialists.length > 0) {
+          agentUsed = data.selected_specialists[0].replace('_', ' ').toUpperCase() + ' Agent';
+        } else if (data.assigned_agent) {
+          agentUsed = data.assigned_agent;
+        }
 
         appendMessage('jarvis', agentUsed, reply);
       } catch (err) {
