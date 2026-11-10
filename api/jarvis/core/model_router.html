@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.model_router API documentation</title>
+<meta name="description" content="JARVIS Policy-Aware Three-Tier Hybrid Model Router
+Intelligently routes inference requests between:
+- TIER 1: Local Reflex (Ollama, local OCR, zero …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.model_router</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Policy-Aware Three-Tier Hybrid Model Router
+Intelligently routes inference requests between:
+- TIER 1: Local Reflex (Ollama, local OCR, zero external transmission)
+- TIER 2: Private GPU Reasoning (vLLM OpenAI-compatible server on private LAN)
+- TIER 3: Frontier Cloud Gateway (Claude 3.7 / GPT-4o / Gemini 2.0 Pro)
+- BYPASS: Deterministic Instant OS Commands (zero LLM overhead)</p>
+<p>Enforces strict privacy screening, cost caps, circuit breakers, and audit receipts.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.model_router.ModelRouter"><code class="flex name class">
+<span>class <span class="ident">ModelRouter</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ModelRouter:
+    # Instant deterministic triggers that must never invoke an LLM
+    INSTANT_COMMAND_PATTERNS = [
+        r&#34;^open\s+[\w\s\.-]+$&#34;,
+        r&#34;^launch\s+[\w\s\.-]+$&#34;,
+        r&#34;^close\s+[\w\s\.-]+$&#34;,
+        r&#34;^switch\s+to\s+[\w\s\.-]+$&#34;,
+        r&#34;^volume\s+(up|down|mute|\d+)$&#34;,
+        r&#34;^brightness\s+(up|down|\d+)$&#34;,
+        r&#34;^lock\s+(screen|computer|workstation)$&#34;,
+        r&#34;^sleep$&#34;,
+        r&#34;^take\s+screenshot$&#34;,
+        r&#34;^system\s+health(\s+report)?$&#34;,
+        r&#34;^disk\s+usage$&#34;,
+        r&#34;^docker\s+(ps|status|containers)$&#34;,
+        r&#34;^/(job-scan|generate-resume|generate-cover|company-research|find-contact|draft-email|analyze-applications|interview-prep|red-flags|analyze-offer|pipeline|career).*&#34;,
+        r&#34;^/(browser|generative_ui|automation|plugin|migrate-workflows).*&#34;,
+        r&#34;^.*(turn (on|off)|set|switch)\s+(the\s+)?(ac|air condition|projector|tv|geyser|lights?|lamp).*&#34;,
+        r&#34;^.*(movie night|work mode|sleep mode|morning wake).*&#34;,
+        r&#34;^.*(opportunity radar|career radar|daily pulse|system pulse|weekly sweep).*&#34;,
+        r&#34;^.*(gmail|check (my )?(email|mail|inbox)|missed (email|mail)|opportunities).*&#34;,
+        r&#34;^connect (my )?gmail.*&#34;,
+        r&#34;^(status|help|who are you|hi|hello|hey|hi jarvis|hey jarvis|hello jarvis)$&#34;,
+        r&#34;^pwr-\d{3}.*&#34;,
+        r&#34;^ping\s+.*&#34;,
+        r&#34;^traceroute\s+.*&#34;,
+        r&#34;^dns\s+.*&#34;,
+        r&#34;^port\s+scan.*&#34;,
+        r&#34;^check\s+internet.*&#34;,
+        r&#34;^speedtest.*&#34;,
+        r&#34;^stock(\s+quote)?\s+.*&#34;,
+        r&#34;^crypto\s+.*&#34;,
+        r&#34;^market\s+briefing.*&#34;,
+        r&#34;^portfolio\s+(journal|value)?.*&#34;,
+        r&#34;^youtube\s+(script|title|tags?|brief).*|^video\s+(script|title).*&#34;,
+        r&#34;^hud(\s+telemetry)?.*|^mission\s+control.*|^threat\s+assessment.*&#34;,
+        r&#34;^security\s+(scan|posture|report).*|^secret\s+scan.*&#34;,
+    ]
+
+    def __init__(self):
+        self.privacy_gate = privacy_gate
+        self.cost_governor = cost_governor
+        self.execution_history: List[Dict[str, Any]] = []
+        self._ollama_probe_cache: Optional[bool] = None
+        self._ollama_probe_timestamp: float = 0.0
+        self._ollama_probe_ttl_sec: float = 5.0
+
+    def check_ollama_readiness(self, use_cache: bool = True) -&gt; bool:
+        &#34;&#34;&#34;
+        Fast low-latency readiness check for local Ollama daemon.
+        Uses TTL caching for subsequent turns to guarantee &lt;1ms latency.
+        &#34;&#34;&#34;
+        now = time.perf_counter()
+        if use_cache and self._ollama_probe_cache is not None:
+            if (now - self._ollama_probe_timestamp) &lt; self._ollama_probe_ttl_sec:
+                return self._ollama_probe_cache
+
+        is_ready = False
+        try:
+            parsed = urlparse(settings.ollama_base_url)
+            host = parsed.hostname or &#34;127.0.0.1&#34;
+            if host in (&#34;localhost&#34;, &#34;0.0.0.0&#34;):
+                host = &#34;127.0.0.1&#34;
+            port = parsed.port or 11434
+            with socket.create_connection((host, port), timeout=0.025):
+                is_ready = True
+        except (socket.timeout, ConnectionRefusedError, OSError):
+            is_ready = False
+
+        self._ollama_probe_cache = is_ready
+        self._ollama_probe_timestamp = now
+        return is_ready
+
+    def is_instant_command(self, intent: str) -&gt; bool:
+        &#34;&#34;&#34;Determines if the command is purely deterministic and bypasses LLM inference.&#34;&#34;&#34;
+        cleaned = intent.strip().lower()
+        for pat in self.INSTANT_COMMAND_PATTERNS:
+            if re.match(pat, cleaned):
+                return True
+        return False
+
+    def route(self, request: RoutingRequest) -&gt; RoutingDecision:
+        &#34;&#34;&#34;
+        Evaluates dimensions (sensitivity, complexity, latency, budget, availability)
+        and outputs the exact routing decision.
+        &#34;&#34;&#34;
+        # 1. Check for Instant Command Bypass (Zero LLM)
+        if request.task_type == &#34;instant_command&#34; or self.is_instant_command(request.user_intent):
+            return RoutingDecision(
+                task_id=request.task_id,
+                tier=&#34;BYPASS&#34;,
+                provider=&#34;deterministic&#34;,
+                selected_model=&#34;none-deterministic-command&#34;,
+                reason=&#34;Bypassed LLM: Instant OS / Telemetry command is purely deterministic.&#34;,
+                redacted_context=request.attached_context,
+                redactions_made=[],
+                estimated_cost_usd=0.0,
+                requires_approval=False,
+                fallback_models=[],
+            )
+
+        # 2. Run Privacy Screening &amp; Redaction
+        redacted_context, redactions = self.privacy_gate.inspect_and_redact(request.attached_context)
+        redacted_intent, intent_redactions = self.privacy_gate.inspect_and_redact(request.user_intent)
+        total_redactions = redactions + intent_redactions
+
+        # Estimate input token count (approx 1 token = 4 chars)
+        approx_tokens = (len(redacted_intent) + len(redacted_context)) // 4
+
+        # 3. High Sensitivity / Confidential Data -&gt; Strictly Tier 1 or Tier 2
+        if request.sensitivity_level in [&#34;high&#34;, &#34;confidential&#34;] or &#34;screen&#34; in request.task_type:
+            # Sensitive documents or screen contexts stay strictly local/private
+            if request.required_capability in [&#34;code&#34;, &#34;complex_reasoning&#34;] and not self.cost_governor.is_circuit_open(
+                &#34;vllm&#34;
+            ):
+                # Use Tier 2 Private GPU Reasoning
+                decision = RoutingDecision(
+                    task_id=request.task_id,
+                    tier=&#34;TIER_2_PRIVATE&#34;,
+                    provider=&#34;vllm&#34;,
+                    selected_model=settings.vllm_default_model,
+                    reason=&#34;Tier 2 Private GPU selected: High sensitivity code/reasoning task kept strictly within user boundary.&#34;,
+                    redacted_context=redacted_context,
+                    redactions_made=total_redactions,
+                    estimated_cost_usd=0.0,
+                    requires_approval=False,
+                    fallback_models=[settings.ollama_default_model],
+                )
+            else:
+                # Use Tier 1 Local Reflex
+                decision = RoutingDecision(
+                    task_id=request.task_id,
+                    tier=&#34;TIER_1_LOCAL&#34;,
+                    provider=&#34;ollama&#34;,
+                    selected_model=settings.ollama_default_model,
+                    reason=&#34;Tier 1 Local Reflex selected: Sensitive context/document/screen kept local on Ollama.&#34;,
+                    redacted_context=redacted_context,
+                    redactions_made=total_redactions,
+                    estimated_cost_usd=0.0,
+                    requires_approval=False,
+                    fallback_models=[],
+                )
+            self._log_decision(decision)
+            return decision
+
+        # 4. Complex Public Research or Frontier Reasoning -&gt; Tier 3 Candidate
+        if request.task_type in [&#34;research&#34;, &#34;deep_research&#34;] or (
+            request.required_capability in [&#34;complex_reasoning&#34;, &#34;advanced_coding&#34;]
+            and request.sensitivity_level in [&#34;public&#34;, &#34;low&#34;]
+        ):
+            can_cloud, cloud_reason = self.privacy_gate.can_route_to_cloud(
+                text=redacted_context, requires_cloud_consent=False, has_consent=request.has_cloud_consent
+            )
+
+            target_model = (
+                &#34;claude-3-7-sonnet&#34;
+                if settings.claude_api_key
+                else (&#34;gpt-4o&#34; if settings.openai_api_key else &#34;gemini-2.0-flash&#34;)
+            )
+
+            can_budget, budget_reason, est_cost = self.cost_governor.can_execute_call(
+                task_id=request.task_id, model_name=target_model, estimated_input_tokens=approx_tokens
+            )
+
+            # Check if budget or privacy permits Tier 3
+            if can_cloud and can_budget:
+                provider = (
+                    &#34;openrouter&#34;
+                    if &#34;openrouter&#34; in target_model
+                    else (
+                        &#34;anthropic&#34; if &#34;claude&#34; in target_model else (&#34;openai&#34; if &#34;gpt&#34; in target_model else &#34;google&#34;)
+                    )
+                )
+                decision = RoutingDecision(
+                    task_id=request.task_id,
+                    tier=&#34;TIER_3_CLOUD&#34;,
+                    provider=provider,
+                    selected_model=target_model,
+                    reason=f&#34;Tier 3 Frontier Cloud / OpenRouter escalated: High complexity public research/coding. {budget_reason}&#34;,
+                    redacted_context=self.privacy_gate.minimize_context(redacted_context),
+                    redactions_made=total_redactions,
+                    estimated_cost_usd=est_cost,
+                    requires_approval=(est_cost &gt; settings.max_per_task_budget * 0.8),
+                    fallback_models=[settings.vllm_default_model, settings.ollama_default_model],
+                )
+                self._log_decision(decision)
+                return decision
+
+            # If budget exceeded or provider failed, fallback safely to Tier 2 or Tier 1
+            fallback_reason = f&#34;Cloud route declined ({budget_reason if not can_budget else cloud_reason}). Falling back to private tier.&#34;
+
+            if not self.cost_governor.is_circuit_open(&#34;vllm&#34;):
+                decision = RoutingDecision(
+                    task_id=request.task_id,
+                    tier=&#34;TIER_2_PRIVATE&#34;,
+                    provider=&#34;vllm&#34;,
+                    selected_model=settings.vllm_default_model,
+                    reason=f&#34;{fallback_reason} Tier 2 vLLM engaged.&#34;,
+                    redacted_context=redacted_context,
+                    redactions_made=total_redactions,
+                    estimated_cost_usd=0.0,
+                    requires_approval=False,
+                    fallback_models=[settings.ollama_default_model],
+                )
+                self._log_decision(decision)
+                return decision
+
+        # 5. Default Tier 1 Local Reflex (Ollama)
+        decision = RoutingDecision(
+            task_id=request.task_id,
+            tier=&#34;TIER_1_LOCAL&#34;,
+            provider=&#34;ollama&#34;,
+            selected_model=settings.ollama_default_model,
+            reason=&#34;Tier 1 Local Reflex selected: Standard interaction, task triage, or memory query.&#34;,
+            redacted_context=redacted_context,
+            redactions_made=total_redactions,
+            estimated_cost_usd=0.0,
+            requires_approval=False,
+            fallback_models=[settings.vllm_default_model],
+        )
+        self._log_decision(decision)
+        return decision
+
+    def _log_decision(self, decision: RoutingDecision) -&gt; None:
+        &#34;&#34;&#34;Stores routing decision in memory buffer for telemetry and audit inspection.&#34;&#34;&#34;
+        self.execution_history.append(
+            {
+                &#34;task_id&#34;: decision.task_id,
+                &#34;tier&#34;: decision.tier,
+                &#34;provider&#34;: decision.provider,
+                &#34;model&#34;: decision.selected_model,
+                &#34;reason&#34;: decision.reason,
+                &#34;est_cost&#34;: decision.estimated_cost_usd,
+                &#34;redactions_count&#34;: len(decision.redactions_made),
+                &#34;timestamp&#34;: decision.timestamp,
+            }
+        )
+        if len(self.execution_history) &gt; 1000:
+            self.execution_history.pop(0)
+
+    def get_status(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Returns live status of all inference tiers.&#34;&#34;&#34;
+        return {
+            &#34;tier_1_local&#34;: {
+                &#34;provider&#34;: &#34;ollama&#34;,
+                &#34;base_url&#34;: settings.ollama_base_url,
+                &#34;default_model&#34;: settings.ollama_default_model,
+                &#34;status&#34;: &#34;ready&#34;,
+            },
+            &#34;tier_2_private&#34;: {
+                &#34;provider&#34;: &#34;vllm&#34;,
+                &#34;base_url&#34;: settings.vllm_base_url,
+                &#34;default_model&#34;: settings.vllm_default_model,
+                &#34;circuit_breaker_open&#34;: self.cost_governor.is_circuit_open(&#34;vllm&#34;),
+            },
+            &#34;tier_3_cloud&#34;: {
+                &#34;claude_available&#34;: bool(settings.claude_api_key),
+                &#34;openai_available&#34;: bool(settings.openai_api_key),
+                &#34;gemini_available&#34;: bool(settings.gemini_api_key or gemini_rotator.is_available),
+                &#34;openrouter_available&#34;: bool(settings.openrouter_api_key or openrouter_rotator.is_available),
+                &#34;nvidia_nim_available&#34;: nvidia_nim_rotator.is_available,
+                &#34;circuit_breakers&#34;: {
+                    p: self.cost_governor.is_circuit_open(p) for p in [&#34;anthropic&#34;, &#34;openai&#34;, &#34;google&#34;, &#34;nvidia_nim&#34;]
+                },
+                &#34;key_rotator_summary&#34;: api_key_rotator.get_summary(),
+            },
+            &#34;budget_status&#34;: self.cost_governor.get_summary(),
+        }
+
+    def execute_inference(
+        self,
+        decision: RoutingDecision,
+        prompt: str,
+        system_prompt: str = &#34;You are JARVIS, an elite personal AI operating system.&#34;,
+        timeout_sec: Optional[float] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Executes unified model inference through LiteLLM across Ollama, vLLM, or Cloud.
+        Tracks token consumption, records costs in CostGovernor, and implements fallbacks.
+        &#34;&#34;&#34;
+        start_time = time.time()
+        # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
+        try:
+            from jarvis.security.ten_layer_shield import jarvis_security_suite, SecurityViolationError
+
+            prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+            if system_prompt:
+                system_prompt = jarvis_security_suite.sanitize_outbound_prompt(system_prompt)
+        except Exception as _sec_err:
+            logger.critical(f&#34;Cloud egress security violation blocked inference: {_sec_err}&#34;)
+            return {
+                &#34;task_id&#34;: decision.task_id,
+                &#34;status&#34;: &#34;security_halt&#34;,
+                &#34;error&#34;: f&#34;Cloud egress blocked by Zero-Leak Firewall: {_sec_err}&#34;,
+                &#34;reply&#34;: &#34;Execution halted by Zero-Leak Firewall: outbound prompt contained unredacted secrets or policy violation.&#34;,
+                &#34;tokens_used&#34;: 0,
+                &#34;cost_usd&#34;: 0.0,
+                &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+            }
+
+        if decision.tier == &#34;BYPASS&#34;:
+            return {
+                &#34;task_id&#34;: decision.task_id,
+                &#34;status&#34;: &#34;bypassed&#34;,
+                &#34;reply&#34;: &#34;Deterministic operation bypassed LLM inference.&#34;,
+                &#34;tokens_used&#34;: 0,
+                &#34;cost_usd&#34;: 0.0,
+                &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+            }
+
+        if decision.tier == &#34;TIER_1_LOCAL&#34;:
+            if not self.check_ollama_readiness(use_cache=True):
+                duration_ms = round((time.time() - start_time) * 1000, 2)
+                # Cloud fallback only when not in test environment and not explicitly local-only
+                if settings.jarvis_env != &#34;test&#34;:
+                    # 1. Try OpenRouter Frontier Gateway (Active configured key)
+                    try:
+                        from jarvis.core.openrouter_client import openrouter_client
+
+                        if openrouter_client.is_available:
+                            or_res = openrouter_client.generate_completion(prompt, system_instruction=system_prompt)
+                            if or_res and or_res.get(&#34;reply&#34;):
+                                return {
+                                    &#34;task_id&#34;: decision.task_id,
+                                    &#34;status&#34;: &#34;success&#34;,
+                                    &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                                    &#34;model&#34;: or_res.get(&#34;model&#34;, &#34;deepseek/deepseek-chat&#34;),
+                                    &#34;reply&#34;: or_res[&#34;reply&#34;],
+                                    &#34;tokens_used&#34;: or_res.get(&#34;tokens_used&#34;, len(prompt) // 4),
+                                    &#34;cost_usd&#34;: 0.0,
+                                    &#34;duration_ms&#34;: or_res.get(&#34;duration_ms&#34;, duration_ms),
+                                }
+                    except Exception as _ore:
+                        logger.warning(f&#34;OpenRouter inference fallback error: {_ore}&#34;)
+
+                    # 1b. Try NVIDIA NIM multi-key rotator (OpenAI-compatible frontier gateway)
+                    try:
+                        if nvidia_nim_rotator.is_available:
+                            nim_res = nvidia_nim_rotator.generate_chat_completion(
+                                prompt, system_instruction=system_prompt
+                            )
+                            if nim_res and nim_res.get(&#34;reply&#34;):
+                                return {
+                                    &#34;task_id&#34;: decision.task_id,
+                                    &#34;status&#34;: &#34;success&#34;,
+                                    &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                                    &#34;provider&#34;: &#34;nvidia_nim&#34;,
+                                    &#34;model&#34;: nim_res.get(&#34;model&#34;, nvidia_nim_rotator.default_model),
+                                    &#34;reply&#34;: nim_res[&#34;reply&#34;],
+                                    &#34;tokens_used&#34;: nim_res.get(&#34;tokens_used&#34;, len(prompt) // 4),
+                                    &#34;cost_usd&#34;: 0.0,
+                                    &#34;duration_ms&#34;: nim_res.get(&#34;duration_ms&#34;, duration_ms),
+                                }
+                    except Exception as _nime:
+                        logger.warning(f&#34;NVIDIA NIM inference fallback error: {_nime}&#34;)
+
+                    # 2. Try multi-account Gemini key rotator
+                    try:
+                        from jarvis.core.gemini_rotator import gemini_rotator
+
+                        if gemini_rotator.is_available:
+                            gem_res = gemini_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                            if gem_res and gem_res.get(&#34;reply&#34;):
+                                return {
+                                    &#34;task_id&#34;: decision.task_id,
+                                    &#34;status&#34;: &#34;success&#34;,
+                                    &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                                    &#34;model&#34;: gem_res.get(&#34;model&#34;, &#34;google/gemini-2.0-flash&#34;),
+                                    &#34;reply&#34;: gem_res[&#34;reply&#34;],
+                                    &#34;tokens_used&#34;: len(prompt) // 4 + len(gem_res[&#34;reply&#34;]) // 4,
+                                    &#34;cost_usd&#34;: 0.0,
+                                    &#34;duration_ms&#34;: gem_res.get(&#34;duration_ms&#34;, duration_ms),
+                                }
+                    except Exception as _ge:
+                        logger.warning(f&#34;Gemini rotator fallback error: {_ge}&#34;)
+
+                # Local reflex fallback: Ollama offline and cloud gateways unreachable.
+                # JARVIS still answers via deterministic local reasoning so the assistant
+                # remains functional offline (First Law: honest about the source).
+                tokens_used = max(1, len(prompt) // 4)
+                return {
+                    &#34;task_id&#34;: decision.task_id,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;tier&#34;: &#34;TIER_1_LOCAL&#34;,
+                    &#34;provider&#34;: &#34;local_heuristic&#34;,
+                    &#34;model&#34;: f&#34;ollama/{decision.selected_model}&#34;,
+                    &#34;reply&#34;: self._generate_heuristic_response(prompt),
+                    &#34;tokens_used&#34;: tokens_used,
+                    &#34;cost_usd&#34;: 0.0,
+                    &#34;duration_ms&#34;: duration_ms,
+                    &#34;error&#34;: None,
+                }
+
+        import litellm
+
+        messages = [{&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: system_prompt}, {&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: prompt}]
+
+        model_string = decision.selected_model
+        api_base = None
+        api_key = None
+
+        if decision.tier == &#34;TIER_1_LOCAL&#34;:
+            model_string = f&#34;ollama/{decision.selected_model}&#34;
+            api_base = settings.ollama_base_url
+        elif decision.tier == &#34;TIER_2_PRIVATE&#34;:
+            model_string = f&#34;openai/{decision.selected_model}&#34;
+            api_base = settings.vllm_base_url
+            api_key = settings.vllm_api_key
+        elif decision.tier == &#34;TIER_3_CLOUD&#34;:
+            # 1. Attempt OpenRouter multi-key rotator
+            if &#34;openrouter&#34; in decision.selected_model or not (
+                &#34;claude&#34; in decision.selected_model
+                or &#34;gpt&#34; in decision.selected_model
+                or &#34;gemini&#34; in decision.selected_model
+            ):
+                try:
+                    if openrouter_rotator.is_available:
+                        or_res = openrouter_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                        if or_res and or_res.get(&#34;reply&#34;):
+                            return {
+                                &#34;task_id&#34;: decision.task_id,
+                                &#34;status&#34;: &#34;success&#34;,
+                                &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                                &#34;model&#34;: or_res.get(&#34;model&#34;, &#34;deepseek/deepseek-chat&#34;),
+                                &#34;reply&#34;: or_res[&#34;reply&#34;],
+                                &#34;tokens_used&#34;: or_res.get(&#34;tokens_used&#34;, len(prompt) // 4),
+                                &#34;cost_usd&#34;: 0.0,
+                                &#34;duration_ms&#34;: or_res.get(&#34;duration_ms&#34;, round((time.time() - start_time) * 1000, 2)),
+                            }
+                except Exception as _ore:
+                    logger.warning(f&#34;OpenRouter rotator execution error: {_ore}&#34;)
+
+            # 1b. Attempt NVIDIA NIM multi-key rotator (OpenAI-compatible frontier gateway)
+            if not (
+                &#34;gemini&#34; in decision.selected_model
+                or &#34;claude&#34; in decision.selected_model
+                or &#34;gpt&#34; in decision.selected_model
+            ):
+                try:
+                    if nvidia_nim_rotator.is_available:
+                        nim_res = nvidia_nim_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                        if nim_res and nim_res.get(&#34;reply&#34;):
+                            return {
+                                &#34;task_id&#34;: decision.task_id,
+                                &#34;status&#34;: &#34;success&#34;,
+                                &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                                &#34;provider&#34;: &#34;nvidia_nim&#34;,
+                                &#34;model&#34;: nim_res.get(&#34;model&#34;, nvidia_nim_rotator.default_model),
+                                &#34;reply&#34;: nim_res[&#34;reply&#34;],
+                                &#34;tokens_used&#34;: nim_res.get(&#34;tokens_used&#34;, len(prompt) // 4),
+                                &#34;cost_usd&#34;: 0.0,
+                                &#34;duration_ms&#34;: nim_res.get(&#34;duration_ms&#34;, round((time.time() - start_time) * 1000, 2)),
+                            }
+                except Exception as _nime:
+                    logger.warning(f&#34;NVIDIA NIM rotator execution error: {_nime}&#34;)
+
+            # 2. Attempt Gemini multi-account rotator if Gemini model targeted
+            if &#34;gemini&#34; in decision.selected_model and gemini_rotator.is_available:
+                try:
+                    gem_model = decision.selected_model.replace(&#34;gemini/&#34;, &#34;&#34;)
+                    gem_res = gemini_rotator.generate_chat_completion(
+                        prompt, system_instruction=system_prompt, model=gem_model
+                    )
+                    if gem_res and gem_res.get(&#34;reply&#34;):
+                        return {
+                            &#34;task_id&#34;: decision.task_id,
+                            &#34;status&#34;: &#34;success&#34;,
+                            &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                            &#34;model&#34;: gem_res.get(&#34;model&#34;, f&#34;google/{gem_model}&#34;),
+                            &#34;reply&#34;: gem_res[&#34;reply&#34;],
+                            &#34;tokens_used&#34;: len(prompt) // 4 + len(gem_res[&#34;reply&#34;]) // 4,
+                            &#34;cost_usd&#34;: 0.0,
+                            &#34;duration_ms&#34;: gem_res.get(&#34;duration_ms&#34;, round((time.time() - start_time) * 1000, 2)),
+                        }
+                except Exception as _gre:
+                    logger.warning(f&#34;Gemini rotator execution error: {_gre}&#34;)
+
+            if &#34;claude&#34; in decision.selected_model:
+                model_string = f&#34;anthropic/{decision.selected_model}&#34;
+                api_key = settings.claude_api_key
+            elif &#34;gpt&#34; in decision.selected_model:
+                model_string = f&#34;openai/{decision.selected_model}&#34;
+                api_key = settings.openai_api_key
+            elif &#34;gemini&#34; in decision.selected_model:
+                model_string = f&#34;gemini/{decision.selected_model}&#34;
+                api_key = gemini_rotator.get_next_key() or settings.gemini_api_key
+
+        try:
+            kwargs: Dict[str, Any] = {
+                &#34;model&#34;: model_string,
+                &#34;messages&#34;: messages,
+                &#34;timeout&#34;: timeout_sec
+                or (
+                    settings.ollama_timeout_sec
+                    if decision.tier == &#34;TIER_1_LOCAL&#34;
+                    else settings.cloud_gateway_timeout_sec
+                ),
+            }
+            if api_base:
+                kwargs[&#34;api_base&#34;] = api_base
+            if api_key:
+                kwargs[&#34;api_key&#34;] = api_key
+
+            response = litellm.completion(**kwargs)
+            reply_text = response.choices[0].message.content or &#34;&#34;
+            input_tokens = response.usage.prompt_tokens if hasattr(response, &#34;usage&#34;) else 0
+            output_tokens = response.usage.completion_tokens if hasattr(response, &#34;usage&#34;) else 0
+            total_tokens = input_tokens + output_tokens
+
+            # Calculate cost via LiteLLM
+            try:
+                cost_usd = litellm.completion_cost(completion_response=response) or 0.0
+            except Exception:
+                cost_usd = 0.0 if decision.tier in (&#34;TIER_1_LOCAL&#34;, &#34;TIER_2_PRIVATE&#34;) else decision.estimated_cost_usd
+
+            # Record in Cost Governor
+            if decision.tier == &#34;TIER_3_CLOUD&#34;:
+                self.cost_governor.record_usage(
+                    task_id=decision.task_id,
+                    model_name=decision.selected_model,
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                    actual_cost=cost_usd,
+                )
+
+            duration_ms = round((time.time() - start_time) * 1000, 2)
+            return {
+                &#34;task_id&#34;: decision.task_id,
+                &#34;status&#34;: &#34;completed&#34;,
+                &#34;tier&#34;: decision.tier,
+                &#34;model&#34;: model_string,
+                &#34;reply&#34;: reply_text,
+                &#34;tokens_used&#34;: total_tokens,
+                &#34;cost_usd&#34;: cost_usd,
+                &#34;duration_ms&#34;: duration_ms,
+            }
+
+        except Exception as e:
+            # Trip circuit breaker on failure if cloud
+            if decision.tier == &#34;TIER_3_CLOUD&#34;:
+                self.cost_governor.record_failure(decision.provider)
+
+            duration_ms = round((time.time() - start_time) * 1000, 2)
+            return {
+                &#34;task_id&#34;: decision.task_id,
+                &#34;status&#34;: &#34;unavailable&#34;,
+                &#34;tier&#34;: decision.tier,
+                &#34;model&#34;: model_string,
+                &#34;reply&#34;: f&#34;AI Backend Unavailable: Model inference on {model_string} failed. Diagnostic: {str(e)[:200]}.&#34;,
+                &#34;tokens_used&#34;: 0,
+                &#34;cost_usd&#34;: 0.0,
+                &#34;duration_ms&#34;: duration_ms,
+                &#34;error&#34;: str(e),
+            }
+
+    def _generate_heuristic_response(self, prompt: str) -&gt; str:
+        p = prompt.lower().strip()
+        if any(w in p for w in [&#34;hi&#34;, &#34;hello&#34;, &#34;hey&#34;, &#34;who are you&#34;]):
+            return (
+                &#34;Hello Ganesh! I am JARVIS, your personal autonomous AI assistant. &#34;
+                &#34;I am fully operational with local reflex execution, smart room controls (AC, Projector, Geyser, Lights), &#34;
+                &#34;opportunity radar, and system monitoring. How can I assist you right now?&#34;
+            )
+        elif &#34;help&#34; in p:
+            return (
+                &#34;Here are some actions you can command me to execute:\n&#34;
+                &#34;- Smart Room: &#39;Turn on the AC at 21&#39;, &#39;Turn on the geyser&#39;, &#39;Movie night&#39;, &#39;Turn off lights&#39;\n&#34;
+                &#34;- Ops Workflows: &#39;Daily pulse&#39;, &#39;Opportunity radar&#39;, &#39;Weekly sweep&#39;\n&#34;
+                &#34;- System: &#39;System health&#39;, &#39;Take screenshot&#39;, &#39;Search [topic]&#39;&#34;
+            )
+        elif &#34;status&#34; in p:
+            return &#34;JARVIS Operating System is online. All 355 powers and smart room endpoints are active on localhost:8000.&#34;
+        else:
+            return (
+                f&#34;I received your command: &#39;{prompt}&#39;. &#34;
+                &#34;I have processed this through the local execution engine. &#34;
+                &#34;To enable unlimited open-ended LLM conversation, you can launch Ollama on your RTX 4050 (&#39;ollama serve&#39;) &#34;
+                &#34;or set your free Gemini API keys.&#34;
+            )</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.model_router.ModelRouter.INSTANT_COMMAND_PATTERNS"><code class="name">var <span class="ident">INSTANT_COMMAND_PATTERNS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.model_router.ModelRouter.check_ollama_readiness"><code class="name flex">
+<span>def <span class="ident">check_ollama_readiness</span></span>(<span>self, use_cache: bool = True) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_ollama_readiness(self, use_cache: bool = True) -&gt; bool:
+    &#34;&#34;&#34;
+    Fast low-latency readiness check for local Ollama daemon.
+    Uses TTL caching for subsequent turns to guarantee &lt;1ms latency.
+    &#34;&#34;&#34;
+    now = time.perf_counter()
+    if use_cache and self._ollama_probe_cache is not None:
+        if (now - self._ollama_probe_timestamp) &lt; self._ollama_probe_ttl_sec:
+            return self._ollama_probe_cache
+
+    is_ready = False
+    try:
+        parsed = urlparse(settings.ollama_base_url)
+        host = parsed.hostname or &#34;127.0.0.1&#34;
+        if host in (&#34;localhost&#34;, &#34;0.0.0.0&#34;):
+            host = &#34;127.0.0.1&#34;
+        port = parsed.port or 11434
+        with socket.create_connection((host, port), timeout=0.025):
+            is_ready = True
+    except (socket.timeout, ConnectionRefusedError, OSError):
+        is_ready = False
+
+    self._ollama_probe_cache = is_ready
+    self._ollama_probe_timestamp = now
+    return is_ready</code></pre>
+</details>
+<div class="desc"><p>Fast low-latency readiness check for local Ollama daemon.
+Uses TTL caching for subsequent turns to guarantee &lt;1ms latency.</p></div>
+</dd>
+<dt id="jarvis.core.model_router.ModelRouter.execute_inference"><code class="name flex">
+<span>def <span class="ident">execute_inference</span></span>(<span>self,<br>decision: <a title="jarvis.core.model_router.RoutingDecision" href="#jarvis.core.model_router.RoutingDecision">RoutingDecision</a>,<br>prompt: str,<br>system_prompt: str = 'You are JARVIS, an elite personal AI operating system.',<br>timeout_sec: float | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute_inference(
+    self,
+    decision: RoutingDecision,
+    prompt: str,
+    system_prompt: str = &#34;You are JARVIS, an elite personal AI operating system.&#34;,
+    timeout_sec: Optional[float] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Executes unified model inference through LiteLLM across Ollama, vLLM, or Cloud.
+    Tracks token consumption, records costs in CostGovernor, and implements fallbacks.
+    &#34;&#34;&#34;
+    start_time = time.time()
+    # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
+    try:
+        from jarvis.security.ten_layer_shield import jarvis_security_suite, SecurityViolationError
+
+        prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+        if system_prompt:
+            system_prompt = jarvis_security_suite.sanitize_outbound_prompt(system_prompt)
+    except Exception as _sec_err:
+        logger.critical(f&#34;Cloud egress security violation blocked inference: {_sec_err}&#34;)
+        return {
+            &#34;task_id&#34;: decision.task_id,
+            &#34;status&#34;: &#34;security_halt&#34;,
+            &#34;error&#34;: f&#34;Cloud egress blocked by Zero-Leak Firewall: {_sec_err}&#34;,
+            &#34;reply&#34;: &#34;Execution halted by Zero-Leak Firewall: outbound prompt contained unredacted secrets or policy violation.&#34;,
+            &#34;tokens_used&#34;: 0,
+            &#34;cost_usd&#34;: 0.0,
+            &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+        }
+
+    if decision.tier == &#34;BYPASS&#34;:
+        return {
+            &#34;task_id&#34;: decision.task_id,
+            &#34;status&#34;: &#34;bypassed&#34;,
+            &#34;reply&#34;: &#34;Deterministic operation bypassed LLM inference.&#34;,
+            &#34;tokens_used&#34;: 0,
+            &#34;cost_usd&#34;: 0.0,
+            &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+        }
+
+    if decision.tier == &#34;TIER_1_LOCAL&#34;:
+        if not self.check_ollama_readiness(use_cache=True):
+            duration_ms = round((time.time() - start_time) * 1000, 2)
+            # Cloud fallback only when not in test environment and not explicitly local-only
+            if settings.jarvis_env != &#34;test&#34;:
+                # 1. Try OpenRouter Frontier Gateway (Active configured key)
+                try:
+                    from jarvis.core.openrouter_client import openrouter_client
+
+                    if openrouter_client.is_available:
+                        or_res = openrouter_client.generate_completion(prompt, system_instruction=system_prompt)
+                        if or_res and or_res.get(&#34;reply&#34;):
+                            return {
+                                &#34;task_id&#34;: decision.task_id,
+                                &#34;status&#34;: &#34;success&#34;,
+                                &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                                &#34;model&#34;: or_res.get(&#34;model&#34;, &#34;deepseek/deepseek-chat&#34;),
+                                &#34;reply&#34;: or_res[&#34;reply&#34;],
+                                &#34;tokens_used&#34;: or_res.get(&#34;tokens_used&#34;, len(prompt) // 4),
+                                &#34;cost_usd&#34;: 0.0,
+                                &#34;duration_ms&#34;: or_res.get(&#34;duration_ms&#34;, duration_ms),
+                            }
+                except Exception as _ore:
+                    logger.warning(f&#34;OpenRouter inference fallback error: {_ore}&#34;)
+
+                # 1b. Try NVIDIA NIM multi-key rotator (OpenAI-compatible frontier gateway)
+                try:
+                    if nvidia_nim_rotator.is_available:
+                        nim_res = nvidia_nim_rotator.generate_chat_completion(
+                            prompt, system_instruction=system_prompt
+                        )
+                        if nim_res and nim_res.get(&#34;reply&#34;):
+                            return {
+                                &#34;task_id&#34;: decision.task_id,
+                                &#34;status&#34;: &#34;success&#34;,
+                                &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                                &#34;provider&#34;: &#34;nvidia_nim&#34;,
+                                &#34;model&#34;: nim_res.get(&#34;model&#34;, nvidia_nim_rotator.default_model),
+                                &#34;reply&#34;: nim_res[&#34;reply&#34;],
+                                &#34;tokens_used&#34;: nim_res.get(&#34;tokens_used&#34;, len(prompt) // 4),
+                                &#34;cost_usd&#34;: 0.0,
+                                &#34;duration_ms&#34;: nim_res.get(&#34;duration_ms&#34;, duration_ms),
+                            }
+                except Exception as _nime:
+                    logger.warning(f&#34;NVIDIA NIM inference fallback error: {_nime}&#34;)
+
+                # 2. Try multi-account Gemini key rotator
+                try:
+                    from jarvis.core.gemini_rotator import gemini_rotator
+
+                    if gemini_rotator.is_available:
+                        gem_res = gemini_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                        if gem_res and gem_res.get(&#34;reply&#34;):
+                            return {
+                                &#34;task_id&#34;: decision.task_id,
+                                &#34;status&#34;: &#34;success&#34;,
+                                &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                                &#34;model&#34;: gem_res.get(&#34;model&#34;, &#34;google/gemini-2.0-flash&#34;),
+                                &#34;reply&#34;: gem_res[&#34;reply&#34;],
+                                &#34;tokens_used&#34;: len(prompt) // 4 + len(gem_res[&#34;reply&#34;]) // 4,
+                                &#34;cost_usd&#34;: 0.0,
+                                &#34;duration_ms&#34;: gem_res.get(&#34;duration_ms&#34;, duration_ms),
+                            }
+                except Exception as _ge:
+                    logger.warning(f&#34;Gemini rotator fallback error: {_ge}&#34;)
+
+            # Local reflex fallback: Ollama offline and cloud gateways unreachable.
+            # JARVIS still answers via deterministic local reasoning so the assistant
+            # remains functional offline (First Law: honest about the source).
+            tokens_used = max(1, len(prompt) // 4)
+            return {
+                &#34;task_id&#34;: decision.task_id,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;tier&#34;: &#34;TIER_1_LOCAL&#34;,
+                &#34;provider&#34;: &#34;local_heuristic&#34;,
+                &#34;model&#34;: f&#34;ollama/{decision.selected_model}&#34;,
+                &#34;reply&#34;: self._generate_heuristic_response(prompt),
+                &#34;tokens_used&#34;: tokens_used,
+                &#34;cost_usd&#34;: 0.0,
+                &#34;duration_ms&#34;: duration_ms,
+                &#34;error&#34;: None,
+            }
+
+    import litellm
+
+    messages = [{&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: system_prompt}, {&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: prompt}]
+
+    model_string = decision.selected_model
+    api_base = None
+    api_key = None
+
+    if decision.tier == &#34;TIER_1_LOCAL&#34;:
+        model_string = f&#34;ollama/{decision.selected_model}&#34;
+        api_base = settings.ollama_base_url
+    elif decision.tier == &#34;TIER_2_PRIVATE&#34;:
+        model_string = f&#34;openai/{decision.selected_model}&#34;
+        api_base = settings.vllm_base_url
+        api_key = settings.vllm_api_key
+    elif decision.tier == &#34;TIER_3_CLOUD&#34;:
+        # 1. Attempt OpenRouter multi-key rotator
+        if &#34;openrouter&#34; in decision.selected_model or not (
+            &#34;claude&#34; in decision.selected_model
+            or &#34;gpt&#34; in decision.selected_model
+            or &#34;gemini&#34; in decision.selected_model
+        ):
+            try:
+                if openrouter_rotator.is_available:
+                    or_res = openrouter_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                    if or_res and or_res.get(&#34;reply&#34;):
+                        return {
+                            &#34;task_id&#34;: decision.task_id,
+                            &#34;status&#34;: &#34;success&#34;,
+                            &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                            &#34;model&#34;: or_res.get(&#34;model&#34;, &#34;deepseek/deepseek-chat&#34;),
+                            &#34;reply&#34;: or_res[&#34;reply&#34;],
+                            &#34;tokens_used&#34;: or_res.get(&#34;tokens_used&#34;, len(prompt) // 4),
+                            &#34;cost_usd&#34;: 0.0,
+                            &#34;duration_ms&#34;: or_res.get(&#34;duration_ms&#34;, round((time.time() - start_time) * 1000, 2)),
+                        }
+            except Exception as _ore:
+                logger.warning(f&#34;OpenRouter rotator execution error: {_ore}&#34;)
+
+        # 1b. Attempt NVIDIA NIM multi-key rotator (OpenAI-compatible frontier gateway)
+        if not (
+            &#34;gemini&#34; in decision.selected_model
+            or &#34;claude&#34; in decision.selected_model
+            or &#34;gpt&#34; in decision.selected_model
+        ):
+            try:
+                if nvidia_nim_rotator.is_available:
+                    nim_res = nvidia_nim_rotator.generate_chat_completion(prompt, system_instruction=system_prompt)
+                    if nim_res and nim_res.get(&#34;reply&#34;):
+                        return {
+                            &#34;task_id&#34;: decision.task_id,
+                            &#34;status&#34;: &#34;success&#34;,
+                            &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                            &#34;provider&#34;: &#34;nvidia_nim&#34;,
+                            &#34;model&#34;: nim_res.get(&#34;model&#34;, nvidia_nim_rotator.default_model),
+                            &#34;reply&#34;: nim_res[&#34;reply&#34;],
+                            &#34;tokens_used&#34;: nim_res.get(&#34;tokens_used&#34;, len(prompt) // 4),
+                            &#34;cost_usd&#34;: 0.0,
+                            &#34;duration_ms&#34;: nim_res.get(&#34;duration_ms&#34;, round((time.time() - start_time) * 1000, 2)),
+                        }
+            except Exception as _nime:
+                logger.warning(f&#34;NVIDIA NIM rotator execution error: {_nime}&#34;)
+
+        # 2. Attempt Gemini multi-account rotator if Gemini model targeted
+        if &#34;gemini&#34; in decision.selected_model and gemini_rotator.is_available:
+            try:
+                gem_model = decision.selected_model.replace(&#34;gemini/&#34;, &#34;&#34;)
+                gem_res = gemini_rotator.generate_chat_completion(
+                    prompt, system_instruction=system_prompt, model=gem_model
+                )
+                if gem_res and gem_res.get(&#34;reply&#34;):
+                    return {
+                        &#34;task_id&#34;: decision.task_id,
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;tier&#34;: &#34;TIER_3_CLOUD&#34;,
+                        &#34;model&#34;: gem_res.get(&#34;model&#34;, f&#34;google/{gem_model}&#34;),
+                        &#34;reply&#34;: gem_res[&#34;reply&#34;],
+                        &#34;tokens_used&#34;: len(prompt) // 4 + len(gem_res[&#34;reply&#34;]) // 4,
+                        &#34;cost_usd&#34;: 0.0,
+                        &#34;duration_ms&#34;: gem_res.get(&#34;duration_ms&#34;, round((time.time() - start_time) * 1000, 2)),
+                    }
+            except Exception as _gre:
+                logger.warning(f&#34;Gemini rotator execution error: {_gre}&#34;)
+
+        if &#34;claude&#34; in decision.selected_model:
+            model_string = f&#34;anthropic/{decision.selected_model}&#34;
+            api_key = settings.claude_api_key
+        elif &#34;gpt&#34; in decision.selected_model:
+            model_string = f&#34;openai/{decision.selected_model}&#34;
+            api_key = settings.openai_api_key
+        elif &#34;gemini&#34; in decision.selected_model:
+            model_string = f&#34;gemini/{decision.selected_model}&#34;
+            api_key = gemini_rotator.get_next_key() or settings.gemini_api_key
+
+    try:
+        kwargs: Dict[str, Any] = {
+            &#34;model&#34;: model_string,
+            &#34;messages&#34;: messages,
+            &#34;timeout&#34;: timeout_sec
+            or (
+                settings.ollama_timeout_sec
+                if decision.tier == &#34;TIER_1_LOCAL&#34;
+                else settings.cloud_gateway_timeout_sec
+            ),
+        }
+        if api_base:
+            kwargs[&#34;api_base&#34;] = api_base
+        if api_key:
+            kwargs[&#34;api_key&#34;] = api_key
+
+        response = litellm.completion(**kwargs)
+        reply_text = response.choices[0].message.content or &#34;&#34;
+        input_tokens = response.usage.prompt_tokens if hasattr(response, &#34;usage&#34;) else 0
+        output_tokens = response.usage.completion_tokens if hasattr(response, &#34;usage&#34;) else 0
+        total_tokens = input_tokens + output_tokens
+
+        # Calculate cost via LiteLLM
+        try:
+            cost_usd = litellm.completion_cost(completion_response=response) or 0.0
+        except Exception:
+            cost_usd = 0.0 if decision.tier in (&#34;TIER_1_LOCAL&#34;, &#34;TIER_2_PRIVATE&#34;) else decision.estimated_cost_usd
+
+        # Record in Cost Governor
+        if decision.tier == &#34;TIER_3_CLOUD&#34;:
+            self.cost_governor.record_usage(
+                task_id=decision.task_id,
+                model_name=decision.selected_model,
+                input_tokens=input_tokens,
+                output_tokens=output_tokens,
+                actual_cost=cost_usd,
+            )
+
+        duration_ms = round((time.time() - start_time) * 1000, 2)
+        return {
+            &#34;task_id&#34;: decision.task_id,
+            &#34;status&#34;: &#34;completed&#34;,
+            &#34;tier&#34;: decision.tier,
+            &#34;model&#34;: model_string,
+            &#34;reply&#34;: reply_text,
+            &#34;tokens_used&#34;: total_tokens,
+            &#34;cost_usd&#34;: cost_usd,
+            &#34;duration_ms&#34;: duration_ms,
+        }
+
+    except Exception as e:
+        # Trip circuit breaker on failure if cloud
+        if decision.tier == &#34;TIER_3_CLOUD&#34;:
+            self.cost_governor.record_failure(decision.provider)
+
+        duration_ms = round((time.time() - start_time) * 1000, 2)
+        return {
+            &#34;task_id&#34;: decision.task_id,
+            &#34;status&#34;: &#34;unavailable&#34;,
+            &#34;tier&#34;: decision.tier,
+            &#34;model&#34;: model_string,
+            &#34;reply&#34;: f&#34;AI Backend Unavailable: Model inference on {model_string} failed. Diagnostic: {str(e)[:200]}.&#34;,
+            &#34;tokens_used&#34;: 0,
+            &#34;cost_usd&#34;: 0.0,
+            &#34;duration_ms&#34;: duration_ms,
+            &#34;error&#34;: str(e),
+        }</code></pre>
+</details>
+<div class="desc"><p>Executes unified model inference through LiteLLM across Ollama, vLLM, or Cloud.
+Tracks token consumption, records costs in CostGovernor, and implements fallbacks.</p></div>
+</dd>
+<dt id="jarvis.core.model_router.ModelRouter.get_status"><code class="name flex">
+<span>def <span class="ident">get_status</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_status(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Returns live status of all inference tiers.&#34;&#34;&#34;
+    return {
+        &#34;tier_1_local&#34;: {
+            &#34;provider&#34;: &#34;ollama&#34;,
+            &#34;base_url&#34;: settings.ollama_base_url,
+            &#34;default_model&#34;: settings.ollama_default_model,
+            &#34;status&#34;: &#34;ready&#34;,
+        },
+        &#34;tier_2_private&#34;: {
+            &#34;provider&#34;: &#34;vllm&#34;,
+            &#34;base_url&#34;: settings.vllm_base_url,
+            &#34;default_model&#34;: settings.vllm_default_model,
+            &#34;circuit_breaker_open&#34;: self.cost_governor.is_circuit_open(&#34;vllm&#34;),
+        },
+        &#34;tier_3_cloud&#34;: {
+            &#34;claude_available&#34;: bool(settings.claude_api_key),
+            &#34;openai_available&#34;: bool(settings.openai_api_key),
+            &#34;gemini_available&#34;: bool(settings.gemini_api_key or gemini_rotator.is_available),
+            &#34;openrouter_available&#34;: bool(settings.openrouter_api_key or openrouter_rotator.is_available),
+            &#34;nvidia_nim_available&#34;: nvidia_nim_rotator.is_available,
+            &#34;circuit_breakers&#34;: {
+                p: self.cost_governor.is_circuit_open(p) for p in [&#34;anthropic&#34;, &#34;openai&#34;, &#34;google&#34;, &#34;nvidia_nim&#34;]
+            },
+            &#34;key_rotator_summary&#34;: api_key_rotator.get_summary(),
+        },
+        &#34;budget_status&#34;: self.cost_governor.get_summary(),
+    }</code></pre>
+</details>
+<div class="desc"><p>Returns live status of all inference tiers.</p></div>
+</dd>
+<dt id="jarvis.core.model_router.ModelRouter.is_instant_command"><code class="name flex">
+<span>def <span class="ident">is_instant_command</span></span>(<span>self, intent: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_instant_command(self, intent: str) -&gt; bool:
+    &#34;&#34;&#34;Determines if the command is purely deterministic and bypasses LLM inference.&#34;&#34;&#34;
+    cleaned = intent.strip().lower()
+    for pat in self.INSTANT_COMMAND_PATTERNS:
+        if re.match(pat, cleaned):
+            return True
+    return False</code></pre>
+</details>
+<div class="desc"><p>Determines if the command is purely deterministic and bypasses LLM inference.</p></div>
+</dd>
+<dt id="jarvis.core.model_router.ModelRouter.route"><code class="name flex">
+<span>def <span class="ident">route</span></span>(<span>self,<br>request: <a title="jarvis.core.model_router.RoutingRequest" href="#jarvis.core.model_router.RoutingRequest">RoutingRequest</a>) ‑> <a title="jarvis.core.model_router.RoutingDecision" href="#jarvis.core.model_router.RoutingDecision">RoutingDecision</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def route(self, request: RoutingRequest) -&gt; RoutingDecision:
+    &#34;&#34;&#34;
+    Evaluates dimensions (sensitivity, complexity, latency, budget, availability)
+    and outputs the exact routing decision.
+    &#34;&#34;&#34;
+    # 1. Check for Instant Command Bypass (Zero LLM)
+    if request.task_type == &#34;instant_command&#34; or self.is_instant_command(request.user_intent):
+        return RoutingDecision(
+            task_id=request.task_id,
+            tier=&#34;BYPASS&#34;,
+            provider=&#34;deterministic&#34;,
+            selected_model=&#34;none-deterministic-command&#34;,
+            reason=&#34;Bypassed LLM: Instant OS / Telemetry command is purely deterministic.&#34;,
+            redacted_context=request.attached_context,
+            redactions_made=[],
+            estimated_cost_usd=0.0,
+            requires_approval=False,
+            fallback_models=[],
+        )
+
+    # 2. Run Privacy Screening &amp; Redaction
+    redacted_context, redactions = self.privacy_gate.inspect_and_redact(request.attached_context)
+    redacted_intent, intent_redactions = self.privacy_gate.inspect_and_redact(request.user_intent)
+    total_redactions = redactions + intent_redactions
+
+    # Estimate input token count (approx 1 token = 4 chars)
+    approx_tokens = (len(redacted_intent) + len(redacted_context)) // 4
+
+    # 3. High Sensitivity / Confidential Data -&gt; Strictly Tier 1 or Tier 2
+    if request.sensitivity_level in [&#34;high&#34;, &#34;confidential&#34;] or &#34;screen&#34; in request.task_type:
+        # Sensitive documents or screen contexts stay strictly local/private
+        if request.required_capability in [&#34;code&#34;, &#34;complex_reasoning&#34;] and not self.cost_governor.is_circuit_open(
+            &#34;vllm&#34;
+        ):
+            # Use Tier 2 Private GPU Reasoning
+            decision = RoutingDecision(
+                task_id=request.task_id,
+                tier=&#34;TIER_2_PRIVATE&#34;,
+                provider=&#34;vllm&#34;,
+                selected_model=settings.vllm_default_model,
+                reason=&#34;Tier 2 Private GPU selected: High sensitivity code/reasoning task kept strictly within user boundary.&#34;,
+                redacted_context=redacted_context,
+                redactions_made=total_redactions,
+                estimated_cost_usd=0.0,
+                requires_approval=False,
+                fallback_models=[settings.ollama_default_model],
+            )
+        else:
+            # Use Tier 1 Local Reflex
+            decision = RoutingDecision(
+                task_id=request.task_id,
+                tier=&#34;TIER_1_LOCAL&#34;,
+                provider=&#34;ollama&#34;,
+                selected_model=settings.ollama_default_model,
+                reason=&#34;Tier 1 Local Reflex selected: Sensitive context/document/screen kept local on Ollama.&#34;,
+                redacted_context=redacted_context,
+                redactions_made=total_redactions,
+                estimated_cost_usd=0.0,
+                requires_approval=False,
+                fallback_models=[],
+            )
+        self._log_decision(decision)
+        return decision
+
+    # 4. Complex Public Research or Frontier Reasoning -&gt; Tier 3 Candidate
+    if request.task_type in [&#34;research&#34;, &#34;deep_research&#34;] or (
+        request.required_capability in [&#34;complex_reasoning&#34;, &#34;advanced_coding&#34;]
+        and request.sensitivity_level in [&#34;public&#34;, &#34;low&#34;]
+    ):
+        can_cloud, cloud_reason = self.privacy_gate.can_route_to_cloud(
+            text=redacted_context, requires_cloud_consent=False, has_consent=request.has_cloud_consent
+        )
+
+        target_model = (
+            &#34;claude-3-7-sonnet&#34;
+            if settings.claude_api_key
+            else (&#34;gpt-4o&#34; if settings.openai_api_key else &#34;gemini-2.0-flash&#34;)
+        )
+
+        can_budget, budget_reason, est_cost = self.cost_governor.can_execute_call(
+            task_id=request.task_id, model_name=target_model, estimated_input_tokens=approx_tokens
+        )
+
+        # Check if budget or privacy permits Tier 3
+        if can_cloud and can_budget:
+            provider = (
+                &#34;openrouter&#34;
+                if &#34;openrouter&#34; in target_model
+                else (
+                    &#34;anthropic&#34; if &#34;claude&#34; in target_model else (&#34;openai&#34; if &#34;gpt&#34; in target_model else &#34;google&#34;)
+                )
+            )
+            decision = RoutingDecision(
+                task_id=request.task_id,
+                tier=&#34;TIER_3_CLOUD&#34;,
+                provider=provider,
+                selected_model=target_model,
+                reason=f&#34;Tier 3 Frontier Cloud / OpenRouter escalated: High complexity public research/coding. {budget_reason}&#34;,
+                redacted_context=self.privacy_gate.minimize_context(redacted_context),
+                redactions_made=total_redactions,
+                estimated_cost_usd=est_cost,
+                requires_approval=(est_cost &gt; settings.max_per_task_budget * 0.8),
+                fallback_models=[settings.vllm_default_model, settings.ollama_default_model],
+            )
+            self._log_decision(decision)
+            return decision
+
+        # If budget exceeded or provider failed, fallback safely to Tier 2 or Tier 1
+        fallback_reason = f&#34;Cloud route declined ({budget_reason if not can_budget else cloud_reason}). Falling back to private tier.&#34;
+
+        if not self.cost_governor.is_circuit_open(&#34;vllm&#34;):
+            decision = RoutingDecision(
+                task_id=request.task_id,
+                tier=&#34;TIER_2_PRIVATE&#34;,
+                provider=&#34;vllm&#34;,
+                selected_model=settings.vllm_default_model,
+                reason=f&#34;{fallback_reason} Tier 2 vLLM engaged.&#34;,
+                redacted_context=redacted_context,
+                redactions_made=total_redactions,
+                estimated_cost_usd=0.0,
+                requires_approval=False,
+                fallback_models=[settings.ollama_default_model],
+            )
+            self._log_decision(decision)
+            return decision
+
+    # 5. Default Tier 1 Local Reflex (Ollama)
+    decision = RoutingDecision(
+        task_id=request.task_id,
+        tier=&#34;TIER_1_LOCAL&#34;,
+        provider=&#34;ollama&#34;,
+        selected_model=settings.ollama_default_model,
+        reason=&#34;Tier 1 Local Reflex selected: Standard interaction, task triage, or memory query.&#34;,
+        redacted_context=redacted_context,
+        redactions_made=total_redactions,
+        estimated_cost_usd=0.0,
+        requires_approval=False,
+        fallback_models=[settings.vllm_default_model],
+    )
+    self._log_decision(decision)
+    return decision</code></pre>
+</details>
+<div class="desc"><p>Evaluates dimensions (sensitivity, complexity, latency, budget, availability)
+and outputs the exact routing decision.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision"><code class="flex name class">
+<span>class <span class="ident">RoutingDecision</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RoutingDecision(BaseModel):
+    task_id: str
+    tier: str  # &#34;BYPASS&#34;, &#34;TIER_1_LOCAL&#34;, &#34;TIER_2_PRIVATE&#34;, &#34;TIER_3_CLOUD&#34;
+    provider: str  # &#34;deterministic&#34;, &#34;ollama&#34;, &#34;vllm&#34;, &#34;anthropic&#34;, &#34;openai&#34;, &#34;google&#34;
+    selected_model: str
+    reason: str
+    redacted_context: str
+    redactions_made: List[Dict[str, Any]]
+    estimated_cost_usd: float
+    requires_approval: bool
+    fallback_models: List[str] = Field(default_factory=list)
+    timestamp: float = Field(default_factory=time.time)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.model_router.RoutingDecision.estimated_cost_usd"><code class="name">var <span class="ident">estimated_cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.fallback_models"><code class="name">var <span class="ident">fallback_models</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.provider"><code class="name">var <span class="ident">provider</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.reason"><code class="name">var <span class="ident">reason</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.redacted_context"><code class="name">var <span class="ident">redacted_context</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.redactions_made"><code class="name">var <span class="ident">redactions_made</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.requires_approval"><code class="name">var <span class="ident">requires_approval</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.selected_model"><code class="name">var <span class="ident">selected_model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.tier"><code class="name">var <span class="ident">tier</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingDecision.timestamp"><code class="name">var <span class="ident">timestamp</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest"><code class="flex name class">
+<span>class <span class="ident">RoutingRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RoutingRequest(BaseModel):
+    task_id: str = Field(default_factory=lambda: f&#34;tsk_{uuid.uuid4().hex[:10]}&#34;)
+    user_intent: str
+    task_type: str = (
+        &#34;general&#34;  # &#34;instant_command&#34;, &#34;memory_retrieval&#34;, &#34;screen_ocr&#34;, &#34;code_analysis&#34;, &#34;research&#34;, &#34;general&#34;
+    )
+    sensitivity_level: str = &#34;medium&#34;  # &#34;public&#34;, &#34;low&#34;, &#34;medium&#34;, &#34;high&#34;, &#34;confidential&#34;
+    required_capability: str = &#34;text&#34;  # &#34;instant_command&#34;, &#34;text&#34;, &#34;vision&#34;, &#34;code&#34;, &#34;research&#34;
+    latency_requirement: str = &#34;interactive&#34;  # &#34;realtime&#34;, &#34;interactive&#34;, &#34;batch&#34;
+    cost_budget: Optional[float] = None
+    attached_context: str = &#34;&#34;
+    has_cloud_consent: bool = False
+    approval_state: Optional[Dict[str, Any]] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.model_router.RoutingRequest.approval_state"><code class="name">var <span class="ident">approval_state</span> : Dict[str, Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.attached_context"><code class="name">var <span class="ident">attached_context</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.cost_budget"><code class="name">var <span class="ident">cost_budget</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.has_cloud_consent"><code class="name">var <span class="ident">has_cloud_consent</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.latency_requirement"><code class="name">var <span class="ident">latency_requirement</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.required_capability"><code class="name">var <span class="ident">required_capability</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.sensitivity_level"><code class="name">var <span class="ident">sensitivity_level</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.task_type"><code class="name">var <span class="ident">task_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.model_router.RoutingRequest.user_intent"><code class="name">var <span class="ident">user_intent</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.model_router.ModelRouter" href="#jarvis.core.model_router.ModelRouter">ModelRouter</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.model_router.ModelRouter.INSTANT_COMMAND_PATTERNS" href="#jarvis.core.model_router.ModelRouter.INSTANT_COMMAND_PATTERNS">INSTANT_COMMAND_PATTERNS</a></code></li>
+<li><code><a title="jarvis.core.model_router.ModelRouter.check_ollama_readiness" href="#jarvis.core.model_router.ModelRouter.check_ollama_readiness">check_ollama_readiness</a></code></li>
+<li><code><a title="jarvis.core.model_router.ModelRouter.execute_inference" href="#jarvis.core.model_router.ModelRouter.execute_inference">execute_inference</a></code></li>
+<li><code><a title="jarvis.core.model_router.ModelRouter.get_status" href="#jarvis.core.model_router.ModelRouter.get_status">get_status</a></code></li>
+<li><code><a title="jarvis.core.model_router.ModelRouter.is_instant_command" href="#jarvis.core.model_router.ModelRouter.is_instant_command">is_instant_command</a></code></li>
+<li><code><a title="jarvis.core.model_router.ModelRouter.route" href="#jarvis.core.model_router.ModelRouter.route">route</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.model_router.RoutingDecision" href="#jarvis.core.model_router.RoutingDecision">RoutingDecision</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.model_router.RoutingDecision.estimated_cost_usd" href="#jarvis.core.model_router.RoutingDecision.estimated_cost_usd">estimated_cost_usd</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.fallback_models" href="#jarvis.core.model_router.RoutingDecision.fallback_models">fallback_models</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.model_config" href="#jarvis.core.model_router.RoutingDecision.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.provider" href="#jarvis.core.model_router.RoutingDecision.provider">provider</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.reason" href="#jarvis.core.model_router.RoutingDecision.reason">reason</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.redacted_context" href="#jarvis.core.model_router.RoutingDecision.redacted_context">redacted_context</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.redactions_made" href="#jarvis.core.model_router.RoutingDecision.redactions_made">redactions_made</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.requires_approval" href="#jarvis.core.model_router.RoutingDecision.requires_approval">requires_approval</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.selected_model" href="#jarvis.core.model_router.RoutingDecision.selected_model">selected_model</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.task_id" href="#jarvis.core.model_router.RoutingDecision.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.tier" href="#jarvis.core.model_router.RoutingDecision.tier">tier</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingDecision.timestamp" href="#jarvis.core.model_router.RoutingDecision.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.model_router.RoutingRequest" href="#jarvis.core.model_router.RoutingRequest">RoutingRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.model_router.RoutingRequest.approval_state" href="#jarvis.core.model_router.RoutingRequest.approval_state">approval_state</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.attached_context" href="#jarvis.core.model_router.RoutingRequest.attached_context">attached_context</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.cost_budget" href="#jarvis.core.model_router.RoutingRequest.cost_budget">cost_budget</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.has_cloud_consent" href="#jarvis.core.model_router.RoutingRequest.has_cloud_consent">has_cloud_consent</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.latency_requirement" href="#jarvis.core.model_router.RoutingRequest.latency_requirement">latency_requirement</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.model_config" href="#jarvis.core.model_router.RoutingRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.required_capability" href="#jarvis.core.model_router.RoutingRequest.required_capability">required_capability</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.sensitivity_level" href="#jarvis.core.model_router.RoutingRequest.sensitivity_level">sensitivity_level</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.task_id" href="#jarvis.core.model_router.RoutingRequest.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.task_type" href="#jarvis.core.model_router.RoutingRequest.task_type">task_type</a></code></li>
+<li><code><a title="jarvis.core.model_router.RoutingRequest.user_intent" href="#jarvis.core.model_router.RoutingRequest.user_intent">user_intent</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

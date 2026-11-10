@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.career.analytics API documentation</title>
+<meta name="description" content="Application Pipeline Tracker &amp; Funnel Analytics (PWR-335) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.career.analytics</code></h1>
+</header>
+<section id="section-intro">
+<p>Application Pipeline Tracker &amp; Funnel Analytics (PWR-335).</p>
+<p>Tracks submitted applications, conversion funnel ratios, response times,
+and rejection pattern analytics with local JSON/SQLite storage.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.career.analytics.CareerPipelineAnalytics"><code class="flex name class">
+<span>class <span class="ident">CareerPipelineAnalytics</span></span>
+<span>(</span><span>storage_path: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CareerPipelineAnalytics:
+    &#34;&#34;&#34;Manages the job application pipeline and calculates funnel conversion metrics.&#34;&#34;&#34;
+
+    def __init__(self, storage_path: Optional[str] = None):
+        self.storage_path = Path(storage_path or &#34;data/career_pipeline.json&#34;)
+        self.storage_path.parent.mkdir(parents=True, exist_ok=True)
+        self.applications: Dict[str, ApplicationEntry] = {}
+        self._load()
+
+    def _load(self) -&gt; None:
+        if not self.storage_path.exists():
+            return
+        try:
+            raw = json.loads(self.storage_path.read_text(encoding=&#34;utf-8&#34;))
+            for item in raw:
+                entry = ApplicationEntry(**item)
+                self.applications[entry.application_id] = entry
+        except Exception as e:
+            logger.warning(f&#34;Failed to load career pipeline: {e}&#34;)
+
+    def _save(self) -&gt; None:
+        try:
+            data = [app.model_dump() for app in self.applications.values()]
+            self.storage_path.write_text(json.dumps(data, indent=2), encoding=&#34;utf-8&#34;)
+        except Exception as e:
+            logger.error(f&#34;Failed to save career pipeline: {e}&#34;)
+
+    def record_application(
+        self,
+        company_name: str,
+        job_title: str,
+        job_url: Optional[str] = None,
+        fit_score: float = 0.0,
+        status: str = &#34;applied&#34;,
+    ) -&gt; ApplicationEntry:
+        &#34;&#34;&#34;Records a new application in the local pipeline ledger.&#34;&#34;&#34;
+        app_id = f&#34;app_{company_name.lower().replace(&#39; &#39;, &#39;_&#39;)}_{job_title.lower().replace(&#39; &#39;, &#39;_&#39;)}&#34;
+        clean_id = &#34;&#34;.join(c for c in app_id if c.isalnum() or c in (&#34;_&#34;, &#34;-&#34;))
+
+        entry = ApplicationEntry(
+            application_id=clean_id,
+            company_name=company_name,
+            job_title=job_title,
+            job_url=job_url,
+            fit_score=fit_score,
+            status=status,
+        )
+        self.applications[clean_id] = entry
+        self._save()
+        logger.info(f&#34;Recorded application {clean_id}: {job_title} at {company_name}&#34;)
+        return entry
+
+    def update_status(
+        self, application_id: str, new_status: str, note: Optional[str] = None
+    ) -&gt; Optional[ApplicationEntry]:
+        &#34;&#34;&#34;Updates the status of an existing application.&#34;&#34;&#34;
+        if application_id not in self.applications:
+            return None
+        app = self.applications[application_id]
+        app.status = new_status
+        if note:
+            app.notes.append(note)
+        self._save()
+        logger.info(f&#34;Updated application {application_id} to {new_status}&#34;)
+        return app
+
+    def list_applications(self, status: Optional[str] = None) -&gt; List[ApplicationEntry]:
+        &#34;&#34;&#34;Returns applications filtered optionally by status.&#34;&#34;&#34;
+        apps = list(self.applications.values())
+        if status:
+            return [a for a in apps if a.status.lower() == status.lower()]
+        return apps
+
+    def analyze_patterns(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Computes funnel statistics, conversion metrics, and rejection trends.&#34;&#34;&#34;
+        total = len(self.applications)
+        if total == 0:
+            return {
+                &#34;total_applications&#34;: 0,
+                &#34;funnel&#34;: {&#34;applied&#34;: 0, &#34;screening&#34;: 0, &#34;interview&#34;: 0, &#34;offer&#34;: 0, &#34;rejected&#34;: 0},
+                &#34;conversion_rates&#34;: {&#34;screening_rate&#34;: 0.0, &#34;interview_rate&#34;: 0.0, &#34;offer_rate&#34;: 0.0},
+                &#34;average_fit_score&#34;: 0.0,
+                &#34;insights&#34;: [&#34;No applications recorded yet. Use /job-scan or /record-application to begin.&#34;],
+            }
+
+        counts = {&#34;saved&#34;: 0, &#34;applied&#34;: 0, &#34;screening&#34;: 0, &#34;interview&#34;: 0, &#34;offer&#34;: 0, &#34;rejected&#34;: 0, &#34;withdrawn&#34;: 0}
+
+        total_score = 0.0
+        for app in self.applications.values():
+            s = app.status.lower()
+            if s in counts:
+                counts[s] += 1
+            total_score += app.fit_score
+
+        avg_score = round(total_score / total, 1)
+
+        # Conversions
+        active_applied = max(
+            1, counts[&#34;applied&#34;] + counts[&#34;screening&#34;] + counts[&#34;interview&#34;] + counts[&#34;offer&#34;] + counts[&#34;rejected&#34;]
+        )
+        screening_rate = round((counts[&#34;screening&#34;] + counts[&#34;interview&#34;] + counts[&#34;offer&#34;]) / active_applied * 100, 1)
+        interview_rate = round((counts[&#34;interview&#34;] + counts[&#34;offer&#34;]) / active_applied * 100, 1)
+        offer_rate = round(counts[&#34;offer&#34;] / active_applied * 100, 1)
+
+        insights = [
+            f&#34;Pipeline contains {total} tracked applications with an average fit score of {avg_score}%.&#34;,
+            f&#34;Screening conversion rate is {screening_rate}% across active applications.&#34;,
+        ]
+
+        if counts[&#34;rejected&#34;] &gt; 0:
+            insights.append(
+                f&#34;Rejected applications ({counts[&#39;rejected&#39;]}) indicate checking keyword match density on ATS resumes.&#34;
+            )
+
+        return {
+            &#34;total_applications&#34;: total,
+            &#34;funnel&#34;: counts,
+            &#34;conversion_rates&#34;: {
+                &#34;screening_rate&#34;: screening_rate,
+                &#34;interview_rate&#34;: interview_rate,
+                &#34;offer_rate&#34;: offer_rate,
+            },
+            &#34;average_fit_score&#34;: avg_score,
+            &#34;insights&#34;: insights,
+        }</code></pre>
+</details>
+<div class="desc"><p>Manages the job application pipeline and calculates funnel conversion metrics.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.career.analytics.CareerPipelineAnalytics.analyze_patterns"><code class="name flex">
+<span>def <span class="ident">analyze_patterns</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analyze_patterns(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Computes funnel statistics, conversion metrics, and rejection trends.&#34;&#34;&#34;
+    total = len(self.applications)
+    if total == 0:
+        return {
+            &#34;total_applications&#34;: 0,
+            &#34;funnel&#34;: {&#34;applied&#34;: 0, &#34;screening&#34;: 0, &#34;interview&#34;: 0, &#34;offer&#34;: 0, &#34;rejected&#34;: 0},
+            &#34;conversion_rates&#34;: {&#34;screening_rate&#34;: 0.0, &#34;interview_rate&#34;: 0.0, &#34;offer_rate&#34;: 0.0},
+            &#34;average_fit_score&#34;: 0.0,
+            &#34;insights&#34;: [&#34;No applications recorded yet. Use /job-scan or /record-application to begin.&#34;],
+        }
+
+    counts = {&#34;saved&#34;: 0, &#34;applied&#34;: 0, &#34;screening&#34;: 0, &#34;interview&#34;: 0, &#34;offer&#34;: 0, &#34;rejected&#34;: 0, &#34;withdrawn&#34;: 0}
+
+    total_score = 0.0
+    for app in self.applications.values():
+        s = app.status.lower()
+        if s in counts:
+            counts[s] += 1
+        total_score += app.fit_score
+
+    avg_score = round(total_score / total, 1)
+
+    # Conversions
+    active_applied = max(
+        1, counts[&#34;applied&#34;] + counts[&#34;screening&#34;] + counts[&#34;interview&#34;] + counts[&#34;offer&#34;] + counts[&#34;rejected&#34;]
+    )
+    screening_rate = round((counts[&#34;screening&#34;] + counts[&#34;interview&#34;] + counts[&#34;offer&#34;]) / active_applied * 100, 1)
+    interview_rate = round((counts[&#34;interview&#34;] + counts[&#34;offer&#34;]) / active_applied * 100, 1)
+    offer_rate = round(counts[&#34;offer&#34;] / active_applied * 100, 1)
+
+    insights = [
+        f&#34;Pipeline contains {total} tracked applications with an average fit score of {avg_score}%.&#34;,
+        f&#34;Screening conversion rate is {screening_rate}% across active applications.&#34;,
+    ]
+
+    if counts[&#34;rejected&#34;] &gt; 0:
+        insights.append(
+            f&#34;Rejected applications ({counts[&#39;rejected&#39;]}) indicate checking keyword match density on ATS resumes.&#34;
+        )
+
+    return {
+        &#34;total_applications&#34;: total,
+        &#34;funnel&#34;: counts,
+        &#34;conversion_rates&#34;: {
+            &#34;screening_rate&#34;: screening_rate,
+            &#34;interview_rate&#34;: interview_rate,
+            &#34;offer_rate&#34;: offer_rate,
+        },
+        &#34;average_fit_score&#34;: avg_score,
+        &#34;insights&#34;: insights,
+    }</code></pre>
+</details>
+<div class="desc"><p>Computes funnel statistics, conversion metrics, and rejection trends.</p></div>
+</dd>
+<dt id="jarvis.career.analytics.CareerPipelineAnalytics.list_applications"><code class="name flex">
+<span>def <span class="ident">list_applications</span></span>(<span>self, status: Optional[str] = None) ‑> List[<a title="jarvis.career.models.ApplicationEntry" href="models.html#jarvis.career.models.ApplicationEntry">ApplicationEntry</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_applications(self, status: Optional[str] = None) -&gt; List[ApplicationEntry]:
+    &#34;&#34;&#34;Returns applications filtered optionally by status.&#34;&#34;&#34;
+    apps = list(self.applications.values())
+    if status:
+        return [a for a in apps if a.status.lower() == status.lower()]
+    return apps</code></pre>
+</details>
+<div class="desc"><p>Returns applications filtered optionally by status.</p></div>
+</dd>
+<dt id="jarvis.career.analytics.CareerPipelineAnalytics.record_application"><code class="name flex">
+<span>def <span class="ident">record_application</span></span>(<span>self,<br>company_name: str,<br>job_title: str,<br>job_url: Optional[str] = None,<br>fit_score: float = 0.0,<br>status: str = 'applied') ‑> <a title="jarvis.career.models.ApplicationEntry" href="models.html#jarvis.career.models.ApplicationEntry">ApplicationEntry</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def record_application(
+    self,
+    company_name: str,
+    job_title: str,
+    job_url: Optional[str] = None,
+    fit_score: float = 0.0,
+    status: str = &#34;applied&#34;,
+) -&gt; ApplicationEntry:
+    &#34;&#34;&#34;Records a new application in the local pipeline ledger.&#34;&#34;&#34;
+    app_id = f&#34;app_{company_name.lower().replace(&#39; &#39;, &#39;_&#39;)}_{job_title.lower().replace(&#39; &#39;, &#39;_&#39;)}&#34;
+    clean_id = &#34;&#34;.join(c for c in app_id if c.isalnum() or c in (&#34;_&#34;, &#34;-&#34;))
+
+    entry = ApplicationEntry(
+        application_id=clean_id,
+        company_name=company_name,
+        job_title=job_title,
+        job_url=job_url,
+        fit_score=fit_score,
+        status=status,
+    )
+    self.applications[clean_id] = entry
+    self._save()
+    logger.info(f&#34;Recorded application {clean_id}: {job_title} at {company_name}&#34;)
+    return entry</code></pre>
+</details>
+<div class="desc"><p>Records a new application in the local pipeline ledger.</p></div>
+</dd>
+<dt id="jarvis.career.analytics.CareerPipelineAnalytics.update_status"><code class="name flex">
+<span>def <span class="ident">update_status</span></span>(<span>self, application_id: str, new_status: str, note: Optional[str] = None) ‑> <a title="jarvis.career.models.ApplicationEntry" href="models.html#jarvis.career.models.ApplicationEntry">ApplicationEntry</a> | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_status(
+    self, application_id: str, new_status: str, note: Optional[str] = None
+) -&gt; Optional[ApplicationEntry]:
+    &#34;&#34;&#34;Updates the status of an existing application.&#34;&#34;&#34;
+    if application_id not in self.applications:
+        return None
+    app = self.applications[application_id]
+    app.status = new_status
+    if note:
+        app.notes.append(note)
+    self._save()
+    logger.info(f&#34;Updated application {application_id} to {new_status}&#34;)
+    return app</code></pre>
+</details>
+<div class="desc"><p>Updates the status of an existing application.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.career" href="index.html">jarvis.career</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.career.analytics.CareerPipelineAnalytics" href="#jarvis.career.analytics.CareerPipelineAnalytics">CareerPipelineAnalytics</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.career.analytics.CareerPipelineAnalytics.analyze_patterns" href="#jarvis.career.analytics.CareerPipelineAnalytics.analyze_patterns">analyze_patterns</a></code></li>
+<li><code><a title="jarvis.career.analytics.CareerPipelineAnalytics.list_applications" href="#jarvis.career.analytics.CareerPipelineAnalytics.list_applications">list_applications</a></code></li>
+<li><code><a title="jarvis.career.analytics.CareerPipelineAnalytics.record_application" href="#jarvis.career.analytics.CareerPipelineAnalytics.record_application">record_application</a></code></li>
+<li><code><a title="jarvis.career.analytics.CareerPipelineAnalytics.update_status" href="#jarvis.career.analytics.CareerPipelineAnalytics.update_status">update_status</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

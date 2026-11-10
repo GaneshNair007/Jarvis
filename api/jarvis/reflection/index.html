@@ -1,0 +1,1497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.reflection API documentation</title>
+<meta name="description" content="JARVIS Reflection Engine Package
+Synthesizes Execution Analysis, Gap Detection, Opportunity Detection,
+Improvement Generation, and Constitution …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.reflection</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Reflection Engine Package
+Synthesizes Execution Analysis, Gap Detection, Opportunity Detection,
+Improvement Generation, and Constitution Scoring into unified Retrospectives.</p>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="jarvis.reflection.analyzer" href="analyzer.html">jarvis.reflection.analyzer</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Reflection Engine - Execution Analyzer
+Analyzes task outcomes, failure logs, execution durations, and completion rates.</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.reflection.gap_detector" href="gap_detector.html">jarvis.reflection.gap_detector</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Reflection Engine - Capability Gap Detector
+Detects missing capabilities, unsupported tool requirements, and repeated failures.</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.reflection.improvement_generator" href="improvement_generator.html">jarvis.reflection.improvement_generator</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Reflection Engine - Improvement Generator
+Converts capability gaps and bottlenecks into formal ImprovementRequests.</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.reflection.opportunity_detector" href="opportunity_detector.html">jarvis.reflection.opportunity_detector</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Reflection Engine - Opportunity Detector
+Extracts strategic and technical advancement opportunities from task outputs.</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.reflection.scorer" href="scorer.html">jarvis.reflection.scorer</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Reflection Engine - Constitution &amp; Quality Scorer
+Compares real execution metrics and artifacts against the Constitution daily.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.reflection.CapabilityGap"><code class="flex name class">
+<span>class <span class="ident">CapabilityGap</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CapabilityGap(BaseModel):
+    gap_type: str  # e.g. &#34;MISSING_TOOL&#34;, &#34;REPEATED_FAILURE&#34;, &#34;TIMEOUT&#34;
+    name: str
+    description: str
+    affected_tasks: List[str] = Field(default_factory=list)
+    suggested_capability: str
+    severity: str = &#34;MEDIUM&#34;  # LOW, MEDIUM, HIGH, CRITICAL</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.reflection.CapabilityGap.affected_tasks"><code class="name">var <span class="ident">affected_tasks</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.CapabilityGap.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.CapabilityGap.gap_type"><code class="name">var <span class="ident">gap_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.CapabilityGap.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.CapabilityGap.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.CapabilityGap.severity"><code class="name">var <span class="ident">severity</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.CapabilityGap.suggested_capability"><code class="name">var <span class="ident">suggested_capability</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.ConstitutionScore"><code class="flex name class">
+<span>class <span class="ident">ConstitutionScore</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ConstitutionScore(BaseModel):
+    overall_score: float  # 0.0 to 1.0
+    values_score: float
+    constraints_score: float
+    violations: List[str] = Field(default_factory=list)
+    compliances: List[str] = Field(default_factory=list)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.reflection.ConstitutionScore.compliances"><code class="name">var <span class="ident">compliances</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ConstitutionScore.constraints_score"><code class="name">var <span class="ident">constraints_score</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ConstitutionScore.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ConstitutionScore.overall_score"><code class="name">var <span class="ident">overall_score</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ConstitutionScore.values_score"><code class="name">var <span class="ident">values_score</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ConstitutionScore.violations"><code class="name">var <span class="ident">violations</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalysis"><code class="flex name class">
+<span>class <span class="ident">ExecutionAnalysis</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ExecutionAnalysis(BaseModel):
+    total_tasks: int
+    completed_tasks: int
+    failed_tasks: int
+    retried_tasks: int
+    completion_rate_pct: float
+    bottlenecks: List[str] = Field(default_factory=list)
+    repeated_failures: Dict[str, int] = Field(default_factory=dict)
+    average_duration: float = 0.0</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.reflection.ExecutionAnalysis.average_duration"><code class="name">var <span class="ident">average_duration</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalysis.bottlenecks"><code class="name">var <span class="ident">bottlenecks</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalysis.completed_tasks"><code class="name">var <span class="ident">completed_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalysis.completion_rate_pct"><code class="name">var <span class="ident">completion_rate_pct</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalysis.failed_tasks"><code class="name">var <span class="ident">failed_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalysis.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalysis.repeated_failures"><code class="name">var <span class="ident">repeated_failures</span> : Dict[str, int]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalysis.retried_tasks"><code class="name">var <span class="ident">retried_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalysis.total_tasks"><code class="name">var <span class="ident">total_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.ExecutionAnalyzer"><code class="flex name class">
+<span>class <span class="ident">ExecutionAnalyzer</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ExecutionAnalyzer:
+    &#34;&#34;&#34;Analyzes runtime telemetry and execution logs of task graphs.&#34;&#34;&#34;
+
+    def analyze_graph(self, graph: TaskGraph) -&gt; ExecutionAnalysis:
+        total = len(graph.nodes)
+        completed = 0
+        failed = 0
+        retried = 0
+        bottlenecks = []
+        repeated_failures: Dict[str, int] = {}
+
+        for task_id, node in graph.nodes.items():
+            if node.status == TaskStatus.COMPLETED:
+                completed += 1
+            elif node.status == TaskStatus.FAILED:
+                failed += 1
+                err = node.metadata.get(&#34;last_error&#34;, &#34;Unknown error&#34;)
+                repeated_failures[err] = repeated_failures.get(err, 0) + 1
+
+            if node.retry_count &gt; 0:
+                retried += 1
+                if node.retry_count &gt;= 2:
+                    bottlenecks.append(f&#34;Task &#39;{node.name}&#39; ({task_id}) required {node.retry_count} retries.&#34;)
+
+        rate = round((completed / max(total, 1)) * 100.0, 1)
+
+        return ExecutionAnalysis(
+            total_tasks=total,
+            completed_tasks=completed,
+            failed_tasks=failed,
+            retried_tasks=retried,
+            completion_rate_pct=rate,
+            bottlenecks=bottlenecks,
+            repeated_failures=repeated_failures,
+        )</code></pre>
+</details>
+<div class="desc"><p>Analyzes runtime telemetry and execution logs of task graphs.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.reflection.ExecutionAnalyzer.analyze_graph"><code class="name flex">
+<span>def <span class="ident">analyze_graph</span></span>(<span>self, graph: TaskGraph) ‑> <a title="jarvis.reflection.analyzer.ExecutionAnalysis" href="analyzer.html#jarvis.reflection.analyzer.ExecutionAnalysis">ExecutionAnalysis</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analyze_graph(self, graph: TaskGraph) -&gt; ExecutionAnalysis:
+    total = len(graph.nodes)
+    completed = 0
+    failed = 0
+    retried = 0
+    bottlenecks = []
+    repeated_failures: Dict[str, int] = {}
+
+    for task_id, node in graph.nodes.items():
+        if node.status == TaskStatus.COMPLETED:
+            completed += 1
+        elif node.status == TaskStatus.FAILED:
+            failed += 1
+            err = node.metadata.get(&#34;last_error&#34;, &#34;Unknown error&#34;)
+            repeated_failures[err] = repeated_failures.get(err, 0) + 1
+
+        if node.retry_count &gt; 0:
+            retried += 1
+            if node.retry_count &gt;= 2:
+                bottlenecks.append(f&#34;Task &#39;{node.name}&#39; ({task_id}) required {node.retry_count} retries.&#34;)
+
+    rate = round((completed / max(total, 1)) * 100.0, 1)
+
+    return ExecutionAnalysis(
+        total_tasks=total,
+        completed_tasks=completed,
+        failed_tasks=failed,
+        retried_tasks=retried,
+        completion_rate_pct=rate,
+        bottlenecks=bottlenecks,
+        repeated_failures=repeated_failures,
+    )</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.GapDetector"><code class="flex name class">
+<span>class <span class="ident">GapDetector</span></span>
+<span>(</span><span>known_capabilities: Set[str] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GapDetector:
+    &#34;&#34;&#34;Inspects task failures and tool requirements to detect system capability gaps.&#34;&#34;&#34;
+
+    def __init__(self, known_capabilities: Set[str] = None):
+        self.known_capabilities = known_capabilities or {
+            &#34;web_search&#34;,
+            &#34;ast_mapper&#34;,
+            &#34;git_cli&#34;,
+            &#34;data_filter&#34;,
+            &#34;doc_parser&#34;,
+            &#34;deep_reasoner&#34;,
+            &#34;decision_matrix&#34;,
+            &#34;roadmap_generator&#34;,
+            &#34;pytest&#34;,
+            &#34;dlp_scan&#34;,
+            &#34;system_health&#34;,
+        }
+
+    def detect_gaps(self, graph: TaskGraph) -&gt; List[CapabilityGap]:
+        gaps: List[CapabilityGap] = []
+        missing_tools: Dict[str, List[str]] = {}
+
+        for task_id, node in graph.nodes.items():
+            # 1. Check for missing tool requirements
+            for req_tool in node.tool_requirements:
+                if req_tool not in self.known_capabilities:
+                    if req_tool not in missing_tools:
+                        missing_tools[req_tool] = []
+                    missing_tools[req_tool].append(task_id)
+
+            # 2. Check for task failure causes
+            if node.status == TaskStatus.FAILED:
+                err = node.metadata.get(&#34;last_error&#34;, &#34;&#34;)
+                if &#34;timeout&#34; in err.lower():
+                    gaps.append(
+                        CapabilityGap(
+                            gap_type=&#34;TIMEOUT&#34;,
+                            name=f&#34;Execution Timeout in {node.name}&#34;,
+                            description=f&#34;Task &#39;{node.name}&#39; timed out repeatedly: {err}&#34;,
+                            affected_tasks=[task_id],
+                            suggested_capability=f&#34;optimize_{node.department}_pipeline&#34;,
+                            severity=&#34;HIGH&#34;,
+                        )
+                    )
+                elif &#34;unredacted&#34; in err.lower() or &#34;security&#34; in err.lower():
+                    gaps.append(
+                        CapabilityGap(
+                            gap_type=&#34;SECURITY_DLP_VIOLATION&#34;,
+                            name=f&#34;DLP Leak Prevention in {node.name}&#34;,
+                            description=f&#34;Task &#39;{node.name}&#39; failed DLP quality gate.&#34;,
+                            affected_tasks=[task_id],
+                            suggested_capability=&#34;enhanced_dlp_prefilter&#34;,
+                            severity=&#34;CRITICAL&#34;,
+                        )
+                    )
+
+        for missing_tool, task_ids in missing_tools.items():
+            gaps.append(
+                CapabilityGap(
+                    gap_type=&#34;MISSING_TOOL&#34;,
+                    name=f&#34;Missing Tool: {missing_tool}&#34;,
+                    description=f&#34;Required tool &#39;{missing_tool}&#39; is not registered in system capability registry.&#34;,
+                    affected_tasks=task_ids,
+                    suggested_capability=f&#34;tool_integration_{missing_tool}&#34;,
+                    severity=&#34;HIGH&#34; if len(task_ids) &gt; 1 else &#34;MEDIUM&#34;,
+                )
+            )
+
+        return gaps</code></pre>
+</details>
+<div class="desc"><p>Inspects task failures and tool requirements to detect system capability gaps.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.reflection.GapDetector.detect_gaps"><code class="name flex">
+<span>def <span class="ident">detect_gaps</span></span>(<span>self, graph: TaskGraph) ‑> List[<a title="jarvis.reflection.gap_detector.CapabilityGap" href="gap_detector.html#jarvis.reflection.gap_detector.CapabilityGap">CapabilityGap</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def detect_gaps(self, graph: TaskGraph) -&gt; List[CapabilityGap]:
+    gaps: List[CapabilityGap] = []
+    missing_tools: Dict[str, List[str]] = {}
+
+    for task_id, node in graph.nodes.items():
+        # 1. Check for missing tool requirements
+        for req_tool in node.tool_requirements:
+            if req_tool not in self.known_capabilities:
+                if req_tool not in missing_tools:
+                    missing_tools[req_tool] = []
+                missing_tools[req_tool].append(task_id)
+
+        # 2. Check for task failure causes
+        if node.status == TaskStatus.FAILED:
+            err = node.metadata.get(&#34;last_error&#34;, &#34;&#34;)
+            if &#34;timeout&#34; in err.lower():
+                gaps.append(
+                    CapabilityGap(
+                        gap_type=&#34;TIMEOUT&#34;,
+                        name=f&#34;Execution Timeout in {node.name}&#34;,
+                        description=f&#34;Task &#39;{node.name}&#39; timed out repeatedly: {err}&#34;,
+                        affected_tasks=[task_id],
+                        suggested_capability=f&#34;optimize_{node.department}_pipeline&#34;,
+                        severity=&#34;HIGH&#34;,
+                    )
+                )
+            elif &#34;unredacted&#34; in err.lower() or &#34;security&#34; in err.lower():
+                gaps.append(
+                    CapabilityGap(
+                        gap_type=&#34;SECURITY_DLP_VIOLATION&#34;,
+                        name=f&#34;DLP Leak Prevention in {node.name}&#34;,
+                        description=f&#34;Task &#39;{node.name}&#39; failed DLP quality gate.&#34;,
+                        affected_tasks=[task_id],
+                        suggested_capability=&#34;enhanced_dlp_prefilter&#34;,
+                        severity=&#34;CRITICAL&#34;,
+                    )
+                )
+
+    for missing_tool, task_ids in missing_tools.items():
+        gaps.append(
+            CapabilityGap(
+                gap_type=&#34;MISSING_TOOL&#34;,
+                name=f&#34;Missing Tool: {missing_tool}&#34;,
+                description=f&#34;Required tool &#39;{missing_tool}&#39; is not registered in system capability registry.&#34;,
+                affected_tasks=task_ids,
+                suggested_capability=f&#34;tool_integration_{missing_tool}&#34;,
+                severity=&#34;HIGH&#34; if len(task_ids) &gt; 1 else &#34;MEDIUM&#34;,
+            )
+        )
+
+    return gaps</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.ImprovementGenerator"><code class="flex name class">
+<span>class <span class="ident">ImprovementGenerator</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImprovementGenerator:
+    &#34;&#34;&#34;Generates structured Improvement proposals ready for Human Review in the Backlog.&#34;&#34;&#34;
+
+    def generate_from_gaps(self, gaps: List[CapabilityGap], analysis: ExecutionAnalysis) -&gt; List[ImprovementProposal]:
+        proposals: List[ImprovementProposal] = []
+
+        for gap in gaps:
+            priority = &#34;CRITICAL&#34; if gap.severity == &#34;CRITICAL&#34; else (&#34;HIGH&#34; if gap.severity == &#34;HIGH&#34; else &#34;MEDIUM&#34;)
+            prop = ImprovementProposal(
+                title=f&#34;Resolve Gap: {gap.name}&#34;,
+                description=gap.description,
+                category=&#34;capability&#34;,
+                priority=priority,
+                proposed_changes={
+                    &#34;gap_type&#34;: gap.gap_type,
+                    &#34;suggested_capability&#34;: gap.suggested_capability,
+                    &#34;affected_tasks&#34;: gap.affected_tasks,
+                    &#34;action_required&#34;: f&#34;Implement and register &#39;{gap.suggested_capability}&#39; in CapabilityRegistry.&#34;,
+                },
+            )
+            proposals.append(prop)
+
+        # Bottlenecks
+        for bottleneck in analysis.bottlenecks:
+            prop = ImprovementProposal(
+                title=f&#34;Optimize Bottleneck: {bottleneck[:60]}&#34;,
+                description=bottleneck,
+                category=&#34;performance&#34;,
+                priority=&#34;MEDIUM&#34;,
+                proposed_changes={
+                    &#34;action_required&#34;: &#34;Refine agent prompts, increase timeouts, or optimize tool calling.&#34;
+                },
+            )
+            proposals.append(prop)
+
+        return proposals</code></pre>
+</details>
+<div class="desc"><p>Generates structured Improvement proposals ready for Human Review in the Backlog.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.reflection.ImprovementGenerator.generate_from_gaps"><code class="name flex">
+<span>def <span class="ident">generate_from_gaps</span></span>(<span>self,<br>gaps: List[<a title="jarvis.reflection.CapabilityGap" href="#jarvis.reflection.CapabilityGap">CapabilityGap</a>],<br>analysis: <a title="jarvis.reflection.ExecutionAnalysis" href="#jarvis.reflection.ExecutionAnalysis">ExecutionAnalysis</a>) ‑> List[<a title="jarvis.reflection.improvement_generator.ImprovementProposal" href="improvement_generator.html#jarvis.reflection.improvement_generator.ImprovementProposal">ImprovementProposal</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_from_gaps(self, gaps: List[CapabilityGap], analysis: ExecutionAnalysis) -&gt; List[ImprovementProposal]:
+    proposals: List[ImprovementProposal] = []
+
+    for gap in gaps:
+        priority = &#34;CRITICAL&#34; if gap.severity == &#34;CRITICAL&#34; else (&#34;HIGH&#34; if gap.severity == &#34;HIGH&#34; else &#34;MEDIUM&#34;)
+        prop = ImprovementProposal(
+            title=f&#34;Resolve Gap: {gap.name}&#34;,
+            description=gap.description,
+            category=&#34;capability&#34;,
+            priority=priority,
+            proposed_changes={
+                &#34;gap_type&#34;: gap.gap_type,
+                &#34;suggested_capability&#34;: gap.suggested_capability,
+                &#34;affected_tasks&#34;: gap.affected_tasks,
+                &#34;action_required&#34;: f&#34;Implement and register &#39;{gap.suggested_capability}&#39; in CapabilityRegistry.&#34;,
+            },
+        )
+        proposals.append(prop)
+
+    # Bottlenecks
+    for bottleneck in analysis.bottlenecks:
+        prop = ImprovementProposal(
+            title=f&#34;Optimize Bottleneck: {bottleneck[:60]}&#34;,
+            description=bottleneck,
+            category=&#34;performance&#34;,
+            priority=&#34;MEDIUM&#34;,
+            proposed_changes={
+                &#34;action_required&#34;: &#34;Refine agent prompts, increase timeouts, or optimize tool calling.&#34;
+            },
+        )
+        proposals.append(prop)
+
+    return proposals</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.ImprovementProposal"><code class="flex name class">
+<span>class <span class="ident">ImprovementProposal</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImprovementProposal(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    description: str
+    category: str
+    priority: str
+    status: str = &#34;PROPOSED&#34;
+    proposed_changes: Dict[str, Any] = Field(default_factory=dict)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.reflection.ImprovementProposal.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ImprovementProposal.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ImprovementProposal.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ImprovementProposal.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ImprovementProposal.priority"><code class="name">var <span class="ident">priority</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ImprovementProposal.proposed_changes"><code class="name">var <span class="ident">proposed_changes</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ImprovementProposal.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.ImprovementProposal.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.Opportunity"><code class="flex name class">
+<span>class <span class="ident">Opportunity</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Opportunity(BaseModel):
+    category: str  # e.g. &#34;PRODUCT&#34;, &#34;SKILL&#34;, &#34;SPEED&#34;, &#34;RESEARCH&#34;
+    title: str
+    description: str
+    source_task: str
+    impact_level: str = &#34;HIGH&#34;  # LOW, MEDIUM, HIGH, TRANSFORMATIVE</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.reflection.Opportunity.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.Opportunity.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.Opportunity.impact_level"><code class="name">var <span class="ident">impact_level</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.Opportunity.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.Opportunity.source_task"><code class="name">var <span class="ident">source_task</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.Opportunity.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.OpportunityDetector"><code class="flex name class">
+<span>class <span class="ident">OpportunityDetector</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OpportunityDetector:
+    &#34;&#34;&#34;Discovers expansion opportunities and reusable skills from task execution outputs.&#34;&#34;&#34;
+
+    def detect_opportunities(self, graph: TaskGraph) -&gt; List[Opportunity]:
+        opportunities: List[Opportunity] = []
+
+        for task_id, node in graph.nodes.items():
+            if node.status == TaskStatus.COMPLETED:
+                for key, val in node.outputs.items():
+                    key_lower = key.lower()
+                    if any(term in key_lower for term in [&#34;opportunity&#34;, &#34;suggest&#34;, &#34;idea&#34;, &#34;product&#34;, &#34;export&#34;]):
+                        opportunities.append(
+                            Opportunity(
+                                category=&#34;PRODUCT&#34; if &#34;product&#34; in key_lower else &#34;SKILL&#34;,
+                                title=f&#34;Opportunity from {node.name}&#34;,
+                                description=str(val),
+                                source_task=task_id,
+                                impact_level=&#34;HIGH&#34;,
+                            )
+                        )
+
+                    if &#34;repo_created&#34; in key_lower:
+                        opportunities.append(
+                            Opportunity(
+                                category=&#34;ENGINEERING&#34;,
+                                title=f&#34;Open Source Asset Created&#34;,
+                                description=f&#34;Automate CI/CD and GSoC alignment for created repository: {val}&#34;,
+                                source_task=task_id,
+                                impact_level=&#34;HIGH&#34;,
+                            )
+                        )
+
+        # Overall Graph Opportunity
+        if graph.is_completed() and len(graph.nodes) &gt;= 5:
+            opportunities.append(
+                Opportunity(
+                    category=&#34;WORKFLOW&#34;,
+                    title=f&#34;Synthesize Reusable Workflow Template&#34;,
+                    description=f&#34;Goal &#39;{graph.goal_id}&#39; completed with 100% success; package DAG topology into standard skill template.&#34;,
+                    source_task=&#34;goal_graph&#34;,
+                    impact_level=&#34;TRANSFORMATIVE&#34;,
+                )
+            )
+
+        return opportunities</code></pre>
+</details>
+<div class="desc"><p>Discovers expansion opportunities and reusable skills from task execution outputs.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.reflection.OpportunityDetector.detect_opportunities"><code class="name flex">
+<span>def <span class="ident">detect_opportunities</span></span>(<span>self, graph: TaskGraph) ‑> List[<a title="jarvis.reflection.opportunity_detector.Opportunity" href="opportunity_detector.html#jarvis.reflection.opportunity_detector.Opportunity">Opportunity</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def detect_opportunities(self, graph: TaskGraph) -&gt; List[Opportunity]:
+    opportunities: List[Opportunity] = []
+
+    for task_id, node in graph.nodes.items():
+        if node.status == TaskStatus.COMPLETED:
+            for key, val in node.outputs.items():
+                key_lower = key.lower()
+                if any(term in key_lower for term in [&#34;opportunity&#34;, &#34;suggest&#34;, &#34;idea&#34;, &#34;product&#34;, &#34;export&#34;]):
+                    opportunities.append(
+                        Opportunity(
+                            category=&#34;PRODUCT&#34; if &#34;product&#34; in key_lower else &#34;SKILL&#34;,
+                            title=f&#34;Opportunity from {node.name}&#34;,
+                            description=str(val),
+                            source_task=task_id,
+                            impact_level=&#34;HIGH&#34;,
+                        )
+                    )
+
+                if &#34;repo_created&#34; in key_lower:
+                    opportunities.append(
+                        Opportunity(
+                            category=&#34;ENGINEERING&#34;,
+                            title=f&#34;Open Source Asset Created&#34;,
+                            description=f&#34;Automate CI/CD and GSoC alignment for created repository: {val}&#34;,
+                            source_task=task_id,
+                            impact_level=&#34;HIGH&#34;,
+                        )
+                    )
+
+    # Overall Graph Opportunity
+    if graph.is_completed() and len(graph.nodes) &gt;= 5:
+        opportunities.append(
+            Opportunity(
+                category=&#34;WORKFLOW&#34;,
+                title=f&#34;Synthesize Reusable Workflow Template&#34;,
+                description=f&#34;Goal &#39;{graph.goal_id}&#39; completed with 100% success; package DAG topology into standard skill template.&#34;,
+                source_task=&#34;goal_graph&#34;,
+                impact_level=&#34;TRANSFORMATIVE&#34;,
+            )
+        )
+
+    return opportunities</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.ReflectionEngine"><code class="flex name class">
+<span>class <span class="ident">ReflectionEngine</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ReflectionEngine:
+    &#34;&#34;&#34;Unified engine coordinating all reflection sub-engines.&#34;&#34;&#34;
+
+    def __init__(self):
+        self.analyzer = ExecutionAnalyzer()
+        self.gap_detector = GapDetector()
+        self.opportunity_detector = OpportunityDetector()
+        self.improvement_generator = ImprovementGenerator()
+        self.scorer = ReflectionScorer()
+
+    def generate_reflection(self, graph: TaskGraph) -&gt; UnifiedReflectionReport:
+        analysis = self.analyzer.analyze_graph(graph)
+        gaps = self.gap_detector.detect_gaps(graph)
+        opportunities = self.opportunity_detector.detect_opportunities(graph)
+        proposals = self.improvement_generator.generate_from_gaps(gaps, analysis)
+        constitution_score = self.scorer.score_execution(graph, analysis)
+
+        return UnifiedReflectionReport(
+            goal_id=graph.goal_id,
+            analysis=analysis,
+            constitution_score=constitution_score,
+            gaps=gaps,
+            opportunities=opportunities,
+            improvement_proposals=proposals,
+        )</code></pre>
+</details>
+<div class="desc"><p>Unified engine coordinating all reflection sub-engines.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.reflection.ReflectionEngine.generate_reflection"><code class="name flex">
+<span>def <span class="ident">generate_reflection</span></span>(<span>self, graph: TaskGraph) ‑> <a title="jarvis.reflection.UnifiedReflectionReport" href="#jarvis.reflection.UnifiedReflectionReport">UnifiedReflectionReport</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_reflection(self, graph: TaskGraph) -&gt; UnifiedReflectionReport:
+    analysis = self.analyzer.analyze_graph(graph)
+    gaps = self.gap_detector.detect_gaps(graph)
+    opportunities = self.opportunity_detector.detect_opportunities(graph)
+    proposals = self.improvement_generator.generate_from_gaps(gaps, analysis)
+    constitution_score = self.scorer.score_execution(graph, analysis)
+
+    return UnifiedReflectionReport(
+        goal_id=graph.goal_id,
+        analysis=analysis,
+        constitution_score=constitution_score,
+        gaps=gaps,
+        opportunities=opportunities,
+        improvement_proposals=proposals,
+    )</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.ReflectionScorer"><code class="flex name class">
+<span>class <span class="ident">ReflectionScorer</span></span>
+<span>(</span><span>constitution_dir: str = 'jarvis/constitution')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ReflectionScorer:
+    &#34;&#34;&#34;Evaluates task execution against Constitution pillars and constraints.&#34;&#34;&#34;
+
+    def __init__(self, constitution_dir: str = &#34;jarvis/constitution&#34;):
+        self.constitution_dir = Path(constitution_dir)
+        self.constraints = self._load_yaml(&#34;constraints.yaml&#34;)
+        self.values = self._load_yaml(&#34;values.yaml&#34;)
+
+    def _load_yaml(self, filename: str) -&gt; Dict[str, Any]:
+        path = self.constitution_dir / filename
+        if path.exists():
+            try:
+                return yaml.safe_load(path.read_text(encoding=&#34;utf-8&#34;)) or {}
+            except Exception:
+                return {}
+        return {}
+
+    def score_execution(self, graph: TaskGraph, analysis: ExecutionAnalysis) -&gt; ConstitutionScore:
+        violations: List[str] = []
+        compliances: List[str] = []
+
+        # 1. Constraint: Mandatory Verification Gate
+        all_verified = True
+        for tid, node in graph.nodes.items():
+            if node.status == TaskStatus.COMPLETED:
+                verif = node.metadata.get(&#34;verification&#34;)
+                if not verif or not verif.get(&#34;passed&#34;):
+                    all_verified = False
+                    violations.append(f&#34;Task &#39;{tid}&#39; marked COMPLETED without verified QA gate.&#34;)
+
+        if all_verified and analysis.completed_tasks &gt; 0:
+            compliances.append(&#34;100% of completed tasks passed multi-stage QA &amp; DLP verification gates.&#34;)
+
+        # 2. Value: Verifiable Truth (Reliability over Illusion)
+        if analysis.completion_rate_pct &gt;= 90.0:
+            compliances.append(f&#34;High verifiable completion rate ({analysis.completion_rate_pct}%).&#34;)
+        elif analysis.failed_tasks &gt; 0 and analysis.completed_tasks == 0:
+            violations.append(&#34;Zero successful completions in goal execution.&#34;)
+
+        # 3. Compute Scores
+        constraints_score = 1.0 if not violations else max(0.0, 1.0 - (len(violations) * 0.3))
+        values_score = round(min(1.0, analysis.completion_rate_pct / 100.0), 2)
+        overall_score = round((constraints_score * 0.6) + (values_score * 0.4), 2)
+
+        return ConstitutionScore(
+            overall_score=overall_score,
+            values_score=values_score,
+            constraints_score=constraints_score,
+            violations=violations,
+            compliances=compliances,
+        )</code></pre>
+</details>
+<div class="desc"><p>Evaluates task execution against Constitution pillars and constraints.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.reflection.ReflectionScorer.score_execution"><code class="name flex">
+<span>def <span class="ident">score_execution</span></span>(<span>self,<br>graph: TaskGraph,<br>analysis: <a title="jarvis.reflection.ExecutionAnalysis" href="#jarvis.reflection.ExecutionAnalysis">ExecutionAnalysis</a>) ‑> <a title="jarvis.reflection.scorer.ConstitutionScore" href="scorer.html#jarvis.reflection.scorer.ConstitutionScore">ConstitutionScore</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def score_execution(self, graph: TaskGraph, analysis: ExecutionAnalysis) -&gt; ConstitutionScore:
+    violations: List[str] = []
+    compliances: List[str] = []
+
+    # 1. Constraint: Mandatory Verification Gate
+    all_verified = True
+    for tid, node in graph.nodes.items():
+        if node.status == TaskStatus.COMPLETED:
+            verif = node.metadata.get(&#34;verification&#34;)
+            if not verif or not verif.get(&#34;passed&#34;):
+                all_verified = False
+                violations.append(f&#34;Task &#39;{tid}&#39; marked COMPLETED without verified QA gate.&#34;)
+
+    if all_verified and analysis.completed_tasks &gt; 0:
+        compliances.append(&#34;100% of completed tasks passed multi-stage QA &amp; DLP verification gates.&#34;)
+
+    # 2. Value: Verifiable Truth (Reliability over Illusion)
+    if analysis.completion_rate_pct &gt;= 90.0:
+        compliances.append(f&#34;High verifiable completion rate ({analysis.completion_rate_pct}%).&#34;)
+    elif analysis.failed_tasks &gt; 0 and analysis.completed_tasks == 0:
+        violations.append(&#34;Zero successful completions in goal execution.&#34;)
+
+    # 3. Compute Scores
+    constraints_score = 1.0 if not violations else max(0.0, 1.0 - (len(violations) * 0.3))
+    values_score = round(min(1.0, analysis.completion_rate_pct / 100.0), 2)
+    overall_score = round((constraints_score * 0.6) + (values_score * 0.4), 2)
+
+    return ConstitutionScore(
+        overall_score=overall_score,
+        values_score=values_score,
+        constraints_score=constraints_score,
+        violations=violations,
+        compliances=compliances,
+    )</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.reflection.UnifiedReflectionReport"><code class="flex name class">
+<span>class <span class="ident">UnifiedReflectionReport</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UnifiedReflectionReport(BaseModel):
+    goal_id: str
+    timestamp: str = Field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
+    analysis: ExecutionAnalysis
+    constitution_score: ConstitutionScore
+    gaps: List[CapabilityGap] = Field(default_factory=list)
+    opportunities: List[Opportunity] = Field(default_factory=list)
+    improvement_proposals: List[ImprovementProposal] = Field(default_factory=list)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.reflection.UnifiedReflectionReport.analysis"><code class="name">var <span class="ident">analysis</span> : <a title="jarvis.reflection.analyzer.ExecutionAnalysis" href="analyzer.html#jarvis.reflection.analyzer.ExecutionAnalysis">ExecutionAnalysis</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.UnifiedReflectionReport.constitution_score"><code class="name">var <span class="ident">constitution_score</span> : <a title="jarvis.reflection.scorer.ConstitutionScore" href="scorer.html#jarvis.reflection.scorer.ConstitutionScore">ConstitutionScore</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.UnifiedReflectionReport.gaps"><code class="name">var <span class="ident">gaps</span> : List[<a title="jarvis.reflection.gap_detector.CapabilityGap" href="gap_detector.html#jarvis.reflection.gap_detector.CapabilityGap">CapabilityGap</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.UnifiedReflectionReport.goal_id"><code class="name">var <span class="ident">goal_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.UnifiedReflectionReport.improvement_proposals"><code class="name">var <span class="ident">improvement_proposals</span> : List[<a title="jarvis.reflection.improvement_generator.ImprovementProposal" href="improvement_generator.html#jarvis.reflection.improvement_generator.ImprovementProposal">ImprovementProposal</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.UnifiedReflectionReport.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.UnifiedReflectionReport.opportunities"><code class="name">var <span class="ident">opportunities</span> : List[<a title="jarvis.reflection.opportunity_detector.Opportunity" href="opportunity_detector.html#jarvis.reflection.opportunity_detector.Opportunity">Opportunity</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.reflection.UnifiedReflectionReport.timestamp"><code class="name">var <span class="ident">timestamp</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis" href="../index.html">jarvis</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="jarvis.reflection.analyzer" href="analyzer.html">jarvis.reflection.analyzer</a></code></li>
+<li><code><a title="jarvis.reflection.gap_detector" href="gap_detector.html">jarvis.reflection.gap_detector</a></code></li>
+<li><code><a title="jarvis.reflection.improvement_generator" href="improvement_generator.html">jarvis.reflection.improvement_generator</a></code></li>
+<li><code><a title="jarvis.reflection.opportunity_detector" href="opportunity_detector.html">jarvis.reflection.opportunity_detector</a></code></li>
+<li><code><a title="jarvis.reflection.scorer" href="scorer.html">jarvis.reflection.scorer</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.reflection.CapabilityGap" href="#jarvis.reflection.CapabilityGap">CapabilityGap</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.reflection.CapabilityGap.affected_tasks" href="#jarvis.reflection.CapabilityGap.affected_tasks">affected_tasks</a></code></li>
+<li><code><a title="jarvis.reflection.CapabilityGap.description" href="#jarvis.reflection.CapabilityGap.description">description</a></code></li>
+<li><code><a title="jarvis.reflection.CapabilityGap.gap_type" href="#jarvis.reflection.CapabilityGap.gap_type">gap_type</a></code></li>
+<li><code><a title="jarvis.reflection.CapabilityGap.model_config" href="#jarvis.reflection.CapabilityGap.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.reflection.CapabilityGap.name" href="#jarvis.reflection.CapabilityGap.name">name</a></code></li>
+<li><code><a title="jarvis.reflection.CapabilityGap.severity" href="#jarvis.reflection.CapabilityGap.severity">severity</a></code></li>
+<li><code><a title="jarvis.reflection.CapabilityGap.suggested_capability" href="#jarvis.reflection.CapabilityGap.suggested_capability">suggested_capability</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.ConstitutionScore" href="#jarvis.reflection.ConstitutionScore">ConstitutionScore</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.reflection.ConstitutionScore.compliances" href="#jarvis.reflection.ConstitutionScore.compliances">compliances</a></code></li>
+<li><code><a title="jarvis.reflection.ConstitutionScore.constraints_score" href="#jarvis.reflection.ConstitutionScore.constraints_score">constraints_score</a></code></li>
+<li><code><a title="jarvis.reflection.ConstitutionScore.model_config" href="#jarvis.reflection.ConstitutionScore.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.reflection.ConstitutionScore.overall_score" href="#jarvis.reflection.ConstitutionScore.overall_score">overall_score</a></code></li>
+<li><code><a title="jarvis.reflection.ConstitutionScore.values_score" href="#jarvis.reflection.ConstitutionScore.values_score">values_score</a></code></li>
+<li><code><a title="jarvis.reflection.ConstitutionScore.violations" href="#jarvis.reflection.ConstitutionScore.violations">violations</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.ExecutionAnalysis" href="#jarvis.reflection.ExecutionAnalysis">ExecutionAnalysis</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.reflection.ExecutionAnalysis.average_duration" href="#jarvis.reflection.ExecutionAnalysis.average_duration">average_duration</a></code></li>
+<li><code><a title="jarvis.reflection.ExecutionAnalysis.bottlenecks" href="#jarvis.reflection.ExecutionAnalysis.bottlenecks">bottlenecks</a></code></li>
+<li><code><a title="jarvis.reflection.ExecutionAnalysis.completed_tasks" href="#jarvis.reflection.ExecutionAnalysis.completed_tasks">completed_tasks</a></code></li>
+<li><code><a title="jarvis.reflection.ExecutionAnalysis.completion_rate_pct" href="#jarvis.reflection.ExecutionAnalysis.completion_rate_pct">completion_rate_pct</a></code></li>
+<li><code><a title="jarvis.reflection.ExecutionAnalysis.failed_tasks" href="#jarvis.reflection.ExecutionAnalysis.failed_tasks">failed_tasks</a></code></li>
+<li><code><a title="jarvis.reflection.ExecutionAnalysis.model_config" href="#jarvis.reflection.ExecutionAnalysis.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.reflection.ExecutionAnalysis.repeated_failures" href="#jarvis.reflection.ExecutionAnalysis.repeated_failures">repeated_failures</a></code></li>
+<li><code><a title="jarvis.reflection.ExecutionAnalysis.retried_tasks" href="#jarvis.reflection.ExecutionAnalysis.retried_tasks">retried_tasks</a></code></li>
+<li><code><a title="jarvis.reflection.ExecutionAnalysis.total_tasks" href="#jarvis.reflection.ExecutionAnalysis.total_tasks">total_tasks</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.ExecutionAnalyzer" href="#jarvis.reflection.ExecutionAnalyzer">ExecutionAnalyzer</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.reflection.ExecutionAnalyzer.analyze_graph" href="#jarvis.reflection.ExecutionAnalyzer.analyze_graph">analyze_graph</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.GapDetector" href="#jarvis.reflection.GapDetector">GapDetector</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.reflection.GapDetector.detect_gaps" href="#jarvis.reflection.GapDetector.detect_gaps">detect_gaps</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.ImprovementGenerator" href="#jarvis.reflection.ImprovementGenerator">ImprovementGenerator</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.reflection.ImprovementGenerator.generate_from_gaps" href="#jarvis.reflection.ImprovementGenerator.generate_from_gaps">generate_from_gaps</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.ImprovementProposal" href="#jarvis.reflection.ImprovementProposal">ImprovementProposal</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.reflection.ImprovementProposal.category" href="#jarvis.reflection.ImprovementProposal.category">category</a></code></li>
+<li><code><a title="jarvis.reflection.ImprovementProposal.description" href="#jarvis.reflection.ImprovementProposal.description">description</a></code></li>
+<li><code><a title="jarvis.reflection.ImprovementProposal.id" href="#jarvis.reflection.ImprovementProposal.id">id</a></code></li>
+<li><code><a title="jarvis.reflection.ImprovementProposal.model_config" href="#jarvis.reflection.ImprovementProposal.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.reflection.ImprovementProposal.priority" href="#jarvis.reflection.ImprovementProposal.priority">priority</a></code></li>
+<li><code><a title="jarvis.reflection.ImprovementProposal.proposed_changes" href="#jarvis.reflection.ImprovementProposal.proposed_changes">proposed_changes</a></code></li>
+<li><code><a title="jarvis.reflection.ImprovementProposal.status" href="#jarvis.reflection.ImprovementProposal.status">status</a></code></li>
+<li><code><a title="jarvis.reflection.ImprovementProposal.title" href="#jarvis.reflection.ImprovementProposal.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.Opportunity" href="#jarvis.reflection.Opportunity">Opportunity</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.reflection.Opportunity.category" href="#jarvis.reflection.Opportunity.category">category</a></code></li>
+<li><code><a title="jarvis.reflection.Opportunity.description" href="#jarvis.reflection.Opportunity.description">description</a></code></li>
+<li><code><a title="jarvis.reflection.Opportunity.impact_level" href="#jarvis.reflection.Opportunity.impact_level">impact_level</a></code></li>
+<li><code><a title="jarvis.reflection.Opportunity.model_config" href="#jarvis.reflection.Opportunity.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.reflection.Opportunity.source_task" href="#jarvis.reflection.Opportunity.source_task">source_task</a></code></li>
+<li><code><a title="jarvis.reflection.Opportunity.title" href="#jarvis.reflection.Opportunity.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.OpportunityDetector" href="#jarvis.reflection.OpportunityDetector">OpportunityDetector</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.reflection.OpportunityDetector.detect_opportunities" href="#jarvis.reflection.OpportunityDetector.detect_opportunities">detect_opportunities</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.ReflectionEngine" href="#jarvis.reflection.ReflectionEngine">ReflectionEngine</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.reflection.ReflectionEngine.generate_reflection" href="#jarvis.reflection.ReflectionEngine.generate_reflection">generate_reflection</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.ReflectionScorer" href="#jarvis.reflection.ReflectionScorer">ReflectionScorer</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.reflection.ReflectionScorer.score_execution" href="#jarvis.reflection.ReflectionScorer.score_execution">score_execution</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.reflection.UnifiedReflectionReport" href="#jarvis.reflection.UnifiedReflectionReport">UnifiedReflectionReport</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.reflection.UnifiedReflectionReport.analysis" href="#jarvis.reflection.UnifiedReflectionReport.analysis">analysis</a></code></li>
+<li><code><a title="jarvis.reflection.UnifiedReflectionReport.constitution_score" href="#jarvis.reflection.UnifiedReflectionReport.constitution_score">constitution_score</a></code></li>
+<li><code><a title="jarvis.reflection.UnifiedReflectionReport.gaps" href="#jarvis.reflection.UnifiedReflectionReport.gaps">gaps</a></code></li>
+<li><code><a title="jarvis.reflection.UnifiedReflectionReport.goal_id" href="#jarvis.reflection.UnifiedReflectionReport.goal_id">goal_id</a></code></li>
+<li><code><a title="jarvis.reflection.UnifiedReflectionReport.improvement_proposals" href="#jarvis.reflection.UnifiedReflectionReport.improvement_proposals">improvement_proposals</a></code></li>
+<li><code><a title="jarvis.reflection.UnifiedReflectionReport.model_config" href="#jarvis.reflection.UnifiedReflectionReport.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.reflection.UnifiedReflectionReport.opportunities" href="#jarvis.reflection.UnifiedReflectionReport.opportunities">opportunities</a></code></li>
+<li><code><a title="jarvis.reflection.UnifiedReflectionReport.timestamp" href="#jarvis.reflection.UnifiedReflectionReport.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

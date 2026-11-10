@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.api.routes_search API documentation</title>
+<meta name="description" content="JARVIS Local Search API Routes.
+Provides REST endpoints for keyword, semantic, hybrid, and research search,
+document ingestion, reindexing, cache …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.api.routes_search</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Local Search API Routes.
+Provides REST endpoints for keyword, semantic, hybrid, and research search,
+document ingestion, reindexing, cache management, and index health.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.api.routes_search.clear_cache"><code class="name flex">
+<span>async def <span class="ident">clear_cache</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/cache/clear&#34;)
+async def clear_cache() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Clear hot search query cache.&#34;&#34;&#34;
+    cleared = search_orchestrator.cache.clear()
+    return {&#34;success&#34;: True, &#34;cleared_entries&#34;: cleared}</code></pre>
+</details>
+<div class="desc"><p>Clear hot search query cache.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.delete_document"><code class="name flex">
+<span>async def <span class="ident">delete_document</span></span>(<span>doc_id: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.delete(&#34;/search/documents/{doc_id}&#34;)
+async def delete_document(doc_id: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Delete a document from search indices.&#34;&#34;&#34;
+    success = search_orchestrator.local.delete_document(doc_id)
+    if not success:
+        raise HTTPException(status_code=404, detail=f&#34;Document not found or already deleted: {doc_id}&#34;)
+
+    # Remove from Meilisearch and Qdrant
+    await search_orchestrator.meili.delete_document(doc_id)
+    search_orchestrator.semantic.delete_document(doc_id)
+    search_orchestrator.cache.clear()
+
+    return {&#34;success&#34;: True, &#34;deleted_doc_id&#34;: doc_id}</code></pre>
+</details>
+<div class="desc"><p>Delete a document from search indices.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.get_document"><code class="name flex">
+<span>async def <span class="ident">get_document</span></span>(<span>doc_id: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/search/documents/{doc_id}&#34;)
+async def get_document(doc_id: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Inspect full document content, provenance, and metadata.&#34;&#34;&#34;
+    doc = search_orchestrator.local.get_document(doc_id)
+    if not doc:
+        raise HTTPException(status_code=404, detail=f&#34;Document not found: {doc_id}&#34;)
+    return doc</code></pre>
+</details>
+<div class="desc"><p>Inspect full document content, provenance, and metadata.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.get_search_health"><code class="name flex">
+<span>async def <span class="ident">get_search_health</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/search/health&#34;)
+async def get_search_health() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Search health probe.&#34;&#34;&#34;
+    stats = search_orchestrator.local.get_stats()
+    return {
+        &#34;status&#34;: &#34;healthy&#34;,
+        &#34;total_documents&#34;: stats[&#34;total_documents&#34;],
+        &#34;fts5_ready&#34;: True,
+        &#34;database_path&#34;: stats[&#34;database_path&#34;],
+    }</code></pre>
+</details>
+<div class="desc"><p>Search health probe.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.get_search_stats"><code class="name flex">
+<span>async def <span class="ident">get_search_stats</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/search/stats&#34;)
+async def get_search_stats() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Return database statistics, document counts, and telemetry.&#34;&#34;&#34;
+    stats = search_orchestrator.local.get_stats()
+    stats[&#34;cache&#34;] = search_orchestrator.cache.stats()
+    return stats</code></pre>
+</details>
+<div class="desc"><p>Return database statistics, document counts, and telemetry.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.get_search_status"><code class="name flex">
+<span>async def <span class="ident">get_search_status</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/search/status&#34;)
+async def get_search_status() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Get status of all connected search sub-engines.&#34;&#34;&#34;
+    meili_ok = await search_orchestrator.meili.is_healthy()
+    qdrant_ok = await search_orchestrator.semantic.is_healthy()
+    searx_ok = await search_orchestrator.web.is_healthy()
+
+    return {
+        &#34;status&#34;: &#34;ready&#34;,
+        &#34;engines&#34;: {
+            &#34;sqlite_fts5&#34;: {&#34;active&#34;: True, &#34;mode&#34;: &#34;primary_local&#34;, &#34;latency&#34;: &#34;1-20ms&#34;},
+            &#34;meilisearch&#34;: {&#34;active&#34;: meili_ok, &#34;mode&#34;: &#34;instant_search&#34;, &#34;latency&#34;: &#34;5-50ms&#34;},
+            &#34;qdrant_semantic&#34;: {&#34;active&#34;: qdrant_ok, &#34;mode&#34;: &#34;vector_semantic&#34;, &#34;latency&#34;: &#34;20-150ms&#34;},
+            &#34;searxng&#34;: {&#34;active&#34;: searx_ok, &#34;mode&#34;: &#34;fresh_web_fallback&#34;, &#34;latency&#34;: &#34;1-5s&#34;},
+            &#34;hot_cache&#34;: {&#34;active&#34;: True, &#34;redis&#34;: bool(search_orchestrator.cache.redis_client), &#34;latency&#34;: &#34;&lt;5ms&#34;},
+        },
+    }</code></pre>
+</details>
+<div class="desc"><p>Get status of all connected search sub-engines.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.ingest_file"><code class="name flex">
+<span>async def <span class="ident">ingest_file</span></span>(<span>req: <a title="jarvis.api.routes_search.IngestFileRequest" href="#jarvis.api.routes_search.IngestFileRequest">IngestFileRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/ingest/file&#34;)
+async def ingest_file(req: IngestFileRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Ingest a single text file into the search engine.&#34;&#34;&#34;
+    ingestor = FileIngestor(
+        local_engine=search_orchestrator.local,
+        semantic_engine=search_orchestrator.semantic,
+        meili_engine=search_orchestrator.meili,
+    )
+    try:
+        doc_ids = await ingestor.ingest_file(
+            file_path=req.file_path,
+            title=req.title,
+            source_type=req.source_type,
+        )
+        return {&#34;success&#34;: True, &#34;indexed_chunks&#34;: len(doc_ids), &#34;doc_ids&#34;: doc_ids}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>Ingest a single text file into the search engine.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.ingest_folder"><code class="name flex">
+<span>async def <span class="ident">ingest_folder</span></span>(<span>req: <a title="jarvis.api.routes_search.IngestFolderRequest" href="#jarvis.api.routes_search.IngestFolderRequest">IngestFolderRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/ingest/folder&#34;)
+async def ingest_folder(req: IngestFolderRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Ingest documents from a directory.&#34;&#34;&#34;
+    from pathlib import Path
+
+    root = Path(req.folder_path)
+    if not root.exists() or not root.is_dir():
+        raise HTTPException(status_code=400, detail=f&#34;Folder not found: {req.folder_path}&#34;)
+
+    file_ingestor = FileIngestor(
+        local_engine=search_orchestrator.local,
+        semantic_engine=search_orchestrator.semantic,
+        meili_engine=search_orchestrator.meili,
+    )
+    pdf_ingestor = PDFIngestor(
+        local_engine=search_orchestrator.local,
+        semantic_engine=search_orchestrator.semantic,
+        meili_engine=search_orchestrator.meili,
+    )
+    md_ingestor = MarkdownIngestor(
+        local_engine=search_orchestrator.local,
+        semantic_engine=search_orchestrator.semantic,
+        meili_engine=search_orchestrator.meili,
+    )
+
+    all_indexed = []
+    pattern = &#34;**/*&#34; if req.recursive else &#34;*&#34;
+    count = 0
+
+    for path in root.glob(pattern):
+        if count &gt;= req.max_files:
+            break
+        if not path.is_file():
+            continue
+
+        try:
+            if path.suffix.lower() == &#34;.pdf&#34;:
+                doc_ids = await pdf_ingestor.ingest_pdf(str(path))
+            elif path.suffix.lower() in (&#34;.md&#34;, &#34;.markdown&#34;):
+                doc_ids = await md_ingestor.ingest_markdown(str(path))
+            elif path.suffix.lower() in (&#34;.txt&#34;, &#34;.csv&#34;, &#34;.json&#34;, &#34;.log&#34;):
+                doc_ids = await file_ingestor.ingest_file(str(path))
+            else:
+                continue
+
+            all_indexed.extend(doc_ids)
+            count += 1
+        except Exception:
+            continue
+
+    return {&#34;success&#34;: True, &#34;files_processed&#34;: count, &#34;total_chunks&#34;: len(all_indexed)}</code></pre>
+</details>
+<div class="desc"><p>Ingest documents from a directory.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.ingest_pdf"><code class="name flex">
+<span>async def <span class="ident">ingest_pdf</span></span>(<span>req: <a title="jarvis.api.routes_search.IngestPDFRequest" href="#jarvis.api.routes_search.IngestPDFRequest">IngestPDFRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/ingest/pdf&#34;)
+async def ingest_pdf(req: IngestPDFRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Ingest a PDF with page-specific provenance.&#34;&#34;&#34;
+    ingestor = PDFIngestor(
+        local_engine=search_orchestrator.local,
+        semantic_engine=search_orchestrator.semantic,
+        meili_engine=search_orchestrator.meili,
+    )
+    try:
+        doc_ids = await ingestor.ingest_pdf(
+            file_path=req.file_path,
+            title=req.title,
+        )
+        return {&#34;success&#34;: True, &#34;indexed_pages&#34;: len(doc_ids), &#34;doc_ids&#34;: doc_ids}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>Ingest a PDF with page-specific provenance.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.ingest_repo"><code class="name flex">
+<span>async def <span class="ident">ingest_repo</span></span>(<span>req: <a title="jarvis.api.routes_search.IngestRepoRequest" href="#jarvis.api.routes_search.IngestRepoRequest">IngestRepoRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/ingest/repo&#34;)
+async def ingest_repo(req: IngestRepoRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Ingest code repository source files.&#34;&#34;&#34;
+    ingestor = CodeRepoIngestor(
+        local_engine=search_orchestrator.local,
+        semantic_engine=search_orchestrator.semantic,
+        meili_engine=search_orchestrator.meili,
+    )
+    try:
+        doc_ids = await ingestor.ingest_repository(
+            repo_dir=req.repo_path,
+            repo_name=req.repo_name,
+            max_files=req.max_files,
+        )
+        return {&#34;success&#34;: True, &#34;indexed_files&#34;: len(doc_ids), &#34;doc_ids&#34;: doc_ids}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>Ingest code repository source files.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.ingest_url"><code class="name flex">
+<span>async def <span class="ident">ingest_url</span></span>(<span>req: <a title="jarvis.api.routes_search.IngestURLRequest" href="#jarvis.api.routes_search.IngestURLRequest">IngestURLRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/ingest/url&#34;)
+async def ingest_url(req: IngestURLRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Ingest browser page or web content.&#34;&#34;&#34;
+    ingestor = BrowserPageIngestor(
+        local_engine=search_orchestrator.local,
+        semantic_engine=search_orchestrator.semantic,
+        meili_engine=search_orchestrator.meili,
+    )
+    try:
+        doc_ids = await ingestor.ingest_page(
+            url=req.url,
+            title=req.title or req.url,
+            html_or_text=req.content,
+        )
+        return {&#34;success&#34;: True, &#34;indexed_chunks&#34;: len(doc_ids), &#34;doc_ids&#34;: doc_ids}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>Ingest browser page or web content.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.list_documents"><code class="name flex">
+<span>async def <span class="ident">list_documents</span></span>(<span>limit: int = Query(50),<br>offset: int = Query(0),<br>source_type: str | None = Query(None)) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/search/documents&#34;)
+async def list_documents(
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+    source_type: Optional[str] = Query(default=None),
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;List indexed documents with pagination.&#34;&#34;&#34;
+    docs = search_orchestrator.local.list_documents(limit=limit, offset=offset, source_type=source_type)
+    return {&#34;documents&#34;: docs, &#34;limit&#34;: limit, &#34;offset&#34;: offset, &#34;count&#34;: len(docs)}</code></pre>
+</details>
+<div class="desc"><p>List indexed documents with pagination.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.reindex_corpus"><code class="name flex">
+<span>async def <span class="ident">reindex_corpus</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/reindex&#34;)
+async def reindex_corpus() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Rebuild SQLite FTS5 search index incrementally from active documents.&#34;&#34;&#34;
+    count = search_orchestrator.local.reindex_all()
+    search_orchestrator.cache.clear()
+    return {&#34;success&#34;: True, &#34;reindexed_count&#34;: count}</code></pre>
+</details>
+<div class="desc"><p>Rebuild SQLite FTS5 search index incrementally from active documents.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.search_hybrid"><code class="name flex">
+<span>async def <span class="ident">search_hybrid</span></span>(<span>req: <a title="jarvis.api.routes_search.SearchRequest" href="#jarvis.api.routes_search.SearchRequest">SearchRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/hybrid&#34;)
+async def search_hybrid(req: SearchRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Execute hybrid search combining SQLite FTS5, Meilisearch, and Qdrant.&#34;&#34;&#34;
+    return await search_orchestrator.search(
+        query=req.query,
+        mode=&#34;hybrid&#34;,
+        limit=req.limit,
+        source_type=req.source_type,
+        refresh_web=req.refresh_web,
+        user_id=req.user_id,
+    )</code></pre>
+</details>
+<div class="desc"><p>Execute hybrid search combining SQLite FTS5, Meilisearch, and Qdrant.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.search_local"><code class="name flex">
+<span>async def <span class="ident">search_local</span></span>(<span>req: <a title="jarvis.api.routes_search.SearchRequest" href="#jarvis.api.routes_search.SearchRequest">SearchRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/local&#34;)
+async def search_local(req: SearchRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Execute millisecond SQLite FTS5 keyword search.&#34;&#34;&#34;
+    return await search_orchestrator.search(
+        query=req.query,
+        mode=&#34;keyword&#34;,
+        limit=req.limit,
+        source_type=req.source_type,
+        refresh_web=False,
+        user_id=req.user_id,
+    )</code></pre>
+</details>
+<div class="desc"><p>Execute millisecond SQLite FTS5 keyword search.</p></div>
+</dd>
+<dt id="jarvis.api.routes_search.search_research"><code class="name flex">
+<span>async def <span class="ident">search_research</span></span>(<span>req: <a title="jarvis.api.routes_search.SearchRequest" href="#jarvis.api.routes_search.SearchRequest">SearchRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/search/research&#34;)
+async def search_research(req: SearchRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Execute deep research search: local-first, with automatic SearXNG web
+    refresh when local corpus does not satisfy the query.
+    &#34;&#34;&#34;
+    return await search_orchestrator.search(
+        query=req.query,
+        mode=&#34;research&#34;,
+        limit=req.limit,
+        source_type=req.source_type,
+        refresh_web=True,
+        user_id=req.user_id,
+    )</code></pre>
+</details>
+<div class="desc"><p>Execute deep research search: local-first, with automatic SearXNG web
+refresh when local corpus does not satisfy the query.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.api.routes_search.IngestFileRequest"><code class="flex name class">
+<span>class <span class="ident">IngestFileRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IngestFileRequest(BaseModel):
+    file_path: str = Field(..., description=&#34;Absolute or relative path to file&#34;)
+    title: Optional[str] = None
+    source_type: str = Field(default=&#34;document&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_search.IngestFileRequest.file_path"><code class="name">var <span class="ident">file_path</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestFileRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestFileRequest.source_type"><code class="name">var <span class="ident">source_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestFileRequest.title"><code class="name">var <span class="ident">title</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_search.IngestFolderRequest"><code class="flex name class">
+<span>class <span class="ident">IngestFolderRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IngestFolderRequest(BaseModel):
+    folder_path: str = Field(..., description=&#34;Path to folder to index&#34;)
+    recursive: bool = Field(default=True)
+    max_files: int = Field(default=100)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_search.IngestFolderRequest.folder_path"><code class="name">var <span class="ident">folder_path</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestFolderRequest.max_files"><code class="name">var <span class="ident">max_files</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestFolderRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestFolderRequest.recursive"><code class="name">var <span class="ident">recursive</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_search.IngestPDFRequest"><code class="flex name class">
+<span>class <span class="ident">IngestPDFRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IngestPDFRequest(BaseModel):
+    file_path: str = Field(..., description=&#34;Path to PDF file&#34;)
+    title: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_search.IngestPDFRequest.file_path"><code class="name">var <span class="ident">file_path</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestPDFRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestPDFRequest.title"><code class="name">var <span class="ident">title</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_search.IngestRepoRequest"><code class="flex name class">
+<span>class <span class="ident">IngestRepoRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IngestRepoRequest(BaseModel):
+    repo_path: str = Field(..., description=&#34;Path to code repository root&#34;)
+    repo_name: Optional[str] = None
+    max_files: int = Field(default=150)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_search.IngestRepoRequest.max_files"><code class="name">var <span class="ident">max_files</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestRepoRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestRepoRequest.repo_name"><code class="name">var <span class="ident">repo_name</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestRepoRequest.repo_path"><code class="name">var <span class="ident">repo_path</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_search.IngestURLRequest"><code class="flex name class">
+<span>class <span class="ident">IngestURLRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IngestURLRequest(BaseModel):
+    url: str = Field(..., description=&#34;Web URL to index&#34;)
+    title: Optional[str] = None
+    content: str = Field(..., description=&#34;Page text content or HTML&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_search.IngestURLRequest.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestURLRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestURLRequest.title"><code class="name">var <span class="ident">title</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.IngestURLRequest.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_search.SearchRequest"><code class="flex name class">
+<span>class <span class="ident">SearchRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SearchRequest(BaseModel):
+    query: str = Field(..., description=&#34;Search query string&#34;)
+    limit: int = Field(default=10, ge=1, le=100)
+    source_type: Optional[str] = Field(default=None, description=&#34;Optional filter by source type&#34;)
+    refresh_web: bool = Field(default=False, description=&#34;Whether to query SearXNG if local results are insufficient&#34;)
+    user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_search.SearchRequest.limit"><code class="name">var <span class="ident">limit</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.SearchRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.SearchRequest.query"><code class="name">var <span class="ident">query</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.SearchRequest.refresh_web"><code class="name">var <span class="ident">refresh_web</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.SearchRequest.source_type"><code class="name">var <span class="ident">source_type</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_search.SearchRequest.user_id"><code class="name">var <span class="ident">user_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.api" href="index.html">jarvis.api</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_search.clear_cache" href="#jarvis.api.routes_search.clear_cache">clear_cache</a></code></li>
+<li><code><a title="jarvis.api.routes_search.delete_document" href="#jarvis.api.routes_search.delete_document">delete_document</a></code></li>
+<li><code><a title="jarvis.api.routes_search.get_document" href="#jarvis.api.routes_search.get_document">get_document</a></code></li>
+<li><code><a title="jarvis.api.routes_search.get_search_health" href="#jarvis.api.routes_search.get_search_health">get_search_health</a></code></li>
+<li><code><a title="jarvis.api.routes_search.get_search_stats" href="#jarvis.api.routes_search.get_search_stats">get_search_stats</a></code></li>
+<li><code><a title="jarvis.api.routes_search.get_search_status" href="#jarvis.api.routes_search.get_search_status">get_search_status</a></code></li>
+<li><code><a title="jarvis.api.routes_search.ingest_file" href="#jarvis.api.routes_search.ingest_file">ingest_file</a></code></li>
+<li><code><a title="jarvis.api.routes_search.ingest_folder" href="#jarvis.api.routes_search.ingest_folder">ingest_folder</a></code></li>
+<li><code><a title="jarvis.api.routes_search.ingest_pdf" href="#jarvis.api.routes_search.ingest_pdf">ingest_pdf</a></code></li>
+<li><code><a title="jarvis.api.routes_search.ingest_repo" href="#jarvis.api.routes_search.ingest_repo">ingest_repo</a></code></li>
+<li><code><a title="jarvis.api.routes_search.ingest_url" href="#jarvis.api.routes_search.ingest_url">ingest_url</a></code></li>
+<li><code><a title="jarvis.api.routes_search.list_documents" href="#jarvis.api.routes_search.list_documents">list_documents</a></code></li>
+<li><code><a title="jarvis.api.routes_search.reindex_corpus" href="#jarvis.api.routes_search.reindex_corpus">reindex_corpus</a></code></li>
+<li><code><a title="jarvis.api.routes_search.search_hybrid" href="#jarvis.api.routes_search.search_hybrid">search_hybrid</a></code></li>
+<li><code><a title="jarvis.api.routes_search.search_local" href="#jarvis.api.routes_search.search_local">search_local</a></code></li>
+<li><code><a title="jarvis.api.routes_search.search_research" href="#jarvis.api.routes_search.search_research">search_research</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.api.routes_search.IngestFileRequest" href="#jarvis.api.routes_search.IngestFileRequest">IngestFileRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_search.IngestFileRequest.file_path" href="#jarvis.api.routes_search.IngestFileRequest.file_path">file_path</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestFileRequest.model_config" href="#jarvis.api.routes_search.IngestFileRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestFileRequest.source_type" href="#jarvis.api.routes_search.IngestFileRequest.source_type">source_type</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestFileRequest.title" href="#jarvis.api.routes_search.IngestFileRequest.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_search.IngestFolderRequest" href="#jarvis.api.routes_search.IngestFolderRequest">IngestFolderRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_search.IngestFolderRequest.folder_path" href="#jarvis.api.routes_search.IngestFolderRequest.folder_path">folder_path</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestFolderRequest.max_files" href="#jarvis.api.routes_search.IngestFolderRequest.max_files">max_files</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestFolderRequest.model_config" href="#jarvis.api.routes_search.IngestFolderRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestFolderRequest.recursive" href="#jarvis.api.routes_search.IngestFolderRequest.recursive">recursive</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_search.IngestPDFRequest" href="#jarvis.api.routes_search.IngestPDFRequest">IngestPDFRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_search.IngestPDFRequest.file_path" href="#jarvis.api.routes_search.IngestPDFRequest.file_path">file_path</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestPDFRequest.model_config" href="#jarvis.api.routes_search.IngestPDFRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestPDFRequest.title" href="#jarvis.api.routes_search.IngestPDFRequest.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_search.IngestRepoRequest" href="#jarvis.api.routes_search.IngestRepoRequest">IngestRepoRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_search.IngestRepoRequest.max_files" href="#jarvis.api.routes_search.IngestRepoRequest.max_files">max_files</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestRepoRequest.model_config" href="#jarvis.api.routes_search.IngestRepoRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestRepoRequest.repo_name" href="#jarvis.api.routes_search.IngestRepoRequest.repo_name">repo_name</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestRepoRequest.repo_path" href="#jarvis.api.routes_search.IngestRepoRequest.repo_path">repo_path</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_search.IngestURLRequest" href="#jarvis.api.routes_search.IngestURLRequest">IngestURLRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_search.IngestURLRequest.content" href="#jarvis.api.routes_search.IngestURLRequest.content">content</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestURLRequest.model_config" href="#jarvis.api.routes_search.IngestURLRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestURLRequest.title" href="#jarvis.api.routes_search.IngestURLRequest.title">title</a></code></li>
+<li><code><a title="jarvis.api.routes_search.IngestURLRequest.url" href="#jarvis.api.routes_search.IngestURLRequest.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_search.SearchRequest" href="#jarvis.api.routes_search.SearchRequest">SearchRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_search.SearchRequest.limit" href="#jarvis.api.routes_search.SearchRequest.limit">limit</a></code></li>
+<li><code><a title="jarvis.api.routes_search.SearchRequest.model_config" href="#jarvis.api.routes_search.SearchRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_search.SearchRequest.query" href="#jarvis.api.routes_search.SearchRequest.query">query</a></code></li>
+<li><code><a title="jarvis.api.routes_search.SearchRequest.refresh_web" href="#jarvis.api.routes_search.SearchRequest.refresh_web">refresh_web</a></code></li>
+<li><code><a title="jarvis.api.routes_search.SearchRequest.source_type" href="#jarvis.api.routes_search.SearchRequest.source_type">source_type</a></code></li>
+<li><code><a title="jarvis.api.routes_search.SearchRequest.user_id" href="#jarvis.api.routes_search.SearchRequest.user_id">user_id</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

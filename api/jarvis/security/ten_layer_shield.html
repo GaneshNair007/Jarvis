@@ -1,0 +1,1543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.security.ten_layer_shield API documentation</title>
+<meta name="description" content="JARVIS 10-Layer Defense-in-Depth Security Suite (Ironclad Data Loss Prevention &amp; Secret Shield)
+Synthesizing TruffleHog high-entropy secret scanning, …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.security.ten_layer_shield</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS 10-Layer Defense-in-Depth Security Suite (Ironclad Data Loss Prevention &amp; Secret Shield)
+Synthesizing TruffleHog high-entropy secret scanning, Microsoft Presidio DLP redaction,
+GitLeaks pre-commit protection, AES-256-GCM vault encryption, and OpenMausBot inline permission brokering.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.AESGCM"><code class="flex name class">
+<span>class <span class="ident">AESGCM</span></span>
+<span>(</span><span>key)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.AESGCM.generate_key"><code class="name flex">
+<span>def <span class="ident">generate_key</span></span>(<span>bit_length)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.AESGCM.decrypt"><code class="name flex">
+<span>def <span class="ident">decrypt</span></span>(<span>self, /, nonce, data, associated_data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.AESGCM.decrypt_into"><code class="name flex">
+<span>def <span class="ident">decrypt_into</span></span>(<span>self, /, nonce, data, associated_data, buf)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.AESGCM.encrypt"><code class="name flex">
+<span>def <span class="ident">encrypt</span></span>(<span>self, /, nonce, data, associated_data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.AESGCM.encrypt_into"><code class="name flex">
+<span>def <span class="ident">encrypt_into</span></span>(<span>self, /, nonce, data, associated_data, buf)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.CloudEgressFirewall"><code class="flex name class">
+<span>class <span class="ident">CloudEgressFirewall</span></span>
+<span>(</span><span>detector: Optional[<a title="jarvis.security.ten_layer_shield.EntropySecretDetector" href="#jarvis.security.ten_layer_shield.EntropySecretDetector">EntropySecretDetector</a>] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CloudEgressFirewall:
+    &#34;&#34;&#34;
+    Layer 3: Intercepts all payloads destined for cloud model providers (Gemini, OpenRouter).
+    Strictly forbids unmasked passwords, secrets, or raw keys from leaving local loopback.
+    &#34;&#34;&#34;
+
+    def __init__(self, detector: Optional[EntropySecretDetector] = None):
+        self.detector = detector or EntropySecretDetector()
+
+    def verify_egress(self, payload: str) -&gt; bool:
+        &#34;&#34;&#34;
+        Verifies if payload is safe to transmit to external cloud API.
+        Returns True if clean; raises SecurityViolationError if unredacted secret found.
+        &#34;&#34;&#34;
+        findings = self.detector.scan_text(payload)
+        high_risk_findings = [f for f in findings if f[&#34;confidence&#34;] == &#34;HIGH&#34;]
+        if high_risk_findings:
+            types = &#34;, &#34;.join(set(f[&#34;type&#34;] for f in high_risk_findings))
+            raise SecurityViolationError(
+                f&#34;Cloud Egress Firewall BLOCKED outbound call: Detected unredacted credentials ({types})&#34;
+            )
+        return True</code></pre>
+</details>
+<div class="desc"><p>Layer 3: Intercepts all payloads destined for cloud model providers (Gemini, OpenRouter).
+Strictly forbids unmasked passwords, secrets, or raw keys from leaving local loopback.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.CloudEgressFirewall.verify_egress"><code class="name flex">
+<span>def <span class="ident">verify_egress</span></span>(<span>self, payload: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_egress(self, payload: str) -&gt; bool:
+    &#34;&#34;&#34;
+    Verifies if payload is safe to transmit to external cloud API.
+    Returns True if clean; raises SecurityViolationError if unredacted secret found.
+    &#34;&#34;&#34;
+    findings = self.detector.scan_text(payload)
+    high_risk_findings = [f for f in findings if f[&#34;confidence&#34;] == &#34;HIGH&#34;]
+    if high_risk_findings:
+        types = &#34;, &#34;.join(set(f[&#34;type&#34;] for f in high_risk_findings))
+        raise SecurityViolationError(
+            f&#34;Cloud Egress Firewall BLOCKED outbound call: Detected unredacted credentials ({types})&#34;
+        )
+    return True</code></pre>
+</details>
+<div class="desc"><p>Verifies if payload is safe to transmit to external cloud API.
+Returns True if clean; raises SecurityViolationError if unredacted secret found.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.EncryptedVault"><code class="flex name class">
+<span>class <span class="ident">EncryptedVault</span></span>
+<span>(</span><span>master_password: Optional[str] = None,<br>key_file_path: Optional[Union[str, Path]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EncryptedVault:
+    &#34;&#34;&#34;
+    Layer 5: Local authenticated encryption for secrets at rest using AES-256-GCM
+    derived from a machine-local master key via PBKDF2-HMAC-SHA256 (100,000 rounds).
+    Provides genuine cryptographic confidentiality and authenticated integrity.
+    &#34;&#34;&#34;
+
+    def __init__(self, master_password: Optional[str] = None, key_file_path: Optional[Union[str, Path]] = None):
+        if master_password:
+            self.master_password = master_password
+        elif os.getenv(&#34;JARVIS_VAULT_KEY&#34;):
+            self.master_password = os.environ[&#34;JARVIS_VAULT_KEY&#34;]
+        else:
+            # Persistent machine-local keyfile
+            kpath = Path(key_file_path or &#34;data/.vault_master.key&#34;)
+            if kpath.exists():
+                try:
+                    self.master_password = kpath.read_text(encoding=&#34;utf-8&#34;).strip()
+                except Exception:
+                    self.master_password = secrets.token_urlsafe(32)
+            else:
+                try:
+                    kpath.parent.mkdir(parents=True, exist_ok=True)
+                    generated = secrets.token_urlsafe(32)
+                    kpath.write_text(generated, encoding=&#34;utf-8&#34;)
+                    self.master_password = generated
+                except Exception:
+                    self.master_password = secrets.token_urlsafe(32)
+
+    def _derive_key(self, salt: bytes) -&gt; bytes:
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=salt,
+            iterations=100_000,
+        )
+        return kdf.derive(self.master_password.encode(&#34;utf-8&#34;))
+
+    def encrypt(self, plain_text: str) -&gt; str:
+        &#34;&#34;&#34;
+        Encrypts text using AES-256-GCM authenticated encryption.
+        Uses a random 16-byte salt and 96-bit nonce per encryption.
+        Produces base64-encoded encrypted envelope.
+        &#34;&#34;&#34;
+        raw_bytes = plain_text.encode(&#34;utf-8&#34;)
+        salt = os.urandom(16)
+        nonce = os.urandom(12)  # 96-bit nonce
+        derived_key = self._derive_key(salt)
+
+        aesgcm = AESGCM(derived_key)
+        ciphertext_with_tag = aesgcm.encrypt(nonce, raw_bytes, None)
+
+        envelope = {
+            &#34;v&#34;: 2,
+            &#34;algo&#34;: &#34;AES-256-GCM&#34;,
+            &#34;salt&#34;: base64.b64encode(salt).decode(&#34;ascii&#34;),
+            &#34;nonce&#34;: base64.b64encode(nonce).decode(&#34;ascii&#34;),
+            &#34;ciphertext&#34;: base64.b64encode(ciphertext_with_tag).decode(&#34;ascii&#34;),
+        }
+        return base64.b64encode(json.dumps(envelope).encode(&#34;utf-8&#34;)).decode(&#34;ascii&#34;)
+
+    def decrypt(self, encrypted_envelope: str) -&gt; str:
+        &#34;&#34;&#34;Decrypts and verifies authentication tag on ciphertext.&#34;&#34;&#34;
+        try:
+            raw_json = base64.b64decode(encrypted_envelope).decode(&#34;utf-8&#34;)
+            envelope = json.loads(raw_json)
+        except Exception as exc:
+            raise SecurityViolationError(f&#34;Vault decryption failed: Invalid envelope ({exc})&#34;) from exc
+
+        try:
+            if envelope.get(&#34;v&#34;) == 2:
+                salt = base64.b64decode(envelope[&#34;salt&#34;])
+                nonce = base64.b64decode(envelope[&#34;nonce&#34;])
+                ciphertext_with_tag = base64.b64decode(envelope[&#34;ciphertext&#34;])
+                derived_key = self._derive_key(salt)
+                aesgcm = AESGCM(derived_key)
+                plaintext_bytes = aesgcm.decrypt(nonce, ciphertext_with_tag, None)
+                return plaintext_bytes.decode(&#34;utf-8&#34;)
+            elif envelope.get(&#34;v&#34;) == 1:
+                iv = base64.b64decode(envelope[&#34;iv&#34;])
+                cipher_bytes = base64.b64decode(envelope[&#34;ciphertext&#34;])
+                expected_tag = base64.b64decode(envelope[&#34;tag&#34;])
+                static_salt = b&#34;jarvis_vault_salt_v1_secure&#34;
+                kdf_key = hashlib.pbkdf2_hmac(&#34;sha256&#34;, self.master_password.encode(), static_salt, 100_000, dklen=32)
+                actual_tag = hmac.new(kdf_key, iv + cipher_bytes, hashlib.sha256).digest()[:16]
+                if not hmac.compare_digest(expected_tag, actual_tag):
+                    raise SecurityViolationError(
+                        &#34;Vault decryption failed: Authentication tag mismatch (tampering detected)&#34;
+                    )
+                key_stream = hashlib.sha256(kdf_key + iv).digest()
+                plain_bytes = bytes([b ^ key_stream[i % len(key_stream)] for i, b in enumerate(cipher_bytes)])
+                return plain_bytes.decode(&#34;utf-8&#34;)
+            else:
+                raise SecurityViolationError(f&#34;Unsupported vault envelope version: {envelope.get(&#39;v&#39;)}&#34;)
+        except SecurityViolationError:
+            raise
+        except InvalidTag:
+            raise SecurityViolationError(&#34;Vault decryption failed: Authentication tag mismatch (tampering detected)&#34;)
+        except Exception as exc:
+            raise SecurityViolationError(
+                f&#34;Vault decryption failed: Authentication tag mismatch or corrupted data ({exc})&#34;
+            ) from exc</code></pre>
+</details>
+<div class="desc"><p>Layer 5: Local authenticated encryption for secrets at rest using AES-256-GCM
+derived from a machine-local master key via PBKDF2-HMAC-SHA256 (100,000 rounds).
+Provides genuine cryptographic confidentiality and authenticated integrity.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.EncryptedVault.decrypt"><code class="name flex">
+<span>def <span class="ident">decrypt</span></span>(<span>self, encrypted_envelope: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decrypt(self, encrypted_envelope: str) -&gt; str:
+    &#34;&#34;&#34;Decrypts and verifies authentication tag on ciphertext.&#34;&#34;&#34;
+    try:
+        raw_json = base64.b64decode(encrypted_envelope).decode(&#34;utf-8&#34;)
+        envelope = json.loads(raw_json)
+    except Exception as exc:
+        raise SecurityViolationError(f&#34;Vault decryption failed: Invalid envelope ({exc})&#34;) from exc
+
+    try:
+        if envelope.get(&#34;v&#34;) == 2:
+            salt = base64.b64decode(envelope[&#34;salt&#34;])
+            nonce = base64.b64decode(envelope[&#34;nonce&#34;])
+            ciphertext_with_tag = base64.b64decode(envelope[&#34;ciphertext&#34;])
+            derived_key = self._derive_key(salt)
+            aesgcm = AESGCM(derived_key)
+            plaintext_bytes = aesgcm.decrypt(nonce, ciphertext_with_tag, None)
+            return plaintext_bytes.decode(&#34;utf-8&#34;)
+        elif envelope.get(&#34;v&#34;) == 1:
+            iv = base64.b64decode(envelope[&#34;iv&#34;])
+            cipher_bytes = base64.b64decode(envelope[&#34;ciphertext&#34;])
+            expected_tag = base64.b64decode(envelope[&#34;tag&#34;])
+            static_salt = b&#34;jarvis_vault_salt_v1_secure&#34;
+            kdf_key = hashlib.pbkdf2_hmac(&#34;sha256&#34;, self.master_password.encode(), static_salt, 100_000, dklen=32)
+            actual_tag = hmac.new(kdf_key, iv + cipher_bytes, hashlib.sha256).digest()[:16]
+            if not hmac.compare_digest(expected_tag, actual_tag):
+                raise SecurityViolationError(
+                    &#34;Vault decryption failed: Authentication tag mismatch (tampering detected)&#34;
+                )
+            key_stream = hashlib.sha256(kdf_key + iv).digest()
+            plain_bytes = bytes([b ^ key_stream[i % len(key_stream)] for i, b in enumerate(cipher_bytes)])
+            return plain_bytes.decode(&#34;utf-8&#34;)
+        else:
+            raise SecurityViolationError(f&#34;Unsupported vault envelope version: {envelope.get(&#39;v&#39;)}&#34;)
+    except SecurityViolationError:
+        raise
+    except InvalidTag:
+        raise SecurityViolationError(&#34;Vault decryption failed: Authentication tag mismatch (tampering detected)&#34;)
+    except Exception as exc:
+        raise SecurityViolationError(
+            f&#34;Vault decryption failed: Authentication tag mismatch or corrupted data ({exc})&#34;
+        ) from exc</code></pre>
+</details>
+<div class="desc"><p>Decrypts and verifies authentication tag on ciphertext.</p></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.EncryptedVault.encrypt"><code class="name flex">
+<span>def <span class="ident">encrypt</span></span>(<span>self, plain_text: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encrypt(self, plain_text: str) -&gt; str:
+    &#34;&#34;&#34;
+    Encrypts text using AES-256-GCM authenticated encryption.
+    Uses a random 16-byte salt and 96-bit nonce per encryption.
+    Produces base64-encoded encrypted envelope.
+    &#34;&#34;&#34;
+    raw_bytes = plain_text.encode(&#34;utf-8&#34;)
+    salt = os.urandom(16)
+    nonce = os.urandom(12)  # 96-bit nonce
+    derived_key = self._derive_key(salt)
+
+    aesgcm = AESGCM(derived_key)
+    ciphertext_with_tag = aesgcm.encrypt(nonce, raw_bytes, None)
+
+    envelope = {
+        &#34;v&#34;: 2,
+        &#34;algo&#34;: &#34;AES-256-GCM&#34;,
+        &#34;salt&#34;: base64.b64encode(salt).decode(&#34;ascii&#34;),
+        &#34;nonce&#34;: base64.b64encode(nonce).decode(&#34;ascii&#34;),
+        &#34;ciphertext&#34;: base64.b64encode(ciphertext_with_tag).decode(&#34;ascii&#34;),
+    }
+    return base64.b64encode(json.dumps(envelope).encode(&#34;utf-8&#34;)).decode(&#34;ascii&#34;)</code></pre>
+</details>
+<div class="desc"><p>Encrypts text using AES-256-GCM authenticated encryption.
+Uses a random 16-byte salt and 96-bit nonce per encryption.
+Produces base64-encoded encrypted envelope.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.EntropySecretDetector"><code class="flex name class">
+<span>class <span class="ident">EntropySecretDetector</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EntropySecretDetector:
+    &#34;&#34;&#34;
+    Layer 1: Scans text for high-entropy secrets, API tokens, passwords, and private keys.
+    Combines Shannon entropy calculation with 80+ credential signatures.
+    &#34;&#34;&#34;
+
+    KNOWN_SECRET_PATTERNS = [
+        # AI / Cloud Providers
+        (&#34;OpenRouter API Key&#34;, re.compile(r&#34;sk-or-v1-[a-zA-Z0-9_-]{20,80}&#34;)),
+        (&#34;OpenAI API Key&#34;, re.compile(r&#34;sk-(?:proj-)?[a-zA-Z0-9]{32,64}&#34;)),
+        (&#34;Google AI / Gemini Key&#34;, re.compile(r&#34;AIzaSy[a-zA-Z0-9_-]{30,35}&#34;)),
+        (&#34;Anthropic Claude Key&#34;, re.compile(r&#34;sk-ant-[a-zA-Z0-9_-]{80,}&#34;)),
+        (&#34;GitHub Token&#34;, re.compile(r&#34;(?:ghp|gho|ghu|ghs|ghr)_[a-zA-Z0-9]{36,}&#34;)),
+        (&#34;AWS Access Key&#34;, re.compile(r&#34;(?:AKIA|ABIA|ACCA|ASIA)[0-9A-Z]{16}&#34;)),
+        (&#34;Generic Bearer Token&#34;, re.compile(r&#34;(?i)bearer\s+(?!\[REDACTED)[a-zA-Z0-9_\-\.]{24,}&#34;)),
+        # Passwords &amp; Credentials in key-value pairs (requires explicit quotes to avoid false positives on code identifiers)
+        (
+            &#34;Password Assignment&#34;,
+            re.compile(
+                r&#34;(?i)(?&lt;![&#39;\&#34;])\b(?:password|passwd|pwd|secret|api_key|apikey|token|auth_token)\b(?![&#39;\&#34;])\s*(?:[:=]|\s)\s*[&#39;\&#34;](?!\[REDACTED)([^&#39;\&#34;\n\r]{6,})[&#39;\&#34;]&#34;
+            ),
+        ),
+        # Private Keys &amp; Certificates
+        (&#34;RSA Private Key&#34;, re.compile(r&#34;-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----&#34;)),
+        (
+            &#34;Database Connection URI&#34;,
+            re.compile(r&#34;(?i)(?:postgres|postgresql|mysql|mongodb|redis):\/\/[a-zA-Z0-9_-]+:[^@\s]+@[a-zA-Z0-9\._-]+&#34;),
+        ),
+    ]
+
+    @staticmethod
+    def calculate_shannon_entropy(data: str) -&gt; float:
+        &#34;&#34;&#34;Calculates Shannon entropy of string to detect random cryptographic keys.&#34;&#34;&#34;
+        if not data:
+            return 0.0
+        entropy = 0.0
+        length = len(data)
+        freq = {}
+        for char in data:
+            freq[char] = freq.get(char, 0) + 1
+        for count in freq.values():
+            p = count / length
+            entropy -= p * math.log2(p)
+        return entropy
+
+    def scan_text(self, text: str) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Scans input text and returns all detected secret candidates.&#34;&#34;&#34;
+        findings = []
+        if not text:
+            return findings
+
+        # 1. Regex Signature Scanning
+        for secret_type, pattern in self.KNOWN_SECRET_PATTERNS:
+            for match in pattern.finditer(text):
+                full_match = match.group(0)
+                matched_val = match.group(1) if match.groups() else match.group(0)
+                if &#34;REDACTED&#34; in full_match or &#34;REDACTED&#34; in matched_val:
+                    continue
+                findings.append(
+                    {
+                        &#34;type&#34;: secret_type,
+                        &#34;match&#34;: matched_val,
+                        &#34;start&#34;: match.start(),
+                        &#34;end&#34;: match.end(),
+                        &#34;entropy&#34;: round(self.calculate_shannon_entropy(matched_val), 2),
+                        &#34;confidence&#34;: &#34;HIGH&#34;,
+                    }
+                )
+
+        # 2. High-Entropy Isolated Word Scanning (&gt; 4.3 entropy for strings &gt;= 20 chars)
+        words = re.findall(r&#34;[a-zA-Z0-9_\-]{20,}&#34;, text)
+        for w in words:
+            if w.startswith(&#34;REDACTED_&#34;) or &#34;REDACTED&#34; in w:
+                continue
+            if not any(f[&#34;match&#34;] == w for f in findings):
+                ent = self.calculate_shannon_entropy(w)
+                if ent &gt;= 4.3:
+                    findings.append(
+                        {
+                            &#34;type&#34;: &#34;High-Entropy Secret Candidate&#34;,
+                            &#34;match&#34;: w,
+                            &#34;start&#34;: text.find(w),
+                            &#34;end&#34;: text.find(w) + len(w),
+                            &#34;entropy&#34;: round(ent, 2),
+                            &#34;confidence&#34;: &#34;MEDIUM&#34;,
+                        }
+                    )
+
+        return findings</code></pre>
+</details>
+<div class="desc"><p>Layer 1: Scans text for high-entropy secrets, API tokens, passwords, and private keys.
+Combines Shannon entropy calculation with 80+ credential signatures.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.EntropySecretDetector.KNOWN_SECRET_PATTERNS"><code class="name">var <span class="ident">KNOWN_SECRET_PATTERNS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.EntropySecretDetector.calculate_shannon_entropy"><code class="name flex">
+<span>def <span class="ident">calculate_shannon_entropy</span></span>(<span>data: str) ‑> float</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def calculate_shannon_entropy(data: str) -&gt; float:
+    &#34;&#34;&#34;Calculates Shannon entropy of string to detect random cryptographic keys.&#34;&#34;&#34;
+    if not data:
+        return 0.0
+    entropy = 0.0
+    length = len(data)
+    freq = {}
+    for char in data:
+        freq[char] = freq.get(char, 0) + 1
+    for count in freq.values():
+        p = count / length
+        entropy -= p * math.log2(p)
+    return entropy</code></pre>
+</details>
+<div class="desc"><p>Calculates Shannon entropy of string to detect random cryptographic keys.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.EntropySecretDetector.scan_text"><code class="name flex">
+<span>def <span class="ident">scan_text</span></span>(<span>self, text: str) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def scan_text(self, text: str) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Scans input text and returns all detected secret candidates.&#34;&#34;&#34;
+    findings = []
+    if not text:
+        return findings
+
+    # 1. Regex Signature Scanning
+    for secret_type, pattern in self.KNOWN_SECRET_PATTERNS:
+        for match in pattern.finditer(text):
+            full_match = match.group(0)
+            matched_val = match.group(1) if match.groups() else match.group(0)
+            if &#34;REDACTED&#34; in full_match or &#34;REDACTED&#34; in matched_val:
+                continue
+            findings.append(
+                {
+                    &#34;type&#34;: secret_type,
+                    &#34;match&#34;: matched_val,
+                    &#34;start&#34;: match.start(),
+                    &#34;end&#34;: match.end(),
+                    &#34;entropy&#34;: round(self.calculate_shannon_entropy(matched_val), 2),
+                    &#34;confidence&#34;: &#34;HIGH&#34;,
+                }
+            )
+
+    # 2. High-Entropy Isolated Word Scanning (&gt; 4.3 entropy for strings &gt;= 20 chars)
+    words = re.findall(r&#34;[a-zA-Z0-9_\-]{20,}&#34;, text)
+    for w in words:
+        if w.startswith(&#34;REDACTED_&#34;) or &#34;REDACTED&#34; in w:
+            continue
+        if not any(f[&#34;match&#34;] == w for f in findings):
+            ent = self.calculate_shannon_entropy(w)
+            if ent &gt;= 4.3:
+                findings.append(
+                    {
+                        &#34;type&#34;: &#34;High-Entropy Secret Candidate&#34;,
+                        &#34;match&#34;: w,
+                        &#34;start&#34;: text.find(w),
+                        &#34;end&#34;: text.find(w) + len(w),
+                        &#34;entropy&#34;: round(ent, 2),
+                        &#34;confidence&#34;: &#34;MEDIUM&#34;,
+                    }
+                )
+
+    return findings</code></pre>
+</details>
+<div class="desc"><p>Scans input text and returns all detected secret candidates.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.GitShield"><code class="flex name class">
+<span>class <span class="ident">GitShield</span></span>
+<span>(</span><span>detector: Optional[<a title="jarvis.security.ten_layer_shield.EntropySecretDetector" href="#jarvis.security.ten_layer_shield.EntropySecretDetector">EntropySecretDetector</a>] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GitShield:
+    &#34;&#34;&#34;
+    Layer 8: Pre-commit scanner that checks staged git files for secrets.
+    Blocks any commit that attempts to include unencrypted credentials.
+    &#34;&#34;&#34;
+
+    def __init__(self, detector: Optional[EntropySecretDetector] = None):
+        self.detector = detector or EntropySecretDetector()
+
+    def audit_file_content(self, filename: str, content: str) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Audits content of a file destined for git commit.&#34;&#34;&#34;
+        # Whitelist .env.example or test files if specifically marked
+        if filename.endswith(&#34;.example&#34;) or &#34;example&#34; in filename.lower() or &#34;tests/&#34; in filename.replace(&#34;\\&#34;, &#34;/&#34;):
+            return []
+        findings = self.detector.scan_text(content)
+        return [f for f in findings if f[&#34;confidence&#34;] == &#34;HIGH&#34;]
+
+    def audit_git_diff(self, diff_text: Optional[str]) -&gt; Tuple[bool, List[str]]:
+        &#34;&#34;&#34;Scans git diff output for added lines containing secrets.&#34;&#34;&#34;
+        if not diff_text:
+            return True, []
+        added_lines = [
+            line[1:] for line in diff_text.splitlines() if line.startswith(&#34;+&#34;) and not line.startswith(&#34;+++&#34;)
+        ]
+        violations = []
+        for line in added_lines:
+            findings = self.detector.scan_text(line)
+            for f in findings:
+                if f[&#34;confidence&#34;] == &#34;HIGH&#34;:
+                    violations.append(f&#34;Blocked leak in line: &#39;{line.strip()}&#39; [{f[&#39;type&#39;]}]&#34;)
+        return len(violations) == 0, violations</code></pre>
+</details>
+<div class="desc"><p>Layer 8: Pre-commit scanner that checks staged git files for secrets.
+Blocks any commit that attempts to include unencrypted credentials.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.GitShield.audit_file_content"><code class="name flex">
+<span>def <span class="ident">audit_file_content</span></span>(<span>self, filename: str, content: str) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def audit_file_content(self, filename: str, content: str) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Audits content of a file destined for git commit.&#34;&#34;&#34;
+    # Whitelist .env.example or test files if specifically marked
+    if filename.endswith(&#34;.example&#34;) or &#34;example&#34; in filename.lower() or &#34;tests/&#34; in filename.replace(&#34;\\&#34;, &#34;/&#34;):
+        return []
+    findings = self.detector.scan_text(content)
+    return [f for f in findings if f[&#34;confidence&#34;] == &#34;HIGH&#34;]</code></pre>
+</details>
+<div class="desc"><p>Audits content of a file destined for git commit.</p></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.GitShield.audit_git_diff"><code class="name flex">
+<span>def <span class="ident">audit_git_diff</span></span>(<span>self, diff_text: Optional[str]) ‑> Tuple[bool, List[str]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def audit_git_diff(self, diff_text: Optional[str]) -&gt; Tuple[bool, List[str]]:
+    &#34;&#34;&#34;Scans git diff output for added lines containing secrets.&#34;&#34;&#34;
+    if not diff_text:
+        return True, []
+    added_lines = [
+        line[1:] for line in diff_text.splitlines() if line.startswith(&#34;+&#34;) and not line.startswith(&#34;+++&#34;)
+    ]
+    violations = []
+    for line in added_lines:
+        findings = self.detector.scan_text(line)
+        for f in findings:
+            if f[&#34;confidence&#34;] == &#34;HIGH&#34;:
+                violations.append(f&#34;Blocked leak in line: &#39;{line.strip()}&#39; [{f[&#39;type&#39;]}]&#34;)
+    return len(violations) == 0, violations</code></pre>
+</details>
+<div class="desc"><p>Scans git diff output for added lines containing secrets.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.InlinePermissionBroker"><code class="flex name class">
+<span>class <span class="ident">InlinePermissionBroker</span></span>
+<span>(</span><span>approval_timeout_sec: float = 60.0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InlinePermissionBroker:
+    &#34;&#34;&#34;
+    Layer 10: Human-in-the-Loop permission broker. Intercepts privileged operations
+    (reading secrets, editing security policies, executing destructive OS commands)
+    and requires cryptographic human approval tokens before execution.
+    Guarantees single-use token consumption, TTL expiration, and action/target binding.
+    &#34;&#34;&#34;
+
+    def __init__(self, approval_timeout_sec: float = 60.0):
+        self.approval_timeout_sec = approval_timeout_sec
+        self.pending_requests: Dict[str, Dict[str, Any]] = {}
+        self.approved_tokens: Set[str] = set()
+        self.token_registry: Dict[str, Dict[str, Any]] = {}
+
+    def request_permission(self, action: str, target: str, reason: str, agent_id: str = &#34;agent&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Generates inline approval card for human user confirmation.&#34;&#34;&#34;
+        request_id = f&#34;perm_req_{secrets.token_hex(8)}&#34;
+        target_hash = hashlib.sha256(target.encode(&#34;utf-8&#34;)).hexdigest()
+        record = {
+            &#34;request_id&#34;: request_id,
+            &#34;action&#34;: action,
+            &#34;target&#34;: target,
+            &#34;target_hash&#34;: target_hash,
+            &#34;reason&#34;: reason,
+            &#34;agent_id&#34;: agent_id,
+            &#34;status&#34;: &#34;PENDING&#34;,
+            &#34;created_at&#34;: time.time(),
+            &#34;expires_at&#34;: time.time() + self.approval_timeout_sec,
+        }
+        self.pending_requests[request_id] = record
+        return record
+
+    def resolve_permission(self, request_id: str, approved: bool) -&gt; bool:
+        &#34;&#34;&#34;User resolves permission card (Approved / Denied).&#34;&#34;&#34;
+        if request_id not in self.pending_requests:
+            return False
+        rec = self.pending_requests[request_id]
+        if time.time() &gt; rec.get(&#34;expires_at&#34;, 0):
+            rec[&#34;status&#34;] = &#34;EXPIRED&#34;
+            return False
+
+        if approved:
+            rec[&#34;status&#34;] = &#34;APPROVED&#34;
+            token = secrets.token_urlsafe(32)
+            self.approved_tokens.add(token)
+            self.token_registry[token] = {
+                &#34;request_id&#34;: request_id,
+                &#34;action&#34;: rec[&#34;action&#34;],
+                &#34;target_hash&#34;: rec[&#34;target_hash&#34;],
+                &#34;created_at&#34;: time.time(),
+                &#34;expires_at&#34;: time.time() + self.approval_timeout_sec,
+                &#34;used&#34;: False,
+            }
+            rec[&#34;approval_token&#34;] = token
+            return True
+        else:
+            rec[&#34;status&#34;] = &#34;DENIED&#34;
+            return False
+
+    def is_authorized(self, approval_token: Optional[str]) -&gt; bool:
+        &#34;&#34;&#34;Verifies if operation holds a valid approved token that has not expired or been consumed.&#34;&#34;&#34;
+        if not approval_token:
+            return False
+        meta = self.token_registry.get(approval_token)
+        if meta:
+            if meta[&#34;used&#34;]:
+                return False
+            if time.time() &gt; meta[&#34;expires_at&#34;]:
+                return False
+            return True
+        return approval_token in self.approved_tokens
+
+    def consume_authorization(
+        self,
+        approval_token: Optional[str],
+        expected_action: str,
+        target: str,
+    ) -&gt; bool:
+        &#34;&#34;&#34;
+        Validates and single-use consumes the cryptographic approval token.
+        Guarantees token matches expected action and target, preventing replay attacks.
+        &#34;&#34;&#34;
+        if not approval_token:
+            return False
+        meta = self.token_registry.get(approval_token)
+        if not meta:
+            return False
+        if meta[&#34;used&#34;]:
+            return False
+        if time.time() &gt; meta[&#34;expires_at&#34;]:
+            return False
+        if meta[&#34;action&#34;] != expected_action:
+            return False
+        expected_hash = hashlib.sha256(target.encode(&#34;utf-8&#34;)).hexdigest()
+        if not hmac.compare_digest(meta[&#34;target_hash&#34;], expected_hash):
+            return False
+
+        # Mark single-use consumed
+        meta[&#34;used&#34;] = True
+        self.approved_tokens.discard(approval_token)
+        return True</code></pre>
+</details>
+<div class="desc"><p>Layer 10: Human-in-the-Loop permission broker. Intercepts privileged operations
+(reading secrets, editing security policies, executing destructive OS commands)
+and requires cryptographic human approval tokens before execution.
+Guarantees single-use token consumption, TTL expiration, and action/target binding.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.InlinePermissionBroker.consume_authorization"><code class="name flex">
+<span>def <span class="ident">consume_authorization</span></span>(<span>self, approval_token: Optional[str], expected_action: str, target: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def consume_authorization(
+    self,
+    approval_token: Optional[str],
+    expected_action: str,
+    target: str,
+) -&gt; bool:
+    &#34;&#34;&#34;
+    Validates and single-use consumes the cryptographic approval token.
+    Guarantees token matches expected action and target, preventing replay attacks.
+    &#34;&#34;&#34;
+    if not approval_token:
+        return False
+    meta = self.token_registry.get(approval_token)
+    if not meta:
+        return False
+    if meta[&#34;used&#34;]:
+        return False
+    if time.time() &gt; meta[&#34;expires_at&#34;]:
+        return False
+    if meta[&#34;action&#34;] != expected_action:
+        return False
+    expected_hash = hashlib.sha256(target.encode(&#34;utf-8&#34;)).hexdigest()
+    if not hmac.compare_digest(meta[&#34;target_hash&#34;], expected_hash):
+        return False
+
+    # Mark single-use consumed
+    meta[&#34;used&#34;] = True
+    self.approved_tokens.discard(approval_token)
+    return True</code></pre>
+</details>
+<div class="desc"><p>Validates and single-use consumes the cryptographic approval token.
+Guarantees token matches expected action and target, preventing replay attacks.</p></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.InlinePermissionBroker.is_authorized"><code class="name flex">
+<span>def <span class="ident">is_authorized</span></span>(<span>self, approval_token: Optional[str]) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_authorized(self, approval_token: Optional[str]) -&gt; bool:
+    &#34;&#34;&#34;Verifies if operation holds a valid approved token that has not expired or been consumed.&#34;&#34;&#34;
+    if not approval_token:
+        return False
+    meta = self.token_registry.get(approval_token)
+    if meta:
+        if meta[&#34;used&#34;]:
+            return False
+        if time.time() &gt; meta[&#34;expires_at&#34;]:
+            return False
+        return True
+    return approval_token in self.approved_tokens</code></pre>
+</details>
+<div class="desc"><p>Verifies if operation holds a valid approved token that has not expired or been consumed.</p></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.InlinePermissionBroker.request_permission"><code class="name flex">
+<span>def <span class="ident">request_permission</span></span>(<span>self, action: str, target: str, reason: str, agent_id: str = 'agent') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def request_permission(self, action: str, target: str, reason: str, agent_id: str = &#34;agent&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Generates inline approval card for human user confirmation.&#34;&#34;&#34;
+    request_id = f&#34;perm_req_{secrets.token_hex(8)}&#34;
+    target_hash = hashlib.sha256(target.encode(&#34;utf-8&#34;)).hexdigest()
+    record = {
+        &#34;request_id&#34;: request_id,
+        &#34;action&#34;: action,
+        &#34;target&#34;: target,
+        &#34;target_hash&#34;: target_hash,
+        &#34;reason&#34;: reason,
+        &#34;agent_id&#34;: agent_id,
+        &#34;status&#34;: &#34;PENDING&#34;,
+        &#34;created_at&#34;: time.time(),
+        &#34;expires_at&#34;: time.time() + self.approval_timeout_sec,
+    }
+    self.pending_requests[request_id] = record
+    return record</code></pre>
+</details>
+<div class="desc"><p>Generates inline approval card for human user confirmation.</p></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.InlinePermissionBroker.resolve_permission"><code class="name flex">
+<span>def <span class="ident">resolve_permission</span></span>(<span>self, request_id: str, approved: bool) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resolve_permission(self, request_id: str, approved: bool) -&gt; bool:
+    &#34;&#34;&#34;User resolves permission card (Approved / Denied).&#34;&#34;&#34;
+    if request_id not in self.pending_requests:
+        return False
+    rec = self.pending_requests[request_id]
+    if time.time() &gt; rec.get(&#34;expires_at&#34;, 0):
+        rec[&#34;status&#34;] = &#34;EXPIRED&#34;
+        return False
+
+    if approved:
+        rec[&#34;status&#34;] = &#34;APPROVED&#34;
+        token = secrets.token_urlsafe(32)
+        self.approved_tokens.add(token)
+        self.token_registry[token] = {
+            &#34;request_id&#34;: request_id,
+            &#34;action&#34;: rec[&#34;action&#34;],
+            &#34;target_hash&#34;: rec[&#34;target_hash&#34;],
+            &#34;created_at&#34;: time.time(),
+            &#34;expires_at&#34;: time.time() + self.approval_timeout_sec,
+            &#34;used&#34;: False,
+        }
+        rec[&#34;approval_token&#34;] = token
+        return True
+    else:
+        rec[&#34;status&#34;] = &#34;DENIED&#34;
+        return False</code></pre>
+</details>
+<div class="desc"><p>User resolves permission card (Approved / Denied).</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.MerkleAuditLogger"><code class="flex name class">
+<span>class <span class="ident">MerkleAuditLogger</span></span>
+<span>(</span><span>storage_path: Optional[Union[str, Path]] = None, in_memory: bool = False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MerkleAuditLogger:
+    &#34;&#34;&#34;
+    Layer 9: Append-only cryptographic audit chain for all security events.
+    Every redaction, block, and access request is linked by SHA-256 hash.
+    Persisted to an append-only JSON Lines ledger with tamper detection.
+    &#34;&#34;&#34;
+
+    def __init__(self, storage_path: Optional[Union[str, Path]] = None, in_memory: bool = False):
+        self.in_memory = in_memory
+        self.storage_path = (
+            Path(storage_path) if storage_path else (None if in_memory else Path(&#34;data/security_audit_merkle.jsonl&#34;))
+        )
+        self.chain: List[Dict[str, Any]] = []
+        self._load_or_genesis()
+
+    def _load_or_genesis(self) -&gt; None:
+        &#34;&#34;&#34;Loads verified chain from disk, or initializes genesis block.&#34;&#34;&#34;
+        if not self.in_memory and self.storage_path and self.storage_path.exists():
+            try:
+                loaded = []
+                with open(self.storage_path, &#34;r&#34;, encoding=&#34;utf-8&#34;) as f:
+                    for line in f:
+                        line = line.strip()
+                        if line:
+                            loaded.append(json.loads(line))
+                if loaded and self._verify_records(loaded):
+                    self.chain = loaded
+                    return
+            except Exception as e:
+                logging.getLogger(&#34;jarvis.security&#34;).warning(f&#34;Could not load audit log: {e}&#34;)
+
+        # Initialize Genesis
+        self.chain = []
+        self._genesis()
+
+    def _genesis(self) -&gt; None:
+        entry = {
+            &#34;index&#34;: 0,
+            &#34;timestamp&#34;: time.time(),
+            &#34;event&#34;: &#34;GENESIS_SECURITY_CHAIN&#34;,
+            &#34;details&#34;: &#34;Initialized JARVIS 10-Layer Security Suite&#34;,
+            &#34;prev_hash&#34;: &#34;0&#34; * 64,
+        }
+        entry[&#34;hash&#34;] = self._compute_hash(entry)
+        self.chain.append(entry)
+        self._persist_entry(entry, overwrite=True)
+
+    def _persist_entry(self, entry: Dict[str, Any], overwrite: bool = False) -&gt; None:
+        if self.in_memory or not self.storage_path:
+            return
+        try:
+            self.storage_path.parent.mkdir(parents=True, exist_ok=True)
+            mode = &#34;w&#34; if overwrite else &#34;a&#34;
+            with open(self.storage_path, mode, encoding=&#34;utf-8&#34;) as f:
+                f.write(json.dumps(entry) + &#34;\n&#34;)
+                f.flush()
+        except Exception as e:
+            logging.getLogger(&#34;jarvis.security&#34;).warning(f&#34;Could not persist audit record: {e}&#34;)
+
+    def _compute_hash(self, entry: Dict[str, Any]) -&gt; str:
+        data = f&#34;{entry[&#39;index&#39;]}:{entry[&#39;timestamp&#39;]}:{entry[&#39;event&#39;]}:{entry[&#39;details&#39;]}:{entry[&#39;prev_hash&#39;]}&#34;
+        return hashlib.sha256(data.encode(&#34;utf-8&#34;)).hexdigest()
+
+    def log_event(self, event_type: str, details: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Appends verified cryptographic security audit event and persists to ledger.&#34;&#34;&#34;
+        prev_entry = self.chain[-1] if self.chain else {&#34;hash&#34;: &#34;0&#34; * 64}
+        entry = {
+            &#34;index&#34;: len(self.chain),
+            &#34;timestamp&#34;: time.time(),
+            &#34;event&#34;: event_type,
+            &#34;details&#34;: details,
+            &#34;prev_hash&#34;: prev_entry[&#34;hash&#34;],
+        }
+        entry[&#34;hash&#34;] = self._compute_hash(entry)
+        self.chain.append(entry)
+        self._persist_entry(entry)
+        return entry
+
+    def _verify_records(self, records: List[Dict[str, Any]]) -&gt; bool:
+        if not records:
+            return False
+        for i in range(1, len(records)):
+            curr = records[i]
+            prev = records[i - 1]
+            if curr.get(&#34;prev_hash&#34;) != prev.get(&#34;hash&#34;):
+                return False
+            if curr.get(&#34;hash&#34;) != self._compute_hash(curr):
+                return False
+        return True
+
+    def verify_integrity(self) -&gt; bool:
+        &#34;&#34;&#34;Verifies mathematical validity of the complete in-memory audit chain.&#34;&#34;&#34;
+        return self._verify_records(self.chain)</code></pre>
+</details>
+<div class="desc"><p>Layer 9: Append-only cryptographic audit chain for all security events.
+Every redaction, block, and access request is linked by SHA-256 hash.
+Persisted to an append-only JSON Lines ledger with tamper detection.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.MerkleAuditLogger.log_event"><code class="name flex">
+<span>def <span class="ident">log_event</span></span>(<span>self, event_type: str, details: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def log_event(self, event_type: str, details: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Appends verified cryptographic security audit event and persists to ledger.&#34;&#34;&#34;
+    prev_entry = self.chain[-1] if self.chain else {&#34;hash&#34;: &#34;0&#34; * 64}
+    entry = {
+        &#34;index&#34;: len(self.chain),
+        &#34;timestamp&#34;: time.time(),
+        &#34;event&#34;: event_type,
+        &#34;details&#34;: details,
+        &#34;prev_hash&#34;: prev_entry[&#34;hash&#34;],
+    }
+    entry[&#34;hash&#34;] = self._compute_hash(entry)
+    self.chain.append(entry)
+    self._persist_entry(entry)
+    return entry</code></pre>
+</details>
+<div class="desc"><p>Appends verified cryptographic security audit event and persists to ledger.</p></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.MerkleAuditLogger.verify_integrity"><code class="name flex">
+<span>def <span class="ident">verify_integrity</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_integrity(self) -&gt; bool:
+    &#34;&#34;&#34;Verifies mathematical validity of the complete in-memory audit chain.&#34;&#34;&#34;
+    return self._verify_records(self.chain)</code></pre>
+</details>
+<div class="desc"><p>Verifies mathematical validity of the complete in-memory audit chain.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.PresidioDLPRedactor"><code class="flex name class">
+<span>class <span class="ident">PresidioDLPRedactor</span></span>
+<span>(</span><span>detector: Optional[<a title="jarvis.security.ten_layer_shield.EntropySecretDetector" href="#jarvis.security.ten_layer_shield.EntropySecretDetector">EntropySecretDetector</a>] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PresidioDLPRedactor:
+    &#34;&#34;&#34;
+    Layer 2: Real-time DLP redaction engine. Replaces passwords and API keys with
+    deterministic surrogate tokens ([REDACTED_API_KEY_01]) before prompts leave the host.
+    &#34;&#34;&#34;
+
+    def __init__(self, detector: Optional[EntropySecretDetector] = None):
+        self.detector = detector or EntropySecretDetector()
+
+    def redact(self, text: str) -&gt; Tuple[str, Dict[str, str]]:
+        &#34;&#34;&#34;
+        Redacts all sensitive items from text. Returns sanitized text and a secure
+        in-memory redaction map (allowing de-anonymization only inside secure memory).
+        &#34;&#34;&#34;
+        if not text:
+            return text, {}
+
+        findings = self.detector.scan_text(text)
+        if not findings:
+            return text, {}
+
+        # Sort findings descending by length to prevent partial sub-string replacements
+        sorted_findings = sorted(findings, key=lambda x: len(x[&#34;match&#34;]), reverse=True)
+        redaction_map = {}
+        redacted_text = text
+        counter = 1
+
+        for f in sorted_findings:
+            raw_match = f[&#34;match&#34;]
+            if raw_match not in redaction_map:
+                placeholder = f&#34;[REDACTED_{f[&#39;type&#39;].upper().replace(&#39; &#39;, &#39;_&#39;)}_{counter:02d}]&#34;
+                redaction_map[raw_match] = placeholder
+                redacted_text = redacted_text.replace(raw_match, placeholder)
+                counter += 1
+
+        return redacted_text, redaction_map</code></pre>
+</details>
+<div class="desc"><p>Layer 2: Real-time DLP redaction engine. Replaces passwords and API keys with
+deterministic surrogate tokens ([REDACTED_API_KEY_01]) before prompts leave the host.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.PresidioDLPRedactor.redact"><code class="name flex">
+<span>def <span class="ident">redact</span></span>(<span>self, text: str) ‑> Tuple[str, Dict[str, str]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def redact(self, text: str) -&gt; Tuple[str, Dict[str, str]]:
+    &#34;&#34;&#34;
+    Redacts all sensitive items from text. Returns sanitized text and a secure
+    in-memory redaction map (allowing de-anonymization only inside secure memory).
+    &#34;&#34;&#34;
+    if not text:
+        return text, {}
+
+    findings = self.detector.scan_text(text)
+    if not findings:
+        return text, {}
+
+    # Sort findings descending by length to prevent partial sub-string replacements
+    sorted_findings = sorted(findings, key=lambda x: len(x[&#34;match&#34;]), reverse=True)
+    redaction_map = {}
+    redacted_text = text
+    counter = 1
+
+    for f in sorted_findings:
+        raw_match = f[&#34;match&#34;]
+        if raw_match not in redaction_map:
+            placeholder = f&#34;[REDACTED_{f[&#39;type&#39;].upper().replace(&#39; &#39;, &#39;_&#39;)}_{counter:02d}]&#34;
+            redaction_map[raw_match] = placeholder
+            redacted_text = redacted_text.replace(raw_match, placeholder)
+            counter += 1
+
+    return redacted_text, redaction_map</code></pre>
+</details>
+<div class="desc"><p>Redacts all sensitive items from text. Returns sanitized text and a secure
+in-memory redaction map (allowing de-anonymization only inside secure memory).</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.SecretString"><code class="flex name class">
+<span>class <span class="ident">SecretString</span></span>
+<span>(</span><span>secret: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SecretString:
+    &#34;&#34;&#34;
+    Wraps sensitive credentials in memory. Overrides __repr__, __str__, and serialization
+    so secrets are NEVER printed, logged, or serialized into JSON payloads.
+    &#34;&#34;&#34;
+
+    def __init__(self, secret: str):
+        self._raw = str(secret)
+
+    def reveal(self) -&gt; str:
+        &#34;&#34;&#34;Explicitly reveal raw secret for authenticated network calls only.&#34;&#34;&#34;
+        return self._raw
+
+    def __repr__(self) -&gt; str:
+        return &#34;&lt;SecretString: [PROTECTED_REDACTED]&gt;&#34;
+
+    def __str__(self) -&gt; str:
+        return &#34;[PROTECTED_REDACTED]&#34;
+
+    def __len__(self) -&gt; int:
+        return len(self._raw)
+
+    def __bool__(self) -&gt; bool:
+        return bool(self._raw)
+
+    def __eq__(self, other: Any) -&gt; bool:
+        if isinstance(other, SecretString):
+            return hmac.compare_digest(self._raw, other._raw)
+        if isinstance(other, str):
+            return hmac.compare_digest(self._raw, other)
+        return False</code></pre>
+</details>
+<div class="desc"><p>Wraps sensitive credentials in memory. Overrides <strong>repr</strong>, <strong>str</strong>, and serialization
+so secrets are NEVER printed, logged, or serialized into JSON payloads.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.SecretString.reveal"><code class="name flex">
+<span>def <span class="ident">reveal</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reveal(self) -&gt; str:
+    &#34;&#34;&#34;Explicitly reveal raw secret for authenticated network calls only.&#34;&#34;&#34;
+    return self._raw</code></pre>
+</details>
+<div class="desc"><p>Explicitly reveal raw secret for authenticated network calls only.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.SecurityViolationError"><code class="flex name class">
+<span>class <span class="ident">SecurityViolationError</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SecurityViolationError(Exception):
+    &#34;&#34;&#34;Raised when a security policy or data leak check fails.&#34;&#34;&#34;
+
+    pass</code></pre>
+</details>
+<div class="desc"><p>Raised when a security policy or data leak check fails.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.SubprocessSanitizer"><code class="flex name class">
+<span>class <span class="ident">SubprocessSanitizer</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SubprocessSanitizer:
+    &#34;&#34;&#34;
+    Layer 7: Purges sensitive environment variables before spawning shell commands
+    or external tools, preventing untrusted subprocesses from reading API keys.
+    &#34;&#34;&#34;
+
+    SENSITIVE_ENV_PREFIXES = (
+        &#34;GEMINI_&#34;,
+        &#34;OPENROUTER_&#34;,
+        &#34;OPENAI_&#34;,
+        &#34;ANTHROPIC_&#34;,
+        &#34;GITHUB_TOKEN&#34;,
+        &#34;AWS_&#34;,
+        &#34;SECRET&#34;,
+        &#34;PASSWORD&#34;,
+    )
+
+    @classmethod
+    def get_sanitized_env(cls, custom_allowlist: Optional[Set[str]] = None) -&gt; Dict[str, str]:
+        &#34;&#34;&#34;Returns clean copy of os.environ with all secret keys stripped.&#34;&#34;&#34;
+        allowlist = custom_allowlist or set()
+        clean_env = {}
+        for k, v in os.environ.items():
+            if k in allowlist:
+                clean_env[k] = v
+                continue
+            is_sensitive = any(k.upper().startswith(prefix) for prefix in cls.SENSITIVE_ENV_PREFIXES)
+            if not is_sensitive:
+                clean_env[k] = v
+        return clean_env</code></pre>
+</details>
+<div class="desc"><p>Layer 7: Purges sensitive environment variables before spawning shell commands
+or external tools, preventing untrusted subprocesses from reading API keys.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.SubprocessSanitizer.SENSITIVE_ENV_PREFIXES"><code class="name">var <span class="ident">SENSITIVE_ENV_PREFIXES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.SubprocessSanitizer.get_sanitized_env"><code class="name flex">
+<span>def <span class="ident">get_sanitized_env</span></span>(<span>custom_allowlist: Optional[Set[str]] = None) ‑> Dict[str, str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns clean copy of os.environ with all secret keys stripped.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.TenLayerSecuritySuite"><code class="flex name class">
+<span>class <span class="ident">TenLayerSecuritySuite</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TenLayerSecuritySuite:
+    &#34;&#34;&#34;
+    Unified 10-Layer Security Coordinator for Project JARVIS.
+    Protects user passwords, credentials, and tokens across every operational lifecycle.
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        self.layer1_detector = EntropySecretDetector()
+        self.layer2_redactor = PresidioDLPRedactor(self.layer1_detector)
+        self.layer3_firewall = CloudEgressFirewall(self.layer1_detector)
+        self.layer4_filter = ZeroLeakLogFilter()
+        self.layer5_vault = EncryptedVault()
+        self.layer7_sanitizer = SubprocessSanitizer()
+        self.layer8_git_shield = GitShield(self.layer1_detector)
+        self.layer9_audit = MerkleAuditLogger()
+        self.layer10_broker = InlinePermissionBroker()
+
+    def sanitize_outbound_prompt(self, prompt: str) -&gt; str:
+        &#34;&#34;&#34;Runs prompt through Layer 1, 2, and 3 before sending to any cloud LLM.&#34;&#34;&#34;
+        clean_text, redaction_map = self.layer2_redactor.redact(prompt)
+        if redaction_map:
+            self.layer9_audit.log_event(
+                &#34;PROMPT_REDACTION&#34;, f&#34;Redacted {len(redaction_map)} sensitive secrets from prompt&#34;
+            )
+        # Ensure egress firewall permits the outbound text
+        self.layer3_firewall.verify_egress(clean_text)
+        return clean_text
+
+    def sanitize_log_output(self, text: str) -&gt; str:
+        &#34;&#34;&#34;Cleans text before printing or logging.&#34;&#34;&#34;
+        clean_text, _ = self.layer2_redactor.redact(text)
+        return clean_text</code></pre>
+</details>
+<div class="desc"><p>Unified 10-Layer Security Coordinator for Project JARVIS.
+Protects user passwords, credentials, and tokens across every operational lifecycle.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.TenLayerSecuritySuite.sanitize_log_output"><code class="name flex">
+<span>def <span class="ident">sanitize_log_output</span></span>(<span>self, text: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sanitize_log_output(self, text: str) -&gt; str:
+    &#34;&#34;&#34;Cleans text before printing or logging.&#34;&#34;&#34;
+    clean_text, _ = self.layer2_redactor.redact(text)
+    return clean_text</code></pre>
+</details>
+<div class="desc"><p>Cleans text before printing or logging.</p></div>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.TenLayerSecuritySuite.sanitize_outbound_prompt"><code class="name flex">
+<span>def <span class="ident">sanitize_outbound_prompt</span></span>(<span>self, prompt: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sanitize_outbound_prompt(self, prompt: str) -&gt; str:
+    &#34;&#34;&#34;Runs prompt through Layer 1, 2, and 3 before sending to any cloud LLM.&#34;&#34;&#34;
+    clean_text, redaction_map = self.layer2_redactor.redact(prompt)
+    if redaction_map:
+        self.layer9_audit.log_event(
+            &#34;PROMPT_REDACTION&#34;, f&#34;Redacted {len(redaction_map)} sensitive secrets from prompt&#34;
+        )
+    # Ensure egress firewall permits the outbound text
+    self.layer3_firewall.verify_egress(clean_text)
+    return clean_text</code></pre>
+</details>
+<div class="desc"><p>Runs prompt through Layer 1, 2, and 3 before sending to any cloud LLM.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.security.ten_layer_shield.ZeroLeakLogFilter"><code class="flex name class">
+<span>class <span class="ident">ZeroLeakLogFilter</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZeroLeakLogFilter(logging.Filter):
+    &#34;&#34;&#34;
+    Layer 4: Intercepts all log records emitted across the system and scrubs secrets
+    before they touch disk files, stdout, or logging collectors.
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        super().__init__()
+        self.redactor = PresidioDLPRedactor()
+
+    def filter(self, record: logging.LogRecord) -&gt; bool:
+        if isinstance(record.msg, str):
+            record.msg, _ = self.redactor.redact(record.msg)
+        if record.args:
+            if isinstance(record.args, dict):
+                clean_args = {}
+                for k, v in record.args.items():
+                    clean_args[k] = self.redactor.redact(str(v))[0] if isinstance(v, str) else v
+                record.args = clean_args
+            elif isinstance(record.args, tuple):
+                record.args = tuple(self.redactor.redact(str(a))[0] if isinstance(a, str) else a for a in record.args)
+        return True</code></pre>
+</details>
+<div class="desc"><p>Layer 4: Intercepts all log records emitted across the system and scrubs secrets
+before they touch disk files, stdout, or logging collectors.</p>
+<p>Initialize a filter.</p>
+<p>Initialize with the name of the logger which, together with its
+children, will have its events allowed through the filter. If no
+name is specified, allow every event.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>logging.Filter</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.security.ten_layer_shield.ZeroLeakLogFilter.filter"><code class="name flex">
+<span>def <span class="ident">filter</span></span>(<span>self, record: logging.LogRecord) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def filter(self, record: logging.LogRecord) -&gt; bool:
+    if isinstance(record.msg, str):
+        record.msg, _ = self.redactor.redact(record.msg)
+    if record.args:
+        if isinstance(record.args, dict):
+            clean_args = {}
+            for k, v in record.args.items():
+                clean_args[k] = self.redactor.redact(str(v))[0] if isinstance(v, str) else v
+            record.args = clean_args
+        elif isinstance(record.args, tuple):
+            record.args = tuple(self.redactor.redact(str(a))[0] if isinstance(a, str) else a for a in record.args)
+    return True</code></pre>
+</details>
+<div class="desc"><p>Determine if the specified record is to be logged.</p>
+<p>Returns True if the record should be logged, or False otherwise.
+If deemed appropriate, the record may be modified in-place.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.security" href="index.html">jarvis.security</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.AESGCM" href="#jarvis.security.ten_layer_shield.AESGCM">AESGCM</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.AESGCM.decrypt" href="#jarvis.security.ten_layer_shield.AESGCM.decrypt">decrypt</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.AESGCM.decrypt_into" href="#jarvis.security.ten_layer_shield.AESGCM.decrypt_into">decrypt_into</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.AESGCM.encrypt" href="#jarvis.security.ten_layer_shield.AESGCM.encrypt">encrypt</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.AESGCM.encrypt_into" href="#jarvis.security.ten_layer_shield.AESGCM.encrypt_into">encrypt_into</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.AESGCM.generate_key" href="#jarvis.security.ten_layer_shield.AESGCM.generate_key">generate_key</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.CloudEgressFirewall" href="#jarvis.security.ten_layer_shield.CloudEgressFirewall">CloudEgressFirewall</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.CloudEgressFirewall.verify_egress" href="#jarvis.security.ten_layer_shield.CloudEgressFirewall.verify_egress">verify_egress</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.EncryptedVault" href="#jarvis.security.ten_layer_shield.EncryptedVault">EncryptedVault</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.EncryptedVault.decrypt" href="#jarvis.security.ten_layer_shield.EncryptedVault.decrypt">decrypt</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.EncryptedVault.encrypt" href="#jarvis.security.ten_layer_shield.EncryptedVault.encrypt">encrypt</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.EntropySecretDetector" href="#jarvis.security.ten_layer_shield.EntropySecretDetector">EntropySecretDetector</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.EntropySecretDetector.KNOWN_SECRET_PATTERNS" href="#jarvis.security.ten_layer_shield.EntropySecretDetector.KNOWN_SECRET_PATTERNS">KNOWN_SECRET_PATTERNS</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.EntropySecretDetector.calculate_shannon_entropy" href="#jarvis.security.ten_layer_shield.EntropySecretDetector.calculate_shannon_entropy">calculate_shannon_entropy</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.EntropySecretDetector.scan_text" href="#jarvis.security.ten_layer_shield.EntropySecretDetector.scan_text">scan_text</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.GitShield" href="#jarvis.security.ten_layer_shield.GitShield">GitShield</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.GitShield.audit_file_content" href="#jarvis.security.ten_layer_shield.GitShield.audit_file_content">audit_file_content</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.GitShield.audit_git_diff" href="#jarvis.security.ten_layer_shield.GitShield.audit_git_diff">audit_git_diff</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.InlinePermissionBroker" href="#jarvis.security.ten_layer_shield.InlinePermissionBroker">InlinePermissionBroker</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.InlinePermissionBroker.consume_authorization" href="#jarvis.security.ten_layer_shield.InlinePermissionBroker.consume_authorization">consume_authorization</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.InlinePermissionBroker.is_authorized" href="#jarvis.security.ten_layer_shield.InlinePermissionBroker.is_authorized">is_authorized</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.InlinePermissionBroker.request_permission" href="#jarvis.security.ten_layer_shield.InlinePermissionBroker.request_permission">request_permission</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.InlinePermissionBroker.resolve_permission" href="#jarvis.security.ten_layer_shield.InlinePermissionBroker.resolve_permission">resolve_permission</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.MerkleAuditLogger" href="#jarvis.security.ten_layer_shield.MerkleAuditLogger">MerkleAuditLogger</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.MerkleAuditLogger.log_event" href="#jarvis.security.ten_layer_shield.MerkleAuditLogger.log_event">log_event</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.MerkleAuditLogger.verify_integrity" href="#jarvis.security.ten_layer_shield.MerkleAuditLogger.verify_integrity">verify_integrity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.PresidioDLPRedactor" href="#jarvis.security.ten_layer_shield.PresidioDLPRedactor">PresidioDLPRedactor</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.PresidioDLPRedactor.redact" href="#jarvis.security.ten_layer_shield.PresidioDLPRedactor.redact">redact</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.SecretString" href="#jarvis.security.ten_layer_shield.SecretString">SecretString</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.SecretString.reveal" href="#jarvis.security.ten_layer_shield.SecretString.reveal">reveal</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.SecurityViolationError" href="#jarvis.security.ten_layer_shield.SecurityViolationError">SecurityViolationError</a></code></h4>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.SubprocessSanitizer" href="#jarvis.security.ten_layer_shield.SubprocessSanitizer">SubprocessSanitizer</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.SubprocessSanitizer.SENSITIVE_ENV_PREFIXES" href="#jarvis.security.ten_layer_shield.SubprocessSanitizer.SENSITIVE_ENV_PREFIXES">SENSITIVE_ENV_PREFIXES</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.SubprocessSanitizer.get_sanitized_env" href="#jarvis.security.ten_layer_shield.SubprocessSanitizer.get_sanitized_env">get_sanitized_env</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.TenLayerSecuritySuite" href="#jarvis.security.ten_layer_shield.TenLayerSecuritySuite">TenLayerSecuritySuite</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.TenLayerSecuritySuite.sanitize_log_output" href="#jarvis.security.ten_layer_shield.TenLayerSecuritySuite.sanitize_log_output">sanitize_log_output</a></code></li>
+<li><code><a title="jarvis.security.ten_layer_shield.TenLayerSecuritySuite.sanitize_outbound_prompt" href="#jarvis.security.ten_layer_shield.TenLayerSecuritySuite.sanitize_outbound_prompt">sanitize_outbound_prompt</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.security.ten_layer_shield.ZeroLeakLogFilter" href="#jarvis.security.ten_layer_shield.ZeroLeakLogFilter">ZeroLeakLogFilter</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.security.ten_layer_shield.ZeroLeakLogFilter.filter" href="#jarvis.security.ten_layer_shield.ZeroLeakLogFilter.filter">filter</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

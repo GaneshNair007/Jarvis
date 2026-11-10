@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.api.routes_integrations API documentation</title>
+<meta name="description" content="JARVIS Integrations REST API Routes
+Exposes management, power execution, dry-runs, and audit trails for all integrations.
+Endpoints:
+GET …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.api.routes_integrations</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Integrations REST API Routes
+Exposes management, power execution, dry-runs, and audit trails for all integrations.</p>
+<p>Endpoints
+-----=
+GET /integrations
+GET /integrations/{integration_id}
+POST /integrations/{integration_id}/connect
+POST /integrations/{integration_id}/disconnect
+POST /integrations/{integration_id}/enable
+POST /integrations/{integration_id}/disable
+GET /integrations/{integration_id}/health
+GET /integrations/{integration_id}/powers
+POST /integrations/{integration_id}/powers/{power_id}/execute
+POST /integrations/{integration_id}/powers/{power_id}/dry-run
+GET /integrations/{integration_id}/audit</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.api.routes_integrations.connect_integration"><code class="name flex">
+<span>def <span class="ident">connect_integration</span></span>(<span>integration_id: str,<br>req: <a title="jarvis.api.routes_integrations.ConnectRequest" href="#jarvis.api.routes_integrations.ConnectRequest">ConnectRequest</a> | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/integrations/{integration_id}/connect&#34;)
+def connect_integration(integration_id: str, req: Optional[ConnectRequest] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Connects or authenticates to the integration.&#34;&#34;&#34;
+    integ = integration_registry.get(integration_id)
+    if not integ:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+    creds = req.credentials if req else None
+    connected = integ.connect(creds)
+    return {
+        &#34;integration_id&#34;: integration_id,
+        &#34;connected&#34;: connected,
+        &#34;status&#34;: &#34;CONNECTED&#34; if connected else &#34;CONNECTION_FAILED&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>Connects or authenticates to the integration.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.disable_integration"><code class="name flex">
+<span>def <span class="ident">disable_integration</span></span>(<span>integration_id: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/integrations/{integration_id}/disable&#34;)
+def disable_integration(integration_id: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Disables integration and all associated powers.&#34;&#34;&#34;
+    success = integration_registry.disable(integration_id)
+    if not success:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+    return {&#34;integration_id&#34;: integration_id, &#34;enabled&#34;: False}</code></pre>
+</details>
+<div class="desc"><p>Disables integration and all associated powers.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.disconnect_integration"><code class="name flex">
+<span>def <span class="ident">disconnect_integration</span></span>(<span>integration_id: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/integrations/{integration_id}/disconnect&#34;)
+def disconnect_integration(integration_id: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Disconnects and tears down active sessions.&#34;&#34;&#34;
+    integ = integration_registry.get(integration_id)
+    if not integ:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+    integ.disconnect()
+    return {&#34;integration_id&#34;: integration_id, &#34;connected&#34;: False, &#34;status&#34;: &#34;DISCONNECTED&#34;}</code></pre>
+</details>
+<div class="desc"><p>Disconnects and tears down active sessions.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.dry_run_integration_power"><code class="name flex">
+<span>def <span class="ident">dry_run_integration_power</span></span>(<span>integration_id: str,<br>power_id: str,<br>req: <a title="jarvis.api.routes_integrations.DryRunRequest" href="#jarvis.api.routes_integrations.DryRunRequest">DryRunRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/integrations/{integration_id}/powers/{power_id}/dry-run&#34;)
+def dry_run_integration_power(integration_id: str, power_id: str, req: DryRunRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Previews action plan, content hash, and approval requirements without mutating state.&#34;&#34;&#34;
+    integ = integration_registry.get(integration_id)
+    if not integ:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+
+    plan = integ.dry_run(power_id=power_id, params=req.params)
+    return plan</code></pre>
+</details>
+<div class="desc"><p>Previews action plan, content hash, and approval requirements without mutating state.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.enable_integration"><code class="name flex">
+<span>def <span class="ident">enable_integration</span></span>(<span>integration_id: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/integrations/{integration_id}/enable&#34;)
+def enable_integration(integration_id: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Enables integration for automated power execution.&#34;&#34;&#34;
+    success = integration_registry.enable(integration_id)
+    if not success:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+    return {&#34;integration_id&#34;: integration_id, &#34;enabled&#34;: True}</code></pre>
+</details>
+<div class="desc"><p>Enables integration for automated power execution.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.execute_integration_power"><code class="name flex">
+<span>def <span class="ident">execute_integration_power</span></span>(<span>integration_id: str,<br>power_id: str,<br>req: <a title="jarvis.api.routes_integrations.ExecutePowerRequest" href="#jarvis.api.routes_integrations.ExecutePowerRequest">ExecutePowerRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/integrations/{integration_id}/powers/{power_id}/execute&#34;)
+def execute_integration_power(integration_id: str, power_id: str, req: ExecutePowerRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Executes an integration power behind rate limits, kill-switches, and approval gates.&#34;&#34;&#34;
+    integ = integration_registry.get(integration_id)
+    if not integ:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+
+    result = integ.execute_power(
+        power_id=power_id, params=req.params, approval_token=req.approval_token, context=req.context
+    )
+    return result</code></pre>
+</details>
+<div class="desc"><p>Executes an integration power behind rate limits, kill-switches, and approval gates.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.get_integration"><code class="name flex">
+<span>def <span class="ident">get_integration</span></span>(<span>integration_id: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/integrations/{integration_id}&#34;)
+def get_integration(integration_id: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Retrieves full metadata for a specific integration.&#34;&#34;&#34;
+    integ = integration_registry.get(integration_id)
+    if not integ:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+    return {
+        &#34;integration_id&#34;: integ.integration_id,
+        &#34;display_name&#34;: integ.display_name,
+        &#34;category&#34;: integ.category,
+        &#34;description&#34;: integ.description,
+        &#34;enabled&#34;: integ.enabled,
+        &#34;connected&#34;: integ.connected,
+        &#34;kill_switched&#34;: integ.kill_switched,
+        &#34;danger_level&#34;: integ.danger_level,
+        &#34;default_approval_tier&#34;: integ.default_approval_tier,
+        &#34;rate_limit_rpm&#34;: integ.rate_limit_rpm,
+        &#34;cost_model&#34;: integ.cost_model,
+        &#34;data_sensitivity&#34;: integ.data_sensitivity,
+        &#34;required_credentials&#34;: integ.required_credentials,
+        &#34;required_scopes&#34;: integ.required_scopes,
+        &#34;powers&#34;: integ.list_powers(),
+        &#34;documentation_url&#34;: integ.documentation_url,
+    }</code></pre>
+</details>
+<div class="desc"><p>Retrieves full metadata for a specific integration.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.integration_audit"><code class="name flex">
+<span>def <span class="ident">integration_audit</span></span>(<span>integration_id: str, limit: int = Query(20)) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/integrations/{integration_id}/audit&#34;)
+def integration_audit(integration_id: str, limit: int = Query(20, ge=1, le=100)) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Retrieves immutable audit trail for actions dispatched through this integration.&#34;&#34;&#34;
+    integ = integration_registry.get(integration_id)
+    if not integ:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+
+    entries = integ.audit(limit=limit)
+    return {&#34;integration_id&#34;: integration_id, &#34;total_events&#34;: len(entries), &#34;events&#34;: entries}</code></pre>
+</details>
+<div class="desc"><p>Retrieves immutable audit trail for actions dispatched through this integration.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.integration_health"><code class="name flex">
+<span>def <span class="ident">integration_health</span></span>(<span>integration_id: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/integrations/{integration_id}/health&#34;)
+def integration_health(integration_id: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Returns live diagnostic health probe for the integration.&#34;&#34;&#34;
+    integ = integration_registry.get(integration_id)
+    if not integ:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+    report = integ.health_check()
+    return report.model_dump()</code></pre>
+</details>
+<div class="desc"><p>Returns live diagnostic health probe for the integration.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.list_integration_powers"><code class="name flex">
+<span>def <span class="ident">list_integration_powers</span></span>(<span>integration_id: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/integrations/{integration_id}/powers&#34;)
+def list_integration_powers(integration_id: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Lists all powers exposed by this integration.&#34;&#34;&#34;
+    integ = integration_registry.get(integration_id)
+    if not integ:
+        raise HTTPException(status_code=404, detail=f&#34;Integration &#39;{integration_id}&#39; not found&#34;)
+    powers = integ.list_powers()
+    return {&#34;integration_id&#34;: integration_id, &#34;total_powers&#34;: len(powers), &#34;powers&#34;: powers}</code></pre>
+</details>
+<div class="desc"><p>Lists all powers exposed by this integration.</p></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.list_integrations"><code class="name flex">
+<span>def <span class="ident">list_integrations</span></span>(<span>category: str | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/integrations&#34;)
+def list_integrations(category: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Lists all registered integrations with connection and safety status.&#34;&#34;&#34;
+    if category:
+        items = integration_registry.list_by_category(category)
+    else:
+        items = integration_registry.list_integrations()
+    return {&#34;total&#34;: len(items), &#34;integrations&#34;: items}</code></pre>
+</details>
+<div class="desc"><p>Lists all registered integrations with connection and safety status.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.api.routes_integrations.ConnectRequest"><code class="flex name class">
+<span>class <span class="ident">ConnectRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ConnectRequest(BaseModel):
+    credentials: Optional[Dict[str, str]] = Field(default=None, description=&#34;Optional runtime credentials&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_integrations.ConnectRequest.credentials"><code class="name">var <span class="ident">credentials</span> : Dict[str, str] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.ConnectRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_integrations.DryRunRequest"><code class="flex name class">
+<span>class <span class="ident">DryRunRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DryRunRequest(BaseModel):
+    params: Dict[str, Any] = Field(default_factory=dict, description=&#34;Parameters to simulate&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_integrations.DryRunRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.DryRunRequest.params"><code class="name">var <span class="ident">params</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_integrations.ExecutePowerRequest"><code class="flex name class">
+<span>class <span class="ident">ExecutePowerRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ExecutePowerRequest(BaseModel):
+    params: Dict[str, Any] = Field(default_factory=dict, description=&#34;Parameters to pass to the power&#34;)
+    approval_token: Optional[str] = Field(default=None, description=&#34;Cryptographic approval token for Tier 2/3 actions&#34;)
+    context: Optional[Dict[str, Any]] = Field(default=None, description=&#34;Optional task execution context&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_integrations.ExecutePowerRequest.approval_token"><code class="name">var <span class="ident">approval_token</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.ExecutePowerRequest.context"><code class="name">var <span class="ident">context</span> : Dict[str, Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.ExecutePowerRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_integrations.ExecutePowerRequest.params"><code class="name">var <span class="ident">params</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.api" href="index.html">jarvis.api</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.api.routes_integrations.connect_integration" href="#jarvis.api.routes_integrations.connect_integration">connect_integration</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.disable_integration" href="#jarvis.api.routes_integrations.disable_integration">disable_integration</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.disconnect_integration" href="#jarvis.api.routes_integrations.disconnect_integration">disconnect_integration</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.dry_run_integration_power" href="#jarvis.api.routes_integrations.dry_run_integration_power">dry_run_integration_power</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.enable_integration" href="#jarvis.api.routes_integrations.enable_integration">enable_integration</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.execute_integration_power" href="#jarvis.api.routes_integrations.execute_integration_power">execute_integration_power</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.get_integration" href="#jarvis.api.routes_integrations.get_integration">get_integration</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.integration_audit" href="#jarvis.api.routes_integrations.integration_audit">integration_audit</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.integration_health" href="#jarvis.api.routes_integrations.integration_health">integration_health</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.list_integration_powers" href="#jarvis.api.routes_integrations.list_integration_powers">list_integration_powers</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.list_integrations" href="#jarvis.api.routes_integrations.list_integrations">list_integrations</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.api.routes_integrations.ConnectRequest" href="#jarvis.api.routes_integrations.ConnectRequest">ConnectRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_integrations.ConnectRequest.credentials" href="#jarvis.api.routes_integrations.ConnectRequest.credentials">credentials</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.ConnectRequest.model_config" href="#jarvis.api.routes_integrations.ConnectRequest.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_integrations.DryRunRequest" href="#jarvis.api.routes_integrations.DryRunRequest">DryRunRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_integrations.DryRunRequest.model_config" href="#jarvis.api.routes_integrations.DryRunRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.DryRunRequest.params" href="#jarvis.api.routes_integrations.DryRunRequest.params">params</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_integrations.ExecutePowerRequest" href="#jarvis.api.routes_integrations.ExecutePowerRequest">ExecutePowerRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_integrations.ExecutePowerRequest.approval_token" href="#jarvis.api.routes_integrations.ExecutePowerRequest.approval_token">approval_token</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.ExecutePowerRequest.context" href="#jarvis.api.routes_integrations.ExecutePowerRequest.context">context</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.ExecutePowerRequest.model_config" href="#jarvis.api.routes_integrations.ExecutePowerRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_integrations.ExecutePowerRequest.params" href="#jarvis.api.routes_integrations.ExecutePowerRequest.params">params</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.db.redis_state API documentation</title>
+<meta name="description" content="JARVIS Redis Real-Time Agent State Layer
+Maintains high-throughput live status, active tasks, and progress telemetry for worker agents.
+Gracefully …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.db.redis_state</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Redis Real-Time Agent State Layer
+Maintains high-throughput live status, active tasks, and progress telemetry for worker agents.
+Gracefully falls back to an in-memory dictionary store if Redis is unavailable locally.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.db.redis_state.InMemoryStateStore"><code class="flex name class">
+<span>class <span class="ident">InMemoryStateStore</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InMemoryStateStore:
+    &#34;&#34;&#34;Thread-safe fallback state store used when Redis server is offline.&#34;&#34;&#34;
+
+    def __init__(self):
+        self._store: Dict[str, str] = {}
+        self._lock = threading.Lock()
+
+    def get(self, key: str) -&gt; Optional[str]:
+        with self._lock:
+            return self._store.get(key)
+
+    def set(self, key: str, value: str, ex: Optional[int] = None) -&gt; None:
+        with self._lock:
+            self._store[key] = value
+
+    def delete(self, key: str) -&gt; None:
+        with self._lock:
+            self._store.pop(key, None)
+
+    def keys(self, pattern: str = &#34;*&#34;) -&gt; List[str]:
+        with self._lock:
+            if pattern == &#34;*&#34; or pattern == &#34;agent:*&#34;:
+                return list(self._store.keys())
+            import fnmatch
+
+            return fnmatch.filter(list(self._store.keys()), pattern)</code></pre>
+</details>
+<div class="desc"><p>Thread-safe fallback state store used when Redis server is offline.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.db.redis_state.InMemoryStateStore.delete"><code class="name flex">
+<span>def <span class="ident">delete</span></span>(<span>self, key: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete(self, key: str) -&gt; None:
+    with self._lock:
+        self._store.pop(key, None)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.redis_state.InMemoryStateStore.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, key: str) ‑> str | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get(self, key: str) -&gt; Optional[str]:
+    with self._lock:
+        return self._store.get(key)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.redis_state.InMemoryStateStore.keys"><code class="name flex">
+<span>def <span class="ident">keys</span></span>(<span>self, pattern: str = '*') ‑> List[str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keys(self, pattern: str = &#34;*&#34;) -&gt; List[str]:
+    with self._lock:
+        if pattern == &#34;*&#34; or pattern == &#34;agent:*&#34;:
+            return list(self._store.keys())
+        import fnmatch
+
+        return fnmatch.filter(list(self._store.keys()), pattern)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.redis_state.InMemoryStateStore.set"><code class="name flex">
+<span>def <span class="ident">set</span></span>(<span>self, key: str, value: str, ex: Optional[int] = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set(self, key: str, value: str, ex: Optional[int] = None) -&gt; None:
+    with self._lock:
+        self._store[key] = value</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.db.redis_state.RedisAgentStateStore"><code class="flex name class">
+<span>class <span class="ident">RedisAgentStateStore</span></span>
+<span>(</span><span>redis_url: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RedisAgentStateStore:
+    &#34;&#34;&#34;
+    Manages live agent status, progress, and heartbeats.
+    Key pattern: agent:{department}:{agent_name}:status
+    &#34;&#34;&#34;
+
+    def __init__(self, redis_url: Optional[str] = None):
+        self.redis_url = redis_url or os.environ.get(&#34;JARVIS_REDIS_URL&#34;, &#34;redis://localhost:6379/0&#34;)
+        self.client = None
+        self._fallback_store = InMemoryStateStore()
+        self._use_fallback = False
+        self._connect()
+
+    def _connect(self) -&gt; None:
+        try:
+            import redis
+
+            client = redis.from_url(self.redis_url, decode_responses=True, socket_timeout=1.0)
+            client.ping()
+            self.client = client
+            self._use_fallback = False
+            logger.info(f&#34;Connected successfully to Redis at {self.redis_url}&#34;)
+        except Exception as e:
+            logger.info(f&#34;Redis not available ({e}); using thread-safe in-memory state fallback.&#34;)
+            self._use_fallback = True
+
+    def set_agent_status(
+        self,
+        department: str,
+        agent_name: str,
+        status: str,
+        current_task: Optional[str] = None,
+        progress: int = 0,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Updates live agent state in Redis.&#34;&#34;&#34;
+        key = f&#34;agent:{department.lower()}:{agent_name.lower()}:status&#34;
+        payload = {
+            &#34;department&#34;: department,
+            &#34;agent_name&#34;: agent_name,
+            &#34;status&#34;: status,
+            &#34;current_task&#34;: current_task or &#34;idle&#34;,
+            &#34;progress&#34;: max(0, min(100, progress)),
+            &#34;last_heartbeat&#34;: datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            &#34;metadata&#34;: metadata or {},
+        }
+        val = json.dumps(payload)
+
+        if not self._use_fallback and self.client:
+            try:
+                self.client.set(key, val, ex=86400)
+            except Exception:
+                self._fallback_store.set(key, val)
+        else:
+            self._fallback_store.set(key, val)
+
+        return payload
+
+    def get_agent_status(self, department: str, agent_name: str) -&gt; Optional[Dict[str, Any]]:
+        &#34;&#34;&#34;Retrieves real-time status of specified agent.&#34;&#34;&#34;
+        key = f&#34;agent:{department.lower()}:{agent_name.lower()}:status&#34;
+        raw = None
+        if not self._use_fallback and self.client:
+            try:
+                raw = self.client.get(key)
+            except Exception:
+                raw = self._fallback_store.get(key)
+        else:
+            raw = self._fallback_store.get(key)
+
+        if raw:
+            try:
+                return json.loads(raw)
+            except Exception:
+                return None
+        return None
+
+    def list_active_agents(self) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Returns list of all active agents with live status.&#34;&#34;&#34;
+        pattern = &#34;agent:*&#34;
+        keys = []
+        if not self._use_fallback and self.client:
+            try:
+                keys = self.client.keys(pattern)
+            except Exception:
+                keys = self._fallback_store.keys(pattern)
+        else:
+            keys = self._fallback_store.keys(pattern)
+
+        active = []
+        for k in keys:
+            if not self._use_fallback and self.client:
+                try:
+                    raw = self.client.get(k)
+                except Exception:
+                    raw = self._fallback_store.get(k)
+            else:
+                raw = self._fallback_store.get(k)
+
+            if raw:
+                try:
+                    data = json.loads(raw)
+                    active.append(data)
+                except Exception:
+                    continue
+        return active
+
+    def clear(self) -&gt; None:
+        &#34;&#34;&#34;Clears state store (useful for test resets).&#34;&#34;&#34;
+        self._fallback_store = InMemoryStateStore()
+        if not self._use_fallback and self.client:
+            try:
+                keys = self.client.keys(&#34;agent:*&#34;)
+                if keys:
+                    self.client.delete(*keys)
+            except Exception:
+                pass</code></pre>
+</details>
+<div class="desc"><p>Manages live agent status, progress, and heartbeats.
+Key pattern: agent:{department}:{agent_name}:status</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.db.redis_state.RedisAgentStateStore.clear"><code class="name flex">
+<span>def <span class="ident">clear</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clear(self) -&gt; None:
+    &#34;&#34;&#34;Clears state store (useful for test resets).&#34;&#34;&#34;
+    self._fallback_store = InMemoryStateStore()
+    if not self._use_fallback and self.client:
+        try:
+            keys = self.client.keys(&#34;agent:*&#34;)
+            if keys:
+                self.client.delete(*keys)
+        except Exception:
+            pass</code></pre>
+</details>
+<div class="desc"><p>Clears state store (useful for test resets).</p></div>
+</dd>
+<dt id="jarvis.db.redis_state.RedisAgentStateStore.get_agent_status"><code class="name flex">
+<span>def <span class="ident">get_agent_status</span></span>(<span>self, department: str, agent_name: str) ‑> Dict[str, Any] | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_agent_status(self, department: str, agent_name: str) -&gt; Optional[Dict[str, Any]]:
+    &#34;&#34;&#34;Retrieves real-time status of specified agent.&#34;&#34;&#34;
+    key = f&#34;agent:{department.lower()}:{agent_name.lower()}:status&#34;
+    raw = None
+    if not self._use_fallback and self.client:
+        try:
+            raw = self.client.get(key)
+        except Exception:
+            raw = self._fallback_store.get(key)
+    else:
+        raw = self._fallback_store.get(key)
+
+    if raw:
+        try:
+            return json.loads(raw)
+        except Exception:
+            return None
+    return None</code></pre>
+</details>
+<div class="desc"><p>Retrieves real-time status of specified agent.</p></div>
+</dd>
+<dt id="jarvis.db.redis_state.RedisAgentStateStore.list_active_agents"><code class="name flex">
+<span>def <span class="ident">list_active_agents</span></span>(<span>self) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_active_agents(self) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Returns list of all active agents with live status.&#34;&#34;&#34;
+    pattern = &#34;agent:*&#34;
+    keys = []
+    if not self._use_fallback and self.client:
+        try:
+            keys = self.client.keys(pattern)
+        except Exception:
+            keys = self._fallback_store.keys(pattern)
+    else:
+        keys = self._fallback_store.keys(pattern)
+
+    active = []
+    for k in keys:
+        if not self._use_fallback and self.client:
+            try:
+                raw = self.client.get(k)
+            except Exception:
+                raw = self._fallback_store.get(k)
+        else:
+            raw = self._fallback_store.get(k)
+
+        if raw:
+            try:
+                data = json.loads(raw)
+                active.append(data)
+            except Exception:
+                continue
+    return active</code></pre>
+</details>
+<div class="desc"><p>Returns list of all active agents with live status.</p></div>
+</dd>
+<dt id="jarvis.db.redis_state.RedisAgentStateStore.set_agent_status"><code class="name flex">
+<span>def <span class="ident">set_agent_status</span></span>(<span>self,<br>department: str,<br>agent_name: str,<br>status: str,<br>current_task: Optional[str] = None,<br>progress: int = 0,<br>metadata: Optional[Dict[str, Any]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_agent_status(
+    self,
+    department: str,
+    agent_name: str,
+    status: str,
+    current_task: Optional[str] = None,
+    progress: int = 0,
+    metadata: Optional[Dict[str, Any]] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Updates live agent state in Redis.&#34;&#34;&#34;
+    key = f&#34;agent:{department.lower()}:{agent_name.lower()}:status&#34;
+    payload = {
+        &#34;department&#34;: department,
+        &#34;agent_name&#34;: agent_name,
+        &#34;status&#34;: status,
+        &#34;current_task&#34;: current_task or &#34;idle&#34;,
+        &#34;progress&#34;: max(0, min(100, progress)),
+        &#34;last_heartbeat&#34;: datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        &#34;metadata&#34;: metadata or {},
+    }
+    val = json.dumps(payload)
+
+    if not self._use_fallback and self.client:
+        try:
+            self.client.set(key, val, ex=86400)
+        except Exception:
+            self._fallback_store.set(key, val)
+    else:
+        self._fallback_store.set(key, val)
+
+    return payload</code></pre>
+</details>
+<div class="desc"><p>Updates live agent state in Redis.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.db" href="index.html">jarvis.db</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.db.redis_state.InMemoryStateStore" href="#jarvis.db.redis_state.InMemoryStateStore">InMemoryStateStore</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.db.redis_state.InMemoryStateStore.delete" href="#jarvis.db.redis_state.InMemoryStateStore.delete">delete</a></code></li>
+<li><code><a title="jarvis.db.redis_state.InMemoryStateStore.get" href="#jarvis.db.redis_state.InMemoryStateStore.get">get</a></code></li>
+<li><code><a title="jarvis.db.redis_state.InMemoryStateStore.keys" href="#jarvis.db.redis_state.InMemoryStateStore.keys">keys</a></code></li>
+<li><code><a title="jarvis.db.redis_state.InMemoryStateStore.set" href="#jarvis.db.redis_state.InMemoryStateStore.set">set</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.db.redis_state.RedisAgentStateStore" href="#jarvis.db.redis_state.RedisAgentStateStore">RedisAgentStateStore</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.db.redis_state.RedisAgentStateStore.clear" href="#jarvis.db.redis_state.RedisAgentStateStore.clear">clear</a></code></li>
+<li><code><a title="jarvis.db.redis_state.RedisAgentStateStore.get_agent_status" href="#jarvis.db.redis_state.RedisAgentStateStore.get_agent_status">get_agent_status</a></code></li>
+<li><code><a title="jarvis.db.redis_state.RedisAgentStateStore.list_active_agents" href="#jarvis.db.redis_state.RedisAgentStateStore.list_active_agents">list_active_agents</a></code></li>
+<li><code><a title="jarvis.db.redis_state.RedisAgentStateStore.set_agent_status" href="#jarvis.db.redis_state.RedisAgentStateStore.set_agent_status">set_agent_status</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

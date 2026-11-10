@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.openmaus_grok API documentation</title>
+<meta name="description" content="JARVIS OpenMausBot Integration: Grok Bot Engine &amp; Multi-Agent Loopback Harness
+Synthesizes the core mechanisms of milind-soni/OpenMausBot:
+1. Grok …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.openmaus_grok</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS OpenMausBot Integration: Grok Bot Engine &amp; Multi-Agent Loopback Harness
+Synthesizes the core mechanisms of milind-soni/OpenMausBot:
+1. Grok Persona Engine (witty, truth-seeking, unfiltered, deep reasoning, fun/think modes).
+2. Multi-Bot Sidebar Roster (GrokBot, CodeBot, ResearchBot, SysBot, ReflexBot).
+3. Loopback Harness &amp; Normalized Agent Event Stream (thought, tool_call, permission_request, message).
+4. Inline Permission Broker (human-in-the-loop allow/deny gates for shell, filesystem, and network).
+5. BYOE (Bring Your Own Engine) multi-provider dispatch via OpenRouter, Groq, and Gemini.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.openmaus_grok.AgentEvent"><code class="flex name class">
+<span>class <span class="ident">AgentEvent</span></span>
+<span>(</span><span>event_id: str,<br>event_type: str,<br>agent_id: str,<br>channel: str,<br>data: Dict[str, Any],<br>timestamp: float = &lt;factory&gt;)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class AgentEvent:
+    event_id: str
+    event_type: str  # thought, tool_call, permission_request, message, status
+    agent_id: str
+    channel: str
+    data: Dict[str, Any]
+    timestamp: float = field(default_factory=time.time)
+
+    def to_dict(self) -&gt; Dict[str, Any]:
+        return {
+            &#34;event_id&#34;: self.event_id,
+            &#34;event_type&#34;: self.event_type,
+            &#34;agent_id&#34;: self.agent_id,
+            &#34;channel&#34;: self.channel,
+            &#34;data&#34;: self.data,
+            &#34;timestamp&#34;: self.timestamp,
+        }</code></pre>
+</details>
+<div class="desc"><p>AgentEvent(event_id: 'str', event_type: 'str', agent_id: 'str', channel: 'str', data: 'Dict[str, Any]', timestamp: 'float' = <factory>)</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.core.openmaus_grok.AgentEvent.agent_id"><code class="name">var <span class="ident">agent_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.AgentEvent.channel"><code class="name">var <span class="ident">channel</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.AgentEvent.data"><code class="name">var <span class="ident">data</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.AgentEvent.event_id"><code class="name">var <span class="ident">event_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.AgentEvent.event_type"><code class="name">var <span class="ident">event_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.AgentEvent.timestamp"><code class="name">var <span class="ident">timestamp</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.openmaus_grok.AgentEvent.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; Dict[str, Any]:
+    return {
+        &#34;event_id&#34;: self.event_id,
+        &#34;event_type&#34;: self.event_type,
+        &#34;agent_id&#34;: self.agent_id,
+        &#34;channel&#34;: self.channel,
+        &#34;data&#34;: self.data,
+        &#34;timestamp&#34;: self.timestamp,
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.openmaus_grok.BotProfile"><code class="flex name class">
+<span>class <span class="ident">BotProfile</span></span>
+<span>(</span><span>bot_id: str,<br>name: str,<br>avatar: str,<br>title: str,<br>description: str,<br>default_mode: <a title="jarvis.core.openmaus_grok.GrokMode" href="#jarvis.core.openmaus_grok.GrokMode">GrokMode</a>,<br>system_instruction: str,<br>allowed_tools: List[str],<br>status: str = 'ONLINE')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class BotProfile:
+    bot_id: str
+    name: str
+    avatar: str
+    title: str
+    description: str
+    default_mode: GrokMode
+    system_instruction: str
+    allowed_tools: List[str]
+    status: str = &#34;ONLINE&#34;</code></pre>
+</details>
+<div class="desc"><p>BotProfile(bot_id: 'str', name: 'str', avatar: 'str', title: 'str', description: 'str', default_mode: 'GrokMode', system_instruction: 'str', allowed_tools: 'List[str]', status: 'str' = 'ONLINE')</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.core.openmaus_grok.BotProfile.allowed_tools"><code class="name">var <span class="ident">allowed_tools</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.BotProfile.avatar"><code class="name">var <span class="ident">avatar</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.BotProfile.bot_id"><code class="name">var <span class="ident">bot_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.BotProfile.default_mode"><code class="name">var <span class="ident">default_mode</span> : <a title="jarvis.core.openmaus_grok.GrokMode" href="#jarvis.core.openmaus_grok.GrokMode">GrokMode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.BotProfile.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.BotProfile.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.BotProfile.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.BotProfile.system_instruction"><code class="name">var <span class="ident">system_instruction</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.BotProfile.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.openmaus_grok.GrokMode"><code class="flex name class">
+<span>class <span class="ident">GrokMode</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GrokMode(str, Enum):
+    STANDARD = &#34;standard&#34;  # Truthful, insightful, concise, Hitchhiker&#39;s Guide tone
+    FUN = &#34;fun&#34;  # Witty, sarcastic, playful humor, unfiltered banter
+    THINK = &#34;think&#34;  # Deep analytical reasoning, chain-of-thought, mathematical rigor
+    CODE = &#34;code&#34;  # Ruthlessly efficient senior engineer, AST and test-driven</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.openmaus_grok.GrokMode.CODE"><code class="name">var <span class="ident">CODE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.GrokMode.FUN"><code class="name">var <span class="ident">FUN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.GrokMode.STANDARD"><code class="name">var <span class="ident">STANDARD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.GrokMode.THINK"><code class="name">var <span class="ident">THINK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausAgentRoster"><code class="flex name class">
+<span>class <span class="ident">OpenMausAgentRoster</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OpenMausAgentRoster:
+    &#34;&#34;&#34;Manages the multi-bot roster inspired by OpenMausBot&#39;s sidebar.&#34;&#34;&#34;
+
+    def __init__(self):
+        self.bots: Dict[str, BotProfile] = {}
+        self._initialize_default_roster()
+
+    def _initialize_default_roster(self):
+        # 1. Grok Bot (Flagship Reasoning &amp; Conversational Agent)
+        self.register_bot(
+            BotProfile(
+                bot_id=&#34;grok&#34;,
+                name=&#34;Grok&#34;,
+                avatar=&#34;⚡&#34;,
+                title=&#34;Chief Cognitive AI &amp; Truth Engine&#34;,
+                description=&#34;Witty, insightful, unfiltered general intelligence with Hitchhiker&#39;s Guide flair.&#34;,
+                default_mode=GrokMode.STANDARD,
+                system_instruction=GROK_PERSONAS[GrokMode.STANDARD],
+                allowed_tools=[&#34;web_search&#34;, &#34;memory_query&#34;, &#34;intent_triage&#34;, &#34;screen_inspect&#34;],
+            )
+        )
+
+        # 2. Code Bot (Autonomous Systems Software Engineer)
+        self.register_bot(
+            BotProfile(
+                bot_id=&#34;code_bot&#34;,
+                name=&#34;CodeMaus&#34;,
+                avatar=&#34;💻&#34;,
+                title=&#34;Senior Systems &amp; AST Engineer&#34;,
+                description=&#34;Specialized in multi-file refactoring, AST repo mapping, unit testing, and git automation.&#34;,
+                default_mode=GrokMode.CODE,
+                system_instruction=GROK_PERSONAS[GrokMode.CODE],
+                allowed_tools=[&#34;ast_repo_map&#34;, &#34;run_tests&#34;, &#34;git_status&#34;, &#34;git_commit&#34;, &#34;file_edit&#34;],
+            )
+        )
+
+        # 3. Research Bot (Deep Search &amp; Fact Extraction)
+        self.register_bot(
+            BotProfile(
+                bot_id=&#34;research_bot&#34;,
+                name=&#34;ScoutMaus&#34;,
+                avatar=&#34;🔍&#34;,
+                title=&#34;Deep Research &amp; Fact Investigator&#34;,
+                description=&#34;Explores web sources, extracts documentation, verifies empirical claims, and cites sources.&#34;,
+                default_mode=GrokMode.THINK,
+                system_instruction=GROK_PERSONAS[GrokMode.THINK],
+                allowed_tools=[&#34;web_search&#34;, &#34;browse_page&#34;, &#34;extract_citations&#34;, &#34;crawl4ai&#34;],
+            )
+        )
+
+        # 4. System Ops Bot (Subprocess &amp; Infrastructure Guardian)
+        self.register_bot(
+            BotProfile(
+                bot_id=&#34;sys_bot&#34;,
+                name=&#34;OpsMaus&#34;,
+                avatar=&#34;🛡️&#34;,
+                title=&#34;Infrastructure &amp; Sandbox Controller&#34;,
+                description=&#34;Monitors host telemetry, manages background daemons, and supervises system security.&#34;,
+                default_mode=GrokMode.STANDARD,
+                system_instruction=(
+                    &#34;You are OpsMaus, the infrastructure guardian of Project JARVIS. &#34;
+                    &#34;You inspect system health, verify running daemons, and safely triage host operations.&#34;
+                ),
+                allowed_tools=[&#34;system_health&#34;, &#34;process_list&#34;, &#34;network_ping&#34;, &#34;port_check&#34;],
+            )
+        )
+
+        # 5. Reflex Bot (Instant Local Macro Engine)
+        self.register_bot(
+            BotProfile(
+                bot_id=&#34;reflex_bot&#34;,
+                name=&#34;ReflexMaus&#34;,
+                avatar=&#34;⚡&#34;,
+                title=&#34;Sub-15ms Local Intent Reflex&#34;,
+                description=&#34;Ultra-low latency instant command dispatcher running local deterministic bypass macros.&#34;,
+                default_mode=GrokMode.STANDARD,
+                system_instruction=&#34;Instant deterministic command dispatcher for desktop macros.&#34;,
+                allowed_tools=[&#34;lock_screen&#34;, &#34;clipboard_copy&#34;, &#34;launch_app&#34;, &#34;media_control&#34;],
+            )
+        )
+
+    def register_bot(self, profile: BotProfile) -&gt; None:
+        self.bots[profile.bot_id] = profile
+
+    def get_bot(self, bot_id: str) -&gt; Optional[BotProfile]:
+        return self.bots.get(bot_id)
+
+    def list_bots(self) -&gt; List[Dict[str, Any]]:
+        return [
+            {
+                &#34;bot_id&#34;: b.bot_id,
+                &#34;name&#34;: b.name,
+                &#34;avatar&#34;: b.avatar,
+                &#34;title&#34;: b.title,
+                &#34;description&#34;: b.description,
+                &#34;mode&#34;: b.default_mode.value,
+                &#34;status&#34;: b.status,
+                &#34;tools&#34;: b.allowed_tools,
+            }
+            for b in self.bots.values()
+        ]</code></pre>
+</details>
+<div class="desc"><p>Manages the multi-bot roster inspired by OpenMausBot's sidebar.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.openmaus_grok.OpenMausAgentRoster.get_bot"><code class="name flex">
+<span>def <span class="ident">get_bot</span></span>(<span>self, bot_id: str) ‑> <a title="jarvis.core.openmaus_grok.BotProfile" href="#jarvis.core.openmaus_grok.BotProfile">BotProfile</a> | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_bot(self, bot_id: str) -&gt; Optional[BotProfile]:
+    return self.bots.get(bot_id)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausAgentRoster.list_bots"><code class="name flex">
+<span>def <span class="ident">list_bots</span></span>(<span>self) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_bots(self) -&gt; List[Dict[str, Any]]:
+    return [
+        {
+            &#34;bot_id&#34;: b.bot_id,
+            &#34;name&#34;: b.name,
+            &#34;avatar&#34;: b.avatar,
+            &#34;title&#34;: b.title,
+            &#34;description&#34;: b.description,
+            &#34;mode&#34;: b.default_mode.value,
+            &#34;status&#34;: b.status,
+            &#34;tools&#34;: b.allowed_tools,
+        }
+        for b in self.bots.values()
+    ]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausAgentRoster.register_bot"><code class="name flex">
+<span>def <span class="ident">register_bot</span></span>(<span>self,<br>profile: <a title="jarvis.core.openmaus_grok.BotProfile" href="#jarvis.core.openmaus_grok.BotProfile">BotProfile</a>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def register_bot(self, profile: BotProfile) -&gt; None:
+    self.bots[profile.bot_id] = profile</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausGrokHarness"><code class="flex name class">
+<span>class <span class="ident">OpenMausGrokHarness</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OpenMausGrokHarness:
+    &#34;&#34;&#34;
+    Central loopback harness server for the OpenMausBot Grok Engine.
+    Coordinates the agent roster, normalizes event streams, enforces DLP sanitization,
+    and dispatches inference across multi-provider cloud and local backends.
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        self.roster = OpenMausAgentRoster()
+        self.broker = OpenMausPermissionBroker()
+        self.channels: List[str] = [&#34;#general&#34;, &#34;#dev&#34;, &#34;#research&#34;, &#34;#ops&#34;]
+        self.event_history: List[AgentEvent] = []
+        self._event_listeners: List[Callable[[AgentEvent], None]] = []
+
+    def add_event_listener(self, callback: Callable[[AgentEvent], None]) -&gt; None:
+        self._event_listeners.append(callback)
+
+    def emit_event(self, event_type: str, agent_id: str, channel: str, data: Dict[str, Any]) -&gt; AgentEvent:
+        event = AgentEvent(
+            event_id=f&#34;evt_{uuid.uuid4().hex[:8]}&#34;,
+            event_type=event_type,
+            agent_id=agent_id,
+            channel=channel,
+            data=data,
+        )
+        self.event_history.append(event)
+        if len(self.event_history) &gt; 500:
+            self.event_history = self.event_history[-500:]
+
+        for listener in self._event_listeners:
+            try:
+                listener(event)
+            except Exception as e:
+                logger.error(f&#34;Error in event listener: {e}&#34;)
+        return event
+
+    async def chat(
+        self,
+        prompt: str,
+        bot_id: str = &#34;grok&#34;,
+        mode: Optional[GrokMode] = None,
+        channel: str = &#34;#general&#34;,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Executes a turn through Grok Bot or a selected agent from the roster.
+        Dispatches thought events, runs DLP sanitization, checks permissions,
+        and invokes multi-provider inference.
+        &#34;&#34;&#34;
+        bot = self.roster.get_bot(bot_id) or self.roster.get_bot(&#34;grok&#34;)
+        active_mode = mode or bot.default_mode
+        sys_prompt = GROK_PERSONAS.get(active_mode, bot.system_instruction)
+
+        # 1. Emit thought event (Internal Deliberation)
+        self.emit_event(
+            event_type=&#34;thought&#34;,
+            agent_id=bot.bot_id,
+            channel=channel,
+            data={
+                &#34;message&#34;: f&#34;Analyzing user intent in [{active_mode.value.upper()}] mode...&#34;,
+                &#34;bot&#34;: bot.name,
+                &#34;mode&#34;: active_mode.value,
+            },
+        )
+
+        # 2. Sanitize prompt through 10-Layer Security Suite (Zero Secret Leakage)
+        sanitized_prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+
+        # 3. Model Inference via Multi-Provider Rotator
+        start_time = time.time()
+        reply_text = None
+        model_name = None
+        provider = &#34;local&#34;
+
+        # Try Groq Cloud (500+ tok/s) if available
+        if groq_rotator.is_available:
+            try:
+                groq_res = groq_rotator.generate_chat_completion(sanitized_prompt, system_instruction=sys_prompt)
+                if groq_res and groq_res.get(&#34;reply&#34;):
+                    reply_text = groq_res[&#34;reply&#34;]
+                    model_name = groq_res.get(&#34;model&#34;, &#34;llama-3.3-70b-versatile&#34;)
+                    provider = &#34;groq&#34;
+            except Exception as ge:
+                logger.warning(f&#34;Groq rotator attempt: {ge}&#34;)
+
+        # Try OpenRouter (e.g. DeepSeek / Grok-2) if Groq not used
+        if not reply_text and openrouter_rotator.is_available:
+            try:
+                or_res = openrouter_rotator.generate_chat_completion(sanitized_prompt, system_instruction=sys_prompt)
+                if or_res and or_res.get(&#34;reply&#34;):
+                    reply_text = or_res[&#34;reply&#34;]
+                    model_name = or_res.get(&#34;model&#34;, &#34;deepseek/deepseek-chat&#34;)
+                    provider = &#34;openrouter&#34;
+            except Exception as oe:
+                logger.warning(f&#34;OpenRouter rotator attempt: {oe}&#34;)
+
+        # Try Gemini Rotator if needed
+        if not reply_text and gemini_rotator.is_available:
+            try:
+                gem_res = gemini_rotator.generate_chat_completion(sanitized_prompt, system_instruction=sys_prompt)
+                if gem_res and gem_res.get(&#34;reply&#34;):
+                    reply_text = gem_res[&#34;reply&#34;]
+                    model_name = gem_res.get(&#34;model&#34;, &#34;gemini-2.5-pro&#34;)
+                    provider = &#34;gemini&#34;
+            except Exception as me:
+                logger.warning(f&#34;Gemini rotator attempt: {me}&#34;)
+
+        # Fallback to standard ModelRouter execution
+        if not reply_text:
+            req = RoutingRequest(
+                task_id=f&#34;grok_{uuid.uuid4().hex[:8]}&#34;,
+                user_intent=sanitized_prompt,
+                task_type=&#34;chat&#34;,
+            )
+            decision = model_router.route(req)
+            inf_res = model_router.execute_inference(decision, sanitized_prompt, system_prompt=sys_prompt)
+            reply_text = inf_res.get(&#34;reply&#34;, &#34;Grok cognitive cycle complete.&#34;)
+            model_name = inf_res.get(&#34;model&#34;, decision.selected_model)
+            provider = decision.tier
+
+        duration_ms = round((time.time() - start_time) * 1000, 2)
+
+        # 4. Emit message event
+        msg_event = self.emit_event(
+            event_type=&#34;agent_message&#34;,
+            agent_id=bot.bot_id,
+            channel=channel,
+            data={
+                &#34;reply&#34;: reply_text,
+                &#34;bot_name&#34;: bot.name,
+                &#34;avatar&#34;: bot.avatar,
+                &#34;mode&#34;: active_mode.value,
+                &#34;provider&#34;: provider,
+                &#34;model&#34;: model_name,
+                &#34;duration_ms&#34;: duration_ms,
+            },
+        )
+
+        return {
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;bot_id&#34;: bot.bot_id,
+            &#34;bot_name&#34;: bot.name,
+            &#34;avatar&#34;: bot.avatar,
+            &#34;channel&#34;: channel,
+            &#34;mode&#34;: active_mode.value,
+            &#34;reply&#34;: reply_text,
+            &#34;model&#34;: model_name,
+            &#34;provider&#34;: provider,
+            &#34;duration_ms&#34;: duration_ms,
+            &#34;event_id&#34;: msg_event.event_id,
+        }</code></pre>
+</details>
+<div class="desc"><p>Central loopback harness server for the OpenMausBot Grok Engine.
+Coordinates the agent roster, normalizes event streams, enforces DLP sanitization,
+and dispatches inference across multi-provider cloud and local backends.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.openmaus_grok.OpenMausGrokHarness.add_event_listener"><code class="name flex">
+<span>def <span class="ident">add_event_listener</span></span>(<span>self,<br>callback: Callable[[<a title="jarvis.core.openmaus_grok.AgentEvent" href="#jarvis.core.openmaus_grok.AgentEvent">AgentEvent</a>], None]) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_event_listener(self, callback: Callable[[AgentEvent], None]) -&gt; None:
+    self._event_listeners.append(callback)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausGrokHarness.chat"><code class="name flex">
+<span>async def <span class="ident">chat</span></span>(<span>self,<br>prompt: str,<br>bot_id: str = 'grok',<br>mode: Optional[<a title="jarvis.core.openmaus_grok.GrokMode" href="#jarvis.core.openmaus_grok.GrokMode">GrokMode</a>] = None,<br>channel: str = '#general') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def chat(
+    self,
+    prompt: str,
+    bot_id: str = &#34;grok&#34;,
+    mode: Optional[GrokMode] = None,
+    channel: str = &#34;#general&#34;,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Executes a turn through Grok Bot or a selected agent from the roster.
+    Dispatches thought events, runs DLP sanitization, checks permissions,
+    and invokes multi-provider inference.
+    &#34;&#34;&#34;
+    bot = self.roster.get_bot(bot_id) or self.roster.get_bot(&#34;grok&#34;)
+    active_mode = mode or bot.default_mode
+    sys_prompt = GROK_PERSONAS.get(active_mode, bot.system_instruction)
+
+    # 1. Emit thought event (Internal Deliberation)
+    self.emit_event(
+        event_type=&#34;thought&#34;,
+        agent_id=bot.bot_id,
+        channel=channel,
+        data={
+            &#34;message&#34;: f&#34;Analyzing user intent in [{active_mode.value.upper()}] mode...&#34;,
+            &#34;bot&#34;: bot.name,
+            &#34;mode&#34;: active_mode.value,
+        },
+    )
+
+    # 2. Sanitize prompt through 10-Layer Security Suite (Zero Secret Leakage)
+    sanitized_prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+
+    # 3. Model Inference via Multi-Provider Rotator
+    start_time = time.time()
+    reply_text = None
+    model_name = None
+    provider = &#34;local&#34;
+
+    # Try Groq Cloud (500+ tok/s) if available
+    if groq_rotator.is_available:
+        try:
+            groq_res = groq_rotator.generate_chat_completion(sanitized_prompt, system_instruction=sys_prompt)
+            if groq_res and groq_res.get(&#34;reply&#34;):
+                reply_text = groq_res[&#34;reply&#34;]
+                model_name = groq_res.get(&#34;model&#34;, &#34;llama-3.3-70b-versatile&#34;)
+                provider = &#34;groq&#34;
+        except Exception as ge:
+            logger.warning(f&#34;Groq rotator attempt: {ge}&#34;)
+
+    # Try OpenRouter (e.g. DeepSeek / Grok-2) if Groq not used
+    if not reply_text and openrouter_rotator.is_available:
+        try:
+            or_res = openrouter_rotator.generate_chat_completion(sanitized_prompt, system_instruction=sys_prompt)
+            if or_res and or_res.get(&#34;reply&#34;):
+                reply_text = or_res[&#34;reply&#34;]
+                model_name = or_res.get(&#34;model&#34;, &#34;deepseek/deepseek-chat&#34;)
+                provider = &#34;openrouter&#34;
+        except Exception as oe:
+            logger.warning(f&#34;OpenRouter rotator attempt: {oe}&#34;)
+
+    # Try Gemini Rotator if needed
+    if not reply_text and gemini_rotator.is_available:
+        try:
+            gem_res = gemini_rotator.generate_chat_completion(sanitized_prompt, system_instruction=sys_prompt)
+            if gem_res and gem_res.get(&#34;reply&#34;):
+                reply_text = gem_res[&#34;reply&#34;]
+                model_name = gem_res.get(&#34;model&#34;, &#34;gemini-2.5-pro&#34;)
+                provider = &#34;gemini&#34;
+        except Exception as me:
+            logger.warning(f&#34;Gemini rotator attempt: {me}&#34;)
+
+    # Fallback to standard ModelRouter execution
+    if not reply_text:
+        req = RoutingRequest(
+            task_id=f&#34;grok_{uuid.uuid4().hex[:8]}&#34;,
+            user_intent=sanitized_prompt,
+            task_type=&#34;chat&#34;,
+        )
+        decision = model_router.route(req)
+        inf_res = model_router.execute_inference(decision, sanitized_prompt, system_prompt=sys_prompt)
+        reply_text = inf_res.get(&#34;reply&#34;, &#34;Grok cognitive cycle complete.&#34;)
+        model_name = inf_res.get(&#34;model&#34;, decision.selected_model)
+        provider = decision.tier
+
+    duration_ms = round((time.time() - start_time) * 1000, 2)
+
+    # 4. Emit message event
+    msg_event = self.emit_event(
+        event_type=&#34;agent_message&#34;,
+        agent_id=bot.bot_id,
+        channel=channel,
+        data={
+            &#34;reply&#34;: reply_text,
+            &#34;bot_name&#34;: bot.name,
+            &#34;avatar&#34;: bot.avatar,
+            &#34;mode&#34;: active_mode.value,
+            &#34;provider&#34;: provider,
+            &#34;model&#34;: model_name,
+            &#34;duration_ms&#34;: duration_ms,
+        },
+    )
+
+    return {
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;bot_id&#34;: bot.bot_id,
+        &#34;bot_name&#34;: bot.name,
+        &#34;avatar&#34;: bot.avatar,
+        &#34;channel&#34;: channel,
+        &#34;mode&#34;: active_mode.value,
+        &#34;reply&#34;: reply_text,
+        &#34;model&#34;: model_name,
+        &#34;provider&#34;: provider,
+        &#34;duration_ms&#34;: duration_ms,
+        &#34;event_id&#34;: msg_event.event_id,
+    }</code></pre>
+</details>
+<div class="desc"><p>Executes a turn through Grok Bot or a selected agent from the roster.
+Dispatches thought events, runs DLP sanitization, checks permissions,
+and invokes multi-provider inference.</p></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausGrokHarness.emit_event"><code class="name flex">
+<span>def <span class="ident">emit_event</span></span>(<span>self, event_type: str, agent_id: str, channel: str, data: Dict[str, Any]) ‑> <a title="jarvis.core.openmaus_grok.AgentEvent" href="#jarvis.core.openmaus_grok.AgentEvent">AgentEvent</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def emit_event(self, event_type: str, agent_id: str, channel: str, data: Dict[str, Any]) -&gt; AgentEvent:
+    event = AgentEvent(
+        event_id=f&#34;evt_{uuid.uuid4().hex[:8]}&#34;,
+        event_type=event_type,
+        agent_id=agent_id,
+        channel=channel,
+        data=data,
+    )
+    self.event_history.append(event)
+    if len(self.event_history) &gt; 500:
+        self.event_history = self.event_history[-500:]
+
+    for listener in self._event_listeners:
+        try:
+            listener(event)
+        except Exception as e:
+            logger.error(f&#34;Error in event listener: {e}&#34;)
+    return event</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausPermissionBroker"><code class="flex name class">
+<span>class <span class="ident">OpenMausPermissionBroker</span></span>
+<span>(</span><span>ttl_seconds: float = 60.0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OpenMausPermissionBroker:
+    &#34;&#34;&#34;
+    Inline permission broker inspired by OpenMausBot.
+    Intercepts privileged system actions, pauses execution, and prompts for explicit human approval.
+    Cryptographically binds approval tokens to action, target, and agent with single-use consumption and TTL.
+    &#34;&#34;&#34;
+
+    PRIVILEGED_OPERATIONS = {
+        &#34;execute_shell&#34;,
+        &#34;delete_file&#34;,
+        &#34;format_disk&#34;,
+        &#34;git_push&#34;,
+        &#34;export_env&#34;,
+        &#34;deploy_production&#34;,
+        &#34;kill_process&#34;,
+    }
+
+    def __init__(self, ttl_seconds: float = 60.0):
+        self.ttl_seconds = ttl_seconds
+        self._pending_decisions: Dict[str, Dict[str, Any]] = {}
+        self._token_registry: Dict[str, Dict[str, Any]] = {}
+
+    def inspect_action(self, action_type: str, details: str, agent_id: str) -&gt; Tuple[bool, Optional[str]]:
+        &#34;&#34;&#34;
+        Returns (is_approved, decision_id).
+        If action is safe, returns (True, None).
+        If action is privileged, returns (False, decision_id).
+        &#34;&#34;&#34;
+        if action_type not in self.PRIVILEGED_OPERATIONS:
+            return True, None
+
+        decision_id = f&#34;perm_{secrets.token_hex(8)}&#34;
+        details_hash = hashlib.sha256(details.encode(&#34;utf-8&#34;)).hexdigest()
+        now = time.time()
+        record = {
+            &#34;decision_id&#34;: decision_id,
+            &#34;action_type&#34;: action_type,
+            &#34;details&#34;: details,
+            &#34;details_hash&#34;: details_hash,
+            &#34;agent_id&#34;: agent_id,
+            &#34;status&#34;: &#34;PENDING&#34;,
+            &#34;created_at&#34;: now,
+            &#34;expires_at&#34;: now + self.ttl_seconds,
+        }
+        self._pending_decisions[decision_id] = record
+        logger.warning(f&#34;Permission Broker: INTERCEPTED privileged action &#39;{action_type}&#39; from [{agent_id}]&#34;)
+        return False, decision_id
+
+    def resolve(self, decision_id: str, approved: bool) -&gt; bool:
+        &#34;&#34;&#34;
+        Resolves decision. Generates a secure single-use token if approved.
+        &#34;&#34;&#34;
+        rec = self._pending_decisions.get(decision_id)
+        if not rec:
+            return False
+
+        now = time.time()
+        if now &gt; rec.get(&#34;expires_at&#34;, 0):
+            rec[&#34;status&#34;] = &#34;EXPIRED&#34;
+            return False
+
+        if approved:
+            rec[&#34;status&#34;] = &#34;APPROVED&#34;
+            rec[&#34;resolved_at&#34;] = now
+            token = secrets.token_urlsafe(32)
+            rec[&#34;approval_token&#34;] = token
+            self._token_registry[token] = {
+                &#34;decision_id&#34;: decision_id,
+                &#34;action_type&#34;: rec[&#34;action_type&#34;],
+                &#34;details_hash&#34;: rec[&#34;details_hash&#34;],
+                &#34;agent_id&#34;: rec[&#34;agent_id&#34;],
+                &#34;expires_at&#34;: now + self.ttl_seconds,
+                &#34;used&#34;: False,
+            }
+            return True
+        else:
+            rec[&#34;status&#34;] = &#34;DENIED&#34;
+            rec[&#34;resolved_at&#34;] = now
+            return False
+
+    def consume(self, token: Optional[str], action_type: str, details: str) -&gt; bool:
+        &#34;&#34;&#34;
+        Single-use consumes an approval token. Validates action, details hash, and TTL.
+        Prevents replay attacks.
+        &#34;&#34;&#34;
+        if not token:
+            return False
+        meta = self._token_registry.get(token)
+        if not meta or meta.get(&#34;used&#34;):
+            return False
+        if time.time() &gt; meta.get(&#34;expires_at&#34;, 0):
+            return False
+        if meta.get(&#34;action_type&#34;) != action_type:
+            return False
+        details_hash = hashlib.sha256(details.encode(&#34;utf-8&#34;)).hexdigest()
+        if not hmac.compare_digest(meta.get(&#34;details_hash&#34;, &#34;&#34;), details_hash):
+            return False
+
+        # Mark single-use consumed
+        meta[&#34;used&#34;] = True
+        return True
+
+    def get_pending(self) -&gt; List[Dict[str, Any]]:
+        now = time.time()
+        return [
+            v for v in self._pending_decisions.values() if v[&#34;status&#34;] == &#34;PENDING&#34; and now &lt;= v.get(&#34;expires_at&#34;, 0)
+        ]</code></pre>
+</details>
+<div class="desc"><p>Inline permission broker inspired by OpenMausBot.
+Intercepts privileged system actions, pauses execution, and prompts for explicit human approval.
+Cryptographically binds approval tokens to action, target, and agent with single-use consumption and TTL.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.openmaus_grok.OpenMausPermissionBroker.PRIVILEGED_OPERATIONS"><code class="name">var <span class="ident">PRIVILEGED_OPERATIONS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.openmaus_grok.OpenMausPermissionBroker.consume"><code class="name flex">
+<span>def <span class="ident">consume</span></span>(<span>self, token: Optional[str], action_type: str, details: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def consume(self, token: Optional[str], action_type: str, details: str) -&gt; bool:
+    &#34;&#34;&#34;
+    Single-use consumes an approval token. Validates action, details hash, and TTL.
+    Prevents replay attacks.
+    &#34;&#34;&#34;
+    if not token:
+        return False
+    meta = self._token_registry.get(token)
+    if not meta or meta.get(&#34;used&#34;):
+        return False
+    if time.time() &gt; meta.get(&#34;expires_at&#34;, 0):
+        return False
+    if meta.get(&#34;action_type&#34;) != action_type:
+        return False
+    details_hash = hashlib.sha256(details.encode(&#34;utf-8&#34;)).hexdigest()
+    if not hmac.compare_digest(meta.get(&#34;details_hash&#34;, &#34;&#34;), details_hash):
+        return False
+
+    # Mark single-use consumed
+    meta[&#34;used&#34;] = True
+    return True</code></pre>
+</details>
+<div class="desc"><p>Single-use consumes an approval token. Validates action, details hash, and TTL.
+Prevents replay attacks.</p></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausPermissionBroker.get_pending"><code class="name flex">
+<span>def <span class="ident">get_pending</span></span>(<span>self) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_pending(self) -&gt; List[Dict[str, Any]]:
+    now = time.time()
+    return [
+        v for v in self._pending_decisions.values() if v[&#34;status&#34;] == &#34;PENDING&#34; and now &lt;= v.get(&#34;expires_at&#34;, 0)
+    ]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausPermissionBroker.inspect_action"><code class="name flex">
+<span>def <span class="ident">inspect_action</span></span>(<span>self, action_type: str, details: str, agent_id: str) ‑> Tuple[bool, str | None]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inspect_action(self, action_type: str, details: str, agent_id: str) -&gt; Tuple[bool, Optional[str]]:
+    &#34;&#34;&#34;
+    Returns (is_approved, decision_id).
+    If action is safe, returns (True, None).
+    If action is privileged, returns (False, decision_id).
+    &#34;&#34;&#34;
+    if action_type not in self.PRIVILEGED_OPERATIONS:
+        return True, None
+
+    decision_id = f&#34;perm_{secrets.token_hex(8)}&#34;
+    details_hash = hashlib.sha256(details.encode(&#34;utf-8&#34;)).hexdigest()
+    now = time.time()
+    record = {
+        &#34;decision_id&#34;: decision_id,
+        &#34;action_type&#34;: action_type,
+        &#34;details&#34;: details,
+        &#34;details_hash&#34;: details_hash,
+        &#34;agent_id&#34;: agent_id,
+        &#34;status&#34;: &#34;PENDING&#34;,
+        &#34;created_at&#34;: now,
+        &#34;expires_at&#34;: now + self.ttl_seconds,
+    }
+    self._pending_decisions[decision_id] = record
+    logger.warning(f&#34;Permission Broker: INTERCEPTED privileged action &#39;{action_type}&#39; from [{agent_id}]&#34;)
+    return False, decision_id</code></pre>
+</details>
+<div class="desc"><p>Returns (is_approved, decision_id).
+If action is safe, returns (True, None).
+If action is privileged, returns (False, decision_id).</p></div>
+</dd>
+<dt id="jarvis.core.openmaus_grok.OpenMausPermissionBroker.resolve"><code class="name flex">
+<span>def <span class="ident">resolve</span></span>(<span>self, decision_id: str, approved: bool) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resolve(self, decision_id: str, approved: bool) -&gt; bool:
+    &#34;&#34;&#34;
+    Resolves decision. Generates a secure single-use token if approved.
+    &#34;&#34;&#34;
+    rec = self._pending_decisions.get(decision_id)
+    if not rec:
+        return False
+
+    now = time.time()
+    if now &gt; rec.get(&#34;expires_at&#34;, 0):
+        rec[&#34;status&#34;] = &#34;EXPIRED&#34;
+        return False
+
+    if approved:
+        rec[&#34;status&#34;] = &#34;APPROVED&#34;
+        rec[&#34;resolved_at&#34;] = now
+        token = secrets.token_urlsafe(32)
+        rec[&#34;approval_token&#34;] = token
+        self._token_registry[token] = {
+            &#34;decision_id&#34;: decision_id,
+            &#34;action_type&#34;: rec[&#34;action_type&#34;],
+            &#34;details_hash&#34;: rec[&#34;details_hash&#34;],
+            &#34;agent_id&#34;: rec[&#34;agent_id&#34;],
+            &#34;expires_at&#34;: now + self.ttl_seconds,
+            &#34;used&#34;: False,
+        }
+        return True
+    else:
+        rec[&#34;status&#34;] = &#34;DENIED&#34;
+        rec[&#34;resolved_at&#34;] = now
+        return False</code></pre>
+</details>
+<div class="desc"><p>Resolves decision. Generates a secure single-use token if approved.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.openmaus_grok.AgentEvent" href="#jarvis.core.openmaus_grok.AgentEvent">AgentEvent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.openmaus_grok.AgentEvent.agent_id" href="#jarvis.core.openmaus_grok.AgentEvent.agent_id">agent_id</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.AgentEvent.channel" href="#jarvis.core.openmaus_grok.AgentEvent.channel">channel</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.AgentEvent.data" href="#jarvis.core.openmaus_grok.AgentEvent.data">data</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.AgentEvent.event_id" href="#jarvis.core.openmaus_grok.AgentEvent.event_id">event_id</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.AgentEvent.event_type" href="#jarvis.core.openmaus_grok.AgentEvent.event_type">event_type</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.AgentEvent.timestamp" href="#jarvis.core.openmaus_grok.AgentEvent.timestamp">timestamp</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.AgentEvent.to_dict" href="#jarvis.core.openmaus_grok.AgentEvent.to_dict">to_dict</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.openmaus_grok.BotProfile" href="#jarvis.core.openmaus_grok.BotProfile">BotProfile</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.openmaus_grok.BotProfile.allowed_tools" href="#jarvis.core.openmaus_grok.BotProfile.allowed_tools">allowed_tools</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.BotProfile.avatar" href="#jarvis.core.openmaus_grok.BotProfile.avatar">avatar</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.BotProfile.bot_id" href="#jarvis.core.openmaus_grok.BotProfile.bot_id">bot_id</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.BotProfile.default_mode" href="#jarvis.core.openmaus_grok.BotProfile.default_mode">default_mode</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.BotProfile.description" href="#jarvis.core.openmaus_grok.BotProfile.description">description</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.BotProfile.name" href="#jarvis.core.openmaus_grok.BotProfile.name">name</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.BotProfile.status" href="#jarvis.core.openmaus_grok.BotProfile.status">status</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.BotProfile.system_instruction" href="#jarvis.core.openmaus_grok.BotProfile.system_instruction">system_instruction</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.BotProfile.title" href="#jarvis.core.openmaus_grok.BotProfile.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.openmaus_grok.GrokMode" href="#jarvis.core.openmaus_grok.GrokMode">GrokMode</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.openmaus_grok.GrokMode.CODE" href="#jarvis.core.openmaus_grok.GrokMode.CODE">CODE</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.GrokMode.FUN" href="#jarvis.core.openmaus_grok.GrokMode.FUN">FUN</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.GrokMode.STANDARD" href="#jarvis.core.openmaus_grok.GrokMode.STANDARD">STANDARD</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.GrokMode.THINK" href="#jarvis.core.openmaus_grok.GrokMode.THINK">THINK</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.openmaus_grok.OpenMausAgentRoster" href="#jarvis.core.openmaus_grok.OpenMausAgentRoster">OpenMausAgentRoster</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausAgentRoster.get_bot" href="#jarvis.core.openmaus_grok.OpenMausAgentRoster.get_bot">get_bot</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausAgentRoster.list_bots" href="#jarvis.core.openmaus_grok.OpenMausAgentRoster.list_bots">list_bots</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausAgentRoster.register_bot" href="#jarvis.core.openmaus_grok.OpenMausAgentRoster.register_bot">register_bot</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.openmaus_grok.OpenMausGrokHarness" href="#jarvis.core.openmaus_grok.OpenMausGrokHarness">OpenMausGrokHarness</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausGrokHarness.add_event_listener" href="#jarvis.core.openmaus_grok.OpenMausGrokHarness.add_event_listener">add_event_listener</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausGrokHarness.chat" href="#jarvis.core.openmaus_grok.OpenMausGrokHarness.chat">chat</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausGrokHarness.emit_event" href="#jarvis.core.openmaus_grok.OpenMausGrokHarness.emit_event">emit_event</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.openmaus_grok.OpenMausPermissionBroker" href="#jarvis.core.openmaus_grok.OpenMausPermissionBroker">OpenMausPermissionBroker</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausPermissionBroker.PRIVILEGED_OPERATIONS" href="#jarvis.core.openmaus_grok.OpenMausPermissionBroker.PRIVILEGED_OPERATIONS">PRIVILEGED_OPERATIONS</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausPermissionBroker.consume" href="#jarvis.core.openmaus_grok.OpenMausPermissionBroker.consume">consume</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausPermissionBroker.get_pending" href="#jarvis.core.openmaus_grok.OpenMausPermissionBroker.get_pending">get_pending</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausPermissionBroker.inspect_action" href="#jarvis.core.openmaus_grok.OpenMausPermissionBroker.inspect_action">inspect_action</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok.OpenMausPermissionBroker.resolve" href="#jarvis.core.openmaus_grok.OpenMausPermissionBroker.resolve">resolve</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

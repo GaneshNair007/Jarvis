@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.agents.executor API documentation</title>
+<meta name="description" content="JARVIS Executor Agent (PWR-292 / PWR-293)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.agents.executor</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Executor Agent (PWR-292 / PWR-293)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration</p>
+<p>Executes concrete actions based on a PlanStep assignment:
+- Code generation &amp; execution (sandboxed subprocess)
+- File operations (read/write/ingest)
+- Shell/OS commands (PowerShell / bash)
+- Browser automation (Playwright)
+- Desktop control (PyAutoGUI See-Act-Verify)
+- System administration (Docker, SSH)</p>
+<p>All actions are gated through the policy engine before execution.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.agents.executor.ExecutionResult"><code class="flex name class">
+<span>class <span class="ident">ExecutionResult</span></span>
+<span>(</span><span>execution_id: str = &lt;factory&gt;,<br>action_type: str = '',<br>status: str = 'pending',<br>stdout: str = '',<br>stderr: str = '',<br>return_value: Any = None,<br>evidence: Optional[str] = None,<br>duration_ms: float = 0.0,<br>cost_usd: float = 0.0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class ExecutionResult:
+    &#34;&#34;&#34;Structured output from a single executor action.&#34;&#34;&#34;
+
+    execution_id: str = field(default_factory=lambda: f&#34;exec_{uuid.uuid4().hex[:8]}&#34;)
+    action_type: str = &#34;&#34;
+    status: str = &#34;pending&#34;  # pending | success | failed | rejected
+    stdout: str = &#34;&#34;
+    stderr: str = &#34;&#34;
+    return_value: Any = None
+    evidence: Optional[str] = None  # screenshot path or hash
+    duration_ms: float = 0.0
+    cost_usd: float = 0.0
+
+    def to_dict(self) -&gt; Dict[str, Any]:
+        return {
+            &#34;execution_id&#34;: self.execution_id,
+            &#34;action_type&#34;: self.action_type,
+            &#34;status&#34;: self.status,
+            &#34;stdout&#34;: self.stdout[:2000],
+            &#34;stderr&#34;: self.stderr[:500],
+            &#34;return_value&#34;: self.return_value,
+            &#34;evidence&#34;: self.evidence,
+            &#34;duration_ms&#34;: self.duration_ms,
+            &#34;cost_usd&#34;: self.cost_usd,
+        }</code></pre>
+</details>
+<div class="desc"><p>Structured output from a single executor action.</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.executor.ExecutionResult.action_type"><code class="name">var <span class="ident">action_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.executor.ExecutionResult.cost_usd"><code class="name">var <span class="ident">cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.executor.ExecutionResult.duration_ms"><code class="name">var <span class="ident">duration_ms</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.executor.ExecutionResult.evidence"><code class="name">var <span class="ident">evidence</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.executor.ExecutionResult.execution_id"><code class="name">var <span class="ident">execution_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.executor.ExecutionResult.return_value"><code class="name">var <span class="ident">return_value</span> : Any</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.executor.ExecutionResult.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.executor.ExecutionResult.stderr"><code class="name">var <span class="ident">stderr</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.executor.ExecutionResult.stdout"><code class="name">var <span class="ident">stdout</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.executor.ExecutionResult.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; Dict[str, Any]:
+    return {
+        &#34;execution_id&#34;: self.execution_id,
+        &#34;action_type&#34;: self.action_type,
+        &#34;status&#34;: self.status,
+        &#34;stdout&#34;: self.stdout[:2000],
+        &#34;stderr&#34;: self.stderr[:500],
+        &#34;return_value&#34;: self.return_value,
+        &#34;evidence&#34;: self.evidence,
+        &#34;duration_ms&#34;: self.duration_ms,
+        &#34;cost_usd&#34;: self.cost_usd,
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.executor.ExecutorAgent"><code class="flex name class">
+<span>class <span class="ident">ExecutorAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ExecutorAgent:
+    &#34;&#34;&#34;
+    Executes tasks dispatched by the AgentSwarmCoordinator.
+    Routes by action_type and enforces policy before any side-effecting action.
+    &#34;&#34;&#34;
+
+    # ── Dispatch table ────────────────────────────────────────────────────────
+    ACTION_DISPATCH = {
+        &#34;shell&#34;: &#34;_run_shell&#34;,
+        &#34;python&#34;: &#34;_run_python&#34;,
+        &#34;browser&#34;: &#34;_run_browser&#34;,
+        &#34;desktop&#34;: &#34;_run_desktop&#34;,
+        &#34;file_read&#34;: &#34;_run_file_read&#34;,
+        &#34;file_write&#34;: &#34;_run_file_write&#34;,
+        &#34;docker&#34;: &#34;_run_docker&#34;,
+        &#34;llm&#34;: &#34;_run_llm&#34;,
+    }
+
+    def execute(
+        self,
+        action_type: str,
+        payload: Dict[str, Any],
+        task_id: Optional[str] = None,
+        approval_token: Optional[str] = None,
+    ) -&gt; ExecutionResult:
+        &#34;&#34;&#34;
+        Synchronous execute wrapper. Dispatches to the correct action handler.
+
+        Args:
+            action_type: One of shell, python, browser, desktop, file_read,
+                         file_write, docker, llm.
+            payload: Action-specific arguments dict.
+            task_id: Parent task ID for audit logging.
+            approval_token: Required for Tier 2+ actions.
+
+        Returns:
+            ExecutionResult with status and outputs.
+        &#34;&#34;&#34;
+        exec_id = f&#34;exec_{uuid.uuid4().hex[:8]}&#34;
+        task_id = task_id or exec_id
+        start = time.time()
+
+        logger.info(f&#34;ExecutorAgent: executing action_type={action_type} task={task_id}&#34;)
+
+        # ── Policy check ──────────────────────────────────────────────────────
+        policy_ok, policy_msg = self._check_policy(action_type, payload, approval_token)
+        if not policy_ok:
+            logger.warning(f&#34;ExecutorAgent: policy rejected — {policy_msg}&#34;)
+            return ExecutionResult(
+                execution_id=exec_id,
+                action_type=action_type,
+                status=&#34;rejected&#34;,
+                stderr=policy_msg,
+                duration_ms=round((time.time() - start) * 1000, 2),
+            )
+
+        # ── Dispatch ──────────────────────────────────────────────────────────
+        method_name = self.ACTION_DISPATCH.get(action_type, &#34;_run_llm&#34;)
+        method = getattr(self, method_name, self._run_llm)
+
+        try:
+            result = method(payload)
+            result.action_type = action_type
+            result.execution_id = exec_id
+            result.duration_ms = round((time.time() - start) * 1000, 2)
+
+            # ── Audit log ─────────────────────────────────────────────────────
+            self._audit(task_id, action_type, result)
+            logger.info(f&#34;ExecutorAgent: exec={exec_id} status={result.status} duration={result.duration_ms}ms&#34;)
+            return result
+
+        except Exception as exc:
+            logger.error(f&#34;ExecutorAgent: unhandled exception — {exc}&#34;)
+            result = ExecutionResult(
+                execution_id=exec_id,
+                action_type=action_type,
+                status=&#34;failed&#34;,
+                stderr=str(exc),
+                duration_ms=round((time.time() - start) * 1000, 2),
+            )
+            self._audit(task_id, action_type, result)
+            return result
+
+    # ── Policy check ──────────────────────────────────────────────────────────
+
+    def _check_policy(
+        self, action_type: str, payload: Dict[str, Any], approval_token: Optional[str]
+    ) -&gt; tuple[bool, str]:
+        &#34;&#34;&#34;Quick policy pre-check before dispatching.&#34;&#34;&#34;
+        # Desktop / shell / docker require at least Tier 1 review
+        high_risk = {&#34;desktop&#34;, &#34;docker&#34;, &#34;shell&#34;}
+        if action_type in high_risk and not approval_token:
+            try:
+                from jarvis.core.policy_engine import policy_engine
+
+                decision = policy_engine.evaluate(
+                    user_input=str(payload.get(&#34;command&#34;, action_type)),
+                    task_type=action_type,
+                )
+                if decision.tier &gt;= 2:
+                    return False, (f&#34;Tier {decision.tier} action &#39;{action_type}&#39; requires explicit approval token.&#34;)
+            except Exception:
+                pass
+        return True, &#34;&#34;
+
+    # ── Action handlers ───────────────────────────────────────────────────────
+
+    def _run_shell(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        cmd = payload.get(&#34;command&#34;, &#34;&#34;)
+        cwd = payload.get(&#34;cwd&#34;, None)
+        timeout = payload.get(&#34;timeout&#34;, 30)
+
+        proc = subprocess.run(
+            cmd,
+            shell=True,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            cwd=cwd,
+        )
+        return ExecutionResult(
+            status=&#34;success&#34; if proc.returncode == 0 else &#34;failed&#34;,
+            stdout=proc.stdout[:4000],
+            stderr=proc.stderr[:1000],
+            return_value=proc.returncode,
+        )
+
+    def _run_python(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        &#34;&#34;&#34;Execute Python code in a sandboxed subprocess.&#34;&#34;&#34;
+        code = payload.get(&#34;code&#34;, &#34;&#34;)
+        timeout = payload.get(&#34;timeout&#34;, 30)
+
+        import tempfile, os
+
+        with tempfile.NamedTemporaryFile(mode=&#34;w&#34;, suffix=&#34;.py&#34;, delete=False, encoding=&#34;utf-8&#34;) as f:
+            f.write(code)
+            tmp_path = f.name
+
+        try:
+            proc = subprocess.run(
+                [&#34;python&#34;, tmp_path],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+            )
+            return ExecutionResult(
+                status=&#34;success&#34; if proc.returncode == 0 else &#34;failed&#34;,
+                stdout=proc.stdout[:4000],
+                stderr=proc.stderr[:1000],
+                return_value=proc.returncode,
+            )
+        finally:
+            try:
+                os.unlink(tmp_path)
+            except Exception:
+                pass
+
+    def _run_browser(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        url = payload.get(&#34;url&#34;, &#34;&#34;)
+        action = payload.get(&#34;action&#34;, &#34;read&#34;)  # read | screenshot | click | search
+
+        try:
+            if action == &#34;search&#34;:
+                from jarvis.browser.search_wrapper import search_wrapper
+
+                results = search_wrapper.search(payload.get(&#34;query&#34;, url))
+                return ExecutionResult(
+                    status=&#34;success&#34;,
+                    return_value=results,
+                    stdout=str(results)[:1000],
+                )
+            else:
+                from jarvis.browser.url_reader import url_reader
+
+                content = url_reader.read(url)
+                return ExecutionResult(
+                    status=&#34;success&#34;,
+                    stdout=content[:3000] if content else &#34;&#34;,
+                    return_value=content,
+                )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    def _run_desktop(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        action = payload.get(&#34;action&#34;, &#34;screenshot&#34;)
+
+        try:
+            from jarvis.computer.desktop_worker import desktop_worker
+
+            if action == &#34;screenshot&#34;:
+                result = desktop_worker.take_screenshot()
+            elif action == &#34;type&#34;:
+                result = desktop_worker.type_text(payload.get(&#34;text&#34;, &#34;&#34;))
+            elif action == &#34;click&#34;:
+                result = desktop_worker.click(payload.get(&#34;x&#34;, 0), payload.get(&#34;y&#34;, 0))
+            else:
+                result = {&#34;status&#34;: &#34;unknown_action&#34;}
+
+            return ExecutionResult(
+                status=&#34;success&#34;,
+                return_value=result,
+                stdout=str(result)[:500],
+                evidence=result.get(&#34;screenshot_path&#34;) if isinstance(result, dict) else None,
+            )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    def _run_file_read(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        from pathlib import Path
+
+        path = Path(payload.get(&#34;path&#34;, &#34;&#34;))
+        try:
+            content = path.read_text(encoding=&#34;utf-8&#34;)
+            return ExecutionResult(
+                status=&#34;success&#34;,
+                stdout=content[:5000],
+                return_value=content,
+            )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    def _run_file_write(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        from pathlib import Path
+
+        path = Path(payload.get(&#34;path&#34;, &#34;&#34;))
+        content = payload.get(&#34;content&#34;, &#34;&#34;)
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content, encoding=&#34;utf-8&#34;)
+            return ExecutionResult(
+                status=&#34;success&#34;,
+                stdout=f&#34;Written {len(content)} chars to {path}&#34;,
+                return_value=str(path),
+            )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    def _run_docker(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        cmd = payload.get(&#34;command&#34;, &#34;docker ps&#34;)
+        return self._run_shell({&#34;command&#34;: cmd, &#34;timeout&#34;: 60})
+
+    def _run_llm(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        &#34;&#34;&#34;Fallback: send the payload as a prompt to the model router.&#34;&#34;&#34;
+        prompt = payload.get(&#34;prompt&#34;, payload.get(&#34;task&#34;, str(payload)))
+        try:
+            from jarvis.core.model_router import model_router, RoutingRequest
+
+            req = RoutingRequest(
+                task_id=f&#34;exec_{uuid.uuid4().hex[:6]}&#34;,
+                user_intent=prompt,
+                sensitivity_level=&#34;low&#34;,
+            )
+            decision = model_router.route(req)
+            result = model_router.execute_inference(decision=decision, prompt=prompt)
+            content = (
+                result.get(&#34;choices&#34;, [{}])[0].get(&#34;message&#34;, {}).get(&#34;content&#34;, &#34;&#34;)
+                if isinstance(result, dict)
+                else str(result)
+            )
+            return ExecutionResult(
+                status=&#34;success&#34;,
+                stdout=content[:3000],
+                return_value=content,
+                cost_usd=getattr(decision, &#34;estimated_cost_usd&#34;, 0.0001),
+            )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    # ── Audit helper ──────────────────────────────────────────────────────────
+
+    def _audit(self, task_id: str, action_type: str, result: ExecutionResult):
+        try:
+            from jarvis.core.audit import audit_ledger
+
+            audit_ledger.log_event(
+                event_type=&#34;EXECUTOR_ACTION&#34;,
+                task_id=task_id,
+                power_id=f&#34;executor.{action_type}&#34;,
+                status=result.status.upper(),
+                inputs={&#34;action_type&#34;: action_type},
+                outputs={&#34;stdout_len&#34;: len(result.stdout), &#34;return_value&#34;: str(result.return_value)[:200]},
+            )
+        except Exception:
+            pass</code></pre>
+</details>
+<div class="desc"><p>Executes tasks dispatched by the AgentSwarmCoordinator.
+Routes by action_type and enforces policy before any side-effecting action.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.executor.ExecutorAgent.ACTION_DISPATCH"><code class="name">var <span class="ident">ACTION_DISPATCH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.executor.ExecutorAgent.execute"><code class="name flex">
+<span>def <span class="ident">execute</span></span>(<span>self,<br>action_type: str,<br>payload: Dict[str, Any],<br>task_id: Optional[str] = None,<br>approval_token: Optional[str] = None) ‑> <a title="jarvis.agents.executor.ExecutionResult" href="#jarvis.agents.executor.ExecutionResult">ExecutionResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute(
+    self,
+    action_type: str,
+    payload: Dict[str, Any],
+    task_id: Optional[str] = None,
+    approval_token: Optional[str] = None,
+) -&gt; ExecutionResult:
+    &#34;&#34;&#34;
+    Synchronous execute wrapper. Dispatches to the correct action handler.
+
+    Args:
+        action_type: One of shell, python, browser, desktop, file_read,
+                     file_write, docker, llm.
+        payload: Action-specific arguments dict.
+        task_id: Parent task ID for audit logging.
+        approval_token: Required for Tier 2+ actions.
+
+    Returns:
+        ExecutionResult with status and outputs.
+    &#34;&#34;&#34;
+    exec_id = f&#34;exec_{uuid.uuid4().hex[:8]}&#34;
+    task_id = task_id or exec_id
+    start = time.time()
+
+    logger.info(f&#34;ExecutorAgent: executing action_type={action_type} task={task_id}&#34;)
+
+    # ── Policy check ──────────────────────────────────────────────────────
+    policy_ok, policy_msg = self._check_policy(action_type, payload, approval_token)
+    if not policy_ok:
+        logger.warning(f&#34;ExecutorAgent: policy rejected — {policy_msg}&#34;)
+        return ExecutionResult(
+            execution_id=exec_id,
+            action_type=action_type,
+            status=&#34;rejected&#34;,
+            stderr=policy_msg,
+            duration_ms=round((time.time() - start) * 1000, 2),
+        )
+
+    # ── Dispatch ──────────────────────────────────────────────────────────
+    method_name = self.ACTION_DISPATCH.get(action_type, &#34;_run_llm&#34;)
+    method = getattr(self, method_name, self._run_llm)
+
+    try:
+        result = method(payload)
+        result.action_type = action_type
+        result.execution_id = exec_id
+        result.duration_ms = round((time.time() - start) * 1000, 2)
+
+        # ── Audit log ─────────────────────────────────────────────────────
+        self._audit(task_id, action_type, result)
+        logger.info(f&#34;ExecutorAgent: exec={exec_id} status={result.status} duration={result.duration_ms}ms&#34;)
+        return result
+
+    except Exception as exc:
+        logger.error(f&#34;ExecutorAgent: unhandled exception — {exc}&#34;)
+        result = ExecutionResult(
+            execution_id=exec_id,
+            action_type=action_type,
+            status=&#34;failed&#34;,
+            stderr=str(exc),
+            duration_ms=round((time.time() - start) * 1000, 2),
+        )
+        self._audit(task_id, action_type, result)
+        return result</code></pre>
+</details>
+<div class="desc"><p>Synchronous execute wrapper. Dispatches to the correct action handler.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>action_type</code></strong></dt>
+<dd>One of shell, python, browser, desktop, file_read,
+file_write, docker, llm.</dd>
+<dt><strong><code>payload</code></strong></dt>
+<dd>Action-specific arguments dict.</dd>
+<dt><strong><code>task_id</code></strong></dt>
+<dd>Parent task ID for audit logging.</dd>
+<dt><strong><code>approval_token</code></strong></dt>
+<dd>Required for Tier 2+ actions.</dd>
+</dl>
+<p>Returns
+-----=
+ExecutionResult with status and outputs.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.agents" href="index.html">jarvis.agents</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.agents.executor.ExecutionResult" href="#jarvis.agents.executor.ExecutionResult">ExecutionResult</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.agents.executor.ExecutionResult.action_type" href="#jarvis.agents.executor.ExecutionResult.action_type">action_type</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutionResult.cost_usd" href="#jarvis.agents.executor.ExecutionResult.cost_usd">cost_usd</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutionResult.duration_ms" href="#jarvis.agents.executor.ExecutionResult.duration_ms">duration_ms</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutionResult.evidence" href="#jarvis.agents.executor.ExecutionResult.evidence">evidence</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutionResult.execution_id" href="#jarvis.agents.executor.ExecutionResult.execution_id">execution_id</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutionResult.return_value" href="#jarvis.agents.executor.ExecutionResult.return_value">return_value</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutionResult.status" href="#jarvis.agents.executor.ExecutionResult.status">status</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutionResult.stderr" href="#jarvis.agents.executor.ExecutionResult.stderr">stderr</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutionResult.stdout" href="#jarvis.agents.executor.ExecutionResult.stdout">stdout</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutionResult.to_dict" href="#jarvis.agents.executor.ExecutionResult.to_dict">to_dict</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.executor.ExecutorAgent" href="#jarvis.agents.executor.ExecutorAgent">ExecutorAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.executor.ExecutorAgent.ACTION_DISPATCH" href="#jarvis.agents.executor.ExecutorAgent.ACTION_DISPATCH">ACTION_DISPATCH</a></code></li>
+<li><code><a title="jarvis.agents.executor.ExecutorAgent.execute" href="#jarvis.agents.executor.ExecutorAgent.execute">execute</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

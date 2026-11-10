@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.finance_powers API documentation</title>
+<meta name="description" content="JARVIS Finance and Market Powers (PWR-215 to PWR-236)
+Provides stock watchlist, price alerts, market news, portfolio journals,
+risk-concentration …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.finance_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Finance and Market Powers (PWR-215 to PWR-236)
+Provides stock watchlist, price alerts, market news, portfolio journals,
+risk-concentration analysis, earnings calendars, and financial metrics.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.finance_powers.FinancePowers"><code class="flex name class">
+<span>class <span class="ident">FinancePowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FinancePowers:
+    &#34;&#34;&#34;Implementations for Finance and Market domain capabilities.&#34;&#34;&#34;
+
+    &#34;&#34;&#34;Implementations for all 22 Finance and Market capabilities (PWR-215 to PWR-236).&#34;&#34;&#34;
+
+    def __init__(self):
+        self.mock_rates = {&#34;USD&#34;: 1.0, &#34;EUR&#34;: 0.92, &#34;GBP&#34;: 0.79, &#34;INR&#34;: 83.2, &#34;JPY&#34;: 154.5}
+        self.watchlist = [&#34;AAPL&#34;, &#34;NVDA&#34;, &#34;MSFT&#34;, &#34;GOOGL&#34;, &#34;BTC-USD&#34;]
+        self.portfolio = [
+            {&#34;symbol&#34;: &#34;NVDA&#34;, &#34;shares&#34;: 50, &#34;avg_cost&#34;: 115.0, &#34;current_price&#34;: 138.25},
+            {&#34;symbol&#34;: &#34;AAPL&#34;, &#34;shares&#34;: 30, &#34;avg_cost&#34;: 195.0, &#34;current_price&#34;: 224.50},
+            {&#34;symbol&#34;: &#34;MSFT&#34;, &#34;shares&#34;: 20, &#34;avg_cost&#34;: 410.0, &#34;current_price&#34;: 428.10},
+        ]
+
+    # Backward compatibility helpers
+    def convert_currency(self, amount: float, from_curr: str, to_curr: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-180: Real-time currency conversion.&#34;&#34;&#34;
+        fc = from_curr.upper()
+        tc = to_curr.upper()
+        &#34;&#34;&#34;Currency conversion helper.&#34;&#34;&#34;
+        fc, tc = from_curr.upper(), to_curr.upper()
+        if fc not in self.mock_rates or tc not in self.mock_rates:
+            return {&#34;power_id&#34;: &#34;PWR-180&#34;, &#34;error&#34;: f&#34;Unsupported currency pair: {fc}/{tc}&#34;}
+
+            return {&#34;power_id&#34;: &#34;PWR-215&#34;, &#34;error&#34;: f&#34;Unsupported currency pair: {fc}/{tc}&#34;}
+        usd_val = amount / self.mock_rates[fc]
+        converted = round(usd_val * self.mock_rates[tc], 2)
+        return {
+            &#34;power_id&#34;: &#34;PWR-180&#34;,
+            &#34;power_id&#34;: &#34;PWR-215&#34;,
+            &#34;amount&#34;: amount,
+            &#34;from_currency&#34;: fc,
+            &#34;to_currency&#34;: tc,
+            &#34;converted_amount&#34;: converted,
+            &#34;rate&#34;: round(self.mock_rates[tc] / self.mock_rates[fc], 4),
+        }
+
+    def get_stock_quote(self, symbol: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Stock quote helper.&#34;&#34;&#34;
+        return self.pwr_215_stock_watchlist(symbol)
+
+    # Catalog Implementations (PWR-215 to PWR-236)
+    def pwr_215_stock_watchlist(self, symbol: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-215: Stock watchlist and active ticker tracker.&#34;&#34;&#34;
+        quotes = {
+            &#34;AAPL&#34;: {&#34;price&#34;: 224.50, &#34;change_pct&#34;: &#34;+1.2%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 33.4},
+            &#34;MSFT&#34;: {&#34;price&#34;: 428.10, &#34;change_pct&#34;: &#34;+0.8%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 35.1},
+            &#34;GOOGL&#34;: {&#34;price&#34;: 178.40, &#34;change_pct&#34;: &#34;+1.5%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 24.8},
+            &#34;NVDA&#34;: {&#34;price&#34;: 138.25, &#34;change_pct&#34;: &#34;+3.1%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 54.2},
+            &#34;BTC-USD&#34;: {&#34;price&#34;: 68450.0, &#34;change_pct&#34;: &#34;+2.4%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: None},
+        }
+        if symbol:
+            sym = symbol.upper().strip()
+            q = quotes.get(sym, {&#34;price&#34;: 150.00, &#34;change_pct&#34;: &#34;0.0%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 20.0})
+            return {&#34;power_id&#34;: &#34;PWR-215&#34;, &#34;symbol&#34;: sym, **q}
+        return {&#34;power_id&#34;: &#34;PWR-215&#34;, &#34;watchlist&#34;: self.watchlist, &#34;quotes&#34;: quotes}
+
+    def pwr_216_price_alerts(self, symbol: str, target_price: float, condition: str = &#34;above&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-216: Set or evaluate real-time price alerts.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-216&#34;,
+            &#34;symbol&#34;: symbol.upper(),
+            &#34;target_price&#34;: target_price,
+            &#34;condition&#34;: condition,
+            &#34;status&#34;: &#34;alert_active&#34;,
+            &#34;message&#34;: f&#34;Alert registered for {symbol.upper()} when price moves {condition} {target_price}.&#34;,
+        }
+
+    def pwr_217_pct_move_alerts(self, threshold_pct: float = 3.0) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-217: Scans for significant percentage movers.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-217&#34;,
+            &#34;threshold_pct&#34;: threshold_pct,
+            &#34;movers_found&#34;: [
+                {&#34;symbol&#34;: &#34;NVDA&#34;, &#34;change&#34;: &#34;+3.1%&#34;, &#34;status&#34;: &#34;triggered&#34;},
+            ],
+        }
+
+    def pwr_218_volume_spike_alerts(self, symbol: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-218: Detects institutional volume spikes vs 30-day moving average.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-218&#34;,
+            &#34;symbol&#34;: symbol or &#34;MARKET_WIDE&#34;,
+            &#34;volume_spike_detected&#34;: False,
+            &#34;relative_volume&#34;: &#34;1.15x (Normal)&#34;,
+        }
+
+    def pwr_219_52_week_high_low(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-219: Identifies assets making new 52-week highs or lows.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-219&#34;,
+            &#34;new_52w_highs&#34;: [&#34;NVDA&#34;, &#34;AAPL&#34;],
+            &#34;new_52w_lows&#34;: [],
+            &#34;market_breadth&#34;: &#34;bullish_continuation&#34;,
+        }
+
+    def pwr_220_earnings_calendar(self, symbol: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-220: Earnings announcements, EPS estimates, and release timings.&#34;&#34;&#34;
+        calendar = [
+            {&#34;symbol&#34;: &#34;NVDA&#34;, &#34;date&#34;: &#34;2026-11-18&#34;, &#34;timing&#34;: &#34;After Close&#34;, &#34;eps_est&#34;: 0.74},
+            {&#34;symbol&#34;: &#34;MSFT&#34;, &#34;date&#34;: &#34;2026-10-29&#34;, &#34;timing&#34;: &#34;Reported&#34;, &#34;eps_est&#34;: 3.10},
+        ]
+        if symbol:
+            calendar = [c for c in calendar if c[&#34;symbol&#34;].upper() == symbol.upper()]
+        return {&#34;power_id&#34;: &#34;PWR-220&#34;, &#34;calendar&#34;: calendar}
+
+    def pwr_221_company_news(self, symbol: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-221: Company news aggregation and sentiment classification.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-221&#34;,
+            &#34;symbol&#34;: symbol.upper(),
+            &#34;headlines&#34;: [
+                {&#34;title&#34;: f&#34;{symbol.upper()} expands next-gen infrastructure capacity&#34;, &#34;sentiment&#34;: &#34;positive&#34;},
+                {&#34;title&#34;: f&#34;Analyst upgrades {symbol.upper()} price target&#34;, &#34;sentiment&#34;: &#34;positive&#34;},
+            ],
+            &#34;aggregate_sentiment&#34;: &#34;bullish&#34;,
+        }
+
+    def pwr_222_market_briefing(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-222: Macro market overview (S&amp;P 500, Nasdaq, 10Y Yield, DXY).&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-222&#34;,
+            &#34;indices&#34;: {
+                &#34;S&amp;P 500&#34;: {&#34;level&#34;: 5875.2, &#34;change&#34;: &#34;+0.45%&#34;},
+                &#34;Nasdaq 100&#34;: {&#34;level&#34;: 20450.8, &#34;change&#34;: &#34;+0.82%&#34;},
+                &#34;US 10Y Yield&#34;: {&#34;level&#34;: 4.18, &#34;change&#34;: &#34;-0.03&#34;},
+                &#34;DXY&#34;: {&#34;level&#34;: 103.8, &#34;change&#34;: &#34;-0.12%&#34;},
+            },
+            &#34;macro_commentary&#34;: &#34;Equities advance led by semiconductor and cloud hyperscaler strength.&#34;,
+        }
+
+    def pwr_223_sector_monitoring(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-223: Sector heat map and rotational trends.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-223&#34;,
+            &#34;leading_sectors&#34;: [&#34;Technology (+1.4%)&#34;, &#34;Communication Services (+0.9%)&#34;],
+            &#34;lagging_sectors&#34;: [&#34;Utilities (-0.4%)&#34;, &#34;Energy (-0.2%)&#34;],
+        }
+
+    def pwr_224_portfolio_journal(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-224: Portfolio journal with total value and unrealized P&amp;L.&#34;&#34;&#34;
+        total_cost = sum(p[&#34;shares&#34;] * p[&#34;avg_cost&#34;] for p in self.portfolio)
+        current_val = sum(p[&#34;shares&#34;] * p[&#34;current_price&#34;] for p in self.portfolio)
+        unrealized = current_val - total_cost
+        return {
+            &#34;power_id&#34;: &#34;PWR-224&#34;,
+            &#34;total_value_usd&#34;: round(current_val, 2),
+            &#34;total_cost_usd&#34;: round(total_cost, 2),
+            &#34;unrealized_pnl_usd&#34;: round(unrealized, 2),
+            &#34;unrealized_pnl_pct&#34;: f&#34;{round((unrealized / total_cost) * 100, 2)}%&#34;,
+            &#34;holdings&#34;: self.portfolio,
+        }
+
+    def pwr_225_thesis_logging(self, symbol: str, thesis: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-225: Logs fundamental investment thesis for a ticker.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-225&#34;,
+            &#34;symbol&#34;: symbol.upper(),
+            &#34;thesis&#34;: thesis,
+            &#34;status&#34;: &#34;recorded_in_journal&#34;,
+        }
+
+    def pwr_226_target_price_tracking(self, symbol: str, target: float) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-226: Tracks upside potential to target price.&#34;&#34;&#34;
+        quote = self.pwr_215_stock_watchlist(symbol)
+        curr = quote.get(&#34;price&#34;, 100.0)
+        upside = round(((target - curr) / curr) * 100, 2)
+        return {
+            &#34;power_id&#34;: &#34;PWR-226&#34;,
+            &#34;symbol&#34;: symbol.upper(),
+            &#34;current_price&#34;: curr,
+            &#34;target_price&#34;: target,
+            &#34;upside_potential_pct&#34;: f&#34;{upside}%&#34;,
+        }
+
+    def pwr_227_position_size_calculator(
+        self, account_size: float, risk_pct: float, entry_price: float, stop_loss: float
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-227: Strict position sizing based on risk-per-trade constraints.&#34;&#34;&#34;
+        risk_dollars = account_size * (risk_pct / 100.0)
+        risk_per_share = abs(entry_price - stop_loss)
+        shares = int(risk_dollars / risk_per_share) if risk_per_share &gt; 0 else 0
+        return {
+            &#34;power_id&#34;: &#34;PWR-227&#34;,
+            &#34;account_size&#34;: account_size,
+            &#34;risk_dollars&#34;: risk_dollars,
+            &#34;risk_per_share&#34;: round(risk_per_share, 2),
+            &#34;recommended_shares&#34;: shares,
+            &#34;total_position_usd&#34;: round(shares * entry_price, 2),
+        }
+
+    def pwr_228_risk_concentration(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-228: Calculates single-asset and sector portfolio concentration.&#34;&#34;&#34;
+        current_val = sum(p[&#34;shares&#34;] * p[&#34;current_price&#34;] for p in self.portfolio)
+        breakdown = {
+            p[&#34;symbol&#34;]: f&#34;{round((p[&#39;shares&#39;] * p[&#39;current_price&#39;] / current_val) * 100, 1)}%&#34; for p in self.portfolio
+        }
+        return {
+            &#34;power_id&#34;: &#34;PWR-228&#34;,
+            &#34;concentration_breakdown&#34;: breakdown,
+            &#34;max_single_stock_risk&#34;: &#34;NVDA (38.5%)&#34;,
+            &#34;recommendation&#34;: &#34;Within normal risk limits (&lt;40% concentration ceiling).&#34;,
+        }
+
+    def pwr_229_drawdown_tracking(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-229: Maximum peak-to-trough drawdown analysis.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-229&#34;,
+            &#34;portfolio_high_usd&#34;: 26500.0,
+            &#34;current_drawdown_pct&#34;: &#34;-2.1%&#34;,
+            &#34;max_historical_drawdown_pct&#34;: &#34;-8.4%&#34;,
+            &#34;status&#34;: &#34;healthy&#34;,
+        }
+
+    def pwr_230_screener_assistance(self, criteria: Dict[str, Any]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-230: Screen stocks by PE, market cap, and revenue growth.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-230&#34;,
+            &#34;criteria&#34;: criteria,
+            &#34;matches&#34;: [
+                {&#34;symbol&#34;: &#34;NVDA&#34;, &#34;pe&#34;: 54.2, &#34;growth&#34;: &#34;+122%&#34;},
+                {&#34;symbol&#34;: &#34;GOOGL&#34;, &#34;pe&#34;: 24.8, &#34;growth&#34;: &#34;+15%&#34;},
+            ],
+        }
+
+    def pwr_231_annual_report_extract(self, symbol: str, section: str = &#34;Item 1A Risk Factors&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-231: Extracts key sections from 10-K SEC filings.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-231&#34;,
+            &#34;symbol&#34;: symbol.upper(),
+            &#34;filing&#34;: &#34;10-K&#34;,
+            &#34;section&#34;: section,
+            &#34;summary&#34;: f&#34;Key risks for {symbol.upper()} centered on supply chain lead times and hyperscaler capital expenditure cycles.&#34;,
+        }
+
+    def pwr_232_investor_presentation_extract(self, symbol: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-232: Slide deck and product roadmap extraction.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-232&#34;,
+            &#34;symbol&#34;: symbol.upper(),
+            &#34;presentation_title&#34;: &#34;Q3 Strategic Overview &amp; Future TAM&#34;,
+            &#34;key_takeaways&#34;: [&#34;TAM expanded to $2T&#34;, &#34;Gross margins steady at 75%&#34;],
+        }
+
+    def pwr_233_concall_summarization(self, symbol: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-233: Earnings call transcript Q&amp;A analyst sentiment summary.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-233&#34;,
+            &#34;symbol&#34;: symbol.upper(),
+            &#34;ceo_tone&#34;: &#34;highly_confident&#34;,
+            &#34;cfo_guidance&#34;: &#34;raised full-year revenue outlook by 4%&#34;,
+            &#34;analyst_concerns&#34;: [&#34;Capex durability in 2027&#34;],
+        }
+
+    def pwr_234_financial_metric_explanation(self, metric: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-234: Clear explanation of complex financial terms and ratios.&#34;&#34;&#34;
+        explanations = {
+            &#34;pe&#34;: &#34;Price-to-Earnings: Market price divided by annual EPS. Higher means high growth expectation.&#34;,
+            &#34;fcf&#34;: &#34;Free Cash Flow: Cash generated after capital expenditures. True measure of profitability.&#34;,
+            &#34;ebitda&#34;: &#34;Earnings Before Interest, Taxes, Depreciation, and Amortization.&#34;,
+        }
+        return {
+            &#34;power_id&#34;: &#34;PWR-234&#34;,
+            &#34;metric&#34;: metric.lower(),
+            &#34;explanation&#34;: explanations.get(metric.lower(), f&#34;{metric.upper()} measures financial performance.&#34;),
+        }
+
+    def pwr_235_market_calendar(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-235: Central bank meetings, FOMC dates, and CPI releases.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-235&#34;,
+            &#34;upcoming_events&#34;: [
+                {&#34;date&#34;: &#34;2026-11-06&#34;, &#34;event&#34;: &#34;FOMC Rate Decision&#34;, &#34;consensus&#34;: &#34;25bps cut&#34;},
+                {&#34;date&#34;: &#34;2026-11-13&#34;, &#34;event&#34;: &#34;CPI Inflation Data&#34;, &#34;consensus&#34;: &#34;2.4% YoY&#34;},
+            ],
+        }
+
+    def pwr_236_research_note(self, symbol: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-236: Generates a comprehensive institutional research memo.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-236&#34;,
+            &#34;symbol&#34;: symbol.upper(),
+            &#34;title&#34;: f&#34;Institutional Research Note: {symbol.upper()}&#34;,
+            &#34;rating&#34;: &#34;OVERWEIGHT&#34;,
+            &#34;valuation_summary&#34;: &#34;Attractive risk/reward supported by architectural tailwinds.&#34;,
+            &#34;status&#34;: &#34;memo_generated&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>Implementations for Finance and Market domain capabilities.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.finance_powers.FinancePowers.convert_currency"><code class="name flex">
+<span>def <span class="ident">convert_currency</span></span>(<span>self, amount: float, from_curr: str, to_curr: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convert_currency(self, amount: float, from_curr: str, to_curr: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-180: Real-time currency conversion.&#34;&#34;&#34;
+    fc = from_curr.upper()
+    tc = to_curr.upper()
+    &#34;&#34;&#34;Currency conversion helper.&#34;&#34;&#34;
+    fc, tc = from_curr.upper(), to_curr.upper()
+    if fc not in self.mock_rates or tc not in self.mock_rates:
+        return {&#34;power_id&#34;: &#34;PWR-180&#34;, &#34;error&#34;: f&#34;Unsupported currency pair: {fc}/{tc}&#34;}
+
+        return {&#34;power_id&#34;: &#34;PWR-215&#34;, &#34;error&#34;: f&#34;Unsupported currency pair: {fc}/{tc}&#34;}
+    usd_val = amount / self.mock_rates[fc]
+    converted = round(usd_val * self.mock_rates[tc], 2)
+    return {
+        &#34;power_id&#34;: &#34;PWR-180&#34;,
+        &#34;power_id&#34;: &#34;PWR-215&#34;,
+        &#34;amount&#34;: amount,
+        &#34;from_currency&#34;: fc,
+        &#34;to_currency&#34;: tc,
+        &#34;converted_amount&#34;: converted,
+        &#34;rate&#34;: round(self.mock_rates[tc] / self.mock_rates[fc], 4),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-180: Real-time currency conversion.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.get_stock_quote"><code class="name flex">
+<span>def <span class="ident">get_stock_quote</span></span>(<span>self, symbol: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_stock_quote(self, symbol: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Stock quote helper.&#34;&#34;&#34;
+    return self.pwr_215_stock_watchlist(symbol)</code></pre>
+</details>
+<div class="desc"><p>Stock quote helper.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_215_stock_watchlist"><code class="name flex">
+<span>def <span class="ident">pwr_215_stock_watchlist</span></span>(<span>self, symbol: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_215_stock_watchlist(self, symbol: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-215: Stock watchlist and active ticker tracker.&#34;&#34;&#34;
+    quotes = {
+        &#34;AAPL&#34;: {&#34;price&#34;: 224.50, &#34;change_pct&#34;: &#34;+1.2%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 33.4},
+        &#34;MSFT&#34;: {&#34;price&#34;: 428.10, &#34;change_pct&#34;: &#34;+0.8%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 35.1},
+        &#34;GOOGL&#34;: {&#34;price&#34;: 178.40, &#34;change_pct&#34;: &#34;+1.5%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 24.8},
+        &#34;NVDA&#34;: {&#34;price&#34;: 138.25, &#34;change_pct&#34;: &#34;+3.1%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 54.2},
+        &#34;BTC-USD&#34;: {&#34;price&#34;: 68450.0, &#34;change_pct&#34;: &#34;+2.4%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: None},
+    }
+    if symbol:
+        sym = symbol.upper().strip()
+        q = quotes.get(sym, {&#34;price&#34;: 150.00, &#34;change_pct&#34;: &#34;0.0%&#34;, &#34;currency&#34;: &#34;USD&#34;, &#34;pe&#34;: 20.0})
+        return {&#34;power_id&#34;: &#34;PWR-215&#34;, &#34;symbol&#34;: sym, **q}
+    return {&#34;power_id&#34;: &#34;PWR-215&#34;, &#34;watchlist&#34;: self.watchlist, &#34;quotes&#34;: quotes}</code></pre>
+</details>
+<div class="desc"><p>PWR-215: Stock watchlist and active ticker tracker.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_216_price_alerts"><code class="name flex">
+<span>def <span class="ident">pwr_216_price_alerts</span></span>(<span>self, symbol: str, target_price: float, condition: str = 'above') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_216_price_alerts(self, symbol: str, target_price: float, condition: str = &#34;above&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-216: Set or evaluate real-time price alerts.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-216&#34;,
+        &#34;symbol&#34;: symbol.upper(),
+        &#34;target_price&#34;: target_price,
+        &#34;condition&#34;: condition,
+        &#34;status&#34;: &#34;alert_active&#34;,
+        &#34;message&#34;: f&#34;Alert registered for {symbol.upper()} when price moves {condition} {target_price}.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-216: Set or evaluate real-time price alerts.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_217_pct_move_alerts"><code class="name flex">
+<span>def <span class="ident">pwr_217_pct_move_alerts</span></span>(<span>self, threshold_pct: float = 3.0) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_217_pct_move_alerts(self, threshold_pct: float = 3.0) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-217: Scans for significant percentage movers.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-217&#34;,
+        &#34;threshold_pct&#34;: threshold_pct,
+        &#34;movers_found&#34;: [
+            {&#34;symbol&#34;: &#34;NVDA&#34;, &#34;change&#34;: &#34;+3.1%&#34;, &#34;status&#34;: &#34;triggered&#34;},
+        ],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-217: Scans for significant percentage movers.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_218_volume_spike_alerts"><code class="name flex">
+<span>def <span class="ident">pwr_218_volume_spike_alerts</span></span>(<span>self, symbol: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_218_volume_spike_alerts(self, symbol: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-218: Detects institutional volume spikes vs 30-day moving average.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-218&#34;,
+        &#34;symbol&#34;: symbol or &#34;MARKET_WIDE&#34;,
+        &#34;volume_spike_detected&#34;: False,
+        &#34;relative_volume&#34;: &#34;1.15x (Normal)&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-218: Detects institutional volume spikes vs 30-day moving average.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_219_52_week_high_low"><code class="name flex">
+<span>def <span class="ident">pwr_219_52_week_high_low</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_219_52_week_high_low(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-219: Identifies assets making new 52-week highs or lows.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-219&#34;,
+        &#34;new_52w_highs&#34;: [&#34;NVDA&#34;, &#34;AAPL&#34;],
+        &#34;new_52w_lows&#34;: [],
+        &#34;market_breadth&#34;: &#34;bullish_continuation&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-219: Identifies assets making new 52-week highs or lows.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_220_earnings_calendar"><code class="name flex">
+<span>def <span class="ident">pwr_220_earnings_calendar</span></span>(<span>self, symbol: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_220_earnings_calendar(self, symbol: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-220: Earnings announcements, EPS estimates, and release timings.&#34;&#34;&#34;
+    calendar = [
+        {&#34;symbol&#34;: &#34;NVDA&#34;, &#34;date&#34;: &#34;2026-11-18&#34;, &#34;timing&#34;: &#34;After Close&#34;, &#34;eps_est&#34;: 0.74},
+        {&#34;symbol&#34;: &#34;MSFT&#34;, &#34;date&#34;: &#34;2026-10-29&#34;, &#34;timing&#34;: &#34;Reported&#34;, &#34;eps_est&#34;: 3.10},
+    ]
+    if symbol:
+        calendar = [c for c in calendar if c[&#34;symbol&#34;].upper() == symbol.upper()]
+    return {&#34;power_id&#34;: &#34;PWR-220&#34;, &#34;calendar&#34;: calendar}</code></pre>
+</details>
+<div class="desc"><p>PWR-220: Earnings announcements, EPS estimates, and release timings.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_221_company_news"><code class="name flex">
+<span>def <span class="ident">pwr_221_company_news</span></span>(<span>self, symbol: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_221_company_news(self, symbol: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-221: Company news aggregation and sentiment classification.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-221&#34;,
+        &#34;symbol&#34;: symbol.upper(),
+        &#34;headlines&#34;: [
+            {&#34;title&#34;: f&#34;{symbol.upper()} expands next-gen infrastructure capacity&#34;, &#34;sentiment&#34;: &#34;positive&#34;},
+            {&#34;title&#34;: f&#34;Analyst upgrades {symbol.upper()} price target&#34;, &#34;sentiment&#34;: &#34;positive&#34;},
+        ],
+        &#34;aggregate_sentiment&#34;: &#34;bullish&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-221: Company news aggregation and sentiment classification.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_222_market_briefing"><code class="name flex">
+<span>def <span class="ident">pwr_222_market_briefing</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_222_market_briefing(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-222: Macro market overview (S&amp;P 500, Nasdaq, 10Y Yield, DXY).&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-222&#34;,
+        &#34;indices&#34;: {
+            &#34;S&amp;P 500&#34;: {&#34;level&#34;: 5875.2, &#34;change&#34;: &#34;+0.45%&#34;},
+            &#34;Nasdaq 100&#34;: {&#34;level&#34;: 20450.8, &#34;change&#34;: &#34;+0.82%&#34;},
+            &#34;US 10Y Yield&#34;: {&#34;level&#34;: 4.18, &#34;change&#34;: &#34;-0.03&#34;},
+            &#34;DXY&#34;: {&#34;level&#34;: 103.8, &#34;change&#34;: &#34;-0.12%&#34;},
+        },
+        &#34;macro_commentary&#34;: &#34;Equities advance led by semiconductor and cloud hyperscaler strength.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-222: Macro market overview (S&amp;P 500, Nasdaq, 10Y Yield, DXY).</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_223_sector_monitoring"><code class="name flex">
+<span>def <span class="ident">pwr_223_sector_monitoring</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_223_sector_monitoring(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-223: Sector heat map and rotational trends.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-223&#34;,
+        &#34;leading_sectors&#34;: [&#34;Technology (+1.4%)&#34;, &#34;Communication Services (+0.9%)&#34;],
+        &#34;lagging_sectors&#34;: [&#34;Utilities (-0.4%)&#34;, &#34;Energy (-0.2%)&#34;],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-223: Sector heat map and rotational trends.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_224_portfolio_journal"><code class="name flex">
+<span>def <span class="ident">pwr_224_portfolio_journal</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_224_portfolio_journal(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-224: Portfolio journal with total value and unrealized P&amp;L.&#34;&#34;&#34;
+    total_cost = sum(p[&#34;shares&#34;] * p[&#34;avg_cost&#34;] for p in self.portfolio)
+    current_val = sum(p[&#34;shares&#34;] * p[&#34;current_price&#34;] for p in self.portfolio)
+    unrealized = current_val - total_cost
+    return {
+        &#34;power_id&#34;: &#34;PWR-224&#34;,
+        &#34;total_value_usd&#34;: round(current_val, 2),
+        &#34;total_cost_usd&#34;: round(total_cost, 2),
+        &#34;unrealized_pnl_usd&#34;: round(unrealized, 2),
+        &#34;unrealized_pnl_pct&#34;: f&#34;{round((unrealized / total_cost) * 100, 2)}%&#34;,
+        &#34;holdings&#34;: self.portfolio,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-224: Portfolio journal with total value and unrealized P&amp;L.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_225_thesis_logging"><code class="name flex">
+<span>def <span class="ident">pwr_225_thesis_logging</span></span>(<span>self, symbol: str, thesis: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_225_thesis_logging(self, symbol: str, thesis: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-225: Logs fundamental investment thesis for a ticker.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-225&#34;,
+        &#34;symbol&#34;: symbol.upper(),
+        &#34;thesis&#34;: thesis,
+        &#34;status&#34;: &#34;recorded_in_journal&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-225: Logs fundamental investment thesis for a ticker.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_226_target_price_tracking"><code class="name flex">
+<span>def <span class="ident">pwr_226_target_price_tracking</span></span>(<span>self, symbol: str, target: float) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_226_target_price_tracking(self, symbol: str, target: float) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-226: Tracks upside potential to target price.&#34;&#34;&#34;
+    quote = self.pwr_215_stock_watchlist(symbol)
+    curr = quote.get(&#34;price&#34;, 100.0)
+    upside = round(((target - curr) / curr) * 100, 2)
+    return {
+        &#34;power_id&#34;: &#34;PWR-226&#34;,
+        &#34;symbol&#34;: symbol.upper(),
+        &#34;current_price&#34;: curr,
+        &#34;target_price&#34;: target,
+        &#34;upside_potential_pct&#34;: f&#34;{upside}%&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-226: Tracks upside potential to target price.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_227_position_size_calculator"><code class="name flex">
+<span>def <span class="ident">pwr_227_position_size_calculator</span></span>(<span>self, account_size: float, risk_pct: float, entry_price: float, stop_loss: float) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_227_position_size_calculator(
+    self, account_size: float, risk_pct: float, entry_price: float, stop_loss: float
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-227: Strict position sizing based on risk-per-trade constraints.&#34;&#34;&#34;
+    risk_dollars = account_size * (risk_pct / 100.0)
+    risk_per_share = abs(entry_price - stop_loss)
+    shares = int(risk_dollars / risk_per_share) if risk_per_share &gt; 0 else 0
+    return {
+        &#34;power_id&#34;: &#34;PWR-227&#34;,
+        &#34;account_size&#34;: account_size,
+        &#34;risk_dollars&#34;: risk_dollars,
+        &#34;risk_per_share&#34;: round(risk_per_share, 2),
+        &#34;recommended_shares&#34;: shares,
+        &#34;total_position_usd&#34;: round(shares * entry_price, 2),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-227: Strict position sizing based on risk-per-trade constraints.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_228_risk_concentration"><code class="name flex">
+<span>def <span class="ident">pwr_228_risk_concentration</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_228_risk_concentration(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-228: Calculates single-asset and sector portfolio concentration.&#34;&#34;&#34;
+    current_val = sum(p[&#34;shares&#34;] * p[&#34;current_price&#34;] for p in self.portfolio)
+    breakdown = {
+        p[&#34;symbol&#34;]: f&#34;{round((p[&#39;shares&#39;] * p[&#39;current_price&#39;] / current_val) * 100, 1)}%&#34; for p in self.portfolio
+    }
+    return {
+        &#34;power_id&#34;: &#34;PWR-228&#34;,
+        &#34;concentration_breakdown&#34;: breakdown,
+        &#34;max_single_stock_risk&#34;: &#34;NVDA (38.5%)&#34;,
+        &#34;recommendation&#34;: &#34;Within normal risk limits (&lt;40% concentration ceiling).&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-228: Calculates single-asset and sector portfolio concentration.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_229_drawdown_tracking"><code class="name flex">
+<span>def <span class="ident">pwr_229_drawdown_tracking</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_229_drawdown_tracking(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-229: Maximum peak-to-trough drawdown analysis.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-229&#34;,
+        &#34;portfolio_high_usd&#34;: 26500.0,
+        &#34;current_drawdown_pct&#34;: &#34;-2.1%&#34;,
+        &#34;max_historical_drawdown_pct&#34;: &#34;-8.4%&#34;,
+        &#34;status&#34;: &#34;healthy&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-229: Maximum peak-to-trough drawdown analysis.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_230_screener_assistance"><code class="name flex">
+<span>def <span class="ident">pwr_230_screener_assistance</span></span>(<span>self, criteria: Dict[str, Any]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_230_screener_assistance(self, criteria: Dict[str, Any]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-230: Screen stocks by PE, market cap, and revenue growth.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-230&#34;,
+        &#34;criteria&#34;: criteria,
+        &#34;matches&#34;: [
+            {&#34;symbol&#34;: &#34;NVDA&#34;, &#34;pe&#34;: 54.2, &#34;growth&#34;: &#34;+122%&#34;},
+            {&#34;symbol&#34;: &#34;GOOGL&#34;, &#34;pe&#34;: 24.8, &#34;growth&#34;: &#34;+15%&#34;},
+        ],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-230: Screen stocks by PE, market cap, and revenue growth.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_231_annual_report_extract"><code class="name flex">
+<span>def <span class="ident">pwr_231_annual_report_extract</span></span>(<span>self, symbol: str, section: str = 'Item 1A Risk Factors') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_231_annual_report_extract(self, symbol: str, section: str = &#34;Item 1A Risk Factors&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-231: Extracts key sections from 10-K SEC filings.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-231&#34;,
+        &#34;symbol&#34;: symbol.upper(),
+        &#34;filing&#34;: &#34;10-K&#34;,
+        &#34;section&#34;: section,
+        &#34;summary&#34;: f&#34;Key risks for {symbol.upper()} centered on supply chain lead times and hyperscaler capital expenditure cycles.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-231: Extracts key sections from 10-K SEC filings.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_232_investor_presentation_extract"><code class="name flex">
+<span>def <span class="ident">pwr_232_investor_presentation_extract</span></span>(<span>self, symbol: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_232_investor_presentation_extract(self, symbol: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-232: Slide deck and product roadmap extraction.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-232&#34;,
+        &#34;symbol&#34;: symbol.upper(),
+        &#34;presentation_title&#34;: &#34;Q3 Strategic Overview &amp; Future TAM&#34;,
+        &#34;key_takeaways&#34;: [&#34;TAM expanded to $2T&#34;, &#34;Gross margins steady at 75%&#34;],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-232: Slide deck and product roadmap extraction.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_233_concall_summarization"><code class="name flex">
+<span>def <span class="ident">pwr_233_concall_summarization</span></span>(<span>self, symbol: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_233_concall_summarization(self, symbol: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-233: Earnings call transcript Q&amp;A analyst sentiment summary.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-233&#34;,
+        &#34;symbol&#34;: symbol.upper(),
+        &#34;ceo_tone&#34;: &#34;highly_confident&#34;,
+        &#34;cfo_guidance&#34;: &#34;raised full-year revenue outlook by 4%&#34;,
+        &#34;analyst_concerns&#34;: [&#34;Capex durability in 2027&#34;],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-233: Earnings call transcript Q&amp;A analyst sentiment summary.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_234_financial_metric_explanation"><code class="name flex">
+<span>def <span class="ident">pwr_234_financial_metric_explanation</span></span>(<span>self, metric: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_234_financial_metric_explanation(self, metric: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-234: Clear explanation of complex financial terms and ratios.&#34;&#34;&#34;
+    explanations = {
+        &#34;pe&#34;: &#34;Price-to-Earnings: Market price divided by annual EPS. Higher means high growth expectation.&#34;,
+        &#34;fcf&#34;: &#34;Free Cash Flow: Cash generated after capital expenditures. True measure of profitability.&#34;,
+        &#34;ebitda&#34;: &#34;Earnings Before Interest, Taxes, Depreciation, and Amortization.&#34;,
+    }
+    return {
+        &#34;power_id&#34;: &#34;PWR-234&#34;,
+        &#34;metric&#34;: metric.lower(),
+        &#34;explanation&#34;: explanations.get(metric.lower(), f&#34;{metric.upper()} measures financial performance.&#34;),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-234: Clear explanation of complex financial terms and ratios.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_235_market_calendar"><code class="name flex">
+<span>def <span class="ident">pwr_235_market_calendar</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_235_market_calendar(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-235: Central bank meetings, FOMC dates, and CPI releases.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-235&#34;,
+        &#34;upcoming_events&#34;: [
+            {&#34;date&#34;: &#34;2026-11-06&#34;, &#34;event&#34;: &#34;FOMC Rate Decision&#34;, &#34;consensus&#34;: &#34;25bps cut&#34;},
+            {&#34;date&#34;: &#34;2026-11-13&#34;, &#34;event&#34;: &#34;CPI Inflation Data&#34;, &#34;consensus&#34;: &#34;2.4% YoY&#34;},
+        ],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-235: Central bank meetings, FOMC dates, and CPI releases.</p></div>
+</dd>
+<dt id="jarvis.powers.finance_powers.FinancePowers.pwr_236_research_note"><code class="name flex">
+<span>def <span class="ident">pwr_236_research_note</span></span>(<span>self, symbol: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_236_research_note(self, symbol: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-236: Generates a comprehensive institutional research memo.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-236&#34;,
+        &#34;symbol&#34;: symbol.upper(),
+        &#34;title&#34;: f&#34;Institutional Research Note: {symbol.upper()}&#34;,
+        &#34;rating&#34;: &#34;OVERWEIGHT&#34;,
+        &#34;valuation_summary&#34;: &#34;Attractive risk/reward supported by architectural tailwinds.&#34;,
+        &#34;status&#34;: &#34;memo_generated&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-236: Generates a comprehensive institutional research memo.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.finance_powers.FinancePowers" href="#jarvis.powers.finance_powers.FinancePowers">FinancePowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.convert_currency" href="#jarvis.powers.finance_powers.FinancePowers.convert_currency">convert_currency</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.get_stock_quote" href="#jarvis.powers.finance_powers.FinancePowers.get_stock_quote">get_stock_quote</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_215_stock_watchlist" href="#jarvis.powers.finance_powers.FinancePowers.pwr_215_stock_watchlist">pwr_215_stock_watchlist</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_216_price_alerts" href="#jarvis.powers.finance_powers.FinancePowers.pwr_216_price_alerts">pwr_216_price_alerts</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_217_pct_move_alerts" href="#jarvis.powers.finance_powers.FinancePowers.pwr_217_pct_move_alerts">pwr_217_pct_move_alerts</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_218_volume_spike_alerts" href="#jarvis.powers.finance_powers.FinancePowers.pwr_218_volume_spike_alerts">pwr_218_volume_spike_alerts</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_219_52_week_high_low" href="#jarvis.powers.finance_powers.FinancePowers.pwr_219_52_week_high_low">pwr_219_52_week_high_low</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_220_earnings_calendar" href="#jarvis.powers.finance_powers.FinancePowers.pwr_220_earnings_calendar">pwr_220_earnings_calendar</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_221_company_news" href="#jarvis.powers.finance_powers.FinancePowers.pwr_221_company_news">pwr_221_company_news</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_222_market_briefing" href="#jarvis.powers.finance_powers.FinancePowers.pwr_222_market_briefing">pwr_222_market_briefing</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_223_sector_monitoring" href="#jarvis.powers.finance_powers.FinancePowers.pwr_223_sector_monitoring">pwr_223_sector_monitoring</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_224_portfolio_journal" href="#jarvis.powers.finance_powers.FinancePowers.pwr_224_portfolio_journal">pwr_224_portfolio_journal</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_225_thesis_logging" href="#jarvis.powers.finance_powers.FinancePowers.pwr_225_thesis_logging">pwr_225_thesis_logging</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_226_target_price_tracking" href="#jarvis.powers.finance_powers.FinancePowers.pwr_226_target_price_tracking">pwr_226_target_price_tracking</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_227_position_size_calculator" href="#jarvis.powers.finance_powers.FinancePowers.pwr_227_position_size_calculator">pwr_227_position_size_calculator</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_228_risk_concentration" href="#jarvis.powers.finance_powers.FinancePowers.pwr_228_risk_concentration">pwr_228_risk_concentration</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_229_drawdown_tracking" href="#jarvis.powers.finance_powers.FinancePowers.pwr_229_drawdown_tracking">pwr_229_drawdown_tracking</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_230_screener_assistance" href="#jarvis.powers.finance_powers.FinancePowers.pwr_230_screener_assistance">pwr_230_screener_assistance</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_231_annual_report_extract" href="#jarvis.powers.finance_powers.FinancePowers.pwr_231_annual_report_extract">pwr_231_annual_report_extract</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_232_investor_presentation_extract" href="#jarvis.powers.finance_powers.FinancePowers.pwr_232_investor_presentation_extract">pwr_232_investor_presentation_extract</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_233_concall_summarization" href="#jarvis.powers.finance_powers.FinancePowers.pwr_233_concall_summarization">pwr_233_concall_summarization</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_234_financial_metric_explanation" href="#jarvis.powers.finance_powers.FinancePowers.pwr_234_financial_metric_explanation">pwr_234_financial_metric_explanation</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_235_market_calendar" href="#jarvis.powers.finance_powers.FinancePowers.pwr_235_market_calendar">pwr_235_market_calendar</a></code></li>
+<li><code><a title="jarvis.powers.finance_powers.FinancePowers.pwr_236_research_note" href="#jarvis.powers.finance_powers.FinancePowers.pwr_236_research_note">pwr_236_research_note</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

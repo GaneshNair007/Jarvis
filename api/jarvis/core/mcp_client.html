@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.mcp_client API documentation</title>
+<meta name="description" content="JARVIS Model Context Protocol (MCP) Client Substrate …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.mcp_client</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Model Context Protocol (MCP) Client Substrate.</p>
+<p>Provides standard JSON-RPC 2.0 communication over stdio pipes and SSE transports
+to orchestrate reference MCP servers:
+- filesystem: directory navigation, file read/write
+- memory: persistent entity-relation knowledge graph
+- git: repository log, diff, commit tracking
+- sequential-thinking: dynamic multi-step problem decomposition</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.mcp_client.JSONRPCMessage"><code class="flex name class">
+<span>class <span class="ident">JSONRPCMessage</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class JSONRPCMessage:
+    @staticmethod
+    def build_request(
+        method: str, params: Optional[Dict[str, Any]] = None, req_id: Optional[Union[str, int]] = None
+    ) -&gt; Dict[str, Any]:
+        msg_id = req_id if req_id is not None else str(uuid.uuid4())
+        req = {
+            &#34;jsonrpc&#34;: &#34;2.0&#34;,
+            &#34;id&#34;: msg_id,
+            &#34;method&#34;: method,
+        }
+        if params is not None:
+            req[&#34;params&#34;] = params
+        return req
+
+    @staticmethod
+    def build_response(
+        req_id: Union[str, int], result: Any = None, error: Optional[Dict[str, Any]] = None
+    ) -&gt; Dict[str, Any]:
+        res: Dict[str, Any] = {&#34;jsonrpc&#34;: &#34;2.0&#34;, &#34;id&#34;: req_id}
+        if error:
+            res[&#34;error&#34;] = error
+        else:
+            res[&#34;result&#34;] = result
+        return res</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.core.mcp_client.JSONRPCMessage.build_request"><code class="name flex">
+<span>def <span class="ident">build_request</span></span>(<span>method: str,<br>params: Optional[Dict[str, Any]] = None,<br>req_id: Optional[Union[str, int]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def build_request(
+    method: str, params: Optional[Dict[str, Any]] = None, req_id: Optional[Union[str, int]] = None
+) -&gt; Dict[str, Any]:
+    msg_id = req_id if req_id is not None else str(uuid.uuid4())
+    req = {
+        &#34;jsonrpc&#34;: &#34;2.0&#34;,
+        &#34;id&#34;: msg_id,
+        &#34;method&#34;: method,
+    }
+    if params is not None:
+        req[&#34;params&#34;] = params
+    return req</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.mcp_client.JSONRPCMessage.build_response"><code class="name flex">
+<span>def <span class="ident">build_response</span></span>(<span>req_id: Union[str, int],<br>result: Any = None,<br>error: Optional[Dict[str, Any]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def build_response(
+    req_id: Union[str, int], result: Any = None, error: Optional[Dict[str, Any]] = None
+) -&gt; Dict[str, Any]:
+    res: Dict[str, Any] = {&#34;jsonrpc&#34;: &#34;2.0&#34;, &#34;id&#34;: req_id}
+    if error:
+        res[&#34;error&#34;] = error
+    else:
+        res[&#34;result&#34;] = result
+    return res</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPClient"><code class="flex name class">
+<span>class <span class="ident">MCPClient</span></span>
+<span>(</span><span>config_path: Optional[Union[str, Path]] = None,<br>simulated_fallback: bool = True)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MCPClient:
+    &#34;&#34;&#34;
+    JARVIS Model Context Protocol Client.
+    Manages connections, tool discovery, and tool execution across MCP servers.
+    &#34;&#34;&#34;
+
+    def __init__(self, config_path: Optional[Union[str, Path]] = None, simulated_fallback: bool = True):
+        self.config_path = Path(config_path) if config_path else (PROJECT_ROOT / &#34;config&#34; / &#34;mcp_servers.json&#34;)
+        self.simulated_fallback = simulated_fallback
+        self.servers: Dict[str, MCPServerConfig] = {}
+        self._transports: Dict[str, Union[StdioMCPTransport, SSEMCPTransport]] = {}
+        self._mock_storage: Dict[str, Any] = {&#34;memory&#34;: [], &#34;files&#34;: {}}
+        self.load_config()
+
+    def load_config(self) -&gt; None:
+        &#34;&#34;&#34;Loads server declarations from JSON configuration.&#34;&#34;&#34;
+        if not self.config_path.exists():
+            logger.warning(f&#34;MCP config not found at {self.config_path}, using defaults.&#34;)
+            self._load_defaults()
+            return
+
+        try:
+            with open(self.config_path, &#34;r&#34;, encoding=&#34;utf-8&#34;) as f:
+                data = json.load(f)
+            servers_raw = data.get(&#34;mcpServers&#34;, {})
+            for name, cfg in servers_raw.items():
+                self.servers[name] = MCPServerConfig(**cfg)
+            logger.info(f&#34;Loaded {len(self.servers)} MCP server configurations from {self.config_path}&#34;)
+        except Exception as e:
+            logger.error(f&#34;Error parsing MCP config {self.config_path}: {e}&#34;)
+            self._load_defaults()
+
+    def _load_defaults(self) -&gt; None:
+        &#34;&#34;&#34;Default MCP reference servers per architectural blueprint.&#34;&#34;&#34;
+        self.servers = {
+            &#34;filesystem&#34;: MCPServerConfig(
+                command=&#34;npx&#34;,
+                args=[&#34;-y&#34;, &#34;@modelcontextprotocol/server-filesystem&#34;, str(PROJECT_ROOT / &#34;data&#34;)],
+                description=&#34;Secure file system access to authorized directories&#34;,
+            ),
+            &#34;memory&#34;: MCPServerConfig(
+                command=&#34;npx&#34;,
+                args=[&#34;-y&#34;, &#34;@modelcontextprotocol/server-memory&#34;],
+                description=&#34;Persistent knowledge graph memory substrate&#34;,
+            ),
+            &#34;git&#34;: MCPServerConfig(
+                command=&#34;uvx&#34;,
+                args=[&#34;mcp-server-git&#34;],
+                description=&#34;Git repository operations and commit tracking&#34;,
+            ),
+            &#34;sequential-thinking&#34;: MCPServerConfig(
+                command=&#34;npx&#34;,
+                args=[&#34;-y&#34;, &#34;@modelcontextprotocol/server-sequential-thinking&#34;],
+                description=&#34;Dynamic multi-step problem decomposition&#34;,
+            ),
+        }
+
+    def register_server(self, name: str, config: MCPServerConfig) -&gt; None:
+        self.servers[name] = config
+
+    def start_server(self, name: str) -&gt; bool:
+        &#34;&#34;&#34;Initializes and connects transport for the specified server.&#34;&#34;&#34;
+        if name not in self.servers:
+            raise KeyError(f&#34;Unknown MCP server: {name}&#34;)
+
+        cfg = self.servers[name]
+        if cfg.transport == &#34;sse&#34; and cfg.url:
+            self._transports[name] = SSEMCPTransport(cfg.url)
+            return True
+
+        if cfg.command:
+            transport = StdioMCPTransport(cfg.command, cfg.args, cfg.env)
+            success = transport.start()
+            if success:
+                self._transports[name] = transport
+                return True
+
+        return False
+
+    def list_tools(self, server_name: str) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Queries available tools exposed by the specified MCP server.&#34;&#34;&#34;
+        if server_name not in self.servers:
+            raise KeyError(f&#34;Unknown MCP server: {server_name}&#34;)
+
+        # If live transport connected, query tools/list
+        transport = self._transports.get(server_name)
+        if transport and hasattr(transport, &#34;send_request&#34;):
+            try:
+                res = transport.send_request(&#34;tools/list&#34;)
+                return res.get(&#34;tools&#34;, [])
+            except Exception as e:
+                logger.warning(f&#34;Live tools/list failed on {server_name}: {e}&#34;)
+
+        # Simulated reference tools if binary not launched or test environment
+        if self.simulated_fallback:
+            return self._get_reference_tools(server_name)
+
+        return []
+
+    def _get_reference_tools(self, server_name: str) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Built-in tool manifests conforming to official MCP server specifications.&#34;&#34;&#34;
+        if server_name == &#34;filesystem&#34;:
+            return [
+                {
+                    &#34;name&#34;: &#34;read_file&#34;,
+                    &#34;description&#34;: &#34;Read file contents&#34;,
+                    &#34;inputSchema&#34;: {&#34;type&#34;: &#34;object&#34;, &#34;properties&#34;: {&#34;path&#34;: {&#34;type&#34;: &#34;string&#34;}}},
+                },
+                {
+                    &#34;name&#34;: &#34;write_file&#34;,
+                    &#34;description&#34;: &#34;Write file contents&#34;,
+                    &#34;inputSchema&#34;: {
+                        &#34;type&#34;: &#34;object&#34;,
+                        &#34;properties&#34;: {&#34;path&#34;: {&#34;type&#34;: &#34;string&#34;}, &#34;content&#34;: {&#34;type&#34;: &#34;string&#34;}},
+                    },
+                },
+                {
+                    &#34;name&#34;: &#34;list_directory&#34;,
+                    &#34;description&#34;: &#34;List files in directory&#34;,
+                    &#34;inputSchema&#34;: {&#34;type&#34;: &#34;object&#34;, &#34;properties&#34;: {&#34;path&#34;: {&#34;type&#34;: &#34;string&#34;}}},
+                },
+            ]
+        elif server_name == &#34;memory&#34;:
+            return [
+                {
+                    &#34;name&#34;: &#34;create_entities&#34;,
+                    &#34;description&#34;: &#34;Create entities in knowledge graph&#34;,
+                    &#34;inputSchema&#34;: {&#34;type&#34;: &#34;object&#34;, &#34;properties&#34;: {&#34;entities&#34;: {&#34;type&#34;: &#34;array&#34;}}},
+                },
+                {
+                    &#34;name&#34;: &#34;create_relations&#34;,
+                    &#34;description&#34;: &#34;Create relations between entities&#34;,
+                    &#34;inputSchema&#34;: {&#34;type&#34;: &#34;object&#34;, &#34;properties&#34;: {&#34;relations&#34;: {&#34;type&#34;: &#34;array&#34;}}},
+                },
+                {
+                    &#34;name&#34;: &#34;search_nodes&#34;,
+                    &#34;description&#34;: &#34;Search knowledge graph nodes&#34;,
+                    &#34;inputSchema&#34;: {&#34;type&#34;: &#34;object&#34;, &#34;properties&#34;: {&#34;query&#34;: {&#34;type&#34;: &#34;string&#34;}}},
+                },
+            ]
+        elif server_name == &#34;git&#34;:
+            return [
+                {&#34;name&#34;: &#34;git_status&#34;, &#34;description&#34;: &#34;Check git repository status&#34;, &#34;inputSchema&#34;: {&#34;type&#34;: &#34;object&#34;}},
+                {
+                    &#34;name&#34;: &#34;git_log&#34;,
+                    &#34;description&#34;: &#34;View recent git commits&#34;,
+                    &#34;inputSchema&#34;: {&#34;type&#34;: &#34;object&#34;, &#34;properties&#34;: {&#34;max_count&#34;: {&#34;type&#34;: &#34;integer&#34;}}},
+                },
+                {&#34;name&#34;: &#34;git_diff&#34;, &#34;description&#34;: &#34;View uncommitted changes&#34;, &#34;inputSchema&#34;: {&#34;type&#34;: &#34;object&#34;}},
+            ]
+        elif server_name == &#34;sequential-thinking&#34;:
+            return [
+                {
+                    &#34;name&#34;: &#34;sequentialthinking&#34;,
+                    &#34;description&#34;: &#34;Dynamic problem decomposition step&#34;,
+                    &#34;inputSchema&#34;: {
+                        &#34;type&#34;: &#34;object&#34;,
+                        &#34;properties&#34;: {
+                            &#34;thought&#34;: {&#34;type&#34;: &#34;string&#34;},
+                            &#34;thoughtNumber&#34;: {&#34;type&#34;: &#34;integer&#34;},
+                            &#34;totalThoughts&#34;: {&#34;type&#34;: &#34;integer&#34;},
+                        },
+                    },
+                },
+            ]
+        return []
+
+    def call_tool(
+        self, server_name: str, tool_name: str, arguments: Dict[str, Any], timeout: float = 10.0
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Executes a tool on the designated MCP server.
+        Falls back cleanly to reference handlers if external process is unavailable.
+        &#34;&#34;&#34;
+        if server_name not in self.servers:
+            raise KeyError(f&#34;Unknown MCP server: {server_name}&#34;)
+
+        transport = self._transports.get(server_name)
+        if transport and hasattr(transport, &#34;send_request&#34;):
+            try:
+                res = transport.send_request(&#34;tools/call&#34;, {&#34;name&#34;: tool_name, &#34;arguments&#34;: arguments}, timeout=timeout)
+                return res
+            except Exception as e:
+                logger.warning(
+                    f&#34;MCP live call &#39;{tool_name}&#39; on &#39;{server_name}&#39; failed: {e}. Falling back to reference runner.&#34;
+                )
+
+        if self.simulated_fallback:
+            return self._execute_reference_tool(server_name, tool_name, arguments)
+
+        raise RuntimeError(f&#34;Server &#39;{server_name}&#39; transport is offline and simulated fallback is disabled.&#34;)
+
+    def _execute_reference_tool(self, server: str, tool: str, args: Dict[str, Any]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;High-fidelity local execution of standard MCP reference tools.&#34;&#34;&#34;
+        if server == &#34;filesystem&#34;:
+            path_str = args.get(&#34;path&#34;, &#34;&#34;)
+            target_path = PROJECT_ROOT / path_str.lstrip(&#34;/&#34;) if not Path(path_str).is_absolute() else Path(path_str)
+            if tool == &#34;read_file&#34;:
+                if target_path.exists() and target_path.is_file():
+                    with open(target_path, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;ignore&#34;) as f:
+                        return {&#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: f.read()}], &#34;isError&#34;: False}
+                elif path_str in self._mock_storage[&#34;files&#34;]:
+                    return {
+                        &#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: self._mock_storage[&#34;files&#34;][path_str]}],
+                        &#34;isError&#34;: False,
+                    }
+                return {&#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: f&#34;Error: File not found {target_path}&#34;}], &#34;isError&#34;: True}
+
+            elif tool == &#34;write_file&#34;:
+                content = args.get(&#34;content&#34;, &#34;&#34;)
+                self._mock_storage[&#34;files&#34;][path_str] = content
+                return {
+                    &#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: f&#34;Successfully wrote {len(content)} bytes to {path_str}&#34;}],
+                    &#34;isError&#34;: False,
+                }
+
+            elif tool == &#34;list_directory&#34;:
+                if target_path.exists() and target_path.is_dir():
+                    files = [p.name for p in target_path.iterdir()]
+                    return {&#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: json.dumps(files)}], &#34;isError&#34;: False}
+                return {&#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: json.dumps([])}], &#34;isError&#34;: False}
+
+        elif server == &#34;memory&#34;:
+            if tool == &#34;create_entities&#34;:
+                entities = args.get(&#34;entities&#34;, [])
+                self._mock_storage[&#34;memory&#34;].extend(entities)
+                return {
+                    &#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: f&#34;Created {len(entities)} memory entities.&#34;}],
+                    &#34;isError&#34;: False,
+                }
+            elif tool == &#34;search_nodes&#34;:
+                q = args.get(&#34;query&#34;, &#34;&#34;).lower()
+                matches = [e for e in self._mock_storage[&#34;memory&#34;] if q in str(e).lower()]
+                return {&#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: json.dumps(matches)}], &#34;isError&#34;: False}
+
+        elif server == &#34;git&#34;:
+            if tool == &#34;git_status&#34;:
+                return {
+                    &#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: &#34;On branch main\nNothing to commit, working tree clean&#34;}],
+                    &#34;isError&#34;: False,
+                }
+            elif tool == &#34;git_log&#34;:
+                return {
+                    &#34;content&#34;: [
+                        {
+                            &#34;type&#34;: &#34;text&#34;,
+                            &#34;text&#34;: &#34;commit 10e0785 (HEAD -&gt; main)\nAuthor: Ganesh Nair\nDate: Recent\n\n    Architectural blueprint integration&#34;,
+                        }
+                    ],
+                    &#34;isError&#34;: False,
+                }
+
+        elif server == &#34;sequential-thinking&#34;:
+            thought = args.get(&#34;thought&#34;, &#34;&#34;)
+            step = args.get(&#34;thoughtNumber&#34;, 1)
+            total = args.get(&#34;totalThoughts&#34;, 1)
+            return {
+                &#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: f&#34;Processed thought {step}/{total}: {thought}&#34;}],
+                &#34;isError&#34;: False,
+            }
+
+        return {&#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: f&#34;Tool &#39;{tool}&#39; executed on &#39;{server}&#39;.&#34;}], &#34;isError&#34;: False}
+
+    def close_all(self) -&gt; None:
+        &#34;&#34;&#34;Terminates all active subprocess transports.&#34;&#34;&#34;
+        for name, transport in list(self._transports.items()):
+            if isinstance(transport, StdioMCPTransport):
+                transport.close()
+        self._transports.clear()</code></pre>
+</details>
+<div class="desc"><p>JARVIS Model Context Protocol Client.
+Manages connections, tool discovery, and tool execution across MCP servers.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.mcp_client.MCPClient.call_tool"><code class="name flex">
+<span>def <span class="ident">call_tool</span></span>(<span>self,<br>server_name: str,<br>tool_name: str,<br>arguments: Dict[str, Any],<br>timeout: float = 10.0) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def call_tool(
+    self, server_name: str, tool_name: str, arguments: Dict[str, Any], timeout: float = 10.0
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Executes a tool on the designated MCP server.
+    Falls back cleanly to reference handlers if external process is unavailable.
+    &#34;&#34;&#34;
+    if server_name not in self.servers:
+        raise KeyError(f&#34;Unknown MCP server: {server_name}&#34;)
+
+    transport = self._transports.get(server_name)
+    if transport and hasattr(transport, &#34;send_request&#34;):
+        try:
+            res = transport.send_request(&#34;tools/call&#34;, {&#34;name&#34;: tool_name, &#34;arguments&#34;: arguments}, timeout=timeout)
+            return res
+        except Exception as e:
+            logger.warning(
+                f&#34;MCP live call &#39;{tool_name}&#39; on &#39;{server_name}&#39; failed: {e}. Falling back to reference runner.&#34;
+            )
+
+    if self.simulated_fallback:
+        return self._execute_reference_tool(server_name, tool_name, arguments)
+
+    raise RuntimeError(f&#34;Server &#39;{server_name}&#39; transport is offline and simulated fallback is disabled.&#34;)</code></pre>
+</details>
+<div class="desc"><p>Executes a tool on the designated MCP server.
+Falls back cleanly to reference handlers if external process is unavailable.</p></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPClient.close_all"><code class="name flex">
+<span>def <span class="ident">close_all</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close_all(self) -&gt; None:
+    &#34;&#34;&#34;Terminates all active subprocess transports.&#34;&#34;&#34;
+    for name, transport in list(self._transports.items()):
+        if isinstance(transport, StdioMCPTransport):
+            transport.close()
+    self._transports.clear()</code></pre>
+</details>
+<div class="desc"><p>Terminates all active subprocess transports.</p></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPClient.list_tools"><code class="name flex">
+<span>def <span class="ident">list_tools</span></span>(<span>self, server_name: str) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_tools(self, server_name: str) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Queries available tools exposed by the specified MCP server.&#34;&#34;&#34;
+    if server_name not in self.servers:
+        raise KeyError(f&#34;Unknown MCP server: {server_name}&#34;)
+
+    # If live transport connected, query tools/list
+    transport = self._transports.get(server_name)
+    if transport and hasattr(transport, &#34;send_request&#34;):
+        try:
+            res = transport.send_request(&#34;tools/list&#34;)
+            return res.get(&#34;tools&#34;, [])
+        except Exception as e:
+            logger.warning(f&#34;Live tools/list failed on {server_name}: {e}&#34;)
+
+    # Simulated reference tools if binary not launched or test environment
+    if self.simulated_fallback:
+        return self._get_reference_tools(server_name)
+
+    return []</code></pre>
+</details>
+<div class="desc"><p>Queries available tools exposed by the specified MCP server.</p></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPClient.load_config"><code class="name flex">
+<span>def <span class="ident">load_config</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_config(self) -&gt; None:
+    &#34;&#34;&#34;Loads server declarations from JSON configuration.&#34;&#34;&#34;
+    if not self.config_path.exists():
+        logger.warning(f&#34;MCP config not found at {self.config_path}, using defaults.&#34;)
+        self._load_defaults()
+        return
+
+    try:
+        with open(self.config_path, &#34;r&#34;, encoding=&#34;utf-8&#34;) as f:
+            data = json.load(f)
+        servers_raw = data.get(&#34;mcpServers&#34;, {})
+        for name, cfg in servers_raw.items():
+            self.servers[name] = MCPServerConfig(**cfg)
+        logger.info(f&#34;Loaded {len(self.servers)} MCP server configurations from {self.config_path}&#34;)
+    except Exception as e:
+        logger.error(f&#34;Error parsing MCP config {self.config_path}: {e}&#34;)
+        self._load_defaults()</code></pre>
+</details>
+<div class="desc"><p>Loads server declarations from JSON configuration.</p></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPClient.register_server"><code class="name flex">
+<span>def <span class="ident">register_server</span></span>(<span>self,<br>name: str,<br>config: <a title="jarvis.core.mcp_client.MCPServerConfig" href="#jarvis.core.mcp_client.MCPServerConfig">MCPServerConfig</a>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def register_server(self, name: str, config: MCPServerConfig) -&gt; None:
+    self.servers[name] = config</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPClient.start_server"><code class="name flex">
+<span>def <span class="ident">start_server</span></span>(<span>self, name: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_server(self, name: str) -&gt; bool:
+    &#34;&#34;&#34;Initializes and connects transport for the specified server.&#34;&#34;&#34;
+    if name not in self.servers:
+        raise KeyError(f&#34;Unknown MCP server: {name}&#34;)
+
+    cfg = self.servers[name]
+    if cfg.transport == &#34;sse&#34; and cfg.url:
+        self._transports[name] = SSEMCPTransport(cfg.url)
+        return True
+
+    if cfg.command:
+        transport = StdioMCPTransport(cfg.command, cfg.args, cfg.env)
+        success = transport.start()
+        if success:
+            self._transports[name] = transport
+            return True
+
+    return False</code></pre>
+</details>
+<div class="desc"><p>Initializes and connects transport for the specified server.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPServerConfig"><code class="flex name class">
+<span>class <span class="ident">MCPServerConfig</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MCPServerConfig(BaseModel):
+    command: Optional[str] = None
+    args: List[str] = Field(default_factory=list)
+    env: Dict[str, str] = Field(default_factory=dict)
+    url: Optional[str] = None
+    transport: str = &#34;stdio&#34;  # &#34;stdio&#34; or &#34;sse&#34;
+    description: str = &#34;&#34;</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.mcp_client.MCPServerConfig.args"><code class="name">var <span class="ident">args</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPServerConfig.command"><code class="name">var <span class="ident">command</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPServerConfig.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPServerConfig.env"><code class="name">var <span class="ident">env</span> : Dict[str, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPServerConfig.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPServerConfig.transport"><code class="name">var <span class="ident">transport</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.mcp_client.MCPServerConfig.url"><code class="name">var <span class="ident">url</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.mcp_client.SSEMCPTransport"><code class="flex name class">
+<span>class <span class="ident">SSEMCPTransport</span></span>
+<span>(</span><span>url: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SSEMCPTransport:
+    &#34;&#34;&#34;Manages Streamable HTTP / Server-Sent Events MCP transport.&#34;&#34;&#34;
+
+    def __init__(self, url: str):
+        self.url = url
+
+    def send_request(
+        self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Posts JSON-RPC request to HTTP/SSE endpoint.&#34;&#34;&#34;
+        import urllib.request
+
+        req_id = str(uuid.uuid4())
+        req_body = json.dumps(JSONRPCMessage.build_request(method, params, req_id=req_id)).encode(&#34;utf-8&#34;)
+        http_req = urllib.request.Request(
+            self.url,
+            data=req_body,
+            headers={&#34;Content-Type&#34;: &#34;application/json&#34;, &#34;Accept&#34;: &#34;application/json, text/event-stream&#34;},
+            method=&#34;POST&#34;,
+        )
+        try:
+            with urllib.request.urlopen(http_req, timeout=timeout) as resp:
+                data = json.loads(resp.read().decode(&#34;utf-8&#34;))
+                if &#34;error&#34; in data:
+                    raise RuntimeError(f&#34;MCP SSE Error: {data[&#39;error&#39;].get(&#39;message&#39;)}&#34;)
+                return data.get(&#34;result&#34;, {})
+        except Exception as e:
+            raise RuntimeError(f&#34;SSE transport request failed: {e}&#34;)</code></pre>
+</details>
+<div class="desc"><p>Manages Streamable HTTP / Server-Sent Events MCP transport.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.mcp_client.SSEMCPTransport.send_request"><code class="name flex">
+<span>def <span class="ident">send_request</span></span>(<span>self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_request(
+    self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Posts JSON-RPC request to HTTP/SSE endpoint.&#34;&#34;&#34;
+    import urllib.request
+
+    req_id = str(uuid.uuid4())
+    req_body = json.dumps(JSONRPCMessage.build_request(method, params, req_id=req_id)).encode(&#34;utf-8&#34;)
+    http_req = urllib.request.Request(
+        self.url,
+        data=req_body,
+        headers={&#34;Content-Type&#34;: &#34;application/json&#34;, &#34;Accept&#34;: &#34;application/json, text/event-stream&#34;},
+        method=&#34;POST&#34;,
+    )
+    try:
+        with urllib.request.urlopen(http_req, timeout=timeout) as resp:
+            data = json.loads(resp.read().decode(&#34;utf-8&#34;))
+            if &#34;error&#34; in data:
+                raise RuntimeError(f&#34;MCP SSE Error: {data[&#39;error&#39;].get(&#39;message&#39;)}&#34;)
+            return data.get(&#34;result&#34;, {})
+    except Exception as e:
+        raise RuntimeError(f&#34;SSE transport request failed: {e}&#34;)</code></pre>
+</details>
+<div class="desc"><p>Posts JSON-RPC request to HTTP/SSE endpoint.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.mcp_client.StdioMCPTransport"><code class="flex name class">
+<span>class <span class="ident">StdioMCPTransport</span></span>
+<span>(</span><span>command: str, args: List[str], env: Optional[Dict[str, str]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StdioMCPTransport:
+    &#34;&#34;&#34;Manages stdio JSON-RPC communication with a subprocess MCP server.&#34;&#34;&#34;
+
+    def __init__(self, command: str, args: List[str], env: Optional[Dict[str, str]] = None):
+        self.command = command
+        self.args = args
+        self.env = env or {}
+        self.process: Optional[subprocess.Popen] = None
+        self._lock = threading.Lock()
+        self._pending_requests: Dict[Union[str, int], threading.Event] = {}
+        self._responses: Dict[Union[str, int], Dict[str, Any]] = {}
+        self._reader_thread: Optional[threading.Thread] = None
+        self._running = False
+
+    def start(self) -&gt; bool:
+        &#34;&#34;&#34;Spawns the MCP server subprocess.&#34;&#34;&#34;
+        cmd = [self.command] + self.args
+        full_env = os.environ.copy()
+        full_env.update(self.env)
+
+        try:
+            self.process = subprocess.Popen(
+                cmd,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                bufsize=1,
+                env=full_env,
+            )
+            self._running = True
+            self._reader_thread = threading.Thread(target=self._read_loop, daemon=True)
+            self._reader_thread.start()
+            logger.info(f&#34;Started stdio MCP server process: {&#39; &#39;.join(cmd)}&#34;)
+            return True
+        except Exception as e:
+            logger.warning(f&#34;Failed to start stdio MCP server process {cmd}: {e}&#34;)
+            self._running = False
+            return False
+
+    def _read_loop(self) -&gt; None:
+        &#34;&#34;&#34;Continuously reads newline-delimited JSON-RPC messages from stdout.&#34;&#34;&#34;
+        while self._running and self.process and self.process.stdout:
+            try:
+                line = self.process.stdout.readline()
+                if not line:
+                    break
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    data = json.loads(line)
+                    req_id = data.get(&#34;id&#34;)
+                    if req_id is not None and req_id in self._pending_requests:
+                        self._responses[req_id] = data
+                        self._pending_requests[req_id].set()
+                except json.JSONDecodeError:
+                    continue
+            except Exception:
+                break
+        self._running = False
+        with self._lock:
+            for req_id, ev in self._pending_requests.items():
+                ev.set()
+
+    def send_request(
+        self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Sends a JSON-RPC request and waits for corresponding response.&#34;&#34;&#34;
+        if not self._running or not self.process or not self.process.stdin:
+            raise RuntimeError(&#34;MCP stdio process is not running.&#34;)
+
+        req_id = str(uuid.uuid4())
+        req = JSONRPCMessage.build_request(method, params, req_id=req_id)
+        event = threading.Event()
+
+        with self._lock:
+            self._pending_requests[req_id] = event
+
+        payload = json.dumps(req) + &#34;\n&#34;
+        try:
+            self.process.stdin.write(payload)
+            self.process.stdin.flush()
+        except Exception as e:
+            with self._lock:
+                self._pending_requests.pop(req_id, None)
+            raise RuntimeError(f&#34;Failed to write to MCP stdin: {e}&#34;)
+
+        # Wait for response
+        signaled = event.wait(timeout=timeout)
+        with self._lock:
+            self._pending_requests.pop(req_id, None)
+            resp = self._responses.pop(req_id, None)
+
+        if not signaled or resp is None:
+            raise TimeoutError(f&#34;MCP request &#39;{method}&#39; timed out after {timeout}s.&#34;)
+
+        if &#34;error&#34; in resp:
+            err = resp[&#34;error&#34;]
+            raise RuntimeError(f&#34;MCP JSON-RPC Error: {err.get(&#39;message&#39;, &#39;Unknown error&#39;)} (code: {err.get(&#39;code&#39;)})&#34;)
+
+        return resp.get(&#34;result&#34;, {})
+
+    def close(self) -&gt; None:
+        &#34;&#34;&#34;Terminates process and releases resources.&#34;&#34;&#34;
+        self._running = False
+        if self.process:
+            try:
+                self.process.terminate()
+                self.process.wait(timeout=2.0)
+            except Exception:
+                try:
+                    self.process.kill()
+                except Exception:
+                    pass
+            self.process = None</code></pre>
+</details>
+<div class="desc"><p>Manages stdio JSON-RPC communication with a subprocess MCP server.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.mcp_client.StdioMCPTransport.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close(self) -&gt; None:
+    &#34;&#34;&#34;Terminates process and releases resources.&#34;&#34;&#34;
+    self._running = False
+    if self.process:
+        try:
+            self.process.terminate()
+            self.process.wait(timeout=2.0)
+        except Exception:
+            try:
+                self.process.kill()
+            except Exception:
+                pass
+        self.process = None</code></pre>
+</details>
+<div class="desc"><p>Terminates process and releases resources.</p></div>
+</dd>
+<dt id="jarvis.core.mcp_client.StdioMCPTransport.send_request"><code class="name flex">
+<span>def <span class="ident">send_request</span></span>(<span>self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_request(
+    self, method: str, params: Optional[Dict[str, Any]] = None, timeout: float = 10.0
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Sends a JSON-RPC request and waits for corresponding response.&#34;&#34;&#34;
+    if not self._running or not self.process or not self.process.stdin:
+        raise RuntimeError(&#34;MCP stdio process is not running.&#34;)
+
+    req_id = str(uuid.uuid4())
+    req = JSONRPCMessage.build_request(method, params, req_id=req_id)
+    event = threading.Event()
+
+    with self._lock:
+        self._pending_requests[req_id] = event
+
+    payload = json.dumps(req) + &#34;\n&#34;
+    try:
+        self.process.stdin.write(payload)
+        self.process.stdin.flush()
+    except Exception as e:
+        with self._lock:
+            self._pending_requests.pop(req_id, None)
+        raise RuntimeError(f&#34;Failed to write to MCP stdin: {e}&#34;)
+
+    # Wait for response
+    signaled = event.wait(timeout=timeout)
+    with self._lock:
+        self._pending_requests.pop(req_id, None)
+        resp = self._responses.pop(req_id, None)
+
+    if not signaled or resp is None:
+        raise TimeoutError(f&#34;MCP request &#39;{method}&#39; timed out after {timeout}s.&#34;)
+
+    if &#34;error&#34; in resp:
+        err = resp[&#34;error&#34;]
+        raise RuntimeError(f&#34;MCP JSON-RPC Error: {err.get(&#39;message&#39;, &#39;Unknown error&#39;)} (code: {err.get(&#39;code&#39;)})&#34;)
+
+    return resp.get(&#34;result&#34;, {})</code></pre>
+</details>
+<div class="desc"><p>Sends a JSON-RPC request and waits for corresponding response.</p></div>
+</dd>
+<dt id="jarvis.core.mcp_client.StdioMCPTransport.start"><code class="name flex">
+<span>def <span class="ident">start</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start(self) -&gt; bool:
+    &#34;&#34;&#34;Spawns the MCP server subprocess.&#34;&#34;&#34;
+    cmd = [self.command] + self.args
+    full_env = os.environ.copy()
+    full_env.update(self.env)
+
+    try:
+        self.process = subprocess.Popen(
+            cmd,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            bufsize=1,
+            env=full_env,
+        )
+        self._running = True
+        self._reader_thread = threading.Thread(target=self._read_loop, daemon=True)
+        self._reader_thread.start()
+        logger.info(f&#34;Started stdio MCP server process: {&#39; &#39;.join(cmd)}&#34;)
+        return True
+    except Exception as e:
+        logger.warning(f&#34;Failed to start stdio MCP server process {cmd}: {e}&#34;)
+        self._running = False
+        return False</code></pre>
+</details>
+<div class="desc"><p>Spawns the MCP server subprocess.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.mcp_client.JSONRPCMessage" href="#jarvis.core.mcp_client.JSONRPCMessage">JSONRPCMessage</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.mcp_client.JSONRPCMessage.build_request" href="#jarvis.core.mcp_client.JSONRPCMessage.build_request">build_request</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.JSONRPCMessage.build_response" href="#jarvis.core.mcp_client.JSONRPCMessage.build_response">build_response</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.mcp_client.MCPClient" href="#jarvis.core.mcp_client.MCPClient">MCPClient</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.mcp_client.MCPClient.call_tool" href="#jarvis.core.mcp_client.MCPClient.call_tool">call_tool</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPClient.close_all" href="#jarvis.core.mcp_client.MCPClient.close_all">close_all</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPClient.list_tools" href="#jarvis.core.mcp_client.MCPClient.list_tools">list_tools</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPClient.load_config" href="#jarvis.core.mcp_client.MCPClient.load_config">load_config</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPClient.register_server" href="#jarvis.core.mcp_client.MCPClient.register_server">register_server</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPClient.start_server" href="#jarvis.core.mcp_client.MCPClient.start_server">start_server</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.mcp_client.MCPServerConfig" href="#jarvis.core.mcp_client.MCPServerConfig">MCPServerConfig</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.mcp_client.MCPServerConfig.args" href="#jarvis.core.mcp_client.MCPServerConfig.args">args</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPServerConfig.command" href="#jarvis.core.mcp_client.MCPServerConfig.command">command</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPServerConfig.description" href="#jarvis.core.mcp_client.MCPServerConfig.description">description</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPServerConfig.env" href="#jarvis.core.mcp_client.MCPServerConfig.env">env</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPServerConfig.model_config" href="#jarvis.core.mcp_client.MCPServerConfig.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPServerConfig.transport" href="#jarvis.core.mcp_client.MCPServerConfig.transport">transport</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.MCPServerConfig.url" href="#jarvis.core.mcp_client.MCPServerConfig.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.mcp_client.SSEMCPTransport" href="#jarvis.core.mcp_client.SSEMCPTransport">SSEMCPTransport</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.mcp_client.SSEMCPTransport.send_request" href="#jarvis.core.mcp_client.SSEMCPTransport.send_request">send_request</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.mcp_client.StdioMCPTransport" href="#jarvis.core.mcp_client.StdioMCPTransport">StdioMCPTransport</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.mcp_client.StdioMCPTransport.close" href="#jarvis.core.mcp_client.StdioMCPTransport.close">close</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.StdioMCPTransport.send_request" href="#jarvis.core.mcp_client.StdioMCPTransport.send_request">send_request</a></code></li>
+<li><code><a title="jarvis.core.mcp_client.StdioMCPTransport.start" href="#jarvis.core.mcp_client.StdioMCPTransport.start">start</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

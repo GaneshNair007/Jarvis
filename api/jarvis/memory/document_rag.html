@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.memory.document_rag API documentation</title>
+<meta name="description" content="JARVIS Document Intelligence &amp; Local RAG System
+Implements local-first document parsing (PDF, Markdown, TXT),
+semantic chunking, vector indexing …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.memory.document_rag</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Document Intelligence &amp; Local RAG System
+Implements local-first document parsing (PDF, Markdown, TXT),
+semantic chunking, vector indexing (TF-IDF / cosine similarity),
+and exact-citation retrieval (Document name, page number, chunk ID, SHA-256).</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.memory.document_rag.DocumentRAG"><code class="flex name class">
+<span>class <span class="ident">DocumentRAG</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DocumentRAG:
+    &#34;&#34;&#34;Manages document ingestion, chunking, indexing, and verifiable citation retrieval.&#34;&#34;&#34;
+
+    def __init__(self):
+        self.store = db_store
+
+    def _compute_sha256(self, content_bytes: bytes) -&gt; str:
+        &#34;&#34;&#34;Computes SHA-256 checksum for byte content.&#34;&#34;&#34;
+        return hashlib.sha256(content_bytes).hexdigest()
+
+    def _chunk_text(self, text: str, chunk_size: int = 500, overlap: int = 50) -&gt; List[str]:
+        &#34;&#34;&#34;Splits long text into overlapping sliding chunks.&#34;&#34;&#34;
+        text = text.strip()
+        if not text:
+            return []
+        if len(text) &lt;= chunk_size:
+            return [text]
+
+        chunks = []
+        start = 0
+        while start &lt; len(text):
+            end = min(start + chunk_size, len(text))
+            chunk = text[start:end].strip()
+            if chunk:
+                chunks.append(chunk)
+            if end &gt;= len(text):
+                break
+            start += chunk_size - overlap
+        return chunks
+
+    def ingest_file(self, file_path: Union[str, Path], metadata: Optional[Dict[str, Any]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Ingests a local file (PDF, TXT, MD, etc.), extracts pages and chunks,
+        and saves them into the database with exact page references.
+        &#34;&#34;&#34;
+        path = Path(file_path).resolve()
+        if not path.exists():
+            raise FileNotFoundError(f&#34;Document file not found at: {path}&#34;)
+
+        file_bytes = path.read_bytes()
+        sha256 = self._compute_sha256(file_bytes)
+        file_size = len(file_bytes)
+        file_type = path.suffix.lower().lstrip(&#34;.&#34;) or &#34;txt&#34;
+        file_name = path.name
+
+        # Check if already ingested (idempotency check)
+        existing = self.store.get_document_by_hash(sha256)
+        if existing:
+            logger.info(&#34;Document already ingested (hash: %s): %s&#34;, sha256[:8], file_name)
+            return existing
+
+        doc_id = f&#34;doc_{uuid.uuid4().hex[:12]}&#34;
+        chunks: List[Dict[str, Any]] = []
+        total_pages = 1
+
+        if file_type == &#34;pdf&#34; and HAS_PYMUPDF:
+            doc = fitz.open(stream=file_bytes, filetype=&#34;pdf&#34;)
+            total_pages = len(doc)
+            chunk_global_idx = 0
+            for page_idx in range(total_pages):
+                page = doc[page_idx]
+                page_num = page_idx + 1
+                page_text = page.get_text(&#34;text&#34;) or &#34;&#34;
+                page_chunks = self._chunk_text(page_text)
+                for c_idx, chunk_content in enumerate(page_chunks):
+                    chunk_id = f&#34;{doc_id}_p{page_num}_{c_idx}&#34;
+                    chunks.append(
+                        {
+                            &#34;id&#34;: chunk_id,
+                            &#34;doc_id&#34;: doc_id,
+                            &#34;page_number&#34;: page_num,
+                            &#34;chunk_index&#34;: chunk_global_idx,
+                            &#34;content&#34;: chunk_content,
+                            &#34;metadata&#34;: {&#34;page&#34;: page_num, &#34;sub_chunk&#34;: c_idx},
+                        }
+                    )
+                    chunk_global_idx += 1
+            doc.close()
+        else:
+            # Plain text / Markdown / other textual formats
+            try:
+                text = file_bytes.decode(&#34;utf-8&#34;)
+            except UnicodeDecodeError:
+                text = file_bytes.decode(&#34;latin-1&#34;, errors=&#34;replace&#34;)
+
+            text_chunks = self._chunk_text(text)
+            for c_idx, chunk_content in enumerate(text_chunks):
+                chunk_id = f&#34;{doc_id}_p1_{c_idx}&#34;
+                chunks.append(
+                    {
+                        &#34;id&#34;: chunk_id,
+                        &#34;doc_id&#34;: doc_id,
+                        &#34;page_number&#34;: 1,
+                        &#34;chunk_index&#34;: c_idx,
+                        &#34;content&#34;: chunk_content,
+                        &#34;metadata&#34;: {&#34;chunk_idx&#34;: c_idx},
+                    }
+                )
+
+        # Save document record
+        self.store.save_document(
+            doc_id=doc_id,
+            file_path=str(path),
+            file_name=file_name,
+            file_type=file_type,
+            sha256=sha256,
+            total_pages=total_pages,
+            total_chunks=len(chunks),
+            file_size=file_size,
+            metadata=metadata or {},
+        )
+
+        # Save chunks
+        if chunks:
+            self.store.save_chunks(chunks)
+
+        audit_ledger.record(
+            actor=&#34;DocumentRAG&#34;,
+            action=&#34;DOCUMENT_INGEST&#34;,
+            target=str(path),
+            payload={&#34;doc_id&#34;: doc_id, &#34;file_name&#34;: file_name, &#34;pages&#34;: total_pages, &#34;chunks&#34;: len(chunks)},
+            result=&#34;INGESTED&#34;,
+        )
+
+        logger.info(&#34;Ingested document %s (%s): %d pages, %d chunks&#34;, file_name, doc_id, total_pages, len(chunks))
+
+        return {
+            &#34;id&#34;: doc_id,
+            &#34;file_name&#34;: file_name,
+            &#34;file_path&#34;: str(path),
+            &#34;file_type&#34;: file_type,
+            &#34;sha256&#34;: sha256,
+            &#34;total_pages&#34;: total_pages,
+            &#34;total_chunks&#34;: len(chunks),
+            &#34;file_size&#34;: file_size,
+        }
+
+    def ingest_text(self, content: str, title: str, metadata: Optional[Dict[str, Any]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Ingests arbitrary raw text as a virtual document.&#34;&#34;&#34;
+        content_bytes = content.encode(&#34;utf-8&#34;)
+        sha256 = self._compute_sha256(content_bytes)
+
+        existing = self.store.get_document_by_hash(sha256)
+        if existing:
+            return existing
+
+        doc_id = f&#34;doc_{uuid.uuid4().hex[:12]}&#34;
+        text_chunks = self._chunk_text(content)
+        chunks = []
+        for c_idx, chunk_content in enumerate(text_chunks):
+            chunk_id = f&#34;{doc_id}_p1_{c_idx}&#34;
+            chunks.append(
+                {
+                    &#34;id&#34;: chunk_id,
+                    &#34;doc_id&#34;: doc_id,
+                    &#34;page_number&#34;: 1,
+                    &#34;chunk_index&#34;: c_idx,
+                    &#34;content&#34;: chunk_content,
+                    &#34;metadata&#34;: {&#34;chunk_idx&#34;: c_idx},
+                }
+            )
+
+        self.store.save_document(
+            doc_id=doc_id,
+            file_path=f&#34;virtual://{title}&#34;,
+            file_name=title,
+            file_type=&#34;text&#34;,
+            sha256=sha256,
+            total_pages=1,
+            total_chunks=len(chunks),
+            file_size=len(content_bytes),
+            metadata=metadata or {},
+        )
+
+        if chunks:
+            self.store.save_chunks(chunks)
+
+        return {
+            &#34;id&#34;: doc_id,
+            &#34;file_name&#34;: title,
+            &#34;file_path&#34;: f&#34;virtual://{title}&#34;,
+            &#34;file_type&#34;: &#34;text&#34;,
+            &#34;sha256&#34;: sha256,
+            &#34;total_pages&#34;: 1,
+            &#34;total_chunks&#34;: len(chunks),
+            &#34;file_size&#34;: len(content_bytes),
+        }
+
+    def query_documents(self, query: str, top_k: int = 5, doc_id: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Executes semantic RAG query across document chunks, returning ranked excerpts
+        with exact file path, page number, chunk ID, and SHA-256 provenance.
+        &#34;&#34;&#34;
+        query_clean = query.strip()
+        if not query_clean:
+            return {&#34;query&#34;: query, &#34;citations&#34;: [], &#34;answer&#34;: &#34;Empty query provided.&#34;, &#34;total_chunks_searched&#34;: 0}
+
+        # Retrieve chunks to search
+        if doc_id:
+            chunks = self.store.get_chunks_for_doc(doc_id)
+            doc_info = self.store.get_document(doc_id)
+            file_path = doc_info[&#34;file_path&#34;] if doc_info else &#34;unknown&#34;
+            file_name = doc_info[&#34;file_name&#34;] if doc_info else &#34;unknown&#34;
+            sha256 = doc_info[&#34;sha256&#34;] if doc_info else &#34;&#34;
+            for c in chunks:
+                c[&#34;file_path&#34;] = file_path
+                c[&#34;file_name&#34;] = file_name
+                c[&#34;sha256&#34;] = sha256
+        else:
+            chunks = self.store.get_all_chunks(limit=2000)
+
+        if not chunks:
+            return {
+                &#34;query&#34;: query,
+                &#34;citations&#34;: [],
+                &#34;answer&#34;: &#34;No indexed documents found in the memory vault.&#34;,
+                &#34;total_chunks_searched&#34;: 0,
+            }
+
+        corpus = [c[&#34;content&#34;] for c in chunks]
+
+        # Use TF-IDF vectorizer for semantic lexical matching
+        try:
+            vectorizer = TfidfVectorizer(stop_words=&#34;english&#34;, ngram_range=(1, 2))
+            tfidf_matrix = vectorizer.fit_transform(corpus)
+            query_vec = vectorizer.transform([query_clean])
+            sim_scores = cosine_similarity(query_vec, tfidf_matrix).flatten()
+        except Exception as e:
+            logger.warning(&#34;Vectorization fallback due to: %s&#34;, e)
+            # Fallback substring scoring
+            sim_scores = np.array([1.0 if query_clean.lower() in c.lower() else 0.0 for c in corpus])
+
+        # Rank indices by highest similarity
+        ranked_indices = np.argsort(sim_scores)[::-1]
+        top_indices = [idx for idx in ranked_indices if sim_scores[idx] &gt; 0.0][:top_k]
+
+        citations: List[Dict[str, Any]] = []
+        synthesized_excerpts: List[str] = []
+
+        for idx in top_indices:
+            ch = chunks[idx]
+            score = float(sim_scores[idx])
+            citation = {
+                &#34;chunk_id&#34;: ch[&#34;id&#34;],
+                &#34;doc_id&#34;: ch[&#34;doc_id&#34;],
+                &#34;file_name&#34;: ch.get(&#34;file_name&#34;, &#34;unknown&#34;),
+                &#34;file_path&#34;: ch.get(&#34;file_path&#34;, &#34;unknown&#34;),
+                &#34;page_number&#34;: ch.get(&#34;page_number&#34;, 1),
+                &#34;score&#34;: round(score, 4),
+                &#34;sha256&#34;: ch.get(&#34;sha256&#34;, &#34;&#34;),
+                &#34;excerpt&#34;: ch[&#34;content&#34;],
+            }
+            citations.append(citation)
+            synthesized_excerpts.append(
+                f&#39;[Doc: {citation[&#34;file_name&#34;]}, Page: {citation[&#34;page_number&#34;]}, Score: {citation[&#34;score&#34;]}]\n&#34;{citation[&#34;excerpt&#34;]}&#34;&#39;
+            )
+
+        if citations:
+            answer = f&#34;Found {len(citations)} relevant citations matching query &#39;{query}&#39;:\n\n&#34; + &#34;\n\n&#34;.join(
+                synthesized_excerpts
+            )
+        else:
+            answer = f&#34;No matching passages found for &#39;{query}&#39; in the {len(chunks)} indexed document chunks.&#34;
+
+        audit_ledger.record(
+            actor=&#34;DocumentRAG&#34;,
+            action=&#34;DOCUMENT_QUERY&#34;,
+            target=doc_id or &#34;ALL_DOCS&#34;,
+            payload={&#34;query&#34;: query, &#34;top_k&#34;: top_k, &#34;retrieved_citations&#34;: len(citations)},
+            result=&#34;SUCCESS&#34;,
+        )
+
+        return {&#34;query&#34;: query, &#34;citations&#34;: citations, &#34;answer&#34;: answer, &#34;total_chunks_searched&#34;: len(chunks)}
+
+    def delete_document(self, doc_id: str) -&gt; bool:
+        &#34;&#34;&#34;Deletes a document and its cascading chunks from the vault.&#34;&#34;&#34;
+        return self.store.delete_document(doc_id)
+
+    def list_documents(self, limit: int = 50) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Lists all ingested documents.&#34;&#34;&#34;
+        return self.store.list_documents(limit=limit)</code></pre>
+</details>
+<div class="desc"><p>Manages document ingestion, chunking, indexing, and verifiable citation retrieval.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.memory.document_rag.DocumentRAG.delete_document"><code class="name flex">
+<span>def <span class="ident">delete_document</span></span>(<span>self, doc_id: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_document(self, doc_id: str) -&gt; bool:
+    &#34;&#34;&#34;Deletes a document and its cascading chunks from the vault.&#34;&#34;&#34;
+    return self.store.delete_document(doc_id)</code></pre>
+</details>
+<div class="desc"><p>Deletes a document and its cascading chunks from the vault.</p></div>
+</dd>
+<dt id="jarvis.memory.document_rag.DocumentRAG.ingest_file"><code class="name flex">
+<span>def <span class="ident">ingest_file</span></span>(<span>self, file_path: str | pathlib.Path, metadata: Dict[str, Any] | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ingest_file(self, file_path: Union[str, Path], metadata: Optional[Dict[str, Any]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Ingests a local file (PDF, TXT, MD, etc.), extracts pages and chunks,
+    and saves them into the database with exact page references.
+    &#34;&#34;&#34;
+    path = Path(file_path).resolve()
+    if not path.exists():
+        raise FileNotFoundError(f&#34;Document file not found at: {path}&#34;)
+
+    file_bytes = path.read_bytes()
+    sha256 = self._compute_sha256(file_bytes)
+    file_size = len(file_bytes)
+    file_type = path.suffix.lower().lstrip(&#34;.&#34;) or &#34;txt&#34;
+    file_name = path.name
+
+    # Check if already ingested (idempotency check)
+    existing = self.store.get_document_by_hash(sha256)
+    if existing:
+        logger.info(&#34;Document already ingested (hash: %s): %s&#34;, sha256[:8], file_name)
+        return existing
+
+    doc_id = f&#34;doc_{uuid.uuid4().hex[:12]}&#34;
+    chunks: List[Dict[str, Any]] = []
+    total_pages = 1
+
+    if file_type == &#34;pdf&#34; and HAS_PYMUPDF:
+        doc = fitz.open(stream=file_bytes, filetype=&#34;pdf&#34;)
+        total_pages = len(doc)
+        chunk_global_idx = 0
+        for page_idx in range(total_pages):
+            page = doc[page_idx]
+            page_num = page_idx + 1
+            page_text = page.get_text(&#34;text&#34;) or &#34;&#34;
+            page_chunks = self._chunk_text(page_text)
+            for c_idx, chunk_content in enumerate(page_chunks):
+                chunk_id = f&#34;{doc_id}_p{page_num}_{c_idx}&#34;
+                chunks.append(
+                    {
+                        &#34;id&#34;: chunk_id,
+                        &#34;doc_id&#34;: doc_id,
+                        &#34;page_number&#34;: page_num,
+                        &#34;chunk_index&#34;: chunk_global_idx,
+                        &#34;content&#34;: chunk_content,
+                        &#34;metadata&#34;: {&#34;page&#34;: page_num, &#34;sub_chunk&#34;: c_idx},
+                    }
+                )
+                chunk_global_idx += 1
+        doc.close()
+    else:
+        # Plain text / Markdown / other textual formats
+        try:
+            text = file_bytes.decode(&#34;utf-8&#34;)
+        except UnicodeDecodeError:
+            text = file_bytes.decode(&#34;latin-1&#34;, errors=&#34;replace&#34;)
+
+        text_chunks = self._chunk_text(text)
+        for c_idx, chunk_content in enumerate(text_chunks):
+            chunk_id = f&#34;{doc_id}_p1_{c_idx}&#34;
+            chunks.append(
+                {
+                    &#34;id&#34;: chunk_id,
+                    &#34;doc_id&#34;: doc_id,
+                    &#34;page_number&#34;: 1,
+                    &#34;chunk_index&#34;: c_idx,
+                    &#34;content&#34;: chunk_content,
+                    &#34;metadata&#34;: {&#34;chunk_idx&#34;: c_idx},
+                }
+            )
+
+    # Save document record
+    self.store.save_document(
+        doc_id=doc_id,
+        file_path=str(path),
+        file_name=file_name,
+        file_type=file_type,
+        sha256=sha256,
+        total_pages=total_pages,
+        total_chunks=len(chunks),
+        file_size=file_size,
+        metadata=metadata or {},
+    )
+
+    # Save chunks
+    if chunks:
+        self.store.save_chunks(chunks)
+
+    audit_ledger.record(
+        actor=&#34;DocumentRAG&#34;,
+        action=&#34;DOCUMENT_INGEST&#34;,
+        target=str(path),
+        payload={&#34;doc_id&#34;: doc_id, &#34;file_name&#34;: file_name, &#34;pages&#34;: total_pages, &#34;chunks&#34;: len(chunks)},
+        result=&#34;INGESTED&#34;,
+    )
+
+    logger.info(&#34;Ingested document %s (%s): %d pages, %d chunks&#34;, file_name, doc_id, total_pages, len(chunks))
+
+    return {
+        &#34;id&#34;: doc_id,
+        &#34;file_name&#34;: file_name,
+        &#34;file_path&#34;: str(path),
+        &#34;file_type&#34;: file_type,
+        &#34;sha256&#34;: sha256,
+        &#34;total_pages&#34;: total_pages,
+        &#34;total_chunks&#34;: len(chunks),
+        &#34;file_size&#34;: file_size,
+    }</code></pre>
+</details>
+<div class="desc"><p>Ingests a local file (PDF, TXT, MD, etc.), extracts pages and chunks,
+and saves them into the database with exact page references.</p></div>
+</dd>
+<dt id="jarvis.memory.document_rag.DocumentRAG.ingest_text"><code class="name flex">
+<span>def <span class="ident">ingest_text</span></span>(<span>self, content: str, title: str, metadata: Dict[str, Any] | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ingest_text(self, content: str, title: str, metadata: Optional[Dict[str, Any]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Ingests arbitrary raw text as a virtual document.&#34;&#34;&#34;
+    content_bytes = content.encode(&#34;utf-8&#34;)
+    sha256 = self._compute_sha256(content_bytes)
+
+    existing = self.store.get_document_by_hash(sha256)
+    if existing:
+        return existing
+
+    doc_id = f&#34;doc_{uuid.uuid4().hex[:12]}&#34;
+    text_chunks = self._chunk_text(content)
+    chunks = []
+    for c_idx, chunk_content in enumerate(text_chunks):
+        chunk_id = f&#34;{doc_id}_p1_{c_idx}&#34;
+        chunks.append(
+            {
+                &#34;id&#34;: chunk_id,
+                &#34;doc_id&#34;: doc_id,
+                &#34;page_number&#34;: 1,
+                &#34;chunk_index&#34;: c_idx,
+                &#34;content&#34;: chunk_content,
+                &#34;metadata&#34;: {&#34;chunk_idx&#34;: c_idx},
+            }
+        )
+
+    self.store.save_document(
+        doc_id=doc_id,
+        file_path=f&#34;virtual://{title}&#34;,
+        file_name=title,
+        file_type=&#34;text&#34;,
+        sha256=sha256,
+        total_pages=1,
+        total_chunks=len(chunks),
+        file_size=len(content_bytes),
+        metadata=metadata or {},
+    )
+
+    if chunks:
+        self.store.save_chunks(chunks)
+
+    return {
+        &#34;id&#34;: doc_id,
+        &#34;file_name&#34;: title,
+        &#34;file_path&#34;: f&#34;virtual://{title}&#34;,
+        &#34;file_type&#34;: &#34;text&#34;,
+        &#34;sha256&#34;: sha256,
+        &#34;total_pages&#34;: 1,
+        &#34;total_chunks&#34;: len(chunks),
+        &#34;file_size&#34;: len(content_bytes),
+    }</code></pre>
+</details>
+<div class="desc"><p>Ingests arbitrary raw text as a virtual document.</p></div>
+</dd>
+<dt id="jarvis.memory.document_rag.DocumentRAG.list_documents"><code class="name flex">
+<span>def <span class="ident">list_documents</span></span>(<span>self, limit: int = 50) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_documents(self, limit: int = 50) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Lists all ingested documents.&#34;&#34;&#34;
+    return self.store.list_documents(limit=limit)</code></pre>
+</details>
+<div class="desc"><p>Lists all ingested documents.</p></div>
+</dd>
+<dt id="jarvis.memory.document_rag.DocumentRAG.query_documents"><code class="name flex">
+<span>def <span class="ident">query_documents</span></span>(<span>self, query: str, top_k: int = 5, doc_id: str | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def query_documents(self, query: str, top_k: int = 5, doc_id: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Executes semantic RAG query across document chunks, returning ranked excerpts
+    with exact file path, page number, chunk ID, and SHA-256 provenance.
+    &#34;&#34;&#34;
+    query_clean = query.strip()
+    if not query_clean:
+        return {&#34;query&#34;: query, &#34;citations&#34;: [], &#34;answer&#34;: &#34;Empty query provided.&#34;, &#34;total_chunks_searched&#34;: 0}
+
+    # Retrieve chunks to search
+    if doc_id:
+        chunks = self.store.get_chunks_for_doc(doc_id)
+        doc_info = self.store.get_document(doc_id)
+        file_path = doc_info[&#34;file_path&#34;] if doc_info else &#34;unknown&#34;
+        file_name = doc_info[&#34;file_name&#34;] if doc_info else &#34;unknown&#34;
+        sha256 = doc_info[&#34;sha256&#34;] if doc_info else &#34;&#34;
+        for c in chunks:
+            c[&#34;file_path&#34;] = file_path
+            c[&#34;file_name&#34;] = file_name
+            c[&#34;sha256&#34;] = sha256
+    else:
+        chunks = self.store.get_all_chunks(limit=2000)
+
+    if not chunks:
+        return {
+            &#34;query&#34;: query,
+            &#34;citations&#34;: [],
+            &#34;answer&#34;: &#34;No indexed documents found in the memory vault.&#34;,
+            &#34;total_chunks_searched&#34;: 0,
+        }
+
+    corpus = [c[&#34;content&#34;] for c in chunks]
+
+    # Use TF-IDF vectorizer for semantic lexical matching
+    try:
+        vectorizer = TfidfVectorizer(stop_words=&#34;english&#34;, ngram_range=(1, 2))
+        tfidf_matrix = vectorizer.fit_transform(corpus)
+        query_vec = vectorizer.transform([query_clean])
+        sim_scores = cosine_similarity(query_vec, tfidf_matrix).flatten()
+    except Exception as e:
+        logger.warning(&#34;Vectorization fallback due to: %s&#34;, e)
+        # Fallback substring scoring
+        sim_scores = np.array([1.0 if query_clean.lower() in c.lower() else 0.0 for c in corpus])
+
+    # Rank indices by highest similarity
+    ranked_indices = np.argsort(sim_scores)[::-1]
+    top_indices = [idx for idx in ranked_indices if sim_scores[idx] &gt; 0.0][:top_k]
+
+    citations: List[Dict[str, Any]] = []
+    synthesized_excerpts: List[str] = []
+
+    for idx in top_indices:
+        ch = chunks[idx]
+        score = float(sim_scores[idx])
+        citation = {
+            &#34;chunk_id&#34;: ch[&#34;id&#34;],
+            &#34;doc_id&#34;: ch[&#34;doc_id&#34;],
+            &#34;file_name&#34;: ch.get(&#34;file_name&#34;, &#34;unknown&#34;),
+            &#34;file_path&#34;: ch.get(&#34;file_path&#34;, &#34;unknown&#34;),
+            &#34;page_number&#34;: ch.get(&#34;page_number&#34;, 1),
+            &#34;score&#34;: round(score, 4),
+            &#34;sha256&#34;: ch.get(&#34;sha256&#34;, &#34;&#34;),
+            &#34;excerpt&#34;: ch[&#34;content&#34;],
+        }
+        citations.append(citation)
+        synthesized_excerpts.append(
+            f&#39;[Doc: {citation[&#34;file_name&#34;]}, Page: {citation[&#34;page_number&#34;]}, Score: {citation[&#34;score&#34;]}]\n&#34;{citation[&#34;excerpt&#34;]}&#34;&#39;
+        )
+
+    if citations:
+        answer = f&#34;Found {len(citations)} relevant citations matching query &#39;{query}&#39;:\n\n&#34; + &#34;\n\n&#34;.join(
+            synthesized_excerpts
+        )
+    else:
+        answer = f&#34;No matching passages found for &#39;{query}&#39; in the {len(chunks)} indexed document chunks.&#34;
+
+    audit_ledger.record(
+        actor=&#34;DocumentRAG&#34;,
+        action=&#34;DOCUMENT_QUERY&#34;,
+        target=doc_id or &#34;ALL_DOCS&#34;,
+        payload={&#34;query&#34;: query, &#34;top_k&#34;: top_k, &#34;retrieved_citations&#34;: len(citations)},
+        result=&#34;SUCCESS&#34;,
+    )
+
+    return {&#34;query&#34;: query, &#34;citations&#34;: citations, &#34;answer&#34;: answer, &#34;total_chunks_searched&#34;: len(chunks)}</code></pre>
+</details>
+<div class="desc"><p>Executes semantic RAG query across document chunks, returning ranked excerpts
+with exact file path, page number, chunk ID, and SHA-256 provenance.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.memory" href="index.html">jarvis.memory</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.memory.document_rag.DocumentRAG" href="#jarvis.memory.document_rag.DocumentRAG">DocumentRAG</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.memory.document_rag.DocumentRAG.delete_document" href="#jarvis.memory.document_rag.DocumentRAG.delete_document">delete_document</a></code></li>
+<li><code><a title="jarvis.memory.document_rag.DocumentRAG.ingest_file" href="#jarvis.memory.document_rag.DocumentRAG.ingest_file">ingest_file</a></code></li>
+<li><code><a title="jarvis.memory.document_rag.DocumentRAG.ingest_text" href="#jarvis.memory.document_rag.DocumentRAG.ingest_text">ingest_text</a></code></li>
+<li><code><a title="jarvis.memory.document_rag.DocumentRAG.list_documents" href="#jarvis.memory.document_rag.DocumentRAG.list_documents">list_documents</a></code></li>
+<li><code><a title="jarvis.memory.document_rag.DocumentRAG.query_documents" href="#jarvis.memory.document_rag.DocumentRAG.query_documents">query_documents</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

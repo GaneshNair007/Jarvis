@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.api.routes_memory API documentation</title>
+<meta name="description" content="JARVIS Memory Vault &amp; Document Intelligence REST API Routes
+Implements Part 7 Memory Vault endpoints:
+POST /memory/add
+POST /memory/search
+POST …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.api.routes_memory</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Memory Vault &amp; Document Intelligence REST API Routes
+Implements Part 7 Memory Vault endpoints:
+POST /memory/add
+POST /memory/search
+POST /memory/delete
+POST /memory/correction
+POST /documents/ingest
+POST /documents/query
+GET /memory
+GET /memory/storage</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.api.routes_memory.add_memory"><code class="name flex">
+<span>def <span class="ident">add_memory</span></span>(<span>req: <a title="jarvis.api.routes_memory.MemoryAddRequest" href="#jarvis.api.routes_memory.MemoryAddRequest">MemoryAddRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/memory/add&#34;)
+def add_memory(req: MemoryAddRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Stores an explicit fact or inferred hypothesis in the private memory vault.&#34;&#34;&#34;
+    try:
+        node_id = memory_manager.store_memory(
+            layer=req.layer,
+            content=req.content,
+            metadata=req.metadata,
+            is_hypothesis=req.is_hypothesis,
+            confidence=req.confidence,
+            evidence_count=req.evidence_count,
+        )
+        return {
+            &#34;status&#34;: &#34;STORED&#34;,
+            &#34;node_id&#34;: node_id,
+            &#34;layer&#34;: req.layer.upper(),
+            &#34;is_hypothesis&#34;: req.is_hypothesis,
+            &#34;confidence&#34;: req.confidence,
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>Stores an explicit fact or inferred hypothesis in the private memory vault.</p></div>
+</dd>
+<dt id="jarvis.api.routes_memory.delete_memory"><code class="name flex">
+<span>def <span class="ident">delete_memory</span></span>(<span>req: <a title="jarvis.api.routes_memory.MemoryDeleteRequest" href="#jarvis.api.routes_memory.MemoryDeleteRequest">MemoryDeleteRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/memory/delete&#34;)
+def delete_memory(req: MemoryDeleteRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Deletes a memory node by ID.&#34;&#34;&#34;
+    deleted = memory_manager.delete_memory(req.node_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail=f&#34;Memory node &#39;{req.node_id}&#39; not found.&#34;)
+    return {&#34;status&#34;: &#34;DELETED&#34;, &#34;node_id&#34;: req.node_id}</code></pre>
+</details>
+<div class="desc"><p>Deletes a memory node by ID.</p></div>
+</dd>
+<dt id="jarvis.api.routes_memory.get_memory_storage"><code class="name flex">
+<span>def <span class="ident">get_memory_storage</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/memory/storage&#34;)
+def get_memory_storage() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Returns database size, layer breakdowns, and vault storage telemetry.&#34;&#34;&#34;
+    return memory_manager.get_storage_stats()</code></pre>
+</details>
+<div class="desc"><p>Returns database size, layer breakdowns, and vault storage telemetry.</p></div>
+</dd>
+<dt id="jarvis.api.routes_memory.ingest_document"><code class="name flex">
+<span>def <span class="ident">ingest_document</span></span>(<span>req: <a title="jarvis.api.routes_memory.DocumentIngestRequest" href="#jarvis.api.routes_memory.DocumentIngestRequest">DocumentIngestRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/documents/ingest&#34;)
+def ingest_document(req: DocumentIngestRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Ingests a file or raw text into the document intelligence RAG system.&#34;&#34;&#34;
+    if req.file_path:
+        try:
+            return document_rag.ingest_file(req.file_path, metadata=req.metadata)
+        except FileNotFoundError as e:
+            raise HTTPException(status_code=404, detail=str(e))
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f&#34;Ingestion failed: {e}&#34;)
+    elif req.content and req.title:
+        return document_rag.ingest_text(req.content, title=req.title, metadata=req.metadata)
+    else:
+        raise HTTPException(status_code=400, detail=&#34;Must provide either &#39;file_path&#39; or both &#39;content&#39; and &#39;title&#39;.&#34;)</code></pre>
+</details>
+<div class="desc"><p>Ingests a file or raw text into the document intelligence RAG system.</p></div>
+</dd>
+<dt id="jarvis.api.routes_memory.list_memory"><code class="name flex">
+<span>def <span class="ident">list_memory</span></span>(<span>layer: str | None = Query(None),<br>query: str | None = Query(None),<br>limit: int = Query(50)) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/memory&#34;)
+def list_memory(
+    layer: Optional[str] = Query(None), query: Optional[str] = Query(None), limit: int = Query(50, ge=1, le=100)
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Lists memory nodes filtered by layer and query.&#34;&#34;&#34;
+    results = memory_manager.recall(layer=layer, query=query, limit=limit)
+    return {&#34;results&#34;: results, &#34;count&#34;: len(results)}</code></pre>
+</details>
+<div class="desc"><p>Lists memory nodes filtered by layer and query.</p></div>
+</dd>
+<dt id="jarvis.api.routes_memory.query_documents"><code class="name flex">
+<span>def <span class="ident">query_documents</span></span>(<span>req: <a title="jarvis.api.routes_memory.DocumentQueryRequest" href="#jarvis.api.routes_memory.DocumentQueryRequest">DocumentQueryRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/documents/query&#34;)
+def query_documents(req: DocumentQueryRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Queries indexed documents and returns cited excerpt passages with exact file and page provenance.&#34;&#34;&#34;
+    return document_rag.query_documents(query=req.query, top_k=req.top_k, doc_id=req.doc_id)</code></pre>
+</details>
+<div class="desc"><p>Queries indexed documents and returns cited excerpt passages with exact file and page provenance.</p></div>
+</dd>
+<dt id="jarvis.api.routes_memory.record_correction"><code class="name flex">
+<span>def <span class="ident">record_correction</span></span>(<span>req: <a title="jarvis.api.routes_memory.CorrectionRequest" href="#jarvis.api.routes_memory.CorrectionRequest">CorrectionRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/memory/correction&#34;)
+def record_correction(req: CorrectionRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Records a user correction and promotes it into directive/procedural memory.&#34;&#34;&#34;
+    try:
+        return correction_engine.record_correction(
+            user_quote=req.user_quote,
+            new_instruction=req.new_instruction,
+            scope=req.scope,
+            failure_id=req.failure_id,
+            old_behavior=req.old_behavior,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>Records a user correction and promotes it into directive/procedural memory.</p></div>
+</dd>
+<dt id="jarvis.api.routes_memory.search_memory"><code class="name flex">
+<span>def <span class="ident">search_memory</span></span>(<span>req: <a title="jarvis.api.routes_memory.MemorySearchRequest" href="#jarvis.api.routes_memory.MemorySearchRequest">MemorySearchRequest</a>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/memory/search&#34;)
+def search_memory(req: MemorySearchRequest) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Searches memory nodes with confidence, layer, and keyword filtering.&#34;&#34;&#34;
+    results = memory_manager.recall(
+        layer=req.layer,
+        query=req.query,
+        is_hypothesis=req.is_hypothesis,
+        min_confidence=req.min_confidence,
+        limit=req.limit,
+    )
+    return {&#34;results&#34;: results, &#34;count&#34;: len(results)}</code></pre>
+</details>
+<div class="desc"><p>Searches memory nodes with confidence, layer, and keyword filtering.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.api.routes_memory.CorrectionRequest"><code class="flex name class">
+<span>class <span class="ident">CorrectionRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CorrectionRequest(BaseModel):
+    user_quote: str = Field(..., description=&#34;User&#39;s original statement or correction prompt&#34;)
+    new_instruction: str = Field(..., description=&#34;The definitive standing instruction to adopt&#34;)
+    scope: str = Field(default=&#34;always&#34;, description=&#34;&#39;this_task&#39;, &#39;this_project&#39;, or &#39;always&#39;&#34;)
+    failure_id: Optional[str] = Field(default=None, description=&#34;Optional ID of failed task or action&#34;)
+    old_behavior: Optional[str] = Field(default=None, description=&#34;Description of the previous erroneous behavior&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_memory.CorrectionRequest.failure_id"><code class="name">var <span class="ident">failure_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.CorrectionRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.CorrectionRequest.new_instruction"><code class="name">var <span class="ident">new_instruction</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.CorrectionRequest.old_behavior"><code class="name">var <span class="ident">old_behavior</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.CorrectionRequest.scope"><code class="name">var <span class="ident">scope</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.CorrectionRequest.user_quote"><code class="name">var <span class="ident">user_quote</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_memory.DocumentIngestRequest"><code class="flex name class">
+<span>class <span class="ident">DocumentIngestRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DocumentIngestRequest(BaseModel):
+    file_path: Optional[str] = Field(default=None, description=&#34;Absolute local path to file (PDF, TXT, MD)&#34;)
+    content: Optional[str] = Field(default=None, description=&#34;Raw text content to ingest if not providing a file path&#34;)
+    title: Optional[str] = Field(default=None, description=&#34;Title for raw text content&#34;)
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description=&#34;Metadata tags&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_memory.DocumentIngestRequest.content"><code class="name">var <span class="ident">content</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.DocumentIngestRequest.file_path"><code class="name">var <span class="ident">file_path</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.DocumentIngestRequest.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.DocumentIngestRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.DocumentIngestRequest.title"><code class="name">var <span class="ident">title</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_memory.DocumentQueryRequest"><code class="flex name class">
+<span>class <span class="ident">DocumentQueryRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DocumentQueryRequest(BaseModel):
+    query: str = Field(..., description=&#34;Natural language question or search query&#34;)
+    top_k: int = Field(default=5, ge=1, le=20, description=&#34;Number of cited chunks to return&#34;)
+    doc_id: Optional[str] = Field(default=None, description=&#34;Optional scope to a single document&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_memory.DocumentQueryRequest.doc_id"><code class="name">var <span class="ident">doc_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.DocumentQueryRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.DocumentQueryRequest.query"><code class="name">var <span class="ident">query</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.DocumentQueryRequest.top_k"><code class="name">var <span class="ident">top_k</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_memory.MemoryAddRequest"><code class="flex name class">
+<span>class <span class="ident">MemoryAddRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MemoryAddRequest(BaseModel):
+    layer: str = Field(
+        default=&#34;SEMANTIC&#34;,
+        description=&#34;Cognitive layer (CAPTURE, RAW, EPISODIC, SEMANTIC, PROCEDURAL, WORKING, DIRECTIVE)&#34;,
+    )
+    content: str = Field(..., description=&#34;Memory content to store&#34;)
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description=&#34;Arbitrary JSON metadata&#34;)
+    is_hypothesis: bool = Field(default=False, description=&#34;True if inferred pattern, False if verified fact&#34;)
+    confidence: float = Field(default=1.0, ge=0.0, le=1.0, description=&#34;Confidence rating between 0.0 and 1.0&#34;)
+    evidence_count: int = Field(default=1, ge=1, description=&#34;Number of independent observations supporting this&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_memory.MemoryAddRequest.confidence"><code class="name">var <span class="ident">confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemoryAddRequest.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemoryAddRequest.evidence_count"><code class="name">var <span class="ident">evidence_count</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemoryAddRequest.is_hypothesis"><code class="name">var <span class="ident">is_hypothesis</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemoryAddRequest.layer"><code class="name">var <span class="ident">layer</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemoryAddRequest.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemoryAddRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_memory.MemoryDeleteRequest"><code class="flex name class">
+<span>class <span class="ident">MemoryDeleteRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MemoryDeleteRequest(BaseModel):
+    node_id: str = Field(..., description=&#34;Unique ID of memory node to delete&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_memory.MemoryDeleteRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemoryDeleteRequest.node_id"><code class="name">var <span class="ident">node_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_memory.MemorySearchRequest"><code class="flex name class">
+<span>class <span class="ident">MemorySearchRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MemorySearchRequest(BaseModel):
+    query: Optional[str] = Field(default=None, description=&#34;Substring or keyword match&#34;)
+    layer: Optional[str] = Field(default=None, description=&#34;Optional layer filter&#34;)
+    is_hypothesis: Optional[bool] = Field(default=None, description=&#34;Filter facts vs hypotheses&#34;)
+    min_confidence: float = Field(default=0.0, ge=0.0, le=1.0, description=&#34;Minimum confidence threshold&#34;)
+    limit: int = Field(default=20, ge=1, le=100)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_memory.MemorySearchRequest.is_hypothesis"><code class="name">var <span class="ident">is_hypothesis</span> : bool | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemorySearchRequest.layer"><code class="name">var <span class="ident">layer</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemorySearchRequest.limit"><code class="name">var <span class="ident">limit</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemorySearchRequest.min_confidence"><code class="name">var <span class="ident">min_confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemorySearchRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_memory.MemorySearchRequest.query"><code class="name">var <span class="ident">query</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.api" href="index.html">jarvis.api</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_memory.add_memory" href="#jarvis.api.routes_memory.add_memory">add_memory</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.delete_memory" href="#jarvis.api.routes_memory.delete_memory">delete_memory</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.get_memory_storage" href="#jarvis.api.routes_memory.get_memory_storage">get_memory_storage</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.ingest_document" href="#jarvis.api.routes_memory.ingest_document">ingest_document</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.list_memory" href="#jarvis.api.routes_memory.list_memory">list_memory</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.query_documents" href="#jarvis.api.routes_memory.query_documents">query_documents</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.record_correction" href="#jarvis.api.routes_memory.record_correction">record_correction</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.search_memory" href="#jarvis.api.routes_memory.search_memory">search_memory</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.api.routes_memory.CorrectionRequest" href="#jarvis.api.routes_memory.CorrectionRequest">CorrectionRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_memory.CorrectionRequest.failure_id" href="#jarvis.api.routes_memory.CorrectionRequest.failure_id">failure_id</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.CorrectionRequest.model_config" href="#jarvis.api.routes_memory.CorrectionRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.CorrectionRequest.new_instruction" href="#jarvis.api.routes_memory.CorrectionRequest.new_instruction">new_instruction</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.CorrectionRequest.old_behavior" href="#jarvis.api.routes_memory.CorrectionRequest.old_behavior">old_behavior</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.CorrectionRequest.scope" href="#jarvis.api.routes_memory.CorrectionRequest.scope">scope</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.CorrectionRequest.user_quote" href="#jarvis.api.routes_memory.CorrectionRequest.user_quote">user_quote</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_memory.DocumentIngestRequest" href="#jarvis.api.routes_memory.DocumentIngestRequest">DocumentIngestRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_memory.DocumentIngestRequest.content" href="#jarvis.api.routes_memory.DocumentIngestRequest.content">content</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.DocumentIngestRequest.file_path" href="#jarvis.api.routes_memory.DocumentIngestRequest.file_path">file_path</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.DocumentIngestRequest.metadata" href="#jarvis.api.routes_memory.DocumentIngestRequest.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.DocumentIngestRequest.model_config" href="#jarvis.api.routes_memory.DocumentIngestRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.DocumentIngestRequest.title" href="#jarvis.api.routes_memory.DocumentIngestRequest.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_memory.DocumentQueryRequest" href="#jarvis.api.routes_memory.DocumentQueryRequest">DocumentQueryRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_memory.DocumentQueryRequest.doc_id" href="#jarvis.api.routes_memory.DocumentQueryRequest.doc_id">doc_id</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.DocumentQueryRequest.model_config" href="#jarvis.api.routes_memory.DocumentQueryRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.DocumentQueryRequest.query" href="#jarvis.api.routes_memory.DocumentQueryRequest.query">query</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.DocumentQueryRequest.top_k" href="#jarvis.api.routes_memory.DocumentQueryRequest.top_k">top_k</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_memory.MemoryAddRequest" href="#jarvis.api.routes_memory.MemoryAddRequest">MemoryAddRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_memory.MemoryAddRequest.confidence" href="#jarvis.api.routes_memory.MemoryAddRequest.confidence">confidence</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemoryAddRequest.content" href="#jarvis.api.routes_memory.MemoryAddRequest.content">content</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemoryAddRequest.evidence_count" href="#jarvis.api.routes_memory.MemoryAddRequest.evidence_count">evidence_count</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemoryAddRequest.is_hypothesis" href="#jarvis.api.routes_memory.MemoryAddRequest.is_hypothesis">is_hypothesis</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemoryAddRequest.layer" href="#jarvis.api.routes_memory.MemoryAddRequest.layer">layer</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemoryAddRequest.metadata" href="#jarvis.api.routes_memory.MemoryAddRequest.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemoryAddRequest.model_config" href="#jarvis.api.routes_memory.MemoryAddRequest.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_memory.MemoryDeleteRequest" href="#jarvis.api.routes_memory.MemoryDeleteRequest">MemoryDeleteRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_memory.MemoryDeleteRequest.model_config" href="#jarvis.api.routes_memory.MemoryDeleteRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemoryDeleteRequest.node_id" href="#jarvis.api.routes_memory.MemoryDeleteRequest.node_id">node_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_memory.MemorySearchRequest" href="#jarvis.api.routes_memory.MemorySearchRequest">MemorySearchRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_memory.MemorySearchRequest.is_hypothesis" href="#jarvis.api.routes_memory.MemorySearchRequest.is_hypothesis">is_hypothesis</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemorySearchRequest.layer" href="#jarvis.api.routes_memory.MemorySearchRequest.layer">layer</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemorySearchRequest.limit" href="#jarvis.api.routes_memory.MemorySearchRequest.limit">limit</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemorySearchRequest.min_confidence" href="#jarvis.api.routes_memory.MemorySearchRequest.min_confidence">min_confidence</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemorySearchRequest.model_config" href="#jarvis.api.routes_memory.MemorySearchRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_memory.MemorySearchRequest.query" href="#jarvis.api.routes_memory.MemorySearchRequest.query">query</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

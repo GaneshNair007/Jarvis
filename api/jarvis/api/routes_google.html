@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.api.routes_google API documentation</title>
+<meta name="description" content="Google OAuth + Gmail Communication Center API routes …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.api.routes_google</code></h1>
+</header>
+<section id="section-intro">
+<p>Google OAuth + Gmail Communication Center API routes.</p>
+<p>Endpoints
+-----=
+GET
+/api/v1/google/status
+Redacted OAuth connection status
+POST
+/api/v1/google/auth/start
+Returns the Google authorization URL
+GET
+/api/v1/google/auth/callback
+Loopback callback; exchanges code, verifies account
+POST
+/api/v1/google/auth/disconnect
+Revoke token + delete local credentials
+GET
+/api/v1/google/gmail/profile
+Connected account identity
+GET
+/api/v1/google/gmail/inbox
+Message list (labelIds=INBOX)
+GET
+/api/v1/google/gmail/unread
+Message list (labelIds=UNREAD)
+GET
+/api/v1/google/gmail/important
+Message list (labelIds=IMPORTANT)
+GET
+/api/v1/google/gmail/sent
+Message list (labelIds=SENT)
+GET
+/api/v1/google/gmail/drafts
+Draft list with previews + content hashes
+GET
+/api/v1/google/gmail/message/{message_id} Full parsed message (untrusted body)
+GET
+/api/v1/google/gmail/draft/{draft_id}
+Draft preview with exact content hash
+POST
+/api/v1/google/gmail/drafts
+Create a real Gmail draft
+POST
+/api/v1/google/gmail/send
+Approval-gated send (bound to content hash)</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.api.routes_google.gmail_create_draft"><code class="name flex">
+<span>async def <span class="ident">gmail_create_draft</span></span>(<span>req: <a title="jarvis.api.routes_google.DraftCreateRequest" href="#jarvis.api.routes_google.DraftCreateRequest">DraftCreateRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/api/v1/google/gmail/drafts&#34;)
+async def gmail_create_draft(req: DraftCreateRequest):
+    _require_connected()
+    return gmail_integration.api.create_draft(
+        to=req.to,
+        subject=req.subject,
+        body=req.body,
+        cc=req.cc,
+        bcc=req.bcc,
+        attachments=req.attachments,
+    )</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.gmail_draft"><code class="name flex">
+<span>async def <span class="ident">gmail_draft</span></span>(<span>draft_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/gmail/draft/{draft_id}&#34;)
+async def gmail_draft(draft_id: str):
+    _require_connected()
+    return gmail_integration.api.get_draft(draft_id)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.gmail_drafts"><code class="name flex">
+<span>async def <span class="ident">gmail_drafts</span></span>(<span>max_results: int = Query(10))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/gmail/drafts&#34;)
+async def gmail_drafts(max_results: int = Query(default=10, ge=1, le=100)):
+    _require_connected()
+    return gmail_integration.api.list_drafts(max_results=max_results)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.gmail_important"><code class="name flex">
+<span>async def <span class="ident">gmail_important</span></span>(<span>max_results: int = Query(10))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/gmail/important&#34;)
+async def gmail_important(max_results: int = Query(default=10, ge=1, le=100)):
+    _require_connected()
+    return gmail_integration.api.list_messages(query=&#34;is:important&#34;, max_results=max_results, label_ids=[&#34;IMPORTANT&#34;])</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.gmail_inbox"><code class="name flex">
+<span>async def <span class="ident">gmail_inbox</span></span>(<span>query: str = Query(),<br>max_results: int = Query(10),<br>label_ids: Optional[str] = Query(None))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/gmail/inbox&#34;)
+async def gmail_inbox(
+    query: str = Query(default=&#34;&#34;),
+    max_results: int = Query(default=10, ge=1, le=100),
+    label_ids: Optional[str] = Query(default=None),
+):
+    _require_connected()
+    return gmail_integration.api.list_messages(query=query, max_results=max_results, label_ids=_label_param(label_ids))</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.gmail_message"><code class="name flex">
+<span>async def <span class="ident">gmail_message</span></span>(<span>message_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/gmail/message/{message_id}&#34;)
+async def gmail_message(message_id: str):
+    _require_connected()
+    return gmail_integration.api.get_message(message_id)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.gmail_profile"><code class="name flex">
+<span>async def <span class="ident">gmail_profile</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/gmail/profile&#34;)
+async def gmail_profile() -&gt; Dict[str, Any]:
+    _require_connected()
+    return gmail_integration.api.get_profile()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.gmail_send"><code class="name flex">
+<span>async def <span class="ident">gmail_send</span></span>(<span>req: <a title="jarvis.api.routes_google.SendMessageRequest" href="#jarvis.api.routes_google.SendMessageRequest">SendMessageRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/api/v1/google/gmail/send&#34;)
+async def gmail_send(req: SendMessageRequest):
+    &#34;&#34;&#34;Approval-gated send.
+
+    The first call issues an approval request bound to the exact content hash
+    (returns AWAITING_APPROVAL). The owner resolves it at
+    POST /api/v1/approvals/{task_id}/resolve and retries with the approval
+    token; only then does Gmail confirm delivery with a real message id.
+    &#34;&#34;&#34;
+    _require_connected()
+    if req.draft_id:
+        params: Dict[str, Any] = {
+            &#34;draft_id&#34;: req.draft_id,
+            &#34;expected_content_hash&#34;: req.expected_content_hash or &#34;&#34;,
+        }
+        if req.approval_token:
+            params[&#34;approval_token&#34;] = req.approval_token
+        return gmail_integration.execute_power(&#34;gmail.send_draft&#34;, params)
+    params = {
+        &#34;to&#34;: req.to,
+        &#34;subject&#34;: req.subject,
+        &#34;body&#34;: req.body,
+        &#34;cc&#34;: req.cc,
+        &#34;bcc&#34;: req.bcc,
+        &#34;attachments&#34;: req.attachments,
+    }
+    if req.expected_content_hash:
+        params[&#34;expected_content_hash&#34;] = req.expected_content_hash
+    if req.approval_token:
+        params[&#34;approval_token&#34;] = req.approval_token
+    return gmail_integration.execute_power(&#34;gmail.send_message&#34;, params)</code></pre>
+</details>
+<div class="desc"><p>Approval-gated send.</p>
+<p>The first call issues an approval request bound to the exact content hash
+(returns AWAITING_APPROVAL). The owner resolves it at
+POST /api/v1/approvals/{task_id}/resolve and retries with the approval
+token; only then does Gmail confirm delivery with a real message id.</p></div>
+</dd>
+<dt id="jarvis.api.routes_google.gmail_sent"><code class="name flex">
+<span>async def <span class="ident">gmail_sent</span></span>(<span>max_results: int = Query(10))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/gmail/sent&#34;)
+async def gmail_sent(max_results: int = Query(default=10, ge=1, le=100)):
+    _require_connected()
+    return gmail_integration.api.list_messages(query=&#34;in:sent&#34;, max_results=max_results, label_ids=[&#34;SENT&#34;])</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.gmail_unread"><code class="name flex">
+<span>async def <span class="ident">gmail_unread</span></span>(<span>max_results: int = Query(10))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/gmail/unread&#34;)
+async def gmail_unread(max_results: int = Query(default=10, ge=1, le=100)):
+    _require_connected()
+    return gmail_integration.api.list_messages(query=&#34;is:unread&#34;, max_results=max_results, label_ids=[&#34;UNREAD&#34;])</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.google_auth_callback"><code class="name flex">
+<span>async def <span class="ident">google_auth_callback</span></span>(<span>code: Optional[str] = Query(None), state: Optional[str] = Query(None))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/auth/callback&#34;, response_class=HTMLResponse)
+async def google_auth_callback(
+    code: Optional[str] = Query(default=None),
+    state: Optional[str] = Query(default=None),
+):
+    &#34;&#34;&#34;Google redirects the owner&#39;s browser here after consent.
+
+    Exchanges the authorization code, verifies that the signed-in account is the
+    dedicated JARVIS identity, persists the token with DPAPI, and renders a
+    success/failure page.
+    &#34;&#34;&#34;
+    try:
+        result = google_flow.complete(code or &#34;&#34;, state or &#34;&#34;, GOOGLE_CALLBACK_URI)
+        email = result.get(&#34;account_email&#34;, &#34;jarvis33246146@gmail.com&#34;)
+        scopes = &#34; &#34;.join(result.get(&#34;scopes&#34;, []))
+        return HTMLResponse(
+            _CONNECTED_PAGE.replace(&#34;{email}&#34;, email).replace(&#34;{scopes}&#34;, scopes),
+            headers={&#34;Cache-Control&#34;: &#34;no-store&#34;},
+        )
+    except OAuthError as exc:
+        logger.warning(&#34;Google OAuth callback failed: %s&#34;, exc.error)
+        return HTMLResponse(
+            _FAILED_PAGE.replace(&#34;{reason}&#34;, exc.description or exc.error),
+            status_code=400,
+            headers={&#34;Cache-Control&#34;: &#34;no-store&#34;},
+        )</code></pre>
+</details>
+<div class="desc"><p>Google redirects the owner's browser here after consent.</p>
+<p>Exchanges the authorization code, verifies that the signed-in account is the
+dedicated JARVIS identity, persists the token with DPAPI, and renders a
+success/failure page.</p></div>
+</dd>
+<dt id="jarvis.api.routes_google.google_auth_disconnect"><code class="name flex">
+<span>async def <span class="ident">google_auth_disconnect</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/api/v1/google/auth/disconnect&#34;)
+async def google_auth_disconnect() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Revoke the Google token at the provider and delete local DPAPI credentials.&#34;&#34;&#34;
+    return google_flow.disconnect()</code></pre>
+</details>
+<div class="desc"><p>Revoke the Google token at the provider and delete local DPAPI credentials.</p></div>
+</dd>
+<dt id="jarvis.api.routes_google.google_auth_start"><code class="name flex">
+<span>async def <span class="ident">google_auth_start</span></span>(<span>req: Optional[<a title="jarvis.api.routes_google.AuthStartRequest" href="#jarvis.api.routes_google.AuthStartRequest">AuthStartRequest</a>] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/api/v1/google/auth/start&#34;)
+async def google_auth_start(req: Optional[AuthStartRequest] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Generate the state+PKCE authorization URL for the dedicated JARVIS account.&#34;&#34;&#34;
+    redirect_uri = req.redirect_uri if req and req.redirect_uri else GOOGLE_CALLBACK_URI
+    auth = google_flow.build_authorization(redirect_uri)
+    return {
+        &#34;authorization_url&#34;: auth[&#34;authorization_url&#34;],
+        &#34;state&#34;: auth[&#34;state&#34;],
+        &#34;redirect_uri&#34;: redirect_uri,
+        &#34;expires_in_sec&#34;: auth[&#34;expires_in_sec&#34;],
+        &#34;scopes&#34;: list(GMAIL_SCOPES),
+        &#34;assistant_account&#34;: &#34;jarvis33246146@gmail.com&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>Generate the state+PKCE authorization URL for the dedicated JARVIS account.</p></div>
+</dd>
+<dt id="jarvis.api.routes_google.google_status"><code class="name flex">
+<span>async def <span class="ident">google_status</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/google/status&#34;)
+async def google_status() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Redacted Google connection status. Never returns token values.&#34;&#34;&#34;
+    return google_flow.status()</code></pre>
+</details>
+<div class="desc"><p>Redacted Google connection status. Never returns token values.</p></div>
+</dd>
+<dt id="jarvis.api.routes_google.list_pending_approvals"><code class="name flex">
+<span>async def <span class="ident">list_pending_approvals</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/api/v1/approvals/pending&#34;)
+async def list_pending_approvals() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Human-facing approval queue for the Communication Center.&#34;&#34;&#34;
+    items = []
+    seen = set()
+    for record in policy_gate.pending_approvals.values():
+        task_id = record.get(&#34;task_id&#34;)
+        if task_id in seen:
+            continue
+        seen.add(task_id)
+        items.append(
+            {
+                &#34;task_id&#34;: task_id,
+                &#34;approval_id&#34;: record.get(&#34;approval_id&#34;),
+                &#34;power_id&#34;: record.get(&#34;power_id&#34;),
+                &#34;action_summary&#34;: record.get(&#34;action_summary&#34;),
+                &#34;expires_at&#34;: record.get(&#34;expires_at&#34;),
+                &#34;status&#34;: record.get(&#34;status&#34;),
+            }
+        )
+    items.sort(key=lambda item: item.get(&#34;expires_at&#34;) or 0)
+    return {&#34;pending&#34;: items, &#34;total&#34;: len(items)}</code></pre>
+</details>
+<div class="desc"><p>Human-facing approval queue for the Communication Center.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.api.routes_google.AuthStartRequest"><code class="flex name class">
+<span>class <span class="ident">AuthStartRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthStartRequest(BaseModel):
+    redirect_uri: Optional[str] = Field(
+        default=None,
+        description=&#34;Override loopback callback URI (defaults to the API server itself)&#34;,
+    )</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_google.AuthStartRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.AuthStartRequest.redirect_uri"><code class="name">var <span class="ident">redirect_uri</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_google.DraftCreateRequest"><code class="flex name class">
+<span>class <span class="ident">DraftCreateRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DraftCreateRequest(BaseModel):
+    to: str
+    subject: str
+    body: str
+    cc: Optional[str] = None
+    bcc: Optional[str] = None
+    attachments: Optional[List[Dict[str, Any]]] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_google.DraftCreateRequest.attachments"><code class="name">var <span class="ident">attachments</span> : List[Dict[str, Any]] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.DraftCreateRequest.bcc"><code class="name">var <span class="ident">bcc</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.DraftCreateRequest.body"><code class="name">var <span class="ident">body</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.DraftCreateRequest.cc"><code class="name">var <span class="ident">cc</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.DraftCreateRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.DraftCreateRequest.subject"><code class="name">var <span class="ident">subject</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.DraftCreateRequest.to"><code class="name">var <span class="ident">to</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest"><code class="flex name class">
+<span>class <span class="ident">SendMessageRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SendMessageRequest(BaseModel):
+    to: str = &#34;&#34;
+    subject: str = &#34;&#34;
+    body: str = &#34;&#34;
+    draft_id: Optional[str] = Field(default=None, description=&#34;Send a previously created draft instead of composing&#34;)
+    expected_content_hash: Optional[str] = Field(
+        default=None,
+        description=&#34;SHA-256 of the exact RFC 822 bytes approved by the owner&#34;,
+    )
+    cc: Optional[str] = None
+    bcc: Optional[str] = None
+    attachments: Optional[List[Dict[str, Any]]] = None
+    approval_token: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_google.SendMessageRequest.approval_token"><code class="name">var <span class="ident">approval_token</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest.attachments"><code class="name">var <span class="ident">attachments</span> : List[Dict[str, Any]] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest.bcc"><code class="name">var <span class="ident">bcc</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest.body"><code class="name">var <span class="ident">body</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest.cc"><code class="name">var <span class="ident">cc</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest.draft_id"><code class="name">var <span class="ident">draft_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest.expected_content_hash"><code class="name">var <span class="ident">expected_content_hash</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest.subject"><code class="name">var <span class="ident">subject</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_google.SendMessageRequest.to"><code class="name">var <span class="ident">to</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.api" href="index.html">jarvis.api</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.api.routes_google.gmail_create_draft" href="#jarvis.api.routes_google.gmail_create_draft">gmail_create_draft</a></code></li>
+<li><code><a title="jarvis.api.routes_google.gmail_draft" href="#jarvis.api.routes_google.gmail_draft">gmail_draft</a></code></li>
+<li><code><a title="jarvis.api.routes_google.gmail_drafts" href="#jarvis.api.routes_google.gmail_drafts">gmail_drafts</a></code></li>
+<li><code><a title="jarvis.api.routes_google.gmail_important" href="#jarvis.api.routes_google.gmail_important">gmail_important</a></code></li>
+<li><code><a title="jarvis.api.routes_google.gmail_inbox" href="#jarvis.api.routes_google.gmail_inbox">gmail_inbox</a></code></li>
+<li><code><a title="jarvis.api.routes_google.gmail_message" href="#jarvis.api.routes_google.gmail_message">gmail_message</a></code></li>
+<li><code><a title="jarvis.api.routes_google.gmail_profile" href="#jarvis.api.routes_google.gmail_profile">gmail_profile</a></code></li>
+<li><code><a title="jarvis.api.routes_google.gmail_send" href="#jarvis.api.routes_google.gmail_send">gmail_send</a></code></li>
+<li><code><a title="jarvis.api.routes_google.gmail_sent" href="#jarvis.api.routes_google.gmail_sent">gmail_sent</a></code></li>
+<li><code><a title="jarvis.api.routes_google.gmail_unread" href="#jarvis.api.routes_google.gmail_unread">gmail_unread</a></code></li>
+<li><code><a title="jarvis.api.routes_google.google_auth_callback" href="#jarvis.api.routes_google.google_auth_callback">google_auth_callback</a></code></li>
+<li><code><a title="jarvis.api.routes_google.google_auth_disconnect" href="#jarvis.api.routes_google.google_auth_disconnect">google_auth_disconnect</a></code></li>
+<li><code><a title="jarvis.api.routes_google.google_auth_start" href="#jarvis.api.routes_google.google_auth_start">google_auth_start</a></code></li>
+<li><code><a title="jarvis.api.routes_google.google_status" href="#jarvis.api.routes_google.google_status">google_status</a></code></li>
+<li><code><a title="jarvis.api.routes_google.list_pending_approvals" href="#jarvis.api.routes_google.list_pending_approvals">list_pending_approvals</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.api.routes_google.AuthStartRequest" href="#jarvis.api.routes_google.AuthStartRequest">AuthStartRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_google.AuthStartRequest.model_config" href="#jarvis.api.routes_google.AuthStartRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_google.AuthStartRequest.redirect_uri" href="#jarvis.api.routes_google.AuthStartRequest.redirect_uri">redirect_uri</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_google.DraftCreateRequest" href="#jarvis.api.routes_google.DraftCreateRequest">DraftCreateRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_google.DraftCreateRequest.attachments" href="#jarvis.api.routes_google.DraftCreateRequest.attachments">attachments</a></code></li>
+<li><code><a title="jarvis.api.routes_google.DraftCreateRequest.bcc" href="#jarvis.api.routes_google.DraftCreateRequest.bcc">bcc</a></code></li>
+<li><code><a title="jarvis.api.routes_google.DraftCreateRequest.body" href="#jarvis.api.routes_google.DraftCreateRequest.body">body</a></code></li>
+<li><code><a title="jarvis.api.routes_google.DraftCreateRequest.cc" href="#jarvis.api.routes_google.DraftCreateRequest.cc">cc</a></code></li>
+<li><code><a title="jarvis.api.routes_google.DraftCreateRequest.model_config" href="#jarvis.api.routes_google.DraftCreateRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_google.DraftCreateRequest.subject" href="#jarvis.api.routes_google.DraftCreateRequest.subject">subject</a></code></li>
+<li><code><a title="jarvis.api.routes_google.DraftCreateRequest.to" href="#jarvis.api.routes_google.DraftCreateRequest.to">to</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_google.SendMessageRequest" href="#jarvis.api.routes_google.SendMessageRequest">SendMessageRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.approval_token" href="#jarvis.api.routes_google.SendMessageRequest.approval_token">approval_token</a></code></li>
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.attachments" href="#jarvis.api.routes_google.SendMessageRequest.attachments">attachments</a></code></li>
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.bcc" href="#jarvis.api.routes_google.SendMessageRequest.bcc">bcc</a></code></li>
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.body" href="#jarvis.api.routes_google.SendMessageRequest.body">body</a></code></li>
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.cc" href="#jarvis.api.routes_google.SendMessageRequest.cc">cc</a></code></li>
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.draft_id" href="#jarvis.api.routes_google.SendMessageRequest.draft_id">draft_id</a></code></li>
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.expected_content_hash" href="#jarvis.api.routes_google.SendMessageRequest.expected_content_hash">expected_content_hash</a></code></li>
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.model_config" href="#jarvis.api.routes_google.SendMessageRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.subject" href="#jarvis.api.routes_google.SendMessageRequest.subject">subject</a></code></li>
+<li><code><a title="jarvis.api.routes_google.SendMessageRequest.to" href="#jarvis.api.routes_google.SendMessageRequest.to">to</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

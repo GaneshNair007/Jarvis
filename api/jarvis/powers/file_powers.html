@@ -1,0 +1,1448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.file_powers API documentation</title>
+<meta name="description" content="JARVIS File &amp; Document Powers (PWR-082 to PWR-099)
+Read, write, search, compare, archive, and analyse files including
+PDF, CSV, Excel, JSON, and …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.file_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS File &amp; Document Powers (PWR-082 to PWR-099)
+Read, write, search, compare, archive, and analyse files including
+PDF, CSV, Excel, JSON, and general filesystem operations.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.file_powers.FilePowers"><code class="flex name class">
+<span>class <span class="ident">FilePowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FilePowers:
+    &#34;&#34;&#34;File and document manipulation powers for JARVIS.&#34;&#34;&#34;
+
+    # ------------------------------------------------------------------ #
+    #  PWR-082 — Read File                                                #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def read_file(path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-082: Read a text file safely and return its content.&#34;&#34;&#34;
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-082&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+            if not p.is_file():
+                return {&#34;power_id&#34;: &#34;PWR-082&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Not a file: {path}&#34;}
+            size = p.stat().st_size
+            # Guard against accidentally reading huge files into memory
+            if size &gt; 50 * 1024 * 1024:  # 50 MB
+                return {
+                    &#34;power_id&#34;: &#34;PWR-082&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;message&#34;: f&#34;File too large ({size:,} bytes). Use a streaming approach.&#34;,
+                }
+            content = p.read_text(encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;)
+            return {
+                &#34;power_id&#34;: &#34;PWR-082&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;size_bytes&#34;: size,
+                &#34;lines&#34;: content.count(&#34;\n&#34;) + 1,
+                &#34;content&#34;: content,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-082&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Failed to read file: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-083 — Write File                                               #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def write_file(path: str, content: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-083: Write text content to a file.
+
+        If the file already exists the response includes approval_required=True
+        so the caller can confirm before overwriting.
+        &#34;&#34;&#34;
+        try:
+            p = Path(path)
+            overwrite = p.exists()
+            if overwrite:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-083&#34;,
+                    &#34;status&#34;: &#34;pending&#34;,
+                    &#34;approval_required&#34;: True,
+                    &#34;message&#34;: f&#34;File already exists: {path}. Confirm overwrite.&#34;,
+                    &#34;path&#34;: str(p.resolve()),
+                }
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(content, encoding=&#34;utf-8&#34;)
+            return {
+                &#34;power_id&#34;: &#34;PWR-083&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;bytes_written&#34;: len(content.encode(&#34;utf-8&#34;)),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-083&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Failed to write file: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-084 — PDF Extract Text                                         #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def pdf_extract_text(path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-084: Extract text from a PDF file.
+
+        Tries PyMuPDF (fitz) first, falls back to a basic subprocess call.
+        &#34;&#34;&#34;
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-084&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+            # ---- Try PyMuPDF ----
+            try:
+                import fitz  # type: ignore[import-untyped]
+
+                doc = fitz.open(str(p))
+                pages: List[str] = []
+                for page in doc:
+                    pages.append(page.get_text())
+                doc.close()
+                full_text = &#34;\n&#34;.join(pages)
+                return {
+                    &#34;power_id&#34;: &#34;PWR-084&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;engine&#34;: &#34;pymupdf&#34;,
+                    &#34;path&#34;: str(p.resolve()),
+                    &#34;pages&#34;: len(pages),
+                    &#34;text&#34;: full_text,
+                }
+            except ImportError:
+                pass
+
+            # ---- Fallback: try pdfminer.six ----
+            try:
+                from pdfminer.high_level import extract_text as _extract  # type: ignore[import-untyped]
+
+                text = _extract(str(p))
+                return {
+                    &#34;power_id&#34;: &#34;PWR-084&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;engine&#34;: &#34;pdfminer&#34;,
+                    &#34;path&#34;: str(p.resolve()),
+                    &#34;text&#34;: text,
+                }
+            except ImportError:
+                pass
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-084&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: &#34;No PDF library available. Install PyMuPDF (`pip install pymupdf`) or pdfminer.six.&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-084&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;PDF extraction failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-085 — PDF Search                                               #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def pdf_search(path: str, query: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-085: Search within a PDF for a text query.&#34;&#34;&#34;
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-085&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+            try:
+                import fitz  # type: ignore[import-untyped]
+
+                doc = fitz.open(str(p))
+                matches: List[Dict[str, Any]] = []
+                for page_num, page in enumerate(doc, start=1):
+                    text = page.get_text()
+                    if query.lower() in text.lower():
+                        # Find line-level matches
+                        for line_no, line in enumerate(text.splitlines(), start=1):
+                            if query.lower() in line.lower():
+                                matches.append({&#34;page&#34;: page_num, &#34;line&#34;: line_no, &#34;text&#34;: line.strip()})
+                doc.close()
+                return {
+                    &#34;power_id&#34;: &#34;PWR-085&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;path&#34;: str(p.resolve()),
+                    &#34;query&#34;: query,
+                    &#34;match_count&#34;: len(matches),
+                    &#34;matches&#34;: matches[:100],  # cap results
+                }
+            except ImportError:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-085&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;message&#34;: &#34;PyMuPDF not installed. Run `pip install pymupdf`.&#34;,
+                }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-085&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;PDF search failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-086 — CSV Summary                                              #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def csv_summary(path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-086: Produce summary statistics for a CSV file.&#34;&#34;&#34;
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-086&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+            with open(p, newline=&#34;&#34;, encoding=&#34;utf-8-sig&#34;, errors=&#34;replace&#34;) as f:
+                reader = csv.reader(f)
+                rows = list(reader)
+
+            if not rows:
+                return {&#34;power_id&#34;: &#34;PWR-086&#34;, &#34;status&#34;: &#34;success&#34;, &#34;path&#34;: str(p.resolve()), &#34;rows&#34;: 0, &#34;columns&#34;: 0}
+
+            headers = rows[0]
+            data_rows = rows[1:]
+
+            # Simple dtype inference
+            dtypes: Dict[str, str] = {}
+            for col_idx, col_name in enumerate(headers):
+                sample_vals = [r[col_idx] for r in data_rows[:100] if col_idx &lt; len(r) and r[col_idx].strip()]
+                if all(_is_numeric(v) for v in sample_vals) and sample_vals:
+                    dtypes[col_name] = &#34;numeric&#34;
+                else:
+                    dtypes[col_name] = &#34;text&#34;
+
+            head = [dict(zip(headers, r)) for r in data_rows[:5]]
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-086&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;rows&#34;: len(data_rows),
+                &#34;columns&#34;: len(headers),
+                &#34;headers&#34;: headers,
+                &#34;dtypes&#34;: dtypes,
+                &#34;head&#34;: head,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-086&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;CSV summary failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-087 — CSV Query / Filter                                       #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def csv_query(path: str, filter_col: str, filter_val: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-087: Filter CSV rows where filter_col matches filter_val.&#34;&#34;&#34;
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-087&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+            with open(p, newline=&#34;&#34;, encoding=&#34;utf-8-sig&#34;, errors=&#34;replace&#34;) as f:
+                reader = csv.DictReader(f)
+                if reader.fieldnames is None:
+                    return {&#34;power_id&#34;: &#34;PWR-087&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;CSV has no headers.&#34;}
+                if filter_col not in reader.fieldnames:
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-087&#34;,
+                        &#34;status&#34;: &#34;error&#34;,
+                        &#34;message&#34;: f&#34;Column &#39;{filter_col}&#39; not found. Available: {reader.fieldnames}&#34;,
+                    }
+                matches = [
+                    row for row in reader if row.get(filter_col, &#34;&#34;).strip().lower() == filter_val.strip().lower()
+                ]
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-087&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;filter&#34;: {filter_col: filter_val},
+                &#34;match_count&#34;: len(matches),
+                &#34;rows&#34;: matches[:200],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-087&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;CSV query failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-088 — Excel Summary                                            #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def excel_summary(path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-088: Produce a summary of an Excel workbook (sheet names, shapes).&#34;&#34;&#34;
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-088&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+            try:
+                import openpyxl  # type: ignore[import-untyped]
+
+                wb = openpyxl.load_workbook(str(p), read_only=True, data_only=True)
+                sheets_info: List[Dict[str, Any]] = []
+                for name in wb.sheetnames:
+                    ws = wb[name]
+                    sheets_info.append(
+                        {
+                            &#34;name&#34;: name,
+                            &#34;rows&#34;: ws.max_row,
+                            &#34;columns&#34;: ws.max_column,
+                        }
+                    )
+                wb.close()
+                return {
+                    &#34;power_id&#34;: &#34;PWR-088&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;path&#34;: str(p.resolve()),
+                    &#34;sheet_count&#34;: len(sheets_info),
+                    &#34;sheets&#34;: sheets_info,
+                }
+            except ImportError:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-088&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;message&#34;: &#34;openpyxl not installed. Run `pip install openpyxl`.&#34;,
+                }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-088&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Excel summary failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-089 — JSON Query                                               #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def json_query(path: str, jmespath_expr: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-089: Read and optionally query a JSON file with a JMESPath expression.&#34;&#34;&#34;
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-089&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+            data = json.loads(p.read_text(encoding=&#34;utf-8&#34;))
+
+            if jmespath_expr:
+                try:
+                    import jmespath as jmp  # type: ignore[import-untyped]
+
+                    result = jmp.search(jmespath_expr, data)
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-089&#34;,
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;path&#34;: str(p.resolve()),
+                        &#34;expression&#34;: jmespath_expr,
+                        &#34;result&#34;: result,
+                    }
+                except ImportError:
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-089&#34;,
+                        &#34;status&#34;: &#34;error&#34;,
+                        &#34;message&#34;: &#34;jmespath not installed. Run `pip install jmespath`. Returning raw data.&#34;,
+                        &#34;data&#34;: data,
+                    }
+            else:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-089&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;path&#34;: str(p.resolve()),
+                    &#34;data&#34;: data,
+                }
+        except json.JSONDecodeError as e:
+            return {&#34;power_id&#34;: &#34;PWR-089&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Invalid JSON: {e}&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-089&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;JSON query failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-090 — File Search                                              #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def file_search(directory: str, pattern: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-090: Search for files by name/glob pattern in a directory tree.&#34;&#34;&#34;
+        try:
+            d = Path(directory)
+            if not d.is_dir():
+                return {&#34;power_id&#34;: &#34;PWR-090&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Not a directory: {directory}&#34;}
+
+            matches = sorted(str(m.resolve()) for m in d.rglob(pattern))
+            return {
+                &#34;power_id&#34;: &#34;PWR-090&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;directory&#34;: str(d.resolve()),
+                &#34;pattern&#34;: pattern,
+                &#34;match_count&#34;: len(matches),
+                &#34;matches&#34;: matches[:500],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-090&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File search failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-091 — File Info                                                #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def file_info(path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-091: Return metadata for a file (size, modified, type, SHA-256 hash).&#34;&#34;&#34;
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-091&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Path not found: {path}&#34;}
+
+            stat = p.stat()
+            sha256 = &#34;&#34;
+            if p.is_file() and stat.st_size &lt; 100 * 1024 * 1024:  # hash files &lt; 100 MB
+                h = hashlib.sha256()
+                with open(p, &#34;rb&#34;) as f:
+                    for chunk in iter(lambda: f.read(65536), b&#34;&#34;):
+                        h.update(chunk)
+                sha256 = h.hexdigest()
+
+            import time as _time
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-091&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;is_file&#34;: p.is_file(),
+                &#34;is_dir&#34;: p.is_dir(),
+                &#34;size_bytes&#34;: stat.st_size,
+                &#34;modified&#34;: _time.ctime(stat.st_mtime),
+                &#34;created&#34;: _time.ctime(stat.st_ctime),
+                &#34;suffix&#34;: p.suffix,
+                &#34;sha256&#34;: sha256,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-091&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File info failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-092 — File Compare                                             #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def file_compare(path1: str, path2: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-092: Compare two text files and return a unified diff.&#34;&#34;&#34;
+        try:
+            p1, p2 = Path(path1), Path(path2)
+            for pp in (p1, p2):
+                if not pp.is_file():
+                    return {&#34;power_id&#34;: &#34;PWR-092&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {pp}&#34;}
+
+            lines1 = p1.read_text(encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;).splitlines(keepends=True)
+            lines2 = p2.read_text(encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;).splitlines(keepends=True)
+            diff = list(difflib.unified_diff(lines1, lines2, fromfile=str(p1), tofile=str(p2)))
+            identical = len(diff) == 0
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-092&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path1&#34;: str(p1.resolve()),
+                &#34;path2&#34;: str(p2.resolve()),
+                &#34;identical&#34;: identical,
+                &#34;diff_lines&#34;: len(diff),
+                &#34;diff&#34;: &#34;&#34;.join(diff[:500]),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-092&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File compare failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-093 — Zip Archive                                              #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def zip_archive(paths: List[str], output: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-093: Create a zip archive from a list of file/folder paths.&#34;&#34;&#34;
+        try:
+            out = Path(output)
+            out.parent.mkdir(parents=True, exist_ok=True)
+            added: List[str] = []
+            with zipfile.ZipFile(str(out), &#34;w&#34;, zipfile.ZIP_DEFLATED) as zf:
+                for item in paths:
+                    ip = Path(item)
+                    if ip.is_file():
+                        zf.write(str(ip), ip.name)
+                        added.append(ip.name)
+                    elif ip.is_dir():
+                        for child in ip.rglob(&#34;*&#34;):
+                            if child.is_file():
+                                arcname = str(child.relative_to(ip.parent))
+                                zf.write(str(child), arcname)
+                                added.append(arcname)
+            return {
+                &#34;power_id&#34;: &#34;PWR-093&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;archive&#34;: str(out.resolve()),
+                &#34;files_added&#34;: len(added),
+                &#34;entries&#34;: added[:100],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-093&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Zip archive failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-094 — Zip Extract                                              #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def zip_extract(archive: str, destination: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-094: Extract a zip archive to a destination directory.&#34;&#34;&#34;
+        try:
+            a = Path(archive)
+            if not a.is_file():
+                return {&#34;power_id&#34;: &#34;PWR-094&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Archive not found: {archive}&#34;}
+
+            dest = Path(destination)
+            dest.mkdir(parents=True, exist_ok=True)
+            with zipfile.ZipFile(str(a), &#34;r&#34;) as zf:
+                names = zf.namelist()
+                zf.extractall(str(dest))
+            return {
+                &#34;power_id&#34;: &#34;PWR-094&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;archive&#34;: str(a.resolve()),
+                &#34;destination&#34;: str(dest.resolve()),
+                &#34;files_extracted&#34;: len(names),
+                &#34;entries&#34;: names[:100],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-094&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Zip extract failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-095 — File Rename                                              #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def file_rename(old_path: str, new_path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-095: Rename / move a file.&#34;&#34;&#34;
+        try:
+            src = Path(old_path)
+            if not src.exists():
+                return {&#34;power_id&#34;: &#34;PWR-095&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Source not found: {old_path}&#34;}
+            dst = Path(new_path)
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            src.rename(dst)
+            return {
+                &#34;power_id&#34;: &#34;PWR-095&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;old_path&#34;: str(src),
+                &#34;new_path&#34;: str(dst.resolve()),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-095&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File rename failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-096 — File Copy                                                #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def file_copy(src: str, dst: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-096: Copy a file or directory.&#34;&#34;&#34;
+        try:
+            s, d = Path(src), Path(dst)
+            if not s.exists():
+                return {&#34;power_id&#34;: &#34;PWR-096&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Source not found: {src}&#34;}
+            d.parent.mkdir(parents=True, exist_ok=True)
+            if s.is_dir():
+                shutil.copytree(str(s), str(d))
+            else:
+                shutil.copy2(str(s), str(d))
+            return {
+                &#34;power_id&#34;: &#34;PWR-096&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;source&#34;: str(s.resolve()),
+                &#34;destination&#34;: str(d.resolve()),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-096&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File copy failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-097 — File Delete                                              #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def file_delete(path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-097: Delete a file (requires approval).&#34;&#34;&#34;
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-097&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Path not found: {path}&#34;}
+            return {
+                &#34;power_id&#34;: &#34;PWR-097&#34;,
+                &#34;status&#34;: &#34;pending&#34;,
+                &#34;approval_required&#34;: True,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;is_dir&#34;: p.is_dir(),
+                &#34;message&#34;: f&#34;Confirm deletion of {&#39;directory&#39; if p.is_dir() else &#39;file&#39;}: {p.resolve()}&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-097&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File delete failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-098 — Directory Tree                                           #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def directory_tree(path: str, depth: int = 3) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-098: List directory contents as a tree structure.&#34;&#34;&#34;
+        try:
+            root = Path(path)
+            if not root.is_dir():
+                return {&#34;power_id&#34;: &#34;PWR-098&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Not a directory: {path}&#34;}
+
+            lines: List[str] = [str(root.resolve())]
+            _walk_tree(root, lines, prefix=&#34;&#34;, depth=depth, max_items=500)
+            return {
+                &#34;power_id&#34;: &#34;PWR-098&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(root.resolve()),
+                &#34;depth&#34;: depth,
+                &#34;tree&#34;: &#34;\n&#34;.join(lines),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-098&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Directory tree failed: {e}&#34;}
+
+    # ------------------------------------------------------------------ #
+    #  PWR-099 — Disk Usage by Folder                                     #
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def disk_usage_by_folder(path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-099: Analyse disk usage for immediate sub-folders of the given path.&#34;&#34;&#34;
+        try:
+            root = Path(path)
+            if not root.is_dir():
+                return {&#34;power_id&#34;: &#34;PWR-099&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Not a directory: {path}&#34;}
+
+            folders: List[Dict[str, Any]] = []
+            total = 0
+            for entry in sorted(root.iterdir()):
+                if entry.is_dir():
+                    size = _dir_size(entry)
+                    folders.append({&#34;name&#34;: entry.name, &#34;size_bytes&#34;: size, &#34;size_human&#34;: _human_size(size)})
+                    total += size
+                elif entry.is_file():
+                    total += entry.stat().st_size
+
+            folders.sort(key=lambda x: x[&#34;size_bytes&#34;], reverse=True)
+            return {
+                &#34;power_id&#34;: &#34;PWR-099&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(root.resolve()),
+                &#34;total_size_bytes&#34;: total,
+                &#34;total_size_human&#34;: _human_size(total),
+                &#34;folders&#34;: folders[:100],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-099&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Disk usage analysis failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>File and document manipulation powers for JARVIS.</p></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.powers.file_powers.FilePowers.csv_query"><code class="name flex">
+<span>def <span class="ident">csv_query</span></span>(<span>path: str, filter_col: str, filter_val: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def csv_query(path: str, filter_col: str, filter_val: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-087: Filter CSV rows where filter_col matches filter_val.&#34;&#34;&#34;
+    try:
+        p = Path(path)
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-087&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+        with open(p, newline=&#34;&#34;, encoding=&#34;utf-8-sig&#34;, errors=&#34;replace&#34;) as f:
+            reader = csv.DictReader(f)
+            if reader.fieldnames is None:
+                return {&#34;power_id&#34;: &#34;PWR-087&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;CSV has no headers.&#34;}
+            if filter_col not in reader.fieldnames:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-087&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;message&#34;: f&#34;Column &#39;{filter_col}&#39; not found. Available: {reader.fieldnames}&#34;,
+                }
+            matches = [
+                row for row in reader if row.get(filter_col, &#34;&#34;).strip().lower() == filter_val.strip().lower()
+            ]
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-087&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;path&#34;: str(p.resolve()),
+            &#34;filter&#34;: {filter_col: filter_val},
+            &#34;match_count&#34;: len(matches),
+            &#34;rows&#34;: matches[:200],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-087&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;CSV query failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-087: Filter CSV rows where filter_col matches filter_val.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.csv_summary"><code class="name flex">
+<span>def <span class="ident">csv_summary</span></span>(<span>path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def csv_summary(path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-086: Produce summary statistics for a CSV file.&#34;&#34;&#34;
+    try:
+        p = Path(path)
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-086&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+        with open(p, newline=&#34;&#34;, encoding=&#34;utf-8-sig&#34;, errors=&#34;replace&#34;) as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+
+        if not rows:
+            return {&#34;power_id&#34;: &#34;PWR-086&#34;, &#34;status&#34;: &#34;success&#34;, &#34;path&#34;: str(p.resolve()), &#34;rows&#34;: 0, &#34;columns&#34;: 0}
+
+        headers = rows[0]
+        data_rows = rows[1:]
+
+        # Simple dtype inference
+        dtypes: Dict[str, str] = {}
+        for col_idx, col_name in enumerate(headers):
+            sample_vals = [r[col_idx] for r in data_rows[:100] if col_idx &lt; len(r) and r[col_idx].strip()]
+            if all(_is_numeric(v) for v in sample_vals) and sample_vals:
+                dtypes[col_name] = &#34;numeric&#34;
+            else:
+                dtypes[col_name] = &#34;text&#34;
+
+        head = [dict(zip(headers, r)) for r in data_rows[:5]]
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-086&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;path&#34;: str(p.resolve()),
+            &#34;rows&#34;: len(data_rows),
+            &#34;columns&#34;: len(headers),
+            &#34;headers&#34;: headers,
+            &#34;dtypes&#34;: dtypes,
+            &#34;head&#34;: head,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-086&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;CSV summary failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-086: Produce summary statistics for a CSV file.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.directory_tree"><code class="name flex">
+<span>def <span class="ident">directory_tree</span></span>(<span>path: str, depth: int = 3) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def directory_tree(path: str, depth: int = 3) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-098: List directory contents as a tree structure.&#34;&#34;&#34;
+    try:
+        root = Path(path)
+        if not root.is_dir():
+            return {&#34;power_id&#34;: &#34;PWR-098&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Not a directory: {path}&#34;}
+
+        lines: List[str] = [str(root.resolve())]
+        _walk_tree(root, lines, prefix=&#34;&#34;, depth=depth, max_items=500)
+        return {
+            &#34;power_id&#34;: &#34;PWR-098&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;path&#34;: str(root.resolve()),
+            &#34;depth&#34;: depth,
+            &#34;tree&#34;: &#34;\n&#34;.join(lines),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-098&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Directory tree failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-098: List directory contents as a tree structure.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.disk_usage_by_folder"><code class="name flex">
+<span>def <span class="ident">disk_usage_by_folder</span></span>(<span>path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def disk_usage_by_folder(path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-099: Analyse disk usage for immediate sub-folders of the given path.&#34;&#34;&#34;
+    try:
+        root = Path(path)
+        if not root.is_dir():
+            return {&#34;power_id&#34;: &#34;PWR-099&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Not a directory: {path}&#34;}
+
+        folders: List[Dict[str, Any]] = []
+        total = 0
+        for entry in sorted(root.iterdir()):
+            if entry.is_dir():
+                size = _dir_size(entry)
+                folders.append({&#34;name&#34;: entry.name, &#34;size_bytes&#34;: size, &#34;size_human&#34;: _human_size(size)})
+                total += size
+            elif entry.is_file():
+                total += entry.stat().st_size
+
+        folders.sort(key=lambda x: x[&#34;size_bytes&#34;], reverse=True)
+        return {
+            &#34;power_id&#34;: &#34;PWR-099&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;path&#34;: str(root.resolve()),
+            &#34;total_size_bytes&#34;: total,
+            &#34;total_size_human&#34;: _human_size(total),
+            &#34;folders&#34;: folders[:100],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-099&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Disk usage analysis failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-099: Analyse disk usage for immediate sub-folders of the given path.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.excel_summary"><code class="name flex">
+<span>def <span class="ident">excel_summary</span></span>(<span>path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def excel_summary(path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-088: Produce a summary of an Excel workbook (sheet names, shapes).&#34;&#34;&#34;
+    try:
+        p = Path(path)
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-088&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+        try:
+            import openpyxl  # type: ignore[import-untyped]
+
+            wb = openpyxl.load_workbook(str(p), read_only=True, data_only=True)
+            sheets_info: List[Dict[str, Any]] = []
+            for name in wb.sheetnames:
+                ws = wb[name]
+                sheets_info.append(
+                    {
+                        &#34;name&#34;: name,
+                        &#34;rows&#34;: ws.max_row,
+                        &#34;columns&#34;: ws.max_column,
+                    }
+                )
+            wb.close()
+            return {
+                &#34;power_id&#34;: &#34;PWR-088&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;sheet_count&#34;: len(sheets_info),
+                &#34;sheets&#34;: sheets_info,
+            }
+        except ImportError:
+            return {
+                &#34;power_id&#34;: &#34;PWR-088&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: &#34;openpyxl not installed. Run `pip install openpyxl`.&#34;,
+            }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-088&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Excel summary failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-088: Produce a summary of an Excel workbook (sheet names, shapes).</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.file_compare"><code class="name flex">
+<span>def <span class="ident">file_compare</span></span>(<span>path1: str, path2: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def file_compare(path1: str, path2: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-092: Compare two text files and return a unified diff.&#34;&#34;&#34;
+    try:
+        p1, p2 = Path(path1), Path(path2)
+        for pp in (p1, p2):
+            if not pp.is_file():
+                return {&#34;power_id&#34;: &#34;PWR-092&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {pp}&#34;}
+
+        lines1 = p1.read_text(encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;).splitlines(keepends=True)
+        lines2 = p2.read_text(encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;).splitlines(keepends=True)
+        diff = list(difflib.unified_diff(lines1, lines2, fromfile=str(p1), tofile=str(p2)))
+        identical = len(diff) == 0
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-092&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;path1&#34;: str(p1.resolve()),
+            &#34;path2&#34;: str(p2.resolve()),
+            &#34;identical&#34;: identical,
+            &#34;diff_lines&#34;: len(diff),
+            &#34;diff&#34;: &#34;&#34;.join(diff[:500]),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-092&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File compare failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-092: Compare two text files and return a unified diff.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.file_copy"><code class="name flex">
+<span>def <span class="ident">file_copy</span></span>(<span>src: str, dst: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def file_copy(src: str, dst: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-096: Copy a file or directory.&#34;&#34;&#34;
+    try:
+        s, d = Path(src), Path(dst)
+        if not s.exists():
+            return {&#34;power_id&#34;: &#34;PWR-096&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Source not found: {src}&#34;}
+        d.parent.mkdir(parents=True, exist_ok=True)
+        if s.is_dir():
+            shutil.copytree(str(s), str(d))
+        else:
+            shutil.copy2(str(s), str(d))
+        return {
+            &#34;power_id&#34;: &#34;PWR-096&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;source&#34;: str(s.resolve()),
+            &#34;destination&#34;: str(d.resolve()),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-096&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File copy failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-096: Copy a file or directory.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.file_delete"><code class="name flex">
+<span>def <span class="ident">file_delete</span></span>(<span>path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def file_delete(path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-097: Delete a file (requires approval).&#34;&#34;&#34;
+    try:
+        p = Path(path)
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-097&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Path not found: {path}&#34;}
+        return {
+            &#34;power_id&#34;: &#34;PWR-097&#34;,
+            &#34;status&#34;: &#34;pending&#34;,
+            &#34;approval_required&#34;: True,
+            &#34;path&#34;: str(p.resolve()),
+            &#34;is_dir&#34;: p.is_dir(),
+            &#34;message&#34;: f&#34;Confirm deletion of {&#39;directory&#39; if p.is_dir() else &#39;file&#39;}: {p.resolve()}&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-097&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File delete failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-097: Delete a file (requires approval).</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.file_info"><code class="name flex">
+<span>def <span class="ident">file_info</span></span>(<span>path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def file_info(path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-091: Return metadata for a file (size, modified, type, SHA-256 hash).&#34;&#34;&#34;
+    try:
+        p = Path(path)
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-091&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Path not found: {path}&#34;}
+
+        stat = p.stat()
+        sha256 = &#34;&#34;
+        if p.is_file() and stat.st_size &lt; 100 * 1024 * 1024:  # hash files &lt; 100 MB
+            h = hashlib.sha256()
+            with open(p, &#34;rb&#34;) as f:
+                for chunk in iter(lambda: f.read(65536), b&#34;&#34;):
+                    h.update(chunk)
+            sha256 = h.hexdigest()
+
+        import time as _time
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-091&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;path&#34;: str(p.resolve()),
+            &#34;is_file&#34;: p.is_file(),
+            &#34;is_dir&#34;: p.is_dir(),
+            &#34;size_bytes&#34;: stat.st_size,
+            &#34;modified&#34;: _time.ctime(stat.st_mtime),
+            &#34;created&#34;: _time.ctime(stat.st_ctime),
+            &#34;suffix&#34;: p.suffix,
+            &#34;sha256&#34;: sha256,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-091&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File info failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-091: Return metadata for a file (size, modified, type, SHA-256 hash).</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.file_rename"><code class="name flex">
+<span>def <span class="ident">file_rename</span></span>(<span>old_path: str, new_path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def file_rename(old_path: str, new_path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-095: Rename / move a file.&#34;&#34;&#34;
+    try:
+        src = Path(old_path)
+        if not src.exists():
+            return {&#34;power_id&#34;: &#34;PWR-095&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Source not found: {old_path}&#34;}
+        dst = Path(new_path)
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        src.rename(dst)
+        return {
+            &#34;power_id&#34;: &#34;PWR-095&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;old_path&#34;: str(src),
+            &#34;new_path&#34;: str(dst.resolve()),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-095&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File rename failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-095: Rename / move a file.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.file_search"><code class="name flex">
+<span>def <span class="ident">file_search</span></span>(<span>directory: str, pattern: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def file_search(directory: str, pattern: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-090: Search for files by name/glob pattern in a directory tree.&#34;&#34;&#34;
+    try:
+        d = Path(directory)
+        if not d.is_dir():
+            return {&#34;power_id&#34;: &#34;PWR-090&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Not a directory: {directory}&#34;}
+
+        matches = sorted(str(m.resolve()) for m in d.rglob(pattern))
+        return {
+            &#34;power_id&#34;: &#34;PWR-090&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;directory&#34;: str(d.resolve()),
+            &#34;pattern&#34;: pattern,
+            &#34;match_count&#34;: len(matches),
+            &#34;matches&#34;: matches[:500],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-090&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File search failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-090: Search for files by name/glob pattern in a directory tree.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.json_query"><code class="name flex">
+<span>def <span class="ident">json_query</span></span>(<span>path: str, jmespath_expr: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def json_query(path: str, jmespath_expr: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-089: Read and optionally query a JSON file with a JMESPath expression.&#34;&#34;&#34;
+    try:
+        p = Path(path)
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-089&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+        data = json.loads(p.read_text(encoding=&#34;utf-8&#34;))
+
+        if jmespath_expr:
+            try:
+                import jmespath as jmp  # type: ignore[import-untyped]
+
+                result = jmp.search(jmespath_expr, data)
+                return {
+                    &#34;power_id&#34;: &#34;PWR-089&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;path&#34;: str(p.resolve()),
+                    &#34;expression&#34;: jmespath_expr,
+                    &#34;result&#34;: result,
+                }
+            except ImportError:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-089&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;message&#34;: &#34;jmespath not installed. Run `pip install jmespath`. Returning raw data.&#34;,
+                    &#34;data&#34;: data,
+                }
+        else:
+            return {
+                &#34;power_id&#34;: &#34;PWR-089&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;data&#34;: data,
+            }
+    except json.JSONDecodeError as e:
+        return {&#34;power_id&#34;: &#34;PWR-089&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Invalid JSON: {e}&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-089&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;JSON query failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-089: Read and optionally query a JSON file with a JMESPath expression.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.pdf_extract_text"><code class="name flex">
+<span>def <span class="ident">pdf_extract_text</span></span>(<span>path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def pdf_extract_text(path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-084: Extract text from a PDF file.
+
+    Tries PyMuPDF (fitz) first, falls back to a basic subprocess call.
+    &#34;&#34;&#34;
+    try:
+        p = Path(path)
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-084&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+        # ---- Try PyMuPDF ----
+        try:
+            import fitz  # type: ignore[import-untyped]
+
+            doc = fitz.open(str(p))
+            pages: List[str] = []
+            for page in doc:
+                pages.append(page.get_text())
+            doc.close()
+            full_text = &#34;\n&#34;.join(pages)
+            return {
+                &#34;power_id&#34;: &#34;PWR-084&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;engine&#34;: &#34;pymupdf&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;pages&#34;: len(pages),
+                &#34;text&#34;: full_text,
+            }
+        except ImportError:
+            pass
+
+        # ---- Fallback: try pdfminer.six ----
+        try:
+            from pdfminer.high_level import extract_text as _extract  # type: ignore[import-untyped]
+
+            text = _extract(str(p))
+            return {
+                &#34;power_id&#34;: &#34;PWR-084&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;engine&#34;: &#34;pdfminer&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;text&#34;: text,
+            }
+        except ImportError:
+            pass
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-084&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: &#34;No PDF library available. Install PyMuPDF (`pip install pymupdf`) or pdfminer.six.&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-084&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;PDF extraction failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-084: Extract text from a PDF file.</p>
+<p>Tries PyMuPDF (fitz) first, falls back to a basic subprocess call.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.pdf_search"><code class="name flex">
+<span>def <span class="ident">pdf_search</span></span>(<span>path: str, query: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def pdf_search(path: str, query: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-085: Search within a PDF for a text query.&#34;&#34;&#34;
+    try:
+        p = Path(path)
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-085&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+
+        try:
+            import fitz  # type: ignore[import-untyped]
+
+            doc = fitz.open(str(p))
+            matches: List[Dict[str, Any]] = []
+            for page_num, page in enumerate(doc, start=1):
+                text = page.get_text()
+                if query.lower() in text.lower():
+                    # Find line-level matches
+                    for line_no, line in enumerate(text.splitlines(), start=1):
+                        if query.lower() in line.lower():
+                            matches.append({&#34;page&#34;: page_num, &#34;line&#34;: line_no, &#34;text&#34;: line.strip()})
+            doc.close()
+            return {
+                &#34;power_id&#34;: &#34;PWR-085&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: str(p.resolve()),
+                &#34;query&#34;: query,
+                &#34;match_count&#34;: len(matches),
+                &#34;matches&#34;: matches[:100],  # cap results
+            }
+        except ImportError:
+            return {
+                &#34;power_id&#34;: &#34;PWR-085&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: &#34;PyMuPDF not installed. Run `pip install pymupdf`.&#34;,
+            }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-085&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;PDF search failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-085: Search within a PDF for a text query.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.read_file"><code class="name flex">
+<span>def <span class="ident">read_file</span></span>(<span>path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def read_file(path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-082: Read a text file safely and return its content.&#34;&#34;&#34;
+    try:
+        p = Path(path)
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-082&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {path}&#34;}
+        if not p.is_file():
+            return {&#34;power_id&#34;: &#34;PWR-082&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Not a file: {path}&#34;}
+        size = p.stat().st_size
+        # Guard against accidentally reading huge files into memory
+        if size &gt; 50 * 1024 * 1024:  # 50 MB
+            return {
+                &#34;power_id&#34;: &#34;PWR-082&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;File too large ({size:,} bytes). Use a streaming approach.&#34;,
+            }
+        content = p.read_text(encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-082&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;path&#34;: str(p.resolve()),
+            &#34;size_bytes&#34;: size,
+            &#34;lines&#34;: content.count(&#34;\n&#34;) + 1,
+            &#34;content&#34;: content,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-082&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Failed to read file: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-082: Read a text file safely and return its content.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.write_file"><code class="name flex">
+<span>def <span class="ident">write_file</span></span>(<span>path: str, content: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def write_file(path: str, content: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-083: Write text content to a file.
+
+    If the file already exists the response includes approval_required=True
+    so the caller can confirm before overwriting.
+    &#34;&#34;&#34;
+    try:
+        p = Path(path)
+        overwrite = p.exists()
+        if overwrite:
+            return {
+                &#34;power_id&#34;: &#34;PWR-083&#34;,
+                &#34;status&#34;: &#34;pending&#34;,
+                &#34;approval_required&#34;: True,
+                &#34;message&#34;: f&#34;File already exists: {path}. Confirm overwrite.&#34;,
+                &#34;path&#34;: str(p.resolve()),
+            }
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(content, encoding=&#34;utf-8&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-083&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;path&#34;: str(p.resolve()),
+            &#34;bytes_written&#34;: len(content.encode(&#34;utf-8&#34;)),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-083&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Failed to write file: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-083: Write text content to a file.</p>
+<p>If the file already exists the response includes approval_required=True
+so the caller can confirm before overwriting.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.zip_archive"><code class="name flex">
+<span>def <span class="ident">zip_archive</span></span>(<span>paths: List[str], output: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def zip_archive(paths: List[str], output: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-093: Create a zip archive from a list of file/folder paths.&#34;&#34;&#34;
+    try:
+        out = Path(output)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        added: List[str] = []
+        with zipfile.ZipFile(str(out), &#34;w&#34;, zipfile.ZIP_DEFLATED) as zf:
+            for item in paths:
+                ip = Path(item)
+                if ip.is_file():
+                    zf.write(str(ip), ip.name)
+                    added.append(ip.name)
+                elif ip.is_dir():
+                    for child in ip.rglob(&#34;*&#34;):
+                        if child.is_file():
+                            arcname = str(child.relative_to(ip.parent))
+                            zf.write(str(child), arcname)
+                            added.append(arcname)
+        return {
+            &#34;power_id&#34;: &#34;PWR-093&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;archive&#34;: str(out.resolve()),
+            &#34;files_added&#34;: len(added),
+            &#34;entries&#34;: added[:100],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-093&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Zip archive failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-093: Create a zip archive from a list of file/folder paths.</p></div>
+</dd>
+<dt id="jarvis.powers.file_powers.FilePowers.zip_extract"><code class="name flex">
+<span>def <span class="ident">zip_extract</span></span>(<span>archive: str, destination: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def zip_extract(archive: str, destination: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-094: Extract a zip archive to a destination directory.&#34;&#34;&#34;
+    try:
+        a = Path(archive)
+        if not a.is_file():
+            return {&#34;power_id&#34;: &#34;PWR-094&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Archive not found: {archive}&#34;}
+
+        dest = Path(destination)
+        dest.mkdir(parents=True, exist_ok=True)
+        with zipfile.ZipFile(str(a), &#34;r&#34;) as zf:
+            names = zf.namelist()
+            zf.extractall(str(dest))
+        return {
+            &#34;power_id&#34;: &#34;PWR-094&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;archive&#34;: str(a.resolve()),
+            &#34;destination&#34;: str(dest.resolve()),
+            &#34;files_extracted&#34;: len(names),
+            &#34;entries&#34;: names[:100],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-094&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Zip extract failed: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-094: Extract a zip archive to a destination directory.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.file_powers.FilePowers" href="#jarvis.powers.file_powers.FilePowers">FilePowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.file_powers.FilePowers.csv_query" href="#jarvis.powers.file_powers.FilePowers.csv_query">csv_query</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.csv_summary" href="#jarvis.powers.file_powers.FilePowers.csv_summary">csv_summary</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.directory_tree" href="#jarvis.powers.file_powers.FilePowers.directory_tree">directory_tree</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.disk_usage_by_folder" href="#jarvis.powers.file_powers.FilePowers.disk_usage_by_folder">disk_usage_by_folder</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.excel_summary" href="#jarvis.powers.file_powers.FilePowers.excel_summary">excel_summary</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.file_compare" href="#jarvis.powers.file_powers.FilePowers.file_compare">file_compare</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.file_copy" href="#jarvis.powers.file_powers.FilePowers.file_copy">file_copy</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.file_delete" href="#jarvis.powers.file_powers.FilePowers.file_delete">file_delete</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.file_info" href="#jarvis.powers.file_powers.FilePowers.file_info">file_info</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.file_rename" href="#jarvis.powers.file_powers.FilePowers.file_rename">file_rename</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.file_search" href="#jarvis.powers.file_powers.FilePowers.file_search">file_search</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.json_query" href="#jarvis.powers.file_powers.FilePowers.json_query">json_query</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.pdf_extract_text" href="#jarvis.powers.file_powers.FilePowers.pdf_extract_text">pdf_extract_text</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.pdf_search" href="#jarvis.powers.file_powers.FilePowers.pdf_search">pdf_search</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.read_file" href="#jarvis.powers.file_powers.FilePowers.read_file">read_file</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.write_file" href="#jarvis.powers.file_powers.FilePowers.write_file">write_file</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.zip_archive" href="#jarvis.powers.file_powers.FilePowers.zip_archive">zip_archive</a></code></li>
+<li><code><a title="jarvis.powers.file_powers.FilePowers.zip_extract" href="#jarvis.powers.file_powers.FilePowers.zip_extract">zip_extract</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

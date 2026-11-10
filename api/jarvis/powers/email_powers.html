@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.email_powers API documentation</title>
+<meta name="description" content="JARVIS Email Powers (PWR-051 to PWR-055) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.email_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Email Powers (PWR-051 to PWR-055).</p>
+<p>Provides deterministic RFC 822 / MIME (.eml) email drafting, outbox storage,
+cryptographic SHA-256 draft integrity, and policy-gated sending.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.email_powers.EmailPowers"><code class="flex name class">
+<span>class <span class="ident">EmailPowers</span></span>
+<span>(</span><span>outbox_dir: Optional[Path] = None, gmail_client: Any = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EmailPowers:
+    &#34;&#34;&#34;Implementations for email drafting and Tier-2 gated sending.
+
+    Delivery is performed exclusively through the Gmail integration (OAuth 2.0).
+    A local ``.eml`` file move is never reported as a sent email.  ``SENT`` is
+    returned only when Gmail confirms a provider message id.
+    &#34;&#34;&#34;
+
+    def __init__(self, outbox_dir: Optional[Path] = None, gmail_client: Any = None):
+        self.outbox_dir = outbox_dir or (settings.data_dir / &#34;outbox&#34;)
+        self.outbox_dir.mkdir(parents=True, exist_ok=True)
+        self._gmail_client = gmail_client
+
+    @property
+    def gmail_client(self) -&gt; Any:
+        &#34;&#34;&#34;Lazily construct the real Gmail API client (never at import time).&#34;&#34;&#34;
+        if self._gmail_client is None:
+            from integrations.google.gmail_api import GoogleApiClient
+
+            self._gmail_client = GoogleApiClient()
+        return self._gmail_client
+
+    def draft_email(
+        self,
+        to: str,
+        subject: str,
+        body: str,
+        from_addr: Optional[str] = None,
+        cc: Optional[str] = None,
+        bcc: Optional[str] = None,
+        outbox_dir: Optional[str | Path] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-051: Deterministically composes and saves an RFC 822 .eml draft to the outbox.&#34;&#34;&#34;
+        target_outbox = Path(outbox_dir) if outbox_dir else self.outbox_dir
+        target_outbox.mkdir(parents=True, exist_ok=True)
+
+        msg = EmailMessage()
+        msg[&#34;To&#34;] = to
+        sender = from_addr or &#34;jarvis@localhost&#34;
+        msg[&#34;From&#34;] = sender
+        msg[&#34;Subject&#34;] = subject
+        msg[&#34;Date&#34;] = formatdate(localtime=True)
+        msg_id = make_msgid(domain=&#34;jarvis.local&#34;)
+        msg[&#34;Message-ID&#34;] = msg_id
+        if cc:
+            msg[&#34;Cc&#34;] = cc
+        if bcc:
+            msg[&#34;Bcc&#34;] = bcc
+        msg.set_content(body)
+
+        raw_bytes = msg.as_bytes()
+        draft_sha256 = hashlib.sha256(raw_bytes).hexdigest()
+
+        # Filename based on hash prefix
+        filename = f&#34;draft_{draft_sha256[:12]}.eml&#34;
+        file_path = target_outbox / filename
+        file_path.write_bytes(raw_bytes)
+
+        audit_ledger.record(
+            actor=&#34;EmailPowers&#34;,
+            action=&#34;DRAFT_EMAIL&#34;,
+            target=str(file_path),
+            payload={
+                &#34;to&#34;: to,
+                &#34;subject&#34;: subject,
+                &#34;sha256&#34;: draft_sha256,
+                &#34;msg_id&#34;: msg_id,
+            },
+            result=&#34;SUCCESS&#34;,
+        )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-051&#34;,
+            &#34;status&#34;: &#34;DRAFT_SAVED&#34;,
+            &#34;file_path&#34;: str(file_path),
+            &#34;sha256&#34;: draft_sha256,
+            &#34;message_id&#34;: msg_id,
+            &#34;to&#34;: to,
+            &#34;subject&#34;: subject,
+            &#34;preview&#34;: body[:160] + &#34;...&#34; if len(body) &gt; 160 else body,
+        }
+
+    def send_email(
+        self,
+        draft_path: str,
+        task_id: str = &#34;send_email_task&#34;,
+        approval_token: Optional[str] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-052: Sends an email draft strictly gated behind Tier-2 cryptographic approval.&#34;&#34;&#34;
+        p = Path(draft_path)
+        if not p.exists():
+            return {
+                &#34;power_id&#34;: &#34;PWR-052&#34;,
+                &#34;success&#34;: False,
+                &#34;error&#34;: f&#34;Draft file not found: {draft_path}&#34;,
+            }
+
+        raw_bytes = p.read_bytes()
+        content_hash = hashlib.sha256(raw_bytes).hexdigest()
+        exec_payload = {&#34;draft_path&#34;: str(p), &#34;sha256&#34;: content_hash}
+
+        # Tier 3 (OUTBOUND_COMM) Policy Evaluation
+        allowed, reason, pending_approval = policy_gate.evaluate_execution(
+            task_id=task_id,
+            power_id=&#34;send_email&#34;,
+            privilege_level=3,
+            payload=exec_payload,
+            approval_token=approval_token,
+        )
+
+        if not allowed:
+            return {
+                &#34;power_id&#34;: &#34;PWR-052&#34;,
+                &#34;success&#34;: False,
+                &#34;status&#34;: &#34;APPROVAL_REQUIRED&#34;,
+                &#34;error&#34;: reason or &#34;Sending outbound email requires Tier-2 human cryptographic sign-off.&#34;,
+                &#34;pending_approval&#34;: pending_approval,
+                &#34;draft_sha256&#34;: content_hash,
+                &#34;draft_path&#34;: str(p),
+            }
+
+        # Approved.  Delivery must be confirmed by a real provider.
+        from integrations.google.gmail_api import GmailApiError
+
+        try:
+            provider_result = self.gmail_client.send_raw_message(
+                raw_bytes=raw_bytes,
+                expected_content_hash=content_hash,
+            )
+        except GmailApiError as exc:
+            logger.warning(&#34;Gmail delivery not confirmed for draft %s: %s&#34;, p.name, exc.error)
+            return {
+                &#34;power_id&#34;: &#34;PWR-052&#34;,
+                &#34;success&#34;: False,
+                &#34;status&#34;: &#34;NOT_SENT&#34;,
+                &#34;error&#34;: f&#34;Gmail delivery not confirmed: {exc}&#34;,
+                &#34;reason&#34;: exc.description or exc.error,
+                &#34;draft_sha256&#34;: content_hash,
+                &#34;draft_path&#34;: str(p),
+                &#34;provider_message_id&#34;: None,
+                &#34;setup_command&#34;: &#34;python -m integrations.google.oauth_flow connect&#34;,
+            }
+        except Exception as exc:  # never claim success on an unknown failure
+            logger.warning(&#34;Email dispatch failed for draft %s (%s)&#34;, p.name, type(exc).__name__)
+            return {
+                &#34;power_id&#34;: &#34;PWR-052&#34;,
+                &#34;success&#34;: False,
+                &#34;status&#34;: &#34;NOT_SENT&#34;,
+                &#34;error&#34;: f&#34;Email dispatch failed ({type(exc).__name__})&#34;,
+                &#34;draft_sha256&#34;: content_hash,
+                &#34;draft_path&#34;: str(p),
+                &#34;provider_message_id&#34;: None,
+            }
+
+        message_id = provider_result.get(&#34;message_id&#34;) if isinstance(provider_result, dict) else None
+        if not message_id:
+            return {
+                &#34;power_id&#34;: &#34;PWR-052&#34;,
+                &#34;success&#34;: False,
+                &#34;status&#34;: &#34;NOT_SENT&#34;,
+                &#34;error&#34;: &#34;The provider did not return a message id; delivery is unconfirmed.&#34;,
+                &#34;draft_sha256&#34;: content_hash,
+                &#34;draft_path&#34;: str(p),
+                &#34;provider_message_id&#34;: None,
+            }
+
+        audit_ledger.record(
+            actor=&#34;EmailPowers&#34;,
+            action=&#34;SEND_EMAIL&#34;,
+            target=str(p),
+            payload={
+                &#34;sha256&#34;: content_hash,
+                &#34;task_id&#34;: task_id,
+                &#34;provider&#34;: provider_result.get(&#34;provider&#34;, &#34;gmail&#34;),
+                &#34;message_id&#34;: message_id,
+            },
+            result=&#34;SUCCESS&#34;,
+        )
+
+        # Archive only after the provider confirmed the message id.
+        sent_dir = p.parent / &#34;sent&#34;
+        sent_dir.mkdir(parents=True, exist_ok=True)
+        dest = sent_dir / p.name
+        p.rename(dest)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-052&#34;,
+            &#34;success&#34;: True,
+            &#34;status&#34;: &#34;SENT&#34;,
+            &#34;provider&#34;: provider_result.get(&#34;provider&#34;, &#34;gmail&#34;),
+            &#34;message_id&#34;: message_id,
+            &#34;provider_message_id&#34;: message_id,
+            &#34;thread_id&#34;: provider_result.get(&#34;thread_id&#34;),
+            &#34;archive_path&#34;: str(dest),
+            &#34;sha256&#34;: content_hash,
+        }
+
+    def list_outbox(self, outbox_dir: Optional[str | Path] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-053: Lists pending email drafts currently waiting in the outbox.&#34;&#34;&#34;
+        target_outbox = Path(outbox_dir) if outbox_dir else self.outbox_dir
+        if not target_outbox.exists():
+            return {&#34;power_id&#34;: &#34;PWR-053&#34;, &#34;count&#34;: 0, &#34;drafts&#34;: []}
+
+        drafts: List[Dict[str, Any]] = []
+        for eml_file in target_outbox.glob(&#34;*.eml&#34;):
+            try:
+                stat = eml_file.stat()
+                drafts.append(
+                    {
+                        &#34;filename&#34;: eml_file.name,
+                        &#34;path&#34;: str(eml_file),
+                        &#34;size_bytes&#34;: stat.st_size,
+                        &#34;created_at&#34;: stat.st_ctime,
+                    }
+                )
+            except Exception as e:
+                logger.warning(f&#34;Error inspecting draft {eml_file}: {e}&#34;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-053&#34;,
+            &#34;count&#34;: len(drafts),
+            &#34;drafts&#34;: drafts,
+        }
+
+    def _parse_email_obj(self, msg: Any, mail_id: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Helper to extract headers and body text from email.message.EmailMessage.&#34;&#34;&#34;
+        from email.header import decode_header
+
+        def _decode_hdr(header_val: str) -&gt; str:
+            if not header_val:
+                return &#34;&#34;
+            parts = decode_header(header_val)
+            res = &#34;&#34;
+            for val, enc in parts:
+                if isinstance(val, bytes):
+                    res += val.decode(enc or &#34;utf-8&#34;, errors=&#34;ignore&#34;)
+                else:
+                    res += str(val)
+            return res
+
+        subject = _decode_hdr(msg.get(&#34;Subject&#34;, &#34;No Subject&#34;))
+        sender = _decode_hdr(msg.get(&#34;From&#34;, &#34;Unknown&#34;))
+        date = msg.get(&#34;Date&#34;, &#34;&#34;)
+
+        body = &#34;&#34;
+        if msg.is_multipart():
+            for part in msg.walk():
+                ctype = part.get_content_type()
+                if ctype == &#34;text/plain&#34;:
+                    try:
+                        payload = part.get_payload(decode=True)
+                        if payload:
+                            body += payload.decode(&#34;utf-8&#34;, errors=&#34;ignore&#34;)
+                    except Exception:
+                        pass
+        else:
+            try:
+                payload = msg.get_payload(decode=True)
+                if payload:
+                    body = payload.decode(&#34;utf-8&#34;, errors=&#34;ignore&#34;)
+                else:
+                    body = str(msg.get_payload() or &#34;&#34;)
+            except Exception:
+                body = str(msg.get_payload() or &#34;&#34;)
+
+        return {
+            &#34;id&#34;: mail_id,
+            &#34;from&#34;: sender,
+            &#34;subject&#34;: subject,
+            &#34;date&#34;: date,
+            &#34;body&#34;: body.strip(),
+        }
+
+    def scan_inbox_for_opportunities(
+        self,
+        inbox_dir: Optional[str | Path] = None,
+        query: str = &#34;opportunity OR offer OR interview OR internship OR hackathon&#34;,
+        limit: int = 10,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-191 &amp; PWR-192: Scan the Gmail account (OAuth 2.0) for opportunities.
+
+        There is no IMAP or app-password path.  If Gmail is not connected, the
+        local ``data/inbox/*.eml`` store is scanned as an explicitly labelled
+        fallback.  Email content is always treated as untrusted external data.
+        &#34;&#34;&#34;
+        parsed_emails: List[Dict[str, Any]] = []
+        live_sync = False
+        source = &#34;local_inbox&#34;
+
+        # 1. Real Gmail read through the official API (OAuth 2.0).
+        try:
+            listing = self.gmail_client.list_messages(
+                query=query,
+                max_results=limit,
+                include_metadata=False,
+            )
+            live_sync = True
+            source = &#34;gmail_oauth&#34;
+            for stub in listing.get(&#34;messages&#34;, []):
+                message_id = stub.get(&#34;id&#34;)
+                if not message_id:
+                    continue
+                detail = self.gmail_client.get_message(message_id)
+                parsed_emails.append(
+                    {
+                        &#34;id&#34;: detail.get(&#34;id&#34;) or message_id,
+                        &#34;from&#34;: detail.get(&#34;from&#34;, &#34;&#34;),
+                        &#34;subject&#34;: detail.get(&#34;subject&#34;, &#34;&#34;),
+                        &#34;date&#34;: detail.get(&#34;date&#34;, &#34;&#34;),
+                        &#34;body&#34;: detail.get(&#34;body_text&#34;, &#34;&#34;),
+                    }
+                )
+        except Exception as exc:
+            # Missing credentials / disconnected account / transient API error:
+            # fall back to the local store and report the truth.
+            logger.info(
+                &#34;Gmail inbox scan unavailable (%s); using local inbox fallback.&#34;,
+                type(exc).__name__,
+            )
+
+        # 2. Local incoming store fallback (data/inbox/*.eml)
+        if not parsed_emails and not live_sync:
+            target_inbox = Path(inbox_dir) if inbox_dir else (settings.data_dir / &#34;inbox&#34;)
+            if target_inbox.exists():
+                import email
+
+                for eml in sorted(target_inbox.glob(&#34;*.eml&#34;), reverse=True)[:limit]:
+                    try:
+                        raw = eml.read_bytes()
+                        msg = email.message_from_bytes(raw)
+                        parsed_emails.append(self._parse_email_obj(msg, eml.name))
+                    except Exception as e:
+                        logger.warning(f&#34;Error parsing local eml {eml}: {e}&#34;)
+
+        # 3. Categorize opportunities &amp; extract recommendations
+        opportunities: List[Dict[str, Any]] = []
+        for em in parsed_emails:
+            subj = em[&#34;subject&#34;].lower()
+            body = em[&#34;body&#34;].lower()
+
+            if &#34;interview&#34; in subj or &#34;shortlist&#34; in subj:
+                cat = &#34;Interview Shortlist&#34;
+                urgency = &#34;HIGH (Action Required)&#34;
+                action = &#34;Review the message and reply with available interview slots.&#34;
+            elif &#34;hackathon&#34; in subj or &#34;contest&#34; in subj:
+                cat = &#34;Hackathon Invitation&#34;
+                urgency = &#34;MEDIUM (Upcoming Briefing)&#34;
+                action = &#34;Confirm team registration and review the event brief.&#34;
+            elif &#34;urgent&#34; in subj or &#34;assignment&#34; in subj or &#34;deadline&#34; in subj or &#34;submission&#34; in subj:
+                cat = &#34;Academic / Project Deadline&#34;
+                urgency = &#34;CRITICAL&#34;
+                action = &#34;Review the deadline and submit the required material.&#34;
+            else:
+                cat = &#34;General Opportunity&#34;
+                urgency = &#34;NORMAL&#34;
+                action = &#34;Review message&#34;
+
+            opportunities.append(
+                {
+                    &#34;source_id&#34;: em[&#34;id&#34;],
+                    &#34;from&#34;: em[&#34;from&#34;],
+                    &#34;subject&#34;: em[&#34;subject&#34;],
+                    &#34;date&#34;: em[&#34;date&#34;],
+                    &#34;category&#34;: cat,
+                    &#34;urgency&#34;: urgency,
+                    &#34;recommended_action&#34;: action,
+                    &#34;snippet&#34;: em[&#34;body&#34;][:250] + (&#34;...&#34; if len(em[&#34;body&#34;]) &gt; 250 else &#34;&#34;),
+                    &#34;content_trust&#34;: &#34;UNTRUSTED_EXTERNAL_DATA&#34;,
+                }
+            )
+
+        if live_sync:
+            setup_note = &#34;Live Gmail sync active through OAuth 2.0.&#34;
+        else:
+            setup_note = (
+                &#34;Gmail is not connected. Scanned the local data/inbox store only. &#34;
+                &#34;Run `python -m integrations.google.oauth_flow connect` to authorize &#34;
+                &#34;the assistant account (OAuth 2.0, no password or app password).&#34;
+            )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-191&#34;,
+            &#34;account&#34;: settings.assistant_email,
+            &#34;auth_method&#34;: &#34;oauth2&#34; if live_sync else &#34;local_inbox&#34;,
+            &#34;source&#34;: source,
+            &#34;live_sync_active&#34;: live_sync,
+            &#34;opportunities_found&#34;: len(opportunities),
+            &#34;urgent_count&#34;: sum(1 for o in opportunities if &#34;HIGH&#34; in o[&#34;urgency&#34;] or &#34;CRITICAL&#34; in o[&#34;urgency&#34;]),
+            &#34;opportunities&#34;: opportunities,
+            &#34;content_trust&#34;: &#34;UNTRUSTED_EXTERNAL_DATA&#34;,
+            &#34;setup_note&#34;: setup_note,
+        }</code></pre>
+</details>
+<div class="desc"><p>Implementations for email drafting and Tier-2 gated sending.</p>
+<p>Delivery is performed exclusively through the Gmail integration (OAuth 2.0).
+A local <code>.eml</code> file move is never reported as a sent email.
+<code>SENT</code> is
+returned only when Gmail confirms a provider message id.</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.powers.email_powers.EmailPowers.gmail_client"><code class="name">prop <span class="ident">gmail_client</span> : Any</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def gmail_client(self) -&gt; Any:
+    &#34;&#34;&#34;Lazily construct the real Gmail API client (never at import time).&#34;&#34;&#34;
+    if self._gmail_client is None:
+        from integrations.google.gmail_api import GoogleApiClient
+
+        self._gmail_client = GoogleApiClient()
+    return self._gmail_client</code></pre>
+</details>
+<div class="desc"><p>Lazily construct the real Gmail API client (never at import time).</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.email_powers.EmailPowers.draft_email"><code class="name flex">
+<span>def <span class="ident">draft_email</span></span>(<span>self,<br>to: str,<br>subject: str,<br>body: str,<br>from_addr: Optional[str] = None,<br>cc: Optional[str] = None,<br>bcc: Optional[str] = None,<br>outbox_dir: Optional[str | Path] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draft_email(
+    self,
+    to: str,
+    subject: str,
+    body: str,
+    from_addr: Optional[str] = None,
+    cc: Optional[str] = None,
+    bcc: Optional[str] = None,
+    outbox_dir: Optional[str | Path] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-051: Deterministically composes and saves an RFC 822 .eml draft to the outbox.&#34;&#34;&#34;
+    target_outbox = Path(outbox_dir) if outbox_dir else self.outbox_dir
+    target_outbox.mkdir(parents=True, exist_ok=True)
+
+    msg = EmailMessage()
+    msg[&#34;To&#34;] = to
+    sender = from_addr or &#34;jarvis@localhost&#34;
+    msg[&#34;From&#34;] = sender
+    msg[&#34;Subject&#34;] = subject
+    msg[&#34;Date&#34;] = formatdate(localtime=True)
+    msg_id = make_msgid(domain=&#34;jarvis.local&#34;)
+    msg[&#34;Message-ID&#34;] = msg_id
+    if cc:
+        msg[&#34;Cc&#34;] = cc
+    if bcc:
+        msg[&#34;Bcc&#34;] = bcc
+    msg.set_content(body)
+
+    raw_bytes = msg.as_bytes()
+    draft_sha256 = hashlib.sha256(raw_bytes).hexdigest()
+
+    # Filename based on hash prefix
+    filename = f&#34;draft_{draft_sha256[:12]}.eml&#34;
+    file_path = target_outbox / filename
+    file_path.write_bytes(raw_bytes)
+
+    audit_ledger.record(
+        actor=&#34;EmailPowers&#34;,
+        action=&#34;DRAFT_EMAIL&#34;,
+        target=str(file_path),
+        payload={
+            &#34;to&#34;: to,
+            &#34;subject&#34;: subject,
+            &#34;sha256&#34;: draft_sha256,
+            &#34;msg_id&#34;: msg_id,
+        },
+        result=&#34;SUCCESS&#34;,
+    )
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-051&#34;,
+        &#34;status&#34;: &#34;DRAFT_SAVED&#34;,
+        &#34;file_path&#34;: str(file_path),
+        &#34;sha256&#34;: draft_sha256,
+        &#34;message_id&#34;: msg_id,
+        &#34;to&#34;: to,
+        &#34;subject&#34;: subject,
+        &#34;preview&#34;: body[:160] + &#34;...&#34; if len(body) &gt; 160 else body,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-051: Deterministically composes and saves an RFC 822 .eml draft to the outbox.</p></div>
+</dd>
+<dt id="jarvis.powers.email_powers.EmailPowers.list_outbox"><code class="name flex">
+<span>def <span class="ident">list_outbox</span></span>(<span>self, outbox_dir: Optional[str | Path] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_outbox(self, outbox_dir: Optional[str | Path] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-053: Lists pending email drafts currently waiting in the outbox.&#34;&#34;&#34;
+    target_outbox = Path(outbox_dir) if outbox_dir else self.outbox_dir
+    if not target_outbox.exists():
+        return {&#34;power_id&#34;: &#34;PWR-053&#34;, &#34;count&#34;: 0, &#34;drafts&#34;: []}
+
+    drafts: List[Dict[str, Any]] = []
+    for eml_file in target_outbox.glob(&#34;*.eml&#34;):
+        try:
+            stat = eml_file.stat()
+            drafts.append(
+                {
+                    &#34;filename&#34;: eml_file.name,
+                    &#34;path&#34;: str(eml_file),
+                    &#34;size_bytes&#34;: stat.st_size,
+                    &#34;created_at&#34;: stat.st_ctime,
+                }
+            )
+        except Exception as e:
+            logger.warning(f&#34;Error inspecting draft {eml_file}: {e}&#34;)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-053&#34;,
+        &#34;count&#34;: len(drafts),
+        &#34;drafts&#34;: drafts,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-053: Lists pending email drafts currently waiting in the outbox.</p></div>
+</dd>
+<dt id="jarvis.powers.email_powers.EmailPowers.scan_inbox_for_opportunities"><code class="name flex">
+<span>def <span class="ident">scan_inbox_for_opportunities</span></span>(<span>self,<br>inbox_dir: Optional[str | Path] = None,<br>query: str = 'opportunity OR offer OR interview OR internship OR hackathon',<br>limit: int = 10) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def scan_inbox_for_opportunities(
+    self,
+    inbox_dir: Optional[str | Path] = None,
+    query: str = &#34;opportunity OR offer OR interview OR internship OR hackathon&#34;,
+    limit: int = 10,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-191 &amp; PWR-192: Scan the Gmail account (OAuth 2.0) for opportunities.
+
+    There is no IMAP or app-password path.  If Gmail is not connected, the
+    local ``data/inbox/*.eml`` store is scanned as an explicitly labelled
+    fallback.  Email content is always treated as untrusted external data.
+    &#34;&#34;&#34;
+    parsed_emails: List[Dict[str, Any]] = []
+    live_sync = False
+    source = &#34;local_inbox&#34;
+
+    # 1. Real Gmail read through the official API (OAuth 2.0).
+    try:
+        listing = self.gmail_client.list_messages(
+            query=query,
+            max_results=limit,
+            include_metadata=False,
+        )
+        live_sync = True
+        source = &#34;gmail_oauth&#34;
+        for stub in listing.get(&#34;messages&#34;, []):
+            message_id = stub.get(&#34;id&#34;)
+            if not message_id:
+                continue
+            detail = self.gmail_client.get_message(message_id)
+            parsed_emails.append(
+                {
+                    &#34;id&#34;: detail.get(&#34;id&#34;) or message_id,
+                    &#34;from&#34;: detail.get(&#34;from&#34;, &#34;&#34;),
+                    &#34;subject&#34;: detail.get(&#34;subject&#34;, &#34;&#34;),
+                    &#34;date&#34;: detail.get(&#34;date&#34;, &#34;&#34;),
+                    &#34;body&#34;: detail.get(&#34;body_text&#34;, &#34;&#34;),
+                }
+            )
+    except Exception as exc:
+        # Missing credentials / disconnected account / transient API error:
+        # fall back to the local store and report the truth.
+        logger.info(
+            &#34;Gmail inbox scan unavailable (%s); using local inbox fallback.&#34;,
+            type(exc).__name__,
+        )
+
+    # 2. Local incoming store fallback (data/inbox/*.eml)
+    if not parsed_emails and not live_sync:
+        target_inbox = Path(inbox_dir) if inbox_dir else (settings.data_dir / &#34;inbox&#34;)
+        if target_inbox.exists():
+            import email
+
+            for eml in sorted(target_inbox.glob(&#34;*.eml&#34;), reverse=True)[:limit]:
+                try:
+                    raw = eml.read_bytes()
+                    msg = email.message_from_bytes(raw)
+                    parsed_emails.append(self._parse_email_obj(msg, eml.name))
+                except Exception as e:
+                    logger.warning(f&#34;Error parsing local eml {eml}: {e}&#34;)
+
+    # 3. Categorize opportunities &amp; extract recommendations
+    opportunities: List[Dict[str, Any]] = []
+    for em in parsed_emails:
+        subj = em[&#34;subject&#34;].lower()
+        body = em[&#34;body&#34;].lower()
+
+        if &#34;interview&#34; in subj or &#34;shortlist&#34; in subj:
+            cat = &#34;Interview Shortlist&#34;
+            urgency = &#34;HIGH (Action Required)&#34;
+            action = &#34;Review the message and reply with available interview slots.&#34;
+        elif &#34;hackathon&#34; in subj or &#34;contest&#34; in subj:
+            cat = &#34;Hackathon Invitation&#34;
+            urgency = &#34;MEDIUM (Upcoming Briefing)&#34;
+            action = &#34;Confirm team registration and review the event brief.&#34;
+        elif &#34;urgent&#34; in subj or &#34;assignment&#34; in subj or &#34;deadline&#34; in subj or &#34;submission&#34; in subj:
+            cat = &#34;Academic / Project Deadline&#34;
+            urgency = &#34;CRITICAL&#34;
+            action = &#34;Review the deadline and submit the required material.&#34;
+        else:
+            cat = &#34;General Opportunity&#34;
+            urgency = &#34;NORMAL&#34;
+            action = &#34;Review message&#34;
+
+        opportunities.append(
+            {
+                &#34;source_id&#34;: em[&#34;id&#34;],
+                &#34;from&#34;: em[&#34;from&#34;],
+                &#34;subject&#34;: em[&#34;subject&#34;],
+                &#34;date&#34;: em[&#34;date&#34;],
+                &#34;category&#34;: cat,
+                &#34;urgency&#34;: urgency,
+                &#34;recommended_action&#34;: action,
+                &#34;snippet&#34;: em[&#34;body&#34;][:250] + (&#34;...&#34; if len(em[&#34;body&#34;]) &gt; 250 else &#34;&#34;),
+                &#34;content_trust&#34;: &#34;UNTRUSTED_EXTERNAL_DATA&#34;,
+            }
+        )
+
+    if live_sync:
+        setup_note = &#34;Live Gmail sync active through OAuth 2.0.&#34;
+    else:
+        setup_note = (
+            &#34;Gmail is not connected. Scanned the local data/inbox store only. &#34;
+            &#34;Run `python -m integrations.google.oauth_flow connect` to authorize &#34;
+            &#34;the assistant account (OAuth 2.0, no password or app password).&#34;
+        )
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-191&#34;,
+        &#34;account&#34;: settings.assistant_email,
+        &#34;auth_method&#34;: &#34;oauth2&#34; if live_sync else &#34;local_inbox&#34;,
+        &#34;source&#34;: source,
+        &#34;live_sync_active&#34;: live_sync,
+        &#34;opportunities_found&#34;: len(opportunities),
+        &#34;urgent_count&#34;: sum(1 for o in opportunities if &#34;HIGH&#34; in o[&#34;urgency&#34;] or &#34;CRITICAL&#34; in o[&#34;urgency&#34;]),
+        &#34;opportunities&#34;: opportunities,
+        &#34;content_trust&#34;: &#34;UNTRUSTED_EXTERNAL_DATA&#34;,
+        &#34;setup_note&#34;: setup_note,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-191 &amp; PWR-192: Scan the Gmail account (OAuth 2.0) for opportunities.</p>
+<p>There is no IMAP or app-password path.
+If Gmail is not connected, the
+local <code>data/inbox/*.eml</code> store is scanned as an explicitly labelled
+fallback.
+Email content is always treated as untrusted external data.</p></div>
+</dd>
+<dt id="jarvis.powers.email_powers.EmailPowers.send_email"><code class="name flex">
+<span>def <span class="ident">send_email</span></span>(<span>self,<br>draft_path: str,<br>task_id: str = 'send_email_task',<br>approval_token: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_email(
+    self,
+    draft_path: str,
+    task_id: str = &#34;send_email_task&#34;,
+    approval_token: Optional[str] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-052: Sends an email draft strictly gated behind Tier-2 cryptographic approval.&#34;&#34;&#34;
+    p = Path(draft_path)
+    if not p.exists():
+        return {
+            &#34;power_id&#34;: &#34;PWR-052&#34;,
+            &#34;success&#34;: False,
+            &#34;error&#34;: f&#34;Draft file not found: {draft_path}&#34;,
+        }
+
+    raw_bytes = p.read_bytes()
+    content_hash = hashlib.sha256(raw_bytes).hexdigest()
+    exec_payload = {&#34;draft_path&#34;: str(p), &#34;sha256&#34;: content_hash}
+
+    # Tier 3 (OUTBOUND_COMM) Policy Evaluation
+    allowed, reason, pending_approval = policy_gate.evaluate_execution(
+        task_id=task_id,
+        power_id=&#34;send_email&#34;,
+        privilege_level=3,
+        payload=exec_payload,
+        approval_token=approval_token,
+    )
+
+    if not allowed:
+        return {
+            &#34;power_id&#34;: &#34;PWR-052&#34;,
+            &#34;success&#34;: False,
+            &#34;status&#34;: &#34;APPROVAL_REQUIRED&#34;,
+            &#34;error&#34;: reason or &#34;Sending outbound email requires Tier-2 human cryptographic sign-off.&#34;,
+            &#34;pending_approval&#34;: pending_approval,
+            &#34;draft_sha256&#34;: content_hash,
+            &#34;draft_path&#34;: str(p),
+        }
+
+    # Approved.  Delivery must be confirmed by a real provider.
+    from integrations.google.gmail_api import GmailApiError
+
+    try:
+        provider_result = self.gmail_client.send_raw_message(
+            raw_bytes=raw_bytes,
+            expected_content_hash=content_hash,
+        )
+    except GmailApiError as exc:
+        logger.warning(&#34;Gmail delivery not confirmed for draft %s: %s&#34;, p.name, exc.error)
+        return {
+            &#34;power_id&#34;: &#34;PWR-052&#34;,
+            &#34;success&#34;: False,
+            &#34;status&#34;: &#34;NOT_SENT&#34;,
+            &#34;error&#34;: f&#34;Gmail delivery not confirmed: {exc}&#34;,
+            &#34;reason&#34;: exc.description or exc.error,
+            &#34;draft_sha256&#34;: content_hash,
+            &#34;draft_path&#34;: str(p),
+            &#34;provider_message_id&#34;: None,
+            &#34;setup_command&#34;: &#34;python -m integrations.google.oauth_flow connect&#34;,
+        }
+    except Exception as exc:  # never claim success on an unknown failure
+        logger.warning(&#34;Email dispatch failed for draft %s (%s)&#34;, p.name, type(exc).__name__)
+        return {
+            &#34;power_id&#34;: &#34;PWR-052&#34;,
+            &#34;success&#34;: False,
+            &#34;status&#34;: &#34;NOT_SENT&#34;,
+            &#34;error&#34;: f&#34;Email dispatch failed ({type(exc).__name__})&#34;,
+            &#34;draft_sha256&#34;: content_hash,
+            &#34;draft_path&#34;: str(p),
+            &#34;provider_message_id&#34;: None,
+        }
+
+    message_id = provider_result.get(&#34;message_id&#34;) if isinstance(provider_result, dict) else None
+    if not message_id:
+        return {
+            &#34;power_id&#34;: &#34;PWR-052&#34;,
+            &#34;success&#34;: False,
+            &#34;status&#34;: &#34;NOT_SENT&#34;,
+            &#34;error&#34;: &#34;The provider did not return a message id; delivery is unconfirmed.&#34;,
+            &#34;draft_sha256&#34;: content_hash,
+            &#34;draft_path&#34;: str(p),
+            &#34;provider_message_id&#34;: None,
+        }
+
+    audit_ledger.record(
+        actor=&#34;EmailPowers&#34;,
+        action=&#34;SEND_EMAIL&#34;,
+        target=str(p),
+        payload={
+            &#34;sha256&#34;: content_hash,
+            &#34;task_id&#34;: task_id,
+            &#34;provider&#34;: provider_result.get(&#34;provider&#34;, &#34;gmail&#34;),
+            &#34;message_id&#34;: message_id,
+        },
+        result=&#34;SUCCESS&#34;,
+    )
+
+    # Archive only after the provider confirmed the message id.
+    sent_dir = p.parent / &#34;sent&#34;
+    sent_dir.mkdir(parents=True, exist_ok=True)
+    dest = sent_dir / p.name
+    p.rename(dest)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-052&#34;,
+        &#34;success&#34;: True,
+        &#34;status&#34;: &#34;SENT&#34;,
+        &#34;provider&#34;: provider_result.get(&#34;provider&#34;, &#34;gmail&#34;),
+        &#34;message_id&#34;: message_id,
+        &#34;provider_message_id&#34;: message_id,
+        &#34;thread_id&#34;: provider_result.get(&#34;thread_id&#34;),
+        &#34;archive_path&#34;: str(dest),
+        &#34;sha256&#34;: content_hash,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-052: Sends an email draft strictly gated behind Tier-2 cryptographic approval.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.email_powers.EmailPowers" href="#jarvis.powers.email_powers.EmailPowers">EmailPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.email_powers.EmailPowers.draft_email" href="#jarvis.powers.email_powers.EmailPowers.draft_email">draft_email</a></code></li>
+<li><code><a title="jarvis.powers.email_powers.EmailPowers.gmail_client" href="#jarvis.powers.email_powers.EmailPowers.gmail_client">gmail_client</a></code></li>
+<li><code><a title="jarvis.powers.email_powers.EmailPowers.list_outbox" href="#jarvis.powers.email_powers.EmailPowers.list_outbox">list_outbox</a></code></li>
+<li><code><a title="jarvis.powers.email_powers.EmailPowers.scan_inbox_for_opportunities" href="#jarvis.powers.email_powers.EmailPowers.scan_inbox_for_opportunities">scan_inbox_for_opportunities</a></code></li>
+<li><code><a title="jarvis.powers.email_powers.EmailPowers.send_email" href="#jarvis.powers.email_powers.EmailPowers.send_email">send_email</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.career.interview_prep API documentation</title>
+<meta name="description" content="Interview Preparation and Red-Flag Checker (PWR-336) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.career.interview_prep</code></h1>
+</header>
+<section id="section-intro">
+<p>Interview Preparation and Red-Flag Checker (PWR-336).</p>
+<p>Generates STAR-method behavioral questions, architectural interview scenarios,
+reverse-interview inquiries, and company culture red flag warnings.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.career.interview_prep.InterviewPrepEngine"><code class="flex name class">
+<span>class <span class="ident">InterviewPrepEngine</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InterviewPrepEngine:
+    &#34;&#34;&#34;Prepares users for technical, system design, and behavioral interviews.&#34;&#34;&#34;
+
+    def prepare_interview(
+        self, role_title: str, company_name: str, focus_tech: Optional[List[str]] = None
+    ) -&gt; InterviewPrepSession:
+        &#34;&#34;&#34;Constructs a comprehensive interview readiness session.&#34;&#34;&#34;
+        tech_list = focus_tech or [&#34;Distributed Systems&#34;, &#34;Concurrency&#34;, &#34;FastAPI&#34;, &#34;SQLite FTS5&#34;, &#34;Vector Search&#34;]
+
+        star_questions = [
+            {
+                &#34;category&#34;: &#34;Architecture &amp; Scaling&#34;,
+                &#34;question&#34;: f&#34;Describe a time you designed a mission-critical system for {role_title} that handled high concurrency. How did you ensure sub-second response times?&#34;,
+                &#34;star_framework&#34;: &#34;Situation: Legacy latency bottlenecks; Task: Re-architect retrieval layer; Action: Fused lexical FTS5 and vector indices with async caching; Result: Reduced p99 latency by 85%.&#34;,
+            },
+            {
+                &#34;category&#34;: &#34;Conflict &amp; Technical Disagreement&#34;,
+                &#34;question&#34;: &#34;Tell me about a time you disagreed with a peer or leadership regarding technology selection. How did you resolve it?&#34;,
+                &#34;star_framework&#34;: &#34;Situation: Debate over cloud API dependency vs local-first SQLite/Qdrant; Task: Justify local-first privacy; Action: Ran empirical latency &amp; cost benchmarks; Result: Secured consensus for local-first design.&#34;,
+            },
+            {
+                &#34;category&#34;: &#34;Failure &amp; Resilience&#34;,
+                &#34;question&#34;: &#34;Walk me through an incident where a production service failed unexpectedly. How did you diagnose, mitigate, and prevent recurrence?&#34;,
+                &#34;star_framework&#34;: &#34;Situation: Async worker queue saturation under unexpected burst load; Task: Prevent cascade failure; Action: Instituted backpressure and circuit breakers; Result: Zero data loss, automated recovery.&#34;,
+            },
+        ]
+
+        questions_to_ask_team = [
+            f&#34;What is the team&#39;s typical development-to-deployment cycle for new capabilities at {company_name}?&#34;,
+            &#34;How does the engineering organization balance feature velocity against technical debt and architectural refactoring?&#34;,
+            &#34;What are the biggest scalability or data integrity challenges the engineering team expects to face in the next 12 months?&#34;,
+        ]
+
+        red_flag_warnings = [
+            &#34;Excessive churn in engineering leadership over the past 12-18 months.&#34;,
+            &#34;Lack of dedicated CI/CD regression testing or reliance on manual production deployments.&#34;,
+            &#34;Vague descriptions of role ownership or ambiguous on-call rotation schedules.&#34;,
+        ]
+
+        logger.info(f&#34;Generated interview prep session for {role_title} at {company_name}&#34;)
+
+        return InterviewPrepSession(
+            role_title=role_title,
+            company_name=company_name,
+            star_questions=star_questions,
+            technical_focus_areas=tech_list,
+            questions_to_ask_team=questions_to_ask_team,
+            red_flag_warnings=red_flag_warnings,
+        )
+
+    def check_red_flags(self, company_name: str, job_description: str) -&gt; List[str]:
+        &#34;&#34;&#34;Scans a job posting or company review text for toxic workplace red flags.&#34;&#34;&#34;
+        red_flags_found = []
+        lower_desc = job_description.lower()
+
+        patterns = [
+            (&#34;wearing many hats&#34;, &#34;Potential lack of role boundaries and chronic understaffing.&#34;),
+            (&#34;fast-paced environment&#34;, &#34;Often signals high pressure and tight deadlines.&#34;),
+            (&#34;must thrive under extreme pressure&#34;, &#34;High risk of burnout and poorly managed delivery timelines.&#34;),
+            (&#34;work hard play hard&#34;, &#34;Often signals expected unpaid overtime and blurred work-life balance.&#34;),
+            (&#34;rockstar&#34;, &#34;May indicate immature engineering hierarchy or subjective performance reviews.&#34;),
+            (&#34;ninja&#34;, &#34;May indicate lack of structured job scope.&#34;),
+            (&#34;guru&#34;, &#34;May indicate unstructured organizational expectations.&#34;),
+            (&#34;unlimited pto&#34;, &#34;Verify actual average days taken; can sometimes discourage planned vacation time.&#34;),
+        ]
+
+        for phrase, meaning in patterns:
+            if phrase in lower_desc:
+                red_flags_found.append(f&#34;Flagged &#39;{phrase}&#39;: {meaning}&#34;)
+
+        if not red_flags_found:
+            red_flags_found.append(&#34;No overt language red flags detected in posting.&#34;)
+
+        logger.info(f&#34;Red flag check for {company_name} found {len(red_flags_found)} signals&#34;)
+        return red_flags_found</code></pre>
+</details>
+<div class="desc"><p>Prepares users for technical, system design, and behavioral interviews.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.career.interview_prep.InterviewPrepEngine.check_red_flags"><code class="name flex">
+<span>def <span class="ident">check_red_flags</span></span>(<span>self, company_name: str, job_description: str) ‑> List[str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_red_flags(self, company_name: str, job_description: str) -&gt; List[str]:
+    &#34;&#34;&#34;Scans a job posting or company review text for toxic workplace red flags.&#34;&#34;&#34;
+    red_flags_found = []
+    lower_desc = job_description.lower()
+
+    patterns = [
+        (&#34;wearing many hats&#34;, &#34;Potential lack of role boundaries and chronic understaffing.&#34;),
+        (&#34;fast-paced environment&#34;, &#34;Often signals high pressure and tight deadlines.&#34;),
+        (&#34;must thrive under extreme pressure&#34;, &#34;High risk of burnout and poorly managed delivery timelines.&#34;),
+        (&#34;work hard play hard&#34;, &#34;Often signals expected unpaid overtime and blurred work-life balance.&#34;),
+        (&#34;rockstar&#34;, &#34;May indicate immature engineering hierarchy or subjective performance reviews.&#34;),
+        (&#34;ninja&#34;, &#34;May indicate lack of structured job scope.&#34;),
+        (&#34;guru&#34;, &#34;May indicate unstructured organizational expectations.&#34;),
+        (&#34;unlimited pto&#34;, &#34;Verify actual average days taken; can sometimes discourage planned vacation time.&#34;),
+    ]
+
+    for phrase, meaning in patterns:
+        if phrase in lower_desc:
+            red_flags_found.append(f&#34;Flagged &#39;{phrase}&#39;: {meaning}&#34;)
+
+    if not red_flags_found:
+        red_flags_found.append(&#34;No overt language red flags detected in posting.&#34;)
+
+    logger.info(f&#34;Red flag check for {company_name} found {len(red_flags_found)} signals&#34;)
+    return red_flags_found</code></pre>
+</details>
+<div class="desc"><p>Scans a job posting or company review text for toxic workplace red flags.</p></div>
+</dd>
+<dt id="jarvis.career.interview_prep.InterviewPrepEngine.prepare_interview"><code class="name flex">
+<span>def <span class="ident">prepare_interview</span></span>(<span>self, role_title: str, company_name: str, focus_tech: Optional[List[str]] = None) ‑> <a title="jarvis.career.models.InterviewPrepSession" href="models.html#jarvis.career.models.InterviewPrepSession">InterviewPrepSession</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def prepare_interview(
+    self, role_title: str, company_name: str, focus_tech: Optional[List[str]] = None
+) -&gt; InterviewPrepSession:
+    &#34;&#34;&#34;Constructs a comprehensive interview readiness session.&#34;&#34;&#34;
+    tech_list = focus_tech or [&#34;Distributed Systems&#34;, &#34;Concurrency&#34;, &#34;FastAPI&#34;, &#34;SQLite FTS5&#34;, &#34;Vector Search&#34;]
+
+    star_questions = [
+        {
+            &#34;category&#34;: &#34;Architecture &amp; Scaling&#34;,
+            &#34;question&#34;: f&#34;Describe a time you designed a mission-critical system for {role_title} that handled high concurrency. How did you ensure sub-second response times?&#34;,
+            &#34;star_framework&#34;: &#34;Situation: Legacy latency bottlenecks; Task: Re-architect retrieval layer; Action: Fused lexical FTS5 and vector indices with async caching; Result: Reduced p99 latency by 85%.&#34;,
+        },
+        {
+            &#34;category&#34;: &#34;Conflict &amp; Technical Disagreement&#34;,
+            &#34;question&#34;: &#34;Tell me about a time you disagreed with a peer or leadership regarding technology selection. How did you resolve it?&#34;,
+            &#34;star_framework&#34;: &#34;Situation: Debate over cloud API dependency vs local-first SQLite/Qdrant; Task: Justify local-first privacy; Action: Ran empirical latency &amp; cost benchmarks; Result: Secured consensus for local-first design.&#34;,
+        },
+        {
+            &#34;category&#34;: &#34;Failure &amp; Resilience&#34;,
+            &#34;question&#34;: &#34;Walk me through an incident where a production service failed unexpectedly. How did you diagnose, mitigate, and prevent recurrence?&#34;,
+            &#34;star_framework&#34;: &#34;Situation: Async worker queue saturation under unexpected burst load; Task: Prevent cascade failure; Action: Instituted backpressure and circuit breakers; Result: Zero data loss, automated recovery.&#34;,
+        },
+    ]
+
+    questions_to_ask_team = [
+        f&#34;What is the team&#39;s typical development-to-deployment cycle for new capabilities at {company_name}?&#34;,
+        &#34;How does the engineering organization balance feature velocity against technical debt and architectural refactoring?&#34;,
+        &#34;What are the biggest scalability or data integrity challenges the engineering team expects to face in the next 12 months?&#34;,
+    ]
+
+    red_flag_warnings = [
+        &#34;Excessive churn in engineering leadership over the past 12-18 months.&#34;,
+        &#34;Lack of dedicated CI/CD regression testing or reliance on manual production deployments.&#34;,
+        &#34;Vague descriptions of role ownership or ambiguous on-call rotation schedules.&#34;,
+    ]
+
+    logger.info(f&#34;Generated interview prep session for {role_title} at {company_name}&#34;)
+
+    return InterviewPrepSession(
+        role_title=role_title,
+        company_name=company_name,
+        star_questions=star_questions,
+        technical_focus_areas=tech_list,
+        questions_to_ask_team=questions_to_ask_team,
+        red_flag_warnings=red_flag_warnings,
+    )</code></pre>
+</details>
+<div class="desc"><p>Constructs a comprehensive interview readiness session.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.career" href="index.html">jarvis.career</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.career.interview_prep.InterviewPrepEngine" href="#jarvis.career.interview_prep.InterviewPrepEngine">InterviewPrepEngine</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.career.interview_prep.InterviewPrepEngine.check_red_flags" href="#jarvis.career.interview_prep.InterviewPrepEngine.check_red_flags">check_red_flags</a></code></li>
+<li><code><a title="jarvis.career.interview_prep.InterviewPrepEngine.prepare_interview" href="#jarvis.career.interview_prep.InterviewPrepEngine.prepare_interview">prepare_interview</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.power_registry API documentation</title>
+<meta name="description" content="JARVIS Central Power Registry
+Manages all 355 operational capabilities, metadata schemas,
+danger levels, category profiles, and MCP tool bindings.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.power_registry</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Central Power Registry
+Manages all 355 operational capabilities, metadata schemas,
+danger levels, category profiles, and MCP tool bindings.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.power_registry.PowerRegistry"><code class="flex name class">
+<span>class <span class="ident">PowerRegistry</span></span>
+<span>(</span><span>catalog_path: pathlib.Path | None = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PowerRegistry:
+    def __init__(self, catalog_path: Optional[Path] = None):
+        self.catalog_path = catalog_path or settings.catalog_path
+        self.powers: Dict[str, Dict[str, Any]] = {}
+        self.category_index: Dict[str, List[str]] = {}
+        self.initial_powers: Dict[str, Dict[str, Any]] = {p[&#34;name&#34;]: p for p in INITIAL_POWERS}
+        for p in INITIAL_POWERS:
+            self.initial_powers[p[&#34;power_id&#34;]] = p
+        self.repo_index: Dict[str, List[str]] = {}
+        self._load_catalog()
+
+    def _load_catalog(self) -&gt; None:
+        &#34;&#34;&#34;Loads power definitions from the JSON catalog.&#34;&#34;&#34;
+        if not self.catalog_path.exists():
+            return
+
+        try:
+            with open(self.catalog_path, &#34;r&#34;, encoding=&#34;utf-8&#34;) as f:
+                records = json.load(f)
+                for item in records:
+                    pid = item.get(&#34;power_id&#34;) or item.get(&#34;id&#34;)
+                    if not pid:
+                        continue
+                    self.powers[pid] = item
+
+                    # Category index (case-insensitive key mapping)
+                    cat = item.get(&#34;category&#34;) or item.get(&#34;fields&#34;, {}).get(&#34;Category&#34;, &#34;General&#34;)
+                    cat_key = cat.strip().lower()
+                    if cat_key not in self.category_index:
+                        self.category_index[cat_key] = []
+                    self.category_index[cat_key].append(pid)
+
+                    # Repository index (JARVIS = a + b + c ... n)
+                    repos = list(item.get(&#34;contributing_repos&#34;, []))
+                    srepo = item.get(&#34;source_repo&#34;)
+                    if srepo and srepo not in repos:
+                        repos.insert(0, srepo)
+                    for r in repos:
+                        r_key = r.strip().lower()
+                        if r_key not in self.repo_index:
+                            self.repo_index[r_key] = []
+                        if pid not in self.repo_index[r_key]:
+                            self.repo_index[r_key].append(pid)
+        except Exception as e:
+            print(f&#34;[PowerRegistry] Warning: Error loading catalog: {e}&#34;)
+
+    def get_power(self, power_id: str) -&gt; Optional[Dict[str, Any]]:
+        &#34;&#34;&#34;Retrieves power definition by ID, slug, or name (e.g. &#39;PWR-001&#39; or &#39;chat&#39;).&#34;&#34;&#34;
+        if power_id in self.initial_powers:
+            return self.initial_powers[power_id]
+
+        pid_clean = power_id.strip()
+        pid_upper = pid_clean.upper()
+        if pid_upper in self.powers:
+            return self.powers[pid_upper]
+        if pid_clean in self.powers:
+            return self.powers[pid_clean]
+
+        # Search by slug or power_name
+        query = pid_clean.lower()
+        for p in self.powers.values():
+            if p.get(&#34;slug&#34;) == query:
+                return p
+            if (p.get(&#34;power_name&#34;) or &#34;&#34;).lower() == query:
+                return p
+        return None
+
+    def enable_power(self, power_id: str) -&gt; bool:
+        p = self.get_power(power_id)
+        if p:
+            p[&#34;enabled&#34;] = True
+            return True
+        return False
+
+    def disable_power(self, power_id: str) -&gt; bool:
+        p = self.get_power(power_id)
+        if p:
+            p[&#34;enabled&#34;] = False
+            return True
+        return False
+
+    def register_power(self, power: Dict[str, Any]) -&gt; None:
+        &#34;&#34;&#34;Registers a dynamic or integration power.&#34;&#34;&#34;
+        pid = power.get(&#34;power_id&#34;) or power.get(&#34;name&#34;)
+        if pid:
+            self.initial_powers[pid] = power
+
+    def list_powers(self) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Returns the roster of initial and integration-registered powers.&#34;&#34;&#34;
+        return list(self.initial_powers.values())
+
+    def list_all_powers(self) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Returns all 355 powers from the Master Catalog.&#34;&#34;&#34;
+        if self.powers:
+            return list(self.powers.values())
+        return list(self.initial_powers.values())
+
+    def search_powers(self, query: str, limit: int = 10) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Searches powers by keyword across name, slug, description, and examples.&#34;&#34;&#34;
+        query_lower = query.lower()
+        results = []
+
+        # Check initial powers
+        for p in INITIAL_POWERS:
+            if query_lower in p[&#34;name&#34;].lower() or query_lower in p[&#34;description&#34;].lower():
+                results.append(p)
+
+        # Check catalog powers
+        for p in self.powers.values():
+            name = (p.get(&#34;power_name&#34;) or p.get(&#34;fields&#34;, {}).get(&#34;Power name&#34;) or p.get(&#34;name&#34;, &#34;&#34;)).lower()
+            slug = (p.get(&#34;slug&#34;) or &#34;&#34;).lower()
+            desc = (p.get(&#34;one_line_description&#34;) or p.get(&#34;fields&#34;, {}).get(&#34;One-line description&#34;) or &#34;&#34;).lower()
+            examples = (
+                p.get(&#34;user_command_examples&#34;) or p.get(&#34;fields&#34;, {}).get(&#34;User command examples&#34;) or &#34;&#34;
+            ).lower()
+
+            if query_lower in name or query_lower in slug or query_lower in desc or query_lower in examples:
+                results.append(p)
+                if len(results) &gt;= limit:
+                    break
+
+        return results[:limit]
+
+    def list_categories(self) -&gt; List[str]:
+        # Return properly capitalized categories
+        cats = set()
+        for p in self.powers.values():
+            c = p.get(&#34;category&#34;)
+            if c:
+                cats.add(c)
+        return sorted(list(cats))
+
+    def get_powers_by_category(self, category: str) -&gt; List[Dict[str, Any]]:
+        cat_key = category.strip().lower()
+        pids = self.category_index.get(cat_key, [])
+        return [self.powers[pid] for pid in pids if pid in self.powers]
+
+    def get_powers_by_repo(self, repo_name: str) -&gt; List[Dict[str, Any]]:
+        r_key = repo_name.strip().lower()
+        pids = self.repo_index.get(r_key, [])
+        return [self.powers[pid] for pid in pids if pid in self.powers]
+
+    def list_ecosystem_repos(self) -&gt; List[str]:
+        return sorted(list(self.repo_index.keys()))
+
+    def get_ecosystem_formula(self) -&gt; str:
+        repos = self.list_ecosystem_repos()
+        return &#34;JARVIS = &#34; + &#34; + &#34;.join(repos) + f&#34; ({self.total_count()} powers)&#34;
+
+    def total_count(self) -&gt; int:
+        return len(self.powers) or len(INITIAL_POWERS)
+
+    def execute_power(self, power_id: str, **kwargs):
+        &#34;&#34;&#34;Dynamically executes any catalog power (PWR-001 to PWR-355) by routing to its domain module.&#34;&#34;&#34;
+        import jarvis.powers as powers_mod
+
+        p = self.get_power(power_id)
+        if not p:
+            return {&#34;power_id&#34;: power_id, &#34;status&#34;: &#34;not_found&#34;, &#34;error&#34;: f&#34;Power {power_id} not found in registry&#34;}
+
+        cat = (p.get(&#34;category&#34;) or &#34;General&#34;).lower()
+        pid = p.get(&#34;power_id&#34;) or power_id
+
+        # ID-range category overrides: numeric power families are authoritative
+        # when integration-registered catalog entries collide with core blocks
+        # (e.g. Home Assistant PWR-320..327 overwriting the Advanced Iron Man
+        # PWR-308..327 block caused PWR-327 to route into the smart-home branch).
+        try:
+            pid_num = int(pid.split(&#34;-&#34;, 1)[1])
+        except (IndexError, ValueError):
+            pid_num = -1
+        if pid_num &gt;= 0:
+            for lo, hi, canonical_category in (
+                (308, 327, &#34;advanced iron man&#34;),
+                (328, 337, &#34;career-ops&#34;),
+                (338, 355, &#34;research&#34;),
+            ):
+                if lo &lt;= pid_num &lt;= hi:
+                    cat = canonical_category
+                    break
+
+        try:
+            # 1. Voice (PWR-001 to PWR-005)
+            if &#34;voice&#34; in cat:
+                if pid == &#34;PWR-001&#34;:
+                    return powers_mod.voice_powers.wake_word_status()
+                elif pid == &#34;PWR-002&#34;:
+                    return powers_mod.voice_powers.speech_to_text(kwargs.get(&#34;audio_path&#34;))
+                elif pid == &#34;PWR-003&#34;:
+                    return powers_mod.voice_powers.text_to_speech(
+                        kwargs.get(&#34;text&#34;, &#34;Online.&#34;), kwargs.get(&#34;voice&#34;, &#34;jarvis&#34;)
+                    )
+                elif pid == &#34;PWR-004&#34;:
+                    return powers_mod.voice_powers.voice_profile_status()
+                elif pid == &#34;PWR-005&#34;:
+                    return powers_mod.voice_powers.interrupt_handling()
+                return {
+                    &#34;power_id&#34;: pid,
+                    &#34;status&#34;: &#34;executed&#34;,
+                    &#34;domain&#34;: &#34;voice&#34;,
+                    &#34;result&#34;: powers_mod.voice_powers.wake_word_status(),
+                }
+
+            # 2. Screen and Computer Awareness (PWR-016 to PWR-026)
+            elif &#34;screen&#34; in cat or &#34;awareness&#34; in cat:
+                if pid == &#34;PWR-016&#34;:
+                    return powers_mod.screen_powers.get_active_window()
+                elif pid == &#34;PWR-017&#34;:
+                    return powers_mod.screen_powers.capture_region(kwargs.get(&#34;region&#34;))
+                elif pid == &#34;PWR-018&#34;:
+                    return powers_mod.screen_powers.focus_window(kwargs.get(&#34;title&#34;, &#34;&#34;))
+                elif pid == &#34;PWR-021&#34;:
+                    return powers_mod.screen_powers.ocr_region(kwargs.get(&#34;region&#34;))
+                elif pid == &#34;PWR-022&#34;:
+                    return powers_mod.screen_powers.get_screen_resolution()
+                elif pid == &#34;PWR-024&#34;:
+                    return powers_mod.screen_powers.window_list()
+                elif pid == &#34;PWR-025&#34;:
+                    return powers_mod.screen_powers.minimize_all()
+                return powers_mod.screen_powers.get_active_window()
+
+            # 3. Instant Local Command (PWR-027 to PWR-049)
+            elif &#34;instant&#34; in cat:
+                if pid == &#34;PWR-027&#34;:
+                    return powers_mod.instant_powers.launch_app(kwargs.get(&#34;app_name&#34;, &#34;notepad&#34;))
+                elif pid == &#34;PWR-028&#34;:
+                    return powers_mod.instant_powers.close_app(kwargs.get(&#34;app_name&#34;, &#34;&#34;))
+                elif pid == &#34;PWR-030&#34;:
+                    return powers_mod.instant_powers.open_file(kwargs.get(&#34;file_path&#34;, &#34;.&#34;))
+                elif pid == &#34;PWR-031&#34;:
+                    return powers_mod.instant_powers.file_search_by_name(kwargs.get(&#34;name_pattern&#34;, &#34;*&#34;))
+                elif pid == &#34;PWR-033&#34;:
+                    return powers_mod.instant_powers.open_folder(kwargs.get(&#34;folder_path&#34;, &#34;.&#34;))
+                elif pid == &#34;PWR-040&#34;:
+                    return powers_mod.instant_powers.open_url(kwargs.get(&#34;url&#34;, &#34;https://google.com&#34;))
+                elif pid == &#34;PWR-042&#34;:
+                    return powers_mod.instant_powers.volume_control(kwargs.get(&#34;level_pct&#34;, 50))
+                elif pid == &#34;PWR-044&#34;:
+                    return powers_mod.instant_powers.capture_screenshot()
+                elif pid == &#34;PWR-046&#34;:
+                    return powers_mod.instant_powers.lock_workstation()
+                elif pid == &#34;PWR-047&#34;:
+                    return powers_mod.instant_powers.open_terminal()
+                return {
+                    &#34;power_id&#34;: pid,
+                    &#34;status&#34;: &#34;executed&#34;,
+                    &#34;domain&#34;: &#34;instant&#34;,
+                    &#34;result&#34;: powers_mod.instant_powers.get_clipboard(),
+                }
+
+            # 4. Dictation and Writing (PWR-050 to PWR-062)
+            elif &#34;dictation&#34; in cat or &#34;writing&#34; in cat:
+                if pid == &#34;PWR-053&#34;:
+                    return powers_mod.dictation_powers.tone_transform(
+                        kwargs.get(&#34;text&#34;, &#34;&#34;), kwargs.get(&#34;target_tone&#34;, &#34;formal&#34;)
+                    )
+                elif pid == &#34;PWR-054&#34;:
+                    return powers_mod.dictation_powers.grammar_polish(kwargs.get(&#34;text&#34;, &#34;&#34;))
+                elif pid == &#34;PWR-055&#34;:
+                    return powers_mod.dictation_powers.summarize_text(kwargs.get(&#34;text&#34;, &#34;&#34;))
+                elif pid == &#34;PWR-062&#34;:
+                    return powers_mod.dictation_powers.word_count_analysis(kwargs.get(&#34;text&#34;, &#34;&#34;))
+                return powers_mod.dictation_powers.word_count_analysis(kwargs.get(&#34;text&#34;, &#34;JARVIS System Online&#34;))
+
+            # 5. Browser and Web Automation (PWR-063 to PWR-081)
+            elif &#34;browser&#34; in cat or &#34;web&#34; in cat:
+                if &#34;search&#34; in p.get(&#34;slug&#34;, &#34;&#34;) or pid == &#34;PWR-063&#34;:
+                    return powers_mod.browser_powers.search_web(kwargs.get(&#34;query&#34;, &#34;AI systems architecture&#34;))
+                elif pid == &#34;PWR-064&#34;:
+                    return powers_mod.browser_powers.read_url(kwargs.get(&#34;url&#34;, &#34;https://news.ycombinator.com&#34;))
+                return powers_mod.browser_powers.search_web(kwargs.get(&#34;query&#34;, &#34;JARVIS&#34;))
+
+            # 6. File and Document (PWR-082 to PWR-099)
+            elif &#34;file&#34; in cat or &#34;document&#34; in cat:
+                if pid == &#34;PWR-082&#34;:
+                    return powers_mod.file_powers.read_file(kwargs.get(&#34;path&#34;, &#34;README.md&#34;))
+                elif pid == &#34;PWR-090&#34;:
+                    return powers_mod.file_powers.file_search(
+                        kwargs.get(&#34;directory&#34;, &#34;.&#34;), kwargs.get(&#34;pattern&#34;, &#34;*.py&#34;)
+                    )
+                elif pid == &#34;PWR-091&#34;:
+                    return powers_mod.file_powers.file_info(kwargs.get(&#34;path&#34;, &#34;README.md&#34;))
+                elif pid == &#34;PWR-098&#34;:
+                    return powers_mod.file_powers.directory_tree(kwargs.get(&#34;path&#34;, &#34;.&#34;))
+                return powers_mod.file_powers.directory_tree(&#34;.&#34;)
+
+            # 7. IT Administration (PWR-100 to PWR-126)
+            elif &#34;it admin&#34; in cat or &#34;administration&#34; in cat:
+                if pid == &#34;PWR-100&#34;:
+                    return powers_mod.it_admin_powers.docker_status()
+                elif pid == &#34;PWR-105&#34;:
+                    return powers_mod.it_admin_powers.service_status(kwargs.get(&#34;service_name&#34;))
+                elif pid == &#34;PWR-110&#34;:
+                    return powers_mod.it_admin_powers.disk_usage()
+                elif pid == &#34;PWR-115&#34;:
+                    return powers_mod.it_admin_powers.process_list(kwargs.get(&#34;top_n&#34;, 10))
+                elif pid == &#34;PWR-121&#34;:
+                    return powers_mod.it_admin_powers.system_uptime()
+                return powers_mod.it_admin_powers.system_uptime()
+
+            # 8. Networking (PWR-127 to PWR-143)
+            elif &#34;network&#34; in cat:
+                if pid == &#34;PWR-127&#34;:
+                    return powers_mod.networking_powers.ping(kwargs.get(&#34;host&#34;, &#34;127.0.0.1&#34;), kwargs.get(&#34;count&#34;, 2))
+                elif pid == &#34;PWR-129&#34;:
+                    return powers_mod.networking_powers.dns_lookup(kwargs.get(&#34;domain&#34;, &#34;google.com&#34;))
+                elif pid == &#34;PWR-130&#34;:
+                    return powers_mod.networking_powers.port_scan(
+                        kwargs.get(&#34;host&#34;, &#34;127.0.0.1&#34;), kwargs.get(&#34;ports&#34;, [8000])
+                    )
+                elif pid == &#34;PWR-131&#34;:
+                    return powers_mod.networking_powers.check_internet()
+                elif pid == &#34;PWR-132&#34;:
+                    return powers_mod.networking_powers.get_network_interfaces()
+                elif pid == &#34;PWR-139&#34;:
+                    return powers_mod.networking_powers.netstat_listeners()
+                elif pid == &#34;PWR-141&#34;:
+                    return powers_mod.networking_powers.bandwidth_monitor()
+                return powers_mod.networking_powers.check_internet()
+
+            # 9. Security (PWR-144 to PWR-161)
+            elif &#34;security&#34; in cat:
+                if pid == &#34;PWR-144&#34;:
+                    return powers_mod.security_powers.secret_scan(kwargs.get(&#34;directory&#34;, &#34;.&#34;))
+                elif pid == &#34;PWR-147&#34;:
+                    return powers_mod.security_powers.password_strength(kwargs.get(&#34;password&#34;, &#34;SecureP@ssw0rd2026!&#34;))
+                elif pid == &#34;PWR-148&#34;:
+                    return powers_mod.security_powers.generate_password(kwargs.get(&#34;length&#34;, 20))
+                elif pid == &#34;PWR-153&#34;:
+                    return powers_mod.security_powers.firewall_status()
+                elif pid == &#34;PWR-161&#34;:
+                    return powers_mod.security_powers.security_posture_report()
+                return powers_mod.security_powers.security_posture_report()
+
+            # 10. Developer (PWR-162 to PWR-184)
+            elif &#34;developer&#34; in cat:
+                if pid == &#34;PWR-162&#34;:
+                    return powers_mod.developer_powers.code_search(
+                        kwargs.get(&#34;pattern&#34;, &#34;Jarvis&#34;), kwargs.get(&#34;directory&#34;, &#34;.&#34;)
+                    )
+                elif pid == &#34;PWR-169&#34;:
+                    return powers_mod.developer_powers.git_log(kwargs.get(&#34;count&#34;, 5))
+                elif pid == &#34;PWR-172&#34;:
+                    return powers_mod.developer_powers.git_branch_list()
+                elif pid == &#34;PWR-175&#34;:
+                    return powers_mod.developer_powers.count_lines(kwargs.get(&#34;directory&#34;, &#34;jarvis&#34;))
+                elif pid == &#34;PWR-176&#34;:
+                    return powers_mod.developer_powers.todo_scan(kwargs.get(&#34;directory&#34;, &#34;jarvis&#34;))
+                return powers_mod.developer_powers.git_status()
+
+            # 11. Productivity / Calendar (PWR-185 to PWR-201)
+            elif &#34;productivity&#34; in cat:
+                if pid == &#34;PWR-185&#34;:
+                    return powers_mod.calendar_powers.get_upcoming_events()
+                elif pid == &#34;PWR-191&#34; or pid == &#34;PWR-192&#34;:
+                    return powers_mod.email_powers.scan_inbox_for_opportunities()
+                return powers_mod.calendar_powers.get_upcoming_events()
+            elif &#34;communication&#34; in cat:
+                if pid == &#34;PWR-203&#34;:
+                    return powers_mod.communication_powers.send_desktop_notification(
+                        kwargs.get(&#34;title&#34;, &#34;Jarvis&#34;), kwargs.get(&#34;body&#34;, &#34;Test&#34;)
+                    )
+                elif pid == &#34;PWR-205&#34;:
+                    return powers_mod.communication_powers.draft_email(
+                        kwargs.get(&#34;to&#34;, &#34;test@example.com&#34;), kwargs.get(&#34;subject&#34;, &#34;Test&#34;), kwargs.get(&#34;body&#34;, &#34;Test&#34;)
+                    )
+                elif pid == &#34;PWR-209&#34;:
+                    return powers_mod.communication_powers.contact_lookup(kwargs.get(&#34;name&#34;, &#34;Ganesh&#34;))
+                return powers_mod.communication_powers.notification_history()
+
+            # 13. Finance and Market (PWR-215 to PWR-236)
+            elif &#34;finance&#34; in cat:
+                if pid == &#34;PWR-215&#34;:
+                    return powers_mod.finance_powers.pwr_215_stock_watchlist(kwargs.get(&#34;symbol&#34;))
+                elif pid == &#34;PWR-220&#34;:
+                    return powers_mod.finance_powers.pwr_220_earnings_calendar(kwargs.get(&#34;symbol&#34;))
+                elif pid == &#34;PWR-222&#34;:
+                    return powers_mod.finance_powers.pwr_222_market_briefing()
+                elif pid == &#34;PWR-224&#34;:
+                    return powers_mod.finance_powers.pwr_224_portfolio_journal()
+                elif pid == &#34;PWR-228&#34;:
+                    return powers_mod.finance_powers.pwr_228_risk_concentration()
+                return powers_mod.finance_powers.pwr_222_market_briefing()
+
+            # 14. YouTube and Content (PWR-237 to PWR-255)
+            elif &#34;youtube&#34; in cat or &#34;content&#34; in cat:
+                if pid == &#34;PWR-237&#34;:
+                    return powers_mod.youtube_powers.generate_video_script(kwargs.get(&#34;topic&#34;, &#34;AI Operating Systems&#34;))
+                elif pid == &#34;PWR-238&#34;:
+                    return powers_mod.youtube_powers.generate_titles(kwargs.get(&#34;topic&#34;, &#34;Autonomous Agents&#34;))
+                elif pid == &#34;PWR-239&#34;:
+                    return powers_mod.youtube_powers.generate_description(kwargs.get(&#34;topic&#34;, &#34;JARVIS&#34;))
+                elif pid == &#34;PWR-240&#34;:
+                    return powers_mod.youtube_powers.generate_tags(kwargs.get(&#34;topic&#34;, &#34;AI&#34;))
+                return powers_mod.youtube_powers.generate_titles(&#34;Autonomous Agent Systems&#34;)
+
+            # 15. Smart-Home (PWR-256 to PWR-270)
+            elif &#34;smart&#34; in cat or &#34;home&#34; in cat:
+                if pid == &#34;PWR-256&#34;:
+                    return powers_mod.smart_home_powers.control_lights(state=kwargs.get(&#34;state&#34;, &#34;on&#34;))
+                elif pid == &#34;PWR-257&#34;:
+                    return powers_mod.smart_home_powers.control_climate(power=kwargs.get(&#34;power&#34;, &#34;on&#34;))
+                elif pid == &#34;PWR-260&#34;:
+                    return powers_mod.smart_home_powers.control_media(power=kwargs.get(&#34;power&#34;, &#34;on&#34;))
+                elif pid == &#34;PWR-263&#34;:
+                    return powers_mod.smart_home_powers.control_plug(
+                        entity_id=&#34;switch.smart_plug_geyser&#34;, power=kwargs.get(&#34;power&#34;, &#34;on&#34;)
+                    )
+                elif pid == &#34;PWR-267&#34;:
+                    return powers_mod.smart_home_powers.activate_scene(kwargs.get(&#34;scene&#34;, &#34;movie_night&#34;))
+                return powers_mod.smart_home_powers.get_all_devices()
+            elif &#34;automation&#34; in cat:
+                if pid == &#34;PWR-272&#34;:
+                    return powers_mod.automation_powers.pwr_272_cron_scheduler()
+                elif pid == &#34;PWR-281&#34;:
+                    return powers_mod.automation_powers.pwr_281_workflow_templates()
+                elif pid == &#34;PWR-283&#34;:
+                    return powers_mod.automation_powers.pwr_283_dependency_graph()
+                elif pid == &#34;PWR-285&#34;:
+                    return powers_mod.automation_powers.pwr_285_audit_trail()
+                return powers_mod.automation_powers.pwr_281_workflow_templates()
+
+            # 17. Multi-Agent (PWR-288 to PWR-307)
+            elif &#34;multi-agent&#34; in cat or &#34;agent&#34; in cat:
+                if pid == &#34;PWR-288&#34;:
+                    return powers_mod.multiagent_powers.orchestrator_dispatch(kwargs.get(&#34;goal&#34;, &#34;System check&#34;))
+                elif pid == &#34;PWR-289&#34; or pid == &#34;PWR-302&#34;:
+                    return powers_mod.multiagent_powers.plan_and_decompose(kwargs.get(&#34;goal&#34;, &#34;Full system test&#34;))
+                elif pid == &#34;PWR-303&#34;:
+                    return powers_mod.multiagent_powers.get_agent_dashboard()
+                elif pid == &#34;PWR-306&#34;:
+                    return powers_mod.multiagent_powers.get_cost_telemetry()
+                return powers_mod.multiagent_powers.get_agent_dashboard()
+
+            # 18. Advanced Iron Man (PWR-308 to PWR-327)
+            elif &#34;iron man&#34; in cat or &#34;advanced&#34; in cat:
+                if pid == &#34;PWR-308&#34;:
+                    return powers_mod.ironman_powers.vision_ui_automation(kwargs.get(&#34;goal&#34;, &#34;Inspect screen&#34;))
+                elif pid == &#34;PWR-313&#34;:
+                    return powers_mod.ironman_powers.research_copilot(kwargs.get(&#34;topic&#34;, &#34;Agent Swarms&#34;))
+                elif pid == &#34;PWR-317&#34;:
+                    return powers_mod.ironman_powers.proactive_maintenance()
+                elif pid == &#34;PWR-324&#34;:
+                    return powers_mod.ironman_powers.cost_governor()
+                elif pid == &#34;PWR-326&#34;:
+                    return powers_mod.ironman_powers.persona_engine(kwargs.get(&#34;persona&#34;))
+                elif pid == &#34;PWR-327&#34;:
+                    return powers_mod.ironman_powers.mission_control_hud()
+                return powers_mod.ironman_powers.mission_control_hud()
+
+            # 19. Career-Ops (PWR-328 to PWR-337)
+            elif &#34;career&#34; in cat:
+                if pid == &#34;PWR-328&#34;:
+                    return powers_mod.career_powers.get_service_status()
+                elif pid == &#34;PWR-329&#34;:
+                    return powers_mod.career_powers.scan_job_listing(
+                        kwargs.get(&#34;job_title&#34;, &#34;AI Architect&#34;),
+                        kwargs.get(&#34;company_name&#34;, &#34;Target&#34;),
+                        kwargs.get(&#34;description&#34;, &#34;Leading LLM architectures&#34;),
+                    )
+                return powers_mod.career_powers.list_pipeline()
+            elif &#34;research&#34; in cat:
+                if pid == &#34;PWR-338&#34;:
+                    return powers_mod.research_derived_powers.dynamic_tool_synthesis(
+                        kwargs.get(&#34;task_description&#34;, &#34;Deploy JARVIS&#34;)
+                    )
+                elif pid == &#34;PWR-340&#34;:
+                    return powers_mod.research_derived_powers.learned_shortcut_registry()
+                elif pid == &#34;PWR-347&#34;:
+                    return powers_mod.research_derived_powers.confidence_scorer(kwargs.get(&#34;response&#34;, &#34;Verified&#34;))
+                elif pid == &#34;PWR-355&#34;:
+                    return powers_mod.research_derived_powers.never_estimate_rule(kwargs.get(&#34;query&#34;, &#34;estimate time&#34;))
+                return powers_mod.research_derived_powers.learned_shortcut_registry()
+
+            return {
+                &#34;power_id&#34;: pid,
+                &#34;status&#34;: &#34;executed&#34;,
+                &#34;category&#34;: cat,
+                &#34;message&#34;: f&#34;Power {pid} routed successfully.&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: pid, &#34;status&#34;: &#34;error&#34;, &#34;category&#34;: cat, &#34;error&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.power_registry.PowerRegistry.disable_power"><code class="name flex">
+<span>def <span class="ident">disable_power</span></span>(<span>self, power_id: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def disable_power(self, power_id: str) -&gt; bool:
+    p = self.get_power(power_id)
+    if p:
+        p[&#34;enabled&#34;] = False
+        return True
+    return False</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.enable_power"><code class="name flex">
+<span>def <span class="ident">enable_power</span></span>(<span>self, power_id: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def enable_power(self, power_id: str) -&gt; bool:
+    p = self.get_power(power_id)
+    if p:
+        p[&#34;enabled&#34;] = True
+        return True
+    return False</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.execute_power"><code class="name flex">
+<span>def <span class="ident">execute_power</span></span>(<span>self, power_id: str, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute_power(self, power_id: str, **kwargs):
+    &#34;&#34;&#34;Dynamically executes any catalog power (PWR-001 to PWR-355) by routing to its domain module.&#34;&#34;&#34;
+    import jarvis.powers as powers_mod
+
+    p = self.get_power(power_id)
+    if not p:
+        return {&#34;power_id&#34;: power_id, &#34;status&#34;: &#34;not_found&#34;, &#34;error&#34;: f&#34;Power {power_id} not found in registry&#34;}
+
+    cat = (p.get(&#34;category&#34;) or &#34;General&#34;).lower()
+    pid = p.get(&#34;power_id&#34;) or power_id
+
+    # ID-range category overrides: numeric power families are authoritative
+    # when integration-registered catalog entries collide with core blocks
+    # (e.g. Home Assistant PWR-320..327 overwriting the Advanced Iron Man
+    # PWR-308..327 block caused PWR-327 to route into the smart-home branch).
+    try:
+        pid_num = int(pid.split(&#34;-&#34;, 1)[1])
+    except (IndexError, ValueError):
+        pid_num = -1
+    if pid_num &gt;= 0:
+        for lo, hi, canonical_category in (
+            (308, 327, &#34;advanced iron man&#34;),
+            (328, 337, &#34;career-ops&#34;),
+            (338, 355, &#34;research&#34;),
+        ):
+            if lo &lt;= pid_num &lt;= hi:
+                cat = canonical_category
+                break
+
+    try:
+        # 1. Voice (PWR-001 to PWR-005)
+        if &#34;voice&#34; in cat:
+            if pid == &#34;PWR-001&#34;:
+                return powers_mod.voice_powers.wake_word_status()
+            elif pid == &#34;PWR-002&#34;:
+                return powers_mod.voice_powers.speech_to_text(kwargs.get(&#34;audio_path&#34;))
+            elif pid == &#34;PWR-003&#34;:
+                return powers_mod.voice_powers.text_to_speech(
+                    kwargs.get(&#34;text&#34;, &#34;Online.&#34;), kwargs.get(&#34;voice&#34;, &#34;jarvis&#34;)
+                )
+            elif pid == &#34;PWR-004&#34;:
+                return powers_mod.voice_powers.voice_profile_status()
+            elif pid == &#34;PWR-005&#34;:
+                return powers_mod.voice_powers.interrupt_handling()
+            return {
+                &#34;power_id&#34;: pid,
+                &#34;status&#34;: &#34;executed&#34;,
+                &#34;domain&#34;: &#34;voice&#34;,
+                &#34;result&#34;: powers_mod.voice_powers.wake_word_status(),
+            }
+
+        # 2. Screen and Computer Awareness (PWR-016 to PWR-026)
+        elif &#34;screen&#34; in cat or &#34;awareness&#34; in cat:
+            if pid == &#34;PWR-016&#34;:
+                return powers_mod.screen_powers.get_active_window()
+            elif pid == &#34;PWR-017&#34;:
+                return powers_mod.screen_powers.capture_region(kwargs.get(&#34;region&#34;))
+            elif pid == &#34;PWR-018&#34;:
+                return powers_mod.screen_powers.focus_window(kwargs.get(&#34;title&#34;, &#34;&#34;))
+            elif pid == &#34;PWR-021&#34;:
+                return powers_mod.screen_powers.ocr_region(kwargs.get(&#34;region&#34;))
+            elif pid == &#34;PWR-022&#34;:
+                return powers_mod.screen_powers.get_screen_resolution()
+            elif pid == &#34;PWR-024&#34;:
+                return powers_mod.screen_powers.window_list()
+            elif pid == &#34;PWR-025&#34;:
+                return powers_mod.screen_powers.minimize_all()
+            return powers_mod.screen_powers.get_active_window()
+
+        # 3. Instant Local Command (PWR-027 to PWR-049)
+        elif &#34;instant&#34; in cat:
+            if pid == &#34;PWR-027&#34;:
+                return powers_mod.instant_powers.launch_app(kwargs.get(&#34;app_name&#34;, &#34;notepad&#34;))
+            elif pid == &#34;PWR-028&#34;:
+                return powers_mod.instant_powers.close_app(kwargs.get(&#34;app_name&#34;, &#34;&#34;))
+            elif pid == &#34;PWR-030&#34;:
+                return powers_mod.instant_powers.open_file(kwargs.get(&#34;file_path&#34;, &#34;.&#34;))
+            elif pid == &#34;PWR-031&#34;:
+                return powers_mod.instant_powers.file_search_by_name(kwargs.get(&#34;name_pattern&#34;, &#34;*&#34;))
+            elif pid == &#34;PWR-033&#34;:
+                return powers_mod.instant_powers.open_folder(kwargs.get(&#34;folder_path&#34;, &#34;.&#34;))
+            elif pid == &#34;PWR-040&#34;:
+                return powers_mod.instant_powers.open_url(kwargs.get(&#34;url&#34;, &#34;https://google.com&#34;))
+            elif pid == &#34;PWR-042&#34;:
+                return powers_mod.instant_powers.volume_control(kwargs.get(&#34;level_pct&#34;, 50))
+            elif pid == &#34;PWR-044&#34;:
+                return powers_mod.instant_powers.capture_screenshot()
+            elif pid == &#34;PWR-046&#34;:
+                return powers_mod.instant_powers.lock_workstation()
+            elif pid == &#34;PWR-047&#34;:
+                return powers_mod.instant_powers.open_terminal()
+            return {
+                &#34;power_id&#34;: pid,
+                &#34;status&#34;: &#34;executed&#34;,
+                &#34;domain&#34;: &#34;instant&#34;,
+                &#34;result&#34;: powers_mod.instant_powers.get_clipboard(),
+            }
+
+        # 4. Dictation and Writing (PWR-050 to PWR-062)
+        elif &#34;dictation&#34; in cat or &#34;writing&#34; in cat:
+            if pid == &#34;PWR-053&#34;:
+                return powers_mod.dictation_powers.tone_transform(
+                    kwargs.get(&#34;text&#34;, &#34;&#34;), kwargs.get(&#34;target_tone&#34;, &#34;formal&#34;)
+                )
+            elif pid == &#34;PWR-054&#34;:
+                return powers_mod.dictation_powers.grammar_polish(kwargs.get(&#34;text&#34;, &#34;&#34;))
+            elif pid == &#34;PWR-055&#34;:
+                return powers_mod.dictation_powers.summarize_text(kwargs.get(&#34;text&#34;, &#34;&#34;))
+            elif pid == &#34;PWR-062&#34;:
+                return powers_mod.dictation_powers.word_count_analysis(kwargs.get(&#34;text&#34;, &#34;&#34;))
+            return powers_mod.dictation_powers.word_count_analysis(kwargs.get(&#34;text&#34;, &#34;JARVIS System Online&#34;))
+
+        # 5. Browser and Web Automation (PWR-063 to PWR-081)
+        elif &#34;browser&#34; in cat or &#34;web&#34; in cat:
+            if &#34;search&#34; in p.get(&#34;slug&#34;, &#34;&#34;) or pid == &#34;PWR-063&#34;:
+                return powers_mod.browser_powers.search_web(kwargs.get(&#34;query&#34;, &#34;AI systems architecture&#34;))
+            elif pid == &#34;PWR-064&#34;:
+                return powers_mod.browser_powers.read_url(kwargs.get(&#34;url&#34;, &#34;https://news.ycombinator.com&#34;))
+            return powers_mod.browser_powers.search_web(kwargs.get(&#34;query&#34;, &#34;JARVIS&#34;))
+
+        # 6. File and Document (PWR-082 to PWR-099)
+        elif &#34;file&#34; in cat or &#34;document&#34; in cat:
+            if pid == &#34;PWR-082&#34;:
+                return powers_mod.file_powers.read_file(kwargs.get(&#34;path&#34;, &#34;README.md&#34;))
+            elif pid == &#34;PWR-090&#34;:
+                return powers_mod.file_powers.file_search(
+                    kwargs.get(&#34;directory&#34;, &#34;.&#34;), kwargs.get(&#34;pattern&#34;, &#34;*.py&#34;)
+                )
+            elif pid == &#34;PWR-091&#34;:
+                return powers_mod.file_powers.file_info(kwargs.get(&#34;path&#34;, &#34;README.md&#34;))
+            elif pid == &#34;PWR-098&#34;:
+                return powers_mod.file_powers.directory_tree(kwargs.get(&#34;path&#34;, &#34;.&#34;))
+            return powers_mod.file_powers.directory_tree(&#34;.&#34;)
+
+        # 7. IT Administration (PWR-100 to PWR-126)
+        elif &#34;it admin&#34; in cat or &#34;administration&#34; in cat:
+            if pid == &#34;PWR-100&#34;:
+                return powers_mod.it_admin_powers.docker_status()
+            elif pid == &#34;PWR-105&#34;:
+                return powers_mod.it_admin_powers.service_status(kwargs.get(&#34;service_name&#34;))
+            elif pid == &#34;PWR-110&#34;:
+                return powers_mod.it_admin_powers.disk_usage()
+            elif pid == &#34;PWR-115&#34;:
+                return powers_mod.it_admin_powers.process_list(kwargs.get(&#34;top_n&#34;, 10))
+            elif pid == &#34;PWR-121&#34;:
+                return powers_mod.it_admin_powers.system_uptime()
+            return powers_mod.it_admin_powers.system_uptime()
+
+        # 8. Networking (PWR-127 to PWR-143)
+        elif &#34;network&#34; in cat:
+            if pid == &#34;PWR-127&#34;:
+                return powers_mod.networking_powers.ping(kwargs.get(&#34;host&#34;, &#34;127.0.0.1&#34;), kwargs.get(&#34;count&#34;, 2))
+            elif pid == &#34;PWR-129&#34;:
+                return powers_mod.networking_powers.dns_lookup(kwargs.get(&#34;domain&#34;, &#34;google.com&#34;))
+            elif pid == &#34;PWR-130&#34;:
+                return powers_mod.networking_powers.port_scan(
+                    kwargs.get(&#34;host&#34;, &#34;127.0.0.1&#34;), kwargs.get(&#34;ports&#34;, [8000])
+                )
+            elif pid == &#34;PWR-131&#34;:
+                return powers_mod.networking_powers.check_internet()
+            elif pid == &#34;PWR-132&#34;:
+                return powers_mod.networking_powers.get_network_interfaces()
+            elif pid == &#34;PWR-139&#34;:
+                return powers_mod.networking_powers.netstat_listeners()
+            elif pid == &#34;PWR-141&#34;:
+                return powers_mod.networking_powers.bandwidth_monitor()
+            return powers_mod.networking_powers.check_internet()
+
+        # 9. Security (PWR-144 to PWR-161)
+        elif &#34;security&#34; in cat:
+            if pid == &#34;PWR-144&#34;:
+                return powers_mod.security_powers.secret_scan(kwargs.get(&#34;directory&#34;, &#34;.&#34;))
+            elif pid == &#34;PWR-147&#34;:
+                return powers_mod.security_powers.password_strength(kwargs.get(&#34;password&#34;, &#34;SecureP@ssw0rd2026!&#34;))
+            elif pid == &#34;PWR-148&#34;:
+                return powers_mod.security_powers.generate_password(kwargs.get(&#34;length&#34;, 20))
+            elif pid == &#34;PWR-153&#34;:
+                return powers_mod.security_powers.firewall_status()
+            elif pid == &#34;PWR-161&#34;:
+                return powers_mod.security_powers.security_posture_report()
+            return powers_mod.security_powers.security_posture_report()
+
+        # 10. Developer (PWR-162 to PWR-184)
+        elif &#34;developer&#34; in cat:
+            if pid == &#34;PWR-162&#34;:
+                return powers_mod.developer_powers.code_search(
+                    kwargs.get(&#34;pattern&#34;, &#34;Jarvis&#34;), kwargs.get(&#34;directory&#34;, &#34;.&#34;)
+                )
+            elif pid == &#34;PWR-169&#34;:
+                return powers_mod.developer_powers.git_log(kwargs.get(&#34;count&#34;, 5))
+            elif pid == &#34;PWR-172&#34;:
+                return powers_mod.developer_powers.git_branch_list()
+            elif pid == &#34;PWR-175&#34;:
+                return powers_mod.developer_powers.count_lines(kwargs.get(&#34;directory&#34;, &#34;jarvis&#34;))
+            elif pid == &#34;PWR-176&#34;:
+                return powers_mod.developer_powers.todo_scan(kwargs.get(&#34;directory&#34;, &#34;jarvis&#34;))
+            return powers_mod.developer_powers.git_status()
+
+        # 11. Productivity / Calendar (PWR-185 to PWR-201)
+        elif &#34;productivity&#34; in cat:
+            if pid == &#34;PWR-185&#34;:
+                return powers_mod.calendar_powers.get_upcoming_events()
+            elif pid == &#34;PWR-191&#34; or pid == &#34;PWR-192&#34;:
+                return powers_mod.email_powers.scan_inbox_for_opportunities()
+            return powers_mod.calendar_powers.get_upcoming_events()
+        elif &#34;communication&#34; in cat:
+            if pid == &#34;PWR-203&#34;:
+                return powers_mod.communication_powers.send_desktop_notification(
+                    kwargs.get(&#34;title&#34;, &#34;Jarvis&#34;), kwargs.get(&#34;body&#34;, &#34;Test&#34;)
+                )
+            elif pid == &#34;PWR-205&#34;:
+                return powers_mod.communication_powers.draft_email(
+                    kwargs.get(&#34;to&#34;, &#34;test@example.com&#34;), kwargs.get(&#34;subject&#34;, &#34;Test&#34;), kwargs.get(&#34;body&#34;, &#34;Test&#34;)
+                )
+            elif pid == &#34;PWR-209&#34;:
+                return powers_mod.communication_powers.contact_lookup(kwargs.get(&#34;name&#34;, &#34;Ganesh&#34;))
+            return powers_mod.communication_powers.notification_history()
+
+        # 13. Finance and Market (PWR-215 to PWR-236)
+        elif &#34;finance&#34; in cat:
+            if pid == &#34;PWR-215&#34;:
+                return powers_mod.finance_powers.pwr_215_stock_watchlist(kwargs.get(&#34;symbol&#34;))
+            elif pid == &#34;PWR-220&#34;:
+                return powers_mod.finance_powers.pwr_220_earnings_calendar(kwargs.get(&#34;symbol&#34;))
+            elif pid == &#34;PWR-222&#34;:
+                return powers_mod.finance_powers.pwr_222_market_briefing()
+            elif pid == &#34;PWR-224&#34;:
+                return powers_mod.finance_powers.pwr_224_portfolio_journal()
+            elif pid == &#34;PWR-228&#34;:
+                return powers_mod.finance_powers.pwr_228_risk_concentration()
+            return powers_mod.finance_powers.pwr_222_market_briefing()
+
+        # 14. YouTube and Content (PWR-237 to PWR-255)
+        elif &#34;youtube&#34; in cat or &#34;content&#34; in cat:
+            if pid == &#34;PWR-237&#34;:
+                return powers_mod.youtube_powers.generate_video_script(kwargs.get(&#34;topic&#34;, &#34;AI Operating Systems&#34;))
+            elif pid == &#34;PWR-238&#34;:
+                return powers_mod.youtube_powers.generate_titles(kwargs.get(&#34;topic&#34;, &#34;Autonomous Agents&#34;))
+            elif pid == &#34;PWR-239&#34;:
+                return powers_mod.youtube_powers.generate_description(kwargs.get(&#34;topic&#34;, &#34;JARVIS&#34;))
+            elif pid == &#34;PWR-240&#34;:
+                return powers_mod.youtube_powers.generate_tags(kwargs.get(&#34;topic&#34;, &#34;AI&#34;))
+            return powers_mod.youtube_powers.generate_titles(&#34;Autonomous Agent Systems&#34;)
+
+        # 15. Smart-Home (PWR-256 to PWR-270)
+        elif &#34;smart&#34; in cat or &#34;home&#34; in cat:
+            if pid == &#34;PWR-256&#34;:
+                return powers_mod.smart_home_powers.control_lights(state=kwargs.get(&#34;state&#34;, &#34;on&#34;))
+            elif pid == &#34;PWR-257&#34;:
+                return powers_mod.smart_home_powers.control_climate(power=kwargs.get(&#34;power&#34;, &#34;on&#34;))
+            elif pid == &#34;PWR-260&#34;:
+                return powers_mod.smart_home_powers.control_media(power=kwargs.get(&#34;power&#34;, &#34;on&#34;))
+            elif pid == &#34;PWR-263&#34;:
+                return powers_mod.smart_home_powers.control_plug(
+                    entity_id=&#34;switch.smart_plug_geyser&#34;, power=kwargs.get(&#34;power&#34;, &#34;on&#34;)
+                )
+            elif pid == &#34;PWR-267&#34;:
+                return powers_mod.smart_home_powers.activate_scene(kwargs.get(&#34;scene&#34;, &#34;movie_night&#34;))
+            return powers_mod.smart_home_powers.get_all_devices()
+        elif &#34;automation&#34; in cat:
+            if pid == &#34;PWR-272&#34;:
+                return powers_mod.automation_powers.pwr_272_cron_scheduler()
+            elif pid == &#34;PWR-281&#34;:
+                return powers_mod.automation_powers.pwr_281_workflow_templates()
+            elif pid == &#34;PWR-283&#34;:
+                return powers_mod.automation_powers.pwr_283_dependency_graph()
+            elif pid == &#34;PWR-285&#34;:
+                return powers_mod.automation_powers.pwr_285_audit_trail()
+            return powers_mod.automation_powers.pwr_281_workflow_templates()
+
+        # 17. Multi-Agent (PWR-288 to PWR-307)
+        elif &#34;multi-agent&#34; in cat or &#34;agent&#34; in cat:
+            if pid == &#34;PWR-288&#34;:
+                return powers_mod.multiagent_powers.orchestrator_dispatch(kwargs.get(&#34;goal&#34;, &#34;System check&#34;))
+            elif pid == &#34;PWR-289&#34; or pid == &#34;PWR-302&#34;:
+                return powers_mod.multiagent_powers.plan_and_decompose(kwargs.get(&#34;goal&#34;, &#34;Full system test&#34;))
+            elif pid == &#34;PWR-303&#34;:
+                return powers_mod.multiagent_powers.get_agent_dashboard()
+            elif pid == &#34;PWR-306&#34;:
+                return powers_mod.multiagent_powers.get_cost_telemetry()
+            return powers_mod.multiagent_powers.get_agent_dashboard()
+
+        # 18. Advanced Iron Man (PWR-308 to PWR-327)
+        elif &#34;iron man&#34; in cat or &#34;advanced&#34; in cat:
+            if pid == &#34;PWR-308&#34;:
+                return powers_mod.ironman_powers.vision_ui_automation(kwargs.get(&#34;goal&#34;, &#34;Inspect screen&#34;))
+            elif pid == &#34;PWR-313&#34;:
+                return powers_mod.ironman_powers.research_copilot(kwargs.get(&#34;topic&#34;, &#34;Agent Swarms&#34;))
+            elif pid == &#34;PWR-317&#34;:
+                return powers_mod.ironman_powers.proactive_maintenance()
+            elif pid == &#34;PWR-324&#34;:
+                return powers_mod.ironman_powers.cost_governor()
+            elif pid == &#34;PWR-326&#34;:
+                return powers_mod.ironman_powers.persona_engine(kwargs.get(&#34;persona&#34;))
+            elif pid == &#34;PWR-327&#34;:
+                return powers_mod.ironman_powers.mission_control_hud()
+            return powers_mod.ironman_powers.mission_control_hud()
+
+        # 19. Career-Ops (PWR-328 to PWR-337)
+        elif &#34;career&#34; in cat:
+            if pid == &#34;PWR-328&#34;:
+                return powers_mod.career_powers.get_service_status()
+            elif pid == &#34;PWR-329&#34;:
+                return powers_mod.career_powers.scan_job_listing(
+                    kwargs.get(&#34;job_title&#34;, &#34;AI Architect&#34;),
+                    kwargs.get(&#34;company_name&#34;, &#34;Target&#34;),
+                    kwargs.get(&#34;description&#34;, &#34;Leading LLM architectures&#34;),
+                )
+            return powers_mod.career_powers.list_pipeline()
+        elif &#34;research&#34; in cat:
+            if pid == &#34;PWR-338&#34;:
+                return powers_mod.research_derived_powers.dynamic_tool_synthesis(
+                    kwargs.get(&#34;task_description&#34;, &#34;Deploy JARVIS&#34;)
+                )
+            elif pid == &#34;PWR-340&#34;:
+                return powers_mod.research_derived_powers.learned_shortcut_registry()
+            elif pid == &#34;PWR-347&#34;:
+                return powers_mod.research_derived_powers.confidence_scorer(kwargs.get(&#34;response&#34;, &#34;Verified&#34;))
+            elif pid == &#34;PWR-355&#34;:
+                return powers_mod.research_derived_powers.never_estimate_rule(kwargs.get(&#34;query&#34;, &#34;estimate time&#34;))
+            return powers_mod.research_derived_powers.learned_shortcut_registry()
+
+        return {
+            &#34;power_id&#34;: pid,
+            &#34;status&#34;: &#34;executed&#34;,
+            &#34;category&#34;: cat,
+            &#34;message&#34;: f&#34;Power {pid} routed successfully.&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: pid, &#34;status&#34;: &#34;error&#34;, &#34;category&#34;: cat, &#34;error&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>Dynamically executes any catalog power (PWR-001 to PWR-355) by routing to its domain module.</p></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.get_ecosystem_formula"><code class="name flex">
+<span>def <span class="ident">get_ecosystem_formula</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_ecosystem_formula(self) -&gt; str:
+    repos = self.list_ecosystem_repos()
+    return &#34;JARVIS = &#34; + &#34; + &#34;.join(repos) + f&#34; ({self.total_count()} powers)&#34;</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.get_power"><code class="name flex">
+<span>def <span class="ident">get_power</span></span>(<span>self, power_id: str) ‑> Dict[str, Any] | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_power(self, power_id: str) -&gt; Optional[Dict[str, Any]]:
+    &#34;&#34;&#34;Retrieves power definition by ID, slug, or name (e.g. &#39;PWR-001&#39; or &#39;chat&#39;).&#34;&#34;&#34;
+    if power_id in self.initial_powers:
+        return self.initial_powers[power_id]
+
+    pid_clean = power_id.strip()
+    pid_upper = pid_clean.upper()
+    if pid_upper in self.powers:
+        return self.powers[pid_upper]
+    if pid_clean in self.powers:
+        return self.powers[pid_clean]
+
+    # Search by slug or power_name
+    query = pid_clean.lower()
+    for p in self.powers.values():
+        if p.get(&#34;slug&#34;) == query:
+            return p
+        if (p.get(&#34;power_name&#34;) or &#34;&#34;).lower() == query:
+            return p
+    return None</code></pre>
+</details>
+<div class="desc"><p>Retrieves power definition by ID, slug, or name (e.g. 'PWR-001' or 'chat').</p></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.get_powers_by_category"><code class="name flex">
+<span>def <span class="ident">get_powers_by_category</span></span>(<span>self, category: str) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_powers_by_category(self, category: str) -&gt; List[Dict[str, Any]]:
+    cat_key = category.strip().lower()
+    pids = self.category_index.get(cat_key, [])
+    return [self.powers[pid] for pid in pids if pid in self.powers]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.get_powers_by_repo"><code class="name flex">
+<span>def <span class="ident">get_powers_by_repo</span></span>(<span>self, repo_name: str) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_powers_by_repo(self, repo_name: str) -&gt; List[Dict[str, Any]]:
+    r_key = repo_name.strip().lower()
+    pids = self.repo_index.get(r_key, [])
+    return [self.powers[pid] for pid in pids if pid in self.powers]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.list_all_powers"><code class="name flex">
+<span>def <span class="ident">list_all_powers</span></span>(<span>self) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_all_powers(self) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Returns all 355 powers from the Master Catalog.&#34;&#34;&#34;
+    if self.powers:
+        return list(self.powers.values())
+    return list(self.initial_powers.values())</code></pre>
+</details>
+<div class="desc"><p>Returns all 355 powers from the Master Catalog.</p></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.list_categories"><code class="name flex">
+<span>def <span class="ident">list_categories</span></span>(<span>self) ‑> List[str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_categories(self) -&gt; List[str]:
+    # Return properly capitalized categories
+    cats = set()
+    for p in self.powers.values():
+        c = p.get(&#34;category&#34;)
+        if c:
+            cats.add(c)
+    return sorted(list(cats))</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.list_ecosystem_repos"><code class="name flex">
+<span>def <span class="ident">list_ecosystem_repos</span></span>(<span>self) ‑> List[str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_ecosystem_repos(self) -&gt; List[str]:
+    return sorted(list(self.repo_index.keys()))</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.list_powers"><code class="name flex">
+<span>def <span class="ident">list_powers</span></span>(<span>self) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_powers(self) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Returns the roster of initial and integration-registered powers.&#34;&#34;&#34;
+    return list(self.initial_powers.values())</code></pre>
+</details>
+<div class="desc"><p>Returns the roster of initial and integration-registered powers.</p></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.register_power"><code class="name flex">
+<span>def <span class="ident">register_power</span></span>(<span>self, power: Dict[str, Any]) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def register_power(self, power: Dict[str, Any]) -&gt; None:
+    &#34;&#34;&#34;Registers a dynamic or integration power.&#34;&#34;&#34;
+    pid = power.get(&#34;power_id&#34;) or power.get(&#34;name&#34;)
+    if pid:
+        self.initial_powers[pid] = power</code></pre>
+</details>
+<div class="desc"><p>Registers a dynamic or integration power.</p></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.search_powers"><code class="name flex">
+<span>def <span class="ident">search_powers</span></span>(<span>self, query: str, limit: int = 10) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search_powers(self, query: str, limit: int = 10) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Searches powers by keyword across name, slug, description, and examples.&#34;&#34;&#34;
+    query_lower = query.lower()
+    results = []
+
+    # Check initial powers
+    for p in INITIAL_POWERS:
+        if query_lower in p[&#34;name&#34;].lower() or query_lower in p[&#34;description&#34;].lower():
+            results.append(p)
+
+    # Check catalog powers
+    for p in self.powers.values():
+        name = (p.get(&#34;power_name&#34;) or p.get(&#34;fields&#34;, {}).get(&#34;Power name&#34;) or p.get(&#34;name&#34;, &#34;&#34;)).lower()
+        slug = (p.get(&#34;slug&#34;) or &#34;&#34;).lower()
+        desc = (p.get(&#34;one_line_description&#34;) or p.get(&#34;fields&#34;, {}).get(&#34;One-line description&#34;) or &#34;&#34;).lower()
+        examples = (
+            p.get(&#34;user_command_examples&#34;) or p.get(&#34;fields&#34;, {}).get(&#34;User command examples&#34;) or &#34;&#34;
+        ).lower()
+
+        if query_lower in name or query_lower in slug or query_lower in desc or query_lower in examples:
+            results.append(p)
+            if len(results) &gt;= limit:
+                break
+
+    return results[:limit]</code></pre>
+</details>
+<div class="desc"><p>Searches powers by keyword across name, slug, description, and examples.</p></div>
+</dd>
+<dt id="jarvis.core.power_registry.PowerRegistry.total_count"><code class="name flex">
+<span>def <span class="ident">total_count</span></span>(<span>self) ‑> int</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def total_count(self) -&gt; int:
+    return len(self.powers) or len(INITIAL_POWERS)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.power_registry.PowerRegistry" href="#jarvis.core.power_registry.PowerRegistry">PowerRegistry</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.disable_power" href="#jarvis.core.power_registry.PowerRegistry.disable_power">disable_power</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.enable_power" href="#jarvis.core.power_registry.PowerRegistry.enable_power">enable_power</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.execute_power" href="#jarvis.core.power_registry.PowerRegistry.execute_power">execute_power</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.get_ecosystem_formula" href="#jarvis.core.power_registry.PowerRegistry.get_ecosystem_formula">get_ecosystem_formula</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.get_power" href="#jarvis.core.power_registry.PowerRegistry.get_power">get_power</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.get_powers_by_category" href="#jarvis.core.power_registry.PowerRegistry.get_powers_by_category">get_powers_by_category</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.get_powers_by_repo" href="#jarvis.core.power_registry.PowerRegistry.get_powers_by_repo">get_powers_by_repo</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.list_all_powers" href="#jarvis.core.power_registry.PowerRegistry.list_all_powers">list_all_powers</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.list_categories" href="#jarvis.core.power_registry.PowerRegistry.list_categories">list_categories</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.list_ecosystem_repos" href="#jarvis.core.power_registry.PowerRegistry.list_ecosystem_repos">list_ecosystem_repos</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.list_powers" href="#jarvis.core.power_registry.PowerRegistry.list_powers">list_powers</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.register_power" href="#jarvis.core.power_registry.PowerRegistry.register_power">register_power</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.search_powers" href="#jarvis.core.power_registry.PowerRegistry.search_powers">search_powers</a></code></li>
+<li><code><a title="jarvis.core.power_registry.PowerRegistry.total_count" href="#jarvis.core.power_registry.PowerRegistry.total_count">total_count</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

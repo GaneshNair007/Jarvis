@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.agents.planner API documentation</title>
+<meta name="description" content="JARVIS Planner Agent (PWR-288 / PWR-289)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.agents.planner</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Planner Agent (PWR-288 / PWR-289)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration</p>
+<p>Decomposes a high-level goal into an ordered list of sub-tasks,
+assigns each task to the most suitable agent role, and estimates
+cost and complexity before any execution begins.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.agents.planner.Plan"><code class="flex name class">
+<span>class <span class="ident">Plan</span></span>
+<span>(</span><span>plan_id: str = &lt;factory&gt;,<br>goal: str = '',<br>steps: List[<a title="jarvis.agents.planner.PlanStep" href="#jarvis.agents.planner.PlanStep">PlanStep</a>] = &lt;factory&gt;,<br>total_estimated_cost_usd: float = 0.0,<br>complexity: str = 'low',<br>requires_approval: bool = False,<br>metadata: Dict[str, Any] = &lt;factory&gt;)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Plan:
+    &#34;&#34;&#34;Structured decomposition of a user goal.&#34;&#34;&#34;
+
+    plan_id: str = field(default_factory=lambda: f&#34;plan_{uuid.uuid4().hex[:8]}&#34;)
+    goal: str = &#34;&#34;
+    steps: List[PlanStep] = field(default_factory=list)
+    total_estimated_cost_usd: float = 0.0
+    complexity: str = &#34;low&#34;  # low | medium | high
+    requires_approval: bool = False
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -&gt; Dict[str, Any]:
+        return {
+            &#34;plan_id&#34;: self.plan_id,
+            &#34;goal&#34;: self.goal,
+            &#34;complexity&#34;: self.complexity,
+            &#34;requires_approval&#34;: self.requires_approval,
+            &#34;total_estimated_cost_usd&#34;: self.total_estimated_cost_usd,
+            &#34;steps&#34;: [
+                {
+                    &#34;step_id&#34;: s.step_id,
+                    &#34;title&#34;: s.title,
+                    &#34;description&#34;: s.description,
+                    &#34;assigned_role&#34;: s.assigned_role,
+                    &#34;depends_on&#34;: s.depends_on,
+                    &#34;estimated_duration_ms&#34;: s.estimated_duration_ms,
+                    &#34;estimated_cost_usd&#34;: s.estimated_cost_usd,
+                }
+                for s in self.steps
+            ],
+        }</code></pre>
+</details>
+<div class="desc"><p>Structured decomposition of a user goal.</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.planner.Plan.complexity"><code class="name">var <span class="ident">complexity</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.Plan.goal"><code class="name">var <span class="ident">goal</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.Plan.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.Plan.plan_id"><code class="name">var <span class="ident">plan_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.Plan.requires_approval"><code class="name">var <span class="ident">requires_approval</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.Plan.steps"><code class="name">var <span class="ident">steps</span> : List[<a title="jarvis.agents.planner.PlanStep" href="#jarvis.agents.planner.PlanStep">PlanStep</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.Plan.total_estimated_cost_usd"><code class="name">var <span class="ident">total_estimated_cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.planner.Plan.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; Dict[str, Any]:
+    return {
+        &#34;plan_id&#34;: self.plan_id,
+        &#34;goal&#34;: self.goal,
+        &#34;complexity&#34;: self.complexity,
+        &#34;requires_approval&#34;: self.requires_approval,
+        &#34;total_estimated_cost_usd&#34;: self.total_estimated_cost_usd,
+        &#34;steps&#34;: [
+            {
+                &#34;step_id&#34;: s.step_id,
+                &#34;title&#34;: s.title,
+                &#34;description&#34;: s.description,
+                &#34;assigned_role&#34;: s.assigned_role,
+                &#34;depends_on&#34;: s.depends_on,
+                &#34;estimated_duration_ms&#34;: s.estimated_duration_ms,
+                &#34;estimated_cost_usd&#34;: s.estimated_cost_usd,
+            }
+            for s in self.steps
+        ],
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.planner.PlanStep"><code class="flex name class">
+<span>class <span class="ident">PlanStep</span></span>
+<span>(</span><span>step_id: str = &lt;factory&gt;,<br>title: str = '',<br>description: str = '',<br>assigned_role: str = 'executor',<br>depends_on: List[str] = &lt;factory&gt;,<br>estimated_duration_ms: int = 1000,<br>estimated_cost_usd: float = 0.0,<br>metadata: Dict[str, Any] = &lt;factory&gt;)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class PlanStep:
+    &#34;&#34;&#34;A single atomic step produced by the Planner.&#34;&#34;&#34;
+
+    step_id: str = field(default_factory=lambda: f&#34;step_{uuid.uuid4().hex[:6]}&#34;)
+    title: str = &#34;&#34;
+    description: str = &#34;&#34;
+    assigned_role: str = &#34;executor&#34;
+    depends_on: List[str] = field(default_factory=list)
+    estimated_duration_ms: int = 1000
+    estimated_cost_usd: float = 0.0
+    metadata: Dict[str, Any] = field(default_factory=dict)</code></pre>
+</details>
+<div class="desc"><p>A single atomic step produced by the Planner.</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.planner.PlanStep.assigned_role"><code class="name">var <span class="ident">assigned_role</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.PlanStep.depends_on"><code class="name">var <span class="ident">depends_on</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.PlanStep.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.PlanStep.estimated_cost_usd"><code class="name">var <span class="ident">estimated_cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.PlanStep.estimated_duration_ms"><code class="name">var <span class="ident">estimated_duration_ms</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.PlanStep.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.PlanStep.step_id"><code class="name">var <span class="ident">step_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.planner.PlanStep.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.planner.PlannerAgent"><code class="flex name class">
+<span>class <span class="ident">PlannerAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PlannerAgent:
+    &#34;&#34;&#34;
+    Decomposes complex goals into executable sub-task plans.
+
+    Strategy:
+    1. Heuristic fast-path for simple single-step goals.
+    2. LLM-assisted decomposition for multi-step / complex goals.
+    3. Dependency graph validation to prevent circular deps.
+    &#34;&#34;&#34;
+
+    # Role keywords for heuristic assignment
+    _ROLE_HINTS: Dict[str, List[str]] = {
+        &#34;researcher&#34;: [&#34;research&#34;, &#34;search&#34;, &#34;find&#34;, &#34;look up&#34;, &#34;investigate&#34;, &#34;read&#34;, &#34;browse&#34;],
+        &#34;coder&#34;: [
+            &#34;code&#34;,
+            &#34;script&#34;,
+            &#34;write script&#34;,
+            &#34;implement&#34;,
+            &#34;fix bug&#34;,
+            &#34;refactor&#34;,
+            &#34;test&#34;,
+            &#34;build&#34;,
+            &#34;python&#34;,
+            &#34;function&#34;,
+        ],
+        &#34;file_agent&#34;: [&#34;file&#34;, &#34;document&#34;, &#34;read file&#34;, &#34;write file&#34;, &#34;pdf&#34;, &#34;ingest&#34;],
+        &#34;system_admin&#34;: [&#34;docker&#34;, &#34;server&#34;, &#34;deploy&#34;, &#34;restart&#34;, &#34;ssh&#34;, &#34;monitor&#34;, &#34;log&#34;],
+        &#34;finance&#34;: [&#34;stock&#34;, &#34;price&#34;, &#34;portfolio&#34;, &#34;trade&#34;, &#34;balance&#34;, &#34;transaction&#34;, &#34;crypto&#34;],
+        &#34;content_strategist&#34;: [&#34;write&#34;, &#34;draft&#34;, &#34;email&#34;, &#34;blog&#34;, &#34;report&#34;, &#34;summarize&#34;],
+        &#34;security_guard&#34;: [&#34;scan&#34;, &#34;audit&#34;, &#34;vulnerability&#34;, &#34;cve&#34;, &#34;permission&#34;, &#34;encrypt&#34;],
+        &#34;browser&#34;: [&#34;open browser&#34;, &#34;navigate&#34;, &#34;click&#34;, &#34;fill form&#34;, &#34;screenshot&#34;, &#34;web&#34;],
+        &#34;reviewer_critic&#34;: [&#34;review&#34;, &#34;evaluate&#34;, &#34;check&#34;, &#34;validate&#34;, &#34;critique&#34;, &#34;qa&#34;],
+    }
+
+    def __init__(self):
+        self._llm_available = False
+        self._try_init_llm()
+
+    def _try_init_llm(self):
+        try:
+            from jarvis.core.model_router import model_router  # noqa
+
+            self._llm_available = True
+        except Exception:
+            self._llm_available = False
+
+    # ── Public API ────────────────────────────────────────────────────────────
+
+    def decompose(self, goal: str, context: str = &#34;&#34;, user_id: str = &#34;ganesh&#34;) -&gt; Plan:
+        &#34;&#34;&#34;
+        Primary entry point. Returns a validated Plan with ordered PlanSteps.
+        &#34;&#34;&#34;
+        plan_id = f&#34;plan_{uuid.uuid4().hex[:8]}&#34;
+        logger.info(f&#34;PlannerAgent: decomposing goal &#39;{goal[:60]}...&#39; (plan={plan_id})&#34;)
+
+        steps = self._heuristic_decompose(goal, context)
+
+        # Attempt LLM enrichment if available and goal is complex
+        if self._llm_available and len(goal.split()) &gt; 10 and len(steps) &lt; 3:
+            try:
+                llm_steps = self._llm_decompose(goal, context)
+                if llm_steps:
+                    steps = llm_steps
+            except Exception as exc:
+                logger.warning(f&#34;PlannerAgent: LLM decompose failed, using heuristic — {exc}&#34;)
+
+        total_cost = sum(s.estimated_cost_usd for s in steps)
+        complexity = &#34;high&#34; if len(steps) &gt; 5 else (&#34;medium&#34; if len(steps) &gt; 2 else &#34;low&#34;)
+        requires_approval = any(
+            kw in goal.lower() for kw in [&#34;delete&#34;, &#34;format&#34;, &#34;wipe&#34;, &#34;deploy&#34;, &#34;send email&#34;, &#34;transaction&#34;]
+        )
+
+        plan = Plan(
+            plan_id=plan_id,
+            goal=goal,
+            steps=steps,
+            total_estimated_cost_usd=total_cost,
+            complexity=complexity,
+            requires_approval=requires_approval,
+            metadata={&#34;user_id&#34;: user_id, &#34;context_len&#34;: len(context)},
+        )
+
+        logger.info(f&#34;PlannerAgent: plan={plan_id} steps={len(steps)} complexity={complexity} cost=${total_cost:.5f}&#34;)
+        return plan
+
+    # ── Heuristic decomposition ───────────────────────────────────────────────
+
+    def _heuristic_decompose(self, goal: str, context: str) -&gt; List[PlanStep]:
+        &#34;&#34;&#34;Fast keyword-based task decomposition with dependency chaining.&#34;&#34;&#34;
+        goal_lower = goal.lower()
+        steps: List[PlanStep] = []
+
+        # Step 1: Always start with a research/memory step for non-trivial goals
+        if any(kw in goal_lower for kw in [&#34;how&#34;, &#34;what&#34;, &#34;why&#34;, &#34;find&#34;, &#34;research&#34;, &#34;search&#34;]):
+            steps.append(
+                PlanStep(
+                    title=&#34;Research &amp; Gather Context&#34;,
+                    description=f&#34;Search memory and web for context relevant to: {goal}&#34;,
+                    assigned_role=&#34;researcher&#34;,
+                    estimated_duration_ms=3000,
+                    estimated_cost_usd=0.0001,
+                )
+            )
+
+        # Step 2: Identify primary execution role
+        primary_role = self._assign_role(goal_lower)
+        prev_ids = [s.step_id for s in steps]
+
+        steps.append(
+            PlanStep(
+                title=f&#34;Execute: {goal[:60]}&#34;,
+                description=goal,
+                assigned_role=primary_role,
+                depends_on=prev_ids,
+                estimated_duration_ms=5000,
+                estimated_cost_usd=0.0003,
+            )
+        )
+
+        # Step 3: Add review step for high-stakes operations
+        if any(kw in goal_lower for kw in [&#34;deploy&#34;, &#34;delete&#34;, &#34;send&#34;, &#34;publish&#34;, &#34;commit&#34;]):
+            steps.append(
+                PlanStep(
+                    title=&#34;Review &amp; Verify Output&#34;,
+                    description=&#34;Critically review the execution output for correctness and safety.&#34;,
+                    assigned_role=&#34;reviewer_critic&#34;,
+                    depends_on=[steps[-1].step_id],
+                    estimated_duration_ms=1500,
+                    estimated_cost_usd=0.0001,
+                )
+            )
+
+        return steps
+
+    def _assign_role(self, goal_lower: str) -&gt; str:
+        &#34;&#34;&#34;Assign best-fit agent role based on keyword matching.&#34;&#34;&#34;
+        scores: Dict[str, int] = {}
+        for role, keywords in self._ROLE_HINTS.items():
+            scores[role] = sum(1 for kw in keywords if kw in goal_lower)
+        best = max(scores, key=lambda r: scores[r])
+        return best if scores[best] &gt; 0 else &#34;executor&#34;
+
+    # ── LLM-assisted decomposition ────────────────────────────────────────────
+
+    def _llm_decompose(self, goal: str, context: str) -&gt; List[PlanStep]:
+        &#34;&#34;&#34;
+        Uses the model router to generate a JSON plan decomposition.
+        Returns empty list on any failure so heuristic fallback is used.
+        &#34;&#34;&#34;
+        from jarvis.core.model_router import model_router, RoutingRequest
+
+        system_prompt = (
+            &#34;You are a task planner. Given a goal, respond ONLY with a JSON array of steps. &#34;
+            &#34;Each step: {title, description, assigned_role, estimated_duration_ms, estimated_cost_usd}. &#34;
+            &#34;Valid roles: researcher, coder, file_agent, system_admin, finance, &#34;
+            &#34;content_strategist, security_guard, browser, reviewer_critic, executor. &#34;
+            &#34;Keep it to 3-7 steps max.&#34;
+        )
+        user_msg = f&#34;Decompose this goal into steps:\n{goal}\n\nContext:\n{context[:500]}&#34;
+
+        req = RoutingRequest(
+            task_id=f&#34;plan_{uuid.uuid4().hex[:6]}&#34;,
+            user_intent=user_msg,
+            sensitivity_level=&#34;low&#34;,
+        )
+        decision = model_router.route(req)
+        result = model_router.execute_inference(decision=decision, prompt=user_msg)
+
+        content = (
+            result.get(&#34;choices&#34;, [{}])[0].get(&#34;message&#34;, {}).get(&#34;content&#34;, &#34;&#34;)
+            if isinstance(result, dict)
+            else str(result)
+        )
+
+        # Extract JSON from the response
+        start = content.find(&#34;[&#34;)
+        end = content.rfind(&#34;]&#34;) + 1
+        if start == -1 or end == 0:
+            return []
+
+        raw_steps = json.loads(content[start:end])
+        steps = []
+        prev_id: Optional[str] = None
+        for raw in raw_steps:
+            step = PlanStep(
+                title=raw.get(&#34;title&#34;, &#34;Step&#34;),
+                description=raw.get(&#34;description&#34;, &#34;&#34;),
+                assigned_role=raw.get(&#34;assigned_role&#34;, &#34;executor&#34;),
+                depends_on=[prev_id] if prev_id else [],
+                estimated_duration_ms=int(raw.get(&#34;estimated_duration_ms&#34;, 1000)),
+                estimated_cost_usd=float(raw.get(&#34;estimated_cost_usd&#34;, 0.0001)),
+            )
+            steps.append(step)
+            prev_id = step.step_id
+
+        return steps</code></pre>
+</details>
+<div class="desc"><p>Decomposes complex goals into executable sub-task plans.</p>
+<p>Strategy:
+1. Heuristic fast-path for simple single-step goals.
+2. LLM-assisted decomposition for multi-step / complex goals.
+3. Dependency graph validation to prevent circular deps.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.planner.PlannerAgent.decompose"><code class="name flex">
+<span>def <span class="ident">decompose</span></span>(<span>self, goal: str, context: str = '', user_id: str = 'ganesh') ‑> <a title="jarvis.agents.planner.Plan" href="#jarvis.agents.planner.Plan">Plan</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decompose(self, goal: str, context: str = &#34;&#34;, user_id: str = &#34;ganesh&#34;) -&gt; Plan:
+    &#34;&#34;&#34;
+    Primary entry point. Returns a validated Plan with ordered PlanSteps.
+    &#34;&#34;&#34;
+    plan_id = f&#34;plan_{uuid.uuid4().hex[:8]}&#34;
+    logger.info(f&#34;PlannerAgent: decomposing goal &#39;{goal[:60]}...&#39; (plan={plan_id})&#34;)
+
+    steps = self._heuristic_decompose(goal, context)
+
+    # Attempt LLM enrichment if available and goal is complex
+    if self._llm_available and len(goal.split()) &gt; 10 and len(steps) &lt; 3:
+        try:
+            llm_steps = self._llm_decompose(goal, context)
+            if llm_steps:
+                steps = llm_steps
+        except Exception as exc:
+            logger.warning(f&#34;PlannerAgent: LLM decompose failed, using heuristic — {exc}&#34;)
+
+    total_cost = sum(s.estimated_cost_usd for s in steps)
+    complexity = &#34;high&#34; if len(steps) &gt; 5 else (&#34;medium&#34; if len(steps) &gt; 2 else &#34;low&#34;)
+    requires_approval = any(
+        kw in goal.lower() for kw in [&#34;delete&#34;, &#34;format&#34;, &#34;wipe&#34;, &#34;deploy&#34;, &#34;send email&#34;, &#34;transaction&#34;]
+    )
+
+    plan = Plan(
+        plan_id=plan_id,
+        goal=goal,
+        steps=steps,
+        total_estimated_cost_usd=total_cost,
+        complexity=complexity,
+        requires_approval=requires_approval,
+        metadata={&#34;user_id&#34;: user_id, &#34;context_len&#34;: len(context)},
+    )
+
+    logger.info(f&#34;PlannerAgent: plan={plan_id} steps={len(steps)} complexity={complexity} cost=${total_cost:.5f}&#34;)
+    return plan</code></pre>
+</details>
+<div class="desc"><p>Primary entry point. Returns a validated Plan with ordered PlanSteps.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.agents" href="index.html">jarvis.agents</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.agents.planner.Plan" href="#jarvis.agents.planner.Plan">Plan</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.planner.Plan.complexity" href="#jarvis.agents.planner.Plan.complexity">complexity</a></code></li>
+<li><code><a title="jarvis.agents.planner.Plan.goal" href="#jarvis.agents.planner.Plan.goal">goal</a></code></li>
+<li><code><a title="jarvis.agents.planner.Plan.metadata" href="#jarvis.agents.planner.Plan.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.agents.planner.Plan.plan_id" href="#jarvis.agents.planner.Plan.plan_id">plan_id</a></code></li>
+<li><code><a title="jarvis.agents.planner.Plan.requires_approval" href="#jarvis.agents.planner.Plan.requires_approval">requires_approval</a></code></li>
+<li><code><a title="jarvis.agents.planner.Plan.steps" href="#jarvis.agents.planner.Plan.steps">steps</a></code></li>
+<li><code><a title="jarvis.agents.planner.Plan.to_dict" href="#jarvis.agents.planner.Plan.to_dict">to_dict</a></code></li>
+<li><code><a title="jarvis.agents.planner.Plan.total_estimated_cost_usd" href="#jarvis.agents.planner.Plan.total_estimated_cost_usd">total_estimated_cost_usd</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.planner.PlanStep" href="#jarvis.agents.planner.PlanStep">PlanStep</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.planner.PlanStep.assigned_role" href="#jarvis.agents.planner.PlanStep.assigned_role">assigned_role</a></code></li>
+<li><code><a title="jarvis.agents.planner.PlanStep.depends_on" href="#jarvis.agents.planner.PlanStep.depends_on">depends_on</a></code></li>
+<li><code><a title="jarvis.agents.planner.PlanStep.description" href="#jarvis.agents.planner.PlanStep.description">description</a></code></li>
+<li><code><a title="jarvis.agents.planner.PlanStep.estimated_cost_usd" href="#jarvis.agents.planner.PlanStep.estimated_cost_usd">estimated_cost_usd</a></code></li>
+<li><code><a title="jarvis.agents.planner.PlanStep.estimated_duration_ms" href="#jarvis.agents.planner.PlanStep.estimated_duration_ms">estimated_duration_ms</a></code></li>
+<li><code><a title="jarvis.agents.planner.PlanStep.metadata" href="#jarvis.agents.planner.PlanStep.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.agents.planner.PlanStep.step_id" href="#jarvis.agents.planner.PlanStep.step_id">step_id</a></code></li>
+<li><code><a title="jarvis.agents.planner.PlanStep.title" href="#jarvis.agents.planner.PlanStep.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.planner.PlannerAgent" href="#jarvis.agents.planner.PlannerAgent">PlannerAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.planner.PlannerAgent.decompose" href="#jarvis.agents.planner.PlannerAgent.decompose">decompose</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

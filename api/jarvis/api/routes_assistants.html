@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.api.routes_assistants API documentation</title>
+<meta name="description" content="OpenAI Assistants API Drop-in Compatibility Route for Project Jarvis …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.api.routes_assistants</code></h1>
+</header>
+<section id="section-intro">
+<p>OpenAI Assistants API Drop-in Compatibility Route for Project Jarvis.</p>
+<p>Enables standard OpenAI client SDKs, gpt-assistants-api-ui, and third-party dashboards
+to communicate directly with JARVIS via standard /v1/threads and /v1/runs endpoints
+while routing execution through local models, persistent memory, and deterministic policy gates.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.api.routes_assistants.chat_completions"><code class="name flex">
+<span>async def <span class="ident">chat_completions</span></span>(<span>req: <a title="jarvis.api.routes_assistants.ChatCompletionRequest" href="#jarvis.api.routes_assistants.ChatCompletionRequest">ChatCompletionRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/chat/completions&#34;)
+async def chat_completions(req: ChatCompletionRequest):
+    &#34;&#34;&#34;Drop-in OpenAI /v1/chat/completions endpoint mapped to Jarvis Orchestrator.&#34;&#34;&#34;
+    user_query = req.messages[-1].content if req.messages else &#34;Hello&#34;
+    orchestrator_result = await orchestrator.process_user_query(
+        query=user_query,
+        task_id=f&#34;chat_{uuid.uuid4().hex[:8]}&#34;,
+    )
+    reply_text = orchestrator_result.get(&#34;outputs&#34;, {}).get(&#34;response&#34;, &#34;JARVIS processed query.&#34;)
+    if isinstance(reply_text, dict):
+        reply_text = reply_text.get(&#34;message&#34;, str(reply_text))
+
+    return {
+        &#34;id&#34;: f&#34;chatcmpl-{uuid.uuid4().hex[:12]}&#34;,
+        &#34;object&#34;: &#34;chat.completion&#34;,
+        &#34;created&#34;: int(time.time()),
+        &#34;model&#34;: req.model,
+        &#34;choices&#34;: [
+            {
+                &#34;index&#34;: 0,
+                &#34;message&#34;: {
+                    &#34;role&#34;: &#34;assistant&#34;,
+                    &#34;content&#34;: str(reply_text),
+                },
+                &#34;finish_reason&#34;: &#34;stop&#34;,
+            }
+        ],
+        &#34;usage&#34;: {
+            &#34;prompt_tokens&#34;: len(user_query.split()),
+            &#34;completion_tokens&#34;: len(str(reply_text).split()),
+            &#34;total_tokens&#34;: len(user_query.split()) + len(str(reply_text).split()),
+        },
+    }</code></pre>
+</details>
+<div class="desc"><p>Drop-in OpenAI /v1/chat/completions endpoint mapped to Jarvis Orchestrator.</p></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.create_message"><code class="name flex">
+<span>def <span class="ident">create_message</span></span>(<span>thread_id: str,<br>req: <a title="jarvis.api.routes_assistants.CreateMessageRequest" href="#jarvis.api.routes_assistants.CreateMessageRequest">CreateMessageRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/threads/{thread_id}/messages&#34;)
+def create_message(thread_id: str, req: CreateMessageRequest):
+    if thread_id not in _THREADS:
+        raise HTTPException(status_code=404, detail=&#34;Thread not found&#34;)
+
+    msg_id = f&#34;msg_{uuid.uuid4().hex[:12]}&#34;
+    msg_obj = {
+        &#34;id&#34;: msg_id,
+        &#34;object&#34;: &#34;thread.message&#34;,
+        &#34;created_at&#34;: int(time.time()),
+        &#34;thread_id&#34;: thread_id,
+        &#34;role&#34;: req.role,
+        &#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: {&#34;value&#34;: req.content}}],
+        &#34;metadata&#34;: req.metadata or {},
+    }
+    _MESSAGES[thread_id].append(msg_obj)
+    return msg_obj</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.create_run"><code class="name flex">
+<span>async def <span class="ident">create_run</span></span>(<span>thread_id: str,<br>req: Optional[<a title="jarvis.api.routes_assistants.CreateRunRequest" href="#jarvis.api.routes_assistants.CreateRunRequest">CreateRunRequest</a>] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/threads/{thread_id}/runs&#34;)
+async def create_run(thread_id: str, req: Optional[CreateRunRequest] = None):
+    if thread_id not in _THREADS:
+        raise HTTPException(status_code=404, detail=&#34;Thread not found&#34;)
+
+    run_id = f&#34;run_{uuid.uuid4().hex[:12]}&#34;
+    now = int(time.time())
+
+    # Get the latest user message
+    messages = _MESSAGES.get(thread_id, [])
+    user_messages = [m for m in messages if m[&#34;role&#34;] == &#34;user&#34;]
+    user_query = &#34;&#34;
+    if user_messages:
+        content_block = user_messages[-1].get(&#34;content&#34;, [{}])[0]
+        user_query = content_block.get(&#34;text&#34;, {}).get(&#34;value&#34;, &#34;&#34;)
+
+    # Execute through Jarvis Orchestrator
+    orchestrator_result = await orchestrator.process_user_query(
+        query=user_query or &#34;Hello Jarvis&#34;,
+        task_id=run_id,
+    )
+
+    assistant_reply = orchestrator_result.get(&#34;outputs&#34;, {}).get(
+        &#34;response&#34;, &#34;Operation completed by Jarvis Orchestrator.&#34;
+    )
+    if isinstance(assistant_reply, dict):
+        assistant_reply = assistant_reply.get(&#34;message&#34;, str(assistant_reply))
+
+    # Append assistant reply to thread
+    reply_msg_id = f&#34;msg_{uuid.uuid4().hex[:12]}&#34;
+    _MESSAGES[thread_id].append(
+        {
+            &#34;id&#34;: reply_msg_id,
+            &#34;object&#34;: &#34;thread.message&#34;,
+            &#34;created_at&#34;: int(time.time()),
+            &#34;thread_id&#34;: thread_id,
+            &#34;role&#34;: &#34;assistant&#34;,
+            &#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: {&#34;value&#34;: str(assistant_reply)}}],
+        }
+    )
+
+    run_obj = {
+        &#34;id&#34;: run_id,
+        &#34;object&#34;: &#34;thread.run&#34;,
+        &#34;created_at&#34;: now,
+        &#34;thread_id&#34;: thread_id,
+        &#34;assistant_id&#34;: (req.assistant_id if req else None) or &#34;asst_jarvis_core&#34;,
+        &#34;status&#34;: &#34;completed&#34;,
+        &#34;model&#34;: orchestrator_result.get(&#34;model&#34;, &#34;qwen2.5-coder&#34;),
+    }
+    _RUNS[run_id] = run_obj
+    return run_obj</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.create_thread"><code class="name flex">
+<span>def <span class="ident">create_thread</span></span>(<span>req: Optional[<a title="jarvis.api.routes_assistants.CreateThreadRequest" href="#jarvis.api.routes_assistants.CreateThreadRequest">CreateThreadRequest</a>] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/threads&#34;)
+def create_thread(req: Optional[CreateThreadRequest] = None):
+    thread_id = f&#34;thread_{uuid.uuid4().hex[:12]}&#34;
+    now = int(time.time())
+    thread_obj = {
+        &#34;id&#34;: thread_id,
+        &#34;object&#34;: &#34;thread&#34;,
+        &#34;created_at&#34;: now,
+        &#34;metadata&#34;: req.metadata if req else {},
+    }
+    _THREADS[thread_id] = thread_obj
+    _MESSAGES[thread_id] = []
+
+    if req and req.messages:
+        for m in req.messages:
+            msg_id = f&#34;msg_{uuid.uuid4().hex[:12]}&#34;
+            _MESSAGES[thread_id].append(
+                {
+                    &#34;id&#34;: msg_id,
+                    &#34;object&#34;: &#34;thread.message&#34;,
+                    &#34;created_at&#34;: now,
+                    &#34;thread_id&#34;: thread_id,
+                    &#34;role&#34;: m.get(&#34;role&#34;, &#34;user&#34;),
+                    &#34;content&#34;: [{&#34;type&#34;: &#34;text&#34;, &#34;text&#34;: {&#34;value&#34;: m.get(&#34;content&#34;, &#34;&#34;)}}],
+                }
+            )
+
+    return thread_obj</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.get_run"><code class="name flex">
+<span>def <span class="ident">get_run</span></span>(<span>thread_id: str, run_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/threads/{thread_id}/runs/{run_id}&#34;)
+def get_run(thread_id: str, run_id: str):
+    if run_id not in _RUNS:
+        raise HTTPException(status_code=404, detail=&#34;Run not found&#34;)
+    return _RUNS[run_id]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.get_thread"><code class="name flex">
+<span>def <span class="ident">get_thread</span></span>(<span>thread_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/threads/{thread_id}&#34;)
+def get_thread(thread_id: str):
+    if thread_id not in _THREADS:
+        raise HTTPException(status_code=404, detail=&#34;Thread not found&#34;)
+    return _THREADS[thread_id]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.list_assistants"><code class="name flex">
+<span>def <span class="ident">list_assistants</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/assistants&#34;)
+def list_assistants():
+    return {
+        &#34;object&#34;: &#34;list&#34;,
+        &#34;data&#34;: list(_ASSISTANTS.values()),
+        &#34;first_id&#34;: &#34;asst_jarvis_core&#34;,
+        &#34;last_id&#34;: &#34;asst_jarvis_core&#34;,
+        &#34;has_more&#34;: False,
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.list_messages"><code class="name flex">
+<span>def <span class="ident">list_messages</span></span>(<span>thread_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/threads/{thread_id}/messages&#34;)
+def list_messages(thread_id: str):
+    if thread_id not in _THREADS:
+        raise HTTPException(status_code=404, detail=&#34;Thread not found&#34;)
+    return {
+        &#34;object&#34;: &#34;list&#34;,
+        &#34;data&#34;: _MESSAGES.get(thread_id, []),
+        &#34;has_more&#34;: False,
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.list_models"><code class="name flex">
+<span>def <span class="ident">list_models</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/models&#34;)
+def list_models():
+    &#34;&#34;&#34;Drop-in OpenAI /v1/models endpoint.&#34;&#34;&#34;
+    return {
+        &#34;object&#34;: &#34;list&#34;,
+        &#34;data&#34;: [
+            {
+                &#34;id&#34;: &#34;jarvis-core&#34;,
+                &#34;object&#34;: &#34;model&#34;,
+                &#34;created&#34;: 1700000000,
+                &#34;owned_by&#34;: &#34;jarvis-os&#34;,
+                &#34;permission&#34;: [],
+                &#34;root&#34;: &#34;jarvis-core&#34;,
+                &#34;parent&#34;: None,
+            },
+            {
+                &#34;id&#34;: &#34;qwen2.5-coder:3b&#34;,
+                &#34;object&#34;: &#34;model&#34;,
+                &#34;created&#34;: 1700000000,
+                &#34;owned_by&#34;: &#34;ollama&#34;,
+                &#34;permission&#34;: [],
+                &#34;root&#34;: &#34;qwen2.5-coder:3b&#34;,
+                &#34;parent&#34;: None,
+            },
+            {
+                &#34;id&#34;: &#34;llama3.2:3b&#34;,
+                &#34;object&#34;: &#34;model&#34;,
+                &#34;created&#34;: 1700000000,
+                &#34;owned_by&#34;: &#34;ollama&#34;,
+                &#34;permission&#34;: [],
+                &#34;root&#34;: &#34;llama3.2:3b&#34;,
+                &#34;parent&#34;: None,
+            },
+        ],
+    }</code></pre>
+</details>
+<div class="desc"><p>Drop-in OpenAI /v1/models endpoint.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.api.routes_assistants.ChatCompletionRequest"><code class="flex name class">
+<span>class <span class="ident">ChatCompletionRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChatCompletionRequest(BaseModel):
+    model: str = &#34;jarvis-core&#34;
+    messages: List[ChatMessage]
+    temperature: Optional[float] = 0.7
+    stream: Optional[bool] = False</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_assistants.ChatCompletionRequest.messages"><code class="name">var <span class="ident">messages</span> : List[<a title="jarvis.api.routes_assistants.ChatMessage" href="#jarvis.api.routes_assistants.ChatMessage">ChatMessage</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.ChatCompletionRequest.model"><code class="name">var <span class="ident">model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.ChatCompletionRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.ChatCompletionRequest.stream"><code class="name">var <span class="ident">stream</span> : bool | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.ChatCompletionRequest.temperature"><code class="name">var <span class="ident">temperature</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_assistants.ChatMessage"><code class="flex name class">
+<span>class <span class="ident">ChatMessage</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChatMessage(BaseModel):
+    role: str
+    content: str</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_assistants.ChatMessage.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.ChatMessage.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.ChatMessage.role"><code class="name">var <span class="ident">role</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateMessageRequest"><code class="flex name class">
+<span>class <span class="ident">CreateMessageRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CreateMessageRequest(BaseModel):
+    role: str = &#34;user&#34;
+    content: str
+    metadata: Optional[Dict[str, Any]] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_assistants.CreateMessageRequest.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateMessageRequest.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateMessageRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateMessageRequest.role"><code class="name">var <span class="ident">role</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateRunRequest"><code class="flex name class">
+<span>class <span class="ident">CreateRunRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CreateRunRequest(BaseModel):
+    assistant_id: Optional[str] = &#34;asst_jarvis_core&#34;
+    model: Optional[str] = None
+    instructions: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_assistants.CreateRunRequest.assistant_id"><code class="name">var <span class="ident">assistant_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateRunRequest.instructions"><code class="name">var <span class="ident">instructions</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateRunRequest.model"><code class="name">var <span class="ident">model</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateRunRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateThreadRequest"><code class="flex name class">
+<span>class <span class="ident">CreateThreadRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CreateThreadRequest(BaseModel):
+    messages: Optional[List[Dict[str, Any]]] = None
+    metadata: Optional[Dict[str, Any]] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_assistants.CreateThreadRequest.messages"><code class="name">var <span class="ident">messages</span> : List[Dict[str, Any]] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateThreadRequest.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_assistants.CreateThreadRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.api" href="index.html">jarvis.api</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_assistants.chat_completions" href="#jarvis.api.routes_assistants.chat_completions">chat_completions</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.create_message" href="#jarvis.api.routes_assistants.create_message">create_message</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.create_run" href="#jarvis.api.routes_assistants.create_run">create_run</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.create_thread" href="#jarvis.api.routes_assistants.create_thread">create_thread</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.get_run" href="#jarvis.api.routes_assistants.get_run">get_run</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.get_thread" href="#jarvis.api.routes_assistants.get_thread">get_thread</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.list_assistants" href="#jarvis.api.routes_assistants.list_assistants">list_assistants</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.list_messages" href="#jarvis.api.routes_assistants.list_messages">list_messages</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.list_models" href="#jarvis.api.routes_assistants.list_models">list_models</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.api.routes_assistants.ChatCompletionRequest" href="#jarvis.api.routes_assistants.ChatCompletionRequest">ChatCompletionRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_assistants.ChatCompletionRequest.messages" href="#jarvis.api.routes_assistants.ChatCompletionRequest.messages">messages</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.ChatCompletionRequest.model" href="#jarvis.api.routes_assistants.ChatCompletionRequest.model">model</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.ChatCompletionRequest.model_config" href="#jarvis.api.routes_assistants.ChatCompletionRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.ChatCompletionRequest.stream" href="#jarvis.api.routes_assistants.ChatCompletionRequest.stream">stream</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.ChatCompletionRequest.temperature" href="#jarvis.api.routes_assistants.ChatCompletionRequest.temperature">temperature</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_assistants.ChatMessage" href="#jarvis.api.routes_assistants.ChatMessage">ChatMessage</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_assistants.ChatMessage.content" href="#jarvis.api.routes_assistants.ChatMessage.content">content</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.ChatMessage.model_config" href="#jarvis.api.routes_assistants.ChatMessage.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.ChatMessage.role" href="#jarvis.api.routes_assistants.ChatMessage.role">role</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_assistants.CreateMessageRequest" href="#jarvis.api.routes_assistants.CreateMessageRequest">CreateMessageRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_assistants.CreateMessageRequest.content" href="#jarvis.api.routes_assistants.CreateMessageRequest.content">content</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.CreateMessageRequest.metadata" href="#jarvis.api.routes_assistants.CreateMessageRequest.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.CreateMessageRequest.model_config" href="#jarvis.api.routes_assistants.CreateMessageRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.CreateMessageRequest.role" href="#jarvis.api.routes_assistants.CreateMessageRequest.role">role</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_assistants.CreateRunRequest" href="#jarvis.api.routes_assistants.CreateRunRequest">CreateRunRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_assistants.CreateRunRequest.assistant_id" href="#jarvis.api.routes_assistants.CreateRunRequest.assistant_id">assistant_id</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.CreateRunRequest.instructions" href="#jarvis.api.routes_assistants.CreateRunRequest.instructions">instructions</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.CreateRunRequest.model" href="#jarvis.api.routes_assistants.CreateRunRequest.model">model</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.CreateRunRequest.model_config" href="#jarvis.api.routes_assistants.CreateRunRequest.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_assistants.CreateThreadRequest" href="#jarvis.api.routes_assistants.CreateThreadRequest">CreateThreadRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_assistants.CreateThreadRequest.messages" href="#jarvis.api.routes_assistants.CreateThreadRequest.messages">messages</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.CreateThreadRequest.metadata" href="#jarvis.api.routes_assistants.CreateThreadRequest.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.api.routes_assistants.CreateThreadRequest.model_config" href="#jarvis.api.routes_assistants.CreateThreadRequest.model_config">model_config</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core API documentation</title>
+<meta name="description" content="Core orchestration, safety, routing, and audit modules for JARVIS.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core</code></h1>
+</header>
+<section id="section-intro">
+<p>Core orchestration, safety, routing, and audit modules for JARVIS.</p>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="jarvis.core.action_decorator" href="action_decorator.html">jarvis.core.action_decorator</a></code></dt>
+<dd>
+<div class="desc"><p>ActionWeaver-inspired Action Decorator for Project Jarvis …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.api_key_rotator" href="api_key_rotator.html">jarvis.core.api_key_rotator</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Multi-Account API Key Rotator &amp; Resilient Cloud Gateway …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.audit" href="audit.html">jarvis.core.audit</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Cryptographic Hash-Chained Audit Ledger
+Produces an append-only, tamper-evident log where every entry is chained
+via SHA-256 to the previous …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.audit_logger" href="audit_logger.html">jarvis.core.audit_logger</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Audit Logger
+Provides append-only cryptographic event logging across tasks, tools, policy decisions, and models.</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.config" href="config.html">jarvis.core.config</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Core Configuration Substrate …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.cost_governor" href="cost_governor.html">jarvis.core.cost_governor</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Cost Governor &amp; Budget Controller
+Estimates and enforces cost caps on LLM calls per task, day, and month.
+Includes circuit breaker …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.doc_pipeline" href="doc_pipeline.html">jarvis.core.doc_pipeline</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Model -&gt; Humanizer -&gt; PDF Pipeline …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.evidence" href="evidence.html">jarvis.core.evidence</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS First Law Compliance: Evidence &amp; TrustResult …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.gemini_rotator" href="gemini_rotator.html">jarvis.core.gemini_rotator</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Gemini Multi-Account API Key Rotator (Compatibility Re-export) …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.guards" href="guards.html">jarvis.core.guards</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Architecture Guards
+Enforces hard system invariants:
+1. Agents cannot perform direct SQL (must access data via repositories).
+2. Agents …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.intent_router" href="intent_router.html">jarvis.core.intent_router</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Fast Intent Router (Jev-Style Decision Engine) …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.logger" href="logger.html">jarvis.core.logger</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Structured Logging Module
+Provides unified, thread-safe console and file logging with
+correlation IDs, ISO timestamps, and log rotation support.</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.mcp_client" href="mcp_client.html">jarvis.core.mcp_client</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Model Context Protocol (MCP) Client Substrate …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.model_router" href="model_router.html">jarvis.core.model_router</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Policy-Aware Three-Tier Hybrid Model Router
+Intelligently routes inference requests between:
+- TIER 1: Local Reflex (Ollama, local OCR, zero …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.notifier" href="notifier.html">jarvis.core.notifier</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Multi-Channel Alert &amp; Dispatch Engine
+Sends real-time proactive alerts via WhatsApp, native Windows Desktop Toast,
+and local audit logs to …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.nvidia_rotator" href="nvidia_rotator.html">jarvis.core.nvidia_rotator</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS NVIDIA NIM Rotator (re-export module for jarvis.core.api_key_rotator) …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.obscura_browser" href="obscura_browser.html">jarvis.core.obscura_browser</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Obscura CDP &amp; Stealth Web Perception Engine
+Inspired by h4ckf0r0day/obscura ultra-lightweight CDP browser and stealth scraping.
+Supports direct …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.openmaus_grok" href="openmaus_grok.html">jarvis.core.openmaus_grok</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS OpenMausBot Integration: Grok Bot Engine &amp; Multi-Agent Loopback Harness
+Synthesizes the core mechanisms of milind-soni/OpenMausBot:
+1. Grok …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.openrouter_client" href="openrouter_client.html">jarvis.core.openrouter_client</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS OpenRouter Frontier Gateway Client …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.orchestrator" href="orchestrator.html">jarvis.core.orchestrator</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Central Orchestration Engine
+Coordinates intent analysis, 3-tier model routing, deterministic policy checks,
+tool execution, and cryptographic …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.policy_engine" href="policy_engine.html">jarvis.core.policy_engine</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Policy Engine (4-Tier Evaluation)
+Implements four approval tiers:
+Tier 0 — Observe
+Tier 1 — Reversible action
+Tier 2 — Explicit approval
+…</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.policy_gate" href="policy_gate.html">jarvis.core.policy_gate</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Deterministic Policy Gate &amp; Approval Engine
+Enforces deny-by-default access control across Privilege Levels 0 to 5.
+Validates HMAC-SHA256 …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.power_binder" href="power_binder.html">jarvis.core.power_binder</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Dynamic Power Binder &amp; Tool Schema Generator …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.power_registry" href="power_registry.html">jarvis.core.power_registry</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Central Power Registry
+Manages all 355 operational capabilities, metadata schemas,
+danger levels, category profiles, and MCP tool bindings.</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.privacy_gate" href="privacy_gate.html">jarvis.core.privacy_gate</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Privacy Gate &amp; Data Loss Prevention (DLP)
+Inspects text and attachments before routing, redacting secrets, credentials,
+tokens, credit cards, …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.relay" href="relay.html">jarvis.core.relay</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Cross-Device Relay (phone &lt;-&gt; laptop) …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.repo_map" href="repo_map.html">jarvis.core.repo_map</a></code></dt>
+<dd>
+<div class="desc"><p>Aider-Inspired Abstract Syntax Tree (AST) Repository Map Generator for Project JARVIS
+Analyzes multi-file codebases using Python's native AST engine, …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.scheduler" href="scheduler.html">jarvis.core.scheduler</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Proactive Autonomous Background Scheduler
+Runs persistent, scheduled background loops for:
+- 08:00 IST: Career &amp; High-Stipend Internship …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.smtp_sender" href="smtp_sender.html">jarvis.core.smtp_sender</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Gmail SMTP Sender …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.state" href="state.html">jarvis.core.state</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS LangGraph State Definition
+Re-exports unified state schema and models from jarvis.brain.state for backward compatibility.</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.state_machine" href="state_machine.html">jarvis.core.state_machine</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Task Lifecycle State Machine
+Enforces strict transitions:
+NEW -&gt; TRIAGED -&gt; PLANNED -&gt; POLICY_CHECK -&gt; QUEUED -&gt; RUNNING -&gt; VERIFYING -&gt; …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.step_telemetry" href="step_telemetry.html">jarvis.core.step_telemetry</a></code></dt>
+<dd>
+<div class="desc"><p>Chainlit-inspired Step Telemetry and Streaming Manager for Project Jarvis …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.task_executor" href="task_executor.html">jarvis.core.task_executor</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Task Graph Executor (Async Parallel DAG Execution Engine)
+Coordinates the complete end-to-end cognitive loop:
+Goal -&gt; TaskGraph (DAG) -&gt; …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.task_graph" href="task_graph.html">jarvis.core.task_graph</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Task Graph Engine (DAG Schema V1 &amp; Graph Topology)
+Implements the Directed Acyclic Graph (DAG) foundation for goal-to-task decomposition,
+…</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.task_memory_writer" href="task_memory_writer.html">jarvis.core.task_memory_writer</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Task Memory Integration Layer
+Every completed task automatically formats and records structured MemoryEvents into
+the persistent long-term …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.task_reflection" href="task_reflection.html">jarvis.core.task_reflection</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Task Reflection Layer (Post-Goal Retrospective &amp; Continuous Improvement)
+Analyzes completed or terminated task graphs to extract successes, …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.task_router" href="task_router.html">jarvis.core.task_router</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Task Router &amp; Agent Assignment Layer (CEO &amp; Department Model)
+Enforces hierarchical management: Tasks do not pick agents.
+The Central CEO …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.task_scheduler" href="task_scheduler.html">jarvis.core.task_scheduler</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Task Scheduler (Priority Queue &amp; Concurrency Controller)
+Manages the DAG task state machine, priority-based dispatching,
+concurrency limits, …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.task_verifier" href="task_verifier.html">jarvis.core.task_verifier</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Task Verification Layer (Quality, Functional, and Security Gates)
+Before any task node transitions to COMPLETED status, the verification layer …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.validate_powers" href="validate_powers.html">jarvis.core.validate_powers</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Power Catalog Integrity Validator
+Validates strict mathematical consistency, unique identifiers,
+repository source attribution, execution …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.visual_grounding" href="visual_grounding.html">jarvis.core.visual_grounding</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS GUI Visual Grounding &amp; Safe Desktop Control …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.voice_stream" href="voice_stream.html">jarvis.core.voice_stream</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Voice Pipeline Substrate (Kokoro-TTS &amp; Faster-Whisper Hooks) …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.web_recon" href="web_recon.html">jarvis.core.web_recon</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Web Reconnaissance &amp; High-Density Opportunity Hunter
+Inspired by Obscura and Crawl4AI lightweight crawling architectures.
+Scrapes, parses, and …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.core.workspace_registry" href="workspace_registry.html">jarvis.core.workspace_registry</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Spoken Workspace Registry
+Resolves spoken project aliases (e.g. "jarvis", "switch-ai", "carbonterra")
+to canonical filesystem paths.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis" href="../index.html">jarvis</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="jarvis.core.action_decorator" href="action_decorator.html">jarvis.core.action_decorator</a></code></li>
+<li><code><a title="jarvis.core.api_key_rotator" href="api_key_rotator.html">jarvis.core.api_key_rotator</a></code></li>
+<li><code><a title="jarvis.core.audit" href="audit.html">jarvis.core.audit</a></code></li>
+<li><code><a title="jarvis.core.audit_logger" href="audit_logger.html">jarvis.core.audit_logger</a></code></li>
+<li><code><a title="jarvis.core.config" href="config.html">jarvis.core.config</a></code></li>
+<li><code><a title="jarvis.core.cost_governor" href="cost_governor.html">jarvis.core.cost_governor</a></code></li>
+<li><code><a title="jarvis.core.doc_pipeline" href="doc_pipeline.html">jarvis.core.doc_pipeline</a></code></li>
+<li><code><a title="jarvis.core.evidence" href="evidence.html">jarvis.core.evidence</a></code></li>
+<li><code><a title="jarvis.core.gemini_rotator" href="gemini_rotator.html">jarvis.core.gemini_rotator</a></code></li>
+<li><code><a title="jarvis.core.guards" href="guards.html">jarvis.core.guards</a></code></li>
+<li><code><a title="jarvis.core.intent_router" href="intent_router.html">jarvis.core.intent_router</a></code></li>
+<li><code><a title="jarvis.core.logger" href="logger.html">jarvis.core.logger</a></code></li>
+<li><code><a title="jarvis.core.mcp_client" href="mcp_client.html">jarvis.core.mcp_client</a></code></li>
+<li><code><a title="jarvis.core.model_router" href="model_router.html">jarvis.core.model_router</a></code></li>
+<li><code><a title="jarvis.core.notifier" href="notifier.html">jarvis.core.notifier</a></code></li>
+<li><code><a title="jarvis.core.nvidia_rotator" href="nvidia_rotator.html">jarvis.core.nvidia_rotator</a></code></li>
+<li><code><a title="jarvis.core.obscura_browser" href="obscura_browser.html">jarvis.core.obscura_browser</a></code></li>
+<li><code><a title="jarvis.core.openmaus_grok" href="openmaus_grok.html">jarvis.core.openmaus_grok</a></code></li>
+<li><code><a title="jarvis.core.openrouter_client" href="openrouter_client.html">jarvis.core.openrouter_client</a></code></li>
+<li><code><a title="jarvis.core.orchestrator" href="orchestrator.html">jarvis.core.orchestrator</a></code></li>
+<li><code><a title="jarvis.core.policy_engine" href="policy_engine.html">jarvis.core.policy_engine</a></code></li>
+<li><code><a title="jarvis.core.policy_gate" href="policy_gate.html">jarvis.core.policy_gate</a></code></li>
+<li><code><a title="jarvis.core.power_binder" href="power_binder.html">jarvis.core.power_binder</a></code></li>
+<li><code><a title="jarvis.core.power_registry" href="power_registry.html">jarvis.core.power_registry</a></code></li>
+<li><code><a title="jarvis.core.privacy_gate" href="privacy_gate.html">jarvis.core.privacy_gate</a></code></li>
+<li><code><a title="jarvis.core.relay" href="relay.html">jarvis.core.relay</a></code></li>
+<li><code><a title="jarvis.core.repo_map" href="repo_map.html">jarvis.core.repo_map</a></code></li>
+<li><code><a title="jarvis.core.scheduler" href="scheduler.html">jarvis.core.scheduler</a></code></li>
+<li><code><a title="jarvis.core.smtp_sender" href="smtp_sender.html">jarvis.core.smtp_sender</a></code></li>
+<li><code><a title="jarvis.core.state" href="state.html">jarvis.core.state</a></code></li>
+<li><code><a title="jarvis.core.state_machine" href="state_machine.html">jarvis.core.state_machine</a></code></li>
+<li><code><a title="jarvis.core.step_telemetry" href="step_telemetry.html">jarvis.core.step_telemetry</a></code></li>
+<li><code><a title="jarvis.core.task_executor" href="task_executor.html">jarvis.core.task_executor</a></code></li>
+<li><code><a title="jarvis.core.task_graph" href="task_graph.html">jarvis.core.task_graph</a></code></li>
+<li><code><a title="jarvis.core.task_memory_writer" href="task_memory_writer.html">jarvis.core.task_memory_writer</a></code></li>
+<li><code><a title="jarvis.core.task_reflection" href="task_reflection.html">jarvis.core.task_reflection</a></code></li>
+<li><code><a title="jarvis.core.task_router" href="task_router.html">jarvis.core.task_router</a></code></li>
+<li><code><a title="jarvis.core.task_scheduler" href="task_scheduler.html">jarvis.core.task_scheduler</a></code></li>
+<li><code><a title="jarvis.core.task_verifier" href="task_verifier.html">jarvis.core.task_verifier</a></code></li>
+<li><code><a title="jarvis.core.validate_powers" href="validate_powers.html">jarvis.core.validate_powers</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding" href="visual_grounding.html">jarvis.core.visual_grounding</a></code></li>
+<li><code><a title="jarvis.core.voice_stream" href="voice_stream.html">jarvis.core.voice_stream</a></code></li>
+<li><code><a title="jarvis.core.web_recon" href="web_recon.html">jarvis.core.web_recon</a></code></li>
+<li><code><a title="jarvis.core.workspace_registry" href="workspace_registry.html">jarvis.core.workspace_registry</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

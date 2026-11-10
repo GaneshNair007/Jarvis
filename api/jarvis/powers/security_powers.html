@@ -1,0 +1,1730 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.security_powers API documentation</title>
+<meta name="description" content="JARVIS Security and DLP Powers (PWR-144 to PWR-161, PWR-268 to PWR-287) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.security_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Security and DLP Powers (PWR-144 to PWR-161, PWR-268 to PWR-287).</p>
+<p>Provides zero-leak secret scans, cryptographic token verification,
+firewall/kill-switch validation, DLP redaction audits, password strength,
+file hashing, permission auditing, and security posture reporting.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.security_powers.SecurityPowers"><code class="flex name class">
+<span>class <span class="ident">SecurityPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SecurityPowers:
+    &#34;&#34;&#34;Implementations for Security and Guardrail domain capabilities.&#34;&#34;&#34;
+
+    def scan_secrets(self, text: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-268: Scans text for exposed credentials, API keys, and sensitive tokens.&#34;&#34;&#34;
+        patterns = {
+            &#34;openai_key&#34;: r&#34;sk-[A-Za-z0-9]{32,}&#34;,
+            &#34;anthropic_key&#34;: r&#34;sk-ant-[A-Za-z0-9_-]{32,}&#34;,
+            &#34;aws_access_key&#34;: r&#34;AKIA[0-9A-Z]{16}&#34;,
+            &#34;jwt_token&#34;: r&#34;eyJ[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*&#34;,
+            &#34;private_key&#34;: r&#34;-----BEGIN (RSA|OPENSSH|EC) PRIVATE KEY-----&#34;,
+        }
+
+        found_findings = []
+        for key_type, regex in patterns.items():
+            matches = re.findall(regex, text)
+            if matches:
+                found_findings.append({&#34;type&#34;: key_type, &#34;count&#34;: len(matches)})
+
+        redacted, _ = privacy_gate.inspect_and_redact(text)
+        return {
+            &#34;power_id&#34;: &#34;PWR-268&#34;,
+            &#34;safe&#34;: len(found_findings) == 0,
+            &#34;findings_count&#34;: len(found_findings),
+            &#34;findings&#34;: found_findings,
+            &#34;redacted_text_length&#34;: len(redacted),
+        }
+
+    def verify_kill_switch(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-279: Queries emergency kill-switch status across the operating system.&#34;&#34;&#34;
+        is_blocked = policy_gate.is_kill_switch_active()
+        return {
+            &#34;power_id&#34;: &#34;PWR-279&#34;,
+            &#34;kill_switch_active&#34;: is_blocked,
+            &#34;system_state&#34;: &#34;LOCKED&#34; if is_blocked else &#34;OPERATIONAL&#34;,
+        }
+
+    def verify_approval_token(self, token: str, action: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-284: Verifies cryptographic validity and expiration of an approval token.&#34;&#34;&#34;
+        valid = policy_gate.verify_token(token)
+        return {&#34;power_id&#34;: &#34;PWR-284&#34;, &#34;token&#34;: token, &#34;action&#34;: action, &#34;valid&#34;: valid}
+
+    # ------------------------------------------------------------------
+    # File-based Secret Scanning (PWR-144)
+    # ------------------------------------------------------------------
+
+    def secret_scan(self, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-144: Scan files for leaked API keys, passwords, and secrets.&#34;&#34;&#34;
+        try:
+            patterns = {
+                &#34;openai_key&#34;: r&#34;sk-[A-Za-z0-9]{32,}&#34;,
+                &#34;anthropic_key&#34;: r&#34;sk-ant-[A-Za-z0-9_-]{32,}&#34;,
+                &#34;aws_access_key&#34;: r&#34;AKIA[0-9A-Z]{16}&#34;,
+                &#34;aws_secret_key&#34;: r&#34;(?i)aws_secret_access_key\s*[=:]\s*\S+&#34;,
+                &#34;github_token&#34;: r&#34;gh[ps]_[A-Za-z0-9]{36,}&#34;,
+                &#34;generic_api_key&#34;: r&#34;(?i)(api[_-]?key|apikey)\s*[=:]\s*[&#39;\&#34;]?\S{16,}&#34;,
+                &#34;generic_secret&#34;: r&#34;(?i)(secret|password|passwd|pwd)\s*[=:]\s*[&#39;\&#34;]?\S{8,}&#34;,
+                &#34;private_key&#34;: r&#34;-----BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY-----&#34;,
+                &#34;connection_string&#34;: r&#34;(?i)(mongodb|postgres|mysql|redis)://\S+&#34;,
+            }
+            skip_dirs = {&#34;.git&#34;, &#34;__pycache__&#34;, &#34;node_modules&#34;, &#34;.venv&#34;, &#34;venv&#34;, &#34;dist&#34;, &#34;build&#34;, &#34;.tox&#34;}
+            scan_exts = {
+                &#34;.py&#34;,
+                &#34;.js&#34;,
+                &#34;.ts&#34;,
+                &#34;.json&#34;,
+                &#34;.yaml&#34;,
+                &#34;.yml&#34;,
+                &#34;.toml&#34;,
+                &#34;.cfg&#34;,
+                &#34;.ini&#34;,
+                &#34;.env&#34;,
+                &#34;.sh&#34;,
+                &#34;.bat&#34;,
+                &#34;.ps1&#34;,
+                &#34;.xml&#34;,
+                &#34;.conf&#34;,
+                &#34;.properties&#34;,
+                &#34;.tf&#34;,
+                &#34;.tfvars&#34;,
+                &#34;&#34;,
+            }
+
+            findings: List[Dict[str, Any]] = []
+            files_scanned = 0
+
+            for root, dirs, files in os.walk(os.path.abspath(directory)):
+                dirs[:] = [d for d in dirs if d not in skip_dirs]
+                for f in files:
+                    ext = os.path.splitext(f)[1]
+                    if ext not in scan_exts:
+                        continue
+                    fp = os.path.join(root, f)
+                    try:
+                        with open(fp, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as fh:
+                            files_scanned += 1
+                            for line_no, line in enumerate(fh, 1):
+                                for secret_type, regex in patterns.items():
+                                    if re.search(regex, line):
+                                        findings.append(
+                                            {
+                                                &#34;file&#34;: os.path.relpath(fp, directory),
+                                                &#34;line&#34;: line_no,
+                                                &#34;type&#34;: secret_type,
+                                                &#34;preview&#34;: line.strip()[:80] + &#34;...&#34;,
+                                            }
+                                        )
+                                        break  # one finding per line
+                    except (OSError, UnicodeDecodeError):
+                        pass
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-144&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;files_scanned&#34;: files_scanned,
+                &#34;finding_count&#34;: len(findings),
+                &#34;findings&#34;: findings[:200],
+                &#34;safe&#34;: len(findings) == 0,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-144&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Hashing &amp; Verification (PWR-145 to PWR-146)
+    # ------------------------------------------------------------------
+
+    def hash_file(self, file_path: str, algorithm: str = &#34;sha256&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-145: Compute file hash with specified algorithm.&#34;&#34;&#34;
+        try:
+            algo = algorithm.lower()
+            if algo not in hashlib.algorithms_available:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-145&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;message&#34;: f&#34;Unsupported algorithm: {algorithm}. Available: {sorted(hashlib.algorithms_available)}&#34;,
+                }
+            h = hashlib.new(algo)
+            with open(file_path, &#34;rb&#34;) as f:
+                while True:
+                    chunk = f.read(8192)
+                    if not chunk:
+                        break
+                    h.update(chunk)
+            file_size = os.path.getsize(file_path)
+            return {
+                &#34;power_id&#34;: &#34;PWR-145&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;file&#34;: file_path,
+                &#34;algorithm&#34;: algo,
+                &#34;hash&#34;: h.hexdigest(),
+                &#34;file_size_bytes&#34;: file_size,
+            }
+        except FileNotFoundError:
+            return {&#34;power_id&#34;: &#34;PWR-145&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-145&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def hash_verify(self, file_path: str, expected_hash: str, algorithm: str = &#34;sha256&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-146: Verify file hash against an expected value.&#34;&#34;&#34;
+        try:
+            result = self.hash_file(file_path, algorithm)
+            if result[&#34;status&#34;] != &#34;success&#34;:
+                result[&#34;power_id&#34;] = &#34;PWR-146&#34;
+                return result
+            computed = result[&#34;hash&#34;]
+            match = computed.lower() == expected_hash.lower()
+            return {
+                &#34;power_id&#34;: &#34;PWR-146&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;file&#34;: file_path,
+                &#34;algorithm&#34;: algorithm,
+                &#34;computed_hash&#34;: computed,
+                &#34;expected_hash&#34;: expected_hash,
+                &#34;match&#34;: match,
+                &#34;verdict&#34;: &#34;VERIFIED&#34; if match else &#34;MISMATCH&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-146&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Password Tools (PWR-147 to PWR-148)
+    # ------------------------------------------------------------------
+
+    def password_strength(self, password: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-147: Check password strength and provide feedback.&#34;&#34;&#34;
+        try:
+            checks = {
+                &#34;length_ok&#34;: len(password) &gt;= 12,
+                &#34;has_upper&#34;: bool(re.search(r&#34;[A-Z]&#34;, password)),
+                &#34;has_lower&#34;: bool(re.search(r&#34;[a-z]&#34;, password)),
+                &#34;has_digit&#34;: bool(re.search(r&#34;\d&#34;, password)),
+                &#34;has_special&#34;: bool(re.search(r&#34;[!@#$%^&amp;*()_+\-=\[\]{};&#39;:\&#34;\\|,.&lt;&gt;/?]&#34;, password)),
+                &#34;no_common_patterns&#34;: not bool(
+                    re.search(r&#34;(password|123456|qwerty|admin|letmein|welcome|monkey|dragon)&#34;, password.lower())
+                ),
+            }
+            score = sum(checks.values())
+            if score &gt;= 6:
+                strength = &#34;strong&#34;
+            elif score &gt;= 4:
+                strength = &#34;moderate&#34;
+            else:
+                strength = &#34;weak&#34;
+
+            suggestions = []
+            if not checks[&#34;length_ok&#34;]:
+                suggestions.append(&#34;Use at least 12 characters&#34;)
+            if not checks[&#34;has_upper&#34;]:
+                suggestions.append(&#34;Add uppercase letters&#34;)
+            if not checks[&#34;has_lower&#34;]:
+                suggestions.append(&#34;Add lowercase letters&#34;)
+            if not checks[&#34;has_digit&#34;]:
+                suggestions.append(&#34;Add digits&#34;)
+            if not checks[&#34;has_special&#34;]:
+                suggestions.append(&#34;Add special characters&#34;)
+            if not checks[&#34;no_common_patterns&#34;]:
+                suggestions.append(&#34;Avoid common password patterns&#34;)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-147&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;strength&#34;: strength,
+                &#34;score&#34;: f&#34;{score}/6&#34;,
+                &#34;checks&#34;: checks,
+                &#34;suggestions&#34;: suggestions,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-147&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def generate_password(self, length: int = 20) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-148: Generate a cryptographically secure random password.&#34;&#34;&#34;
+        try:
+            if length &lt; 8:
+                return {&#34;power_id&#34;: &#34;PWR-148&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Password length must be at least 8&#34;}
+            alphabet = string.ascii_letters + string.digits + &#34;!@#$%^&amp;*()-_=+&#34;
+            # Ensure at least one of each category
+            password = [
+                secrets.choice(string.ascii_uppercase),
+                secrets.choice(string.ascii_lowercase),
+                secrets.choice(string.digits),
+                secrets.choice(&#34;!@#$%^&amp;*()-_=+&#34;),
+            ]
+            password += [secrets.choice(alphabet) for _ in range(length - 4)]
+            # Shuffle to avoid predictable positions
+            pw_list = list(password)
+            # Fisher-Yates shuffle using secrets
+            for i in range(len(pw_list) - 1, 0, -1):
+                j = secrets.randbelow(i + 1)
+                pw_list[i], pw_list[j] = pw_list[j], pw_list[i]
+            generated = &#34;&#34;.join(pw_list)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-148&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;password&#34;: generated,
+                &#34;length&#34;: length,
+                &#34;entropy_bits&#34;: round(len(generated) * 6.5, 1),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-148&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Encryption Placeholders (PWR-149 to PWR-150)
+    # ------------------------------------------------------------------
+
+    def encrypt_file(self, file_path: str, key: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-149: Placeholder for file encryption (requires cryptography package).&#34;&#34;&#34;
+        try:
+            if not os.path.isfile(file_path):
+                return {&#34;power_id&#34;: &#34;PWR-149&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+            return {
+                &#34;power_id&#34;: &#34;PWR-149&#34;,
+                &#34;status&#34;: &#34;dispatched&#34;,
+                &#34;file&#34;: file_path,
+                &#34;message&#34;: &#34;File encryption dispatched. Install &#39;cryptography&#39; package &#34;
+                &#34;and implement Fernet-based encryption for production use.&#34;,
+                &#34;file_size_bytes&#34;: os.path.getsize(file_path),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-149&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def decrypt_file(self, file_path: str, key: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-150: Placeholder for file decryption (requires cryptography package).&#34;&#34;&#34;
+        try:
+            if not os.path.isfile(file_path):
+                return {&#34;power_id&#34;: &#34;PWR-150&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+            return {
+                &#34;power_id&#34;: &#34;PWR-150&#34;,
+                &#34;status&#34;: &#34;dispatched&#34;,
+                &#34;file&#34;: file_path,
+                &#34;message&#34;: &#34;File decryption dispatched. Install &#39;cryptography&#39; package &#34;
+                &#34;and implement Fernet-based decryption for production use.&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-150&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Audit &amp; Permissions (PWR-151 to PWR-152)
+    # ------------------------------------------------------------------
+
+    def audit_log_export(self, output_path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-151: Export audit log from Windows Security event log.&#34;&#34;&#34;
+        try:
+            ps_script = (
+                &#34;Get-EventLog -LogName Security -Newest 100 -ErrorAction Stop | &#34;
+                &#34;Select-Object TimeGenerated, EntryType, Source, InstanceId, Message | &#34;
+                &#34;ConvertTo-Json -Depth 3&#34;
+            )
+            res = subprocess.run(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            with open(output_path, &#34;w&#34;, encoding=&#34;utf-8&#34;) as f:
+                f.write(res.stdout if res.stdout else &#34;[]&#34;)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-151&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;output_path&#34;: output_path,
+                &#34;size_bytes&#34;: os.path.getsize(output_path),
+                &#34;message&#34;: &#34;Audit log exported successfully&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-151&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def permissions_audit(self, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-152: File permission analysis using icacls on Windows.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;icacls&#34;, os.path.abspath(directory)],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            entries: List[Dict[str, str]] = []
+            for line in res.stdout.strip().splitlines():
+                line = line.strip()
+                if line and not line.startswith(&#34;Successfully&#34;):
+                    entries.append({&#34;entry&#34;: line})
+
+            # Check for world-writable items
+            world_writable: List[str] = []
+            for root, dirs, files in os.walk(os.path.abspath(directory)):
+                for f in files[:100]:
+                    fp = os.path.join(root, f)
+                    try:
+                        # On Windows, check if file is read-only
+                        import stat
+
+                        st = os.stat(fp)
+                        if st.st_mode &amp; stat.S_IWOTH:
+                            world_writable.append(os.path.relpath(fp, directory))
+                    except OSError:
+                        pass
+                break  # Only top-level for performance
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-152&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;directory&#34;: os.path.abspath(directory),
+                &#34;acl_entries&#34;: entries[:50],
+                &#34;world_writable_count&#34;: len(world_writable),
+                &#34;world_writable&#34;: world_writable[:20],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-152&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # System Security Status (PWR-153 to PWR-155)
+    # ------------------------------------------------------------------
+
+    def firewall_status(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-153: Check Windows Firewall status for all profiles.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;netsh&#34;, &#34;advfirewall&#34;, &#34;show&#34;, &#34;allprofiles&#34;, &#34;state&#34;],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            profiles: Dict[str, str] = {}
+            current_profile = &#34;&#34;
+            for line in res.stdout.splitlines():
+                line = line.strip()
+                if &#34;Profile&#34; in line and &#34;Settings&#34; in line:
+                    current_profile = line.replace(&#34;Settings:&#34;, &#34;&#34;).strip()
+                elif line.startswith(&#34;State&#34;):
+                    state = line.split()[-1] if line.split() else &#34;unknown&#34;
+                    profiles[current_profile] = state
+
+            all_on = all(v.upper() == &#34;ON&#34; for v in profiles.values()) if profiles else False
+            return {
+                &#34;power_id&#34;: &#34;PWR-153&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;firewall_enabled&#34;: all_on,
+                &#34;profiles&#34;: profiles,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-153&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def antivirus_status(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-154: Check Windows Defender / antivirus status.&#34;&#34;&#34;
+        try:
+            ps_script = (
+                &#34;try { &#34;
+                &#34;$status = Get-MpComputerStatus -ErrorAction Stop; &#34;
+                &#34;ConvertTo-Json @{&#34;
+                &#34;  RealTimeProtection=$status.RealTimeProtectionEnabled; &#34;
+                &#34;  AntivirusEnabled=$status.AntivirusEnabled; &#34;
+                &#34;  AntispywareEnabled=$status.AntispywareEnabled; &#34;
+                &#34;  SignatureAge=$status.AntivirusSignatureAge; &#34;
+                &#34;  LastScan=$status.FullScanEndTime.ToString(&#39;o&#39;); &#34;
+                &#34;  QuickScanAge=$status.QuickScanAge; &#34;
+                &#34;  EngineVersion=$status.AMEngineVersion &#34;
+                &#34;} &#34;
+                &#34;} catch { ConvertTo-Json @{error=$_.Exception.Message} }&#34;
+            )
+            res = subprocess.run(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            try:
+                data = json.loads(res.stdout) if res.stdout.strip() else {}
+            except json.JSONDecodeError:
+                data = {&#34;raw&#34;: res.stdout[:2000]}
+
+            if &#34;error&#34; in data:
+                return {&#34;power_id&#34;: &#34;PWR-154&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: data[&#34;error&#34;]}
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-154&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;defender&#34;: data,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-154&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def certificate_store(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-155: List certificates from the Windows certificate store.&#34;&#34;&#34;
+        try:
+            ps_script = (
+                &#34;Get-ChildItem Cert:\\LocalMachine\\My -ErrorAction Stop | &#34;
+                &#34;Select-Object Subject, Issuer, NotAfter, Thumbprint | &#34;
+                &#34;ConvertTo-Json -Depth 2&#34;
+            )
+            res = subprocess.run(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            try:
+                certs = json.loads(res.stdout) if res.stdout.strip() else []
+                if isinstance(certs, dict):
+                    certs = [certs]
+            except json.JSONDecodeError:
+                certs = []
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-155&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;cert_count&#34;: len(certs),
+                &#34;certificates&#34;: certs[:100],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-155&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Git &amp; Code Security (PWR-156)
+    # ------------------------------------------------------------------
+
+    def git_secrets_scan(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-156: Scan git history for committed secrets.&#34;&#34;&#34;
+        try:
+            # Search recent commits for secret-like patterns
+            res = subprocess.run(
+                [&#34;git&#34;, &#34;log&#34;, &#34;--all&#34;, &#34;-p&#34;, &#34;--max-count=50&#34;, &#34;-S&#34;, &#34;AKIA&#34;, &#34;--oneline&#34;],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            aws_findings = res.stdout.strip().splitlines() if res.stdout.strip() else []
+
+            res2 = subprocess.run(
+                [&#34;git&#34;, &#34;log&#34;, &#34;--all&#34;, &#34;-p&#34;, &#34;--max-count=50&#34;, &#34;-S&#34;, &#34;sk-&#34;, &#34;--oneline&#34;],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            api_findings = res2.stdout.strip().splitlines() if res2.stdout.strip() else []
+
+            all_findings = []
+            for line in (aws_findings + api_findings)[:50]:
+                all_findings.append({&#34;commit_ref&#34;: line.strip()[:120]})
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-156&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;repo&#34;: os.path.abspath(repo_path),
+                &#34;finding_count&#34;: len(all_findings),
+                &#34;findings&#34;: all_findings,
+                &#34;safe&#34;: len(all_findings) == 0,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-156&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Network &amp; Process Security (PWR-157 to PWR-158)
+    # ------------------------------------------------------------------
+
+    def network_connections(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-157: List active network connections (like netstat).&#34;&#34;&#34;
+        try:
+            import psutil
+
+            connections: List[Dict[str, Any]] = []
+            for conn in psutil.net_connections(kind=&#34;inet&#34;):
+                try:
+                    proc_name = &#34;&#34;
+                    if conn.pid:
+                        try:
+                            proc_name = psutil.Process(conn.pid).name()
+                        except (psutil.NoSuchProcess, psutil.AccessDenied):
+                            proc_name = &#34;unknown&#34;
+                    connections.append(
+                        {
+                            &#34;local_addr&#34;: f&#34;{conn.laddr.ip}:{conn.laddr.port}&#34; if conn.laddr else &#34;&#34;,
+                            &#34;remote_addr&#34;: f&#34;{conn.raddr.ip}:{conn.raddr.port}&#34; if conn.raddr else &#34;&#34;,
+                            &#34;status&#34;: conn.status,
+                            &#34;pid&#34;: conn.pid,
+                            &#34;process&#34;: proc_name,
+                        }
+                    )
+                except Exception:
+                    pass
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-157&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;connection_count&#34;: len(connections),
+                &#34;connections&#34;: connections[:100],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-157&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def suspicious_process_check(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-158: Check for processes with suspicious characteristics.&#34;&#34;&#34;
+        try:
+            import psutil
+
+            suspicious: List[Dict[str, Any]] = []
+            suspicious_names = {
+                &#34;mimikatz&#34;,
+                &#34;pwdump&#34;,
+                &#34;procdump&#34;,
+                &#34;lazagne&#34;,
+                &#34;keylogger&#34;,
+                &#34;netcat&#34;,
+                &#34;nc&#34;,
+                &#34;ncat&#34;,
+                &#34;reverse&#34;,
+                &#34;meterpreter&#34;,
+                &#34;cobaltstrike&#34;,
+                &#34;empire&#34;,
+                &#34;bloodhound&#34;,
+                &#34;rubeus&#34;,
+                &#34;certutil&#34;,
+            }
+
+            for proc in psutil.process_iter([&#34;pid&#34;, &#34;name&#34;, &#34;exe&#34;, &#34;cmdline&#34;, &#34;username&#34;]):
+                try:
+                    info = proc.info
+                    name_lower = (info.get(&#34;name&#34;) or &#34;&#34;).lower()
+                    exe_lower = (info.get(&#34;exe&#34;) or &#34;&#34;).lower()
+
+                    flags: List[str] = []
+
+                    # Check against known suspicious names
+                    for sn in suspicious_names:
+                        if sn in name_lower or sn in exe_lower:
+                            flags.append(f&#34;known_suspicious:{sn}&#34;)
+
+                    # Check for processes running from temp directories
+                    if info.get(&#34;exe&#34;):
+                        exe = info[&#34;exe&#34;].lower()
+                        if any(t in exe for t in [&#34;\\temp\\&#34;, &#34;\\tmp\\&#34;, &#34;\\appdata\\local\\temp&#34;]):
+                            flags.append(&#34;running_from_temp&#34;)
+
+                    # Check for hidden/no-window PowerShell
+                    cmdline = info.get(&#34;cmdline&#34;) or []
+                    cmdline_str = &#34; &#34;.join(cmdline).lower()
+                    if &#34;powershell&#34; in name_lower and any(
+                        f in cmdline_str for f in [&#34;-enc&#34;, &#34;-encodedcommand&#34;, &#34;-hidden&#34;, &#34;-windowstyle hidden&#34;]
+                    ):
+                        flags.append(&#34;hidden_powershell&#34;)
+
+                    if flags:
+                        suspicious.append(
+                            {
+                                &#34;pid&#34;: info[&#34;pid&#34;],
+                                &#34;name&#34;: info[&#34;name&#34;],
+                                &#34;exe&#34;: info.get(&#34;exe&#34;, &#34;&#34;),
+                                &#34;username&#34;: info.get(&#34;username&#34;, &#34;&#34;),
+                                &#34;flags&#34;: flags,
+                            }
+                        )
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    pass
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-158&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;suspicious_count&#34;: len(suspicious),
+                &#34;processes&#34;: suspicious[:50],
+                &#34;safe&#34;: len(suspicious) == 0,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-158&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Key Management (PWR-159)
+    # ------------------------------------------------------------------
+
+    def key_rotation_reminder(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-159: Check API key ages by scanning .env files.&#34;&#34;&#34;
+        try:
+            env_files = []
+            # Look for .env files in common locations
+            search_dirs = [
+                os.path.expanduser(&#34;~&#34;),
+                os.getcwd(),
+            ]
+            for d in search_dirs:
+                env_path = os.path.join(d, &#34;.env&#34;)
+                if os.path.isfile(env_path):
+                    env_files.append(env_path)
+
+            findings: List[Dict[str, Any]] = []
+            for env_file in env_files:
+                try:
+                    mod_time = datetime.datetime.fromtimestamp(os.path.getmtime(env_file))
+                    age_days = (datetime.datetime.now() - mod_time).days
+                    with open(env_file, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+                        key_count = sum(1 for line in f if line.strip() and not line.startswith(&#34;#&#34;) and &#34;=&#34; in line)
+                    findings.append(
+                        {
+                            &#34;file&#34;: env_file,
+                            &#34;last_modified&#34;: mod_time.strftime(&#34;%Y-%m-%d&#34;),
+                            &#34;age_days&#34;: age_days,
+                            &#34;key_count&#34;: key_count,
+                            &#34;rotation_recommended&#34;: age_days &gt; 90,
+                        }
+                    )
+                except OSError:
+                    pass
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-159&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;env_files_found&#34;: len(env_files),
+                &#34;findings&#34;: findings,
+                &#34;action_needed&#34;: any(f.get(&#34;rotation_recommended&#34;) for f in findings),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-159&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Security Posture Report (PWR-161)
+    # ------------------------------------------------------------------
+
+    def security_posture_report(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-161: Generate an overall security posture summary.&#34;&#34;&#34;
+        try:
+            report: Dict[str, Any] = {&#34;power_id&#34;: &#34;PWR-161&#34;, &#34;status&#34;: &#34;success&#34;, &#34;checks&#34;: {}}
+            issues: List[str] = []
+            score = 100
+
+            # 1. Firewall
+            fw = self.firewall_status()
+            fw_ok = fw.get(&#34;firewall_enabled&#34;, False)
+            report[&#34;checks&#34;][&#34;firewall&#34;] = &#34;enabled&#34; if fw_ok else &#34;DISABLED&#34;
+            if not fw_ok:
+                issues.append(&#34;Windows Firewall is not fully enabled&#34;)
+                score -= 20
+
+            # 2. Antivirus
+            av = self.antivirus_status()
+            if av.get(&#34;status&#34;) == &#34;success&#34;:
+                defender = av.get(&#34;defender&#34;, {})
+                rtp = defender.get(&#34;RealTimeProtection&#34;, False)
+                report[&#34;checks&#34;][&#34;realtime_protection&#34;] = &#34;enabled&#34; if rtp else &#34;DISABLED&#34;
+                if not rtp:
+                    issues.append(&#34;Real-time protection is disabled&#34;)
+                    score -= 25
+                sig_age = defender.get(&#34;SignatureAge&#34;, 0)
+                if isinstance(sig_age, (int, float)) and sig_age &gt; 7:
+                    issues.append(f&#34;Antivirus signatures are {sig_age} days old&#34;)
+                    score -= 10
+            else:
+                report[&#34;checks&#34;][&#34;antivirus&#34;] = &#34;check_failed&#34;
+                score -= 10
+
+            # 3. Key rotation
+            kr = self.key_rotation_reminder()
+            if kr.get(&#34;action_needed&#34;):
+                issues.append(&#34;API keys may need rotation (&gt;90 days old)&#34;)
+                score -= 10
+
+            # 4. Kill switch
+            ks = self.verify_kill_switch()
+            report[&#34;checks&#34;][&#34;kill_switch&#34;] = ks.get(&#34;system_state&#34;, &#34;UNKNOWN&#34;)
+
+            report[&#34;security_score&#34;] = max(0, score)
+            report[&#34;grade&#34;] = (
+                &#34;A&#34; if score &gt;= 90 else &#34;B&#34; if score &gt;= 75 else &#34;C&#34; if score &gt;= 60 else &#34;D&#34; if score &gt;= 40 else &#34;F&#34;
+            )
+            report[&#34;issues&#34;] = issues
+            report[&#34;issue_count&#34;] = len(issues)
+
+            return report
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-161&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>Implementations for Security and Guardrail domain capabilities.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.security_powers.SecurityPowers.antivirus_status"><code class="name flex">
+<span>def <span class="ident">antivirus_status</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def antivirus_status(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-154: Check Windows Defender / antivirus status.&#34;&#34;&#34;
+    try:
+        ps_script = (
+            &#34;try { &#34;
+            &#34;$status = Get-MpComputerStatus -ErrorAction Stop; &#34;
+            &#34;ConvertTo-Json @{&#34;
+            &#34;  RealTimeProtection=$status.RealTimeProtectionEnabled; &#34;
+            &#34;  AntivirusEnabled=$status.AntivirusEnabled; &#34;
+            &#34;  AntispywareEnabled=$status.AntispywareEnabled; &#34;
+            &#34;  SignatureAge=$status.AntivirusSignatureAge; &#34;
+            &#34;  LastScan=$status.FullScanEndTime.ToString(&#39;o&#39;); &#34;
+            &#34;  QuickScanAge=$status.QuickScanAge; &#34;
+            &#34;  EngineVersion=$status.AMEngineVersion &#34;
+            &#34;} &#34;
+            &#34;} catch { ConvertTo-Json @{error=$_.Exception.Message} }&#34;
+        )
+        res = subprocess.run(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        try:
+            data = json.loads(res.stdout) if res.stdout.strip() else {}
+        except json.JSONDecodeError:
+            data = {&#34;raw&#34;: res.stdout[:2000]}
+
+        if &#34;error&#34; in data:
+            return {&#34;power_id&#34;: &#34;PWR-154&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: data[&#34;error&#34;]}
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-154&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;defender&#34;: data,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-154&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-154: Check Windows Defender / antivirus status.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.audit_log_export"><code class="name flex">
+<span>def <span class="ident">audit_log_export</span></span>(<span>self, output_path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def audit_log_export(self, output_path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-151: Export audit log from Windows Security event log.&#34;&#34;&#34;
+    try:
+        ps_script = (
+            &#34;Get-EventLog -LogName Security -Newest 100 -ErrorAction Stop | &#34;
+            &#34;Select-Object TimeGenerated, EntryType, Source, InstanceId, Message | &#34;
+            &#34;ConvertTo-Json -Depth 3&#34;
+        )
+        res = subprocess.run(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        with open(output_path, &#34;w&#34;, encoding=&#34;utf-8&#34;) as f:
+            f.write(res.stdout if res.stdout else &#34;[]&#34;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-151&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;output_path&#34;: output_path,
+            &#34;size_bytes&#34;: os.path.getsize(output_path),
+            &#34;message&#34;: &#34;Audit log exported successfully&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-151&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-151: Export audit log from Windows Security event log.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.certificate_store"><code class="name flex">
+<span>def <span class="ident">certificate_store</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def certificate_store(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-155: List certificates from the Windows certificate store.&#34;&#34;&#34;
+    try:
+        ps_script = (
+            &#34;Get-ChildItem Cert:\\LocalMachine\\My -ErrorAction Stop | &#34;
+            &#34;Select-Object Subject, Issuer, NotAfter, Thumbprint | &#34;
+            &#34;ConvertTo-Json -Depth 2&#34;
+        )
+        res = subprocess.run(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        try:
+            certs = json.loads(res.stdout) if res.stdout.strip() else []
+            if isinstance(certs, dict):
+                certs = [certs]
+        except json.JSONDecodeError:
+            certs = []
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-155&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;cert_count&#34;: len(certs),
+            &#34;certificates&#34;: certs[:100],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-155&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-155: List certificates from the Windows certificate store.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.decrypt_file"><code class="name flex">
+<span>def <span class="ident">decrypt_file</span></span>(<span>self, file_path: str, key: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decrypt_file(self, file_path: str, key: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-150: Placeholder for file decryption (requires cryptography package).&#34;&#34;&#34;
+    try:
+        if not os.path.isfile(file_path):
+            return {&#34;power_id&#34;: &#34;PWR-150&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+        return {
+            &#34;power_id&#34;: &#34;PWR-150&#34;,
+            &#34;status&#34;: &#34;dispatched&#34;,
+            &#34;file&#34;: file_path,
+            &#34;message&#34;: &#34;File decryption dispatched. Install &#39;cryptography&#39; package &#34;
+            &#34;and implement Fernet-based decryption for production use.&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-150&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-150: Placeholder for file decryption (requires cryptography package).</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.encrypt_file"><code class="name flex">
+<span>def <span class="ident">encrypt_file</span></span>(<span>self, file_path: str, key: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encrypt_file(self, file_path: str, key: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-149: Placeholder for file encryption (requires cryptography package).&#34;&#34;&#34;
+    try:
+        if not os.path.isfile(file_path):
+            return {&#34;power_id&#34;: &#34;PWR-149&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+        return {
+            &#34;power_id&#34;: &#34;PWR-149&#34;,
+            &#34;status&#34;: &#34;dispatched&#34;,
+            &#34;file&#34;: file_path,
+            &#34;message&#34;: &#34;File encryption dispatched. Install &#39;cryptography&#39; package &#34;
+            &#34;and implement Fernet-based encryption for production use.&#34;,
+            &#34;file_size_bytes&#34;: os.path.getsize(file_path),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-149&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-149: Placeholder for file encryption (requires cryptography package).</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.firewall_status"><code class="name flex">
+<span>def <span class="ident">firewall_status</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def firewall_status(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-153: Check Windows Firewall status for all profiles.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;netsh&#34;, &#34;advfirewall&#34;, &#34;show&#34;, &#34;allprofiles&#34;, &#34;state&#34;],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        profiles: Dict[str, str] = {}
+        current_profile = &#34;&#34;
+        for line in res.stdout.splitlines():
+            line = line.strip()
+            if &#34;Profile&#34; in line and &#34;Settings&#34; in line:
+                current_profile = line.replace(&#34;Settings:&#34;, &#34;&#34;).strip()
+            elif line.startswith(&#34;State&#34;):
+                state = line.split()[-1] if line.split() else &#34;unknown&#34;
+                profiles[current_profile] = state
+
+        all_on = all(v.upper() == &#34;ON&#34; for v in profiles.values()) if profiles else False
+        return {
+            &#34;power_id&#34;: &#34;PWR-153&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;firewall_enabled&#34;: all_on,
+            &#34;profiles&#34;: profiles,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-153&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-153: Check Windows Firewall status for all profiles.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.generate_password"><code class="name flex">
+<span>def <span class="ident">generate_password</span></span>(<span>self, length: int = 20) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_password(self, length: int = 20) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-148: Generate a cryptographically secure random password.&#34;&#34;&#34;
+    try:
+        if length &lt; 8:
+            return {&#34;power_id&#34;: &#34;PWR-148&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Password length must be at least 8&#34;}
+        alphabet = string.ascii_letters + string.digits + &#34;!@#$%^&amp;*()-_=+&#34;
+        # Ensure at least one of each category
+        password = [
+            secrets.choice(string.ascii_uppercase),
+            secrets.choice(string.ascii_lowercase),
+            secrets.choice(string.digits),
+            secrets.choice(&#34;!@#$%^&amp;*()-_=+&#34;),
+        ]
+        password += [secrets.choice(alphabet) for _ in range(length - 4)]
+        # Shuffle to avoid predictable positions
+        pw_list = list(password)
+        # Fisher-Yates shuffle using secrets
+        for i in range(len(pw_list) - 1, 0, -1):
+            j = secrets.randbelow(i + 1)
+            pw_list[i], pw_list[j] = pw_list[j], pw_list[i]
+        generated = &#34;&#34;.join(pw_list)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-148&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;password&#34;: generated,
+            &#34;length&#34;: length,
+            &#34;entropy_bits&#34;: round(len(generated) * 6.5, 1),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-148&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-148: Generate a cryptographically secure random password.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.git_secrets_scan"><code class="name flex">
+<span>def <span class="ident">git_secrets_scan</span></span>(<span>self, repo_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def git_secrets_scan(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-156: Scan git history for committed secrets.&#34;&#34;&#34;
+    try:
+        # Search recent commits for secret-like patterns
+        res = subprocess.run(
+            [&#34;git&#34;, &#34;log&#34;, &#34;--all&#34;, &#34;-p&#34;, &#34;--max-count=50&#34;, &#34;-S&#34;, &#34;AKIA&#34;, &#34;--oneline&#34;],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        aws_findings = res.stdout.strip().splitlines() if res.stdout.strip() else []
+
+        res2 = subprocess.run(
+            [&#34;git&#34;, &#34;log&#34;, &#34;--all&#34;, &#34;-p&#34;, &#34;--max-count=50&#34;, &#34;-S&#34;, &#34;sk-&#34;, &#34;--oneline&#34;],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        api_findings = res2.stdout.strip().splitlines() if res2.stdout.strip() else []
+
+        all_findings = []
+        for line in (aws_findings + api_findings)[:50]:
+            all_findings.append({&#34;commit_ref&#34;: line.strip()[:120]})
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-156&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;repo&#34;: os.path.abspath(repo_path),
+            &#34;finding_count&#34;: len(all_findings),
+            &#34;findings&#34;: all_findings,
+            &#34;safe&#34;: len(all_findings) == 0,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-156&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-156: Scan git history for committed secrets.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.hash_file"><code class="name flex">
+<span>def <span class="ident">hash_file</span></span>(<span>self, file_path: str, algorithm: str = 'sha256') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hash_file(self, file_path: str, algorithm: str = &#34;sha256&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-145: Compute file hash with specified algorithm.&#34;&#34;&#34;
+    try:
+        algo = algorithm.lower()
+        if algo not in hashlib.algorithms_available:
+            return {
+                &#34;power_id&#34;: &#34;PWR-145&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;Unsupported algorithm: {algorithm}. Available: {sorted(hashlib.algorithms_available)}&#34;,
+            }
+        h = hashlib.new(algo)
+        with open(file_path, &#34;rb&#34;) as f:
+            while True:
+                chunk = f.read(8192)
+                if not chunk:
+                    break
+                h.update(chunk)
+        file_size = os.path.getsize(file_path)
+        return {
+            &#34;power_id&#34;: &#34;PWR-145&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;file&#34;: file_path,
+            &#34;algorithm&#34;: algo,
+            &#34;hash&#34;: h.hexdigest(),
+            &#34;file_size_bytes&#34;: file_size,
+        }
+    except FileNotFoundError:
+        return {&#34;power_id&#34;: &#34;PWR-145&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-145&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-145: Compute file hash with specified algorithm.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.hash_verify"><code class="name flex">
+<span>def <span class="ident">hash_verify</span></span>(<span>self, file_path: str, expected_hash: str, algorithm: str = 'sha256') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hash_verify(self, file_path: str, expected_hash: str, algorithm: str = &#34;sha256&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-146: Verify file hash against an expected value.&#34;&#34;&#34;
+    try:
+        result = self.hash_file(file_path, algorithm)
+        if result[&#34;status&#34;] != &#34;success&#34;:
+            result[&#34;power_id&#34;] = &#34;PWR-146&#34;
+            return result
+        computed = result[&#34;hash&#34;]
+        match = computed.lower() == expected_hash.lower()
+        return {
+            &#34;power_id&#34;: &#34;PWR-146&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;file&#34;: file_path,
+            &#34;algorithm&#34;: algorithm,
+            &#34;computed_hash&#34;: computed,
+            &#34;expected_hash&#34;: expected_hash,
+            &#34;match&#34;: match,
+            &#34;verdict&#34;: &#34;VERIFIED&#34; if match else &#34;MISMATCH&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-146&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-146: Verify file hash against an expected value.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.key_rotation_reminder"><code class="name flex">
+<span>def <span class="ident">key_rotation_reminder</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def key_rotation_reminder(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-159: Check API key ages by scanning .env files.&#34;&#34;&#34;
+    try:
+        env_files = []
+        # Look for .env files in common locations
+        search_dirs = [
+            os.path.expanduser(&#34;~&#34;),
+            os.getcwd(),
+        ]
+        for d in search_dirs:
+            env_path = os.path.join(d, &#34;.env&#34;)
+            if os.path.isfile(env_path):
+                env_files.append(env_path)
+
+        findings: List[Dict[str, Any]] = []
+        for env_file in env_files:
+            try:
+                mod_time = datetime.datetime.fromtimestamp(os.path.getmtime(env_file))
+                age_days = (datetime.datetime.now() - mod_time).days
+                with open(env_file, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+                    key_count = sum(1 for line in f if line.strip() and not line.startswith(&#34;#&#34;) and &#34;=&#34; in line)
+                findings.append(
+                    {
+                        &#34;file&#34;: env_file,
+                        &#34;last_modified&#34;: mod_time.strftime(&#34;%Y-%m-%d&#34;),
+                        &#34;age_days&#34;: age_days,
+                        &#34;key_count&#34;: key_count,
+                        &#34;rotation_recommended&#34;: age_days &gt; 90,
+                    }
+                )
+            except OSError:
+                pass
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-159&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;env_files_found&#34;: len(env_files),
+            &#34;findings&#34;: findings,
+            &#34;action_needed&#34;: any(f.get(&#34;rotation_recommended&#34;) for f in findings),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-159&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-159: Check API key ages by scanning .env files.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.network_connections"><code class="name flex">
+<span>def <span class="ident">network_connections</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def network_connections(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-157: List active network connections (like netstat).&#34;&#34;&#34;
+    try:
+        import psutil
+
+        connections: List[Dict[str, Any]] = []
+        for conn in psutil.net_connections(kind=&#34;inet&#34;):
+            try:
+                proc_name = &#34;&#34;
+                if conn.pid:
+                    try:
+                        proc_name = psutil.Process(conn.pid).name()
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        proc_name = &#34;unknown&#34;
+                connections.append(
+                    {
+                        &#34;local_addr&#34;: f&#34;{conn.laddr.ip}:{conn.laddr.port}&#34; if conn.laddr else &#34;&#34;,
+                        &#34;remote_addr&#34;: f&#34;{conn.raddr.ip}:{conn.raddr.port}&#34; if conn.raddr else &#34;&#34;,
+                        &#34;status&#34;: conn.status,
+                        &#34;pid&#34;: conn.pid,
+                        &#34;process&#34;: proc_name,
+                    }
+                )
+            except Exception:
+                pass
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-157&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;connection_count&#34;: len(connections),
+            &#34;connections&#34;: connections[:100],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-157&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-157: List active network connections (like netstat).</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.password_strength"><code class="name flex">
+<span>def <span class="ident">password_strength</span></span>(<span>self, password: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def password_strength(self, password: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-147: Check password strength and provide feedback.&#34;&#34;&#34;
+    try:
+        checks = {
+            &#34;length_ok&#34;: len(password) &gt;= 12,
+            &#34;has_upper&#34;: bool(re.search(r&#34;[A-Z]&#34;, password)),
+            &#34;has_lower&#34;: bool(re.search(r&#34;[a-z]&#34;, password)),
+            &#34;has_digit&#34;: bool(re.search(r&#34;\d&#34;, password)),
+            &#34;has_special&#34;: bool(re.search(r&#34;[!@#$%^&amp;*()_+\-=\[\]{};&#39;:\&#34;\\|,.&lt;&gt;/?]&#34;, password)),
+            &#34;no_common_patterns&#34;: not bool(
+                re.search(r&#34;(password|123456|qwerty|admin|letmein|welcome|monkey|dragon)&#34;, password.lower())
+            ),
+        }
+        score = sum(checks.values())
+        if score &gt;= 6:
+            strength = &#34;strong&#34;
+        elif score &gt;= 4:
+            strength = &#34;moderate&#34;
+        else:
+            strength = &#34;weak&#34;
+
+        suggestions = []
+        if not checks[&#34;length_ok&#34;]:
+            suggestions.append(&#34;Use at least 12 characters&#34;)
+        if not checks[&#34;has_upper&#34;]:
+            suggestions.append(&#34;Add uppercase letters&#34;)
+        if not checks[&#34;has_lower&#34;]:
+            suggestions.append(&#34;Add lowercase letters&#34;)
+        if not checks[&#34;has_digit&#34;]:
+            suggestions.append(&#34;Add digits&#34;)
+        if not checks[&#34;has_special&#34;]:
+            suggestions.append(&#34;Add special characters&#34;)
+        if not checks[&#34;no_common_patterns&#34;]:
+            suggestions.append(&#34;Avoid common password patterns&#34;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-147&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;strength&#34;: strength,
+            &#34;score&#34;: f&#34;{score}/6&#34;,
+            &#34;checks&#34;: checks,
+            &#34;suggestions&#34;: suggestions,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-147&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-147: Check password strength and provide feedback.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.permissions_audit"><code class="name flex">
+<span>def <span class="ident">permissions_audit</span></span>(<span>self, directory: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def permissions_audit(self, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-152: File permission analysis using icacls on Windows.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;icacls&#34;, os.path.abspath(directory)],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        entries: List[Dict[str, str]] = []
+        for line in res.stdout.strip().splitlines():
+            line = line.strip()
+            if line and not line.startswith(&#34;Successfully&#34;):
+                entries.append({&#34;entry&#34;: line})
+
+        # Check for world-writable items
+        world_writable: List[str] = []
+        for root, dirs, files in os.walk(os.path.abspath(directory)):
+            for f in files[:100]:
+                fp = os.path.join(root, f)
+                try:
+                    # On Windows, check if file is read-only
+                    import stat
+
+                    st = os.stat(fp)
+                    if st.st_mode &amp; stat.S_IWOTH:
+                        world_writable.append(os.path.relpath(fp, directory))
+                except OSError:
+                    pass
+            break  # Only top-level for performance
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-152&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;directory&#34;: os.path.abspath(directory),
+            &#34;acl_entries&#34;: entries[:50],
+            &#34;world_writable_count&#34;: len(world_writable),
+            &#34;world_writable&#34;: world_writable[:20],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-152&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-152: File permission analysis using icacls on Windows.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.scan_secrets"><code class="name flex">
+<span>def <span class="ident">scan_secrets</span></span>(<span>self, text: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def scan_secrets(self, text: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-268: Scans text for exposed credentials, API keys, and sensitive tokens.&#34;&#34;&#34;
+    patterns = {
+        &#34;openai_key&#34;: r&#34;sk-[A-Za-z0-9]{32,}&#34;,
+        &#34;anthropic_key&#34;: r&#34;sk-ant-[A-Za-z0-9_-]{32,}&#34;,
+        &#34;aws_access_key&#34;: r&#34;AKIA[0-9A-Z]{16}&#34;,
+        &#34;jwt_token&#34;: r&#34;eyJ[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*&#34;,
+        &#34;private_key&#34;: r&#34;-----BEGIN (RSA|OPENSSH|EC) PRIVATE KEY-----&#34;,
+    }
+
+    found_findings = []
+    for key_type, regex in patterns.items():
+        matches = re.findall(regex, text)
+        if matches:
+            found_findings.append({&#34;type&#34;: key_type, &#34;count&#34;: len(matches)})
+
+    redacted, _ = privacy_gate.inspect_and_redact(text)
+    return {
+        &#34;power_id&#34;: &#34;PWR-268&#34;,
+        &#34;safe&#34;: len(found_findings) == 0,
+        &#34;findings_count&#34;: len(found_findings),
+        &#34;findings&#34;: found_findings,
+        &#34;redacted_text_length&#34;: len(redacted),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-268: Scans text for exposed credentials, API keys, and sensitive tokens.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.secret_scan"><code class="name flex">
+<span>def <span class="ident">secret_scan</span></span>(<span>self, directory: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def secret_scan(self, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-144: Scan files for leaked API keys, passwords, and secrets.&#34;&#34;&#34;
+    try:
+        patterns = {
+            &#34;openai_key&#34;: r&#34;sk-[A-Za-z0-9]{32,}&#34;,
+            &#34;anthropic_key&#34;: r&#34;sk-ant-[A-Za-z0-9_-]{32,}&#34;,
+            &#34;aws_access_key&#34;: r&#34;AKIA[0-9A-Z]{16}&#34;,
+            &#34;aws_secret_key&#34;: r&#34;(?i)aws_secret_access_key\s*[=:]\s*\S+&#34;,
+            &#34;github_token&#34;: r&#34;gh[ps]_[A-Za-z0-9]{36,}&#34;,
+            &#34;generic_api_key&#34;: r&#34;(?i)(api[_-]?key|apikey)\s*[=:]\s*[&#39;\&#34;]?\S{16,}&#34;,
+            &#34;generic_secret&#34;: r&#34;(?i)(secret|password|passwd|pwd)\s*[=:]\s*[&#39;\&#34;]?\S{8,}&#34;,
+            &#34;private_key&#34;: r&#34;-----BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY-----&#34;,
+            &#34;connection_string&#34;: r&#34;(?i)(mongodb|postgres|mysql|redis)://\S+&#34;,
+        }
+        skip_dirs = {&#34;.git&#34;, &#34;__pycache__&#34;, &#34;node_modules&#34;, &#34;.venv&#34;, &#34;venv&#34;, &#34;dist&#34;, &#34;build&#34;, &#34;.tox&#34;}
+        scan_exts = {
+            &#34;.py&#34;,
+            &#34;.js&#34;,
+            &#34;.ts&#34;,
+            &#34;.json&#34;,
+            &#34;.yaml&#34;,
+            &#34;.yml&#34;,
+            &#34;.toml&#34;,
+            &#34;.cfg&#34;,
+            &#34;.ini&#34;,
+            &#34;.env&#34;,
+            &#34;.sh&#34;,
+            &#34;.bat&#34;,
+            &#34;.ps1&#34;,
+            &#34;.xml&#34;,
+            &#34;.conf&#34;,
+            &#34;.properties&#34;,
+            &#34;.tf&#34;,
+            &#34;.tfvars&#34;,
+            &#34;&#34;,
+        }
+
+        findings: List[Dict[str, Any]] = []
+        files_scanned = 0
+
+        for root, dirs, files in os.walk(os.path.abspath(directory)):
+            dirs[:] = [d for d in dirs if d not in skip_dirs]
+            for f in files:
+                ext = os.path.splitext(f)[1]
+                if ext not in scan_exts:
+                    continue
+                fp = os.path.join(root, f)
+                try:
+                    with open(fp, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as fh:
+                        files_scanned += 1
+                        for line_no, line in enumerate(fh, 1):
+                            for secret_type, regex in patterns.items():
+                                if re.search(regex, line):
+                                    findings.append(
+                                        {
+                                            &#34;file&#34;: os.path.relpath(fp, directory),
+                                            &#34;line&#34;: line_no,
+                                            &#34;type&#34;: secret_type,
+                                            &#34;preview&#34;: line.strip()[:80] + &#34;...&#34;,
+                                        }
+                                    )
+                                    break  # one finding per line
+                except (OSError, UnicodeDecodeError):
+                    pass
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-144&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;files_scanned&#34;: files_scanned,
+            &#34;finding_count&#34;: len(findings),
+            &#34;findings&#34;: findings[:200],
+            &#34;safe&#34;: len(findings) == 0,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-144&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-144: Scan files for leaked API keys, passwords, and secrets.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.security_posture_report"><code class="name flex">
+<span>def <span class="ident">security_posture_report</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def security_posture_report(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-161: Generate an overall security posture summary.&#34;&#34;&#34;
+    try:
+        report: Dict[str, Any] = {&#34;power_id&#34;: &#34;PWR-161&#34;, &#34;status&#34;: &#34;success&#34;, &#34;checks&#34;: {}}
+        issues: List[str] = []
+        score = 100
+
+        # 1. Firewall
+        fw = self.firewall_status()
+        fw_ok = fw.get(&#34;firewall_enabled&#34;, False)
+        report[&#34;checks&#34;][&#34;firewall&#34;] = &#34;enabled&#34; if fw_ok else &#34;DISABLED&#34;
+        if not fw_ok:
+            issues.append(&#34;Windows Firewall is not fully enabled&#34;)
+            score -= 20
+
+        # 2. Antivirus
+        av = self.antivirus_status()
+        if av.get(&#34;status&#34;) == &#34;success&#34;:
+            defender = av.get(&#34;defender&#34;, {})
+            rtp = defender.get(&#34;RealTimeProtection&#34;, False)
+            report[&#34;checks&#34;][&#34;realtime_protection&#34;] = &#34;enabled&#34; if rtp else &#34;DISABLED&#34;
+            if not rtp:
+                issues.append(&#34;Real-time protection is disabled&#34;)
+                score -= 25
+            sig_age = defender.get(&#34;SignatureAge&#34;, 0)
+            if isinstance(sig_age, (int, float)) and sig_age &gt; 7:
+                issues.append(f&#34;Antivirus signatures are {sig_age} days old&#34;)
+                score -= 10
+        else:
+            report[&#34;checks&#34;][&#34;antivirus&#34;] = &#34;check_failed&#34;
+            score -= 10
+
+        # 3. Key rotation
+        kr = self.key_rotation_reminder()
+        if kr.get(&#34;action_needed&#34;):
+            issues.append(&#34;API keys may need rotation (&gt;90 days old)&#34;)
+            score -= 10
+
+        # 4. Kill switch
+        ks = self.verify_kill_switch()
+        report[&#34;checks&#34;][&#34;kill_switch&#34;] = ks.get(&#34;system_state&#34;, &#34;UNKNOWN&#34;)
+
+        report[&#34;security_score&#34;] = max(0, score)
+        report[&#34;grade&#34;] = (
+            &#34;A&#34; if score &gt;= 90 else &#34;B&#34; if score &gt;= 75 else &#34;C&#34; if score &gt;= 60 else &#34;D&#34; if score &gt;= 40 else &#34;F&#34;
+        )
+        report[&#34;issues&#34;] = issues
+        report[&#34;issue_count&#34;] = len(issues)
+
+        return report
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-161&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-161: Generate an overall security posture summary.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.suspicious_process_check"><code class="name flex">
+<span>def <span class="ident">suspicious_process_check</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def suspicious_process_check(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-158: Check for processes with suspicious characteristics.&#34;&#34;&#34;
+    try:
+        import psutil
+
+        suspicious: List[Dict[str, Any]] = []
+        suspicious_names = {
+            &#34;mimikatz&#34;,
+            &#34;pwdump&#34;,
+            &#34;procdump&#34;,
+            &#34;lazagne&#34;,
+            &#34;keylogger&#34;,
+            &#34;netcat&#34;,
+            &#34;nc&#34;,
+            &#34;ncat&#34;,
+            &#34;reverse&#34;,
+            &#34;meterpreter&#34;,
+            &#34;cobaltstrike&#34;,
+            &#34;empire&#34;,
+            &#34;bloodhound&#34;,
+            &#34;rubeus&#34;,
+            &#34;certutil&#34;,
+        }
+
+        for proc in psutil.process_iter([&#34;pid&#34;, &#34;name&#34;, &#34;exe&#34;, &#34;cmdline&#34;, &#34;username&#34;]):
+            try:
+                info = proc.info
+                name_lower = (info.get(&#34;name&#34;) or &#34;&#34;).lower()
+                exe_lower = (info.get(&#34;exe&#34;) or &#34;&#34;).lower()
+
+                flags: List[str] = []
+
+                # Check against known suspicious names
+                for sn in suspicious_names:
+                    if sn in name_lower or sn in exe_lower:
+                        flags.append(f&#34;known_suspicious:{sn}&#34;)
+
+                # Check for processes running from temp directories
+                if info.get(&#34;exe&#34;):
+                    exe = info[&#34;exe&#34;].lower()
+                    if any(t in exe for t in [&#34;\\temp\\&#34;, &#34;\\tmp\\&#34;, &#34;\\appdata\\local\\temp&#34;]):
+                        flags.append(&#34;running_from_temp&#34;)
+
+                # Check for hidden/no-window PowerShell
+                cmdline = info.get(&#34;cmdline&#34;) or []
+                cmdline_str = &#34; &#34;.join(cmdline).lower()
+                if &#34;powershell&#34; in name_lower and any(
+                    f in cmdline_str for f in [&#34;-enc&#34;, &#34;-encodedcommand&#34;, &#34;-hidden&#34;, &#34;-windowstyle hidden&#34;]
+                ):
+                    flags.append(&#34;hidden_powershell&#34;)
+
+                if flags:
+                    suspicious.append(
+                        {
+                            &#34;pid&#34;: info[&#34;pid&#34;],
+                            &#34;name&#34;: info[&#34;name&#34;],
+                            &#34;exe&#34;: info.get(&#34;exe&#34;, &#34;&#34;),
+                            &#34;username&#34;: info.get(&#34;username&#34;, &#34;&#34;),
+                            &#34;flags&#34;: flags,
+                        }
+                    )
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                pass
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-158&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;suspicious_count&#34;: len(suspicious),
+            &#34;processes&#34;: suspicious[:50],
+            &#34;safe&#34;: len(suspicious) == 0,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-158&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-158: Check for processes with suspicious characteristics.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.verify_approval_token"><code class="name flex">
+<span>def <span class="ident">verify_approval_token</span></span>(<span>self, token: str, action: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_approval_token(self, token: str, action: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-284: Verifies cryptographic validity and expiration of an approval token.&#34;&#34;&#34;
+    valid = policy_gate.verify_token(token)
+    return {&#34;power_id&#34;: &#34;PWR-284&#34;, &#34;token&#34;: token, &#34;action&#34;: action, &#34;valid&#34;: valid}</code></pre>
+</details>
+<div class="desc"><p>PWR-284: Verifies cryptographic validity and expiration of an approval token.</p></div>
+</dd>
+<dt id="jarvis.powers.security_powers.SecurityPowers.verify_kill_switch"><code class="name flex">
+<span>def <span class="ident">verify_kill_switch</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_kill_switch(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-279: Queries emergency kill-switch status across the operating system.&#34;&#34;&#34;
+    is_blocked = policy_gate.is_kill_switch_active()
+    return {
+        &#34;power_id&#34;: &#34;PWR-279&#34;,
+        &#34;kill_switch_active&#34;: is_blocked,
+        &#34;system_state&#34;: &#34;LOCKED&#34; if is_blocked else &#34;OPERATIONAL&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-279: Queries emergency kill-switch status across the operating system.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.security_powers.SecurityPowers" href="#jarvis.powers.security_powers.SecurityPowers">SecurityPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.antivirus_status" href="#jarvis.powers.security_powers.SecurityPowers.antivirus_status">antivirus_status</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.audit_log_export" href="#jarvis.powers.security_powers.SecurityPowers.audit_log_export">audit_log_export</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.certificate_store" href="#jarvis.powers.security_powers.SecurityPowers.certificate_store">certificate_store</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.decrypt_file" href="#jarvis.powers.security_powers.SecurityPowers.decrypt_file">decrypt_file</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.encrypt_file" href="#jarvis.powers.security_powers.SecurityPowers.encrypt_file">encrypt_file</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.firewall_status" href="#jarvis.powers.security_powers.SecurityPowers.firewall_status">firewall_status</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.generate_password" href="#jarvis.powers.security_powers.SecurityPowers.generate_password">generate_password</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.git_secrets_scan" href="#jarvis.powers.security_powers.SecurityPowers.git_secrets_scan">git_secrets_scan</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.hash_file" href="#jarvis.powers.security_powers.SecurityPowers.hash_file">hash_file</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.hash_verify" href="#jarvis.powers.security_powers.SecurityPowers.hash_verify">hash_verify</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.key_rotation_reminder" href="#jarvis.powers.security_powers.SecurityPowers.key_rotation_reminder">key_rotation_reminder</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.network_connections" href="#jarvis.powers.security_powers.SecurityPowers.network_connections">network_connections</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.password_strength" href="#jarvis.powers.security_powers.SecurityPowers.password_strength">password_strength</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.permissions_audit" href="#jarvis.powers.security_powers.SecurityPowers.permissions_audit">permissions_audit</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.scan_secrets" href="#jarvis.powers.security_powers.SecurityPowers.scan_secrets">scan_secrets</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.secret_scan" href="#jarvis.powers.security_powers.SecurityPowers.secret_scan">secret_scan</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.security_posture_report" href="#jarvis.powers.security_powers.SecurityPowers.security_posture_report">security_posture_report</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.suspicious_process_check" href="#jarvis.powers.security_powers.SecurityPowers.suspicious_process_check">suspicious_process_check</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.verify_approval_token" href="#jarvis.powers.security_powers.SecurityPowers.verify_approval_token">verify_approval_token</a></code></li>
+<li><code><a title="jarvis.powers.security_powers.SecurityPowers.verify_kill_switch" href="#jarvis.powers.security_powers.SecurityPowers.verify_kill_switch">verify_kill_switch</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

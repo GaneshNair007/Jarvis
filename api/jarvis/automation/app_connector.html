@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.automation.app_connector API documentation</title>
+<meta name="description" content="JARVIS app connectors — launch/focus local apps and delegate to coding agents …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.automation.app_connector</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS app connectors — launch/focus local apps and delegate to coding agents.</p>
+<p>Two tiers, honestly separated:</p>
+<ol>
+<li>Native launch: detached process starts (Antigravity, IDE form, opencode,
+browsers, terminals) — fully deterministic, testable via injected spawn.</li>
+<li>Delegated tasking: "tell opencode to fix the tests" → headless
+<code>opencode run --auto "&lt;task&gt;"</code> (logs to data/logs/opencode_<ts>.log,
+detached, First-Law evidence record). For Antigravity there is no stable
+public task API, so the honest route is: launch + copy the task to the
+clipboard for the agent panel (Ctrl+V). Never pretend a typed-out task
+was consumed by the app.</li>
+</ol>
+<p>Voice grammar (checked in this order, before the orchestrator):
+"open antigravity" / "launch opencode"
+→ launch
+"ask opencode to fix x"
+→ opencode delegate
+"tell antigravity to plan x"
+→ antigravity open + clipboard</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.automation.app_connector.antigravity_delegate"><code class="name flex">
+<span>def <span class="ident">antigravity_delegate</span></span>(<span>task: str,<br>project: str | None = None,<br>agent: str = 'antigravity',<br>spawner: Callable[[List[str]], int] = &lt;function _silent_spawn&gt;) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def antigravity_delegate(
+    task: str,
+    project: Optional[str] = None,
+    agent: str = &#34;antigravity&#34;,
+    spawner: Callable[[List[str]], int] = _silent_spawn,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Launches Antigravity + puts the task on the clipboard (no public API).
+
+    Honest contract: we OPEN the app and PRE-LOAD the clipboard; the user
+    pastes (Ctrl+V) into the agent panel. We do not claim the app consumed
+    or executed the task.
+    &#34;&#34;&#34;
+    args: List[str] = []
+    if project:
+        cleaned = project.strip().strip(&#34;\&#34;&#39;&#34;)
+        if os.path.isdir(cleaned):
+            args = [cleaned]
+    launched = launch_app(agent, args, spawner=spawner)
+    clipped = set_clipboard(task)
+    launched.update(
+        {
+            &#34;agent&#34;: agent,
+            &#34;task&#34;: task,
+            &#34;clipboard&#34;: clipped,
+            &#34;task_preloaded&#34;: clipped,
+            &#34;handoff&#34;: &#34;task on clipboard - Ctrl+V in the Antigravity agent panel&#34;
+            if clipped
+            else &#34;app launched - copy the task manually&#34;,
+        }
+    )
+    launched[&#34;ok&#34;] = bool(launched.get(&#34;ok&#34;))
+    return launched</code></pre>
+</details>
+<div class="desc"><p>Launches Antigravity + puts the task on the clipboard (no public API).</p>
+<p>Honest contract: we OPEN the app and PRE-LOAD the clipboard; the user
+pastes (Ctrl+V) into the agent panel. We do not claim the app consumed
+or executed the task.</p></div>
+</dd>
+<dt id="jarvis.automation.app_connector.launch_app"><code class="name flex">
+<span>def <span class="ident">launch_app</span></span>(<span>alias_id: str,<br>args: List[str] | None = None,<br>spawner: Callable[[List[str]], int] = &lt;function _silent_spawn&gt;) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def launch_app(
+    alias_id: str, args: Optional[List[str]] = None, spawner: Callable[[List[str]], int] = _silent_spawn
+) -&gt; Dict[str, Any]:
+    exe = _resolve_executable(alias_id)
+    if not exe:
+        return {&#34;ok&#34;: False, &#34;error&#34;: f&#34;app &#39;{alias_id}&#39; not found on this host&#34;, &#34;app&#34;: alias_id}
+    argv = [exe] + list(args or [])
+    pid = spawner(argv)
+    if not pid:
+        return {&#34;ok&#34;: False, &#34;error&#34;: f&#34;could not launch &#39;{alias_id}&#39;&#34;, &#34;app&#34;: alias_id}
+    logger.info(f&#34;launched {alias_id} via {exe} (pid {pid})&#34;)
+    return {&#34;ok&#34;: True, &#34;app&#34;: alias_id, &#34;exe&#34;: exe, &#34;argv&#34;: argv, &#34;pid&#34;: pid}</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.automation.app_connector.launch_in_console"><code class="name flex">
+<span>def <span class="ident">launch_in_console</span></span>(<span>alias_id: str,<br>args: List[str] | None = None,<br>spawner: Callable[[List[str]], int] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def launch_in_console(
+    alias_id: str, args: Optional[List[str]] = None, spawner: Callable[[List[str]], int] = None
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Interactive session in a VISIBLE console (for TUIs the user drives).&#34;&#34;&#34;
+    exe = _resolve_executable(alias_id)
+    if not exe:
+        return {&#34;ok&#34;: False, &#34;error&#34;: f&#34;app &#39;{alias_id}&#39; not found on this host&#34;}
+    quoted = &#34; &#34;.join([f&#39;&#34;{exe}&#34;&#39;] + [f&#39;&#34;{a}&#34;&#39; for a in (args or [])])
+    argv = [&#34;cmd&#34;, &#34;/c&#34;, &#34;start&#34;, &#34;&#34;, &#34;cmd&#34;, &#34;/k&#34;, quoted]
+    spawn = spawner or _silent_spawn
+    pid = spawn(argv)
+    return {&#34;ok&#34;: bool(pid), &#34;app&#34;: alias_id, &#34;argv&#34;: argv, &#34;pid&#34;: pid}</code></pre>
+</details>
+<div class="desc"><p>Interactive session in a VISIBLE console (for TUIs the user drives).</p></div>
+</dd>
+<dt id="jarvis.automation.app_connector.match_app_intent"><code class="name flex">
+<span>def <span class="ident">match_app_intent</span></span>(<span>command: str) ‑> Dict[str, Any] | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def match_app_intent(command: str) -&gt; Optional[Dict[str, Any]]:
+    &#34;&#34;&#34;Parses a stripped voice command into an app-connection intent, or None.&#34;&#34;&#34;
+    if not command:
+        return None
+    text = command.strip(_WAKE_STRIP).strip()
+    if not text:
+        return None
+
+    m = _OPENCODE_IN_RE.match(text)
+    if m:
+        path = m.group(&#34;path&#34;).strip().strip(&#34;\&#34;&#39;&#34;)
+        try:
+            from jarvis.core.workspace_registry import resolve_workspace
+
+            path = resolve_workspace(path)
+        except Exception:
+            pass
+        return {&#34;kind&#34;: &#34;opencode_in&#34;, &#34;path&#34;: path}
+
+    m = _ASK_RE.match(text)
+    if m:
+        agent = m.group(&#34;agent&#34;).lower().replace(&#34; &#34;, &#34;&#34;).replace(&#34;-&#34;, &#34;&#34;)
+        agent_id = &#34;antigravity&#34; if agent.startswith(&#34;antigravity&#34;) else &#34;opencode&#34;
+        # &#34;antigravity ide&#34; specifically routes to the classic IDE window
+        if agent.endswith(&#34;ide&#34;):
+            agent_id = &#34;antigravity_ide&#34;
+        return {&#34;kind&#34;: &#34;delegate&#34;, &#34;agent&#34;: agent_id, &#34;task&#34;: m.group(&#34;task&#34;).strip()}
+
+    m = _OPEN_RE.match(text)
+    if m:
+        spoken = m.group(1).strip().lower()
+        alias = _resolve_alias(spoken)
+        if alias:
+            return {&#34;kind&#34;: &#34;launch&#34;, &#34;app&#34;: alias}
+    return None</code></pre>
+</details>
+<div class="desc"><p>Parses a stripped voice command into an app-connection intent, or None.</p></div>
+</dd>
+<dt id="jarvis.automation.app_connector.opencode_delegate"><code class="name flex">
+<span>def <span class="ident">opencode_delegate</span></span>(<span>task: str,<br>workdir: str | None = None,<br>auto_approve: bool = True,<br>spawner: Callable[[List[str]], int] = &lt;function _silent_spawn&gt;) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def opencode_delegate(
+    task: str,
+    workdir: Optional[str] = None,
+    auto_approve: bool = True,
+    spawner: Callable[[List[str]], int] = _silent_spawn,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Headless delegate: runs `opencode run [--auto] &#34;&lt;task&gt;&#34;` detached, logged.&#34;&#34;&#34;
+    exe = _resolve_executable(&#34;opencode&#34;)
+    if not exe:
+        return {&#34;ok&#34;: False, &#34;error&#34;: &#34;opencode CLI not found on this host&#34;}
+    cwd = workdir if (workdir and os.path.isdir(workdir)) else str(REPO_ROOT)
+    argv = [exe, &#34;run&#34;]
+    if auto_approve:
+        argv.append(&#34;--auto&#34;)
+    argv += [&#34;--title&#34;, f&#34;jarvis-wake-{int(time.time())}&#34;, task]
+    log_dir = REPO_ROOT / &#34;data&#34; / &#34;logs&#34;
+    log_dir.mkdir(parents=True, exist_ok=True)
+    # spawn via cmd to redirect into a per-task log while remaining detached
+    log_path = log_dir / f&#34;opencode_{int(time.time())}.log&#34;
+    cmdline = &#34; &#34;.join(f&#39;&#34;{a}&#34;&#39; for a in argv)
+    argv2 = [&#34;cmd&#34;, &#34;/c&#34;, f&#39;cd /d &#34;{cwd}&#34; &amp;&amp; {cmdline} &gt; &#34;{log_path}&#34; 2&gt;&amp;1&#39;]
+    pid = spawner(argv2)
+    if not pid:
+        return {&#34;ok&#34;: False, &#34;error&#34;: &#34;opencode delegate failed to launch&#34;, &#34;argv&#34;: argv2}
+    logger.info(f&#34;opencode delegate started (pid {pid}) log={log_path}&#34;)
+    return {
+        &#34;ok&#34;: True,
+        &#34;agent&#34;: &#34;opencode&#34;,
+        &#34;task&#34;: task,
+        &#34;workdir&#34;: cwd,
+        &#34;auto_approve&#34;: auto_approve,
+        &#34;log&#34;: str(log_path),
+        &#34;pid&#34;: pid,
+    }</code></pre>
+</details>
+<div class="desc"><p>Headless delegate: runs <code>opencode run [--auto] "&lt;task&gt;"</code> detached, logged.</p></div>
+</dd>
+<dt id="jarvis.automation.app_connector.set_clipboard"><code class="name flex">
+<span>def <span class="ident">set_clipboard</span></span>(<span>text: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_clipboard(text: str) -&gt; bool:
+    &#34;&#34;&#34;Windows clipboard via PowerShell -EncodedCommand (quoting-safe).&#34;&#34;&#34;
+    import base64
+
+    encoded = base64.b64encode(f&#34;Set-Clipboard -Value @&#39;\n{text}\n&#39;@&#34;.encode(&#34;utf-16le&#34;)).decode(&#34;ascii&#34;)
+    try:
+        subprocess.run(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-EncodedCommand&#34;, encoded],
+            timeout=15,
+            check=False,
+            capture_output=True,
+        )
+        return True
+    except Exception:
+        return False</code></pre>
+</details>
+<div class="desc"><p>Windows clipboard via PowerShell -EncodedCommand (quoting-safe).</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.automation" href="index.html">jarvis.automation</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.automation.app_connector.antigravity_delegate" href="#jarvis.automation.app_connector.antigravity_delegate">antigravity_delegate</a></code></li>
+<li><code><a title="jarvis.automation.app_connector.launch_app" href="#jarvis.automation.app_connector.launch_app">launch_app</a></code></li>
+<li><code><a title="jarvis.automation.app_connector.launch_in_console" href="#jarvis.automation.app_connector.launch_in_console">launch_in_console</a></code></li>
+<li><code><a title="jarvis.automation.app_connector.match_app_intent" href="#jarvis.automation.app_connector.match_app_intent">match_app_intent</a></code></li>
+<li><code><a title="jarvis.automation.app_connector.opencode_delegate" href="#jarvis.automation.app_connector.opencode_delegate">opencode_delegate</a></code></li>
+<li><code><a title="jarvis.automation.app_connector.set_clipboard" href="#jarvis.automation.app_connector.set_clipboard">set_clipboard</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

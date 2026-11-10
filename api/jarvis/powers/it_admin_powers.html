@@ -1,0 +1,2169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.it_admin_powers API documentation</title>
+<meta name="description" content="JARVIS IT Administration Powers (PWR-100 to PWR-126)
+Telemetry, resource diagnostics, container inspection, process management, and certificate tracking.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.it_admin_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS IT Administration Powers (PWR-100 to PWR-126)
+Telemetry, resource diagnostics, container inspection, process management, and certificate tracking.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers"><code class="flex name class">
+<span>class <span class="ident">ITAdminPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ITAdminPowers:
+    @staticmethod
+    def system_health_report() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-100: Generates comprehensive host performance telemetry.&#34;&#34;&#34;
+        cpu_pct = psutil.cpu_percent(interval=None)
+        ram = psutil.virtual_memory()
+        disk = psutil.disk_usage(settings.disk_mount_path)
+
+        boot_time = datetime.datetime.fromtimestamp(psutil.boot_time()).strftime(&#34;%Y-%m-%d %H:%M:%S&#34;)
+
+        # Fast non-blocking top processes (sampled only when requested)
+        top_processes = []
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-100&#34;,
+            &#34;power_name&#34;: &#34;System health report&#34;,
+            &#34;status&#34;: &#34;healthy&#34; if (cpu_pct &lt; 90 and ram.percent &lt; 90) else &#34;warning&#34;,
+            &#34;cpu&#34;: {
+                &#34;percent&#34;: cpu_pct,
+                &#34;cores_logical&#34;: psutil.cpu_count(logical=True),
+                &#34;cores_physical&#34;: psutil.cpu_count(logical=False),
+            },
+            &#34;memory&#34;: {
+                &#34;total_gb&#34;: round(ram.total / (1024**3), 2),
+                &#34;used_gb&#34;: round(ram.used / (1024**3), 2),
+                &#34;available_gb&#34;: round(ram.available / (1024**3), 2),
+                &#34;percent&#34;: ram.percent,
+            },
+            &#34;disk&#34;: {
+                &#34;total_gb&#34;: round(disk.total / (1024**3), 2),
+                &#34;used_gb&#34;: round(disk.used / (1024**3), 2),
+                &#34;free_gb&#34;: round(disk.free / (1024**3), 2),
+                &#34;percent&#34;: disk.percent,
+            },
+            &#34;system&#34;: {&#34;boot_time&#34;: boot_time, &#34;timestamp&#34;: time.time()},
+            &#34;top_processes&#34;: top_processes,
+        }
+
+    @staticmethod
+    def cpu_ram_disk_monitoring() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-101: Fine-grained CPU, RAM, and Disk telemetry.&#34;&#34;&#34;
+        cpu_times = psutil.cpu_times_percent(interval=0.1)
+        ram = psutil.virtual_memory()
+        swap = psutil.swap_memory()
+        disk = psutil.disk_usage(settings.disk_mount_path)
+        io_counters = psutil.disk_io_counters()
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-101&#34;,
+            &#34;power_name&#34;: &#34;CPU/RAM/disk monitoring&#34;,
+            &#34;timestamp&#34;: time.time(),
+            &#34;cpu_user&#34;: getattr(cpu_times, &#34;user&#34;, 0.0),
+            &#34;cpu_system&#34;: getattr(cpu_times, &#34;system&#34;, 0.0),
+            &#34;cpu_idle&#34;: getattr(cpu_times, &#34;idle&#34;, 0.0),
+            &#34;ram_used_percent&#34;: ram.percent,
+            &#34;swap_used_percent&#34;: swap.percent,
+            &#34;disk_used_percent&#34;: disk.percent,
+            &#34;read_bytes&#34;: io_counters.read_bytes if io_counters else 0,
+            &#34;write_bytes&#34;: io_counters.write_bytes if io_counters else 0,
+        }
+
+    @staticmethod
+    def disk_space_analysis(path: str = settings.disk_mount_path) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-103: Disk space forecasting and directory usage breakdown.&#34;&#34;&#34;
+        usage = shutil.disk_usage(path)
+        free_pct = round((usage.free / usage.total) * 100, 2)
+        burn_rate_gb_day = 0.5  # Estimated baseline burn rate
+        days_until_exhaustion = round((usage.free / (1024**3)) / max(burn_rate_gb_day, 0.01), 1)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-103&#34;,
+            &#34;power_name&#34;: &#34;Disk-space forecast&#34;,
+            &#34;path&#34;: path,
+            &#34;total_gb&#34;: round(usage.total / (1024**3), 2),
+            &#34;used_gb&#34;: round(usage.used / (1024**3), 2),
+            &#34;free_gb&#34;: round(usage.free / (1024**3), 2),
+            &#34;free_percent&#34;: free_pct,
+            &#34;estimated_days_remaining&#34;: days_until_exhaustion,
+            &#34;status&#34;: &#34;critical&#34; if free_pct &lt; 10 else (&#34;warning&#34; if free_pct &lt; 20 else &#34;healthy&#34;),
+        }
+
+    @staticmethod
+    def process_analysis(limit: int = 10) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-105: Process analysis and CPU/RAM hog detection.&#34;&#34;&#34;
+        processes = []
+        for p in psutil.process_iter([&#34;pid&#34;, &#34;name&#34;, &#34;cpu_percent&#34;, &#34;memory_percent&#34;, &#34;status&#34;]):
+            try:
+                processes.append(p.info)
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
+
+        top_by_cpu = sorted(processes, key=lambda x: x.get(&#34;cpu_percent&#34;) or 0, reverse=True)[:limit]
+        top_by_ram = sorted(processes, key=lambda x: x.get(&#34;memory_percent&#34;) or 0, reverse=True)[:limit]
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-105&#34;,
+            &#34;power_name&#34;: &#34;Process analysis&#34;,
+            &#34;total_running_processes&#34;: len(processes),
+            &#34;top_cpu_consumers&#34;: top_by_cpu,
+            &#34;top_ram_consumers&#34;: top_by_ram,
+        }
+
+    @staticmethod
+    def safe_process_termination(pid: int, force: bool = False) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-106: Safely terminates a runaway process with safety verification.&#34;&#34;&#34;
+        try:
+            p = psutil.Process(pid)
+            name = p.name()
+            # Protect system and self
+            if pid &lt;= 4 or &#34;system&#34; in name.lower() or pid == psutil.Process().pid:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-106&#34;,
+                    &#34;success&#34;: False,
+                    &#34;error&#34;: f&#34;Cannot terminate protected critical process {name} (PID: {pid})&#34;,
+                }
+            if force:
+                p.kill()
+            else:
+                p.terminate()
+            return {
+                &#34;power_id&#34;: &#34;PWR-106&#34;,
+                &#34;success&#34;: True,
+                &#34;pid&#34;: pid,
+                &#34;name&#34;: name,
+                &#34;action&#34;: &#34;SIGKILL&#34; if force else &#34;SIGTERM&#34;,
+            }
+        except psutil.NoSuchProcess:
+            return {&#34;power_id&#34;: &#34;PWR-106&#34;, &#34;success&#34;: False, &#34;error&#34;: f&#34;Process {pid} does not exist&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-106&#34;, &#34;success&#34;: False, &#34;error&#34;: str(e)}
+
+    @staticmethod
+    def docker_container_monitoring() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-117: Docker container monitoring and health verification.&#34;&#34;&#34;
+        try:
+            # Check docker CLI or socket
+            res = subprocess.run(
+                [&#34;docker&#34;, &#34;ps&#34;, &#34;--format&#34;, &#34;{{.ID}}|{{.Image}}|{{.Status}}|{{.Names}}&#34;],
+                capture_output=True,
+                text=True,
+                timeout=3.0,
+            )
+            if res.returncode != 0:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-117&#34;,
+                    &#34;power_name&#34;: &#34;Docker container monitoring&#34;,
+                    &#34;docker_available&#34;: False,
+                    &#34;containers&#34;: [],
+                    &#34;message&#34;: &#34;Docker daemon unavailable or not running&#34;,
+                }
+
+            containers = []
+            for line in res.stdout.strip().splitlines():
+                if line:
+                    parts = line.split(&#34;|&#34;)
+                    if len(parts) &gt;= 4:
+                        containers.append({&#34;id&#34;: parts[0], &#34;image&#34;: parts[1], &#34;status&#34;: parts[2], &#34;name&#34;: parts[3]})
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-117&#34;,
+                &#34;power_name&#34;: &#34;Docker container monitoring&#34;,
+                &#34;docker_available&#34;: True,
+                &#34;total_containers&#34;: len(containers),
+                &#34;containers&#34;: containers,
+            }
+        except Exception as e:
+            return {
+                &#34;power_id&#34;: &#34;PWR-117&#34;,
+                &#34;power_name&#34;: &#34;Docker container monitoring&#34;,
+                &#34;docker_available&#34;: False,
+                &#34;containers&#34;: [],
+                &#34;message&#34;: f&#34;Docker probe failed: {str(e)}&#34;,
+            }
+
+    @staticmethod
+    def server_uptime_monitoring() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-120: Server uptime and host availability monitoring.&#34;&#34;&#34;
+        boot_ts = psutil.boot_time()
+        uptime_seconds = int(time.time() - boot_ts)
+        days = uptime_seconds // 86400
+        hours = (uptime_seconds % 86400) // 3600
+        minutes = (uptime_seconds % 3600) // 60
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-120&#34;,
+            &#34;power_name&#34;: &#34;Server uptime monitoring&#34;,
+            &#34;uptime_seconds&#34;: uptime_seconds,
+            &#34;uptime_human&#34;: f&#34;{days}d {hours}h {minutes}m&#34;,
+            &#34;boot_timestamp&#34;: datetime.datetime.fromtimestamp(boot_ts).isoformat(),
+            &#34;status&#34;: &#34;online&#34;,
+        }
+
+    @staticmethod
+    def check_ssl_certificate(hostname: str, port: int = 443) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-121: Checks SSL/TLS certificate validity and expiration for a domain.&#34;&#34;&#34;
+        context = ssl.create_default_context()
+        try:
+            with socket.create_connection((hostname, port), timeout=5.0) as sock:
+                with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+                    cert = ssock.getpeercert()
+                    not_after_str = cert[&#34;notAfter&#34;]
+                    # e.g., &#39;May 15 12:00:00 2027 GMT&#39;
+                    expiry = datetime.datetime.strptime(not_after_str, &#34;%b %d %H:%M:%S %Y %Z&#34;)
+                    days_left = (expiry - datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)).days
+
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-121&#34;,
+                        &#34;power_name&#34;: &#34;SSL certificate monitoring&#34;,
+                        &#34;hostname&#34;: hostname,
+                        &#34;status&#34;: &#34;valid&#34; if days_left &gt; 14 else &#34;expiring_soon&#34;,
+                        &#34;expires_at&#34;: expiry.strftime(&#34;%Y-%m-%d&#34;),
+                        &#34;days_remaining&#34;: days_left,
+                        &#34;issuer&#34;: dict(x[0] for x in cert.get(&#34;issuer&#34;, [])),
+                    }
+        except Exception as e:
+            return {
+                &#34;power_id&#34;: &#34;PWR-121&#34;,
+                &#34;power_name&#34;: &#34;SSL certificate monitoring&#34;,
+                &#34;hostname&#34;: hostname,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;Failed to verify SSL certificate: {str(e)}&#34;,
+            }
+
+    # ------------------------------------------------------------------
+    # Docker Management (PWR-100 to PWR-102)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def docker_status() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-100: Lists Docker containers with status, CPU, and memory usage.&#34;&#34;&#34;
+        try:
+            ps_result = subprocess.run(
+                [&#34;docker&#34;, &#34;ps&#34;, &#34;-a&#34;, &#34;--format&#34;, &#34;{{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}&#34;],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            if ps_result.returncode != 0:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-100&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;message&#34;: ps_result.stderr.strip() or &#34;Docker not available&#34;,
+                }
+
+            containers: List[Dict[str, str]] = []
+            for line in ps_result.stdout.strip().splitlines():
+                parts = line.split(&#34;\t&#34;)
+                if len(parts) &gt;= 4:
+                    containers.append(
+                        {
+                            &#34;id&#34;: parts[0],
+                            &#34;name&#34;: parts[1],
+                            &#34;status&#34;: parts[2],
+                            &#34;image&#34;: parts[3],
+                        }
+                    )
+
+            # Gather stats for running containers
+            stats_result = subprocess.run(
+                [&#34;docker&#34;, &#34;stats&#34;, &#34;--no-stream&#34;, &#34;--format&#34;, &#34;{{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}&#34;],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            stats_map: Dict[str, Dict[str, str]] = {}
+            if stats_result.returncode == 0:
+                for line in stats_result.stdout.strip().splitlines():
+                    parts = line.split(&#34;\t&#34;)
+                    if len(parts) &gt;= 3:
+                        stats_map[parts[0]] = {&#34;cpu&#34;: parts[1], &#34;memory&#34;: parts[2]}
+
+            for c in containers:
+                s = stats_map.get(c[&#34;id&#34;], stats_map.get(c[&#34;name&#34;], {}))
+                c[&#34;cpu_percent&#34;] = s.get(&#34;cpu&#34;, &#34;N/A&#34;)
+                c[&#34;memory_usage&#34;] = s.get(&#34;memory&#34;, &#34;N/A&#34;)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-100&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;container_count&#34;: len(containers),
+                &#34;containers&#34;: containers,
+            }
+        except FileNotFoundError:
+            return {&#34;power_id&#34;: &#34;PWR-100&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Docker CLI not found on PATH&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-100&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def docker_logs(container: str, lines: int = 50) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-101: Tail container logs.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;docker&#34;, &#34;logs&#34;, &#34;--tail&#34;, str(lines), container],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            output = res.stdout or res.stderr
+            return {
+                &#34;power_id&#34;: &#34;PWR-101&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;container&#34;: container,
+                &#34;lines_requested&#34;: lines,
+                &#34;logs&#34;: output[-5000:],  # cap to 5 KB
+            }
+        except FileNotFoundError:
+            return {&#34;power_id&#34;: &#34;PWR-101&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Docker CLI not found on PATH&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-101&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def docker_restart(container: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-102: Restart a Docker container. Requires user approval.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;docker&#34;, &#34;restart&#34;, container],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            return {
+                &#34;power_id&#34;: &#34;PWR-102&#34;,
+                &#34;status&#34;: &#34;success&#34; if res.returncode == 0 else &#34;error&#34;,
+                &#34;container&#34;: container,
+                &#34;output&#34;: (res.stdout or res.stderr).strip(),
+                &#34;approval_required&#34;: True,
+            }
+        except FileNotFoundError:
+            return {
+                &#34;power_id&#34;: &#34;PWR-102&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: &#34;Docker CLI not found on PATH&#34;,
+                &#34;approval_required&#34;: True,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-102&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}
+
+    # ------------------------------------------------------------------
+    # Windows Service Management (PWR-105 to PWR-106)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def service_status(service_name: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-105: Query Windows service status via sc query.&#34;&#34;&#34;
+        try:
+            cmd = [&#34;sc&#34;, &#34;query&#34;]
+            if service_name:
+                cmd.append(service_name)
+            res = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+            if res.returncode != 0:
+                return {&#34;power_id&#34;: &#34;PWR-105&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: res.stderr.strip() or res.stdout.strip()}
+
+            services: List[Dict[str, str]] = []
+            current: Dict[str, str] = {}
+            for line in res.stdout.splitlines():
+                line = line.strip()
+                if line.startswith(&#34;SERVICE_NAME:&#34;):
+                    if current:
+                        services.append(current)
+                    current = {&#34;service_name&#34;: line.split(&#34;:&#34;, 1)[1].strip()}
+                elif line.startswith(&#34;DISPLAY_NAME:&#34;):
+                    current[&#34;display_name&#34;] = line.split(&#34;:&#34;, 1)[1].strip()
+                elif line.startswith(&#34;STATE&#34;):
+                    # e.g. STATE              : 4  RUNNING
+                    state_part = line.split(&#34;:&#34;, 1)[1].strip()
+                    current[&#34;state&#34;] = state_part
+            if current:
+                services.append(current)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-105&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;service_count&#34;: len(services),
+                &#34;services&#34;: services[:100],  # cap output
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-105&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def service_restart(service_name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-106: Restart a Windows service. Requires user approval.&#34;&#34;&#34;
+        try:
+            stop = subprocess.run(
+                [&#34;sc&#34;, &#34;stop&#34;, service_name],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            time.sleep(2)
+            start = subprocess.run(
+                [&#34;sc&#34;, &#34;start&#34;, service_name],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            return {
+                &#34;power_id&#34;: &#34;PWR-106&#34;,
+                &#34;status&#34;: &#34;success&#34; if start.returncode == 0 else &#34;error&#34;,
+                &#34;service_name&#34;: service_name,
+                &#34;stop_output&#34;: stop.stdout.strip(),
+                &#34;start_output&#34;: start.stdout.strip(),
+                &#34;approval_required&#34;: True,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-106&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}
+
+    # ------------------------------------------------------------------
+    # Disk Management (PWR-110, PWR-112)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def disk_usage() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-110: Disk usage per drive using psutil.&#34;&#34;&#34;
+        try:
+            partitions = psutil.disk_partitions(all=False)
+            drives: List[Dict[str, Any]] = []
+            for p in partitions:
+                try:
+                    usage = psutil.disk_usage(p.mountpoint)
+                    drives.append(
+                        {
+                            &#34;device&#34;: p.device,
+                            &#34;mountpoint&#34;: p.mountpoint,
+                            &#34;fstype&#34;: p.fstype,
+                            &#34;total_gb&#34;: round(usage.total / (1024**3), 2),
+                            &#34;used_gb&#34;: round(usage.used / (1024**3), 2),
+                            &#34;free_gb&#34;: round(usage.free / (1024**3), 2),
+                            &#34;percent&#34;: usage.percent,
+                        }
+                    )
+                except PermissionError:
+                    drives.append({&#34;device&#34;: p.device, &#34;mountpoint&#34;: p.mountpoint, &#34;error&#34;: &#34;Permission denied&#34;})
+            return {
+                &#34;power_id&#34;: &#34;PWR-110&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;drive_count&#34;: len(drives),
+                &#34;drives&#34;: drives,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-110&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def disk_cleanup_preview() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-112: Preview temp/cache files that could be cleaned.&#34;&#34;&#34;
+        try:
+            targets = [
+                tempfile.gettempdir(),
+                os.path.join(os.environ.get(&#34;LOCALAPPDATA&#34;, &#34;&#34;), &#34;Temp&#34;),
+                os.path.join(os.environ.get(&#34;WINDIR&#34;, r&#34;C:\Windows&#34;), &#34;Temp&#34;),
+            ]
+            cleanup_items: List[Dict[str, Any]] = []
+            total_size = 0
+
+            for target_dir in targets:
+                if not os.path.isdir(target_dir):
+                    continue
+                dir_size = 0
+                file_count = 0
+                try:
+                    for root, dirs, files in os.walk(target_dir):
+                        for f in files:
+                            try:
+                                fp = os.path.join(root, f)
+                                dir_size += os.path.getsize(fp)
+                                file_count += 1
+                            except (OSError, PermissionError):
+                                pass
+                except (OSError, PermissionError):
+                    pass
+                total_size += dir_size
+                cleanup_items.append(
+                    {
+                        &#34;directory&#34;: target_dir,
+                        &#34;file_count&#34;: file_count,
+                        &#34;size_mb&#34;: round(dir_size / (1024**2), 2),
+                    }
+                )
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-112&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;total_reclaimable_mb&#34;: round(total_size / (1024**2), 2),
+                &#34;locations&#34;: cleanup_items,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-112&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Process Management (PWR-115, PWR-116)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def process_list(top_n: int = 20) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-115: Top processes by CPU and memory usage.&#34;&#34;&#34;
+        try:
+            procs: List[Dict[str, Any]] = []
+            for p in psutil.process_iter([&#34;pid&#34;, &#34;name&#34;, &#34;cpu_percent&#34;, &#34;memory_percent&#34;, &#34;status&#34;]):
+                try:
+                    info = p.info
+                    procs.append(
+                        {
+                            &#34;pid&#34;: info[&#34;pid&#34;],
+                            &#34;name&#34;: info[&#34;name&#34;],
+                            &#34;cpu_percent&#34;: info.get(&#34;cpu_percent&#34;, 0.0) or 0.0,
+                            &#34;memory_percent&#34;: round(info.get(&#34;memory_percent&#34;, 0.0) or 0.0, 2),
+                            &#34;status&#34;: info.get(&#34;status&#34;, &#34;unknown&#34;),
+                        }
+                    )
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    pass
+
+            procs.sort(key=lambda x: x[&#34;cpu_percent&#34;] + x[&#34;memory_percent&#34;], reverse=True)
+            return {
+                &#34;power_id&#34;: &#34;PWR-115&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;total_processes&#34;: len(procs),
+                &#34;top_processes&#34;: procs[:top_n],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-115&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def kill_process(pid: int) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-116: Kill a process by PID. Requires user approval.&#34;&#34;&#34;
+        try:
+            proc = psutil.Process(pid)
+            proc_name = proc.name()
+            proc.terminate()
+            gone, alive = psutil.wait_procs([proc], timeout=5)
+            if alive:
+                for p in alive:
+                    p.kill()
+            return {
+                &#34;power_id&#34;: &#34;PWR-116&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;pid&#34;: pid,
+                &#34;name&#34;: proc_name,
+                &#34;message&#34;: f&#34;Process {proc_name} (PID {pid}) terminated&#34;,
+                &#34;approval_required&#34;: True,
+            }
+        except psutil.NoSuchProcess:
+            return {
+                &#34;power_id&#34;: &#34;PWR-116&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;No process with PID {pid}&#34;,
+                &#34;approval_required&#34;: True,
+            }
+        except psutil.AccessDenied:
+            return {
+                &#34;power_id&#34;: &#34;PWR-116&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;Access denied for PID {pid}&#34;,
+                &#34;approval_required&#34;: True,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-116&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}
+
+    # ------------------------------------------------------------------
+    # Event Logs &amp; System Info (PWR-118 to PWR-126)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def event_log_search(keyword: str, source: str = &#34;System&#34;, count: int = 20) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-118: Search Windows Event Log entries matching a keyword.&#34;&#34;&#34;
+        try:
+            ps_script = (
+                f&#34;Get-EventLog -LogName {source} -Newest 200 -ErrorAction Stop | &#34;
+                f&#34;Where-Object {{ $_.Message -match &#39;{keyword}&#39; }} | &#34;
+                f&#34;Select-Object -First {count} TimeGenerated, EntryType, Source, Message | &#34;
+                f&#34;ConvertTo-Json -Depth 3&#34;
+            )
+            res = subprocess.run(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            import json
+
+            try:
+                events = json.loads(res.stdout) if res.stdout.strip() else []
+                if isinstance(events, dict):
+                    events = [events]
+            except json.JSONDecodeError:
+                events = [{&#34;raw&#34;: res.stdout[:3000]}]
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-118&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;keyword&#34;: keyword,
+                &#34;source&#34;: source,
+                &#34;event_count&#34;: len(events),
+                &#34;events&#34;: events[:count],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-118&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def startup_programs() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-119: List startup programs from common registry locations.&#34;&#34;&#34;
+        try:
+            programs: List[Dict[str, str]] = []
+            reg_paths = [
+                (winreg.HKEY_CURRENT_USER, r&#34;Software\Microsoft\Windows\CurrentVersion\Run&#34;),
+                (winreg.HKEY_LOCAL_MACHINE, r&#34;Software\Microsoft\Windows\CurrentVersion\Run&#34;),
+            ]
+            for hive, path in reg_paths:
+                try:
+                    key = winreg.OpenKey(hive, path)
+                    i = 0
+                    while True:
+                        try:
+                            name, value, _ = winreg.EnumValue(key, i)
+                            programs.append(
+                                {
+                                    &#34;name&#34;: name,
+                                    &#34;command&#34;: value,
+                                    &#34;location&#34;: f&#34;{&#39;HKCU&#39; if hive == winreg.HKEY_CURRENT_USER else &#39;HKLM&#39;}\\{path}&#34;,
+                                }
+                            )
+                            i += 1
+                        except OSError:
+                            break
+                    winreg.CloseKey(key)
+                except OSError:
+                    pass
+
+            # Also check startup folder
+            startup_folder = os.path.join(
+                os.environ.get(&#34;APPDATA&#34;, &#34;&#34;),
+                r&#34;Microsoft\Windows\Start Menu\Programs\Startup&#34;,
+            )
+            if os.path.isdir(startup_folder):
+                for f in os.listdir(startup_folder):
+                    programs.append(
+                        {&#34;name&#34;: f, &#34;command&#34;: os.path.join(startup_folder, f), &#34;location&#34;: &#34;Startup Folder&#34;}
+                    )
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-119&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;count&#34;: len(programs),
+                &#34;programs&#34;: programs,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-119&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def ssl_cert_check(host: str, port: int = 443) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-120: Check TLS certificate expiry for a host.&#34;&#34;&#34;
+        try:
+            ctx = ssl.create_default_context()
+            with socket.create_connection((host, port), timeout=5) as sock:
+                with ctx.wrap_socket(sock, server_hostname=host) as ssock:
+                    cert = ssock.getpeercert()
+                    not_after = cert.get(&#34;notAfter&#34;, &#34;&#34;)
+                    expiry = datetime.datetime.strptime(not_after, &#34;%b %d %H:%M:%S %Y %Z&#34;)
+                    days_left = (expiry - datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)).days
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-120&#34;,
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;host&#34;: host,
+                        &#34;port&#34;: port,
+                        &#34;subject&#34;: dict(x[0] for x in cert.get(&#34;subject&#34;, [])),
+                        &#34;issuer&#34;: dict(x[0] for x in cert.get(&#34;issuer&#34;, [])),
+                        &#34;expires_at&#34;: expiry.strftime(&#34;%Y-%m-%d %H:%M:%S&#34;),
+                        &#34;days_remaining&#34;: days_left,
+                        &#34;warning&#34;: days_left &lt; 30,
+                    }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-120&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def system_uptime() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-121: System uptime since last boot.&#34;&#34;&#34;
+        try:
+            boot_ts = psutil.boot_time()
+            boot_dt = datetime.datetime.fromtimestamp(boot_ts)
+            now = datetime.datetime.now()
+            delta = now - boot_dt
+            days = delta.days
+            hours, remainder = divmod(delta.seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            return {
+                &#34;power_id&#34;: &#34;PWR-121&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;boot_time&#34;: boot_dt.strftime(&#34;%Y-%m-%d %H:%M:%S&#34;),
+                &#34;uptime_str&#34;: f&#34;{days}d {hours}h {minutes}m {seconds}s&#34;,
+                &#34;uptime_seconds&#34;: int(delta.total_seconds()),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-121&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def installed_software() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-122: List installed programs from the registry.&#34;&#34;&#34;
+        try:
+            programs: List[Dict[str, str]] = []
+            reg_paths = [
+                (winreg.HKEY_LOCAL_MACHINE, r&#34;SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall&#34;),
+                (winreg.HKEY_LOCAL_MACHINE, r&#34;SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall&#34;),
+                (winreg.HKEY_CURRENT_USER, r&#34;SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall&#34;),
+            ]
+            seen = set()
+            for hive, path in reg_paths:
+                try:
+                    key = winreg.OpenKey(hive, path)
+                    for i in range(winreg.QueryInfoKey(key)[0]):
+                        try:
+                            subkey_name = winreg.EnumKey(key, i)
+                            subkey = winreg.OpenKey(key, subkey_name)
+                            try:
+                                name = winreg.QueryValueEx(subkey, &#34;DisplayName&#34;)[0]
+                            except OSError:
+                                continue
+                            if name in seen:
+                                continue
+                            seen.add(name)
+                            version = &#34;&#34;
+                            try:
+                                version = winreg.QueryValueEx(subkey, &#34;DisplayVersion&#34;)[0]
+                            except OSError:
+                                pass
+                            publisher = &#34;&#34;
+                            try:
+                                publisher = winreg.QueryValueEx(subkey, &#34;Publisher&#34;)[0]
+                            except OSError:
+                                pass
+                            programs.append({&#34;name&#34;: name, &#34;version&#34;: version, &#34;publisher&#34;: publisher})
+                            winreg.CloseKey(subkey)
+                        except OSError:
+                            pass
+                    winreg.CloseKey(key)
+                except OSError:
+                    pass
+
+            programs.sort(key=lambda x: x[&#34;name&#34;].lower())
+            return {
+                &#34;power_id&#34;: &#34;PWR-122&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;count&#34;: len(programs),
+                &#34;programs&#34;: programs,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-122&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def environment_variables() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-123: List environment variables with secrets masked.&#34;&#34;&#34;
+        try:
+            secret_keywords = {
+                &#34;key&#34;,
+                &#34;secret&#34;,
+                &#34;token&#34;,
+                &#34;password&#34;,
+                &#34;passwd&#34;,
+                &#34;credential&#34;,
+                &#34;auth&#34;,
+                &#34;api_key&#34;,
+                &#34;apikey&#34;,
+                &#34;private&#34;,
+            }
+            env_vars: List[Dict[str, str]] = []
+            for k, v in sorted(os.environ.items()):
+                is_sensitive = any(s in k.lower() for s in secret_keywords)
+                env_vars.append(
+                    {
+                        &#34;name&#34;: k,
+                        &#34;value&#34;: &#34;****REDACTED****&#34; if is_sensitive else v,
+                        &#34;sensitive&#34;: is_sensitive,
+                    }
+                )
+            return {
+                &#34;power_id&#34;: &#34;PWR-123&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;count&#34;: len(env_vars),
+                &#34;variables&#34;: env_vars,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-123&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def driver_info() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-124: GPU/display driver information via WMIC.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;wmic&#34;, &#34;path&#34;, &#34;Win32_VideoController&#34;, &#34;get&#34;, &#34;Name,DriverVersion,AdapterRAM,Status&#34;, &#34;/format:csv&#34;],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            drivers: List[Dict[str, str]] = []
+            lines = [l.strip() for l in res.stdout.strip().splitlines() if l.strip()]
+            if len(lines) &gt; 1:
+                headers = [h.strip() for h in lines[0].split(&#34;,&#34;)]
+                for line in lines[1:]:
+                    values = [v.strip() for v in line.split(&#34;,&#34;)]
+                    if len(values) &gt;= len(headers):
+                        entry = dict(zip(headers, values))
+                        drivers.append(entry)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-124&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;gpu_count&#34;: len(drivers),
+                &#34;drivers&#34;: drivers,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-124&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def windows_update_status() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-125: Check Windows Update status via PowerShell.&#34;&#34;&#34;
+        try:
+            ps_script = (
+                &#34;try { &#34;
+                &#34;$session = New-Object -ComObject Microsoft.Update.Session; &#34;
+                &#34;$searcher = $session.CreateUpdateSearcher(); &#34;
+                &#34;$result = $searcher.Search(&#39;IsInstalled=0&#39;); &#34;
+                &#34;$updates = @(); &#34;
+                &#34;foreach ($u in $result.Updates) { &#34;
+                &#34;  $updates += @{Title=$u.Title; Severity=$u.MsrcSeverity; &#34;
+                &#34;  KB=($u.KBArticleIDs -join &#39;,&#39;)}; &#34;
+                &#34;}; &#34;
+                &#34;$updates | ConvertTo-Json -Depth 2 &#34;
+                &#34;} catch { Write-Output (ConvertTo-Json @{error=$_.Exception.Message}) }&#34;
+            )
+            res = subprocess.run(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+                capture_output=True,
+                text=True,
+                timeout=60,
+            )
+            import json
+
+            try:
+                updates = json.loads(res.stdout) if res.stdout.strip() else []
+                if isinstance(updates, dict):
+                    if &#34;error&#34; in updates:
+                        return {&#34;power_id&#34;: &#34;PWR-125&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: updates[&#34;error&#34;]}
+                    updates = [updates]
+            except json.JSONDecodeError:
+                updates = []
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-125&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;pending_count&#34;: len(updates),
+                &#34;pending_updates&#34;: updates[:50],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-125&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def crash_dump_analysis() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-126: Check for recent BSOD/crash dumps.&#34;&#34;&#34;
+        try:
+            dump_paths = [
+                os.path.join(os.environ.get(&#34;WINDIR&#34;, r&#34;C:\Windows&#34;), &#34;Minidump&#34;),
+                os.path.join(os.environ.get(&#34;WINDIR&#34;, r&#34;C:\Windows&#34;), &#34;MEMORY.DMP&#34;),
+            ]
+            dumps: List[Dict[str, Any]] = []
+
+            minidump_dir = dump_paths[0]
+            if os.path.isdir(minidump_dir):
+                for f in sorted(os.listdir(minidump_dir), reverse=True)[:20]:
+                    fp = os.path.join(minidump_dir, f)
+                    try:
+                        stat = os.stat(fp)
+                        dumps.append(
+                            {
+                                &#34;file&#34;: f,
+                                &#34;path&#34;: fp,
+                                &#34;size_kb&#34;: round(stat.st_size / 1024, 2),
+                                &#34;created&#34;: datetime.datetime.fromtimestamp(stat.st_ctime).strftime(&#34;%Y-%m-%d %H:%M:%S&#34;),
+                            }
+                        )
+                    except OSError:
+                        pass
+
+            full_dump = dump_paths[1]
+            if os.path.isfile(full_dump):
+                try:
+                    stat = os.stat(full_dump)
+                    dumps.append(
+                        {
+                            &#34;file&#34;: &#34;MEMORY.DMP&#34;,
+                            &#34;path&#34;: full_dump,
+                            &#34;size_mb&#34;: round(stat.st_size / (1024**2), 2),
+                            &#34;created&#34;: datetime.datetime.fromtimestamp(stat.st_ctime).strftime(&#34;%Y-%m-%d %H:%M:%S&#34;),
+                        }
+                    )
+                except OSError:
+                    pass
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-126&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;dump_count&#34;: len(dumps),
+                &#34;recent_dumps&#34;: dumps,
+                &#34;has_recent_crashes&#34;: len(dumps) &gt; 0,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-126&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.check_ssl_certificate"><code class="name flex">
+<span>def <span class="ident">check_ssl_certificate</span></span>(<span>hostname: str, port: int = 443) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def check_ssl_certificate(hostname: str, port: int = 443) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-121: Checks SSL/TLS certificate validity and expiration for a domain.&#34;&#34;&#34;
+    context = ssl.create_default_context()
+    try:
+        with socket.create_connection((hostname, port), timeout=5.0) as sock:
+            with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+                cert = ssock.getpeercert()
+                not_after_str = cert[&#34;notAfter&#34;]
+                # e.g., &#39;May 15 12:00:00 2027 GMT&#39;
+                expiry = datetime.datetime.strptime(not_after_str, &#34;%b %d %H:%M:%S %Y %Z&#34;)
+                days_left = (expiry - datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)).days
+
+                return {
+                    &#34;power_id&#34;: &#34;PWR-121&#34;,
+                    &#34;power_name&#34;: &#34;SSL certificate monitoring&#34;,
+                    &#34;hostname&#34;: hostname,
+                    &#34;status&#34;: &#34;valid&#34; if days_left &gt; 14 else &#34;expiring_soon&#34;,
+                    &#34;expires_at&#34;: expiry.strftime(&#34;%Y-%m-%d&#34;),
+                    &#34;days_remaining&#34;: days_left,
+                    &#34;issuer&#34;: dict(x[0] for x in cert.get(&#34;issuer&#34;, [])),
+                }
+    except Exception as e:
+        return {
+            &#34;power_id&#34;: &#34;PWR-121&#34;,
+            &#34;power_name&#34;: &#34;SSL certificate monitoring&#34;,
+            &#34;hostname&#34;: hostname,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: f&#34;Failed to verify SSL certificate: {str(e)}&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>PWR-121: Checks SSL/TLS certificate validity and expiration for a domain.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.cpu_ram_disk_monitoring"><code class="name flex">
+<span>def <span class="ident">cpu_ram_disk_monitoring</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def cpu_ram_disk_monitoring() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-101: Fine-grained CPU, RAM, and Disk telemetry.&#34;&#34;&#34;
+    cpu_times = psutil.cpu_times_percent(interval=0.1)
+    ram = psutil.virtual_memory()
+    swap = psutil.swap_memory()
+    disk = psutil.disk_usage(settings.disk_mount_path)
+    io_counters = psutil.disk_io_counters()
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-101&#34;,
+        &#34;power_name&#34;: &#34;CPU/RAM/disk monitoring&#34;,
+        &#34;timestamp&#34;: time.time(),
+        &#34;cpu_user&#34;: getattr(cpu_times, &#34;user&#34;, 0.0),
+        &#34;cpu_system&#34;: getattr(cpu_times, &#34;system&#34;, 0.0),
+        &#34;cpu_idle&#34;: getattr(cpu_times, &#34;idle&#34;, 0.0),
+        &#34;ram_used_percent&#34;: ram.percent,
+        &#34;swap_used_percent&#34;: swap.percent,
+        &#34;disk_used_percent&#34;: disk.percent,
+        &#34;read_bytes&#34;: io_counters.read_bytes if io_counters else 0,
+        &#34;write_bytes&#34;: io_counters.write_bytes if io_counters else 0,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-101: Fine-grained CPU, RAM, and Disk telemetry.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.crash_dump_analysis"><code class="name flex">
+<span>def <span class="ident">crash_dump_analysis</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def crash_dump_analysis() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-126: Check for recent BSOD/crash dumps.&#34;&#34;&#34;
+    try:
+        dump_paths = [
+            os.path.join(os.environ.get(&#34;WINDIR&#34;, r&#34;C:\Windows&#34;), &#34;Minidump&#34;),
+            os.path.join(os.environ.get(&#34;WINDIR&#34;, r&#34;C:\Windows&#34;), &#34;MEMORY.DMP&#34;),
+        ]
+        dumps: List[Dict[str, Any]] = []
+
+        minidump_dir = dump_paths[0]
+        if os.path.isdir(minidump_dir):
+            for f in sorted(os.listdir(minidump_dir), reverse=True)[:20]:
+                fp = os.path.join(minidump_dir, f)
+                try:
+                    stat = os.stat(fp)
+                    dumps.append(
+                        {
+                            &#34;file&#34;: f,
+                            &#34;path&#34;: fp,
+                            &#34;size_kb&#34;: round(stat.st_size / 1024, 2),
+                            &#34;created&#34;: datetime.datetime.fromtimestamp(stat.st_ctime).strftime(&#34;%Y-%m-%d %H:%M:%S&#34;),
+                        }
+                    )
+                except OSError:
+                    pass
+
+        full_dump = dump_paths[1]
+        if os.path.isfile(full_dump):
+            try:
+                stat = os.stat(full_dump)
+                dumps.append(
+                    {
+                        &#34;file&#34;: &#34;MEMORY.DMP&#34;,
+                        &#34;path&#34;: full_dump,
+                        &#34;size_mb&#34;: round(stat.st_size / (1024**2), 2),
+                        &#34;created&#34;: datetime.datetime.fromtimestamp(stat.st_ctime).strftime(&#34;%Y-%m-%d %H:%M:%S&#34;),
+                    }
+                )
+            except OSError:
+                pass
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-126&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;dump_count&#34;: len(dumps),
+            &#34;recent_dumps&#34;: dumps,
+            &#34;has_recent_crashes&#34;: len(dumps) &gt; 0,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-126&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-126: Check for recent BSOD/crash dumps.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.disk_cleanup_preview"><code class="name flex">
+<span>def <span class="ident">disk_cleanup_preview</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def disk_cleanup_preview() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-112: Preview temp/cache files that could be cleaned.&#34;&#34;&#34;
+    try:
+        targets = [
+            tempfile.gettempdir(),
+            os.path.join(os.environ.get(&#34;LOCALAPPDATA&#34;, &#34;&#34;), &#34;Temp&#34;),
+            os.path.join(os.environ.get(&#34;WINDIR&#34;, r&#34;C:\Windows&#34;), &#34;Temp&#34;),
+        ]
+        cleanup_items: List[Dict[str, Any]] = []
+        total_size = 0
+
+        for target_dir in targets:
+            if not os.path.isdir(target_dir):
+                continue
+            dir_size = 0
+            file_count = 0
+            try:
+                for root, dirs, files in os.walk(target_dir):
+                    for f in files:
+                        try:
+                            fp = os.path.join(root, f)
+                            dir_size += os.path.getsize(fp)
+                            file_count += 1
+                        except (OSError, PermissionError):
+                            pass
+            except (OSError, PermissionError):
+                pass
+            total_size += dir_size
+            cleanup_items.append(
+                {
+                    &#34;directory&#34;: target_dir,
+                    &#34;file_count&#34;: file_count,
+                    &#34;size_mb&#34;: round(dir_size / (1024**2), 2),
+                }
+            )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-112&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;total_reclaimable_mb&#34;: round(total_size / (1024**2), 2),
+            &#34;locations&#34;: cleanup_items,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-112&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-112: Preview temp/cache files that could be cleaned.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.disk_space_analysis"><code class="name flex">
+<span>def <span class="ident">disk_space_analysis</span></span>(<span>path: str = '/') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def disk_space_analysis(path: str = settings.disk_mount_path) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-103: Disk space forecasting and directory usage breakdown.&#34;&#34;&#34;
+    usage = shutil.disk_usage(path)
+    free_pct = round((usage.free / usage.total) * 100, 2)
+    burn_rate_gb_day = 0.5  # Estimated baseline burn rate
+    days_until_exhaustion = round((usage.free / (1024**3)) / max(burn_rate_gb_day, 0.01), 1)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-103&#34;,
+        &#34;power_name&#34;: &#34;Disk-space forecast&#34;,
+        &#34;path&#34;: path,
+        &#34;total_gb&#34;: round(usage.total / (1024**3), 2),
+        &#34;used_gb&#34;: round(usage.used / (1024**3), 2),
+        &#34;free_gb&#34;: round(usage.free / (1024**3), 2),
+        &#34;free_percent&#34;: free_pct,
+        &#34;estimated_days_remaining&#34;: days_until_exhaustion,
+        &#34;status&#34;: &#34;critical&#34; if free_pct &lt; 10 else (&#34;warning&#34; if free_pct &lt; 20 else &#34;healthy&#34;),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-103: Disk space forecasting and directory usage breakdown.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.disk_usage"><code class="name flex">
+<span>def <span class="ident">disk_usage</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def disk_usage() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-110: Disk usage per drive using psutil.&#34;&#34;&#34;
+    try:
+        partitions = psutil.disk_partitions(all=False)
+        drives: List[Dict[str, Any]] = []
+        for p in partitions:
+            try:
+                usage = psutil.disk_usage(p.mountpoint)
+                drives.append(
+                    {
+                        &#34;device&#34;: p.device,
+                        &#34;mountpoint&#34;: p.mountpoint,
+                        &#34;fstype&#34;: p.fstype,
+                        &#34;total_gb&#34;: round(usage.total / (1024**3), 2),
+                        &#34;used_gb&#34;: round(usage.used / (1024**3), 2),
+                        &#34;free_gb&#34;: round(usage.free / (1024**3), 2),
+                        &#34;percent&#34;: usage.percent,
+                    }
+                )
+            except PermissionError:
+                drives.append({&#34;device&#34;: p.device, &#34;mountpoint&#34;: p.mountpoint, &#34;error&#34;: &#34;Permission denied&#34;})
+        return {
+            &#34;power_id&#34;: &#34;PWR-110&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;drive_count&#34;: len(drives),
+            &#34;drives&#34;: drives,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-110&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-110: Disk usage per drive using psutil.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.docker_container_monitoring"><code class="name flex">
+<span>def <span class="ident">docker_container_monitoring</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def docker_container_monitoring() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-117: Docker container monitoring and health verification.&#34;&#34;&#34;
+    try:
+        # Check docker CLI or socket
+        res = subprocess.run(
+            [&#34;docker&#34;, &#34;ps&#34;, &#34;--format&#34;, &#34;{{.ID}}|{{.Image}}|{{.Status}}|{{.Names}}&#34;],
+            capture_output=True,
+            text=True,
+            timeout=3.0,
+        )
+        if res.returncode != 0:
+            return {
+                &#34;power_id&#34;: &#34;PWR-117&#34;,
+                &#34;power_name&#34;: &#34;Docker container monitoring&#34;,
+                &#34;docker_available&#34;: False,
+                &#34;containers&#34;: [],
+                &#34;message&#34;: &#34;Docker daemon unavailable or not running&#34;,
+            }
+
+        containers = []
+        for line in res.stdout.strip().splitlines():
+            if line:
+                parts = line.split(&#34;|&#34;)
+                if len(parts) &gt;= 4:
+                    containers.append({&#34;id&#34;: parts[0], &#34;image&#34;: parts[1], &#34;status&#34;: parts[2], &#34;name&#34;: parts[3]})
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-117&#34;,
+            &#34;power_name&#34;: &#34;Docker container monitoring&#34;,
+            &#34;docker_available&#34;: True,
+            &#34;total_containers&#34;: len(containers),
+            &#34;containers&#34;: containers,
+        }
+    except Exception as e:
+        return {
+            &#34;power_id&#34;: &#34;PWR-117&#34;,
+            &#34;power_name&#34;: &#34;Docker container monitoring&#34;,
+            &#34;docker_available&#34;: False,
+            &#34;containers&#34;: [],
+            &#34;message&#34;: f&#34;Docker probe failed: {str(e)}&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>PWR-117: Docker container monitoring and health verification.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.docker_logs"><code class="name flex">
+<span>def <span class="ident">docker_logs</span></span>(<span>container: str, lines: int = 50) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def docker_logs(container: str, lines: int = 50) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-101: Tail container logs.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;docker&#34;, &#34;logs&#34;, &#34;--tail&#34;, str(lines), container],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        output = res.stdout or res.stderr
+        return {
+            &#34;power_id&#34;: &#34;PWR-101&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;container&#34;: container,
+            &#34;lines_requested&#34;: lines,
+            &#34;logs&#34;: output[-5000:],  # cap to 5 KB
+        }
+    except FileNotFoundError:
+        return {&#34;power_id&#34;: &#34;PWR-101&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Docker CLI not found on PATH&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-101&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-101: Tail container logs.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.docker_restart"><code class="name flex">
+<span>def <span class="ident">docker_restart</span></span>(<span>container: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def docker_restart(container: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-102: Restart a Docker container. Requires user approval.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;docker&#34;, &#34;restart&#34;, container],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-102&#34;,
+            &#34;status&#34;: &#34;success&#34; if res.returncode == 0 else &#34;error&#34;,
+            &#34;container&#34;: container,
+            &#34;output&#34;: (res.stdout or res.stderr).strip(),
+            &#34;approval_required&#34;: True,
+        }
+    except FileNotFoundError:
+        return {
+            &#34;power_id&#34;: &#34;PWR-102&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: &#34;Docker CLI not found on PATH&#34;,
+            &#34;approval_required&#34;: True,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-102&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}</code></pre>
+</details>
+<div class="desc"><p>PWR-102: Restart a Docker container. Requires user approval.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.docker_status"><code class="name flex">
+<span>def <span class="ident">docker_status</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def docker_status() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-100: Lists Docker containers with status, CPU, and memory usage.&#34;&#34;&#34;
+    try:
+        ps_result = subprocess.run(
+            [&#34;docker&#34;, &#34;ps&#34;, &#34;-a&#34;, &#34;--format&#34;, &#34;{{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}&#34;],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        if ps_result.returncode != 0:
+            return {
+                &#34;power_id&#34;: &#34;PWR-100&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: ps_result.stderr.strip() or &#34;Docker not available&#34;,
+            }
+
+        containers: List[Dict[str, str]] = []
+        for line in ps_result.stdout.strip().splitlines():
+            parts = line.split(&#34;\t&#34;)
+            if len(parts) &gt;= 4:
+                containers.append(
+                    {
+                        &#34;id&#34;: parts[0],
+                        &#34;name&#34;: parts[1],
+                        &#34;status&#34;: parts[2],
+                        &#34;image&#34;: parts[3],
+                    }
+                )
+
+        # Gather stats for running containers
+        stats_result = subprocess.run(
+            [&#34;docker&#34;, &#34;stats&#34;, &#34;--no-stream&#34;, &#34;--format&#34;, &#34;{{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}&#34;],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        stats_map: Dict[str, Dict[str, str]] = {}
+        if stats_result.returncode == 0:
+            for line in stats_result.stdout.strip().splitlines():
+                parts = line.split(&#34;\t&#34;)
+                if len(parts) &gt;= 3:
+                    stats_map[parts[0]] = {&#34;cpu&#34;: parts[1], &#34;memory&#34;: parts[2]}
+
+        for c in containers:
+            s = stats_map.get(c[&#34;id&#34;], stats_map.get(c[&#34;name&#34;], {}))
+            c[&#34;cpu_percent&#34;] = s.get(&#34;cpu&#34;, &#34;N/A&#34;)
+            c[&#34;memory_usage&#34;] = s.get(&#34;memory&#34;, &#34;N/A&#34;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-100&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;container_count&#34;: len(containers),
+            &#34;containers&#34;: containers,
+        }
+    except FileNotFoundError:
+        return {&#34;power_id&#34;: &#34;PWR-100&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Docker CLI not found on PATH&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-100&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-100: Lists Docker containers with status, CPU, and memory usage.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.driver_info"><code class="name flex">
+<span>def <span class="ident">driver_info</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def driver_info() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-124: GPU/display driver information via WMIC.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;wmic&#34;, &#34;path&#34;, &#34;Win32_VideoController&#34;, &#34;get&#34;, &#34;Name,DriverVersion,AdapterRAM,Status&#34;, &#34;/format:csv&#34;],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        drivers: List[Dict[str, str]] = []
+        lines = [l.strip() for l in res.stdout.strip().splitlines() if l.strip()]
+        if len(lines) &gt; 1:
+            headers = [h.strip() for h in lines[0].split(&#34;,&#34;)]
+            for line in lines[1:]:
+                values = [v.strip() for v in line.split(&#34;,&#34;)]
+                if len(values) &gt;= len(headers):
+                    entry = dict(zip(headers, values))
+                    drivers.append(entry)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-124&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;gpu_count&#34;: len(drivers),
+            &#34;drivers&#34;: drivers,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-124&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-124: GPU/display driver information via WMIC.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.environment_variables"><code class="name flex">
+<span>def <span class="ident">environment_variables</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def environment_variables() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-123: List environment variables with secrets masked.&#34;&#34;&#34;
+    try:
+        secret_keywords = {
+            &#34;key&#34;,
+            &#34;secret&#34;,
+            &#34;token&#34;,
+            &#34;password&#34;,
+            &#34;passwd&#34;,
+            &#34;credential&#34;,
+            &#34;auth&#34;,
+            &#34;api_key&#34;,
+            &#34;apikey&#34;,
+            &#34;private&#34;,
+        }
+        env_vars: List[Dict[str, str]] = []
+        for k, v in sorted(os.environ.items()):
+            is_sensitive = any(s in k.lower() for s in secret_keywords)
+            env_vars.append(
+                {
+                    &#34;name&#34;: k,
+                    &#34;value&#34;: &#34;****REDACTED****&#34; if is_sensitive else v,
+                    &#34;sensitive&#34;: is_sensitive,
+                }
+            )
+        return {
+            &#34;power_id&#34;: &#34;PWR-123&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;count&#34;: len(env_vars),
+            &#34;variables&#34;: env_vars,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-123&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-123: List environment variables with secrets masked.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.event_log_search"><code class="name flex">
+<span>def <span class="ident">event_log_search</span></span>(<span>keyword: str, source: str = 'System', count: int = 20) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def event_log_search(keyword: str, source: str = &#34;System&#34;, count: int = 20) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-118: Search Windows Event Log entries matching a keyword.&#34;&#34;&#34;
+    try:
+        ps_script = (
+            f&#34;Get-EventLog -LogName {source} -Newest 200 -ErrorAction Stop | &#34;
+            f&#34;Where-Object {{ $_.Message -match &#39;{keyword}&#39; }} | &#34;
+            f&#34;Select-Object -First {count} TimeGenerated, EntryType, Source, Message | &#34;
+            f&#34;ConvertTo-Json -Depth 3&#34;
+        )
+        res = subprocess.run(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        import json
+
+        try:
+            events = json.loads(res.stdout) if res.stdout.strip() else []
+            if isinstance(events, dict):
+                events = [events]
+        except json.JSONDecodeError:
+            events = [{&#34;raw&#34;: res.stdout[:3000]}]
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-118&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;keyword&#34;: keyword,
+            &#34;source&#34;: source,
+            &#34;event_count&#34;: len(events),
+            &#34;events&#34;: events[:count],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-118&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-118: Search Windows Event Log entries matching a keyword.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.installed_software"><code class="name flex">
+<span>def <span class="ident">installed_software</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def installed_software() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-122: List installed programs from the registry.&#34;&#34;&#34;
+    try:
+        programs: List[Dict[str, str]] = []
+        reg_paths = [
+            (winreg.HKEY_LOCAL_MACHINE, r&#34;SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall&#34;),
+            (winreg.HKEY_LOCAL_MACHINE, r&#34;SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall&#34;),
+            (winreg.HKEY_CURRENT_USER, r&#34;SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall&#34;),
+        ]
+        seen = set()
+        for hive, path in reg_paths:
+            try:
+                key = winreg.OpenKey(hive, path)
+                for i in range(winreg.QueryInfoKey(key)[0]):
+                    try:
+                        subkey_name = winreg.EnumKey(key, i)
+                        subkey = winreg.OpenKey(key, subkey_name)
+                        try:
+                            name = winreg.QueryValueEx(subkey, &#34;DisplayName&#34;)[0]
+                        except OSError:
+                            continue
+                        if name in seen:
+                            continue
+                        seen.add(name)
+                        version = &#34;&#34;
+                        try:
+                            version = winreg.QueryValueEx(subkey, &#34;DisplayVersion&#34;)[0]
+                        except OSError:
+                            pass
+                        publisher = &#34;&#34;
+                        try:
+                            publisher = winreg.QueryValueEx(subkey, &#34;Publisher&#34;)[0]
+                        except OSError:
+                            pass
+                        programs.append({&#34;name&#34;: name, &#34;version&#34;: version, &#34;publisher&#34;: publisher})
+                        winreg.CloseKey(subkey)
+                    except OSError:
+                        pass
+                winreg.CloseKey(key)
+            except OSError:
+                pass
+
+        programs.sort(key=lambda x: x[&#34;name&#34;].lower())
+        return {
+            &#34;power_id&#34;: &#34;PWR-122&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;count&#34;: len(programs),
+            &#34;programs&#34;: programs,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-122&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-122: List installed programs from the registry.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.kill_process"><code class="name flex">
+<span>def <span class="ident">kill_process</span></span>(<span>pid: int) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def kill_process(pid: int) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-116: Kill a process by PID. Requires user approval.&#34;&#34;&#34;
+    try:
+        proc = psutil.Process(pid)
+        proc_name = proc.name()
+        proc.terminate()
+        gone, alive = psutil.wait_procs([proc], timeout=5)
+        if alive:
+            for p in alive:
+                p.kill()
+        return {
+            &#34;power_id&#34;: &#34;PWR-116&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;pid&#34;: pid,
+            &#34;name&#34;: proc_name,
+            &#34;message&#34;: f&#34;Process {proc_name} (PID {pid}) terminated&#34;,
+            &#34;approval_required&#34;: True,
+        }
+    except psutil.NoSuchProcess:
+        return {
+            &#34;power_id&#34;: &#34;PWR-116&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: f&#34;No process with PID {pid}&#34;,
+            &#34;approval_required&#34;: True,
+        }
+    except psutil.AccessDenied:
+        return {
+            &#34;power_id&#34;: &#34;PWR-116&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: f&#34;Access denied for PID {pid}&#34;,
+            &#34;approval_required&#34;: True,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-116&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}</code></pre>
+</details>
+<div class="desc"><p>PWR-116: Kill a process by PID. Requires user approval.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.process_analysis"><code class="name flex">
+<span>def <span class="ident">process_analysis</span></span>(<span>limit: int = 10) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def process_analysis(limit: int = 10) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-105: Process analysis and CPU/RAM hog detection.&#34;&#34;&#34;
+    processes = []
+    for p in psutil.process_iter([&#34;pid&#34;, &#34;name&#34;, &#34;cpu_percent&#34;, &#34;memory_percent&#34;, &#34;status&#34;]):
+        try:
+            processes.append(p.info)
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            continue
+
+    top_by_cpu = sorted(processes, key=lambda x: x.get(&#34;cpu_percent&#34;) or 0, reverse=True)[:limit]
+    top_by_ram = sorted(processes, key=lambda x: x.get(&#34;memory_percent&#34;) or 0, reverse=True)[:limit]
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-105&#34;,
+        &#34;power_name&#34;: &#34;Process analysis&#34;,
+        &#34;total_running_processes&#34;: len(processes),
+        &#34;top_cpu_consumers&#34;: top_by_cpu,
+        &#34;top_ram_consumers&#34;: top_by_ram,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-105: Process analysis and CPU/RAM hog detection.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.process_list"><code class="name flex">
+<span>def <span class="ident">process_list</span></span>(<span>top_n: int = 20) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def process_list(top_n: int = 20) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-115: Top processes by CPU and memory usage.&#34;&#34;&#34;
+    try:
+        procs: List[Dict[str, Any]] = []
+        for p in psutil.process_iter([&#34;pid&#34;, &#34;name&#34;, &#34;cpu_percent&#34;, &#34;memory_percent&#34;, &#34;status&#34;]):
+            try:
+                info = p.info
+                procs.append(
+                    {
+                        &#34;pid&#34;: info[&#34;pid&#34;],
+                        &#34;name&#34;: info[&#34;name&#34;],
+                        &#34;cpu_percent&#34;: info.get(&#34;cpu_percent&#34;, 0.0) or 0.0,
+                        &#34;memory_percent&#34;: round(info.get(&#34;memory_percent&#34;, 0.0) or 0.0, 2),
+                        &#34;status&#34;: info.get(&#34;status&#34;, &#34;unknown&#34;),
+                    }
+                )
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                pass
+
+        procs.sort(key=lambda x: x[&#34;cpu_percent&#34;] + x[&#34;memory_percent&#34;], reverse=True)
+        return {
+            &#34;power_id&#34;: &#34;PWR-115&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;total_processes&#34;: len(procs),
+            &#34;top_processes&#34;: procs[:top_n],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-115&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-115: Top processes by CPU and memory usage.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.safe_process_termination"><code class="name flex">
+<span>def <span class="ident">safe_process_termination</span></span>(<span>pid: int, force: bool = False) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def safe_process_termination(pid: int, force: bool = False) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-106: Safely terminates a runaway process with safety verification.&#34;&#34;&#34;
+    try:
+        p = psutil.Process(pid)
+        name = p.name()
+        # Protect system and self
+        if pid &lt;= 4 or &#34;system&#34; in name.lower() or pid == psutil.Process().pid:
+            return {
+                &#34;power_id&#34;: &#34;PWR-106&#34;,
+                &#34;success&#34;: False,
+                &#34;error&#34;: f&#34;Cannot terminate protected critical process {name} (PID: {pid})&#34;,
+            }
+        if force:
+            p.kill()
+        else:
+            p.terminate()
+        return {
+            &#34;power_id&#34;: &#34;PWR-106&#34;,
+            &#34;success&#34;: True,
+            &#34;pid&#34;: pid,
+            &#34;name&#34;: name,
+            &#34;action&#34;: &#34;SIGKILL&#34; if force else &#34;SIGTERM&#34;,
+        }
+    except psutil.NoSuchProcess:
+        return {&#34;power_id&#34;: &#34;PWR-106&#34;, &#34;success&#34;: False, &#34;error&#34;: f&#34;Process {pid} does not exist&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-106&#34;, &#34;success&#34;: False, &#34;error&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-106: Safely terminates a runaway process with safety verification.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.server_uptime_monitoring"><code class="name flex">
+<span>def <span class="ident">server_uptime_monitoring</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def server_uptime_monitoring() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-120: Server uptime and host availability monitoring.&#34;&#34;&#34;
+    boot_ts = psutil.boot_time()
+    uptime_seconds = int(time.time() - boot_ts)
+    days = uptime_seconds // 86400
+    hours = (uptime_seconds % 86400) // 3600
+    minutes = (uptime_seconds % 3600) // 60
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-120&#34;,
+        &#34;power_name&#34;: &#34;Server uptime monitoring&#34;,
+        &#34;uptime_seconds&#34;: uptime_seconds,
+        &#34;uptime_human&#34;: f&#34;{days}d {hours}h {minutes}m&#34;,
+        &#34;boot_timestamp&#34;: datetime.datetime.fromtimestamp(boot_ts).isoformat(),
+        &#34;status&#34;: &#34;online&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-120: Server uptime and host availability monitoring.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.service_restart"><code class="name flex">
+<span>def <span class="ident">service_restart</span></span>(<span>service_name: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def service_restart(service_name: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-106: Restart a Windows service. Requires user approval.&#34;&#34;&#34;
+    try:
+        stop = subprocess.run(
+            [&#34;sc&#34;, &#34;stop&#34;, service_name],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        time.sleep(2)
+        start = subprocess.run(
+            [&#34;sc&#34;, &#34;start&#34;, service_name],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-106&#34;,
+            &#34;status&#34;: &#34;success&#34; if start.returncode == 0 else &#34;error&#34;,
+            &#34;service_name&#34;: service_name,
+            &#34;stop_output&#34;: stop.stdout.strip(),
+            &#34;start_output&#34;: start.stdout.strip(),
+            &#34;approval_required&#34;: True,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-106&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}</code></pre>
+</details>
+<div class="desc"><p>PWR-106: Restart a Windows service. Requires user approval.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.service_status"><code class="name flex">
+<span>def <span class="ident">service_status</span></span>(<span>service_name: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def service_status(service_name: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-105: Query Windows service status via sc query.&#34;&#34;&#34;
+    try:
+        cmd = [&#34;sc&#34;, &#34;query&#34;]
+        if service_name:
+            cmd.append(service_name)
+        res = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+        if res.returncode != 0:
+            return {&#34;power_id&#34;: &#34;PWR-105&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: res.stderr.strip() or res.stdout.strip()}
+
+        services: List[Dict[str, str]] = []
+        current: Dict[str, str] = {}
+        for line in res.stdout.splitlines():
+            line = line.strip()
+            if line.startswith(&#34;SERVICE_NAME:&#34;):
+                if current:
+                    services.append(current)
+                current = {&#34;service_name&#34;: line.split(&#34;:&#34;, 1)[1].strip()}
+            elif line.startswith(&#34;DISPLAY_NAME:&#34;):
+                current[&#34;display_name&#34;] = line.split(&#34;:&#34;, 1)[1].strip()
+            elif line.startswith(&#34;STATE&#34;):
+                # e.g. STATE              : 4  RUNNING
+                state_part = line.split(&#34;:&#34;, 1)[1].strip()
+                current[&#34;state&#34;] = state_part
+        if current:
+            services.append(current)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-105&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;service_count&#34;: len(services),
+            &#34;services&#34;: services[:100],  # cap output
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-105&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-105: Query Windows service status via sc query.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.ssl_cert_check"><code class="name flex">
+<span>def <span class="ident">ssl_cert_check</span></span>(<span>host: str, port: int = 443) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ssl_cert_check(host: str, port: int = 443) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-120: Check TLS certificate expiry for a host.&#34;&#34;&#34;
+    try:
+        ctx = ssl.create_default_context()
+        with socket.create_connection((host, port), timeout=5) as sock:
+            with ctx.wrap_socket(sock, server_hostname=host) as ssock:
+                cert = ssock.getpeercert()
+                not_after = cert.get(&#34;notAfter&#34;, &#34;&#34;)
+                expiry = datetime.datetime.strptime(not_after, &#34;%b %d %H:%M:%S %Y %Z&#34;)
+                days_left = (expiry - datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)).days
+                return {
+                    &#34;power_id&#34;: &#34;PWR-120&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;host&#34;: host,
+                    &#34;port&#34;: port,
+                    &#34;subject&#34;: dict(x[0] for x in cert.get(&#34;subject&#34;, [])),
+                    &#34;issuer&#34;: dict(x[0] for x in cert.get(&#34;issuer&#34;, [])),
+                    &#34;expires_at&#34;: expiry.strftime(&#34;%Y-%m-%d %H:%M:%S&#34;),
+                    &#34;days_remaining&#34;: days_left,
+                    &#34;warning&#34;: days_left &lt; 30,
+                }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-120&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-120: Check TLS certificate expiry for a host.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.startup_programs"><code class="name flex">
+<span>def <span class="ident">startup_programs</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def startup_programs() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-119: List startup programs from common registry locations.&#34;&#34;&#34;
+    try:
+        programs: List[Dict[str, str]] = []
+        reg_paths = [
+            (winreg.HKEY_CURRENT_USER, r&#34;Software\Microsoft\Windows\CurrentVersion\Run&#34;),
+            (winreg.HKEY_LOCAL_MACHINE, r&#34;Software\Microsoft\Windows\CurrentVersion\Run&#34;),
+        ]
+        for hive, path in reg_paths:
+            try:
+                key = winreg.OpenKey(hive, path)
+                i = 0
+                while True:
+                    try:
+                        name, value, _ = winreg.EnumValue(key, i)
+                        programs.append(
+                            {
+                                &#34;name&#34;: name,
+                                &#34;command&#34;: value,
+                                &#34;location&#34;: f&#34;{&#39;HKCU&#39; if hive == winreg.HKEY_CURRENT_USER else &#39;HKLM&#39;}\\{path}&#34;,
+                            }
+                        )
+                        i += 1
+                    except OSError:
+                        break
+                winreg.CloseKey(key)
+            except OSError:
+                pass
+
+        # Also check startup folder
+        startup_folder = os.path.join(
+            os.environ.get(&#34;APPDATA&#34;, &#34;&#34;),
+            r&#34;Microsoft\Windows\Start Menu\Programs\Startup&#34;,
+        )
+        if os.path.isdir(startup_folder):
+            for f in os.listdir(startup_folder):
+                programs.append(
+                    {&#34;name&#34;: f, &#34;command&#34;: os.path.join(startup_folder, f), &#34;location&#34;: &#34;Startup Folder&#34;}
+                )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-119&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;count&#34;: len(programs),
+            &#34;programs&#34;: programs,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-119&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-119: List startup programs from common registry locations.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.system_health_report"><code class="name flex">
+<span>def <span class="ident">system_health_report</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def system_health_report() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-100: Generates comprehensive host performance telemetry.&#34;&#34;&#34;
+    cpu_pct = psutil.cpu_percent(interval=None)
+    ram = psutil.virtual_memory()
+    disk = psutil.disk_usage(settings.disk_mount_path)
+
+    boot_time = datetime.datetime.fromtimestamp(psutil.boot_time()).strftime(&#34;%Y-%m-%d %H:%M:%S&#34;)
+
+    # Fast non-blocking top processes (sampled only when requested)
+    top_processes = []
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-100&#34;,
+        &#34;power_name&#34;: &#34;System health report&#34;,
+        &#34;status&#34;: &#34;healthy&#34; if (cpu_pct &lt; 90 and ram.percent &lt; 90) else &#34;warning&#34;,
+        &#34;cpu&#34;: {
+            &#34;percent&#34;: cpu_pct,
+            &#34;cores_logical&#34;: psutil.cpu_count(logical=True),
+            &#34;cores_physical&#34;: psutil.cpu_count(logical=False),
+        },
+        &#34;memory&#34;: {
+            &#34;total_gb&#34;: round(ram.total / (1024**3), 2),
+            &#34;used_gb&#34;: round(ram.used / (1024**3), 2),
+            &#34;available_gb&#34;: round(ram.available / (1024**3), 2),
+            &#34;percent&#34;: ram.percent,
+        },
+        &#34;disk&#34;: {
+            &#34;total_gb&#34;: round(disk.total / (1024**3), 2),
+            &#34;used_gb&#34;: round(disk.used / (1024**3), 2),
+            &#34;free_gb&#34;: round(disk.free / (1024**3), 2),
+            &#34;percent&#34;: disk.percent,
+        },
+        &#34;system&#34;: {&#34;boot_time&#34;: boot_time, &#34;timestamp&#34;: time.time()},
+        &#34;top_processes&#34;: top_processes,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-100: Generates comprehensive host performance telemetry.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.system_uptime"><code class="name flex">
+<span>def <span class="ident">system_uptime</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def system_uptime() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-121: System uptime since last boot.&#34;&#34;&#34;
+    try:
+        boot_ts = psutil.boot_time()
+        boot_dt = datetime.datetime.fromtimestamp(boot_ts)
+        now = datetime.datetime.now()
+        delta = now - boot_dt
+        days = delta.days
+        hours, remainder = divmod(delta.seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        return {
+            &#34;power_id&#34;: &#34;PWR-121&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;boot_time&#34;: boot_dt.strftime(&#34;%Y-%m-%d %H:%M:%S&#34;),
+            &#34;uptime_str&#34;: f&#34;{days}d {hours}h {minutes}m {seconds}s&#34;,
+            &#34;uptime_seconds&#34;: int(delta.total_seconds()),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-121&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-121: System uptime since last boot.</p></div>
+</dd>
+<dt id="jarvis.powers.it_admin_powers.ITAdminPowers.windows_update_status"><code class="name flex">
+<span>def <span class="ident">windows_update_status</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def windows_update_status() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-125: Check Windows Update status via PowerShell.&#34;&#34;&#34;
+    try:
+        ps_script = (
+            &#34;try { &#34;
+            &#34;$session = New-Object -ComObject Microsoft.Update.Session; &#34;
+            &#34;$searcher = $session.CreateUpdateSearcher(); &#34;
+            &#34;$result = $searcher.Search(&#39;IsInstalled=0&#39;); &#34;
+            &#34;$updates = @(); &#34;
+            &#34;foreach ($u in $result.Updates) { &#34;
+            &#34;  $updates += @{Title=$u.Title; Severity=$u.MsrcSeverity; &#34;
+            &#34;  KB=($u.KBArticleIDs -join &#39;,&#39;)}; &#34;
+            &#34;}; &#34;
+            &#34;$updates | ConvertTo-Json -Depth 2 &#34;
+            &#34;} catch { Write-Output (ConvertTo-Json @{error=$_.Exception.Message}) }&#34;
+        )
+        res = subprocess.run(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+        import json
+
+        try:
+            updates = json.loads(res.stdout) if res.stdout.strip() else []
+            if isinstance(updates, dict):
+                if &#34;error&#34; in updates:
+                    return {&#34;power_id&#34;: &#34;PWR-125&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: updates[&#34;error&#34;]}
+                updates = [updates]
+        except json.JSONDecodeError:
+            updates = []
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-125&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;pending_count&#34;: len(updates),
+            &#34;pending_updates&#34;: updates[:50],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-125&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-125: Check Windows Update status via PowerShell.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers" href="#jarvis.powers.it_admin_powers.ITAdminPowers">ITAdminPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.check_ssl_certificate" href="#jarvis.powers.it_admin_powers.ITAdminPowers.check_ssl_certificate">check_ssl_certificate</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.cpu_ram_disk_monitoring" href="#jarvis.powers.it_admin_powers.ITAdminPowers.cpu_ram_disk_monitoring">cpu_ram_disk_monitoring</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.crash_dump_analysis" href="#jarvis.powers.it_admin_powers.ITAdminPowers.crash_dump_analysis">crash_dump_analysis</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.disk_cleanup_preview" href="#jarvis.powers.it_admin_powers.ITAdminPowers.disk_cleanup_preview">disk_cleanup_preview</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.disk_space_analysis" href="#jarvis.powers.it_admin_powers.ITAdminPowers.disk_space_analysis">disk_space_analysis</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.disk_usage" href="#jarvis.powers.it_admin_powers.ITAdminPowers.disk_usage">disk_usage</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.docker_container_monitoring" href="#jarvis.powers.it_admin_powers.ITAdminPowers.docker_container_monitoring">docker_container_monitoring</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.docker_logs" href="#jarvis.powers.it_admin_powers.ITAdminPowers.docker_logs">docker_logs</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.docker_restart" href="#jarvis.powers.it_admin_powers.ITAdminPowers.docker_restart">docker_restart</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.docker_status" href="#jarvis.powers.it_admin_powers.ITAdminPowers.docker_status">docker_status</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.driver_info" href="#jarvis.powers.it_admin_powers.ITAdminPowers.driver_info">driver_info</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.environment_variables" href="#jarvis.powers.it_admin_powers.ITAdminPowers.environment_variables">environment_variables</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.event_log_search" href="#jarvis.powers.it_admin_powers.ITAdminPowers.event_log_search">event_log_search</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.installed_software" href="#jarvis.powers.it_admin_powers.ITAdminPowers.installed_software">installed_software</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.kill_process" href="#jarvis.powers.it_admin_powers.ITAdminPowers.kill_process">kill_process</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.process_analysis" href="#jarvis.powers.it_admin_powers.ITAdminPowers.process_analysis">process_analysis</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.process_list" href="#jarvis.powers.it_admin_powers.ITAdminPowers.process_list">process_list</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.safe_process_termination" href="#jarvis.powers.it_admin_powers.ITAdminPowers.safe_process_termination">safe_process_termination</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.server_uptime_monitoring" href="#jarvis.powers.it_admin_powers.ITAdminPowers.server_uptime_monitoring">server_uptime_monitoring</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.service_restart" href="#jarvis.powers.it_admin_powers.ITAdminPowers.service_restart">service_restart</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.service_status" href="#jarvis.powers.it_admin_powers.ITAdminPowers.service_status">service_status</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.ssl_cert_check" href="#jarvis.powers.it_admin_powers.ITAdminPowers.ssl_cert_check">ssl_cert_check</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.startup_programs" href="#jarvis.powers.it_admin_powers.ITAdminPowers.startup_programs">startup_programs</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.system_health_report" href="#jarvis.powers.it_admin_powers.ITAdminPowers.system_health_report">system_health_report</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.system_uptime" href="#jarvis.powers.it_admin_powers.ITAdminPowers.system_uptime">system_uptime</a></code></li>
+<li><code><a title="jarvis.powers.it_admin_powers.ITAdminPowers.windows_update_status" href="#jarvis.powers.it_admin_powers.ITAdminPowers.windows_update_status">windows_update_status</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

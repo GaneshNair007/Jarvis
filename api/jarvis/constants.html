@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.constants API documentation</title>
+<meta name="description" content="JARVIS Central Constants Module.
+Defines immutable technical constants, enums, network security boundaries,
+default DLP patterns, and application …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.constants</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Central Constants Module.
+Defines immutable technical constants, enums, network security boundaries,
+default DLP patterns, and application metadata.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.constants.DocumentSourceType"><code class="flex name class">
+<span>class <span class="ident">DocumentSourceType</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DocumentSourceType(str, Enum):
+    CODE_REPO = &#34;code_repo&#34;
+    MARKDOWN_NOTES = &#34;markdown_notes&#34;
+    PDF = &#34;pdf&#34;
+    DOCUMENT = &#34;document&#34;
+    CHAT_HISTORY = &#34;chat_history&#34;
+    BROWSER_PAGE = &#34;browser_page&#34;
+    WEB_CACHE = &#34;web_cache&#34;
+    NOTES = &#34;notes&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.constants.DocumentSourceType.BROWSER_PAGE"><code class="name">var <span class="ident">BROWSER_PAGE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.DocumentSourceType.CHAT_HISTORY"><code class="name">var <span class="ident">CHAT_HISTORY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.DocumentSourceType.CODE_REPO"><code class="name">var <span class="ident">CODE_REPO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.DocumentSourceType.DOCUMENT"><code class="name">var <span class="ident">DOCUMENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.DocumentSourceType.MARKDOWN_NOTES"><code class="name">var <span class="ident">MARKDOWN_NOTES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.DocumentSourceType.NOTES"><code class="name">var <span class="ident">NOTES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.DocumentSourceType.PDF"><code class="name">var <span class="ident">PDF</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.DocumentSourceType.WEB_CACHE"><code class="name">var <span class="ident">WEB_CACHE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.constants.ModelTier"><code class="flex name class">
+<span>class <span class="ident">ModelTier</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ModelTier(str, Enum):
+    BYPASS = &#34;BYPASS&#34;
+    TIER_1_LOCAL = &#34;TIER_1_LOCAL&#34;
+    TIER_2_PRIVATE = &#34;TIER_2_PRIVATE&#34;
+    TIER_3_CLOUD = &#34;TIER_3_CLOUD&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.constants.ModelTier.BYPASS"><code class="name">var <span class="ident">BYPASS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.ModelTier.TIER_1_LOCAL"><code class="name">var <span class="ident">TIER_1_LOCAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.ModelTier.TIER_2_PRIVATE"><code class="name">var <span class="ident">TIER_2_PRIVATE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.ModelTier.TIER_3_CLOUD"><code class="name">var <span class="ident">TIER_3_CLOUD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.constants.PolicyTier"><code class="flex name class">
+<span>class <span class="ident">PolicyTier</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PolicyTier(int, Enum):
+    TIER_0_OBSERVE = 0
+    TIER_1_REVERSIBLE = 1
+    TIER_2_EXPLICIT_APPROVAL = 2
+    TIER_3_STEP_UP_AUTH = 3</code></pre>
+</details>
+<div class="desc"><p>int([x]) -&gt; integer
+int(x, base=10) -&gt; integer</p>
+<p>Convert a number or string to an integer, or return 0 if no arguments
+are given.
+If x is a number, return x.<strong>int</strong>().
+For floating point
+numbers, this truncates towards zero.</p>
+<p>If x is not a number or if base is given, then x must be a string,
+bytes, or bytearray instance representing an integer literal in the
+given base.
+The literal can be preceded by '+' or '-' and be surrounded
+by whitespace.
+The base defaults to 10.
+Valid bases are 0 and 2-36.
+Base 0 means to interpret the base from the string as an integer literal.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; int('0b100', base=0)
+4
+</code></pre></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.constants.PolicyTier.TIER_0_OBSERVE"><code class="name">var <span class="ident">TIER_0_OBSERVE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.PolicyTier.TIER_1_REVERSIBLE"><code class="name">var <span class="ident">TIER_1_REVERSIBLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.PolicyTier.TIER_2_EXPLICIT_APPROVAL"><code class="name">var <span class="ident">TIER_2_EXPLICIT_APPROVAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.PolicyTier.TIER_3_STEP_UP_AUTH"><code class="name">var <span class="ident">TIER_3_STEP_UP_AUTH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.constants.PrivilegeLevel"><code class="flex name class">
+<span>class <span class="ident">PrivilegeLevel</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PrivilegeLevel(int, Enum):
+    PUBLIC_READ = 0
+    LOCAL_READ = 1
+    LOCAL_WRITE = 2
+    OUTBOUND_COMM = 3
+    SYSTEM_MODIFY = 4
+    IRREVERSIBLE_OP = 5</code></pre>
+</details>
+<div class="desc"><p>int([x]) -&gt; integer
+int(x, base=10) -&gt; integer</p>
+<p>Convert a number or string to an integer, or return 0 if no arguments
+are given.
+If x is a number, return x.<strong>int</strong>().
+For floating point
+numbers, this truncates towards zero.</p>
+<p>If x is not a number or if base is given, then x must be a string,
+bytes, or bytearray instance representing an integer literal in the
+given base.
+The literal can be preceded by '+' or '-' and be surrounded
+by whitespace.
+The base defaults to 10.
+Valid bases are 0 and 2-36.
+Base 0 means to interpret the base from the string as an integer literal.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; int('0b100', base=0)
+4
+</code></pre></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.constants.PrivilegeLevel.IRREVERSIBLE_OP"><code class="name">var <span class="ident">IRREVERSIBLE_OP</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.PrivilegeLevel.LOCAL_READ"><code class="name">var <span class="ident">LOCAL_READ</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.PrivilegeLevel.LOCAL_WRITE"><code class="name">var <span class="ident">LOCAL_WRITE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.PrivilegeLevel.OUTBOUND_COMM"><code class="name">var <span class="ident">OUTBOUND_COMM</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.PrivilegeLevel.PUBLIC_READ"><code class="name">var <span class="ident">PUBLIC_READ</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.PrivilegeLevel.SYSTEM_MODIFY"><code class="name">var <span class="ident">SYSTEM_MODIFY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.constants.SearchMode"><code class="flex name class">
+<span>class <span class="ident">SearchMode</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SearchMode(str, Enum):
+    KEYWORD = &#34;keyword&#34;
+    SEMANTIC = &#34;semantic&#34;
+    HYBRID = &#34;hybrid&#34;
+    RESEARCH = &#34;research&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.constants.SearchMode.HYBRID"><code class="name">var <span class="ident">HYBRID</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.SearchMode.KEYWORD"><code class="name">var <span class="ident">KEYWORD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.SearchMode.RESEARCH"><code class="name">var <span class="ident">RESEARCH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.SearchMode.SEMANTIC"><code class="name">var <span class="ident">SEMANTIC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.constants.TaskStatus"><code class="flex name class">
+<span>class <span class="ident">TaskStatus</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskStatus(str, Enum):
+    NEW = &#34;NEW&#34;
+    TRIAGED = &#34;TRIAGED&#34;
+    PLANNED = &#34;PLANNED&#34;
+    POLICY_CHECK = &#34;POLICY_CHECK&#34;
+    QUEUED = &#34;QUEUED&#34;
+    RUNNING = &#34;RUNNING&#34;
+    VERIFYING = &#34;VERIFYING&#34;
+    COMPLETED = &#34;COMPLETED&#34;
+    AWAITING_APPROVAL = &#34;AWAITING_APPROVAL&#34;
+    AWAITING_LOGIN = &#34;AWAITING_LOGIN&#34;
+    DEVICE_OFFLINE = &#34;DEVICE_OFFLINE&#34;
+    LIMIT_REACHED = &#34;LIMIT_REACHED&#34;
+    FAILED_RECOVERABLE = &#34;FAILED_RECOVERABLE&#34;
+    FAILED_TERMINAL = &#34;FAILED_TERMINAL&#34;
+    CANCELLED = &#34;CANCELLED&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.constants.TaskStatus.AWAITING_APPROVAL"><code class="name">var <span class="ident">AWAITING_APPROVAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.AWAITING_LOGIN"><code class="name">var <span class="ident">AWAITING_LOGIN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.CANCELLED"><code class="name">var <span class="ident">CANCELLED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.COMPLETED"><code class="name">var <span class="ident">COMPLETED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.DEVICE_OFFLINE"><code class="name">var <span class="ident">DEVICE_OFFLINE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.FAILED_RECOVERABLE"><code class="name">var <span class="ident">FAILED_RECOVERABLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.FAILED_TERMINAL"><code class="name">var <span class="ident">FAILED_TERMINAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.LIMIT_REACHED"><code class="name">var <span class="ident">LIMIT_REACHED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.NEW"><code class="name">var <span class="ident">NEW</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.PLANNED"><code class="name">var <span class="ident">PLANNED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.POLICY_CHECK"><code class="name">var <span class="ident">POLICY_CHECK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.QUEUED"><code class="name">var <span class="ident">QUEUED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.RUNNING"><code class="name">var <span class="ident">RUNNING</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.TRIAGED"><code class="name">var <span class="ident">TRIAGED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.constants.TaskStatus.VERIFYING"><code class="name">var <span class="ident">VERIFYING</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis" href="index.html">jarvis</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.constants.DocumentSourceType" href="#jarvis.constants.DocumentSourceType">DocumentSourceType</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.constants.DocumentSourceType.BROWSER_PAGE" href="#jarvis.constants.DocumentSourceType.BROWSER_PAGE">BROWSER_PAGE</a></code></li>
+<li><code><a title="jarvis.constants.DocumentSourceType.CHAT_HISTORY" href="#jarvis.constants.DocumentSourceType.CHAT_HISTORY">CHAT_HISTORY</a></code></li>
+<li><code><a title="jarvis.constants.DocumentSourceType.CODE_REPO" href="#jarvis.constants.DocumentSourceType.CODE_REPO">CODE_REPO</a></code></li>
+<li><code><a title="jarvis.constants.DocumentSourceType.DOCUMENT" href="#jarvis.constants.DocumentSourceType.DOCUMENT">DOCUMENT</a></code></li>
+<li><code><a title="jarvis.constants.DocumentSourceType.MARKDOWN_NOTES" href="#jarvis.constants.DocumentSourceType.MARKDOWN_NOTES">MARKDOWN_NOTES</a></code></li>
+<li><code><a title="jarvis.constants.DocumentSourceType.NOTES" href="#jarvis.constants.DocumentSourceType.NOTES">NOTES</a></code></li>
+<li><code><a title="jarvis.constants.DocumentSourceType.PDF" href="#jarvis.constants.DocumentSourceType.PDF">PDF</a></code></li>
+<li><code><a title="jarvis.constants.DocumentSourceType.WEB_CACHE" href="#jarvis.constants.DocumentSourceType.WEB_CACHE">WEB_CACHE</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.constants.ModelTier" href="#jarvis.constants.ModelTier">ModelTier</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.constants.ModelTier.BYPASS" href="#jarvis.constants.ModelTier.BYPASS">BYPASS</a></code></li>
+<li><code><a title="jarvis.constants.ModelTier.TIER_1_LOCAL" href="#jarvis.constants.ModelTier.TIER_1_LOCAL">TIER_1_LOCAL</a></code></li>
+<li><code><a title="jarvis.constants.ModelTier.TIER_2_PRIVATE" href="#jarvis.constants.ModelTier.TIER_2_PRIVATE">TIER_2_PRIVATE</a></code></li>
+<li><code><a title="jarvis.constants.ModelTier.TIER_3_CLOUD" href="#jarvis.constants.ModelTier.TIER_3_CLOUD">TIER_3_CLOUD</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.constants.PolicyTier" href="#jarvis.constants.PolicyTier">PolicyTier</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.constants.PolicyTier.TIER_0_OBSERVE" href="#jarvis.constants.PolicyTier.TIER_0_OBSERVE">TIER_0_OBSERVE</a></code></li>
+<li><code><a title="jarvis.constants.PolicyTier.TIER_1_REVERSIBLE" href="#jarvis.constants.PolicyTier.TIER_1_REVERSIBLE">TIER_1_REVERSIBLE</a></code></li>
+<li><code><a title="jarvis.constants.PolicyTier.TIER_2_EXPLICIT_APPROVAL" href="#jarvis.constants.PolicyTier.TIER_2_EXPLICIT_APPROVAL">TIER_2_EXPLICIT_APPROVAL</a></code></li>
+<li><code><a title="jarvis.constants.PolicyTier.TIER_3_STEP_UP_AUTH" href="#jarvis.constants.PolicyTier.TIER_3_STEP_UP_AUTH">TIER_3_STEP_UP_AUTH</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.constants.PrivilegeLevel" href="#jarvis.constants.PrivilegeLevel">PrivilegeLevel</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.constants.PrivilegeLevel.IRREVERSIBLE_OP" href="#jarvis.constants.PrivilegeLevel.IRREVERSIBLE_OP">IRREVERSIBLE_OP</a></code></li>
+<li><code><a title="jarvis.constants.PrivilegeLevel.LOCAL_READ" href="#jarvis.constants.PrivilegeLevel.LOCAL_READ">LOCAL_READ</a></code></li>
+<li><code><a title="jarvis.constants.PrivilegeLevel.LOCAL_WRITE" href="#jarvis.constants.PrivilegeLevel.LOCAL_WRITE">LOCAL_WRITE</a></code></li>
+<li><code><a title="jarvis.constants.PrivilegeLevel.OUTBOUND_COMM" href="#jarvis.constants.PrivilegeLevel.OUTBOUND_COMM">OUTBOUND_COMM</a></code></li>
+<li><code><a title="jarvis.constants.PrivilegeLevel.PUBLIC_READ" href="#jarvis.constants.PrivilegeLevel.PUBLIC_READ">PUBLIC_READ</a></code></li>
+<li><code><a title="jarvis.constants.PrivilegeLevel.SYSTEM_MODIFY" href="#jarvis.constants.PrivilegeLevel.SYSTEM_MODIFY">SYSTEM_MODIFY</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.constants.SearchMode" href="#jarvis.constants.SearchMode">SearchMode</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.constants.SearchMode.HYBRID" href="#jarvis.constants.SearchMode.HYBRID">HYBRID</a></code></li>
+<li><code><a title="jarvis.constants.SearchMode.KEYWORD" href="#jarvis.constants.SearchMode.KEYWORD">KEYWORD</a></code></li>
+<li><code><a title="jarvis.constants.SearchMode.RESEARCH" href="#jarvis.constants.SearchMode.RESEARCH">RESEARCH</a></code></li>
+<li><code><a title="jarvis.constants.SearchMode.SEMANTIC" href="#jarvis.constants.SearchMode.SEMANTIC">SEMANTIC</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.constants.TaskStatus" href="#jarvis.constants.TaskStatus">TaskStatus</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.constants.TaskStatus.AWAITING_APPROVAL" href="#jarvis.constants.TaskStatus.AWAITING_APPROVAL">AWAITING_APPROVAL</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.AWAITING_LOGIN" href="#jarvis.constants.TaskStatus.AWAITING_LOGIN">AWAITING_LOGIN</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.CANCELLED" href="#jarvis.constants.TaskStatus.CANCELLED">CANCELLED</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.COMPLETED" href="#jarvis.constants.TaskStatus.COMPLETED">COMPLETED</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.DEVICE_OFFLINE" href="#jarvis.constants.TaskStatus.DEVICE_OFFLINE">DEVICE_OFFLINE</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.FAILED_RECOVERABLE" href="#jarvis.constants.TaskStatus.FAILED_RECOVERABLE">FAILED_RECOVERABLE</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.FAILED_TERMINAL" href="#jarvis.constants.TaskStatus.FAILED_TERMINAL">FAILED_TERMINAL</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.LIMIT_REACHED" href="#jarvis.constants.TaskStatus.LIMIT_REACHED">LIMIT_REACHED</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.NEW" href="#jarvis.constants.TaskStatus.NEW">NEW</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.PLANNED" href="#jarvis.constants.TaskStatus.PLANNED">PLANNED</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.POLICY_CHECK" href="#jarvis.constants.TaskStatus.POLICY_CHECK">POLICY_CHECK</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.QUEUED" href="#jarvis.constants.TaskStatus.QUEUED">QUEUED</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.RUNNING" href="#jarvis.constants.TaskStatus.RUNNING">RUNNING</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.TRIAGED" href="#jarvis.constants.TaskStatus.TRIAGED">TRIAGED</a></code></li>
+<li><code><a title="jarvis.constants.TaskStatus.VERIFYING" href="#jarvis.constants.TaskStatus.VERIFYING">VERIFYING</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.orchestrator API documentation</title>
+<meta name="description" content="JARVIS Central Orchestration Engine
+Coordinates intent analysis, 3-tier model routing, deterministic policy checks,
+tool execution, and cryptographic …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.orchestrator</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Central Orchestration Engine
+Coordinates intent analysis, 3-tier model routing, deterministic policy checks,
+tool execution, and cryptographic audit logging.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.orchestrator.JarvisOrchestrator"><code class="flex name class">
+<span>class <span class="ident">JarvisOrchestrator</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class JarvisOrchestrator:
+    def __init__(self):
+        self.router = model_router
+        self.policy = policy_gate
+        self.audit = audit_ledger
+        self.registry = power_registry
+        self.state_machine = state_machine
+        self.store = db_store
+
+    async def process_user_query(
+        self,
+        query: str,
+        task_id: Optional[str] = None,
+        context: str = &#34;&#34;,
+        sensitivity_level: str = &#34;medium&#34;,
+        approval_token: Optional[str] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        End-to-End Orchestration Loop:
+        1. Initialize Task State (NEW)
+        2. Triage &amp; Route via 3-Tier Model Router (TRIAGED)
+        3. Deterministic Policy Check (POLICY_CHECK)
+        4. Execute Worker / LLM Reasoning (RUNNING)
+        5. Verify Outcome (VERIFYING)
+        6. Cryptographic Audit Log &amp; State Completion (COMPLETED)
+        &#34;&#34;&#34;
+        task_id = task_id or f&#34;tsk_{uuid.uuid4().hex[:10]}&#34;
+        self.state_machine.create_task(task_id, &#34;NEW&#34;)
+        self.store.save_task(task_id, title=query[:80], status=&#34;NEW&#34;, inputs={&#34;query&#34;: query})
+
+        start_time = time.time()
+
+        # Step 1: Model Routing &amp; Intent Triage
+        routing_req = RoutingRequest(
+            task_id=task_id, user_intent=query, sensitivity_level=sensitivity_level, attached_context=context
+        )
+        decision = self.router.route(routing_req)
+        self.state_machine.transition(task_id, &#34;TRIAGED&#34;, reason=f&#34;Routed to {decision.tier} ({decision.provider})&#34;)
+
+        # Step 2: Policy &amp; Approval Gate
+        self.state_machine.transition(task_id, &#34;POLICY_CHECK&#34;, reason=&#34;Evaluating policy gate rules&#34;)
+        privilege_level = 0 if decision.tier == &#34;BYPASS&#34; else (1 if decision.tier == &#34;TIER_1_LOCAL&#34; else 2)
+        policy_allowed, policy_msg, pending_approval = self.policy.evaluate_execution(
+            task_id=task_id,
+            power_id=decision.selected_model,
+            privilege_level=privilege_level,
+            payload={&#34;query&#34;: query, &#34;model&#34;: decision.selected_model},
+            approval_token=approval_token,
+        )
+
+        if not policy_allowed:
+            self.state_machine.transition(task_id, &#34;REJECTED&#34;, reason=policy_msg)
+            self.store.save_task(
+                task_id,
+                title=query[:80],
+                status=&#34;REJECTED&#34;,
+                power_id=&#34;policy_gate&#34;,
+                inputs={&#34;query&#34;: query},
+                outputs={&#34;reason&#34;: policy_msg},
+            )
+            self.audit.log_event(
+                event_type=&#34;POLICY_REJECT&#34;,
+                task_id=task_id,
+                power_id=&#34;policy_gate&#34;,
+                status=&#34;REJECTED&#34;,
+                inputs={&#34;query&#34;: query},
+                outputs={&#34;reason&#34;: policy_msg, &#34;pending_approval&#34;: pending_approval},
+            )
+            return {
+                &#34;task_id&#34;: task_id,
+                &#34;status&#34;: &#34;REJECTED&#34;,
+                &#34;message&#34;: policy_msg,
+                &#34;pending_approval&#34;: pending_approval,
+                &#34;tier&#34;: decision.tier,
+            }
+
+        # Step 3: Execution Execution lane
+        self.state_machine.transition(task_id, &#34;RUNNING&#34;, reason=&#34;Executing routed operation&#34;)
+
+        execution_result = {}
+
+        # Code and self-improvement tasks dispatch through the multi-agent swarm
+        # (checked before LLM tiers so /code and /upgrade always reach subagents).
+        if query.strip().lower().startswith(&#34;/code&#34;) or &#34;write code&#34; in query.lower() or &#34;generate&#34; in query.lower():
+            from jarvis.powers.multiagent_powers import multiagent_powers
+
+            execution_result = multiagent_powers.orchestrator_dispatch(f&#34;Code: {query}&#34;)
+        elif query.strip().lower().startswith(&#34;/upgrade&#34;) or &#34;self improve&#34; in query.lower():
+            from jarvis.powers.multiagent_powers import multiagent_powers
+
+            execution_result = multiagent_powers.self_upgrade_pipeline()
+        elif decision.tier == &#34;BYPASS&#34;:
+            # Instant command execution
+            execution_result = self._execute_instant_command(query)
+        elif decision.tier in (&#34;TIER_1_LOCAL&#34;, &#34;TIER_2_PRIVATE&#34;, &#34;TIER_3_CLOUD&#34;):
+            # Unified LiteLLM inference execution across local and cloud tiers
+            full_prompt = (
+                f&#34;Source Context:\n{decision.redacted_context}\n\nUser Question: {query}\n&#34;
+                &#34;Instruction: Answer strictly based on the source context provided. &#34;
+                &#34;Identify the source file. If information is not in the source, state so honestly without inventing facts.&#34;
+                if decision.redacted_context
+                else query
+            )
+            execution_result = self.router.execute_inference(
+                decision=decision,
+                prompt=full_prompt,
+            )
+        else:
+            execution_result = {&#34;note&#34;: &#34;No matching execution path, returning empty result&#34;}
+
+        # Step 4: Verification &amp; Completion (Honest State)
+        is_failed = execution_result.get(&#34;status&#34;) in (&#34;unavailable&#34;, &#34;error&#34;, &#34;failed&#34;) or bool(
+            execution_result.get(&#34;error&#34;)
+        )
+        final_state = &#34;FAILED&#34; if is_failed else &#34;COMPLETED&#34;
+
+        self.state_machine.transition(task_id, &#34;VERIFYING&#34;, reason=&#34;Validating execution receipts&#34;)
+        self.state_machine.transition(
+            task_id,
+            final_state,
+            reason=&#34;Execution failed: &#34; + str(execution_result.get(&#34;error&#34;, &#34;unavailable&#34;))
+            if is_failed
+            else &#34;Task finished successfully&#34;,
+        )
+        self.store.save_task(
+            task_id,
+            title=query[:80],
+            status=final_state,
+            power_id=decision.selected_model,
+            inputs={&#34;query&#34;: query},
+            outputs=execution_result,
+        )
+
+        # Step 5: Cryptographic Audit Logging
+        self.audit.log_event(
+            event_type=&#34;TASK_&#34; + final_state,
+            task_id=task_id,
+            power_id=decision.selected_model,
+            status=&#34;FAILURE&#34; if is_failed else &#34;SUCCESS&#34;,
+            inputs={&#34;query&#34;: query, &#34;tier&#34;: decision.tier},
+            outputs=execution_result,
+            details={&#34;cost_usd&#34;: decision.estimated_cost_usd, &#34;duration_ms&#34;: (time.time() - start_time) * 1000},
+        )
+
+        return {
+            &#34;task_id&#34;: task_id,
+            &#34;status&#34;: final_state,
+            &#34;tier&#34;: decision.tier,
+            &#34;provider&#34;: decision.provider,
+            &#34;model&#34;: decision.selected_model,
+            &#34;response&#34;: execution_result,
+            &#34;routing_reason&#34;: decision.reason,
+            &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+        }
+
+    def _execute_instant_command(self, query: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Executes instant OS commands with zero LLM overhead.&#34;&#34;&#34;
+        cleaned = query.strip().lower()
+
+        if &#34;health&#34; in cleaned or &#34;telemetry&#34; in cleaned:
+            import psutil
+
+            return {
+                &#34;type&#34;: &#34;telemetry&#34;,
+                &#34;cpu_percent&#34;: psutil.cpu_percent(interval=None),
+                &#34;ram_percent&#34;: psutil.virtual_memory().percent,
+                &#34;disk_percent&#34;: psutil.disk_usage(settings.disk_mount_path).percent
+                if hasattr(psutil, &#34;disk_usage&#34;)
+                else 0.0,
+                &#34;message&#34;: &#34;System health metrics retrieved immediately.&#34;,
+            }
+        elif &#34;screenshot&#34; in cleaned:
+            return {
+                &#34;type&#34;: &#34;screenshot&#34;,
+                &#34;status&#34;: &#34;captured&#34;,
+                &#34;file&#34;: str(settings.screenshot_dir / &#34;latest_screen.png&#34;),
+                &#34;message&#34;: &#34;Screen capture executed immediately.&#34;,
+            }
+        elif &#34;lock&#34; in cleaned:
+            return {
+                &#34;type&#34;: &#34;system_control&#34;,
+                &#34;status&#34;: &#34;dispatched&#34;,
+                &#34;action&#34;: &#34;lock_workstation&#34;,
+                &#34;message&#34;: &#34;Workstation lock requested.&#34;,
+            }
+        elif any(
+            k in cleaned
+            for k in [
+                &#34;ac&#34;,
+                &#34;air condition&#34;,
+                &#34;projector&#34;,
+                &#34;geyser&#34;,
+                &#34;light&#34;,
+                &#34;lamp&#34;,
+                &#34;movie night&#34;,
+                &#34;work mode&#34;,
+                &#34;sleep mode&#34;,
+                &#34;morning wake&#34;,
+            ]
+        ):
+            from jarvis.powers.smart_home_powers import smart_home_powers
+
+            res = smart_home_powers.process_voice_command(query)
+            if res.get(&#34;status&#34;) != &#34;unhandled&#34;:
+                return {
+                    &#34;type&#34;: &#34;smart_home&#34;,
+                    &#34;power_id&#34;: res.get(&#34;power_id&#34;),
+                    &#34;status&#34;: &#34;executed&#34;,
+                    &#34;message&#34;: res.get(&#34;feedback&#34;, &#34;Smart home action completed.&#34;),
+                    &#34;details&#34;: res,
+                }
+        elif &#34;opportunity radar&#34; in cleaned or &#34;career radar&#34; in cleaned or &#34;leads&#34; in cleaned:
+            from jarvis.routines.ops_workflows import opportunity_radar
+
+            return opportunity_radar.run()
+        elif &#34;daily pulse&#34; in cleaned or &#34;system pulse&#34; in cleaned:
+            from jarvis.routines.ops_workflows import daily_system_pulse
+
+            return daily_system_pulse.run()
+        elif &#34;weekly sweep&#34; in cleaned:
+            from jarvis.routines.ops_workflows import weekly_ops_sweep
+
+            return weekly_ops_sweep.run()
+        elif any(
+            k in cleaned
+            for k in [&#34;gmail&#34;, &#34;email&#34;, &#34;inbox&#34;, &#34;check mail&#34;, &#34;check emails&#34;, &#34;missed mail&#34;, &#34;opportunities&#34;]
+        ):
+            from jarvis.powers.email_powers import email_powers
+
+            res = email_powers.scan_inbox_for_opportunities()
+            summary_lines = [
+                f&#34;Scanned inbox for {res[&#39;account&#39;]}: Found {res[&#39;opportunities_found&#39;]} opportunities ({res[&#39;urgent_count&#39;]} urgent):&#34;
+            ]
+            for idx, item in enumerate(res[&#34;opportunities&#34;], 1):
+                summary_lines.append(f&#34;{idx}. [{item[&#39;category&#39;]}] {item[&#39;subject&#39;]} ({item[&#39;from&#39;]})&#34;)
+                summary_lines.append(f&#34;   Action: {item[&#39;recommended_action&#39;]}&#34;)
+
+            return {
+                &#34;type&#34;: &#34;email_triage&#34;,
+                &#34;power_id&#34;: &#34;PWR-191&#34;,
+                &#34;status&#34;: &#34;completed&#34;,
+                &#34;message&#34;: &#34;\n&#34;.join(summary_lines),
+                &#34;details&#34;: res,
+            }
+        elif cleaned.startswith(&#34;read file &#34;) or cleaned.startswith(&#34;cat &#34;):
+            from jarvis.powers.file_powers import file_powers
+
+            fp = cleaned.replace(&#34;read file&#34;, &#34;&#34;).replace(&#34;cat&#34;, &#34;&#34;).strip()
+            return file_powers.read_file(fp)
+        elif cleaned.startswith(&#34;pwr-&#34;):
+            # Direct power invocation
+            parts = cleaned.split()
+            pid = parts[0].upper()
+            return self.registry.execute_power(pid)
+        elif cleaned.startswith(&#34;ping &#34;):
+            from jarvis.powers.networking_powers import networking_powers
+
+            host = cleaned.replace(&#34;ping&#34;, &#34;&#34;).strip() or &#34;127.0.0.1&#34;
+            return networking_powers.ping(host)
+        elif cleaned.startswith(&#34;speedtest&#34;) or &#34;speed test&#34; in cleaned:
+            from jarvis.powers.networking_powers import networking_powers
+
+            return networking_powers.speed_test_estimate()
+        elif cleaned.startswith(&#34;check internet&#34;):
+            from jarvis.powers.networking_powers import networking_powers
+
+            return networking_powers.check_internet()
+        elif cleaned.startswith(&#34;stock &#34;) or &#34;stock quote&#34; in cleaned:
+            from jarvis.powers.finance_powers import finance_powers
+
+            sym = cleaned.replace(&#34;stock quote&#34;, &#34;&#34;).replace(&#34;stock&#34;, &#34;&#34;).strip() or &#34;NVDA&#34;
+            return finance_powers.pwr_215_stock_watchlist(sym)
+        elif &#34;market briefing&#34; in cleaned:
+            from jarvis.powers.finance_powers import finance_powers
+
+            return finance_powers.pwr_222_market_briefing()
+        elif &#34;portfolio&#34; in cleaned:
+            from jarvis.powers.finance_powers import finance_powers
+
+            return finance_powers.pwr_224_portfolio_journal()
+        elif &#34;hud&#34; in cleaned or &#34;mission control&#34; in cleaned:
+            from jarvis.powers.ironman_powers import ironman_powers
+
+            return ironman_powers.mission_control_hud()
+        elif &#34;threat assessment&#34; in cleaned:
+            from jarvis.powers.ironman_powers import ironman_powers
+
+            return ironman_powers.threat_assessment()
+        elif &#34;security posture&#34; in cleaned or &#34;security scan&#34; in cleaned:
+            from jarvis.powers.security_powers import security_powers
+
+            return security_powers.security_posture_report()
+        elif cleaned.startswith(&#34;youtube script &#34;) or cleaned.startswith(&#34;video script &#34;):
+            from jarvis.powers.youtube_powers import youtube_powers
+
+            topic = cleaned.replace(&#34;youtube script&#34;, &#34;&#34;).replace(&#34;video script&#34;, &#34;&#34;).strip() or &#34;AI OS&#34;
+            return youtube_powers.generate_video_script(topic)
+        elif any(w in cleaned for w in [&#34;who are you&#34;, &#34;what can you do&#34;, &#34;help&#34;]):
+            from jarvis.core.model_router import model_router
+
+            return {
+                &#34;type&#34;: &#34;assistant_info&#34;,
+                &#34;message&#34;: model_router._generate_heuristic_response(query),
+            }
+        elif cleaned.startswith(&#34;search &#34;) or &#34;web search&#34; in cleaned:
+            from jarvis.powers.browser_powers import browser_powers
+
+            q = cleaned.replace(&#34;web search&#34;, &#34;&#34;).replace(&#34;search&#34;, &#34;&#34;).strip()
+            return browser_powers.search_web(q or query)
+        elif cleaned.startswith(&#34;research &#34;) or &#34;deep research&#34; in cleaned:
+            from jarvis.powers.browser_powers import browser_powers
+
+            topic = cleaned.replace(&#34;deep research&#34;, &#34;&#34;).replace(&#34;research&#34;, &#34;&#34;).strip()
+            return browser_powers.deep_research(topic or query)
+        elif cleaned.startswith(&#34;read url &#34;) or (cleaned.startswith(&#34;http://&#34;) or cleaned.startswith(&#34;https://&#34;)):
+            from jarvis.powers.browser_powers import browser_powers
+
+            url = query.replace(&#34;read url&#34;, &#34;&#34;).strip()
+            return browser_powers.read_url(url)
+        elif cleaned.startswith(&#34;/job-scan&#34;) or cleaned.startswith(&#34;/career scan&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            parts = query.replace(&#34;/job-scan&#34;, &#34;&#34;).replace(&#34;/career scan&#34;, &#34;&#34;).strip()
+            title = parts or &#34;Principal AI Systems Architect&#34;
+            company = &#34;Target Enterprise&#34;
+            if &#34; at &#34; in parts:
+                title, company = parts.split(&#34; at &#34;, 1)
+            return career_powers.scan_job_listing(
+                job_title=title.strip(),
+                company_name=company.strip(),
+                description=f&#34;Seeking {title} experienced in distributed systems, async python, and search engines.&#34;,
+            )
+        elif cleaned.startswith(&#34;/generate-resume&#34;) or cleaned.startswith(&#34;/career resume&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            parts = query.replace(&#34;/generate-resume&#34;, &#34;&#34;).replace(&#34;/career resume&#34;, &#34;&#34;).strip()
+            title = parts or &#34;Principal Systems Architect&#34;
+            company = &#34;Target Tech&#34;
+            if &#34; at &#34; in parts:
+                title, company = parts.split(&#34; at &#34;, 1)
+            return career_powers.generate_tailored_resume(job_title=title.strip(), company_name=company.strip())
+        elif cleaned.startswith(&#34;/generate-cover&#34;) or cleaned.startswith(&#34;/career cover&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            parts = query.replace(&#34;/generate-cover&#34;, &#34;&#34;).replace(&#34;/career cover&#34;, &#34;&#34;).strip()
+            title = parts or &#34;Lead Engineer&#34;
+            company = &#34;Target Tech&#34;
+            if &#34; at &#34; in parts:
+                title, company = parts.split(&#34; at &#34;, 1)
+            return career_powers.generate_cover_letter(job_title=title.strip(), company_name=company.strip())
+        elif cleaned.startswith(&#34;/company-research&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            company = query.replace(&#34;/company-research&#34;, &#34;&#34;).strip() or &#34;Google&#34;
+            return career_powers.research_company_brief(company_name=company)
+        elif cleaned.startswith(&#34;/find-contact&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            company = query.replace(&#34;/find-contact&#34;, &#34;&#34;).strip() or &#34;OpenAI&#34;
+            return career_powers.find_company_contacts(company_name=company)
+        elif cleaned.startswith(&#34;/draft-email&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            parts = query.replace(&#34;/draft-email&#34;, &#34;&#34;).strip()
+            return career_powers.draft_application_email(
+                recipient_name=&#34;Hiring Team&#34;,
+                company_name=parts or &#34;Acme Corp&#34;,
+                role_title=&#34;Principal Systems Architect&#34;,
+            )
+        elif cleaned.startswith(&#34;/analyze-applications&#34;) or cleaned.startswith(&#34;/pipeline&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            return career_powers.analyze_application_pipeline()
+        elif cleaned.startswith(&#34;/interview-prep&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            parts = query.replace(&#34;/interview-prep&#34;, &#34;&#34;).strip() or &#34;Principal AI Architect at TechCorp&#34;
+            title, company = parts, &#34;TechCorp&#34;
+            if &#34; at &#34; in parts:
+                title, company = parts.split(&#34; at &#34;, 1)
+            return career_powers.interview_prep_and_red_flags(role_title=title.strip(), company_name=company.strip())
+        elif cleaned.startswith(&#34;/red-flags&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            company = query.replace(&#34;/red-flags&#34;, &#34;&#34;).strip() or &#34;Startup Inc&#34;
+            return career_powers.interview_prep_and_red_flags(
+                role_title=&#34;Engineer&#34;,
+                company_name=company,
+                job_description=&#34;Fast-paced environment wearing many hats, rockstar required.&#34;,
+            )
+        elif cleaned.startswith(&#34;/analyze-offer&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            return career_powers.analyze_offer_and_salary_gap(
+                company_name=&#34;InnovateAI&#34;,
+                role_title=&#34;Principal AI Architect&#34;,
+                base_salary=240000.0,
+                bonus=35000.0,
+                equity_annual_val=80000.0,
+            )
+        elif cleaned.startswith(&#34;/career&#34;):
+            from jarvis.powers.career_powers import career_powers
+
+            return career_powers.get_service_status()
+        else:
+            return {
+                &#34;type&#34;: &#34;instant_command&#34;,
+                &#34;status&#34;: &#34;executed&#34;,
+                &#34;command&#34;: cleaned,
+                &#34;message&#34;: f&#34;Instant command &#39;{cleaned}&#39; dispatched.&#34;,
+            }</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.orchestrator.JarvisOrchestrator.process_user_query"><code class="name flex">
+<span>async def <span class="ident">process_user_query</span></span>(<span>self,<br>query: str,<br>task_id: str | None = None,<br>context: str = '',<br>sensitivity_level: str = 'medium',<br>approval_token: str | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def process_user_query(
+    self,
+    query: str,
+    task_id: Optional[str] = None,
+    context: str = &#34;&#34;,
+    sensitivity_level: str = &#34;medium&#34;,
+    approval_token: Optional[str] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    End-to-End Orchestration Loop:
+    1. Initialize Task State (NEW)
+    2. Triage &amp; Route via 3-Tier Model Router (TRIAGED)
+    3. Deterministic Policy Check (POLICY_CHECK)
+    4. Execute Worker / LLM Reasoning (RUNNING)
+    5. Verify Outcome (VERIFYING)
+    6. Cryptographic Audit Log &amp; State Completion (COMPLETED)
+    &#34;&#34;&#34;
+    task_id = task_id or f&#34;tsk_{uuid.uuid4().hex[:10]}&#34;
+    self.state_machine.create_task(task_id, &#34;NEW&#34;)
+    self.store.save_task(task_id, title=query[:80], status=&#34;NEW&#34;, inputs={&#34;query&#34;: query})
+
+    start_time = time.time()
+
+    # Step 1: Model Routing &amp; Intent Triage
+    routing_req = RoutingRequest(
+        task_id=task_id, user_intent=query, sensitivity_level=sensitivity_level, attached_context=context
+    )
+    decision = self.router.route(routing_req)
+    self.state_machine.transition(task_id, &#34;TRIAGED&#34;, reason=f&#34;Routed to {decision.tier} ({decision.provider})&#34;)
+
+    # Step 2: Policy &amp; Approval Gate
+    self.state_machine.transition(task_id, &#34;POLICY_CHECK&#34;, reason=&#34;Evaluating policy gate rules&#34;)
+    privilege_level = 0 if decision.tier == &#34;BYPASS&#34; else (1 if decision.tier == &#34;TIER_1_LOCAL&#34; else 2)
+    policy_allowed, policy_msg, pending_approval = self.policy.evaluate_execution(
+        task_id=task_id,
+        power_id=decision.selected_model,
+        privilege_level=privilege_level,
+        payload={&#34;query&#34;: query, &#34;model&#34;: decision.selected_model},
+        approval_token=approval_token,
+    )
+
+    if not policy_allowed:
+        self.state_machine.transition(task_id, &#34;REJECTED&#34;, reason=policy_msg)
+        self.store.save_task(
+            task_id,
+            title=query[:80],
+            status=&#34;REJECTED&#34;,
+            power_id=&#34;policy_gate&#34;,
+            inputs={&#34;query&#34;: query},
+            outputs={&#34;reason&#34;: policy_msg},
+        )
+        self.audit.log_event(
+            event_type=&#34;POLICY_REJECT&#34;,
+            task_id=task_id,
+            power_id=&#34;policy_gate&#34;,
+            status=&#34;REJECTED&#34;,
+            inputs={&#34;query&#34;: query},
+            outputs={&#34;reason&#34;: policy_msg, &#34;pending_approval&#34;: pending_approval},
+        )
+        return {
+            &#34;task_id&#34;: task_id,
+            &#34;status&#34;: &#34;REJECTED&#34;,
+            &#34;message&#34;: policy_msg,
+            &#34;pending_approval&#34;: pending_approval,
+            &#34;tier&#34;: decision.tier,
+        }
+
+    # Step 3: Execution Execution lane
+    self.state_machine.transition(task_id, &#34;RUNNING&#34;, reason=&#34;Executing routed operation&#34;)
+
+    execution_result = {}
+
+    # Code and self-improvement tasks dispatch through the multi-agent swarm
+    # (checked before LLM tiers so /code and /upgrade always reach subagents).
+    if query.strip().lower().startswith(&#34;/code&#34;) or &#34;write code&#34; in query.lower() or &#34;generate&#34; in query.lower():
+        from jarvis.powers.multiagent_powers import multiagent_powers
+
+        execution_result = multiagent_powers.orchestrator_dispatch(f&#34;Code: {query}&#34;)
+    elif query.strip().lower().startswith(&#34;/upgrade&#34;) or &#34;self improve&#34; in query.lower():
+        from jarvis.powers.multiagent_powers import multiagent_powers
+
+        execution_result = multiagent_powers.self_upgrade_pipeline()
+    elif decision.tier == &#34;BYPASS&#34;:
+        # Instant command execution
+        execution_result = self._execute_instant_command(query)
+    elif decision.tier in (&#34;TIER_1_LOCAL&#34;, &#34;TIER_2_PRIVATE&#34;, &#34;TIER_3_CLOUD&#34;):
+        # Unified LiteLLM inference execution across local and cloud tiers
+        full_prompt = (
+            f&#34;Source Context:\n{decision.redacted_context}\n\nUser Question: {query}\n&#34;
+            &#34;Instruction: Answer strictly based on the source context provided. &#34;
+            &#34;Identify the source file. If information is not in the source, state so honestly without inventing facts.&#34;
+            if decision.redacted_context
+            else query
+        )
+        execution_result = self.router.execute_inference(
+            decision=decision,
+            prompt=full_prompt,
+        )
+    else:
+        execution_result = {&#34;note&#34;: &#34;No matching execution path, returning empty result&#34;}
+
+    # Step 4: Verification &amp; Completion (Honest State)
+    is_failed = execution_result.get(&#34;status&#34;) in (&#34;unavailable&#34;, &#34;error&#34;, &#34;failed&#34;) or bool(
+        execution_result.get(&#34;error&#34;)
+    )
+    final_state = &#34;FAILED&#34; if is_failed else &#34;COMPLETED&#34;
+
+    self.state_machine.transition(task_id, &#34;VERIFYING&#34;, reason=&#34;Validating execution receipts&#34;)
+    self.state_machine.transition(
+        task_id,
+        final_state,
+        reason=&#34;Execution failed: &#34; + str(execution_result.get(&#34;error&#34;, &#34;unavailable&#34;))
+        if is_failed
+        else &#34;Task finished successfully&#34;,
+    )
+    self.store.save_task(
+        task_id,
+        title=query[:80],
+        status=final_state,
+        power_id=decision.selected_model,
+        inputs={&#34;query&#34;: query},
+        outputs=execution_result,
+    )
+
+    # Step 5: Cryptographic Audit Logging
+    self.audit.log_event(
+        event_type=&#34;TASK_&#34; + final_state,
+        task_id=task_id,
+        power_id=decision.selected_model,
+        status=&#34;FAILURE&#34; if is_failed else &#34;SUCCESS&#34;,
+        inputs={&#34;query&#34;: query, &#34;tier&#34;: decision.tier},
+        outputs=execution_result,
+        details={&#34;cost_usd&#34;: decision.estimated_cost_usd, &#34;duration_ms&#34;: (time.time() - start_time) * 1000},
+    )
+
+    return {
+        &#34;task_id&#34;: task_id,
+        &#34;status&#34;: final_state,
+        &#34;tier&#34;: decision.tier,
+        &#34;provider&#34;: decision.provider,
+        &#34;model&#34;: decision.selected_model,
+        &#34;response&#34;: execution_result,
+        &#34;routing_reason&#34;: decision.reason,
+        &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+    }</code></pre>
+</details>
+<div class="desc"><p>End-to-End Orchestration Loop:
+1. Initialize Task State (NEW)
+2. Triage &amp; Route via 3-Tier Model Router (TRIAGED)
+3. Deterministic Policy Check (POLICY_CHECK)
+4. Execute Worker / LLM Reasoning (RUNNING)
+5. Verify Outcome (VERIFYING)
+6. Cryptographic Audit Log &amp; State Completion (COMPLETED)</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.orchestrator.JarvisOrchestrator" href="#jarvis.core.orchestrator.JarvisOrchestrator">JarvisOrchestrator</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.orchestrator.JarvisOrchestrator.process_user_query" href="#jarvis.core.orchestrator.JarvisOrchestrator.process_user_query">process_user_query</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

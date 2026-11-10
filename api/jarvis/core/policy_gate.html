@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.policy_gate API documentation</title>
+<meta name="description" content="JARVIS Deterministic Policy Gate &amp; Approval Engine
+Enforces deny-by-default access control across Privilege Levels 0 to 5.
+Validates HMAC-SHA256 …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.policy_gate</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Deterministic Policy Gate &amp; Approval Engine
+Enforces deny-by-default access control across Privilege Levels 0 to 5.
+Validates HMAC-SHA256 cryptographic approval tokens bound to payload hashes.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.policy_gate.PolicyGate"><code class="flex name class">
+<span>class <span class="ident">PolicyGate</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PolicyGate:
+    # Privilege Level mappings
+    PRIVILEGE_LEVELS = {
+        0: &#34;PUBLIC_READ&#34;,  # Web search, public docs
+        1: &#34;LOCAL_READ&#34;,  # Reading local files, telemetry
+        2: &#34;LOCAL_WRITE&#34;,  # Writing temp drafts, local notes
+        3: &#34;OUTBOUND_COMM&#34;,  # Sending emails, posting messages
+        4: &#34;SYSTEM_MODIFY&#34;,  # Installing packages, editing configs
+        5: &#34;IRREVERSIBLE_OP&#34;,  # Deleting files, code deploy, financial purchase
+    }
+
+    # Powers that strictly require human cryptographic approval
+    APPROVAL_REQUIRED_POWERS = {
+        # File &amp; System deletions / drops
+        &#34;delete_file&#34;,
+        &#34;drop_table&#34;,
+        &#34;drop_database&#34;,
+        &#34;kill_process&#34;,
+        &#34;format_disk&#34;,
+        &#34;wipe_system&#34;,
+        # Outbound comms
+        &#34;send_email&#34;,
+        &#34;post_tweet&#34;,
+        &#34;submit_form&#34;,
+        &#34;send_chat_message&#34;,
+        # Financial / deployment / lifecycle
+        &#34;purchase_item&#34;,
+        &#34;execute_trade&#34;,
+        &#34;trade_crypto&#34;,
+        &#34;mint_nft&#34;,
+        &#34;deploy_production&#34;,
+        &#34;reboot_host&#34;,
+        &#34;shutdown_host&#34;,
+    }
+
+    CRITICAL_POWERS = {
+        &#34;format_disk&#34;,
+        &#34;drop_database&#34;,
+        &#34;wipe_system&#34;,
+        &#34;reboot_host&#34;,
+        &#34;shutdown_host&#34;,
+        &#34;deploy_production&#34;,
+        &#34;execute_trade&#34;,
+        &#34;trade_crypto&#34;,
+        &#34;mint_nft&#34;,
+    }
+
+    def __init__(self):
+        self.secret_key = settings.jarvis_secret_key.encode(&#34;utf-8&#34;)
+        self.kill_switch_active = False
+        self.pending_approvals: Dict[str, Dict[str, Any]] = {}
+
+    def trigger_kill_switch(self, reason: str = &#34;Manual emergency stop&#34;) -&gt; None:
+        &#34;&#34;&#34;Immediately halts all autonomous execution loops.&#34;&#34;&#34;
+        self.kill_switch_active = True
+
+    def reset_kill_switch(self) -&gt; None:
+        self.kill_switch_active = False
+
+    def is_kill_switch_active(self) -&gt; bool:
+        &#34;&#34;&#34;Returns True if emergency kill switch is activated.&#34;&#34;&#34;
+        return self.kill_switch_active
+
+    def hash_payload(self, payload: Any) -&gt; str:
+        &#34;&#34;&#34;Generates canonical SHA-256 hash of task execution parameters.&#34;&#34;&#34;
+        data_str = str(payload).encode(&#34;utf-8&#34;)
+        return hashlib.sha256(data_str).hexdigest()
+
+    def generate_approval_token(self, task_id: str, power_id: str, payload_hash: str) -&gt; Tuple[str, float]:
+        &#34;&#34;&#34;Creates an HMAC-SHA256 token valid for the configured approval window.&#34;&#34;&#34;
+        expiry = int(time.time() + (settings.approval_token_expiry_minutes * 60))
+        message = f&#34;{task_id}:{power_id}:{payload_hash}:{expiry}&#34;.encode(&#34;utf-8&#34;)
+        signature = hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
+        token = f&#34;{signature}.{expiry}&#34;
+        return token, float(expiry)
+
+    def request_approval(self, power_id: str, task_id: str, action_summary: str, payload: Any) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Generates an approval record and token bound to payload hash.&#34;&#34;&#34;
+        payload_hash = self.hash_payload(payload)
+        token, expires_at = self.generate_approval_token(task_id, power_id, payload_hash)
+        approval_id = f&#34;appr_{uuid.uuid4().hex[:12]}&#34;
+        record = {
+            &#34;id&#34;: approval_id,
+            &#34;approval_id&#34;: approval_id,
+            &#34;task_id&#34;: task_id,
+            &#34;power_id&#34;: power_id,
+            &#34;action_summary&#34;: action_summary,
+            &#34;payload_hash&#34;: payload_hash,
+            &#34;token&#34;: token,
+            &#34;expires_at&#34;: expires_at,
+            &#34;status&#34;: &#34;PENDING&#34;,
+        }
+        self.pending_approvals[approval_id] = record
+        self.pending_approvals[task_id] = record
+        return record
+
+    def verify_token(self, token: str) -&gt; bool:
+        &#34;&#34;&#34;Verifies an HMAC approval token&#39;s signature and expiration.&#34;&#34;&#34;
+        try:
+            sig, expiry_str = token.split(&#34;.&#34;)
+            expiry = int(expiry_str)
+            if time.time() &gt; expiry:
+                return False
+            for appr in self.pending_approvals.values():
+                if appr.get(&#34;token&#34;) == token or appr.get(&#34;id&#34;) == token or appr.get(&#34;approval_id&#34;) == token:
+                    valid, _ = self.verify_approval_token(
+                        appr[&#34;task_id&#34;], appr[&#34;power_id&#34;], appr[&#34;payload_hash&#34;], appr.get(&#34;token&#34;, token)
+                    )
+                    return valid
+            return False
+        except Exception:
+            return False
+
+    def verify_state_approval(
+        self,
+        token: str,
+        task_id: Optional[str] = None,
+        power_id: Optional[str] = None,
+        payload_hash: Optional[str] = None,
+    ) -&gt; Tuple[bool, str]:
+        &#34;&#34;&#34;
+        Comprehensive cryptographic verification of an approval token or approval_id.
+        1. Checks pending_approvals records by token, approval_id, or task_id.
+        2. If candidate parameters (task_id, power_id, payload_hash) are provided, verifies direct HMAC signature.
+        Returns (is_valid, reason).
+        &#34;&#34;&#34;
+        if not token or not isinstance(token, str):
+            return False, &#34;Approval token is missing or empty&#34;
+
+        # 1. Search pending_approvals records
+        for appr in list(self.pending_approvals.values()):
+            if appr.get(&#34;token&#34;) == token or appr.get(&#34;id&#34;) == token or appr.get(&#34;approval_id&#34;) == token:
+                if power_id and appr.get(&#34;power_id&#34;) != power_id:
+                    continue
+                if task_id and appr.get(&#34;task_id&#34;) != task_id:
+                    continue
+                if payload_hash and appr.get(&#34;payload_hash&#34;) != payload_hash:
+                    continue
+                return self.verify_approval_token(
+                    task_id=appr.get(&#34;task_id&#34;, task_id or &#34;&#34;),
+                    power_id=appr.get(&#34;power_id&#34;, power_id or &#34;&#34;),
+                    payload_hash=appr.get(&#34;payload_hash&#34;, payload_hash or &#34;&#34;),
+                    token=appr.get(&#34;token&#34;, token),
+                )
+
+        # 2. Direct HMAC verification if task_id, power_id, and payload_hash are provided
+        if task_id and power_id and payload_hash:
+            return self.verify_approval_token(task_id, power_id, payload_hash, token)
+
+        # 3. Direct verification of token format
+        try:
+            sig, expiry_str = token.split(&#34;.&#34;)
+            expiry = int(expiry_str)
+            if time.time() &gt; expiry:
+                return False, &#34;Approval token has expired&#34;
+            if len(sig) != 64:
+                return False, &#34;Malformed approval token: invalid signature length&#34;
+        except Exception as exc:
+            return False, f&#34;Malformed approval token: {exc}&#34;
+
+        return False, &#34;Approval token not recognized in pending approvals and missing cryptographic anchor&#34;
+
+    def verify_approval_token(self, task_id: str, power_id: str, payload_hash: str, token: str) -&gt; Tuple[bool, str]:
+        &#34;&#34;&#34;Validates the cryptographic HMAC signature and expiration of an approval token.&#34;&#34;&#34;
+        try:
+            sig, expiry_str = token.split(&#34;.&#34;)
+            expiry = int(expiry_str)
+            if time.time() &gt; expiry:
+                return False, &#34;Approval token has expired&#34;
+
+            message = f&#34;{task_id}:{power_id}:{payload_hash}:{expiry}&#34;.encode(&#34;utf-8&#34;)
+            expected_sig = hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
+
+            if hmac.compare_digest(sig, expected_sig):
+                return True, &#34;Approval token valid and verified&#34;
+            return False, &#34;Invalid cryptographic signature on approval token&#34;
+        except Exception as e:
+            return False, f&#34;Malformed approval token: {str(e)}&#34;
+
+    def evaluate_execution(
+        self,
+        task_id: str,
+        power_id: str,
+        privilege_level: int,
+        payload: Dict[str, Any],
+        approval_token: Optional[str] = None,
+    ) -&gt; Tuple[bool, str, Optional[Dict[str, Any]]]:
+        &#34;&#34;&#34;
+        Deterministic Policy Evaluation:
+        1. Check emergency kill switch
+        2. Check privilege level and approval requirements
+        3. Check allow-lists (directories, domains)
+        4. Validate cryptographic approval if needed
+        &#34;&#34;&#34;
+        # 1. Kill Switch Check
+        if self.kill_switch_active:
+            return False, &#34;EXECUTION BLOCKED: Emergency Kill Switch is ACTIVE&#34;, None
+
+        payload_hash = self.hash_payload(payload)
+
+        # 2. Level 0 &amp; 1 (Reads) - Allow if configured
+        if privilege_level &lt;= 1:
+            if not settings.allow_unapproved_reads and privilege_level == 1:
+                return False, &#34;Policy requires read approval in strict isolation mode&#34;, None
+            return True, &#34;Read operation cleared by Policy Gate&#34;, None
+
+        # 3. Check if Power or Privilege Level requires approval
+        needs_approval = (
+            privilege_level &gt;= 3
+            or power_id.lower() in self.APPROVAL_REQUIRED_POWERS
+            or any(danger_kw in power_id.lower() for danger_kw in [&#34;delete&#34;, &#34;drop&#34;, &#34;deploy&#34;, &#34;buy&#34;, &#34;send&#34;, &#34;kill&#34;])
+        )
+
+        if needs_approval:
+            if not approval_token:
+                # Generate a pending approval request
+                token, expiry = self.generate_approval_token(task_id, power_id, payload_hash)
+                approval_req = {
+                    &#34;task_id&#34;: task_id,
+                    &#34;power_id&#34;: power_id,
+                    &#34;payload_hash&#34;: payload_hash,
+                    &#34;token&#34;: token,
+                    &#34;expires_at&#34;: expiry,
+                    &#34;action_summary&#34;: f&#34;Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})&#34;,
+                }
+                self.pending_approvals[task_id] = approval_req
+                return (
+                    False,
+                    f&#34;POLICY REQUIREMENT: Human approval required for {power_id} (Level {privilege_level})&#34;,
+                    approval_req,
+                )
+
+            # Verify token
+            valid, reason = self.verify_approval_token(task_id, power_id, payload_hash, approval_token)
+            if not valid:
+                return False, f&#34;APPROVAL FAILED: {reason}&#34;, None
+
+        # 4. Allow-list Verifications
+        # Directory check
+        target_dir = payload.get(&#34;target_directory&#34;) or payload.get(&#34;directory&#34;) or payload.get(&#34;path&#34;)
+        if target_dir:
+            if not any(target_dir.startswith(allowed) for allowed in settings.allowed_directories):
+                # If strict mode, deny
+                if settings.policy_strict_mode and privilege_level &gt;= 2:
+                    return False, f&#34;SECURITY VIOLATION: Path &#39;{target_dir}&#39; is not within allowed directories&#34;, None
+
+        return True, &#34;Policy Gate approved execution&#34;, None</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.policy_gate.PolicyGate.APPROVAL_REQUIRED_POWERS"><code class="name">var <span class="ident">APPROVAL_REQUIRED_POWERS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.CRITICAL_POWERS"><code class="name">var <span class="ident">CRITICAL_POWERS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.PRIVILEGE_LEVELS"><code class="name">var <span class="ident">PRIVILEGE_LEVELS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.policy_gate.PolicyGate.evaluate_execution"><code class="name flex">
+<span>def <span class="ident">evaluate_execution</span></span>(<span>self,<br>task_id: str,<br>power_id: str,<br>privilege_level: int,<br>payload: Dict[str, Any],<br>approval_token: str | None = None) ‑> Tuple[bool, str, Dict[str, Any] | None]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_execution(
+    self,
+    task_id: str,
+    power_id: str,
+    privilege_level: int,
+    payload: Dict[str, Any],
+    approval_token: Optional[str] = None,
+) -&gt; Tuple[bool, str, Optional[Dict[str, Any]]]:
+    &#34;&#34;&#34;
+    Deterministic Policy Evaluation:
+    1. Check emergency kill switch
+    2. Check privilege level and approval requirements
+    3. Check allow-lists (directories, domains)
+    4. Validate cryptographic approval if needed
+    &#34;&#34;&#34;
+    # 1. Kill Switch Check
+    if self.kill_switch_active:
+        return False, &#34;EXECUTION BLOCKED: Emergency Kill Switch is ACTIVE&#34;, None
+
+    payload_hash = self.hash_payload(payload)
+
+    # 2. Level 0 &amp; 1 (Reads) - Allow if configured
+    if privilege_level &lt;= 1:
+        if not settings.allow_unapproved_reads and privilege_level == 1:
+            return False, &#34;Policy requires read approval in strict isolation mode&#34;, None
+        return True, &#34;Read operation cleared by Policy Gate&#34;, None
+
+    # 3. Check if Power or Privilege Level requires approval
+    needs_approval = (
+        privilege_level &gt;= 3
+        or power_id.lower() in self.APPROVAL_REQUIRED_POWERS
+        or any(danger_kw in power_id.lower() for danger_kw in [&#34;delete&#34;, &#34;drop&#34;, &#34;deploy&#34;, &#34;buy&#34;, &#34;send&#34;, &#34;kill&#34;])
+    )
+
+    if needs_approval:
+        if not approval_token:
+            # Generate a pending approval request
+            token, expiry = self.generate_approval_token(task_id, power_id, payload_hash)
+            approval_req = {
+                &#34;task_id&#34;: task_id,
+                &#34;power_id&#34;: power_id,
+                &#34;payload_hash&#34;: payload_hash,
+                &#34;token&#34;: token,
+                &#34;expires_at&#34;: expiry,
+                &#34;action_summary&#34;: f&#34;Execute {power_id} (Level {privilege_level} - {self.PRIVILEGE_LEVELS.get(privilege_level)})&#34;,
+            }
+            self.pending_approvals[task_id] = approval_req
+            return (
+                False,
+                f&#34;POLICY REQUIREMENT: Human approval required for {power_id} (Level {privilege_level})&#34;,
+                approval_req,
+            )
+
+        # Verify token
+        valid, reason = self.verify_approval_token(task_id, power_id, payload_hash, approval_token)
+        if not valid:
+            return False, f&#34;APPROVAL FAILED: {reason}&#34;, None
+
+    # 4. Allow-list Verifications
+    # Directory check
+    target_dir = payload.get(&#34;target_directory&#34;) or payload.get(&#34;directory&#34;) or payload.get(&#34;path&#34;)
+    if target_dir:
+        if not any(target_dir.startswith(allowed) for allowed in settings.allowed_directories):
+            # If strict mode, deny
+            if settings.policy_strict_mode and privilege_level &gt;= 2:
+                return False, f&#34;SECURITY VIOLATION: Path &#39;{target_dir}&#39; is not within allowed directories&#34;, None
+
+    return True, &#34;Policy Gate approved execution&#34;, None</code></pre>
+</details>
+<div class="desc"><p>Deterministic Policy Evaluation:
+1. Check emergency kill switch
+2. Check privilege level and approval requirements
+3. Check allow-lists (directories, domains)
+4. Validate cryptographic approval if needed</p></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.generate_approval_token"><code class="name flex">
+<span>def <span class="ident">generate_approval_token</span></span>(<span>self, task_id: str, power_id: str, payload_hash: str) ‑> Tuple[str, float]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_approval_token(self, task_id: str, power_id: str, payload_hash: str) -&gt; Tuple[str, float]:
+    &#34;&#34;&#34;Creates an HMAC-SHA256 token valid for the configured approval window.&#34;&#34;&#34;
+    expiry = int(time.time() + (settings.approval_token_expiry_minutes * 60))
+    message = f&#34;{task_id}:{power_id}:{payload_hash}:{expiry}&#34;.encode(&#34;utf-8&#34;)
+    signature = hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
+    token = f&#34;{signature}.{expiry}&#34;
+    return token, float(expiry)</code></pre>
+</details>
+<div class="desc"><p>Creates an HMAC-SHA256 token valid for the configured approval window.</p></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.hash_payload"><code class="name flex">
+<span>def <span class="ident">hash_payload</span></span>(<span>self, payload: Any) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hash_payload(self, payload: Any) -&gt; str:
+    &#34;&#34;&#34;Generates canonical SHA-256 hash of task execution parameters.&#34;&#34;&#34;
+    data_str = str(payload).encode(&#34;utf-8&#34;)
+    return hashlib.sha256(data_str).hexdigest()</code></pre>
+</details>
+<div class="desc"><p>Generates canonical SHA-256 hash of task execution parameters.</p></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.is_kill_switch_active"><code class="name flex">
+<span>def <span class="ident">is_kill_switch_active</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_kill_switch_active(self) -&gt; bool:
+    &#34;&#34;&#34;Returns True if emergency kill switch is activated.&#34;&#34;&#34;
+    return self.kill_switch_active</code></pre>
+</details>
+<div class="desc"><p>Returns True if emergency kill switch is activated.</p></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.request_approval"><code class="name flex">
+<span>def <span class="ident">request_approval</span></span>(<span>self, power_id: str, task_id: str, action_summary: str, payload: Any) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def request_approval(self, power_id: str, task_id: str, action_summary: str, payload: Any) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Generates an approval record and token bound to payload hash.&#34;&#34;&#34;
+    payload_hash = self.hash_payload(payload)
+    token, expires_at = self.generate_approval_token(task_id, power_id, payload_hash)
+    approval_id = f&#34;appr_{uuid.uuid4().hex[:12]}&#34;
+    record = {
+        &#34;id&#34;: approval_id,
+        &#34;approval_id&#34;: approval_id,
+        &#34;task_id&#34;: task_id,
+        &#34;power_id&#34;: power_id,
+        &#34;action_summary&#34;: action_summary,
+        &#34;payload_hash&#34;: payload_hash,
+        &#34;token&#34;: token,
+        &#34;expires_at&#34;: expires_at,
+        &#34;status&#34;: &#34;PENDING&#34;,
+    }
+    self.pending_approvals[approval_id] = record
+    self.pending_approvals[task_id] = record
+    return record</code></pre>
+</details>
+<div class="desc"><p>Generates an approval record and token bound to payload hash.</p></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.reset_kill_switch"><code class="name flex">
+<span>def <span class="ident">reset_kill_switch</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset_kill_switch(self) -&gt; None:
+    self.kill_switch_active = False</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.trigger_kill_switch"><code class="name flex">
+<span>def <span class="ident">trigger_kill_switch</span></span>(<span>self, reason: str = 'Manual emergency stop') ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def trigger_kill_switch(self, reason: str = &#34;Manual emergency stop&#34;) -&gt; None:
+    &#34;&#34;&#34;Immediately halts all autonomous execution loops.&#34;&#34;&#34;
+    self.kill_switch_active = True</code></pre>
+</details>
+<div class="desc"><p>Immediately halts all autonomous execution loops.</p></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.verify_approval_token"><code class="name flex">
+<span>def <span class="ident">verify_approval_token</span></span>(<span>self, task_id: str, power_id: str, payload_hash: str, token: str) ‑> Tuple[bool, str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_approval_token(self, task_id: str, power_id: str, payload_hash: str, token: str) -&gt; Tuple[bool, str]:
+    &#34;&#34;&#34;Validates the cryptographic HMAC signature and expiration of an approval token.&#34;&#34;&#34;
+    try:
+        sig, expiry_str = token.split(&#34;.&#34;)
+        expiry = int(expiry_str)
+        if time.time() &gt; expiry:
+            return False, &#34;Approval token has expired&#34;
+
+        message = f&#34;{task_id}:{power_id}:{payload_hash}:{expiry}&#34;.encode(&#34;utf-8&#34;)
+        expected_sig = hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
+
+        if hmac.compare_digest(sig, expected_sig):
+            return True, &#34;Approval token valid and verified&#34;
+        return False, &#34;Invalid cryptographic signature on approval token&#34;
+    except Exception as e:
+        return False, f&#34;Malformed approval token: {str(e)}&#34;</code></pre>
+</details>
+<div class="desc"><p>Validates the cryptographic HMAC signature and expiration of an approval token.</p></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.verify_state_approval"><code class="name flex">
+<span>def <span class="ident">verify_state_approval</span></span>(<span>self,<br>token: str,<br>task_id: str | None = None,<br>power_id: str | None = None,<br>payload_hash: str | None = None) ‑> Tuple[bool, str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_state_approval(
+    self,
+    token: str,
+    task_id: Optional[str] = None,
+    power_id: Optional[str] = None,
+    payload_hash: Optional[str] = None,
+) -&gt; Tuple[bool, str]:
+    &#34;&#34;&#34;
+    Comprehensive cryptographic verification of an approval token or approval_id.
+    1. Checks pending_approvals records by token, approval_id, or task_id.
+    2. If candidate parameters (task_id, power_id, payload_hash) are provided, verifies direct HMAC signature.
+    Returns (is_valid, reason).
+    &#34;&#34;&#34;
+    if not token or not isinstance(token, str):
+        return False, &#34;Approval token is missing or empty&#34;
+
+    # 1. Search pending_approvals records
+    for appr in list(self.pending_approvals.values()):
+        if appr.get(&#34;token&#34;) == token or appr.get(&#34;id&#34;) == token or appr.get(&#34;approval_id&#34;) == token:
+            if power_id and appr.get(&#34;power_id&#34;) != power_id:
+                continue
+            if task_id and appr.get(&#34;task_id&#34;) != task_id:
+                continue
+            if payload_hash and appr.get(&#34;payload_hash&#34;) != payload_hash:
+                continue
+            return self.verify_approval_token(
+                task_id=appr.get(&#34;task_id&#34;, task_id or &#34;&#34;),
+                power_id=appr.get(&#34;power_id&#34;, power_id or &#34;&#34;),
+                payload_hash=appr.get(&#34;payload_hash&#34;, payload_hash or &#34;&#34;),
+                token=appr.get(&#34;token&#34;, token),
+            )
+
+    # 2. Direct HMAC verification if task_id, power_id, and payload_hash are provided
+    if task_id and power_id and payload_hash:
+        return self.verify_approval_token(task_id, power_id, payload_hash, token)
+
+    # 3. Direct verification of token format
+    try:
+        sig, expiry_str = token.split(&#34;.&#34;)
+        expiry = int(expiry_str)
+        if time.time() &gt; expiry:
+            return False, &#34;Approval token has expired&#34;
+        if len(sig) != 64:
+            return False, &#34;Malformed approval token: invalid signature length&#34;
+    except Exception as exc:
+        return False, f&#34;Malformed approval token: {exc}&#34;
+
+    return False, &#34;Approval token not recognized in pending approvals and missing cryptographic anchor&#34;</code></pre>
+</details>
+<div class="desc"><p>Comprehensive cryptographic verification of an approval token or approval_id.
+1. Checks pending_approvals records by token, approval_id, or task_id.
+2. If candidate parameters (task_id, power_id, payload_hash) are provided, verifies direct HMAC signature.
+Returns (is_valid, reason).</p></div>
+</dd>
+<dt id="jarvis.core.policy_gate.PolicyGate.verify_token"><code class="name flex">
+<span>def <span class="ident">verify_token</span></span>(<span>self, token: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_token(self, token: str) -&gt; bool:
+    &#34;&#34;&#34;Verifies an HMAC approval token&#39;s signature and expiration.&#34;&#34;&#34;
+    try:
+        sig, expiry_str = token.split(&#34;.&#34;)
+        expiry = int(expiry_str)
+        if time.time() &gt; expiry:
+            return False
+        for appr in self.pending_approvals.values():
+            if appr.get(&#34;token&#34;) == token or appr.get(&#34;id&#34;) == token or appr.get(&#34;approval_id&#34;) == token:
+                valid, _ = self.verify_approval_token(
+                    appr[&#34;task_id&#34;], appr[&#34;power_id&#34;], appr[&#34;payload_hash&#34;], appr.get(&#34;token&#34;, token)
+                )
+                return valid
+        return False
+    except Exception:
+        return False</code></pre>
+</details>
+<div class="desc"><p>Verifies an HMAC approval token's signature and expiration.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.policy_gate.PolicyGate" href="#jarvis.core.policy_gate.PolicyGate">PolicyGate</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.APPROVAL_REQUIRED_POWERS" href="#jarvis.core.policy_gate.PolicyGate.APPROVAL_REQUIRED_POWERS">APPROVAL_REQUIRED_POWERS</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.CRITICAL_POWERS" href="#jarvis.core.policy_gate.PolicyGate.CRITICAL_POWERS">CRITICAL_POWERS</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.PRIVILEGE_LEVELS" href="#jarvis.core.policy_gate.PolicyGate.PRIVILEGE_LEVELS">PRIVILEGE_LEVELS</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.evaluate_execution" href="#jarvis.core.policy_gate.PolicyGate.evaluate_execution">evaluate_execution</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.generate_approval_token" href="#jarvis.core.policy_gate.PolicyGate.generate_approval_token">generate_approval_token</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.hash_payload" href="#jarvis.core.policy_gate.PolicyGate.hash_payload">hash_payload</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.is_kill_switch_active" href="#jarvis.core.policy_gate.PolicyGate.is_kill_switch_active">is_kill_switch_active</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.request_approval" href="#jarvis.core.policy_gate.PolicyGate.request_approval">request_approval</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.reset_kill_switch" href="#jarvis.core.policy_gate.PolicyGate.reset_kill_switch">reset_kill_switch</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.trigger_kill_switch" href="#jarvis.core.policy_gate.PolicyGate.trigger_kill_switch">trigger_kill_switch</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.verify_approval_token" href="#jarvis.core.policy_gate.PolicyGate.verify_approval_token">verify_approval_token</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.verify_state_approval" href="#jarvis.core.policy_gate.PolicyGate.verify_state_approval">verify_state_approval</a></code></li>
+<li><code><a title="jarvis.core.policy_gate.PolicyGate.verify_token" href="#jarvis.core.policy_gate.PolicyGate.verify_token">verify_token</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

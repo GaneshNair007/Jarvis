@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.capabilities API documentation</title>
+<meta name="description" content="JARVIS Capabilities Package">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.capabilities</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Capabilities Package</p>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="jarvis.capabilities.models" href="models.html">jarvis.capabilities.models</a></code></dt>
+<dd>
+<div class="desc"><p>Capability Models and Maturity Levels</p>
+<p>Levels
+-----=
+MISSING
+EXPERIMENTAL
+BASIC
+ADVANCED
+ELITE</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.capabilities.registry" href="registry.html">jarvis.capabilities.registry</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Capability Registry
+Tracks runtime capabilities across 5 maturity tiers:
+MISSING, EXPERIMENTAL, BASIC, ADVANCED, ELITE.
+Enforces that …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.capabilities.service" href="service.html">jarvis.capabilities.service</a></code></dt>
+<dd>
+<div class="desc"><p>Capability Service (Database Synchronization Layer)
+Loads capabilities from PostgreSQL database into memory on startup and persists updates.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.capabilities.CapabilityLevel"><code class="flex name class">
+<span>class <span class="ident">CapabilityLevel</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CapabilityLevel(str, Enum):
+    MISSING = &#34;MISSING&#34;
+    EXPERIMENTAL = &#34;EXPERIMENTAL&#34;
+    BASIC = &#34;BASIC&#34;
+    ADVANCED = &#34;ADVANCED&#34;
+    ELITE = &#34;ELITE&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.capabilities.CapabilityLevel.ADVANCED"><code class="name">var <span class="ident">ADVANCED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilityLevel.BASIC"><code class="name">var <span class="ident">BASIC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilityLevel.ELITE"><code class="name">var <span class="ident">ELITE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilityLevel.EXPERIMENTAL"><code class="name">var <span class="ident">EXPERIMENTAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilityLevel.MISSING"><code class="name">var <span class="ident">MISSING</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.capabilities.CapabilityRegistry"><code class="flex name class">
+<span>class <span class="ident">CapabilityRegistry</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CapabilityRegistry:
+    &#34;&#34;&#34;Central catalog of system capabilities, maturity stages, and tool requirements.&#34;&#34;&#34;
+
+    def __init__(self):
+        self._capabilities: Dict[str, CapabilitySchema] = {}
+        self._initialize_core_capabilities()
+
+    def _initialize_core_capabilities(self):
+        core_caps = [
+            CapabilitySchema(
+                name=&#34;task_graph_engine&#34;,
+                level=CapabilityLevel.ELITE,
+                category=&#34;core&#34;,
+                description=&#34;Hierarchical DAG task decomposition, cycle detection, parallel waves.&#34;,
+                required_tools=[&#34;kahn_cycle_detector&#34;, &#34;topological_sorter&#34;],
+                success_rate=1.0,
+            ),
+            CapabilitySchema(
+                name=&#34;ten_layer_security_shield&#34;,
+                level=CapabilityLevel.ELITE,
+                category=&#34;security&#34;,
+                description=&#34;10-layer defense against credential leakage, DPI inspection, DPAPI encryption.&#34;,
+                required_tools=[&#34;dlp_scan&#34;, &#34;entropy_scanner&#34;, &#34;merkle_audit&#34;],
+                success_rate=1.0,
+            ),
+            CapabilitySchema(
+                name=&#34;ast_code_mapper&#34;,
+                level=CapabilityLevel.ADVANCED,
+                category=&#34;engineering&#34;,
+                description=&#34;Parses Python repository AST, extracts classes and methods, builds call graph.&#34;,
+                required_tools=[&#34;ast_mapper&#34;],
+                success_rate=0.98,
+            ),
+            CapabilitySchema(
+                name=&#34;multi_account_rotator&#34;,
+                level=CapabilityLevel.ADVANCED,
+                category=&#34;infrastructure&#34;,
+                description=&#34;Automated key rotation across Gemini Pro/Flash with 429 exponential backoff.&#34;,
+                required_tools=[&#34;api_rotator&#34;],
+                success_rate=0.99,
+            ),
+            CapabilitySchema(
+                name=&#34;openmaus_grok_engine&#34;,
+                level=CapabilityLevel.ADVANCED,
+                category=&#34;intelligence&#34;,
+                description=&#34;OpenMaus multi-persona Grok engine harness with inline permission broker.&#34;,
+                required_tools=[&#34;deep_reasoner&#34;],
+                success_rate=0.97,
+            ),
+            CapabilitySchema(
+                name=&#34;desktop_ui_tars_grounding&#34;,
+                level=CapabilityLevel.BASIC,
+                category=&#34;desktop&#34;,
+                description=&#34;Normalized 0-1000 coordinate grounding for visual element localization.&#34;,
+                required_tools=[&#34;ui_tars_grounding&#34;],
+                success_rate=0.85,
+            ),
+            CapabilitySchema(
+                name=&#34;kokoro_tts_edge&#34;,
+                level=CapabilityLevel.BASIC,
+                category=&#34;voice&#34;,
+                description=&#34;Ultra-low latency local neural speech synthesis (&lt;300ms) on RTX 4050.&#34;,
+                required_tools=[&#34;kokoro_tts&#34;],
+                success_rate=0.90,
+            ),
+            CapabilitySchema(
+                name=&#34;autonomous_self_repair&#34;,
+                level=CapabilityLevel.MISSING,
+                category=&#34;engineering&#34;,
+                description=&#34;Autonomous detection and pull-request patch authoring for production bugs.&#34;,
+                required_tools=[&#34;backlog_service&#34;, &#34;git_cli&#34;],
+                success_rate=0.0,
+            ),
+        ]
+        for cap in core_caps:
+            self._capabilities[cap.name] = cap
+
+    def register_capability(
+        self,
+        name: str,
+        level: CapabilityLevel | str = CapabilityLevel.EXPERIMENTAL,
+        category: str = &#34;general&#34;,
+        description: str = &#34;&#34;,
+        required_tools: Optional[List[str]] = None,
+        success_rate: float = 1.0,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -&gt; CapabilitySchema:
+        &#34;&#34;&#34;Registers a new capability into the system catalog.&#34;&#34;&#34;
+        if isinstance(level, str):
+            level = CapabilityLevel(level.upper())
+
+        cap = CapabilitySchema(
+            name=name,
+            level=level,
+            category=category,
+            description=description,
+            required_tools=required_tools or [],
+            success_rate=success_rate,
+            metadata=metadata or {},
+        )
+        self._capabilities[name] = cap
+        logger.info(f&#34;Registered capability &#39;{name}&#39; at level [{level.value}].&#34;)
+        return cap
+
+    def update_capability(
+        self,
+        name: str,
+        level: Optional[CapabilityLevel | str] = None,
+        success_rate: Optional[float] = None,
+        description: Optional[str] = None,
+    ) -&gt; Optional[CapabilitySchema]:
+        &#34;&#34;&#34;Updates maturity level or telemetry for an existing capability.&#34;&#34;&#34;
+        cap = self._capabilities.get(name)
+        if not cap:
+            logger.warning(f&#34;Capability &#39;{name}&#39; not found for update.&#34;)
+            return None
+
+        if level is not None:
+            if isinstance(level, str):
+                level = CapabilityLevel(level.upper())
+            cap.level = level
+
+        if success_rate is not None:
+            cap.success_rate = max(0.0, min(1.0, round(success_rate, 3)))
+
+        if description is not None:
+            cap.description = description
+
+        cap.updated_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        logger.info(f&#34;Updated capability &#39;{name}&#39; -&gt; Level={cap.level.value}, SuccessRate={cap.success_rate}.&#34;)
+        return cap
+
+    def list_capabilities(
+        self,
+        level: Optional[CapabilityLevel | str] = None,
+        category: Optional[str] = None,
+    ) -&gt; List[CapabilitySchema]:
+        &#34;&#34;&#34;Lists registered capabilities with optional filtering.&#34;&#34;&#34;
+        caps = list(self._capabilities.values())
+        if level:
+            target_level = level.value if isinstance(level, CapabilityLevel) else level.upper()
+            caps = [c for c in caps if c.level.value == target_level]
+        if category:
+            caps = [c for c in caps if c.category.lower() == category.lower()]
+        return caps
+
+    def find_missing_capabilities(self) -&gt; List[CapabilitySchema]:
+        &#34;&#34;&#34;Identifies capabilities currently flagged as MISSING.&#34;&#34;&#34;
+        return [c for c in self._capabilities.values() if c.level == CapabilityLevel.MISSING]
+
+    def has_capability(self, name: str, minimum_level: CapabilityLevel = CapabilityLevel.BASIC) -&gt; bool:
+        &#34;&#34;&#34;Checks if a capability exists and meets the minimum maturity threshold.&#34;&#34;&#34;
+        cap = self._capabilities.get(name)
+        if not cap or cap.level == CapabilityLevel.MISSING:
+            return False
+
+        tier_order = [
+            CapabilityLevel.MISSING,
+            CapabilityLevel.EXPERIMENTAL,
+            CapabilityLevel.BASIC,
+            CapabilityLevel.ADVANCED,
+            CapabilityLevel.ELITE,
+        ]
+        return tier_order.index(cap.level) &gt;= tier_order.index(minimum_level)</code></pre>
+</details>
+<div class="desc"><p>Central catalog of system capabilities, maturity stages, and tool requirements.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.capabilities.CapabilityRegistry.find_missing_capabilities"><code class="name flex">
+<span>def <span class="ident">find_missing_capabilities</span></span>(<span>self) ‑> List[<a title="jarvis.capabilities.models.CapabilitySchema" href="models.html#jarvis.capabilities.models.CapabilitySchema">CapabilitySchema</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def find_missing_capabilities(self) -&gt; List[CapabilitySchema]:
+    &#34;&#34;&#34;Identifies capabilities currently flagged as MISSING.&#34;&#34;&#34;
+    return [c for c in self._capabilities.values() if c.level == CapabilityLevel.MISSING]</code></pre>
+</details>
+<div class="desc"><p>Identifies capabilities currently flagged as MISSING.</p></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilityRegistry.has_capability"><code class="name flex">
+<span>def <span class="ident">has_capability</span></span>(<span>self,<br>name: str,<br>minimum_level: <a title="jarvis.capabilities.CapabilityLevel" href="#jarvis.capabilities.CapabilityLevel">CapabilityLevel</a> = CapabilityLevel.BASIC) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def has_capability(self, name: str, minimum_level: CapabilityLevel = CapabilityLevel.BASIC) -&gt; bool:
+    &#34;&#34;&#34;Checks if a capability exists and meets the minimum maturity threshold.&#34;&#34;&#34;
+    cap = self._capabilities.get(name)
+    if not cap or cap.level == CapabilityLevel.MISSING:
+        return False
+
+    tier_order = [
+        CapabilityLevel.MISSING,
+        CapabilityLevel.EXPERIMENTAL,
+        CapabilityLevel.BASIC,
+        CapabilityLevel.ADVANCED,
+        CapabilityLevel.ELITE,
+    ]
+    return tier_order.index(cap.level) &gt;= tier_order.index(minimum_level)</code></pre>
+</details>
+<div class="desc"><p>Checks if a capability exists and meets the minimum maturity threshold.</p></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilityRegistry.list_capabilities"><code class="name flex">
+<span>def <span class="ident">list_capabilities</span></span>(<span>self,<br>level: Optional[<a title="jarvis.capabilities.CapabilityLevel" href="#jarvis.capabilities.CapabilityLevel">CapabilityLevel</a> | str] = None,<br>category: Optional[str] = None) ‑> List[<a title="jarvis.capabilities.models.CapabilitySchema" href="models.html#jarvis.capabilities.models.CapabilitySchema">CapabilitySchema</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_capabilities(
+    self,
+    level: Optional[CapabilityLevel | str] = None,
+    category: Optional[str] = None,
+) -&gt; List[CapabilitySchema]:
+    &#34;&#34;&#34;Lists registered capabilities with optional filtering.&#34;&#34;&#34;
+    caps = list(self._capabilities.values())
+    if level:
+        target_level = level.value if isinstance(level, CapabilityLevel) else level.upper()
+        caps = [c for c in caps if c.level.value == target_level]
+    if category:
+        caps = [c for c in caps if c.category.lower() == category.lower()]
+    return caps</code></pre>
+</details>
+<div class="desc"><p>Lists registered capabilities with optional filtering.</p></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilityRegistry.register_capability"><code class="name flex">
+<span>def <span class="ident">register_capability</span></span>(<span>self,<br>name: str,<br>level: <a title="jarvis.capabilities.CapabilityLevel" href="#jarvis.capabilities.CapabilityLevel">CapabilityLevel</a> | str = CapabilityLevel.EXPERIMENTAL,<br>category: str = 'general',<br>description: str = '',<br>required_tools: Optional[List[str]] = None,<br>success_rate: float = 1.0,<br>metadata: Optional[Dict[str, Any]] = None) ‑> <a title="jarvis.capabilities.models.CapabilitySchema" href="models.html#jarvis.capabilities.models.CapabilitySchema">CapabilitySchema</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def register_capability(
+    self,
+    name: str,
+    level: CapabilityLevel | str = CapabilityLevel.EXPERIMENTAL,
+    category: str = &#34;general&#34;,
+    description: str = &#34;&#34;,
+    required_tools: Optional[List[str]] = None,
+    success_rate: float = 1.0,
+    metadata: Optional[Dict[str, Any]] = None,
+) -&gt; CapabilitySchema:
+    &#34;&#34;&#34;Registers a new capability into the system catalog.&#34;&#34;&#34;
+    if isinstance(level, str):
+        level = CapabilityLevel(level.upper())
+
+    cap = CapabilitySchema(
+        name=name,
+        level=level,
+        category=category,
+        description=description,
+        required_tools=required_tools or [],
+        success_rate=success_rate,
+        metadata=metadata or {},
+    )
+    self._capabilities[name] = cap
+    logger.info(f&#34;Registered capability &#39;{name}&#39; at level [{level.value}].&#34;)
+    return cap</code></pre>
+</details>
+<div class="desc"><p>Registers a new capability into the system catalog.</p></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilityRegistry.update_capability"><code class="name flex">
+<span>def <span class="ident">update_capability</span></span>(<span>self,<br>name: str,<br>level: Optional[<a title="jarvis.capabilities.CapabilityLevel" href="#jarvis.capabilities.CapabilityLevel">CapabilityLevel</a> | str] = None,<br>success_rate: Optional[float] = None,<br>description: Optional[str] = None) ‑> <a title="jarvis.capabilities.models.CapabilitySchema" href="models.html#jarvis.capabilities.models.CapabilitySchema">CapabilitySchema</a> | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_capability(
+    self,
+    name: str,
+    level: Optional[CapabilityLevel | str] = None,
+    success_rate: Optional[float] = None,
+    description: Optional[str] = None,
+) -&gt; Optional[CapabilitySchema]:
+    &#34;&#34;&#34;Updates maturity level or telemetry for an existing capability.&#34;&#34;&#34;
+    cap = self._capabilities.get(name)
+    if not cap:
+        logger.warning(f&#34;Capability &#39;{name}&#39; not found for update.&#34;)
+        return None
+
+    if level is not None:
+        if isinstance(level, str):
+            level = CapabilityLevel(level.upper())
+        cap.level = level
+
+    if success_rate is not None:
+        cap.success_rate = max(0.0, min(1.0, round(success_rate, 3)))
+
+    if description is not None:
+        cap.description = description
+
+    cap.updated_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    logger.info(f&#34;Updated capability &#39;{name}&#39; -&gt; Level={cap.level.value}, SuccessRate={cap.success_rate}.&#34;)
+    return cap</code></pre>
+</details>
+<div class="desc"><p>Updates maturity level or telemetry for an existing capability.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema"><code class="flex name class">
+<span>class <span class="ident">CapabilitySchema</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CapabilitySchema(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str = Field(..., description=&#34;Unique capability identifier e.g. &#39;ast_code_mapper&#39;&#34;)
+    level: CapabilityLevel = CapabilityLevel.EXPERIMENTAL
+    category: str = Field(default=&#34;general&#34;, description=&#34;engineering, security, research, operations, career&#34;)
+    description: str = &#34;&#34;
+    required_tools: List[str] = Field(default_factory=list)
+    success_rate: float = 1.0
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+    created_at: str = Field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
+    updated_at: str = Field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.capabilities.CapabilitySchema.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.created_at"><code class="name">var <span class="ident">created_at</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.level"><code class="name">var <span class="ident">level</span> : <a title="jarvis.capabilities.models.CapabilityLevel" href="models.html#jarvis.capabilities.models.CapabilityLevel">CapabilityLevel</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.required_tools"><code class="name">var <span class="ident">required_tools</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.success_rate"><code class="name">var <span class="ident">success_rate</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilitySchema.updated_at"><code class="name">var <span class="ident">updated_at</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.capabilities.CapabilityService"><code class="flex name class">
+<span>class <span class="ident">CapabilityService</span></span>
+<span>(</span><span>registry: Optional[<a title="jarvis.capabilities.CapabilityRegistry" href="#jarvis.capabilities.CapabilityRegistry">CapabilityRegistry</a>] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CapabilityService:
+    &#34;&#34;&#34;Service synchronizing the in-memory registry with persistent database storage.&#34;&#34;&#34;
+
+    def __init__(self, registry: Optional[CapabilityRegistry] = None):
+        self.registry = registry or capability_registry
+
+    def sync_from_database(self, session: Session) -&gt; int:
+        &#34;&#34;&#34;Loads all capabilities from the database into the runtime registry.&#34;&#34;&#34;
+        repo = CapabilityRepository(session)
+        db_caps = repo.list(limit=500)
+        loaded = 0
+        for db_cap in db_caps:
+            try:
+                level_enum = CapabilityLevel(db_cap.level)
+            except ValueError:
+                level_enum = CapabilityLevel.EXPERIMENTAL
+
+            self.registry.register_capability(
+                name=db_cap.name,
+                level=level_enum,
+                category=db_cap.category,
+                description=db_cap.description,
+                required_tools=db_cap.required_tools,
+                success_rate=db_cap.success_rate,
+                metadata=db_cap.metadata_json,
+            )
+            loaded += 1
+        logger.info(f&#34;CapabilityService: Synchronized {loaded} capabilities from database.&#34;)
+        return loaded
+
+    def persist_to_database(self, session: Session, name: str) -&gt; bool:
+        &#34;&#34;&#34;Flushes an in-memory capability to the database.&#34;&#34;&#34;
+        caps = [c for c in self.registry.list_capabilities() if c.name == name]
+        if not caps:
+            return False
+        cap = caps[0]
+        repo = CapabilityRepository(session)
+        repo.upsert_capability(
+            name=cap.name,
+            level=cap.level.value,
+            category=cap.category,
+            description=cap.description,
+            required_tools=cap.required_tools,
+            success_rate=cap.success_rate,
+            metadata_json=cap.metadata,
+        )
+        session.flush()
+        return True</code></pre>
+</details>
+<div class="desc"><p>Service synchronizing the in-memory registry with persistent database storage.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.capabilities.CapabilityService.persist_to_database"><code class="name flex">
+<span>def <span class="ident">persist_to_database</span></span>(<span>self, session: Session, name: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def persist_to_database(self, session: Session, name: str) -&gt; bool:
+    &#34;&#34;&#34;Flushes an in-memory capability to the database.&#34;&#34;&#34;
+    caps = [c for c in self.registry.list_capabilities() if c.name == name]
+    if not caps:
+        return False
+    cap = caps[0]
+    repo = CapabilityRepository(session)
+    repo.upsert_capability(
+        name=cap.name,
+        level=cap.level.value,
+        category=cap.category,
+        description=cap.description,
+        required_tools=cap.required_tools,
+        success_rate=cap.success_rate,
+        metadata_json=cap.metadata,
+    )
+    session.flush()
+    return True</code></pre>
+</details>
+<div class="desc"><p>Flushes an in-memory capability to the database.</p></div>
+</dd>
+<dt id="jarvis.capabilities.CapabilityService.sync_from_database"><code class="name flex">
+<span>def <span class="ident">sync_from_database</span></span>(<span>self, session: Session) ‑> int</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sync_from_database(self, session: Session) -&gt; int:
+    &#34;&#34;&#34;Loads all capabilities from the database into the runtime registry.&#34;&#34;&#34;
+    repo = CapabilityRepository(session)
+    db_caps = repo.list(limit=500)
+    loaded = 0
+    for db_cap in db_caps:
+        try:
+            level_enum = CapabilityLevel(db_cap.level)
+        except ValueError:
+            level_enum = CapabilityLevel.EXPERIMENTAL
+
+        self.registry.register_capability(
+            name=db_cap.name,
+            level=level_enum,
+            category=db_cap.category,
+            description=db_cap.description,
+            required_tools=db_cap.required_tools,
+            success_rate=db_cap.success_rate,
+            metadata=db_cap.metadata_json,
+        )
+        loaded += 1
+    logger.info(f&#34;CapabilityService: Synchronized {loaded} capabilities from database.&#34;)
+    return loaded</code></pre>
+</details>
+<div class="desc"><p>Loads all capabilities from the database into the runtime registry.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis" href="../index.html">jarvis</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="jarvis.capabilities.models" href="models.html">jarvis.capabilities.models</a></code></li>
+<li><code><a title="jarvis.capabilities.registry" href="registry.html">jarvis.capabilities.registry</a></code></li>
+<li><code><a title="jarvis.capabilities.service" href="service.html">jarvis.capabilities.service</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.capabilities.CapabilityLevel" href="#jarvis.capabilities.CapabilityLevel">CapabilityLevel</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.capabilities.CapabilityLevel.ADVANCED" href="#jarvis.capabilities.CapabilityLevel.ADVANCED">ADVANCED</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilityLevel.BASIC" href="#jarvis.capabilities.CapabilityLevel.BASIC">BASIC</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilityLevel.ELITE" href="#jarvis.capabilities.CapabilityLevel.ELITE">ELITE</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilityLevel.EXPERIMENTAL" href="#jarvis.capabilities.CapabilityLevel.EXPERIMENTAL">EXPERIMENTAL</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilityLevel.MISSING" href="#jarvis.capabilities.CapabilityLevel.MISSING">MISSING</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.capabilities.CapabilityRegistry" href="#jarvis.capabilities.CapabilityRegistry">CapabilityRegistry</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.capabilities.CapabilityRegistry.find_missing_capabilities" href="#jarvis.capabilities.CapabilityRegistry.find_missing_capabilities">find_missing_capabilities</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilityRegistry.has_capability" href="#jarvis.capabilities.CapabilityRegistry.has_capability">has_capability</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilityRegistry.list_capabilities" href="#jarvis.capabilities.CapabilityRegistry.list_capabilities">list_capabilities</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilityRegistry.register_capability" href="#jarvis.capabilities.CapabilityRegistry.register_capability">register_capability</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilityRegistry.update_capability" href="#jarvis.capabilities.CapabilityRegistry.update_capability">update_capability</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.capabilities.CapabilitySchema" href="#jarvis.capabilities.CapabilitySchema">CapabilitySchema</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.capabilities.CapabilitySchema.category" href="#jarvis.capabilities.CapabilitySchema.category">category</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.created_at" href="#jarvis.capabilities.CapabilitySchema.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.description" href="#jarvis.capabilities.CapabilitySchema.description">description</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.id" href="#jarvis.capabilities.CapabilitySchema.id">id</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.level" href="#jarvis.capabilities.CapabilitySchema.level">level</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.metadata" href="#jarvis.capabilities.CapabilitySchema.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.model_config" href="#jarvis.capabilities.CapabilitySchema.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.name" href="#jarvis.capabilities.CapabilitySchema.name">name</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.required_tools" href="#jarvis.capabilities.CapabilitySchema.required_tools">required_tools</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.success_rate" href="#jarvis.capabilities.CapabilitySchema.success_rate">success_rate</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilitySchema.updated_at" href="#jarvis.capabilities.CapabilitySchema.updated_at">updated_at</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.capabilities.CapabilityService" href="#jarvis.capabilities.CapabilityService">CapabilityService</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.capabilities.CapabilityService.persist_to_database" href="#jarvis.capabilities.CapabilityService.persist_to_database">persist_to_database</a></code></li>
+<li><code><a title="jarvis.capabilities.CapabilityService.sync_from_database" href="#jarvis.capabilities.CapabilityService.sync_from_database">sync_from_database</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

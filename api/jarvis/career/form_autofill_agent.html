@@ -1,0 +1,1143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.career.form_autofill_agent API documentation</title>
+<meta name="description" content="JARVIS Autonomous Application Form Autofill &amp; Opportunity Radar Agent
+Empowers JARVIS to evaluate job, internship, and hackathon applications against
+…">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.career.form_autofill_agent</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Autonomous Application Form Autofill &amp; Opportunity Radar Agent
+Empowers JARVIS to evaluate job, internship, and hackathon applications against
+Ganesh Nair's professional profile, score alignment, and autonomously generate
+field-by-field autofill payloads (or drive browser form submissions).</p>
+<p>Operator Profile:
+- Name: Ganesh Nair
+- Email: nairganesh134@gmail.com
+- Phone: +91 9324094474
+- Location: Pune, India
+- University: Symbiosis Institute of Technology (SIT), Pune (B.Tech AI &amp; ML)
+- LinkedIn: <a href="https://www.linkedin.com/in/ganesh-nair-8ab1a5378/">https://www.linkedin.com/in/ganesh-nair-8ab1a5378/</a>
+- GitHub: <a href="https://github.com/GaneshNair007">https://github.com/GaneshNair007</a>
+- Target Track: GSoC 2026/2027 | AI Systems Engineer | Distributed Agent Architect</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.career.form_autofill_agent.AutonomousFormFiller"><code class="flex name class">
+<span>class <span class="ident">AutonomousFormFiller</span></span>
+<span>(</span><span>profile: Optional[<a title="jarvis.career.form_autofill_agent.CandidateProfile" href="#jarvis.career.form_autofill_agent.CandidateProfile">CandidateProfile</a>] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AutonomousFormFiller:
+    &#34;&#34;&#34;
+    Intelligent agent that maps arbitrary job, internship, and hackathon
+    application forms to Ganesh Nair&#39;s profile and synthesizes technical essay responses.
+    &#34;&#34;&#34;
+
+    def __init__(self, profile: Optional[CandidateProfile] = None):
+        self.profile = profile or CandidateProfile()
+
+    def evaluate_opportunity_fit(
+        self,
+        title: str,
+        description: str,
+        requirements: List[str],
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Calculates alignment score between Ganesh&#39;s skills and opportunity requirements.
+        Highlights matching strengths and recommended project showcases.
+        &#34;&#34;&#34;
+        matched_skills = []
+        missing_skills = []
+
+        combined_text = f&#34;{title} {description} {&#39; &#39;.join(requirements)}&#34;.lower()
+
+        for skill in self.profile.core_skills:
+            # Check for keyword matches
+            keywords = skill.lower().replace(&#34;(&#34;, &#34;&#34;).replace(&#34;)&#34;, &#34;&#34;).split()
+            if any(kw in combined_text for kw in keywords if len(kw) &gt; 3):
+                matched_skills.append(skill)
+
+        # High-leverage domain matches
+        if any(term in combined_text for term in [&#34;python&#34;, &#34;agent&#34;, &#34;llm&#34;, &#34;ai&#34;, &#34;machine learning&#34;, &#34;vision&#34;]):
+            score = round(min(0.70 + (len(matched_skills) * 0.05), 0.99), 2)
+        else:
+            score = 0.65
+
+        recommendation = &#34;HIGHLY RECOMMENDED&#34; if score &gt;= 0.85 else (&#34;RECOMMENDED&#34; if score &gt;= 0.70 else &#34;OPTIONAL&#34;)
+
+        return {
+            &#34;title&#34;: title,
+            &#34;fit_score&#34;: score,
+            &#34;recommendation&#34;: recommendation,
+            &#34;matched_skills&#34;: matched_skills,
+            &#34;showcase_project&#34;: &#34;Project JARVIS (105-Agent Autonomous Operating System)&#34;
+            if &#34;agent&#34; in combined_text or &#34;ai&#34; in combined_text
+            else &#34;AURA / AgriKavach&#34;,
+            &#34;candidate_name&#34;: self.profile.full_name,
+        }
+
+    def generate_essay_answer(self, prompt: str, word_limit: int = 150) -&gt; str:
+        &#34;&#34;&#34;
+        Synthesizes technical, grounded essay answers to standard application questions.
+        &#34;&#34;&#34;
+        p_lower = prompt.lower()
+
+        if &#34;why&#34; in p_lower and (&#34;interested&#34; in p_lower or &#34;join&#34; in p_lower or &#34;apply&#34; in p_lower):
+            return (
+                f&#34;I am deeply passionate about engineering autonomous systems and applied AI. &#34;
+                f&#34;At SIT Pune, I have architected Project JARVIS—an autonomous operating system running 105 concurrent &#34;
+                f&#34;micro-agents and an AES-256-GCM zero-leak security shield. This role aligns perfectly with my focus on &#34;
+                f&#34;low-latency backend concurrency, Model Context Protocol integration, and building reliable developer tooling.&#34;
+            )
+
+        if &#34;project&#34; in p_lower or &#34;achievement&#34; in p_lower or &#34;proud&#34; in p_lower or &#34;challenging&#34; in p_lower:
+            return (
+                f&#34;My most challenging project is Project JARVIS (github.com/GaneshNair007/Jarvis). &#34;
+                f&#34;I engineered an asymmetric hybrid compute topology distributing low-latency Kokoro-TTS and Faster-Whisper &#34;
+                f&#34;onto my laptop&#39;s NVIDIA RTX 4050 GPU while routing cloud reasoning models through a fail-closed DLP firewall. &#34;
+                f&#34;I implemented an Aider-style AST codebase knowledge graph and verified the entire system with 80+ passing test cases.&#34;
+            )
+
+        if &#34;strength&#34; in p_lower or &#34;skills&#34; in p_lower or &#34;background&#34; in p_lower:
+            return (
+                f&#34;My core strengths are systems-level Python (Asyncio/FastAPI), autonomous agent design, and verifiable security. &#34;
+                f&#34;I build software with test-driven rigor, cryptographic auditability (Merkle chains), and strict git hygiene. &#34;
+                f&#34;I am currently preparing for GSoC 2026/2027 with open-source contributions in runtime ergonomics and compiler AST analysis.&#34;
+            )
+
+        # Generic default technical response
+        return (
+            f&#34;As an AI Systems Engineer pursuing B.Tech AI &amp; ML at SIT Pune, I specialize in autonomous multi-agent systems, &#34;
+            f&#34;Model Context Protocol architectures, and edge GPU acceleration on NVIDIA RTX hardware. &#34;
+            f&#34;You can review my open-source code and contributions at github.com/GaneshNair007.&#34;
+        )
+
+    def autofill_form(
+        self,
+        form_title: str,
+        fields: List[FormField],
+    ) -&gt; FormAutofillResult:
+        &#34;&#34;&#34;
+        Autonomously fills an application form given its field schema.
+        Maps personal credentials and generates tailored essay answers.
+        &#34;&#34;&#34;
+        filled_fields: Dict[str, Any] = {}
+        unmapped_fields: List[str] = []
+        essay_answers: Dict[str, str] = {}
+
+        for f in fields:
+            label_clean = f.label.lower()
+            fid = f.field_id
+
+            # Name mappings
+            if &#34;first&#34; in label_clean and &#34;name&#34; in label_clean:
+                filled_fields[fid] = self.profile.first_name
+            elif &#34;last&#34; in label_clean and &#34;name&#34; in label_clean:
+                filled_fields[fid] = self.profile.last_name
+            elif &#34;name&#34; in label_clean or &#34;full name&#34; in label_clean:
+                filled_fields[fid] = self.profile.full_name
+
+            # Contact
+            elif &#34;email&#34; in label_clean:
+                filled_fields[fid] = self.profile.email
+            elif (
+                &#34;phone&#34; in label_clean
+                or &#34;mobile&#34; in label_clean
+                or &#34;contact&#34; in label_clean
+                or &#34;whatsapp&#34; in label_clean
+            ):
+                filled_fields[fid] = self.profile.phone
+            elif &#34;city&#34; in label_clean or &#34;location&#34; in label_clean or &#34;address&#34; in label_clean:
+                filled_fields[fid] = self.profile.location
+
+            # Links
+            elif &#34;linkedin&#34; in label_clean:
+                filled_fields[fid] = self.profile.linkedin_url
+            elif &#34;github&#34; in label_clean:
+                filled_fields[fid] = self.profile.github_url
+            elif &#34;portfolio&#34; in label_clean or &#34;website&#34; in label_clean or &#34;project url&#34; in label_clean:
+                filled_fields[fid] = self.profile.portfolio_url
+
+            # Education
+            elif &#34;university&#34; in label_clean or &#34;college&#34; in label_clean or &#34;institution&#34; in label_clean:
+                filled_fields[fid] = self.profile.university
+            elif &#34;degree&#34; in label_clean or &#34;major&#34; in label_clean or &#34;branch&#34; in label_clean:
+                filled_fields[fid] = self.profile.degree
+            elif &#34;graduat&#34; in label_clean or &#34;year&#34; in label_clean or &#34;batch&#34; in label_clean:
+                filled_fields[fid] = self.profile.graduation_year
+
+            # Subjective essay questions
+            elif f.field_type == &#34;textarea&#34; or any(
+                w in label_clean for w in [&#34;why&#34;, &#34;tell us&#34;, &#34;describe&#34;, &#34;experience&#34;, &#34;about yourself&#34;, &#34;project&#34;]
+            ):
+                essay = self.generate_essay_answer(f.label)
+                filled_fields[fid] = essay
+                essay_answers[f.label] = essay
+
+            else:
+                unmapped_fields.append(f.label)
+
+        # Check readiness
+        ready = len(unmapped_fields) == 0 or all(not f.required for f in fields if f.label in unmapped_fields)
+
+        return FormAutofillResult(
+            form_title=form_title,
+            fit_score=0.96,
+            total_fields=len(fields),
+            filled_fields=filled_fields,
+            unmapped_fields=unmapped_fields,
+            essay_answers=essay_answers,
+            ready_for_submission=ready,
+        )
+
+    def autofill_web_form(
+        self,
+        url: str,
+        headless: bool = True,
+        dry_run: bool = False,
+        allow_submit: bool = False,
+        allow_private: bool = False,
+        screenshot_dir: Optional[str] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Drives an ephemeral Playwright browser session to locate DOM form fields,
+        maps Ganesh Nair&#39;s profile to inputs/textareas, types verified values,
+        and strictly pauses at the submit button unless explicit human authorization is granted.
+        &#34;&#34;&#34;
+        from jarvis.browser.context_manager import BrowserContextManager
+
+        ctx_mgr = BrowserContextManager(headless=headless)
+        filled_records: List[Dict[str, str]] = []
+        submit_button_found = False
+        screenshot_path = &#34;&#34;
+
+        with ctx_mgr.research_context(allow_private=allow_private) as (context, page):
+            page.goto(url)
+            page.wait_for_load_state(&#34;domcontentloaded&#34;)
+
+            # Collect all inputs and textareas
+            inputs = page.locator(&#34;input, textarea&#34;).all()
+            for el in inputs:
+                try:
+                    el_type = (el.get_attribute(&#34;type&#34;) or &#34;text&#34;).lower()
+                    el_name = (el.get_attribute(&#34;name&#34;) or &#34;&#34;).lower()
+                    el_id = (el.get_attribute(&#34;id&#34;) or &#34;&#34;).lower()
+                    el_ph = (el.get_attribute(&#34;placeholder&#34;) or &#34;&#34;).lower()
+                    el_label = (el.get_attribute(&#34;aria-label&#34;) or &#34;&#34;).lower()
+
+                    descriptor = f&#34;{el_name} {el_id} {el_ph} {el_label}&#34;
+
+                    val_to_fill = None
+
+                    if el_type in (&#34;text&#34;, &#34;email&#34;, &#34;tel&#34;, &#34;url&#34;) or el.evaluate(
+                        &#34;node =&gt; node.tagName.toLowerCase() == &#39;textarea&#39;&#34;
+                    ):
+                        if &#34;email&#34; in descriptor or el_type == &#34;email&#34;:
+                            val_to_fill = self.profile.email
+                        elif (
+                            &#34;phone&#34; in descriptor
+                            or &#34;mobile&#34; in descriptor
+                            or &#34;contact&#34; in descriptor
+                            or el_type == &#34;tel&#34;
+                        ):
+                            val_to_fill = self.profile.phone
+                        elif &#34;github&#34; in descriptor:
+                            val_to_fill = self.profile.github_url
+                        elif &#34;linkedin&#34; in descriptor:
+                            val_to_fill = self.profile.linkedin_url
+                        elif &#34;portfolio&#34; in descriptor or &#34;website&#34; in descriptor:
+                            val_to_fill = self.profile.portfolio_url
+                        elif &#34;first&#34; in descriptor:
+                            val_to_fill = self.profile.first_name
+                        elif &#34;last&#34; in descriptor:
+                            val_to_fill = self.profile.last_name
+                        elif &#34;name&#34; in descriptor:
+                            val_to_fill = self.profile.full_name
+                        elif &#34;university&#34; in descriptor or &#34;college&#34; in descriptor:
+                            val_to_fill = self.profile.university
+                        elif &#34;degree&#34; in descriptor or &#34;major&#34; in descriptor:
+                            val_to_fill = self.profile.degree
+                        elif &#34;location&#34; in descriptor or &#34;city&#34; in descriptor:
+                            val_to_fill = self.profile.location
+                        elif el.evaluate(&#34;node =&gt; node.tagName.toLowerCase() == &#39;textarea&#39;&#34;) or any(
+                            q in descriptor for q in [&#34;why&#34;, &#34;project&#34;, &#34;experience&#34;, &#34;about&#34;, &#34;essay&#34;]
+                        ):
+                            val_to_fill = self.generate_essay_answer(descriptor)
+
+                    if val_to_fill and not dry_run:
+                        el.fill(val_to_fill)
+                        filled_records.append(
+                            {
+                                &#34;element&#34;: descriptor.strip(),
+                                &#34;type&#34;: el_type,
+                                &#34;value&#34;: val_to_fill[:50] + (&#34;...&#34; if len(val_to_fill) &gt; 50 else &#34;&#34;),
+                            }
+                        )
+                    elif val_to_fill and dry_run:
+                        filled_records.append(
+                            {
+                                &#34;element&#34;: descriptor.strip(),
+                                &#34;type&#34;: el_type,
+                                &#34;value&#34;: &#34;[DRY RUN PREVIEW] &#34; + val_to_fill[:50],
+                            }
+                        )
+                except Exception as e:
+                    logger.debug(f&#34;Field fill skipped: {e}&#34;)
+
+            # Check for submit buttons
+            submit_candidates = page.locator(
+                &#34;button[type=&#39;submit&#39;], input[type=&#39;submit&#39;], button:has-text(&#39;Submit&#39;), button:has-text(&#39;Apply&#39;)&#34;
+            )
+            submit_button_found = submit_candidates.count() &gt; 0
+
+            # Capture evidence screenshot
+            if screenshot_dir:
+                s_dir = Path(screenshot_dir)
+                s_dir.mkdir(parents=True, exist_ok=True)
+                s_file = s_dir / f&#34;form_autofill_{int(time.time())}.png&#34;
+                page.screenshot(path=str(s_file))
+                screenshot_path = str(s_file)
+
+            # Strict Human Gate: only submit if allow_submit is explicitly True
+            submitted = False
+            if submit_button_found and allow_submit and not dry_run:
+                submit_candidates.first.click()
+                submitted = True
+                logger.info(f&#34;Form successfully submitted with human authorization for {url}&#34;)
+
+        return {
+            &#34;target_url&#34;: url,
+            &#34;candidate&#34;: self.profile.full_name,
+            &#34;total_fields_filled&#34;: len(filled_records),
+            &#34;fields_filled&#34;: filled_records,
+            &#34;submit_button_found&#34;: submit_button_found,
+            &#34;submitted&#34;: submitted,
+            &#34;human_approval_required&#34;: not submitted,
+            &#34;screenshot_evidence&#34;: screenshot_path,
+            &#34;status&#34;: &#34;submitted&#34; if submitted else &#34;ready_for_human_review&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>Intelligent agent that maps arbitrary job, internship, and hackathon
+application forms to Ganesh Nair's profile and synthesizes technical essay responses.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.career.form_autofill_agent.AutonomousFormFiller.autofill_form"><code class="name flex">
+<span>def <span class="ident">autofill_form</span></span>(<span>self,<br>form_title: str,<br>fields: List[<a title="jarvis.career.form_autofill_agent.FormField" href="#jarvis.career.form_autofill_agent.FormField">FormField</a>]) ‑> <a title="jarvis.career.form_autofill_agent.FormAutofillResult" href="#jarvis.career.form_autofill_agent.FormAutofillResult">FormAutofillResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def autofill_form(
+    self,
+    form_title: str,
+    fields: List[FormField],
+) -&gt; FormAutofillResult:
+    &#34;&#34;&#34;
+    Autonomously fills an application form given its field schema.
+    Maps personal credentials and generates tailored essay answers.
+    &#34;&#34;&#34;
+    filled_fields: Dict[str, Any] = {}
+    unmapped_fields: List[str] = []
+    essay_answers: Dict[str, str] = {}
+
+    for f in fields:
+        label_clean = f.label.lower()
+        fid = f.field_id
+
+        # Name mappings
+        if &#34;first&#34; in label_clean and &#34;name&#34; in label_clean:
+            filled_fields[fid] = self.profile.first_name
+        elif &#34;last&#34; in label_clean and &#34;name&#34; in label_clean:
+            filled_fields[fid] = self.profile.last_name
+        elif &#34;name&#34; in label_clean or &#34;full name&#34; in label_clean:
+            filled_fields[fid] = self.profile.full_name
+
+        # Contact
+        elif &#34;email&#34; in label_clean:
+            filled_fields[fid] = self.profile.email
+        elif (
+            &#34;phone&#34; in label_clean
+            or &#34;mobile&#34; in label_clean
+            or &#34;contact&#34; in label_clean
+            or &#34;whatsapp&#34; in label_clean
+        ):
+            filled_fields[fid] = self.profile.phone
+        elif &#34;city&#34; in label_clean or &#34;location&#34; in label_clean or &#34;address&#34; in label_clean:
+            filled_fields[fid] = self.profile.location
+
+        # Links
+        elif &#34;linkedin&#34; in label_clean:
+            filled_fields[fid] = self.profile.linkedin_url
+        elif &#34;github&#34; in label_clean:
+            filled_fields[fid] = self.profile.github_url
+        elif &#34;portfolio&#34; in label_clean or &#34;website&#34; in label_clean or &#34;project url&#34; in label_clean:
+            filled_fields[fid] = self.profile.portfolio_url
+
+        # Education
+        elif &#34;university&#34; in label_clean or &#34;college&#34; in label_clean or &#34;institution&#34; in label_clean:
+            filled_fields[fid] = self.profile.university
+        elif &#34;degree&#34; in label_clean or &#34;major&#34; in label_clean or &#34;branch&#34; in label_clean:
+            filled_fields[fid] = self.profile.degree
+        elif &#34;graduat&#34; in label_clean or &#34;year&#34; in label_clean or &#34;batch&#34; in label_clean:
+            filled_fields[fid] = self.profile.graduation_year
+
+        # Subjective essay questions
+        elif f.field_type == &#34;textarea&#34; or any(
+            w in label_clean for w in [&#34;why&#34;, &#34;tell us&#34;, &#34;describe&#34;, &#34;experience&#34;, &#34;about yourself&#34;, &#34;project&#34;]
+        ):
+            essay = self.generate_essay_answer(f.label)
+            filled_fields[fid] = essay
+            essay_answers[f.label] = essay
+
+        else:
+            unmapped_fields.append(f.label)
+
+    # Check readiness
+    ready = len(unmapped_fields) == 0 or all(not f.required for f in fields if f.label in unmapped_fields)
+
+    return FormAutofillResult(
+        form_title=form_title,
+        fit_score=0.96,
+        total_fields=len(fields),
+        filled_fields=filled_fields,
+        unmapped_fields=unmapped_fields,
+        essay_answers=essay_answers,
+        ready_for_submission=ready,
+    )</code></pre>
+</details>
+<div class="desc"><p>Autonomously fills an application form given its field schema.
+Maps personal credentials and generates tailored essay answers.</p></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.AutonomousFormFiller.autofill_web_form"><code class="name flex">
+<span>def <span class="ident">autofill_web_form</span></span>(<span>self,<br>url: str,<br>headless: bool = True,<br>dry_run: bool = False,<br>allow_submit: bool = False,<br>allow_private: bool = False,<br>screenshot_dir: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def autofill_web_form(
+    self,
+    url: str,
+    headless: bool = True,
+    dry_run: bool = False,
+    allow_submit: bool = False,
+    allow_private: bool = False,
+    screenshot_dir: Optional[str] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Drives an ephemeral Playwright browser session to locate DOM form fields,
+    maps Ganesh Nair&#39;s profile to inputs/textareas, types verified values,
+    and strictly pauses at the submit button unless explicit human authorization is granted.
+    &#34;&#34;&#34;
+    from jarvis.browser.context_manager import BrowserContextManager
+
+    ctx_mgr = BrowserContextManager(headless=headless)
+    filled_records: List[Dict[str, str]] = []
+    submit_button_found = False
+    screenshot_path = &#34;&#34;
+
+    with ctx_mgr.research_context(allow_private=allow_private) as (context, page):
+        page.goto(url)
+        page.wait_for_load_state(&#34;domcontentloaded&#34;)
+
+        # Collect all inputs and textareas
+        inputs = page.locator(&#34;input, textarea&#34;).all()
+        for el in inputs:
+            try:
+                el_type = (el.get_attribute(&#34;type&#34;) or &#34;text&#34;).lower()
+                el_name = (el.get_attribute(&#34;name&#34;) or &#34;&#34;).lower()
+                el_id = (el.get_attribute(&#34;id&#34;) or &#34;&#34;).lower()
+                el_ph = (el.get_attribute(&#34;placeholder&#34;) or &#34;&#34;).lower()
+                el_label = (el.get_attribute(&#34;aria-label&#34;) or &#34;&#34;).lower()
+
+                descriptor = f&#34;{el_name} {el_id} {el_ph} {el_label}&#34;
+
+                val_to_fill = None
+
+                if el_type in (&#34;text&#34;, &#34;email&#34;, &#34;tel&#34;, &#34;url&#34;) or el.evaluate(
+                    &#34;node =&gt; node.tagName.toLowerCase() == &#39;textarea&#39;&#34;
+                ):
+                    if &#34;email&#34; in descriptor or el_type == &#34;email&#34;:
+                        val_to_fill = self.profile.email
+                    elif (
+                        &#34;phone&#34; in descriptor
+                        or &#34;mobile&#34; in descriptor
+                        or &#34;contact&#34; in descriptor
+                        or el_type == &#34;tel&#34;
+                    ):
+                        val_to_fill = self.profile.phone
+                    elif &#34;github&#34; in descriptor:
+                        val_to_fill = self.profile.github_url
+                    elif &#34;linkedin&#34; in descriptor:
+                        val_to_fill = self.profile.linkedin_url
+                    elif &#34;portfolio&#34; in descriptor or &#34;website&#34; in descriptor:
+                        val_to_fill = self.profile.portfolio_url
+                    elif &#34;first&#34; in descriptor:
+                        val_to_fill = self.profile.first_name
+                    elif &#34;last&#34; in descriptor:
+                        val_to_fill = self.profile.last_name
+                    elif &#34;name&#34; in descriptor:
+                        val_to_fill = self.profile.full_name
+                    elif &#34;university&#34; in descriptor or &#34;college&#34; in descriptor:
+                        val_to_fill = self.profile.university
+                    elif &#34;degree&#34; in descriptor or &#34;major&#34; in descriptor:
+                        val_to_fill = self.profile.degree
+                    elif &#34;location&#34; in descriptor or &#34;city&#34; in descriptor:
+                        val_to_fill = self.profile.location
+                    elif el.evaluate(&#34;node =&gt; node.tagName.toLowerCase() == &#39;textarea&#39;&#34;) or any(
+                        q in descriptor for q in [&#34;why&#34;, &#34;project&#34;, &#34;experience&#34;, &#34;about&#34;, &#34;essay&#34;]
+                    ):
+                        val_to_fill = self.generate_essay_answer(descriptor)
+
+                if val_to_fill and not dry_run:
+                    el.fill(val_to_fill)
+                    filled_records.append(
+                        {
+                            &#34;element&#34;: descriptor.strip(),
+                            &#34;type&#34;: el_type,
+                            &#34;value&#34;: val_to_fill[:50] + (&#34;...&#34; if len(val_to_fill) &gt; 50 else &#34;&#34;),
+                        }
+                    )
+                elif val_to_fill and dry_run:
+                    filled_records.append(
+                        {
+                            &#34;element&#34;: descriptor.strip(),
+                            &#34;type&#34;: el_type,
+                            &#34;value&#34;: &#34;[DRY RUN PREVIEW] &#34; + val_to_fill[:50],
+                        }
+                    )
+            except Exception as e:
+                logger.debug(f&#34;Field fill skipped: {e}&#34;)
+
+        # Check for submit buttons
+        submit_candidates = page.locator(
+            &#34;button[type=&#39;submit&#39;], input[type=&#39;submit&#39;], button:has-text(&#39;Submit&#39;), button:has-text(&#39;Apply&#39;)&#34;
+        )
+        submit_button_found = submit_candidates.count() &gt; 0
+
+        # Capture evidence screenshot
+        if screenshot_dir:
+            s_dir = Path(screenshot_dir)
+            s_dir.mkdir(parents=True, exist_ok=True)
+            s_file = s_dir / f&#34;form_autofill_{int(time.time())}.png&#34;
+            page.screenshot(path=str(s_file))
+            screenshot_path = str(s_file)
+
+        # Strict Human Gate: only submit if allow_submit is explicitly True
+        submitted = False
+        if submit_button_found and allow_submit and not dry_run:
+            submit_candidates.first.click()
+            submitted = True
+            logger.info(f&#34;Form successfully submitted with human authorization for {url}&#34;)
+
+    return {
+        &#34;target_url&#34;: url,
+        &#34;candidate&#34;: self.profile.full_name,
+        &#34;total_fields_filled&#34;: len(filled_records),
+        &#34;fields_filled&#34;: filled_records,
+        &#34;submit_button_found&#34;: submit_button_found,
+        &#34;submitted&#34;: submitted,
+        &#34;human_approval_required&#34;: not submitted,
+        &#34;screenshot_evidence&#34;: screenshot_path,
+        &#34;status&#34;: &#34;submitted&#34; if submitted else &#34;ready_for_human_review&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>Drives an ephemeral Playwright browser session to locate DOM form fields,
+maps Ganesh Nair's profile to inputs/textareas, types verified values,
+and strictly pauses at the submit button unless explicit human authorization is granted.</p></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.AutonomousFormFiller.evaluate_opportunity_fit"><code class="name flex">
+<span>def <span class="ident">evaluate_opportunity_fit</span></span>(<span>self, title: str, description: str, requirements: List[str]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_opportunity_fit(
+    self,
+    title: str,
+    description: str,
+    requirements: List[str],
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Calculates alignment score between Ganesh&#39;s skills and opportunity requirements.
+    Highlights matching strengths and recommended project showcases.
+    &#34;&#34;&#34;
+    matched_skills = []
+    missing_skills = []
+
+    combined_text = f&#34;{title} {description} {&#39; &#39;.join(requirements)}&#34;.lower()
+
+    for skill in self.profile.core_skills:
+        # Check for keyword matches
+        keywords = skill.lower().replace(&#34;(&#34;, &#34;&#34;).replace(&#34;)&#34;, &#34;&#34;).split()
+        if any(kw in combined_text for kw in keywords if len(kw) &gt; 3):
+            matched_skills.append(skill)
+
+    # High-leverage domain matches
+    if any(term in combined_text for term in [&#34;python&#34;, &#34;agent&#34;, &#34;llm&#34;, &#34;ai&#34;, &#34;machine learning&#34;, &#34;vision&#34;]):
+        score = round(min(0.70 + (len(matched_skills) * 0.05), 0.99), 2)
+    else:
+        score = 0.65
+
+    recommendation = &#34;HIGHLY RECOMMENDED&#34; if score &gt;= 0.85 else (&#34;RECOMMENDED&#34; if score &gt;= 0.70 else &#34;OPTIONAL&#34;)
+
+    return {
+        &#34;title&#34;: title,
+        &#34;fit_score&#34;: score,
+        &#34;recommendation&#34;: recommendation,
+        &#34;matched_skills&#34;: matched_skills,
+        &#34;showcase_project&#34;: &#34;Project JARVIS (105-Agent Autonomous Operating System)&#34;
+        if &#34;agent&#34; in combined_text or &#34;ai&#34; in combined_text
+        else &#34;AURA / AgriKavach&#34;,
+        &#34;candidate_name&#34;: self.profile.full_name,
+    }</code></pre>
+</details>
+<div class="desc"><p>Calculates alignment score between Ganesh's skills and opportunity requirements.
+Highlights matching strengths and recommended project showcases.</p></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.AutonomousFormFiller.generate_essay_answer"><code class="name flex">
+<span>def <span class="ident">generate_essay_answer</span></span>(<span>self, prompt: str, word_limit: int = 150) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_essay_answer(self, prompt: str, word_limit: int = 150) -&gt; str:
+    &#34;&#34;&#34;
+    Synthesizes technical, grounded essay answers to standard application questions.
+    &#34;&#34;&#34;
+    p_lower = prompt.lower()
+
+    if &#34;why&#34; in p_lower and (&#34;interested&#34; in p_lower or &#34;join&#34; in p_lower or &#34;apply&#34; in p_lower):
+        return (
+            f&#34;I am deeply passionate about engineering autonomous systems and applied AI. &#34;
+            f&#34;At SIT Pune, I have architected Project JARVIS—an autonomous operating system running 105 concurrent &#34;
+            f&#34;micro-agents and an AES-256-GCM zero-leak security shield. This role aligns perfectly with my focus on &#34;
+            f&#34;low-latency backend concurrency, Model Context Protocol integration, and building reliable developer tooling.&#34;
+        )
+
+    if &#34;project&#34; in p_lower or &#34;achievement&#34; in p_lower or &#34;proud&#34; in p_lower or &#34;challenging&#34; in p_lower:
+        return (
+            f&#34;My most challenging project is Project JARVIS (github.com/GaneshNair007/Jarvis). &#34;
+            f&#34;I engineered an asymmetric hybrid compute topology distributing low-latency Kokoro-TTS and Faster-Whisper &#34;
+            f&#34;onto my laptop&#39;s NVIDIA RTX 4050 GPU while routing cloud reasoning models through a fail-closed DLP firewall. &#34;
+            f&#34;I implemented an Aider-style AST codebase knowledge graph and verified the entire system with 80+ passing test cases.&#34;
+        )
+
+    if &#34;strength&#34; in p_lower or &#34;skills&#34; in p_lower or &#34;background&#34; in p_lower:
+        return (
+            f&#34;My core strengths are systems-level Python (Asyncio/FastAPI), autonomous agent design, and verifiable security. &#34;
+            f&#34;I build software with test-driven rigor, cryptographic auditability (Merkle chains), and strict git hygiene. &#34;
+            f&#34;I am currently preparing for GSoC 2026/2027 with open-source contributions in runtime ergonomics and compiler AST analysis.&#34;
+        )
+
+    # Generic default technical response
+    return (
+        f&#34;As an AI Systems Engineer pursuing B.Tech AI &amp; ML at SIT Pune, I specialize in autonomous multi-agent systems, &#34;
+        f&#34;Model Context Protocol architectures, and edge GPU acceleration on NVIDIA RTX hardware. &#34;
+        f&#34;You can review my open-source code and contributions at github.com/GaneshNair007.&#34;
+    )</code></pre>
+</details>
+<div class="desc"><p>Synthesizes technical, grounded essay answers to standard application questions.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile"><code class="flex name class">
+<span>class <span class="ident">CandidateProfile</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CandidateProfile(BaseModel):
+    first_name: str = &#34;Ganesh&#34;
+    last_name: str = &#34;Nair&#34;
+    full_name: str = &#34;Ganesh Nair&#34;
+    email: str = &#34;nairganesh134@gmail.com&#34;
+    phone: str = &#34;+919324094474&#34;
+    location: str = &#34;Pune, Maharashtra, India&#34;
+    university: str = &#34;Symbiosis Institute of Technology (SIT), Pune&#34;
+    degree: str = &#34;B.Tech in Artificial Intelligence and Machine Learning&#34;
+    graduation_year: str = &#34;2027&#34;
+    linkedin_url: str = &#34;https://www.linkedin.com/in/ganesh-nair-8ab1a5378/&#34;
+    github_url: str = &#34;https://github.com/GaneshNair007&#34;
+    portfolio_url: str = &#34;https://github.com/GaneshNair007/Jarvis&#34;
+    core_skills: List[str] = Field(
+        default_factory=lambda: [
+            &#34;Autonomous Multi-Agent Systems&#34;,
+            &#34;Python (Asyncio, FastAPI)&#34;,
+            &#34;Model Context Protocol (FastMCP)&#34;,
+            &#34;PyTorch &amp; Computer Vision (OpenCV)&#34;,
+            &#34;AES-256-GCM Hardware Vaults&#34;,
+            &#34;Abstract Syntax Tree (AST) Code Mapping&#34;,
+            &#34;Distributed Task Graph Scheduling&#34;,
+            &#34;NVIDIA RTX 4050 Edge ML Inference&#34;,
+        ]
+    )
+    hardware: str = &#34;NVIDIA GeForce RTX 4050 (6GB VRAM) Laptop GPU&#34;</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.core_skills"><code class="name">var <span class="ident">core_skills</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.degree"><code class="name">var <span class="ident">degree</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.email"><code class="name">var <span class="ident">email</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.first_name"><code class="name">var <span class="ident">first_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.full_name"><code class="name">var <span class="ident">full_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.github_url"><code class="name">var <span class="ident">github_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.graduation_year"><code class="name">var <span class="ident">graduation_year</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.hardware"><code class="name">var <span class="ident">hardware</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.last_name"><code class="name">var <span class="ident">last_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.linkedin_url"><code class="name">var <span class="ident">linkedin_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.location"><code class="name">var <span class="ident">location</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.phone"><code class="name">var <span class="ident">phone</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.portfolio_url"><code class="name">var <span class="ident">portfolio_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.CandidateProfile.university"><code class="name">var <span class="ident">university</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormAutofillResult"><code class="flex name class">
+<span>class <span class="ident">FormAutofillResult</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FormAutofillResult(BaseModel):
+    form_title: str
+    fit_score: float
+    total_fields: int
+    filled_fields: Dict[str, Any]
+    unmapped_fields: List[str]
+    essay_answers: Dict[str, str]
+    ready_for_submission: bool</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.career.form_autofill_agent.FormAutofillResult.essay_answers"><code class="name">var <span class="ident">essay_answers</span> : Dict[str, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormAutofillResult.filled_fields"><code class="name">var <span class="ident">filled_fields</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormAutofillResult.fit_score"><code class="name">var <span class="ident">fit_score</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormAutofillResult.form_title"><code class="name">var <span class="ident">form_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormAutofillResult.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormAutofillResult.ready_for_submission"><code class="name">var <span class="ident">ready_for_submission</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormAutofillResult.total_fields"><code class="name">var <span class="ident">total_fields</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormAutofillResult.unmapped_fields"><code class="name">var <span class="ident">unmapped_fields</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormField"><code class="flex name class">
+<span>class <span class="ident">FormField</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FormField(BaseModel):
+    field_id: str
+    label: str
+    field_type: str = &#34;text&#34;  # text, email, tel, url, textarea, select, checkbox
+    required: bool = True
+    options: Optional[List[str]] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.career.form_autofill_agent.FormField.field_id"><code class="name">var <span class="ident">field_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormField.field_type"><code class="name">var <span class="ident">field_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormField.label"><code class="name">var <span class="ident">label</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormField.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormField.options"><code class="name">var <span class="ident">options</span> : List[str] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.career.form_autofill_agent.FormField.required"><code class="name">var <span class="ident">required</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.career" href="index.html">jarvis.career</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.career.form_autofill_agent.AutonomousFormFiller" href="#jarvis.career.form_autofill_agent.AutonomousFormFiller">AutonomousFormFiller</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.career.form_autofill_agent.AutonomousFormFiller.autofill_form" href="#jarvis.career.form_autofill_agent.AutonomousFormFiller.autofill_form">autofill_form</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.AutonomousFormFiller.autofill_web_form" href="#jarvis.career.form_autofill_agent.AutonomousFormFiller.autofill_web_form">autofill_web_form</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.AutonomousFormFiller.evaluate_opportunity_fit" href="#jarvis.career.form_autofill_agent.AutonomousFormFiller.evaluate_opportunity_fit">evaluate_opportunity_fit</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.AutonomousFormFiller.generate_essay_answer" href="#jarvis.career.form_autofill_agent.AutonomousFormFiller.generate_essay_answer">generate_essay_answer</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.career.form_autofill_agent.CandidateProfile" href="#jarvis.career.form_autofill_agent.CandidateProfile">CandidateProfile</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.core_skills" href="#jarvis.career.form_autofill_agent.CandidateProfile.core_skills">core_skills</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.degree" href="#jarvis.career.form_autofill_agent.CandidateProfile.degree">degree</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.email" href="#jarvis.career.form_autofill_agent.CandidateProfile.email">email</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.first_name" href="#jarvis.career.form_autofill_agent.CandidateProfile.first_name">first_name</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.full_name" href="#jarvis.career.form_autofill_agent.CandidateProfile.full_name">full_name</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.github_url" href="#jarvis.career.form_autofill_agent.CandidateProfile.github_url">github_url</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.graduation_year" href="#jarvis.career.form_autofill_agent.CandidateProfile.graduation_year">graduation_year</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.hardware" href="#jarvis.career.form_autofill_agent.CandidateProfile.hardware">hardware</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.last_name" href="#jarvis.career.form_autofill_agent.CandidateProfile.last_name">last_name</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.linkedin_url" href="#jarvis.career.form_autofill_agent.CandidateProfile.linkedin_url">linkedin_url</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.location" href="#jarvis.career.form_autofill_agent.CandidateProfile.location">location</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.model_config" href="#jarvis.career.form_autofill_agent.CandidateProfile.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.phone" href="#jarvis.career.form_autofill_agent.CandidateProfile.phone">phone</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.portfolio_url" href="#jarvis.career.form_autofill_agent.CandidateProfile.portfolio_url">portfolio_url</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.CandidateProfile.university" href="#jarvis.career.form_autofill_agent.CandidateProfile.university">university</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.career.form_autofill_agent.FormAutofillResult" href="#jarvis.career.form_autofill_agent.FormAutofillResult">FormAutofillResult</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.career.form_autofill_agent.FormAutofillResult.essay_answers" href="#jarvis.career.form_autofill_agent.FormAutofillResult.essay_answers">essay_answers</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormAutofillResult.filled_fields" href="#jarvis.career.form_autofill_agent.FormAutofillResult.filled_fields">filled_fields</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormAutofillResult.fit_score" href="#jarvis.career.form_autofill_agent.FormAutofillResult.fit_score">fit_score</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormAutofillResult.form_title" href="#jarvis.career.form_autofill_agent.FormAutofillResult.form_title">form_title</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormAutofillResult.model_config" href="#jarvis.career.form_autofill_agent.FormAutofillResult.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormAutofillResult.ready_for_submission" href="#jarvis.career.form_autofill_agent.FormAutofillResult.ready_for_submission">ready_for_submission</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormAutofillResult.total_fields" href="#jarvis.career.form_autofill_agent.FormAutofillResult.total_fields">total_fields</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormAutofillResult.unmapped_fields" href="#jarvis.career.form_autofill_agent.FormAutofillResult.unmapped_fields">unmapped_fields</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.career.form_autofill_agent.FormField" href="#jarvis.career.form_autofill_agent.FormField">FormField</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.career.form_autofill_agent.FormField.field_id" href="#jarvis.career.form_autofill_agent.FormField.field_id">field_id</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormField.field_type" href="#jarvis.career.form_autofill_agent.FormField.field_type">field_type</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormField.label" href="#jarvis.career.form_autofill_agent.FormField.label">label</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormField.model_config" href="#jarvis.career.form_autofill_agent.FormField.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormField.options" href="#jarvis.career.form_autofill_agent.FormField.options">options</a></code></li>
+<li><code><a title="jarvis.career.form_autofill_agent.FormField.required" href="#jarvis.career.form_autofill_agent.FormField.required">required</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

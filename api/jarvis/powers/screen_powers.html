@@ -1,0 +1,1523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.screen_powers API documentation</title>
+<meta name="description" content="JARVIS Screen &amp; Window Powers (PWR-016 to PWR-026)
+Display interaction and visual automation:
+- Window management (focus, enumerate, minimize)
+- …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.screen_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Screen &amp; Window Powers (PWR-016 to PWR-026)
+Display interaction and visual automation:
+- Window management (focus, enumerate, minimize)
+- Screen capture and region OCR
+- Mouse/keyboard simulation
+- Screenshot comparison and visual element search</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.screen_powers.ScreenPowers"><code class="flex name class">
+<span>class <span class="ident">ScreenPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ScreenPowers:
+    &#34;&#34;&#34;Screen capture, window management, and input simulation powers.&#34;&#34;&#34;
+
+    # Win32 constants
+    _SW_RESTORE = 9
+    _SW_MINIMIZE = 6
+    _KEYEVENTF_KEYUP = 0x0002
+    _INPUT_KEYBOARD = 1
+    _INPUT_MOUSE = 0
+    _MOUSEEVENTF_LEFTDOWN = 0x0002
+    _MOUSEEVENTF_LEFTUP = 0x0004
+    _MOUSEEVENTF_ABSOLUTE = 0x8000
+    _MOUSEEVENTF_MOVE = 0x0001
+    _VK_LWIN = 0x5B
+    _VK_D = 0x44
+
+    # ------------------------------------------------------------------ #
+    # PWR-016  Get Active Window
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def get_active_window() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-016: Get the currently focused foreground window title and handle.&#34;&#34;&#34;
+        try:
+            user32 = ctypes.windll.user32
+            hwnd = user32.GetForegroundWindow()
+
+            # Get window title
+            length = user32.GetWindowTextLengthW(hwnd)
+            buf = ctypes.create_unicode_buffer(length + 1)
+            user32.GetWindowTextW(hwnd, buf, length + 1)
+
+            # Get window rect
+            rect = ctypes.wintypes.RECT()
+            user32.GetWindowRect(hwnd, ctypes.byref(rect))
+
+            # Get process ID
+            pid = ctypes.wintypes.DWORD()
+            user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-016&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;hwnd&#34;: hwnd,
+                &#34;title&#34;: buf.value,
+                &#34;pid&#34;: pid.value,
+                &#34;rect&#34;: {
+                    &#34;left&#34;: rect.left,
+                    &#34;top&#34;: rect.top,
+                    &#34;right&#34;: rect.right,
+                    &#34;bottom&#34;: rect.bottom,
+                    &#34;width&#34;: rect.right - rect.left,
+                    &#34;height&#34;: rect.bottom - rect.top,
+                },
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-016&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-017  Capture Region
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def capture_region(region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-017: Screenshot (full or region) with SHA-256 hash.
+
+        Args:
+            region: Optional (left, top, right, bottom) bounding box.
+                    If None, captures the full primary monitor.
+        &#34;&#34;&#34;
+        try:
+            # Try mss first (fast, no display server dependency)
+            try:
+                import mss
+                import mss.tools
+
+                with mss.mss() as sct:
+                    if region:
+                        monitor = {
+                            &#34;left&#34;: region[0],
+                            &#34;top&#34;: region[1],
+                            &#34;width&#34;: region[2] - region[0],
+                            &#34;height&#34;: region[3] - region[1],
+                        }
+                    else:
+                        monitor = sct.monitors[1]  # Primary monitor
+
+                    screenshot = sct.grab(monitor)
+                    raw_bytes = mss.tools.to_png(screenshot.rgb, screenshot.size)
+
+                    sha256 = hashlib.sha256(raw_bytes).hexdigest()
+
+                    # Save to temp
+                    ts = int(time.time())
+                    path = os.path.join(os.environ.get(&#34;TEMP&#34;, &#34;.&#34;), f&#34;jarvis_capture_{ts}.png&#34;)
+                    with open(path, &#34;wb&#34;) as f:
+                        f.write(raw_bytes)
+
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-017&#34;,
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;path&#34;: path,
+                        &#34;width&#34;: screenshot.size[0],
+                        &#34;height&#34;: screenshot.size[1],
+                        &#34;sha256&#34;: sha256,
+                        &#34;size_bytes&#34;: len(raw_bytes),
+                    }
+            except ImportError:
+                pass
+
+            # Fallback: PIL/Pillow
+            try:
+                from PIL import ImageGrab
+
+                if region:
+                    img = ImageGrab.grab(bbox=region)
+                else:
+                    img = ImageGrab.grab()
+
+                ts = int(time.time())
+                path = os.path.join(os.environ.get(&#34;TEMP&#34;, &#34;.&#34;), f&#34;jarvis_capture_{ts}.png&#34;)
+                img.save(path, &#34;PNG&#34;)
+
+                with open(path, &#34;rb&#34;) as f:
+                    sha256 = hashlib.sha256(f.read()).hexdigest()
+
+                return {
+                    &#34;power_id&#34;: &#34;PWR-017&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;path&#34;: path,
+                    &#34;width&#34;: img.width,
+                    &#34;height&#34;: img.height,
+                    &#34;sha256&#34;: sha256,
+                    &#34;size_bytes&#34;: os.path.getsize(path),
+                }
+            except ImportError:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-017&#34;,
+                    &#34;status&#34;: &#34;unavailable&#34;,
+                    &#34;message&#34;: &#34;Neither mss nor Pillow is installed. Install via: pip install mss Pillow&#34;,
+                }
+
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-017&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-018  Focus Window
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def focus_window(title: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-018: Bring a window to the foreground by partial title match.&#34;&#34;&#34;
+        try:
+            user32 = ctypes.windll.user32
+
+            # Callback type for EnumWindows
+            WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.POINTER(ctypes.c_int))
+
+            target_hwnd = None
+            target_title = &#34;&#34;
+
+            def enum_callback(hwnd, _lParam):
+                nonlocal target_hwnd, target_title
+                if user32.IsWindowVisible(hwnd):
+                    length = user32.GetWindowTextLengthW(hwnd)
+                    if length &gt; 0:
+                        buf = ctypes.create_unicode_buffer(length + 1)
+                        user32.GetWindowTextW(hwnd, buf, length + 1)
+                        win_title = buf.value
+                        if title.lower() in win_title.lower():
+                            target_hwnd = hwnd
+                            target_title = win_title
+                            return False  # Stop enumeration
+                return True
+
+            user32.EnumWindows(WNDENUMPROC(enum_callback), 0)
+
+            if target_hwnd is None:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-018&#34;,
+                    &#34;status&#34;: &#34;not_found&#34;,
+                    &#34;search_title&#34;: title,
+                    &#34;message&#34;: f&#34;No visible window matching &#39;{title}&#39; found.&#34;,
+                }
+
+            # Restore if minimized, then bring to front
+            user32.ShowWindow(target_hwnd, ScreenPowers._SW_RESTORE)
+            user32.SetForegroundWindow(target_hwnd)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-018&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;hwnd&#34;: target_hwnd,
+                &#34;window_title&#34;: target_title,
+                &#34;search_title&#34;: title,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-018&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-019  Safe Type
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def safe_type(text: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-019: Type text into the currently focused window using SendInput.&#34;&#34;&#34;
+        try:
+            user32 = ctypes.windll.user32
+
+            # Use SendInput with KEYEVENTF_UNICODE for each character
+            KEYEVENTF_UNICODE = 0x0004
+            KEYEVENTF_KEYUP = 0x0002
+            INPUT_KEYBOARD = 1
+
+            # INPUT structure for SendInput
+            class KEYBDINPUT(ctypes.Structure):
+                _fields_ = [
+                    (&#34;wVk&#34;, ctypes.c_ushort),
+                    (&#34;wScan&#34;, ctypes.c_ushort),
+                    (&#34;dwFlags&#34;, ctypes.c_ulong),
+                    (&#34;time&#34;, ctypes.c_ulong),
+                    (&#34;dwExtraInfo&#34;, ctypes.POINTER(ctypes.c_ulong)),
+                ]
+
+            class HARDWAREINPUT(ctypes.Structure):
+                _fields_ = [
+                    (&#34;uMsg&#34;, ctypes.c_ulong),
+                    (&#34;wParamL&#34;, ctypes.c_short),
+                    (&#34;wParamH&#34;, ctypes.c_ushort),
+                ]
+
+            class MOUSEINPUT(ctypes.Structure):
+                _fields_ = [
+                    (&#34;dx&#34;, ctypes.c_long),
+                    (&#34;dy&#34;, ctypes.c_long),
+                    (&#34;mouseData&#34;, ctypes.c_ulong),
+                    (&#34;dwFlags&#34;, ctypes.c_ulong),
+                    (&#34;time&#34;, ctypes.c_ulong),
+                    (&#34;dwExtraInfo&#34;, ctypes.POINTER(ctypes.c_ulong)),
+                ]
+
+            class INPUT_UNION(ctypes.Union):
+                _fields_ = [
+                    (&#34;ki&#34;, KEYBDINPUT),
+                    (&#34;mi&#34;, MOUSEINPUT),
+                    (&#34;hi&#34;, HARDWAREINPUT),
+                ]
+
+            class INPUT(ctypes.Structure):
+                _fields_ = [
+                    (&#34;type&#34;, ctypes.c_ulong),
+                    (&#34;union&#34;, INPUT_UNION),
+                ]
+
+            chars_sent = 0
+            for char in text:
+                # Key down
+                inp_down = INPUT()
+                inp_down.type = INPUT_KEYBOARD
+                inp_down.union.ki.wVk = 0
+                inp_down.union.ki.wScan = ord(char)
+                inp_down.union.ki.dwFlags = KEYEVENTF_UNICODE
+                inp_down.union.ki.time = 0
+                inp_down.union.ki.dwExtraInfo = ctypes.pointer(ctypes.c_ulong(0))
+
+                # Key up
+                inp_up = INPUT()
+                inp_up.type = INPUT_KEYBOARD
+                inp_up.union.ki.wVk = 0
+                inp_up.union.ki.wScan = ord(char)
+                inp_up.union.ki.dwFlags = KEYEVENTF_UNICODE | KEYEVENTF_KEYUP
+                inp_up.union.ki.time = 0
+                inp_up.union.ki.dwExtraInfo = ctypes.pointer(ctypes.c_ulong(0))
+
+                user32.SendInput(2, (INPUT * 2)(inp_down, inp_up), ctypes.sizeof(INPUT))
+                chars_sent += 1
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-019&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;characters_typed&#34;: chars_sent,
+                &#34;text_length&#34;: len(text),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-019&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-020  Mouse Click
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def mouse_click(x: int, y: int) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-020: Simulate a left mouse click at screen coordinates (x, y).&#34;&#34;&#34;
+        try:
+            user32 = ctypes.windll.user32
+
+            # Get screen dimensions for absolute coordinate conversion
+            screen_w = user32.GetSystemMetrics(0)
+            screen_h = user32.GetSystemMetrics(1)
+
+            # Convert to absolute coordinates (0-65535 range)
+            abs_x = int(x * 65535 / screen_w)
+            abs_y = int(y * 65535 / screen_h)
+
+            # Move cursor
+            user32.SetCursorPos(x, y)
+            time.sleep(0.05)
+
+            # Click using mouse_event
+            MOUSEEVENTF_LEFTDOWN = 0x0002
+            MOUSEEVENTF_LEFTUP = 0x0004
+            user32.mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+            time.sleep(0.02)
+            user32.mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-020&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;x&#34;: x,
+                &#34;y&#34;: y,
+                &#34;screen_resolution&#34;: {&#34;width&#34;: screen_w, &#34;height&#34;: screen_h},
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-020&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-021  OCR Region
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def ocr_region(region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-021: OCR text extraction from a screen region.
+
+        Args:
+            region: Optional (left, top, right, bottom) bounding box.
+        &#34;&#34;&#34;
+        try:
+            # Step 1: Capture the region
+            try:
+                from PIL import ImageGrab
+            except ImportError:
+                try:
+                    import mss
+                    # We&#39;ll handle mss below
+                except ImportError:
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-021&#34;,
+                        &#34;status&#34;: &#34;unavailable&#34;,
+                        &#34;message&#34;: &#34;Neither Pillow nor mss is installed for screen capture.&#34;,
+                    }
+
+            img = None
+            try:
+                from PIL import ImageGrab
+
+                if region:
+                    img = ImageGrab.grab(bbox=region)
+                else:
+                    img = ImageGrab.grab()
+            except ImportError:
+                import mss
+
+                with mss.mss() as sct:
+                    if region:
+                        monitor = {
+                            &#34;left&#34;: region[0],
+                            &#34;top&#34;: region[1],
+                            &#34;width&#34;: region[2] - region[0],
+                            &#34;height&#34;: region[3] - region[1],
+                        }
+                    else:
+                        monitor = sct.monitors[1]
+                    screenshot = sct.grab(monitor)
+                    # Convert to PIL for pytesseract
+                    from PIL import Image
+
+                    img = Image.frombytes(&#34;RGB&#34;, screenshot.size, screenshot.bgra, &#34;raw&#34;, &#34;BGRX&#34;)
+
+            if img is None:
+                return {&#34;power_id&#34;: &#34;PWR-021&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Failed to capture screen region.&#34;}
+
+            # Step 2: Run OCR
+            try:
+                import pytesseract
+
+                text = pytesseract.image_to_string(img)
+                return {
+                    &#34;power_id&#34;: &#34;PWR-021&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;text&#34;: text.strip(),
+                    &#34;region&#34;: region,
+                    &#34;image_size&#34;: {&#34;width&#34;: img.width, &#34;height&#34;: img.height},
+                    &#34;engine&#34;: &#34;pytesseract&#34;,
+                }
+            except ImportError:
+                # Save image so user can run OCR externally
+                ts = int(time.time())
+                path = os.path.join(os.environ.get(&#34;TEMP&#34;, &#34;.&#34;), f&#34;jarvis_ocr_{ts}.png&#34;)
+                img.save(path, &#34;PNG&#34;)
+                return {
+                    &#34;power_id&#34;: &#34;PWR-021&#34;,
+                    &#34;status&#34;: &#34;ocr_unavailable&#34;,
+                    &#34;message&#34;: &#34;pytesseract not installed. Screenshot saved for manual OCR.&#34;,
+                    &#34;screenshot_path&#34;: path,
+                    &#34;image_size&#34;: {&#34;width&#34;: img.width, &#34;height&#34;: img.height},
+                }
+            except Exception as ocr_err:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-021&#34;,
+                    &#34;status&#34;: &#34;ocr_error&#34;,
+                    &#34;message&#34;: f&#34;OCR failed: {ocr_err}&#34;,
+                    &#34;region&#34;: region,
+                }
+
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-021&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-022  Screen Resolution
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def get_screen_resolution() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-022: Get the primary screen resolution.&#34;&#34;&#34;
+        try:
+            user32 = ctypes.windll.user32
+
+            # SM_CXSCREEN=0, SM_CYSCREEN=1 for primary monitor
+            width = user32.GetSystemMetrics(0)
+            height = user32.GetSystemMetrics(1)
+
+            # Virtual screen (all monitors combined)
+            # SM_CXVIRTUALSCREEN=78, SM_CYVIRTUALSCREEN=79
+            virtual_w = user32.GetSystemMetrics(78)
+            virtual_h = user32.GetSystemMetrics(79)
+
+            # Number of monitors: SM_CMONITORS=80
+            monitor_count = user32.GetSystemMetrics(80)
+
+            # DPI awareness
+            dpi = 96
+            try:
+                dpi = user32.GetDpiForSystem()
+            except AttributeError:
+                pass  # Older Windows versions
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-022&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;primary&#34;: {&#34;width&#34;: width, &#34;height&#34;: height},
+                &#34;virtual_screen&#34;: {&#34;width&#34;: virtual_w, &#34;height&#34;: virtual_h},
+                &#34;monitor_count&#34;: monitor_count,
+                &#34;dpi&#34;: dpi,
+                &#34;scale_factor&#34;: round(dpi / 96.0 * 100),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-022&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-023  Visual Element Find (Placeholder)
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def visual_element_find(description: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-023: Visual grounding — find a UI element by natural language description.
+
+        This is a placeholder for integration with a vision model (e.g., GPT-4V, OmniParser).
+        Currently returns a structured &#34;not implemented&#34; response.
+        &#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-023&#34;,
+            &#34;status&#34;: &#34;not_implemented&#34;,
+            &#34;description&#34;: description,
+            &#34;message&#34;: (
+                &#34;Visual element finding requires a vision model backend (e.g., GPT-4V, OmniParser). &#34;
+                &#34;This is a placeholder for future integration. Use window_list() or &#34;
+                &#34;get_active_window() for basic window-level discovery.&#34;
+            ),
+            &#34;suggested_alternatives&#34;: [&#34;PWR-016 (get_active_window)&#34;, &#34;PWR-024 (window_list)&#34;],
+        }
+
+    # ------------------------------------------------------------------ #
+    # PWR-024  Window List
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def window_list() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-024: Enumerate all visible top-level windows.&#34;&#34;&#34;
+        try:
+            user32 = ctypes.windll.user32
+
+            WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.POINTER(ctypes.c_int))
+
+            windows: List[Dict[str, Any]] = []
+
+            def enum_callback(hwnd, _lParam):
+                if user32.IsWindowVisible(hwnd):
+                    length = user32.GetWindowTextLengthW(hwnd)
+                    if length &gt; 0:
+                        buf = ctypes.create_unicode_buffer(length + 1)
+                        user32.GetWindowTextW(hwnd, buf, length + 1)
+                        title = buf.value
+                        if title.strip():
+                            rect = ctypes.wintypes.RECT()
+                            user32.GetWindowRect(hwnd, ctypes.byref(rect))
+
+                            pid = ctypes.wintypes.DWORD()
+                            user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+
+                            windows.append(
+                                {
+                                    &#34;hwnd&#34;: hwnd,
+                                    &#34;title&#34;: title,
+                                    &#34;pid&#34;: pid.value,
+                                    &#34;rect&#34;: {
+                                        &#34;left&#34;: rect.left,
+                                        &#34;top&#34;: rect.top,
+                                        &#34;right&#34;: rect.right,
+                                        &#34;bottom&#34;: rect.bottom,
+                                        &#34;width&#34;: rect.right - rect.left,
+                                        &#34;height&#34;: rect.bottom - rect.top,
+                                    },
+                                }
+                            )
+                return True
+
+            user32.EnumWindows(WNDENUMPROC(enum_callback), 0)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-024&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;window_count&#34;: len(windows),
+                &#34;windows&#34;: windows,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-024&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-025  Minimize All
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def minimize_all() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-025: Minimize all windows (Win+D equivalent).&#34;&#34;&#34;
+        try:
+            user32 = ctypes.windll.user32
+
+            # Simulate Win+D keystroke
+            KEYEVENTF_KEYUP = 0x0002
+            VK_LWIN = 0x5B
+            VK_D = 0x44
+
+            # Win key down
+            user32.keybd_event(VK_LWIN, 0, 0, 0)
+            # D key down
+            user32.keybd_event(VK_D, 0, 0, 0)
+            time.sleep(0.05)
+            # D key up
+            user32.keybd_event(VK_D, 0, KEYEVENTF_KEYUP, 0)
+            # Win key up
+            user32.keybd_event(VK_LWIN, 0, KEYEVENTF_KEYUP, 0)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-025&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;action&#34;: &#34;minimize_all&#34;,
+                &#34;message&#34;: &#34;All windows minimized (Win+D sent)&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-025&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-026  Screenshot Diff
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def screenshot_diff(img1_path: str, img2_path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-026: Compare two screenshots pixel-wise and report differences.&#34;&#34;&#34;
+        try:
+            if not os.path.isfile(img1_path):
+                return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {img1_path}&#34;}
+            if not os.path.isfile(img2_path):
+                return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {img2_path}&#34;}
+
+            try:
+                from PIL import Image
+            except ImportError:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-026&#34;,
+                    &#34;status&#34;: &#34;unavailable&#34;,
+                    &#34;message&#34;: &#34;Pillow is required for screenshot comparison. Install via: pip install Pillow&#34;,
+                }
+
+            img1 = Image.open(img1_path).convert(&#34;RGB&#34;)
+            img2 = Image.open(img2_path).convert(&#34;RGB&#34;)
+
+            # Check dimensions
+            if img1.size != img2.size:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-026&#34;,
+                    &#34;status&#34;: &#34;size_mismatch&#34;,
+                    &#34;img1_size&#34;: {&#34;width&#34;: img1.width, &#34;height&#34;: img1.height},
+                    &#34;img2_size&#34;: {&#34;width&#34;: img2.width, &#34;height&#34;: img2.height},
+                    &#34;message&#34;: &#34;Images have different dimensions; pixel-wise comparison not possible.&#34;,
+                }
+
+            # Pixel-wise comparison
+            pixels1 = img1.load()
+            pixels2 = img2.load()
+            total_pixels = img1.width * img1.height
+            diff_count = 0
+            total_diff_magnitude = 0
+
+            # Bounding box of changed region
+            min_x, min_y = img1.width, img1.height
+            max_x, max_y = 0, 0
+
+            for y in range(img1.height):
+                for x in range(img1.width):
+                    p1 = pixels1[x, y]
+                    p2 = pixels2[x, y]
+                    if p1 != p2:
+                        diff_count += 1
+                        total_diff_magnitude += sum(abs(a - b) for a, b in zip(p1, p2))
+                        min_x = min(min_x, x)
+                        min_y = min(min_y, y)
+                        max_x = max(max_x, x)
+                        max_y = max(max_y, y)
+
+            diff_pct = round((diff_count / total_pixels) * 100, 4) if total_pixels &gt; 0 else 0.0
+            identical = diff_count == 0
+
+            result: Dict[str, Any] = {
+                &#34;power_id&#34;: &#34;PWR-026&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;identical&#34;: identical,
+                &#34;total_pixels&#34;: total_pixels,
+                &#34;different_pixels&#34;: diff_count,
+                &#34;difference_pct&#34;: diff_pct,
+                &#34;image_size&#34;: {&#34;width&#34;: img1.width, &#34;height&#34;: img1.height},
+            }
+
+            if not identical:
+                avg_magnitude = round(total_diff_magnitude / (diff_count * 3), 2) if diff_count &gt; 0 else 0
+                result[&#34;diff_bounding_box&#34;] = {
+                    &#34;left&#34;: min_x,
+                    &#34;top&#34;: min_y,
+                    &#34;right&#34;: max_x,
+                    &#34;bottom&#34;: max_y,
+                    &#34;width&#34;: max_x - min_x + 1,
+                    &#34;height&#34;: max_y - min_y + 1,
+                }
+                result[&#34;avg_pixel_magnitude&#34;] = avg_magnitude
+
+                # Generate diff image
+                try:
+                    diff_img = Image.new(&#34;RGB&#34;, img1.size, (0, 0, 0))
+                    diff_pixels = diff_img.load()
+                    for y in range(img1.height):
+                        for x in range(img1.width):
+                            p1 = pixels1[x, y]
+                            p2 = pixels2[x, y]
+                            if p1 != p2:
+                                # Highlight differences in red with intensity proportional to magnitude
+                                mag = min(255, sum(abs(a - b) for a, b in zip(p1, p2)))
+                                diff_pixels[x, y] = (mag, 0, 0)
+
+                    ts = int(time.time())
+                    diff_path = os.path.join(os.environ.get(&#34;TEMP&#34;, &#34;.&#34;), f&#34;jarvis_diff_{ts}.png&#34;)
+                    diff_img.save(diff_path, &#34;PNG&#34;)
+                    result[&#34;diff_image_path&#34;] = diff_path
+                except Exception:
+                    pass  # Diff image is optional
+
+            return result
+
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>Screen capture, window management, and input simulation powers.</p></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.capture_region"><code class="name flex">
+<span>def <span class="ident">capture_region</span></span>(<span>region: Optional[Tuple[int, int, int, int]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def capture_region(region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-017: Screenshot (full or region) with SHA-256 hash.
+
+    Args:
+        region: Optional (left, top, right, bottom) bounding box.
+                If None, captures the full primary monitor.
+    &#34;&#34;&#34;
+    try:
+        # Try mss first (fast, no display server dependency)
+        try:
+            import mss
+            import mss.tools
+
+            with mss.mss() as sct:
+                if region:
+                    monitor = {
+                        &#34;left&#34;: region[0],
+                        &#34;top&#34;: region[1],
+                        &#34;width&#34;: region[2] - region[0],
+                        &#34;height&#34;: region[3] - region[1],
+                    }
+                else:
+                    monitor = sct.monitors[1]  # Primary monitor
+
+                screenshot = sct.grab(monitor)
+                raw_bytes = mss.tools.to_png(screenshot.rgb, screenshot.size)
+
+                sha256 = hashlib.sha256(raw_bytes).hexdigest()
+
+                # Save to temp
+                ts = int(time.time())
+                path = os.path.join(os.environ.get(&#34;TEMP&#34;, &#34;.&#34;), f&#34;jarvis_capture_{ts}.png&#34;)
+                with open(path, &#34;wb&#34;) as f:
+                    f.write(raw_bytes)
+
+                return {
+                    &#34;power_id&#34;: &#34;PWR-017&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;path&#34;: path,
+                    &#34;width&#34;: screenshot.size[0],
+                    &#34;height&#34;: screenshot.size[1],
+                    &#34;sha256&#34;: sha256,
+                    &#34;size_bytes&#34;: len(raw_bytes),
+                }
+        except ImportError:
+            pass
+
+        # Fallback: PIL/Pillow
+        try:
+            from PIL import ImageGrab
+
+            if region:
+                img = ImageGrab.grab(bbox=region)
+            else:
+                img = ImageGrab.grab()
+
+            ts = int(time.time())
+            path = os.path.join(os.environ.get(&#34;TEMP&#34;, &#34;.&#34;), f&#34;jarvis_capture_{ts}.png&#34;)
+            img.save(path, &#34;PNG&#34;)
+
+            with open(path, &#34;rb&#34;) as f:
+                sha256 = hashlib.sha256(f.read()).hexdigest()
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-017&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;path&#34;: path,
+                &#34;width&#34;: img.width,
+                &#34;height&#34;: img.height,
+                &#34;sha256&#34;: sha256,
+                &#34;size_bytes&#34;: os.path.getsize(path),
+            }
+        except ImportError:
+            return {
+                &#34;power_id&#34;: &#34;PWR-017&#34;,
+                &#34;status&#34;: &#34;unavailable&#34;,
+                &#34;message&#34;: &#34;Neither mss nor Pillow is installed. Install via: pip install mss Pillow&#34;,
+            }
+
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-017&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-017: Screenshot (full or region) with SHA-256 hash.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>region</code></strong></dt>
+<dd>Optional (left, top, right, bottom) bounding box.
+If None, captures the full primary monitor.</dd>
+</dl></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.focus_window"><code class="name flex">
+<span>def <span class="ident">focus_window</span></span>(<span>title: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def focus_window(title: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-018: Bring a window to the foreground by partial title match.&#34;&#34;&#34;
+    try:
+        user32 = ctypes.windll.user32
+
+        # Callback type for EnumWindows
+        WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.POINTER(ctypes.c_int))
+
+        target_hwnd = None
+        target_title = &#34;&#34;
+
+        def enum_callback(hwnd, _lParam):
+            nonlocal target_hwnd, target_title
+            if user32.IsWindowVisible(hwnd):
+                length = user32.GetWindowTextLengthW(hwnd)
+                if length &gt; 0:
+                    buf = ctypes.create_unicode_buffer(length + 1)
+                    user32.GetWindowTextW(hwnd, buf, length + 1)
+                    win_title = buf.value
+                    if title.lower() in win_title.lower():
+                        target_hwnd = hwnd
+                        target_title = win_title
+                        return False  # Stop enumeration
+            return True
+
+        user32.EnumWindows(WNDENUMPROC(enum_callback), 0)
+
+        if target_hwnd is None:
+            return {
+                &#34;power_id&#34;: &#34;PWR-018&#34;,
+                &#34;status&#34;: &#34;not_found&#34;,
+                &#34;search_title&#34;: title,
+                &#34;message&#34;: f&#34;No visible window matching &#39;{title}&#39; found.&#34;,
+            }
+
+        # Restore if minimized, then bring to front
+        user32.ShowWindow(target_hwnd, ScreenPowers._SW_RESTORE)
+        user32.SetForegroundWindow(target_hwnd)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-018&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;hwnd&#34;: target_hwnd,
+            &#34;window_title&#34;: target_title,
+            &#34;search_title&#34;: title,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-018&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-018: Bring a window to the foreground by partial title match.</p></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.get_active_window"><code class="name flex">
+<span>def <span class="ident">get_active_window</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_active_window() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-016: Get the currently focused foreground window title and handle.&#34;&#34;&#34;
+    try:
+        user32 = ctypes.windll.user32
+        hwnd = user32.GetForegroundWindow()
+
+        # Get window title
+        length = user32.GetWindowTextLengthW(hwnd)
+        buf = ctypes.create_unicode_buffer(length + 1)
+        user32.GetWindowTextW(hwnd, buf, length + 1)
+
+        # Get window rect
+        rect = ctypes.wintypes.RECT()
+        user32.GetWindowRect(hwnd, ctypes.byref(rect))
+
+        # Get process ID
+        pid = ctypes.wintypes.DWORD()
+        user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-016&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;hwnd&#34;: hwnd,
+            &#34;title&#34;: buf.value,
+            &#34;pid&#34;: pid.value,
+            &#34;rect&#34;: {
+                &#34;left&#34;: rect.left,
+                &#34;top&#34;: rect.top,
+                &#34;right&#34;: rect.right,
+                &#34;bottom&#34;: rect.bottom,
+                &#34;width&#34;: rect.right - rect.left,
+                &#34;height&#34;: rect.bottom - rect.top,
+            },
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-016&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-016: Get the currently focused foreground window title and handle.</p></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.get_screen_resolution"><code class="name flex">
+<span>def <span class="ident">get_screen_resolution</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_screen_resolution() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-022: Get the primary screen resolution.&#34;&#34;&#34;
+    try:
+        user32 = ctypes.windll.user32
+
+        # SM_CXSCREEN=0, SM_CYSCREEN=1 for primary monitor
+        width = user32.GetSystemMetrics(0)
+        height = user32.GetSystemMetrics(1)
+
+        # Virtual screen (all monitors combined)
+        # SM_CXVIRTUALSCREEN=78, SM_CYVIRTUALSCREEN=79
+        virtual_w = user32.GetSystemMetrics(78)
+        virtual_h = user32.GetSystemMetrics(79)
+
+        # Number of monitors: SM_CMONITORS=80
+        monitor_count = user32.GetSystemMetrics(80)
+
+        # DPI awareness
+        dpi = 96
+        try:
+            dpi = user32.GetDpiForSystem()
+        except AttributeError:
+            pass  # Older Windows versions
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-022&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;primary&#34;: {&#34;width&#34;: width, &#34;height&#34;: height},
+            &#34;virtual_screen&#34;: {&#34;width&#34;: virtual_w, &#34;height&#34;: virtual_h},
+            &#34;monitor_count&#34;: monitor_count,
+            &#34;dpi&#34;: dpi,
+            &#34;scale_factor&#34;: round(dpi / 96.0 * 100),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-022&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-022: Get the primary screen resolution.</p></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.minimize_all"><code class="name flex">
+<span>def <span class="ident">minimize_all</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def minimize_all() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-025: Minimize all windows (Win+D equivalent).&#34;&#34;&#34;
+    try:
+        user32 = ctypes.windll.user32
+
+        # Simulate Win+D keystroke
+        KEYEVENTF_KEYUP = 0x0002
+        VK_LWIN = 0x5B
+        VK_D = 0x44
+
+        # Win key down
+        user32.keybd_event(VK_LWIN, 0, 0, 0)
+        # D key down
+        user32.keybd_event(VK_D, 0, 0, 0)
+        time.sleep(0.05)
+        # D key up
+        user32.keybd_event(VK_D, 0, KEYEVENTF_KEYUP, 0)
+        # Win key up
+        user32.keybd_event(VK_LWIN, 0, KEYEVENTF_KEYUP, 0)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-025&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;action&#34;: &#34;minimize_all&#34;,
+            &#34;message&#34;: &#34;All windows minimized (Win+D sent)&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-025&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-025: Minimize all windows (Win+D equivalent).</p></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.mouse_click"><code class="name flex">
+<span>def <span class="ident">mouse_click</span></span>(<span>x: int, y: int) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def mouse_click(x: int, y: int) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-020: Simulate a left mouse click at screen coordinates (x, y).&#34;&#34;&#34;
+    try:
+        user32 = ctypes.windll.user32
+
+        # Get screen dimensions for absolute coordinate conversion
+        screen_w = user32.GetSystemMetrics(0)
+        screen_h = user32.GetSystemMetrics(1)
+
+        # Convert to absolute coordinates (0-65535 range)
+        abs_x = int(x * 65535 / screen_w)
+        abs_y = int(y * 65535 / screen_h)
+
+        # Move cursor
+        user32.SetCursorPos(x, y)
+        time.sleep(0.05)
+
+        # Click using mouse_event
+        MOUSEEVENTF_LEFTDOWN = 0x0002
+        MOUSEEVENTF_LEFTUP = 0x0004
+        user32.mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+        time.sleep(0.02)
+        user32.mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-020&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;x&#34;: x,
+            &#34;y&#34;: y,
+            &#34;screen_resolution&#34;: {&#34;width&#34;: screen_w, &#34;height&#34;: screen_h},
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-020&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-020: Simulate a left mouse click at screen coordinates (x, y).</p></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.ocr_region"><code class="name flex">
+<span>def <span class="ident">ocr_region</span></span>(<span>region: Optional[Tuple[int, int, int, int]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ocr_region(region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-021: OCR text extraction from a screen region.
+
+    Args:
+        region: Optional (left, top, right, bottom) bounding box.
+    &#34;&#34;&#34;
+    try:
+        # Step 1: Capture the region
+        try:
+            from PIL import ImageGrab
+        except ImportError:
+            try:
+                import mss
+                # We&#39;ll handle mss below
+            except ImportError:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-021&#34;,
+                    &#34;status&#34;: &#34;unavailable&#34;,
+                    &#34;message&#34;: &#34;Neither Pillow nor mss is installed for screen capture.&#34;,
+                }
+
+        img = None
+        try:
+            from PIL import ImageGrab
+
+            if region:
+                img = ImageGrab.grab(bbox=region)
+            else:
+                img = ImageGrab.grab()
+        except ImportError:
+            import mss
+
+            with mss.mss() as sct:
+                if region:
+                    monitor = {
+                        &#34;left&#34;: region[0],
+                        &#34;top&#34;: region[1],
+                        &#34;width&#34;: region[2] - region[0],
+                        &#34;height&#34;: region[3] - region[1],
+                    }
+                else:
+                    monitor = sct.monitors[1]
+                screenshot = sct.grab(monitor)
+                # Convert to PIL for pytesseract
+                from PIL import Image
+
+                img = Image.frombytes(&#34;RGB&#34;, screenshot.size, screenshot.bgra, &#34;raw&#34;, &#34;BGRX&#34;)
+
+        if img is None:
+            return {&#34;power_id&#34;: &#34;PWR-021&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Failed to capture screen region.&#34;}
+
+        # Step 2: Run OCR
+        try:
+            import pytesseract
+
+            text = pytesseract.image_to_string(img)
+            return {
+                &#34;power_id&#34;: &#34;PWR-021&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;text&#34;: text.strip(),
+                &#34;region&#34;: region,
+                &#34;image_size&#34;: {&#34;width&#34;: img.width, &#34;height&#34;: img.height},
+                &#34;engine&#34;: &#34;pytesseract&#34;,
+            }
+        except ImportError:
+            # Save image so user can run OCR externally
+            ts = int(time.time())
+            path = os.path.join(os.environ.get(&#34;TEMP&#34;, &#34;.&#34;), f&#34;jarvis_ocr_{ts}.png&#34;)
+            img.save(path, &#34;PNG&#34;)
+            return {
+                &#34;power_id&#34;: &#34;PWR-021&#34;,
+                &#34;status&#34;: &#34;ocr_unavailable&#34;,
+                &#34;message&#34;: &#34;pytesseract not installed. Screenshot saved for manual OCR.&#34;,
+                &#34;screenshot_path&#34;: path,
+                &#34;image_size&#34;: {&#34;width&#34;: img.width, &#34;height&#34;: img.height},
+            }
+        except Exception as ocr_err:
+            return {
+                &#34;power_id&#34;: &#34;PWR-021&#34;,
+                &#34;status&#34;: &#34;ocr_error&#34;,
+                &#34;message&#34;: f&#34;OCR failed: {ocr_err}&#34;,
+                &#34;region&#34;: region,
+            }
+
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-021&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-021: OCR text extraction from a screen region.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>region</code></strong></dt>
+<dd>Optional (left, top, right, bottom) bounding box.</dd>
+</dl></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.safe_type"><code class="name flex">
+<span>def <span class="ident">safe_type</span></span>(<span>text: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def safe_type(text: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-019: Type text into the currently focused window using SendInput.&#34;&#34;&#34;
+    try:
+        user32 = ctypes.windll.user32
+
+        # Use SendInput with KEYEVENTF_UNICODE for each character
+        KEYEVENTF_UNICODE = 0x0004
+        KEYEVENTF_KEYUP = 0x0002
+        INPUT_KEYBOARD = 1
+
+        # INPUT structure for SendInput
+        class KEYBDINPUT(ctypes.Structure):
+            _fields_ = [
+                (&#34;wVk&#34;, ctypes.c_ushort),
+                (&#34;wScan&#34;, ctypes.c_ushort),
+                (&#34;dwFlags&#34;, ctypes.c_ulong),
+                (&#34;time&#34;, ctypes.c_ulong),
+                (&#34;dwExtraInfo&#34;, ctypes.POINTER(ctypes.c_ulong)),
+            ]
+
+        class HARDWAREINPUT(ctypes.Structure):
+            _fields_ = [
+                (&#34;uMsg&#34;, ctypes.c_ulong),
+                (&#34;wParamL&#34;, ctypes.c_short),
+                (&#34;wParamH&#34;, ctypes.c_ushort),
+            ]
+
+        class MOUSEINPUT(ctypes.Structure):
+            _fields_ = [
+                (&#34;dx&#34;, ctypes.c_long),
+                (&#34;dy&#34;, ctypes.c_long),
+                (&#34;mouseData&#34;, ctypes.c_ulong),
+                (&#34;dwFlags&#34;, ctypes.c_ulong),
+                (&#34;time&#34;, ctypes.c_ulong),
+                (&#34;dwExtraInfo&#34;, ctypes.POINTER(ctypes.c_ulong)),
+            ]
+
+        class INPUT_UNION(ctypes.Union):
+            _fields_ = [
+                (&#34;ki&#34;, KEYBDINPUT),
+                (&#34;mi&#34;, MOUSEINPUT),
+                (&#34;hi&#34;, HARDWAREINPUT),
+            ]
+
+        class INPUT(ctypes.Structure):
+            _fields_ = [
+                (&#34;type&#34;, ctypes.c_ulong),
+                (&#34;union&#34;, INPUT_UNION),
+            ]
+
+        chars_sent = 0
+        for char in text:
+            # Key down
+            inp_down = INPUT()
+            inp_down.type = INPUT_KEYBOARD
+            inp_down.union.ki.wVk = 0
+            inp_down.union.ki.wScan = ord(char)
+            inp_down.union.ki.dwFlags = KEYEVENTF_UNICODE
+            inp_down.union.ki.time = 0
+            inp_down.union.ki.dwExtraInfo = ctypes.pointer(ctypes.c_ulong(0))
+
+            # Key up
+            inp_up = INPUT()
+            inp_up.type = INPUT_KEYBOARD
+            inp_up.union.ki.wVk = 0
+            inp_up.union.ki.wScan = ord(char)
+            inp_up.union.ki.dwFlags = KEYEVENTF_UNICODE | KEYEVENTF_KEYUP
+            inp_up.union.ki.time = 0
+            inp_up.union.ki.dwExtraInfo = ctypes.pointer(ctypes.c_ulong(0))
+
+            user32.SendInput(2, (INPUT * 2)(inp_down, inp_up), ctypes.sizeof(INPUT))
+            chars_sent += 1
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-019&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;characters_typed&#34;: chars_sent,
+            &#34;text_length&#34;: len(text),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-019&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-019: Type text into the currently focused window using SendInput.</p></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.screenshot_diff"><code class="name flex">
+<span>def <span class="ident">screenshot_diff</span></span>(<span>img1_path: str, img2_path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def screenshot_diff(img1_path: str, img2_path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-026: Compare two screenshots pixel-wise and report differences.&#34;&#34;&#34;
+    try:
+        if not os.path.isfile(img1_path):
+            return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {img1_path}&#34;}
+        if not os.path.isfile(img2_path):
+            return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {img2_path}&#34;}
+
+        try:
+            from PIL import Image
+        except ImportError:
+            return {
+                &#34;power_id&#34;: &#34;PWR-026&#34;,
+                &#34;status&#34;: &#34;unavailable&#34;,
+                &#34;message&#34;: &#34;Pillow is required for screenshot comparison. Install via: pip install Pillow&#34;,
+            }
+
+        img1 = Image.open(img1_path).convert(&#34;RGB&#34;)
+        img2 = Image.open(img2_path).convert(&#34;RGB&#34;)
+
+        # Check dimensions
+        if img1.size != img2.size:
+            return {
+                &#34;power_id&#34;: &#34;PWR-026&#34;,
+                &#34;status&#34;: &#34;size_mismatch&#34;,
+                &#34;img1_size&#34;: {&#34;width&#34;: img1.width, &#34;height&#34;: img1.height},
+                &#34;img2_size&#34;: {&#34;width&#34;: img2.width, &#34;height&#34;: img2.height},
+                &#34;message&#34;: &#34;Images have different dimensions; pixel-wise comparison not possible.&#34;,
+            }
+
+        # Pixel-wise comparison
+        pixels1 = img1.load()
+        pixels2 = img2.load()
+        total_pixels = img1.width * img1.height
+        diff_count = 0
+        total_diff_magnitude = 0
+
+        # Bounding box of changed region
+        min_x, min_y = img1.width, img1.height
+        max_x, max_y = 0, 0
+
+        for y in range(img1.height):
+            for x in range(img1.width):
+                p1 = pixels1[x, y]
+                p2 = pixels2[x, y]
+                if p1 != p2:
+                    diff_count += 1
+                    total_diff_magnitude += sum(abs(a - b) for a, b in zip(p1, p2))
+                    min_x = min(min_x, x)
+                    min_y = min(min_y, y)
+                    max_x = max(max_x, x)
+                    max_y = max(max_y, y)
+
+        diff_pct = round((diff_count / total_pixels) * 100, 4) if total_pixels &gt; 0 else 0.0
+        identical = diff_count == 0
+
+        result: Dict[str, Any] = {
+            &#34;power_id&#34;: &#34;PWR-026&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;identical&#34;: identical,
+            &#34;total_pixels&#34;: total_pixels,
+            &#34;different_pixels&#34;: diff_count,
+            &#34;difference_pct&#34;: diff_pct,
+            &#34;image_size&#34;: {&#34;width&#34;: img1.width, &#34;height&#34;: img1.height},
+        }
+
+        if not identical:
+            avg_magnitude = round(total_diff_magnitude / (diff_count * 3), 2) if diff_count &gt; 0 else 0
+            result[&#34;diff_bounding_box&#34;] = {
+                &#34;left&#34;: min_x,
+                &#34;top&#34;: min_y,
+                &#34;right&#34;: max_x,
+                &#34;bottom&#34;: max_y,
+                &#34;width&#34;: max_x - min_x + 1,
+                &#34;height&#34;: max_y - min_y + 1,
+            }
+            result[&#34;avg_pixel_magnitude&#34;] = avg_magnitude
+
+            # Generate diff image
+            try:
+                diff_img = Image.new(&#34;RGB&#34;, img1.size, (0, 0, 0))
+                diff_pixels = diff_img.load()
+                for y in range(img1.height):
+                    for x in range(img1.width):
+                        p1 = pixels1[x, y]
+                        p2 = pixels2[x, y]
+                        if p1 != p2:
+                            # Highlight differences in red with intensity proportional to magnitude
+                            mag = min(255, sum(abs(a - b) for a, b in zip(p1, p2)))
+                            diff_pixels[x, y] = (mag, 0, 0)
+
+                ts = int(time.time())
+                diff_path = os.path.join(os.environ.get(&#34;TEMP&#34;, &#34;.&#34;), f&#34;jarvis_diff_{ts}.png&#34;)
+                diff_img.save(diff_path, &#34;PNG&#34;)
+                result[&#34;diff_image_path&#34;] = diff_path
+            except Exception:
+                pass  # Diff image is optional
+
+        return result
+
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-026: Compare two screenshots pixel-wise and report differences.</p></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.visual_element_find"><code class="name flex">
+<span>def <span class="ident">visual_element_find</span></span>(<span>description: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def visual_element_find(description: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-023: Visual grounding — find a UI element by natural language description.
+
+    This is a placeholder for integration with a vision model (e.g., GPT-4V, OmniParser).
+    Currently returns a structured &#34;not implemented&#34; response.
+    &#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-023&#34;,
+        &#34;status&#34;: &#34;not_implemented&#34;,
+        &#34;description&#34;: description,
+        &#34;message&#34;: (
+            &#34;Visual element finding requires a vision model backend (e.g., GPT-4V, OmniParser). &#34;
+            &#34;This is a placeholder for future integration. Use window_list() or &#34;
+            &#34;get_active_window() for basic window-level discovery.&#34;
+        ),
+        &#34;suggested_alternatives&#34;: [&#34;PWR-016 (get_active_window)&#34;, &#34;PWR-024 (window_list)&#34;],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-023: Visual grounding — find a UI element by natural language description.</p>
+<p>This is a placeholder for integration with a vision model (e.g., GPT-4V, OmniParser).
+Currently returns a structured "not implemented" response.</p></div>
+</dd>
+<dt id="jarvis.powers.screen_powers.ScreenPowers.window_list"><code class="name flex">
+<span>def <span class="ident">window_list</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def window_list() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-024: Enumerate all visible top-level windows.&#34;&#34;&#34;
+    try:
+        user32 = ctypes.windll.user32
+
+        WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.POINTER(ctypes.c_int))
+
+        windows: List[Dict[str, Any]] = []
+
+        def enum_callback(hwnd, _lParam):
+            if user32.IsWindowVisible(hwnd):
+                length = user32.GetWindowTextLengthW(hwnd)
+                if length &gt; 0:
+                    buf = ctypes.create_unicode_buffer(length + 1)
+                    user32.GetWindowTextW(hwnd, buf, length + 1)
+                    title = buf.value
+                    if title.strip():
+                        rect = ctypes.wintypes.RECT()
+                        user32.GetWindowRect(hwnd, ctypes.byref(rect))
+
+                        pid = ctypes.wintypes.DWORD()
+                        user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+
+                        windows.append(
+                            {
+                                &#34;hwnd&#34;: hwnd,
+                                &#34;title&#34;: title,
+                                &#34;pid&#34;: pid.value,
+                                &#34;rect&#34;: {
+                                    &#34;left&#34;: rect.left,
+                                    &#34;top&#34;: rect.top,
+                                    &#34;right&#34;: rect.right,
+                                    &#34;bottom&#34;: rect.bottom,
+                                    &#34;width&#34;: rect.right - rect.left,
+                                    &#34;height&#34;: rect.bottom - rect.top,
+                                },
+                            }
+                        )
+            return True
+
+        user32.EnumWindows(WNDENUMPROC(enum_callback), 0)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-024&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;window_count&#34;: len(windows),
+            &#34;windows&#34;: windows,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-024&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-024: Enumerate all visible top-level windows.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.screen_powers.ScreenPowers" href="#jarvis.powers.screen_powers.ScreenPowers">ScreenPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.capture_region" href="#jarvis.powers.screen_powers.ScreenPowers.capture_region">capture_region</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.focus_window" href="#jarvis.powers.screen_powers.ScreenPowers.focus_window">focus_window</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.get_active_window" href="#jarvis.powers.screen_powers.ScreenPowers.get_active_window">get_active_window</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.get_screen_resolution" href="#jarvis.powers.screen_powers.ScreenPowers.get_screen_resolution">get_screen_resolution</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.minimize_all" href="#jarvis.powers.screen_powers.ScreenPowers.minimize_all">minimize_all</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.mouse_click" href="#jarvis.powers.screen_powers.ScreenPowers.mouse_click">mouse_click</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.ocr_region" href="#jarvis.powers.screen_powers.ScreenPowers.ocr_region">ocr_region</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.safe_type" href="#jarvis.powers.screen_powers.ScreenPowers.safe_type">safe_type</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.screenshot_diff" href="#jarvis.powers.screen_powers.ScreenPowers.screenshot_diff">screenshot_diff</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.visual_element_find" href="#jarvis.powers.screen_powers.ScreenPowers.visual_element_find">visual_element_find</a></code></li>
+<li><code><a title="jarvis.powers.screen_powers.ScreenPowers.window_list" href="#jarvis.powers.screen_powers.ScreenPowers.window_list">window_list</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

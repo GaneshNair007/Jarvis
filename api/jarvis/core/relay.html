@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.relay API documentation</title>
+<meta name="description" content="JARVIS Cross-Device Relay (phone &lt;-&gt; laptop) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.relay</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Cross-Device Relay (phone &lt;-&gt; laptop).</p>
+<p>Lets a phone (or any second device) send commands to this machine and get
+answers back over authenticated HTTP:</p>
+<pre><code>laptop:  POST /api/v1/relay/pair         -&gt; {code}          (6-digit, short TTL)
+phone:   POST /api/v1/relay/exchange     {code, device}     -&gt; {token}
+phone:   POST /api/v1/relay/command      Bearer &lt;token&gt;     -&gt; {reply, trust}
+phone:   GET  /api/v1/relay/status       Bearer &lt;token&gt;     -&gt; host + voice health
+</code></pre>
+<p>Security model:
+- Pairing codes are 6 random digits, single-use, TTL-bound.
+- Device tokens are 32-byte secrets, constant-time compared.
+- Failed exchanges are rate limited per relay instance.
+- Every command is wrapped in a TrustResult (First Law: No Evidence, No Claim).</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.relay.DeviceRelay"><code class="flex name class">
+<span>class <span class="ident">DeviceRelay</span></span>
+<span>(</span><span>orchestrator: Any = None, clock: Optional[Callable[[], float]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DeviceRelay:
+    &#34;&#34;&#34;Pairing + authenticated command relay between laptop and phone.&#34;&#34;&#34;
+
+    def __init__(self, orchestrator: Any = None, clock: Optional[Callable[[], float]] = None):
+        self._orchestrator = orchestrator
+        self._clock = clock or time.time
+        self._lock = threading.RLock()  # re-entrant: _record() is called while holding it
+        self._pairing: Dict[str, Dict[str, Any]] = {}  # code -&gt; {expires_at, device_hint}
+        self._tokens: Dict[str, Dict[str, Any]] = {}  # token -&gt; {device_id, device_name, created_at}
+        self._failed_exchanges: List[float] = []
+        self.command_count = 0
+        self.evidence_log: List[Dict[str, Any]] = []
+
+    # ------------------------------------------------------------------ #
+    #  Evidence                                                           #
+    # ------------------------------------------------------------------ #
+
+    def _record(self, source: str, data: Dict[str, Any]) -&gt; Evidence:
+        ev = Evidence(source=source, data=data, timestamp=self._clock(), trust_level=&#34;verified&#34;)
+        with self._lock:
+            self.evidence_log.append(ev.to_dict())
+            if len(self.evidence_log) &gt; 500:
+                self.evidence_log.pop(0)
+        return ev
+
+    # ------------------------------------------------------------------ #
+    #  Pairing                                                            #
+    # ------------------------------------------------------------------ #
+
+    def create_pairing_code(self, ttl_sec: int = PAIRING_CODE_TTL_SEC) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Generates a fresh single-use pairing code for the laptop screen.&#34;&#34;&#34;
+        code = f&#34;{secrets.randbelow(1_000_000):06d}&#34;
+        expires_at = self._clock() + ttl_sec
+        with self._lock:
+            # Drop expired codes so the table stays bounded.
+            now = self._clock()
+            self._pairing = {c: v for c, v in self._pairing.items() if v[&#34;expires_at&#34;] &gt; now}
+            self._pairing[code] = {&#34;expires_at&#34;: expires_at, &#34;created_at&#34;: now}
+        self._record(&#34;relay.pair&#34;, {&#34;code_length&#34;: len(code), &#34;ttl_sec&#34;: ttl_sec})
+        logger.info(&#34;Relay pairing code issued (ttl=%ss)&#34;, ttl_sec)
+        return {&#34;code&#34;: code, &#34;expires_in&#34;: ttl_sec, &#34;expires_at&#34;: expires_at}
+
+    def exchange_code(self, code: str, device_name: str = &#34;phone&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Trades a valid pairing code for a persistent device token.&#34;&#34;&#34;
+        now = self._clock()
+        with self._lock:
+            # Rate limit failed attempts.
+            self._failed_exchanges = [t for t in self._failed_exchanges if now - t &lt; FAILED_WINDOW_SEC]
+            if len(self._failed_exchanges) &gt;= MAX_FAILED_EXCHANGES:
+                raise RelayAuthError(&#34;too many failed pairing attempts, retry later&#34;)
+
+            entry = self._pairing.get(str(code).strip())
+            if entry is None or entry[&#34;expires_at&#34;] &lt;= now:
+                self._failed_exchanges.append(now)
+                self._record(
+                    &#34;relay.exchange&#34;,
+                    {&#34;status&#34;: &#34;rejected&#34;, &#34;reason&#34;: &#34;invalid_or_expired_code&#34;},
+                )
+                raise RelayAuthError(&#34;invalid or expired pairing code&#34;)
+
+            del self._pairing[str(code).strip()]
+            token = secrets.token_urlsafe(32)
+            device_id = f&#34;dev_{secrets.token_hex(4)}&#34;
+            self._tokens[token] = {
+                &#34;device_id&#34;: device_id,
+                &#34;device_name&#34;: (device_name or &#34;phone&#34;)[:64],
+                &#34;created_at&#34;: now,
+                &#34;last_seen&#34;: now,
+            }
+
+        self._record(
+            &#34;relay.exchange&#34;,
+            {&#34;status&#34;: &#34;accepted&#34;, &#34;device_id&#34;: device_id, &#34;device_name&#34;: device_name[:64]},
+        )
+        logger.info(&#34;Relay device paired: %s&#34;, device_name)
+        return {&#34;token&#34;: token, &#34;device_id&#34;: device_id, &#34;device_name&#34;: device_name[:64]}
+
+    def authenticate(self, token: Optional[str]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Validates a bearer token and refreshes last_seen. Raises RelayAuthError.&#34;&#34;&#34;
+        if not token:
+            raise RelayAuthError(&#34;missing token&#34;)
+        now = self._clock()
+        with self._lock:
+            for known, meta in self._tokens.items():
+                if secrets.compare_digest(known, token):
+                    meta[&#34;last_seen&#34;] = now
+                    return dict(meta)
+        raise RelayAuthError(&#34;invalid token&#34;)
+
+    def revoke_device(self, token: str) -&gt; bool:
+        with self._lock:
+            for known in list(self._tokens):
+                if secrets.compare_digest(known, token):
+                    del self._tokens[known]
+                    self._record(&#34;relay.revoke&#34;, {&#34;revoked&#34;: True})
+                    return True
+        return False
+
+    def list_devices(self) -&gt; List[Dict[str, Any]]:
+        with self._lock:
+            return [dict(v) for v in self._tokens.values()]
+
+    # ------------------------------------------------------------------ #
+    #  Command execution                                                  #
+    # ------------------------------------------------------------------ #
+
+    async def execute_command(self, token: Optional[str], command: str) -&gt; TrustResult:
+        &#34;&#34;&#34;Authenticates the device and routes the command through the orchestrator.
+
+        Always returns a TrustResult: success carries command evidence, failure
+        carries rejection/error evidence. Never claims success without proof.
+        &#34;&#34;&#34;
+        command = (command or &#34;&#34;).strip()
+        try:
+            device = self.authenticate(token)
+        except RelayAuthError as exc:
+            ev = self._record(
+                &#34;relay.command&#34;,
+                {&#34;status&#34;: &#34;rejected&#34;, &#34;reason&#34;: str(exc), &#34;command_preview&#34;: command[:80]},
+            )
+            return TrustResult.fail(evidence=ev, description=f&#34;relay auth rejected: {exc}&#34;)
+
+        if not command:
+            ev = self._record(
+                &#34;relay.command&#34;,
+                {&#34;status&#34;: &#34;rejected&#34;, &#34;reason&#34;: &#34;empty_command&#34;, &#34;device_id&#34;: device[&#34;device_id&#34;]},
+            )
+            return TrustResult.fail(evidence=ev, description=&#34;empty command&#34;)
+
+        started = self._clock()
+        try:
+            orch = self._orchestrator
+            if orch is None:
+                from jarvis.core.orchestrator import orchestrator as global_orch
+
+                orch = global_orch
+            result = await orch.process_user_query(command)
+        except Exception as exc:
+            ev = self._record(
+                &#34;relay.command&#34;,
+                {
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;device_id&#34;: device[&#34;device_id&#34;],
+                    &#34;command&#34;: command,
+                    &#34;error&#34;: str(exc),
+                },
+            )
+            return TrustResult.fail(evidence=ev, description=f&#34;command failed: {exc}&#34;)
+
+        reply_data = result.get(&#34;response&#34;, {})
+        if isinstance(reply_data, dict):
+            reply = reply_data.get(&#34;message&#34;) or reply_data.get(&#34;reply&#34;) or str(reply_data)
+        else:
+            reply = str(reply_data)
+
+        duration_ms = round((self._clock() - started) * 1000, 2)
+        with self._lock:
+            self.command_count += 1
+        ev = self._record(
+            &#34;relay.command&#34;,
+            {
+                &#34;status&#34;: &#34;executed&#34;,
+                &#34;device_id&#34;: device[&#34;device_id&#34;],
+                &#34;device_name&#34;: device[&#34;device_name&#34;],
+                &#34;command&#34;: command,
+                &#34;task_id&#34;: result.get(&#34;task_id&#34;),
+                &#34;orchestrator_status&#34;: result.get(&#34;status&#34;),
+                &#34;reply&#34;: reply[:2000],
+                &#34;reply_preview&#34;: reply[:200],
+                &#34;duration_ms&#34;: duration_ms,
+            },
+        )
+        trust = TrustResult.success(
+            evidence=ev,
+            description=f&#34;command executed for {device[&#39;device_name&#39;]} in {duration_ms} ms&#34;,
+        )
+        trust.result = {&#34;reply&#34;: reply, &#34;task_id&#34;: result.get(&#34;task_id&#34;), &#34;status&#34;: result.get(&#34;status&#34;)}
+        return trust
+
+    # ------------------------------------------------------------------ #
+    #  Status                                                             #
+    # ------------------------------------------------------------------ #
+
+    def status(self) -&gt; Dict[str, Any]:
+        voice_health: Dict[str, Any] = {}
+        try:
+            from jarvis.voice.daemon import voice_daemon
+
+            voice_health = voice_daemon.health()
+        except Exception as exc:  # pragma: no cover - voice stack optional
+            voice_health = {&#34;error&#34;: str(exc)}
+        with self._lock:
+            return {
+                &#34;paired_devices&#34;: len(self._tokens),
+                &#34;commands_relayed&#34;: self.command_count,
+                &#34;pending_pairing_codes&#34;: len(self._pairing),
+                &#34;evidence_count&#34;: len(self.evidence_log),
+                &#34;voice&#34;: voice_health,
+                &#34;timestamp&#34;: self._clock(),
+            }</code></pre>
+</details>
+<div class="desc"><p>Pairing + authenticated command relay between laptop and phone.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.relay.DeviceRelay.authenticate"><code class="name flex">
+<span>def <span class="ident">authenticate</span></span>(<span>self, token: Optional[str]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def authenticate(self, token: Optional[str]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Validates a bearer token and refreshes last_seen. Raises RelayAuthError.&#34;&#34;&#34;
+    if not token:
+        raise RelayAuthError(&#34;missing token&#34;)
+    now = self._clock()
+    with self._lock:
+        for known, meta in self._tokens.items():
+            if secrets.compare_digest(known, token):
+                meta[&#34;last_seen&#34;] = now
+                return dict(meta)
+    raise RelayAuthError(&#34;invalid token&#34;)</code></pre>
+</details>
+<div class="desc"><p>Validates a bearer token and refreshes last_seen. Raises RelayAuthError.</p></div>
+</dd>
+<dt id="jarvis.core.relay.DeviceRelay.create_pairing_code"><code class="name flex">
+<span>def <span class="ident">create_pairing_code</span></span>(<span>self, ttl_sec: int = 300) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_pairing_code(self, ttl_sec: int = PAIRING_CODE_TTL_SEC) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Generates a fresh single-use pairing code for the laptop screen.&#34;&#34;&#34;
+    code = f&#34;{secrets.randbelow(1_000_000):06d}&#34;
+    expires_at = self._clock() + ttl_sec
+    with self._lock:
+        # Drop expired codes so the table stays bounded.
+        now = self._clock()
+        self._pairing = {c: v for c, v in self._pairing.items() if v[&#34;expires_at&#34;] &gt; now}
+        self._pairing[code] = {&#34;expires_at&#34;: expires_at, &#34;created_at&#34;: now}
+    self._record(&#34;relay.pair&#34;, {&#34;code_length&#34;: len(code), &#34;ttl_sec&#34;: ttl_sec})
+    logger.info(&#34;Relay pairing code issued (ttl=%ss)&#34;, ttl_sec)
+    return {&#34;code&#34;: code, &#34;expires_in&#34;: ttl_sec, &#34;expires_at&#34;: expires_at}</code></pre>
+</details>
+<div class="desc"><p>Generates a fresh single-use pairing code for the laptop screen.</p></div>
+</dd>
+<dt id="jarvis.core.relay.DeviceRelay.exchange_code"><code class="name flex">
+<span>def <span class="ident">exchange_code</span></span>(<span>self, code: str, device_name: str = 'phone') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def exchange_code(self, code: str, device_name: str = &#34;phone&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Trades a valid pairing code for a persistent device token.&#34;&#34;&#34;
+    now = self._clock()
+    with self._lock:
+        # Rate limit failed attempts.
+        self._failed_exchanges = [t for t in self._failed_exchanges if now - t &lt; FAILED_WINDOW_SEC]
+        if len(self._failed_exchanges) &gt;= MAX_FAILED_EXCHANGES:
+            raise RelayAuthError(&#34;too many failed pairing attempts, retry later&#34;)
+
+        entry = self._pairing.get(str(code).strip())
+        if entry is None or entry[&#34;expires_at&#34;] &lt;= now:
+            self._failed_exchanges.append(now)
+            self._record(
+                &#34;relay.exchange&#34;,
+                {&#34;status&#34;: &#34;rejected&#34;, &#34;reason&#34;: &#34;invalid_or_expired_code&#34;},
+            )
+            raise RelayAuthError(&#34;invalid or expired pairing code&#34;)
+
+        del self._pairing[str(code).strip()]
+        token = secrets.token_urlsafe(32)
+        device_id = f&#34;dev_{secrets.token_hex(4)}&#34;
+        self._tokens[token] = {
+            &#34;device_id&#34;: device_id,
+            &#34;device_name&#34;: (device_name or &#34;phone&#34;)[:64],
+            &#34;created_at&#34;: now,
+            &#34;last_seen&#34;: now,
+        }
+
+    self._record(
+        &#34;relay.exchange&#34;,
+        {&#34;status&#34;: &#34;accepted&#34;, &#34;device_id&#34;: device_id, &#34;device_name&#34;: device_name[:64]},
+    )
+    logger.info(&#34;Relay device paired: %s&#34;, device_name)
+    return {&#34;token&#34;: token, &#34;device_id&#34;: device_id, &#34;device_name&#34;: device_name[:64]}</code></pre>
+</details>
+<div class="desc"><p>Trades a valid pairing code for a persistent device token.</p></div>
+</dd>
+<dt id="jarvis.core.relay.DeviceRelay.execute_command"><code class="name flex">
+<span>async def <span class="ident">execute_command</span></span>(<span>self, token: Optional[str], command: str) ‑> <a title="jarvis.core.evidence.TrustResult" href="evidence.html#jarvis.core.evidence.TrustResult">TrustResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def execute_command(self, token: Optional[str], command: str) -&gt; TrustResult:
+    &#34;&#34;&#34;Authenticates the device and routes the command through the orchestrator.
+
+    Always returns a TrustResult: success carries command evidence, failure
+    carries rejection/error evidence. Never claims success without proof.
+    &#34;&#34;&#34;
+    command = (command or &#34;&#34;).strip()
+    try:
+        device = self.authenticate(token)
+    except RelayAuthError as exc:
+        ev = self._record(
+            &#34;relay.command&#34;,
+            {&#34;status&#34;: &#34;rejected&#34;, &#34;reason&#34;: str(exc), &#34;command_preview&#34;: command[:80]},
+        )
+        return TrustResult.fail(evidence=ev, description=f&#34;relay auth rejected: {exc}&#34;)
+
+    if not command:
+        ev = self._record(
+            &#34;relay.command&#34;,
+            {&#34;status&#34;: &#34;rejected&#34;, &#34;reason&#34;: &#34;empty_command&#34;, &#34;device_id&#34;: device[&#34;device_id&#34;]},
+        )
+        return TrustResult.fail(evidence=ev, description=&#34;empty command&#34;)
+
+    started = self._clock()
+    try:
+        orch = self._orchestrator
+        if orch is None:
+            from jarvis.core.orchestrator import orchestrator as global_orch
+
+            orch = global_orch
+        result = await orch.process_user_query(command)
+    except Exception as exc:
+        ev = self._record(
+            &#34;relay.command&#34;,
+            {
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;device_id&#34;: device[&#34;device_id&#34;],
+                &#34;command&#34;: command,
+                &#34;error&#34;: str(exc),
+            },
+        )
+        return TrustResult.fail(evidence=ev, description=f&#34;command failed: {exc}&#34;)
+
+    reply_data = result.get(&#34;response&#34;, {})
+    if isinstance(reply_data, dict):
+        reply = reply_data.get(&#34;message&#34;) or reply_data.get(&#34;reply&#34;) or str(reply_data)
+    else:
+        reply = str(reply_data)
+
+    duration_ms = round((self._clock() - started) * 1000, 2)
+    with self._lock:
+        self.command_count += 1
+    ev = self._record(
+        &#34;relay.command&#34;,
+        {
+            &#34;status&#34;: &#34;executed&#34;,
+            &#34;device_id&#34;: device[&#34;device_id&#34;],
+            &#34;device_name&#34;: device[&#34;device_name&#34;],
+            &#34;command&#34;: command,
+            &#34;task_id&#34;: result.get(&#34;task_id&#34;),
+            &#34;orchestrator_status&#34;: result.get(&#34;status&#34;),
+            &#34;reply&#34;: reply[:2000],
+            &#34;reply_preview&#34;: reply[:200],
+            &#34;duration_ms&#34;: duration_ms,
+        },
+    )
+    trust = TrustResult.success(
+        evidence=ev,
+        description=f&#34;command executed for {device[&#39;device_name&#39;]} in {duration_ms} ms&#34;,
+    )
+    trust.result = {&#34;reply&#34;: reply, &#34;task_id&#34;: result.get(&#34;task_id&#34;), &#34;status&#34;: result.get(&#34;status&#34;)}
+    return trust</code></pre>
+</details>
+<div class="desc"><p>Authenticates the device and routes the command through the orchestrator.</p>
+<p>Always returns a TrustResult: success carries command evidence, failure
+carries rejection/error evidence. Never claims success without proof.</p></div>
+</dd>
+<dt id="jarvis.core.relay.DeviceRelay.list_devices"><code class="name flex">
+<span>def <span class="ident">list_devices</span></span>(<span>self) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_devices(self) -&gt; List[Dict[str, Any]]:
+    with self._lock:
+        return [dict(v) for v in self._tokens.values()]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.relay.DeviceRelay.revoke_device"><code class="name flex">
+<span>def <span class="ident">revoke_device</span></span>(<span>self, token: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def revoke_device(self, token: str) -&gt; bool:
+    with self._lock:
+        for known in list(self._tokens):
+            if secrets.compare_digest(known, token):
+                del self._tokens[known]
+                self._record(&#34;relay.revoke&#34;, {&#34;revoked&#34;: True})
+                return True
+    return False</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.relay.DeviceRelay.status"><code class="name flex">
+<span>def <span class="ident">status</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def status(self) -&gt; Dict[str, Any]:
+    voice_health: Dict[str, Any] = {}
+    try:
+        from jarvis.voice.daemon import voice_daemon
+
+        voice_health = voice_daemon.health()
+    except Exception as exc:  # pragma: no cover - voice stack optional
+        voice_health = {&#34;error&#34;: str(exc)}
+    with self._lock:
+        return {
+            &#34;paired_devices&#34;: len(self._tokens),
+            &#34;commands_relayed&#34;: self.command_count,
+            &#34;pending_pairing_codes&#34;: len(self._pairing),
+            &#34;evidence_count&#34;: len(self.evidence_log),
+            &#34;voice&#34;: voice_health,
+            &#34;timestamp&#34;: self._clock(),
+        }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.relay.RelayAuthError"><code class="flex name class">
+<span>class <span class="ident">RelayAuthError</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RelayAuthError(Exception):
+    &#34;&#34;&#34;Raised when a relay token or pairing code is invalid/expired.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Raised when a relay token or pairing code is invalid/expired.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.relay.DeviceRelay" href="#jarvis.core.relay.DeviceRelay">DeviceRelay</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.relay.DeviceRelay.authenticate" href="#jarvis.core.relay.DeviceRelay.authenticate">authenticate</a></code></li>
+<li><code><a title="jarvis.core.relay.DeviceRelay.create_pairing_code" href="#jarvis.core.relay.DeviceRelay.create_pairing_code">create_pairing_code</a></code></li>
+<li><code><a title="jarvis.core.relay.DeviceRelay.exchange_code" href="#jarvis.core.relay.DeviceRelay.exchange_code">exchange_code</a></code></li>
+<li><code><a title="jarvis.core.relay.DeviceRelay.execute_command" href="#jarvis.core.relay.DeviceRelay.execute_command">execute_command</a></code></li>
+<li><code><a title="jarvis.core.relay.DeviceRelay.list_devices" href="#jarvis.core.relay.DeviceRelay.list_devices">list_devices</a></code></li>
+<li><code><a title="jarvis.core.relay.DeviceRelay.revoke_device" href="#jarvis.core.relay.DeviceRelay.revoke_device">revoke_device</a></code></li>
+<li><code><a title="jarvis.core.relay.DeviceRelay.status" href="#jarvis.core.relay.DeviceRelay.status">status</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.relay.RelayAuthError" href="#jarvis.core.relay.RelayAuthError">RelayAuthError</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.career_powers API documentation</title>
+<meta name="description" content="JARVIS Career-Ops Powers (PWR-328 to PWR-337) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.career_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Career-Ops Powers (PWR-328 to PWR-337).</p>
+<p>Operational implementations for local job scanning, ATS resume generation,
+cover-letter crafting, company research, contact discovery, email outreach,
+pipeline analytics, interview preparation, and compensation negotiation.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.career_powers.CareerPowers"><code class="flex name class">
+<span>class <span class="ident">CareerPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CareerPowers:
+    &#34;&#34;&#34;Implementations for Career-Ops domain capabilities.&#34;&#34;&#34;
+
+    def __init__(self):
+        self.service = career_service
+
+    def get_service_status(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-328: Checks career service layer health, concurrency limit, and user profile.&#34;&#34;&#34;
+        profile = self.service.profile
+        apps = self.service.list_applications()
+        return {
+            &#34;power_id&#34;: &#34;PWR-328&#34;,
+            &#34;status&#34;: &#34;healthy&#34;,
+            &#34;candidate_name&#34;: profile.name,
+            &#34;target_roles&#34;: profile.target_roles,
+            &#34;tracked_applications_count&#34;: len(apps),
+            &#34;max_concurrency&#34;: 3,
+        }
+
+    def scan_job_listing(
+        self, job_title: str, company_name: str, description: str, job_url: Optional[str] = None
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-329: Job scan and fit scoring (scan.mjs equivalent).&#34;&#34;&#34;
+        score = _safe_run_async(
+            self.service.scan_job(
+                job_title=job_title, company_name=company_name, description=description, job_url=job_url
+            )
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-329&#34;,
+            &#34;job_id&#34;: score.job_id,
+            &#34;company_name&#34;: score.company_name,
+            &#34;job_title&#34;: score.job_title,
+            &#34;global_score&#34;: score.global_score,
+            &#34;hard_skills_score&#34;: score.hard_skills_score,
+            &#34;soft_skills_score&#34;: score.soft_skills_score,
+            &#34;matched_skills&#34;: score.matched_skills,
+            &#34;missing_skills&#34;: score.missing_skills,
+            &#34;recommendation&#34;: score.recommendation,
+        }
+
+    def generate_tailored_resume(
+        self, job_title: str, company_name: str, target_keywords: Optional[List[str]] = None
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-330: Tailored ATS resume generation (generate-pdf.mjs equivalent).&#34;&#34;&#34;
+        resume = _safe_run_async(
+            self.service.generate_resume(
+                job_title=job_title, company_name=company_name, target_keywords=target_keywords
+            )
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-330&#34;,
+            &#34;resume_id&#34;: resume.resume_id,
+            &#34;file_path&#34;: resume.file_path,
+            &#34;ats_score&#34;: resume.ats_score,
+            &#34;included_keywords&#34;: resume.included_keywords,
+        }
+
+    def generate_cover_letter(
+        self, job_title: str, company_name: str, key_challenges: Optional[List[str]] = None
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-331: Tailored cover-letter generation (cover mode equivalent).&#34;&#34;&#34;
+        cover = _safe_run_async(
+            self.service.generate_cover_letter(
+                job_title=job_title, company_name=company_name, key_challenges=key_challenges
+            )
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-331&#34;,
+            &#34;letter_id&#34;: cover.letter_id,
+            &#34;company_name&#34;: cover.company_name,
+            &#34;content&#34;: cover.content,
+            &#34;star_points&#34;: cover.star_points,
+        }
+
+    def research_company_brief(self, company_name: str, domain: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-332: Company research brief (deep mode equivalent).&#34;&#34;&#34;
+        dossier = _safe_run_async(self.service.research_company(company_name=company_name, domain=domain))
+        return {
+            &#34;power_id&#34;: &#34;PWR-332&#34;,
+            &#34;company_name&#34;: dossier.company_name,
+            &#34;summary&#34;: dossier.summary,
+            &#34;culture_signals&#34;: dossier.culture_signals,
+            &#34;tech_stack&#34;: dossier.tech_stack,
+            &#34;recent_news&#34;: dossier.recent_news,
+            &#34;leadership&#34;: dossier.leadership,
+            &#34;glassdoor_rating&#34;: dossier.glassdoor_rating,
+        }
+
+    def find_company_contacts(self, company_name: str, role_title: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-333: Contact finder and outreach draft (contacto equivalent).&#34;&#34;&#34;
+        contacts = _safe_run_async(self.service.find_contacts(company_name=company_name, role_title=role_title))
+        return {
+            &#34;power_id&#34;: &#34;PWR-333&#34;,
+            &#34;company_name&#34;: company_name,
+            &#34;contacts_found&#34;: len(contacts),
+            &#34;contacts&#34;: [c.model_dump() for c in contacts],
+        }
+
+    def draft_application_email(self, recipient_name: str, company_name: str, role_title: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-334: Application email draft (email mode equivalent).&#34;&#34;&#34;
+        draft = _safe_run_async(
+            self.service.draft_email(recipient_name=recipient_name, company_name=company_name, role_title=role_title)
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-334&#34;,
+            &#34;subject&#34;: draft[&#34;subject&#34;],
+            &#34;body&#34;: draft[&#34;body&#34;],
+            &#34;recipient_name&#34;: draft[&#34;recipient_name&#34;],
+            &#34;company_name&#34;: draft[&#34;company_name&#34;],
+            &#34;role_title&#34;: draft[&#34;role_title&#34;],
+        }
+
+    def analyze_application_pipeline(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-335: Application pipeline analytics (analyze-patterns equivalent).&#34;&#34;&#34;
+        stats = self.service.analyze_pipeline()
+        return {&#34;power_id&#34;: &#34;PWR-335&#34;, **stats}
+
+    def interview_prep_and_red_flags(
+        self,
+        role_title: str,
+        company_name: str,
+        job_description: Optional[str] = None,
+        focus_tech: Optional[List[str]] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-336: Interview prep, STAR scenarios, and red-flag checking.&#34;&#34;&#34;
+        prep = self.service.prepare_interview(role_title=role_title, company_name=company_name, focus_tech=focus_tech)
+        red_flags = []
+        if job_description:
+            red_flags = self.service.check_red_flags(company_name, job_description)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-336&#34;,
+            &#34;role_title&#34;: prep.role_title,
+            &#34;company_name&#34;: prep.company_name,
+            &#34;star_questions&#34;: prep.star_questions,
+            &#34;technical_focus_areas&#34;: prep.technical_focus_areas,
+            &#34;questions_to_ask_team&#34;: prep.questions_to_ask_team,
+            &#34;red_flag_warnings&#34;: red_flags or prep.red_flag_warnings,
+        }
+
+    def analyze_offer_and_salary_gap(
+        self, company_name: str, role_title: str, base_salary: float, bonus: float = 0.0, equity_annual_val: float = 0.0
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-337: Offer compensation analysis and negotiation script.&#34;&#34;&#34;
+        analysis = self.service.analyze_offer(
+            company_name=company_name,
+            role_title=role_title,
+            base_salary=base_salary,
+            bonus=bonus,
+            equity_annual_val=equity_annual_val,
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-337&#34;,
+            &#34;offer_id&#34;: analysis.offer_id,
+            &#34;company_name&#34;: analysis.company_name,
+            &#34;role_title&#34;: analysis.role_title,
+            &#34;total_comp&#34;: analysis.total_comp,
+            &#34;target_comp&#34;: analysis.target_comp,
+            &#34;gap&#34;: analysis.gap,
+            &#34;gap_percentage&#34;: analysis.gap_percentage,
+            &#34;verdict&#34;: analysis.verdict,
+            &#34;negotiation_script&#34;: analysis.negotiation_script,
+        }</code></pre>
+</details>
+<div class="desc"><p>Implementations for Career-Ops domain capabilities.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.career_powers.CareerPowers.analyze_application_pipeline"><code class="name flex">
+<span>def <span class="ident">analyze_application_pipeline</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analyze_application_pipeline(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-335: Application pipeline analytics (analyze-patterns equivalent).&#34;&#34;&#34;
+    stats = self.service.analyze_pipeline()
+    return {&#34;power_id&#34;: &#34;PWR-335&#34;, **stats}</code></pre>
+</details>
+<div class="desc"><p>PWR-335: Application pipeline analytics (analyze-patterns equivalent).</p></div>
+</dd>
+<dt id="jarvis.powers.career_powers.CareerPowers.analyze_offer_and_salary_gap"><code class="name flex">
+<span>def <span class="ident">analyze_offer_and_salary_gap</span></span>(<span>self,<br>company_name: str,<br>role_title: str,<br>base_salary: float,<br>bonus: float = 0.0,<br>equity_annual_val: float = 0.0) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analyze_offer_and_salary_gap(
+    self, company_name: str, role_title: str, base_salary: float, bonus: float = 0.0, equity_annual_val: float = 0.0
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-337: Offer compensation analysis and negotiation script.&#34;&#34;&#34;
+    analysis = self.service.analyze_offer(
+        company_name=company_name,
+        role_title=role_title,
+        base_salary=base_salary,
+        bonus=bonus,
+        equity_annual_val=equity_annual_val,
+    )
+    return {
+        &#34;power_id&#34;: &#34;PWR-337&#34;,
+        &#34;offer_id&#34;: analysis.offer_id,
+        &#34;company_name&#34;: analysis.company_name,
+        &#34;role_title&#34;: analysis.role_title,
+        &#34;total_comp&#34;: analysis.total_comp,
+        &#34;target_comp&#34;: analysis.target_comp,
+        &#34;gap&#34;: analysis.gap,
+        &#34;gap_percentage&#34;: analysis.gap_percentage,
+        &#34;verdict&#34;: analysis.verdict,
+        &#34;negotiation_script&#34;: analysis.negotiation_script,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-337: Offer compensation analysis and negotiation script.</p></div>
+</dd>
+<dt id="jarvis.powers.career_powers.CareerPowers.draft_application_email"><code class="name flex">
+<span>def <span class="ident">draft_application_email</span></span>(<span>self, recipient_name: str, company_name: str, role_title: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draft_application_email(self, recipient_name: str, company_name: str, role_title: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-334: Application email draft (email mode equivalent).&#34;&#34;&#34;
+    draft = _safe_run_async(
+        self.service.draft_email(recipient_name=recipient_name, company_name=company_name, role_title=role_title)
+    )
+    return {
+        &#34;power_id&#34;: &#34;PWR-334&#34;,
+        &#34;subject&#34;: draft[&#34;subject&#34;],
+        &#34;body&#34;: draft[&#34;body&#34;],
+        &#34;recipient_name&#34;: draft[&#34;recipient_name&#34;],
+        &#34;company_name&#34;: draft[&#34;company_name&#34;],
+        &#34;role_title&#34;: draft[&#34;role_title&#34;],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-334: Application email draft (email mode equivalent).</p></div>
+</dd>
+<dt id="jarvis.powers.career_powers.CareerPowers.find_company_contacts"><code class="name flex">
+<span>def <span class="ident">find_company_contacts</span></span>(<span>self, company_name: str, role_title: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def find_company_contacts(self, company_name: str, role_title: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-333: Contact finder and outreach draft (contacto equivalent).&#34;&#34;&#34;
+    contacts = _safe_run_async(self.service.find_contacts(company_name=company_name, role_title=role_title))
+    return {
+        &#34;power_id&#34;: &#34;PWR-333&#34;,
+        &#34;company_name&#34;: company_name,
+        &#34;contacts_found&#34;: len(contacts),
+        &#34;contacts&#34;: [c.model_dump() for c in contacts],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-333: Contact finder and outreach draft (contacto equivalent).</p></div>
+</dd>
+<dt id="jarvis.powers.career_powers.CareerPowers.generate_cover_letter"><code class="name flex">
+<span>def <span class="ident">generate_cover_letter</span></span>(<span>self,<br>job_title: str,<br>company_name: str,<br>key_challenges: Optional[List[str]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_cover_letter(
+    self, job_title: str, company_name: str, key_challenges: Optional[List[str]] = None
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-331: Tailored cover-letter generation (cover mode equivalent).&#34;&#34;&#34;
+    cover = _safe_run_async(
+        self.service.generate_cover_letter(
+            job_title=job_title, company_name=company_name, key_challenges=key_challenges
+        )
+    )
+    return {
+        &#34;power_id&#34;: &#34;PWR-331&#34;,
+        &#34;letter_id&#34;: cover.letter_id,
+        &#34;company_name&#34;: cover.company_name,
+        &#34;content&#34;: cover.content,
+        &#34;star_points&#34;: cover.star_points,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-331: Tailored cover-letter generation (cover mode equivalent).</p></div>
+</dd>
+<dt id="jarvis.powers.career_powers.CareerPowers.generate_tailored_resume"><code class="name flex">
+<span>def <span class="ident">generate_tailored_resume</span></span>(<span>self,<br>job_title: str,<br>company_name: str,<br>target_keywords: Optional[List[str]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_tailored_resume(
+    self, job_title: str, company_name: str, target_keywords: Optional[List[str]] = None
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-330: Tailored ATS resume generation (generate-pdf.mjs equivalent).&#34;&#34;&#34;
+    resume = _safe_run_async(
+        self.service.generate_resume(
+            job_title=job_title, company_name=company_name, target_keywords=target_keywords
+        )
+    )
+    return {
+        &#34;power_id&#34;: &#34;PWR-330&#34;,
+        &#34;resume_id&#34;: resume.resume_id,
+        &#34;file_path&#34;: resume.file_path,
+        &#34;ats_score&#34;: resume.ats_score,
+        &#34;included_keywords&#34;: resume.included_keywords,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-330: Tailored ATS resume generation (generate-pdf.mjs equivalent).</p></div>
+</dd>
+<dt id="jarvis.powers.career_powers.CareerPowers.get_service_status"><code class="name flex">
+<span>def <span class="ident">get_service_status</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_service_status(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-328: Checks career service layer health, concurrency limit, and user profile.&#34;&#34;&#34;
+    profile = self.service.profile
+    apps = self.service.list_applications()
+    return {
+        &#34;power_id&#34;: &#34;PWR-328&#34;,
+        &#34;status&#34;: &#34;healthy&#34;,
+        &#34;candidate_name&#34;: profile.name,
+        &#34;target_roles&#34;: profile.target_roles,
+        &#34;tracked_applications_count&#34;: len(apps),
+        &#34;max_concurrency&#34;: 3,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-328: Checks career service layer health, concurrency limit, and user profile.</p></div>
+</dd>
+<dt id="jarvis.powers.career_powers.CareerPowers.interview_prep_and_red_flags"><code class="name flex">
+<span>def <span class="ident">interview_prep_and_red_flags</span></span>(<span>self,<br>role_title: str,<br>company_name: str,<br>job_description: Optional[str] = None,<br>focus_tech: Optional[List[str]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def interview_prep_and_red_flags(
+    self,
+    role_title: str,
+    company_name: str,
+    job_description: Optional[str] = None,
+    focus_tech: Optional[List[str]] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-336: Interview prep, STAR scenarios, and red-flag checking.&#34;&#34;&#34;
+    prep = self.service.prepare_interview(role_title=role_title, company_name=company_name, focus_tech=focus_tech)
+    red_flags = []
+    if job_description:
+        red_flags = self.service.check_red_flags(company_name, job_description)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-336&#34;,
+        &#34;role_title&#34;: prep.role_title,
+        &#34;company_name&#34;: prep.company_name,
+        &#34;star_questions&#34;: prep.star_questions,
+        &#34;technical_focus_areas&#34;: prep.technical_focus_areas,
+        &#34;questions_to_ask_team&#34;: prep.questions_to_ask_team,
+        &#34;red_flag_warnings&#34;: red_flags or prep.red_flag_warnings,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-336: Interview prep, STAR scenarios, and red-flag checking.</p></div>
+</dd>
+<dt id="jarvis.powers.career_powers.CareerPowers.research_company_brief"><code class="name flex">
+<span>def <span class="ident">research_company_brief</span></span>(<span>self, company_name: str, domain: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def research_company_brief(self, company_name: str, domain: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-332: Company research brief (deep mode equivalent).&#34;&#34;&#34;
+    dossier = _safe_run_async(self.service.research_company(company_name=company_name, domain=domain))
+    return {
+        &#34;power_id&#34;: &#34;PWR-332&#34;,
+        &#34;company_name&#34;: dossier.company_name,
+        &#34;summary&#34;: dossier.summary,
+        &#34;culture_signals&#34;: dossier.culture_signals,
+        &#34;tech_stack&#34;: dossier.tech_stack,
+        &#34;recent_news&#34;: dossier.recent_news,
+        &#34;leadership&#34;: dossier.leadership,
+        &#34;glassdoor_rating&#34;: dossier.glassdoor_rating,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-332: Company research brief (deep mode equivalent).</p></div>
+</dd>
+<dt id="jarvis.powers.career_powers.CareerPowers.scan_job_listing"><code class="name flex">
+<span>def <span class="ident">scan_job_listing</span></span>(<span>self,<br>job_title: str,<br>company_name: str,<br>description: str,<br>job_url: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def scan_job_listing(
+    self, job_title: str, company_name: str, description: str, job_url: Optional[str] = None
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-329: Job scan and fit scoring (scan.mjs equivalent).&#34;&#34;&#34;
+    score = _safe_run_async(
+        self.service.scan_job(
+            job_title=job_title, company_name=company_name, description=description, job_url=job_url
+        )
+    )
+    return {
+        &#34;power_id&#34;: &#34;PWR-329&#34;,
+        &#34;job_id&#34;: score.job_id,
+        &#34;company_name&#34;: score.company_name,
+        &#34;job_title&#34;: score.job_title,
+        &#34;global_score&#34;: score.global_score,
+        &#34;hard_skills_score&#34;: score.hard_skills_score,
+        &#34;soft_skills_score&#34;: score.soft_skills_score,
+        &#34;matched_skills&#34;: score.matched_skills,
+        &#34;missing_skills&#34;: score.missing_skills,
+        &#34;recommendation&#34;: score.recommendation,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-329: Job scan and fit scoring (scan.mjs equivalent).</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.career_powers.CareerPowers" href="#jarvis.powers.career_powers.CareerPowers">CareerPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.analyze_application_pipeline" href="#jarvis.powers.career_powers.CareerPowers.analyze_application_pipeline">analyze_application_pipeline</a></code></li>
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.analyze_offer_and_salary_gap" href="#jarvis.powers.career_powers.CareerPowers.analyze_offer_and_salary_gap">analyze_offer_and_salary_gap</a></code></li>
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.draft_application_email" href="#jarvis.powers.career_powers.CareerPowers.draft_application_email">draft_application_email</a></code></li>
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.find_company_contacts" href="#jarvis.powers.career_powers.CareerPowers.find_company_contacts">find_company_contacts</a></code></li>
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.generate_cover_letter" href="#jarvis.powers.career_powers.CareerPowers.generate_cover_letter">generate_cover_letter</a></code></li>
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.generate_tailored_resume" href="#jarvis.powers.career_powers.CareerPowers.generate_tailored_resume">generate_tailored_resume</a></code></li>
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.get_service_status" href="#jarvis.powers.career_powers.CareerPowers.get_service_status">get_service_status</a></code></li>
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.interview_prep_and_red_flags" href="#jarvis.powers.career_powers.CareerPowers.interview_prep_and_red_flags">interview_prep_and_red_flags</a></code></li>
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.research_company_brief" href="#jarvis.powers.career_powers.CareerPowers.research_company_brief">research_company_brief</a></code></li>
+<li><code><a title="jarvis.powers.career_powers.CareerPowers.scan_job_listing" href="#jarvis.powers.career_powers.CareerPowers.scan_job_listing">scan_job_listing</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

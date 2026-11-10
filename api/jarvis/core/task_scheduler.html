@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.task_scheduler API documentation</title>
+<meta name="description" content="JARVIS Task Scheduler (Priority Queue &amp; Concurrency Controller)
+Manages the DAG task state machine, priority-based dispatching,
+concurrency limits, …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.task_scheduler</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Task Scheduler (Priority Queue &amp; Concurrency Controller)
+Manages the DAG task state machine, priority-based dispatching,
+concurrency limits, and downstream dependency unblocking.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.task_scheduler.TaskScheduler"><code class="flex name class">
+<span>class <span class="ident">TaskScheduler</span></span>
+<span>(</span><span>max_concurrency: int = 5)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskScheduler:
+    &#34;&#34;&#34;
+    State machine and concurrency manager for executing TaskGraph nodes.
+    Maintains active task queues, dispatches ready tasks according to Priority,
+    and enforces maximum concurrent running task constraints.
+    &#34;&#34;&#34;
+
+    def __init__(self, max_concurrency: int = 5):
+        self.max_concurrency = max_concurrency
+        self.running_tasks: Set[str] = set()
+
+    def get_dispatchable_tasks(self, graph: TaskGraph) -&gt; List[TaskNode]:
+        &#34;&#34;&#34;
+        Returns the next batch of tasks ready to execute, respecting
+        dependencies, priority order, and max concurrency limit.
+        &#34;&#34;&#34;
+        available_slots = max(0, self.max_concurrency - len(self.running_tasks))
+        if available_slots == 0:
+            return []
+
+        # Query DAG for all ready tasks
+        ready_candidates = graph.get_ready_tasks()
+
+        # Exclude currently running tasks
+        candidates = [t for t in ready_candidates if t.task_id not in self.running_tasks]
+
+        # Sort by priority (CRITICAL first, then HIGH, MEDIUM, LOW)
+        candidates.sort(key=lambda t: PRIORITY_WEIGHTS.get(t.priority, 2))
+
+        # Take up to available concurrency slots
+        dispatch_batch = candidates[:available_slots]
+        return dispatch_batch
+
+    def mark_started(self, graph: TaskGraph, task_id: str, agent_id: Optional[str] = None) -&gt; Optional[TaskNode]:
+        &#34;&#34;&#34;Transitions a task into RUNNING state and registers it in active running set.&#34;&#34;&#34;
+        node = graph.nodes.get(task_id)
+        if not node:
+            logger.error(f&#34;Task &#39;{task_id}&#39; not found in graph.&#34;)
+            return None
+
+        node.mark_running(agent_id=agent_id)
+        self.running_tasks.add(task_id)
+        logger.info(
+            f&#34;Task &#39;{task_id}&#39; ({node.name}) marked RUNNING with agent [{node.assigned_agent}]. Active running: {len(self.running_tasks)}&#34;
+        )
+        return node
+
+    def mark_completed(
+        self, graph: TaskGraph, task_id: str, outputs: Optional[Dict[str, Any]] = None
+    ) -&gt; Optional[TaskNode]:
+        &#34;&#34;&#34;
+        Transitions a task to COMPLETED, unblocks downstream dependent tasks,
+        and releases concurrency slot.
+        &#34;&#34;&#34;
+        node = graph.nodes.get(task_id)
+        if not node:
+            logger.error(f&#34;Task &#39;{task_id}&#39; not found in graph.&#34;)
+            return None
+
+        node.mark_completed(outputs=outputs)
+        self.running_tasks.discard(task_id)
+        logger.info(f&#34;Task &#39;{task_id}&#39; ({node.name}) COMPLETED. Active running: {len(self.running_tasks)}&#34;)
+
+        # Check downstream dependent nodes
+        downstream = graph.edges.get(task_id, [])
+        for child_id in downstream:
+            child_node = graph.nodes.get(child_id)
+            if child_node and child_node.status in (TaskStatus.PENDING, TaskStatus.BLOCKED):
+                # Verify if all dependencies of child are now completed
+                all_deps_done = all(
+                    graph.nodes.get(dep) and graph.nodes[dep].status == TaskStatus.COMPLETED
+                    for dep in child_node.dependencies
+                )
+                if all_deps_done:
+                    child_node.mark_ready()
+                    logger.info(f&#34;Downstream task &#39;{child_id}&#39; ({child_node.name}) unblocked -&gt; READY.&#34;)
+
+        return node
+
+    def mark_failed(self, graph: TaskGraph, task_id: str, error_message: str) -&gt; Optional[TaskNode]:
+        &#34;&#34;&#34;
+        Handles task failure and retries.
+        If retry count &lt; max_retries, sets back to READY for next cycle.
+        If exhausted, transitions to FAILED and cancels dependent downstream tasks.
+        &#34;&#34;&#34;
+        node = graph.nodes.get(task_id)
+        if not node:
+            logger.error(f&#34;Task &#39;{task_id}&#39; not found in graph.&#34;)
+            return None
+
+        self.running_tasks.discard(task_id)
+        node.mark_failed(error_message)
+
+        if node.status == TaskStatus.FAILED:
+            logger.warning(f&#34;Task &#39;{task_id}&#39; irrevocably FAILED after max retries: {error_message}&#34;)
+            self._cascade_cancellation(graph, task_id)
+        else:
+            logger.info(f&#34;Task &#39;{task_id}&#39; retry scheduled ({node.retry_count}/{node.max_retries}).&#34;)
+
+        return node
+
+    def _cascade_cancellation(self, graph: TaskGraph, failed_task_id: str) -&gt; None:
+        &#34;&#34;&#34;Cascades cancellation to all dependent tasks that required this failed task.&#34;&#34;&#34;
+        to_cancel = [child_id for child_id in graph.edges.get(failed_task_id, [])]
+        while to_cancel:
+            curr = to_cancel.pop(0)
+            child = graph.nodes.get(curr)
+            if child and child.status not in (TaskStatus.COMPLETED, TaskStatus.FAILED, TaskStatus.CANCELLED):
+                child.status = TaskStatus.CANCELLED
+                child.metadata[&#34;cancellation_reason&#34;] = f&#34;Dependency &#39;{failed_task_id}&#39; failed.&#34;
+                logger.warning(f&#34;Cascaded CANCELLED on dependent task &#39;{curr}&#39; ({child.name}).&#34;)
+                to_cancel.extend(graph.edges.get(curr, []))
+
+    def is_finished(self, graph: TaskGraph) -&gt; bool:
+        &#34;&#34;&#34;Returns True if the entire graph has finished executing (completed, failed, or cancelled).&#34;&#34;&#34;
+        if len(self.running_tasks) &gt; 0:
+            return False
+        for node in graph.nodes.values():
+            if node.status in (TaskStatus.PENDING, TaskStatus.READY, TaskStatus.RUNNING, TaskStatus.BLOCKED):
+                return False
+        return True</code></pre>
+</details>
+<div class="desc"><p>State machine and concurrency manager for executing TaskGraph nodes.
+Maintains active task queues, dispatches ready tasks according to Priority,
+and enforces maximum concurrent running task constraints.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.task_scheduler.TaskScheduler.get_dispatchable_tasks"><code class="name flex">
+<span>def <span class="ident">get_dispatchable_tasks</span></span>(<span>self, graph: TaskGraph) ‑> List[<a title="jarvis.core.task_graph.TaskNode" href="task_graph.html#jarvis.core.task_graph.TaskNode">TaskNode</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dispatchable_tasks(self, graph: TaskGraph) -&gt; List[TaskNode]:
+    &#34;&#34;&#34;
+    Returns the next batch of tasks ready to execute, respecting
+    dependencies, priority order, and max concurrency limit.
+    &#34;&#34;&#34;
+    available_slots = max(0, self.max_concurrency - len(self.running_tasks))
+    if available_slots == 0:
+        return []
+
+    # Query DAG for all ready tasks
+    ready_candidates = graph.get_ready_tasks()
+
+    # Exclude currently running tasks
+    candidates = [t for t in ready_candidates if t.task_id not in self.running_tasks]
+
+    # Sort by priority (CRITICAL first, then HIGH, MEDIUM, LOW)
+    candidates.sort(key=lambda t: PRIORITY_WEIGHTS.get(t.priority, 2))
+
+    # Take up to available concurrency slots
+    dispatch_batch = candidates[:available_slots]
+    return dispatch_batch</code></pre>
+</details>
+<div class="desc"><p>Returns the next batch of tasks ready to execute, respecting
+dependencies, priority order, and max concurrency limit.</p></div>
+</dd>
+<dt id="jarvis.core.task_scheduler.TaskScheduler.is_finished"><code class="name flex">
+<span>def <span class="ident">is_finished</span></span>(<span>self, graph: TaskGraph) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_finished(self, graph: TaskGraph) -&gt; bool:
+    &#34;&#34;&#34;Returns True if the entire graph has finished executing (completed, failed, or cancelled).&#34;&#34;&#34;
+    if len(self.running_tasks) &gt; 0:
+        return False
+    for node in graph.nodes.values():
+        if node.status in (TaskStatus.PENDING, TaskStatus.READY, TaskStatus.RUNNING, TaskStatus.BLOCKED):
+            return False
+    return True</code></pre>
+</details>
+<div class="desc"><p>Returns True if the entire graph has finished executing (completed, failed, or cancelled).</p></div>
+</dd>
+<dt id="jarvis.core.task_scheduler.TaskScheduler.mark_completed"><code class="name flex">
+<span>def <span class="ident">mark_completed</span></span>(<span>self, graph: TaskGraph, task_id: str, outputs: Optional[Dict[str, Any]] = None) ‑> <a title="jarvis.core.task_graph.TaskNode" href="task_graph.html#jarvis.core.task_graph.TaskNode">TaskNode</a> | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mark_completed(
+    self, graph: TaskGraph, task_id: str, outputs: Optional[Dict[str, Any]] = None
+) -&gt; Optional[TaskNode]:
+    &#34;&#34;&#34;
+    Transitions a task to COMPLETED, unblocks downstream dependent tasks,
+    and releases concurrency slot.
+    &#34;&#34;&#34;
+    node = graph.nodes.get(task_id)
+    if not node:
+        logger.error(f&#34;Task &#39;{task_id}&#39; not found in graph.&#34;)
+        return None
+
+    node.mark_completed(outputs=outputs)
+    self.running_tasks.discard(task_id)
+    logger.info(f&#34;Task &#39;{task_id}&#39; ({node.name}) COMPLETED. Active running: {len(self.running_tasks)}&#34;)
+
+    # Check downstream dependent nodes
+    downstream = graph.edges.get(task_id, [])
+    for child_id in downstream:
+        child_node = graph.nodes.get(child_id)
+        if child_node and child_node.status in (TaskStatus.PENDING, TaskStatus.BLOCKED):
+            # Verify if all dependencies of child are now completed
+            all_deps_done = all(
+                graph.nodes.get(dep) and graph.nodes[dep].status == TaskStatus.COMPLETED
+                for dep in child_node.dependencies
+            )
+            if all_deps_done:
+                child_node.mark_ready()
+                logger.info(f&#34;Downstream task &#39;{child_id}&#39; ({child_node.name}) unblocked -&gt; READY.&#34;)
+
+    return node</code></pre>
+</details>
+<div class="desc"><p>Transitions a task to COMPLETED, unblocks downstream dependent tasks,
+and releases concurrency slot.</p></div>
+</dd>
+<dt id="jarvis.core.task_scheduler.TaskScheduler.mark_failed"><code class="name flex">
+<span>def <span class="ident">mark_failed</span></span>(<span>self, graph: TaskGraph, task_id: str, error_message: str) ‑> <a title="jarvis.core.task_graph.TaskNode" href="task_graph.html#jarvis.core.task_graph.TaskNode">TaskNode</a> | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mark_failed(self, graph: TaskGraph, task_id: str, error_message: str) -&gt; Optional[TaskNode]:
+    &#34;&#34;&#34;
+    Handles task failure and retries.
+    If retry count &lt; max_retries, sets back to READY for next cycle.
+    If exhausted, transitions to FAILED and cancels dependent downstream tasks.
+    &#34;&#34;&#34;
+    node = graph.nodes.get(task_id)
+    if not node:
+        logger.error(f&#34;Task &#39;{task_id}&#39; not found in graph.&#34;)
+        return None
+
+    self.running_tasks.discard(task_id)
+    node.mark_failed(error_message)
+
+    if node.status == TaskStatus.FAILED:
+        logger.warning(f&#34;Task &#39;{task_id}&#39; irrevocably FAILED after max retries: {error_message}&#34;)
+        self._cascade_cancellation(graph, task_id)
+    else:
+        logger.info(f&#34;Task &#39;{task_id}&#39; retry scheduled ({node.retry_count}/{node.max_retries}).&#34;)
+
+    return node</code></pre>
+</details>
+<div class="desc"><p>Handles task failure and retries.
+If retry count &lt; max_retries, sets back to READY for next cycle.
+If exhausted, transitions to FAILED and cancels dependent downstream tasks.</p></div>
+</dd>
+<dt id="jarvis.core.task_scheduler.TaskScheduler.mark_started"><code class="name flex">
+<span>def <span class="ident">mark_started</span></span>(<span>self, graph: TaskGraph, task_id: str, agent_id: Optional[str] = None) ‑> <a title="jarvis.core.task_graph.TaskNode" href="task_graph.html#jarvis.core.task_graph.TaskNode">TaskNode</a> | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mark_started(self, graph: TaskGraph, task_id: str, agent_id: Optional[str] = None) -&gt; Optional[TaskNode]:
+    &#34;&#34;&#34;Transitions a task into RUNNING state and registers it in active running set.&#34;&#34;&#34;
+    node = graph.nodes.get(task_id)
+    if not node:
+        logger.error(f&#34;Task &#39;{task_id}&#39; not found in graph.&#34;)
+        return None
+
+    node.mark_running(agent_id=agent_id)
+    self.running_tasks.add(task_id)
+    logger.info(
+        f&#34;Task &#39;{task_id}&#39; ({node.name}) marked RUNNING with agent [{node.assigned_agent}]. Active running: {len(self.running_tasks)}&#34;
+    )
+    return node</code></pre>
+</details>
+<div class="desc"><p>Transitions a task into RUNNING state and registers it in active running set.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.task_scheduler.TaskScheduler" href="#jarvis.core.task_scheduler.TaskScheduler">TaskScheduler</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.task_scheduler.TaskScheduler.get_dispatchable_tasks" href="#jarvis.core.task_scheduler.TaskScheduler.get_dispatchable_tasks">get_dispatchable_tasks</a></code></li>
+<li><code><a title="jarvis.core.task_scheduler.TaskScheduler.is_finished" href="#jarvis.core.task_scheduler.TaskScheduler.is_finished">is_finished</a></code></li>
+<li><code><a title="jarvis.core.task_scheduler.TaskScheduler.mark_completed" href="#jarvis.core.task_scheduler.TaskScheduler.mark_completed">mark_completed</a></code></li>
+<li><code><a title="jarvis.core.task_scheduler.TaskScheduler.mark_failed" href="#jarvis.core.task_scheduler.TaskScheduler.mark_failed">mark_failed</a></code></li>
+<li><code><a title="jarvis.core.task_scheduler.TaskScheduler.mark_started" href="#jarvis.core.task_scheduler.TaskScheduler.mark_started">mark_started</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

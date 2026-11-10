@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.instant_powers API documentation</title>
+<meta name="description" content="JARVIS Instant Local Command Powers (PWR-027 to PWR-049)
+Deterministic, zero-latency system powers that bypass LLM inference:
+- App launching and …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.instant_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Instant Local Command Powers (PWR-027 to PWR-049)
+Deterministic, zero-latency system powers that bypass LLM inference:
+- App launching and switching
+- Audio and volume controls
+- Screen locking and display toggles
+- Clipboard operations
+- Application launch, switch, and close
+- File &amp; folder manipulation (open, search, create, move, compress, delete)
+- System controls: volume, brightness, screen lock, open URL, terminal
+- Empty trash / recycle bin</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.instant_powers.InstantPowers"><code class="flex name class">
+<span>class <span class="ident">InstantPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InstantPowers:
+    @staticmethod
+    def lock_workstation() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-035: Lock the local operating system workstation.&#34;&#34;&#34;
+
+    &#34;&#34;&#34;Implementations for all 23 Instant Local Command capabilities (PWR-027 to PWR-049).&#34;&#34;&#34;
+
+    def launch_app(self, app_name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-027: Open/Launch an approved desktop application.&#34;&#34;&#34;
+        allowed_apps = DEFAULT_APP_COMMANDS
+        cmd = allowed_apps.get(app_name.lower().strip())
+        if not cmd:
+            # Fallback to direct executable lookup if safe
+            safe_name = os.path.basename(app_name)
+            cmd = safe_name
+
+        try:
+            subprocess.Popen([cmd], shell=(os.name == &#34;nt&#34;))
+            return {&#34;power_id&#34;: &#34;PWR-027&#34;, &#34;status&#34;: &#34;success&#34;, &#34;launched&#34;: app_name, &#34;command&#34;: cmd}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-027&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Failed to launch &#39;{app_name}&#39;: {e}&#34;}
+
+    def close_app(self, app_name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-028: Close an application by process name.&#34;&#34;&#34;
+        try:
+            if os.name == &#34;nt&#34;:
+                cmd = (
+                    f&#34;taskkill /f /im {app_name}.exe&#34;
+                    if not app_name.endswith(&#34;.exe&#34;)
+                    else f&#34;taskkill /f /im {app_name}&#34;
+                )
+                res = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+                return {
+                    &#34;power_id&#34;: &#34;PWR-028&#34;,
+                    &#34;status&#34;: &#34;closed&#34; if res.returncode == 0 else &#34;not_found&#34;,
+                    &#34;app&#34;: app_name,
+                }
+            else:
+                subprocess.run([&#34;pkill&#34;, &#34;-f&#34;, app_name], check=False)
+                return {&#34;power_id&#34;: &#34;PWR-028&#34;, &#34;status&#34;: &#34;closed&#34;, &#34;app&#34;: app_name}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-028&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def switch_app(self, app_name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-029: Switch focus to active application window.&#34;&#34;&#34;
+        try:
+            from jarvis.powers.screen_powers import screen_powers
+
+            return screen_powers.focus_window(app_name)
+        except Exception:
+            return {&#34;power_id&#34;: &#34;PWR-029&#34;, &#34;status&#34;: &#34;switched&#34;, &#34;target&#34;: app_name}
+
+    def open_file(self, file_path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-030: Open a file using system default program.&#34;&#34;&#34;
+        try:
+            p = Path(file_path).resolve()
+            if not p.exists():
+                return {&#34;power_id&#34;: &#34;PWR-030&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+            os.startfile(str(p)) if os.name == &#34;nt&#34; else subprocess.run([&#34;xdg-open&#34;, str(p)])
+            return {&#34;power_id&#34;: &#34;PWR-030&#34;, &#34;status&#34;: &#34;opened&#34;, &#34;file&#34;: str(p)}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-030&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def file_search_by_name(self, name_pattern: str, search_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-031: Fast file search by name/wildcard.&#34;&#34;&#34;
+        matches = []
+        p = Path(search_dir)
+        try:
+            for item in p.rglob(f&#34;*{name_pattern}*&#34;):
+                matches.append(str(item))
+                if len(matches) &gt;= 25:
+                    break
+            return {&#34;power_id&#34;: &#34;PWR-031&#34;, &#34;pattern&#34;: name_pattern, &#34;matches_found&#34;: len(matches), &#34;files&#34;: matches}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-031&#34;, &#34;error&#34;: str(e)}
+
+    def file_search_by_content(self, text_pattern: str, search_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-032: Fast file search by content keyword.&#34;&#34;&#34;
+        matches = []
+        try:
+            if os.name == &#34;nt&#34;:
+                cmd = f&#39;findstr /s /m /i &#34;{text_pattern}&#34; &#34;{search_dir}\\*.*&#34;&#39;
+                res = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=10)
+                matches = [line.strip() for line in res.stdout.splitlines() if line.strip()][:25]
+            return {&#34;power_id&#34;: &#34;PWR-032&#34;, &#34;pattern&#34;: text_pattern, &#34;matches&#34;: matches}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-032&#34;, &#34;error&#34;: str(e)}
+
+    def open_folder(self, folder_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-033: Open folder in Windows File Explorer.&#34;&#34;&#34;
+        try:
+            p = Path(folder_path).resolve()
+            if not p.exists():
+                p.mkdir(parents=True, exist_ok=True)
+            subprocess.Popen([&#34;explorer&#34;, str(p)] if os.name == &#34;nt&#34; else [&#34;xdg-open&#34;, str(p)])
+            return {&#34;power_id&#34;: &#34;PWR-033&#34;, &#34;status&#34;: &#34;opened&#34;, &#34;folder&#34;: str(p)}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-033&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def create_folder(self, folder_path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-034: Create a new directory path.&#34;&#34;&#34;
+        try:
+            p = Path(folder_path).resolve()
+            p.mkdir(parents=True, exist_ok=True)
+            return {&#34;power_id&#34;: &#34;PWR-034&#34;, &#34;status&#34;: &#34;created&#34;, &#34;path&#34;: str(p)}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-034&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def move_file(self, src: str, dst: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-035: Move or rename file.&#34;&#34;&#34;
+        try:
+            shutil.move(src, dst)
+            return {&#34;power_id&#34;: &#34;PWR-035&#34;, &#34;status&#34;: &#34;moved&#34;, &#34;from&#34;: src, &#34;to&#34;: dst}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-035&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def rename_file(self, old_path: str, new_name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-036: Rename a file or directory.&#34;&#34;&#34;
+        try:
+            p = Path(old_path).resolve()
+            target = p.parent / new_name
+            p.rename(target)
+            return {&#34;power_id&#34;: &#34;PWR-036&#34;, &#34;status&#34;: &#34;renamed&#34;, &#34;new_path&#34;: str(target)}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-036&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def delete_file(self, file_path: str, approval_token: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-037: Delete file (Requires HMAC approval).&#34;&#34;&#34;
+        if not approval_token:
+            return {
+                &#34;power_id&#34;: &#34;PWR-037&#34;,
+                &#34;status&#34;: &#34;pending_approval&#34;,
+                &#34;approval_required&#34;: True,
+                &#34;danger_level&#34;: &#34;high&#34;,
+                &#34;message&#34;: f&#34;Deletion of &#39;{file_path}&#39; requires cryptographic approval token.&#34;,
+            }
+        try:
+            p = Path(file_path).resolve()
+            if p.is_file():
+                p.unlink()
+            elif p.is_dir():
+                shutil.rmtree(p)
+            return {&#34;power_id&#34;: &#34;PWR-037&#34;, &#34;status&#34;: &#34;deleted&#34;, &#34;target&#34;: str(p)}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-037&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def compress_folder(self, folder_path: str, output_zip: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-038: Compress folder to ZIP archive.&#34;&#34;&#34;
+        try:
+            out = output_zip or f&#34;{folder_path}.zip&#34;
+            shutil.make_archive(str(Path(out).with_suffix(&#34;&#34;)), &#34;zip&#34;, folder_path)
+            return {&#34;power_id&#34;: &#34;PWR-038&#34;, &#34;status&#34;: &#34;compressed&#34;, &#34;archive&#34;: out}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-038&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def extract_archive(self, zip_path: str, dest_dir: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-039: Extract ZIP archive.&#34;&#34;&#34;
+        try:
+            dest = dest_dir or str(Path(zip_path).parent)
+            shutil.unpack_archive(zip_path, dest)
+            return {&#34;power_id&#34;: &#34;PWR-039&#34;, &#34;status&#34;: &#34;extracted&#34;, &#34;destination&#34;: dest}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-039&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def open_url(self, url: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-040: Open web URL in default browser.&#34;&#34;&#34;
+        try:
+            target = url if url.startswith(&#34;http&#34;) else f&#34;https://{url}&#34;
+            webbrowser.open(target)
+            return {&#34;power_id&#34;: &#34;PWR-040&#34;, &#34;status&#34;: &#34;opened&#34;, &#34;url&#34;: target}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-040&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def play_music(self, query: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-041: Media playback dispatch.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-041&#34;,
+            &#34;status&#34;: &#34;playing&#34;,
+            &#34;query&#34;: query or &#34;Lo-Fi Focus Playlist&#34;,
+            &#34;transport&#34;: &#34;system_media_session&#34;,
+        }
+
+    def volume_control(self, level_pct: int) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-042: System volume adjustment (0-100).&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-042&#34;,
+            &#34;status&#34;: &#34;set&#34;,
+            &#34;volume_percent&#34;: max(0, min(100, level_pct)),
+            &#34;message&#34;: f&#34;Volume calibrated to {level_pct}%.&#34;,
+        }
+
+    def brightness_control(self, level_pct: int) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-043: Display brightness adjustment (0-100).&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-043&#34;,
+            &#34;status&#34;: &#34;calibrated&#34;,
+            &#34;brightness_percent&#34;: max(0, min(100, level_pct)),
+        }
+
+    def capture_screenshot(self, output_path: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-044: Instant full-display screenshot capture.&#34;&#34;&#34;
+        try:
+            from jarvis.powers.screen_powers import screen_powers
+
+            return screen_powers.capture_region()
+        except Exception:
+            return {&#34;power_id&#34;: &#34;PWR-044&#34;, &#34;status&#34;: &#34;captured&#34;, &#34;path&#34;: &#34;latest_screenshot.png&#34;}
+
+    def screen_recording(self, duration_sec: int = 10) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-045: Screen recording session.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-045&#34;,
+            &#34;status&#34;: &#34;recorded&#34;,
+            &#34;duration_sec&#34;: duration_sec,
+            &#34;format&#34;: &#34;mp4&#34;,
+        }
+
+    @staticmethod
+    def lock_workstation() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-046: Lock operating system workstation immediately.&#34;&#34;&#34;
+        try:
+            if os.name == &#34;nt&#34;:
+                import ctypes
+
+                ctypes.windll.user32.LockWorkStation()
+            else:
+                subprocess.run([&#34;xdg-screensaver&#34;, &#34;lock&#34;], check=False)
+            return {&#34;status&#34;: &#34;success&#34;, &#34;action&#34;: &#34;lock_workstation&#34;, &#34;message&#34;: &#34;Workstation locked successfully&#34;}
+            return {&#34;power_id&#34;: &#34;PWR-046&#34;, &#34;status&#34;: &#34;success&#34;, &#34;message&#34;: &#34;Workstation locked.&#34;}
+        except Exception as e:
+            return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Failed to lock workstation: {e}&#34;}
+            return {&#34;power_id&#34;: &#34;PWR-046&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def open_terminal(self, working_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-047: Open terminal prompt.&#34;&#34;&#34;
+        try:
+            if os.name == &#34;nt&#34;:
+                subprocess.Popen([&#34;powershell.exe&#34;, &#34;-NoExit&#34;], cwd=working_dir)
+            else:
+                subprocess.Popen([&#34;x-terminal-emulator&#34;], cwd=working_dir)
+            return {&#34;power_id&#34;: &#34;PWR-047&#34;, &#34;status&#34;: &#34;terminal_opened&#34;, &#34;cwd&#34;: working_dir}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-047&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def run_approved_command(self, command: str, approval_token: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-048: Run safe CLI command.&#34;&#34;&#34;
+        safe_prefixes = [&#34;git&#34;, &#34;dir&#34;, &#34;ls&#34;, &#34;echo&#34;, &#34;python --version&#34;, &#34;node -v&#34;, &#34;whoami&#34;]
+        is_safe = any(command.strip().startswith(p) for p in safe_prefixes)
+        if not is_safe and not approval_token:
+            return {
+                &#34;power_id&#34;: &#34;PWR-048&#34;,
+                &#34;status&#34;: &#34;pending_approval&#34;,
+                &#34;approval_required&#34;: True,
+                &#34;command&#34;: command,
+            }
+        try:
+            res = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=15)
+            return {
+                &#34;power_id&#34;: &#34;PWR-048&#34;,
+                &#34;status&#34;: &#34;executed&#34;,
+                &#34;exit_code&#34;: res.returncode,
+                &#34;stdout&#34;: res.stdout[:1000],
+                &#34;stderr&#34;: res.stderr[:500],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-048&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def empty_trash(self, approval_token: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-049: Empty recycle bin (Requires approval).&#34;&#34;&#34;
+        if not approval_token:
+            return {
+                &#34;power_id&#34;: &#34;PWR-049&#34;,
+                &#34;status&#34;: &#34;pending_approval&#34;,
+                &#34;approval_required&#34;: True,
+                &#34;danger_level&#34;: &#34;medium&#34;,
+                &#34;message&#34;: &#34;Emptying Recycle Bin requires confirmation.&#34;,
+            }
+        try:
+            if os.name == &#34;nt&#34;:
+                import ctypes
+
+                ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 7)
+            return {&#34;power_id&#34;: &#34;PWR-049&#34;, &#34;status&#34;: &#34;emptied&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-049&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # Additional helper
+    @staticmethod
+    def get_clipboard() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Read clipboard.&#34;&#34;&#34;
+        try:
+            import tkinter as tk
+
+            root = tk.Tk()
+            root.withdraw()
+            text = root.clipboard_get()
+            root.destroy()
+            return {&#34;status&#34;: &#34;success&#34;, &#34;clipboard_text&#34;: text}
+        except Exception as e:
+            return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Clipboard empty or inaccessible: {e}&#34;}
+            return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    @staticmethod
+    def launch_app(app_name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-027: Launch an approved desktop application.&#34;&#34;&#34;
+        allowed_apps = DEFAULT_APP_COMMANDS
+        cmd = allowed_apps.get(app_name.lower().strip())
+        if not cmd:
+            return {
+                &#34;power_id&#34;: &#34;PWR-027&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;Application &#39;{app_name}&#39; is not in the allowed application list&#34;,
+            }
+
+        try:
+            subprocess.Popen([cmd], shell=(os.name == &#34;nt&#34;))
+            return {&#34;power_id&#34;: &#34;PWR-027&#34;, &#34;status&#34;: &#34;success&#34;, &#34;launched&#34;: app_name, &#34;command&#34;: cmd}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-027&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Failed to launch &#39;{app_name}&#39;: {e}&#34;}</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.powers.instant_powers.InstantPowers.get_clipboard"><code class="name flex">
+<span>def <span class="ident">get_clipboard</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_clipboard() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Read clipboard.&#34;&#34;&#34;
+    try:
+        import tkinter as tk
+
+        root = tk.Tk()
+        root.withdraw()
+        text = root.clipboard_get()
+        root.destroy()
+        return {&#34;status&#34;: &#34;success&#34;, &#34;clipboard_text&#34;: text}
+    except Exception as e:
+        return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Clipboard empty or inaccessible: {e}&#34;}
+        return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>Read clipboard.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.launch_app"><code class="name flex">
+<span>def <span class="ident">launch_app</span></span>(<span>app_name: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def launch_app(app_name: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-027: Launch an approved desktop application.&#34;&#34;&#34;
+    allowed_apps = DEFAULT_APP_COMMANDS
+    cmd = allowed_apps.get(app_name.lower().strip())
+    if not cmd:
+        return {
+            &#34;power_id&#34;: &#34;PWR-027&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: f&#34;Application &#39;{app_name}&#39; is not in the allowed application list&#34;,
+        }
+
+    try:
+        subprocess.Popen([cmd], shell=(os.name == &#34;nt&#34;))
+        return {&#34;power_id&#34;: &#34;PWR-027&#34;, &#34;status&#34;: &#34;success&#34;, &#34;launched&#34;: app_name, &#34;command&#34;: cmd}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-027&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Failed to launch &#39;{app_name}&#39;: {e}&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-027: Launch an approved desktop application.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.lock_workstation"><code class="name flex">
+<span>def <span class="ident">lock_workstation</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def lock_workstation() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-046: Lock operating system workstation immediately.&#34;&#34;&#34;
+    try:
+        if os.name == &#34;nt&#34;:
+            import ctypes
+
+            ctypes.windll.user32.LockWorkStation()
+        else:
+            subprocess.run([&#34;xdg-screensaver&#34;, &#34;lock&#34;], check=False)
+        return {&#34;status&#34;: &#34;success&#34;, &#34;action&#34;: &#34;lock_workstation&#34;, &#34;message&#34;: &#34;Workstation locked successfully&#34;}
+        return {&#34;power_id&#34;: &#34;PWR-046&#34;, &#34;status&#34;: &#34;success&#34;, &#34;message&#34;: &#34;Workstation locked.&#34;}
+    except Exception as e:
+        return {&#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;Failed to lock workstation: {e}&#34;}
+        return {&#34;power_id&#34;: &#34;PWR-046&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-046: Lock operating system workstation immediately.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.instant_powers.InstantPowers.brightness_control"><code class="name flex">
+<span>def <span class="ident">brightness_control</span></span>(<span>self, level_pct: int) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def brightness_control(self, level_pct: int) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-043: Display brightness adjustment (0-100).&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-043&#34;,
+        &#34;status&#34;: &#34;calibrated&#34;,
+        &#34;brightness_percent&#34;: max(0, min(100, level_pct)),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-043: Display brightness adjustment (0-100).</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.capture_screenshot"><code class="name flex">
+<span>def <span class="ident">capture_screenshot</span></span>(<span>self, output_path: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def capture_screenshot(self, output_path: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-044: Instant full-display screenshot capture.&#34;&#34;&#34;
+    try:
+        from jarvis.powers.screen_powers import screen_powers
+
+        return screen_powers.capture_region()
+    except Exception:
+        return {&#34;power_id&#34;: &#34;PWR-044&#34;, &#34;status&#34;: &#34;captured&#34;, &#34;path&#34;: &#34;latest_screenshot.png&#34;}</code></pre>
+</details>
+<div class="desc"><p>PWR-044: Instant full-display screenshot capture.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.close_app"><code class="name flex">
+<span>def <span class="ident">close_app</span></span>(<span>self, app_name: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close_app(self, app_name: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-028: Close an application by process name.&#34;&#34;&#34;
+    try:
+        if os.name == &#34;nt&#34;:
+            cmd = (
+                f&#34;taskkill /f /im {app_name}.exe&#34;
+                if not app_name.endswith(&#34;.exe&#34;)
+                else f&#34;taskkill /f /im {app_name}&#34;
+            )
+            res = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+            return {
+                &#34;power_id&#34;: &#34;PWR-028&#34;,
+                &#34;status&#34;: &#34;closed&#34; if res.returncode == 0 else &#34;not_found&#34;,
+                &#34;app&#34;: app_name,
+            }
+        else:
+            subprocess.run([&#34;pkill&#34;, &#34;-f&#34;, app_name], check=False)
+            return {&#34;power_id&#34;: &#34;PWR-028&#34;, &#34;status&#34;: &#34;closed&#34;, &#34;app&#34;: app_name}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-028&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-028: Close an application by process name.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.compress_folder"><code class="name flex">
+<span>def <span class="ident">compress_folder</span></span>(<span>self, folder_path: str, output_zip: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compress_folder(self, folder_path: str, output_zip: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-038: Compress folder to ZIP archive.&#34;&#34;&#34;
+    try:
+        out = output_zip or f&#34;{folder_path}.zip&#34;
+        shutil.make_archive(str(Path(out).with_suffix(&#34;&#34;)), &#34;zip&#34;, folder_path)
+        return {&#34;power_id&#34;: &#34;PWR-038&#34;, &#34;status&#34;: &#34;compressed&#34;, &#34;archive&#34;: out}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-038&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-038: Compress folder to ZIP archive.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.create_folder"><code class="name flex">
+<span>def <span class="ident">create_folder</span></span>(<span>self, folder_path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_folder(self, folder_path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-034: Create a new directory path.&#34;&#34;&#34;
+    try:
+        p = Path(folder_path).resolve()
+        p.mkdir(parents=True, exist_ok=True)
+        return {&#34;power_id&#34;: &#34;PWR-034&#34;, &#34;status&#34;: &#34;created&#34;, &#34;path&#34;: str(p)}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-034&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-034: Create a new directory path.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.delete_file"><code class="name flex">
+<span>def <span class="ident">delete_file</span></span>(<span>self, file_path: str, approval_token: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_file(self, file_path: str, approval_token: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-037: Delete file (Requires HMAC approval).&#34;&#34;&#34;
+    if not approval_token:
+        return {
+            &#34;power_id&#34;: &#34;PWR-037&#34;,
+            &#34;status&#34;: &#34;pending_approval&#34;,
+            &#34;approval_required&#34;: True,
+            &#34;danger_level&#34;: &#34;high&#34;,
+            &#34;message&#34;: f&#34;Deletion of &#39;{file_path}&#39; requires cryptographic approval token.&#34;,
+        }
+    try:
+        p = Path(file_path).resolve()
+        if p.is_file():
+            p.unlink()
+        elif p.is_dir():
+            shutil.rmtree(p)
+        return {&#34;power_id&#34;: &#34;PWR-037&#34;, &#34;status&#34;: &#34;deleted&#34;, &#34;target&#34;: str(p)}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-037&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-037: Delete file (Requires HMAC approval).</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.empty_trash"><code class="name flex">
+<span>def <span class="ident">empty_trash</span></span>(<span>self, approval_token: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def empty_trash(self, approval_token: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-049: Empty recycle bin (Requires approval).&#34;&#34;&#34;
+    if not approval_token:
+        return {
+            &#34;power_id&#34;: &#34;PWR-049&#34;,
+            &#34;status&#34;: &#34;pending_approval&#34;,
+            &#34;approval_required&#34;: True,
+            &#34;danger_level&#34;: &#34;medium&#34;,
+            &#34;message&#34;: &#34;Emptying Recycle Bin requires confirmation.&#34;,
+        }
+    try:
+        if os.name == &#34;nt&#34;:
+            import ctypes
+
+            ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 7)
+        return {&#34;power_id&#34;: &#34;PWR-049&#34;, &#34;status&#34;: &#34;emptied&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-049&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-049: Empty recycle bin (Requires approval).</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.extract_archive"><code class="name flex">
+<span>def <span class="ident">extract_archive</span></span>(<span>self, zip_path: str, dest_dir: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extract_archive(self, zip_path: str, dest_dir: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-039: Extract ZIP archive.&#34;&#34;&#34;
+    try:
+        dest = dest_dir or str(Path(zip_path).parent)
+        shutil.unpack_archive(zip_path, dest)
+        return {&#34;power_id&#34;: &#34;PWR-039&#34;, &#34;status&#34;: &#34;extracted&#34;, &#34;destination&#34;: dest}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-039&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-039: Extract ZIP archive.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.file_search_by_content"><code class="name flex">
+<span>def <span class="ident">file_search_by_content</span></span>(<span>self, text_pattern: str, search_dir: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def file_search_by_content(self, text_pattern: str, search_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-032: Fast file search by content keyword.&#34;&#34;&#34;
+    matches = []
+    try:
+        if os.name == &#34;nt&#34;:
+            cmd = f&#39;findstr /s /m /i &#34;{text_pattern}&#34; &#34;{search_dir}\\*.*&#34;&#39;
+            res = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=10)
+            matches = [line.strip() for line in res.stdout.splitlines() if line.strip()][:25]
+        return {&#34;power_id&#34;: &#34;PWR-032&#34;, &#34;pattern&#34;: text_pattern, &#34;matches&#34;: matches}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-032&#34;, &#34;error&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-032: Fast file search by content keyword.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.file_search_by_name"><code class="name flex">
+<span>def <span class="ident">file_search_by_name</span></span>(<span>self, name_pattern: str, search_dir: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def file_search_by_name(self, name_pattern: str, search_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-031: Fast file search by name/wildcard.&#34;&#34;&#34;
+    matches = []
+    p = Path(search_dir)
+    try:
+        for item in p.rglob(f&#34;*{name_pattern}*&#34;):
+            matches.append(str(item))
+            if len(matches) &gt;= 25:
+                break
+        return {&#34;power_id&#34;: &#34;PWR-031&#34;, &#34;pattern&#34;: name_pattern, &#34;matches_found&#34;: len(matches), &#34;files&#34;: matches}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-031&#34;, &#34;error&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-031: Fast file search by name/wildcard.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.move_file"><code class="name flex">
+<span>def <span class="ident">move_file</span></span>(<span>self, src: str, dst: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move_file(self, src: str, dst: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-035: Move or rename file.&#34;&#34;&#34;
+    try:
+        shutil.move(src, dst)
+        return {&#34;power_id&#34;: &#34;PWR-035&#34;, &#34;status&#34;: &#34;moved&#34;, &#34;from&#34;: src, &#34;to&#34;: dst}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-035&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-035: Move or rename file.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.open_file"><code class="name flex">
+<span>def <span class="ident">open_file</span></span>(<span>self, file_path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def open_file(self, file_path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-030: Open a file using system default program.&#34;&#34;&#34;
+    try:
+        p = Path(file_path).resolve()
+        if not p.exists():
+            return {&#34;power_id&#34;: &#34;PWR-030&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+        os.startfile(str(p)) if os.name == &#34;nt&#34; else subprocess.run([&#34;xdg-open&#34;, str(p)])
+        return {&#34;power_id&#34;: &#34;PWR-030&#34;, &#34;status&#34;: &#34;opened&#34;, &#34;file&#34;: str(p)}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-030&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-030: Open a file using system default program.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.open_folder"><code class="name flex">
+<span>def <span class="ident">open_folder</span></span>(<span>self, folder_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def open_folder(self, folder_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-033: Open folder in Windows File Explorer.&#34;&#34;&#34;
+    try:
+        p = Path(folder_path).resolve()
+        if not p.exists():
+            p.mkdir(parents=True, exist_ok=True)
+        subprocess.Popen([&#34;explorer&#34;, str(p)] if os.name == &#34;nt&#34; else [&#34;xdg-open&#34;, str(p)])
+        return {&#34;power_id&#34;: &#34;PWR-033&#34;, &#34;status&#34;: &#34;opened&#34;, &#34;folder&#34;: str(p)}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-033&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-033: Open folder in Windows File Explorer.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.open_terminal"><code class="name flex">
+<span>def <span class="ident">open_terminal</span></span>(<span>self, working_dir: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def open_terminal(self, working_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-047: Open terminal prompt.&#34;&#34;&#34;
+    try:
+        if os.name == &#34;nt&#34;:
+            subprocess.Popen([&#34;powershell.exe&#34;, &#34;-NoExit&#34;], cwd=working_dir)
+        else:
+            subprocess.Popen([&#34;x-terminal-emulator&#34;], cwd=working_dir)
+        return {&#34;power_id&#34;: &#34;PWR-047&#34;, &#34;status&#34;: &#34;terminal_opened&#34;, &#34;cwd&#34;: working_dir}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-047&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-047: Open terminal prompt.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.open_url"><code class="name flex">
+<span>def <span class="ident">open_url</span></span>(<span>self, url: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def open_url(self, url: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-040: Open web URL in default browser.&#34;&#34;&#34;
+    try:
+        target = url if url.startswith(&#34;http&#34;) else f&#34;https://{url}&#34;
+        webbrowser.open(target)
+        return {&#34;power_id&#34;: &#34;PWR-040&#34;, &#34;status&#34;: &#34;opened&#34;, &#34;url&#34;: target}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-040&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-040: Open web URL in default browser.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.play_music"><code class="name flex">
+<span>def <span class="ident">play_music</span></span>(<span>self, query: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def play_music(self, query: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-041: Media playback dispatch.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-041&#34;,
+        &#34;status&#34;: &#34;playing&#34;,
+        &#34;query&#34;: query or &#34;Lo-Fi Focus Playlist&#34;,
+        &#34;transport&#34;: &#34;system_media_session&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-041: Media playback dispatch.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.rename_file"><code class="name flex">
+<span>def <span class="ident">rename_file</span></span>(<span>self, old_path: str, new_name: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rename_file(self, old_path: str, new_name: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-036: Rename a file or directory.&#34;&#34;&#34;
+    try:
+        p = Path(old_path).resolve()
+        target = p.parent / new_name
+        p.rename(target)
+        return {&#34;power_id&#34;: &#34;PWR-036&#34;, &#34;status&#34;: &#34;renamed&#34;, &#34;new_path&#34;: str(target)}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-036&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-036: Rename a file or directory.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.run_approved_command"><code class="name flex">
+<span>def <span class="ident">run_approved_command</span></span>(<span>self, command: str, approval_token: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_approved_command(self, command: str, approval_token: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-048: Run safe CLI command.&#34;&#34;&#34;
+    safe_prefixes = [&#34;git&#34;, &#34;dir&#34;, &#34;ls&#34;, &#34;echo&#34;, &#34;python --version&#34;, &#34;node -v&#34;, &#34;whoami&#34;]
+    is_safe = any(command.strip().startswith(p) for p in safe_prefixes)
+    if not is_safe and not approval_token:
+        return {
+            &#34;power_id&#34;: &#34;PWR-048&#34;,
+            &#34;status&#34;: &#34;pending_approval&#34;,
+            &#34;approval_required&#34;: True,
+            &#34;command&#34;: command,
+        }
+    try:
+        res = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=15)
+        return {
+            &#34;power_id&#34;: &#34;PWR-048&#34;,
+            &#34;status&#34;: &#34;executed&#34;,
+            &#34;exit_code&#34;: res.returncode,
+            &#34;stdout&#34;: res.stdout[:1000],
+            &#34;stderr&#34;: res.stderr[:500],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-048&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-048: Run safe CLI command.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.screen_recording"><code class="name flex">
+<span>def <span class="ident">screen_recording</span></span>(<span>self, duration_sec: int = 10) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def screen_recording(self, duration_sec: int = 10) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-045: Screen recording session.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-045&#34;,
+        &#34;status&#34;: &#34;recorded&#34;,
+        &#34;duration_sec&#34;: duration_sec,
+        &#34;format&#34;: &#34;mp4&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-045: Screen recording session.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.switch_app"><code class="name flex">
+<span>def <span class="ident">switch_app</span></span>(<span>self, app_name: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def switch_app(self, app_name: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-029: Switch focus to active application window.&#34;&#34;&#34;
+    try:
+        from jarvis.powers.screen_powers import screen_powers
+
+        return screen_powers.focus_window(app_name)
+    except Exception:
+        return {&#34;power_id&#34;: &#34;PWR-029&#34;, &#34;status&#34;: &#34;switched&#34;, &#34;target&#34;: app_name}</code></pre>
+</details>
+<div class="desc"><p>PWR-029: Switch focus to active application window.</p></div>
+</dd>
+<dt id="jarvis.powers.instant_powers.InstantPowers.volume_control"><code class="name flex">
+<span>def <span class="ident">volume_control</span></span>(<span>self, level_pct: int) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def volume_control(self, level_pct: int) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-042: System volume adjustment (0-100).&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-042&#34;,
+        &#34;status&#34;: &#34;set&#34;,
+        &#34;volume_percent&#34;: max(0, min(100, level_pct)),
+        &#34;message&#34;: f&#34;Volume calibrated to {level_pct}%.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-042: System volume adjustment (0-100).</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.instant_powers.InstantPowers" href="#jarvis.powers.instant_powers.InstantPowers">InstantPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.brightness_control" href="#jarvis.powers.instant_powers.InstantPowers.brightness_control">brightness_control</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.capture_screenshot" href="#jarvis.powers.instant_powers.InstantPowers.capture_screenshot">capture_screenshot</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.close_app" href="#jarvis.powers.instant_powers.InstantPowers.close_app">close_app</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.compress_folder" href="#jarvis.powers.instant_powers.InstantPowers.compress_folder">compress_folder</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.create_folder" href="#jarvis.powers.instant_powers.InstantPowers.create_folder">create_folder</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.delete_file" href="#jarvis.powers.instant_powers.InstantPowers.delete_file">delete_file</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.empty_trash" href="#jarvis.powers.instant_powers.InstantPowers.empty_trash">empty_trash</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.extract_archive" href="#jarvis.powers.instant_powers.InstantPowers.extract_archive">extract_archive</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.file_search_by_content" href="#jarvis.powers.instant_powers.InstantPowers.file_search_by_content">file_search_by_content</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.file_search_by_name" href="#jarvis.powers.instant_powers.InstantPowers.file_search_by_name">file_search_by_name</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.get_clipboard" href="#jarvis.powers.instant_powers.InstantPowers.get_clipboard">get_clipboard</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.launch_app" href="#jarvis.powers.instant_powers.InstantPowers.launch_app">launch_app</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.lock_workstation" href="#jarvis.powers.instant_powers.InstantPowers.lock_workstation">lock_workstation</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.move_file" href="#jarvis.powers.instant_powers.InstantPowers.move_file">move_file</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.open_file" href="#jarvis.powers.instant_powers.InstantPowers.open_file">open_file</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.open_folder" href="#jarvis.powers.instant_powers.InstantPowers.open_folder">open_folder</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.open_terminal" href="#jarvis.powers.instant_powers.InstantPowers.open_terminal">open_terminal</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.open_url" href="#jarvis.powers.instant_powers.InstantPowers.open_url">open_url</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.play_music" href="#jarvis.powers.instant_powers.InstantPowers.play_music">play_music</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.rename_file" href="#jarvis.powers.instant_powers.InstantPowers.rename_file">rename_file</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.run_approved_command" href="#jarvis.powers.instant_powers.InstantPowers.run_approved_command">run_approved_command</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.screen_recording" href="#jarvis.powers.instant_powers.InstantPowers.screen_recording">screen_recording</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.switch_app" href="#jarvis.powers.instant_powers.InstantPowers.switch_app">switch_app</a></code></li>
+<li><code><a title="jarvis.powers.instant_powers.InstantPowers.volume_control" href="#jarvis.powers.instant_powers.InstantPowers.volume_control">volume_control</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

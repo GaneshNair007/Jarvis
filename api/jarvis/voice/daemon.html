@@ -1,0 +1,1737 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.voice.daemon API documentation</title>
+<meta name="description" content="JARVIS Always-On Voice Daemon …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.voice.daemon</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Always-On Voice Daemon.</p>
+<p>Continuously listens on the microphone for wake phrases ("Hey Jarvis"),
+transcribes speech with faster-whisper, routes commands through the
+orchestrator, and speaks replies via Windows SAPI.</p>
+<p>Runs headless in the background - no browser, no localhost tab required.</p>
+<p>Stage 1: Continuous microphone capture (sounddevice, 16 kHz mono PCM)
+Stage 2: Energy-based voice activity detection and utterance segmentation
+Stage 3: Real faster-whisper transcription of each detected utterance
+Stage 4: Wake phrase matching and command extraction
+Stage 5: Orchestrator execution with Evidence-backed results
+Stage 6: SAPI spoken reply with barge-in interruption support</p>
+<p>Every wake event and executed command is recorded as Evidence
+(First Law: No Evidence, No Claim).</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.voice.daemon.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main() -&gt; None:  # pragma: no cover - interactive entrypoint
+    &#34;&#34;&#34;Entry point for `python -m jarvis.voice.daemon` background service.&#34;&#34;&#34;
+    from jarvis.ops.process_registry import process_registry
+
+    claim, existing = process_registry.claim_role(&#34;voice_daemon&#34;)
+    if claim == &#34;EXISTING&#34; and existing is not None:
+        print(
+            f&#34;[JARVIS Voice Daemon] another instance is already running (pid {existing.pid}); this launch is a no-op.&#34;
+        )
+        return
+    if claim == &#34;NO_MATCH&#34;:
+        # Unusual launch path (for example an embedded interpreter).  The
+        # daemon may still run, but it cannot claim a validated registry slot.
+        print(&#34;[JARVIS Voice Daemon] launch path does not match the registry signature; running unregistered.&#34;)
+
+    daemon = VoiceDaemon()
+    try:
+        health = daemon.start(use_microphone=True)
+        print(f&#34;[JARVIS Voice Daemon] {health}&#34;)
+        while daemon.running:
+            time.sleep(1.0)
+    except KeyboardInterrupt:
+        daemon.stop()
+    finally:
+        process_registry.release(&#34;voice_daemon&#34;)</code></pre>
+</details>
+<div class="desc"><p>Entry point for <code>python -m jarvis.voice.daemon</code> background service.</p></div>
+</dd>
+<dt id="jarvis.voice.daemon.probe_input_devices"><code class="name flex">
+<span>def <span class="ident">probe_input_devices</span></span>(<span>duration_sec: float = 0.7,<br>min_mean: float = 100.0,<br>max_mean: float = 8000.0,<br>max_clipped_frac: float = 0.01,<br>min_nonzero_window_frac: float = 0.75) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def probe_input_devices(
+    duration_sec: float = 0.7,
+    min_mean: float = 100.0,
+    max_mean: float = 8000.0,
+    max_clipped_frac: float = 0.01,
+    min_nonzero_window_frac: float = 0.75,
+) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Records a short sample from every input device and classifies it.
+
+    Measured with the SAME mechanism the daemon uses (sounddevice InputStream
+    callbacks), because several Realtek devices on this host pass a one-shot
+    `sd.rec` sample yet deliver ZERO live callbacks (12/20 measured on this
+    machine). Status meanings (First Law - measured, not assumed):
+      live   - sustained acoustic signal (noise floor &gt;= min_mean, no dropouts,
+               no full-scale glitching) -&gt; safe for wake-word listening
+      silent - stream delivers but carries near-digital silence (muted mic)
+      glitch - full-scale noise or intermittent dropouts (driver fault)
+      error  - device could not be opened OR never delivers callbacks
+    &#34;&#34;&#34;
+    results: List[Dict[str, Any]] = []
+    if np is None:  # pragma: no cover
+        return results
+    try:
+        import sounddevice as sd
+        import queue as _queue
+        import time as _time
+    except Exception as exc:  # pragma: no cover
+        logger.warning(f&#34;probe_input_devices: sounddevice unavailable: {exc}&#34;)
+        return results
+
+    devices = sd.query_devices()
+    window = max(1, int(duration_sec * 4))  # 0.25 s windows
+    for idx, info in enumerate(devices):
+        if info.get(&#34;max_input_channels&#34;, 0) &lt; 1:
+            continue
+        entry: Dict[str, Any] = {
+            &#34;index&#34;: idx,
+            &#34;name&#34;: info.get(&#34;name&#34;, &#34;&#34;),
+            &#34;hostapi&#34;: sd.query_hostapis(info.get(&#34;hostapi&#34;, 0)).get(&#34;name&#34;, &#34;&#34;),
+            &#34;default_rate&#34;: int(info.get(&#34;default_samplerate&#34;, 16000)),
+        }
+        # Probe at the rate the daemon would actually use (native), because
+        # MME opens differ from WDM/WASAPI restrictions across this host.
+        rate = entry[&#34;default_rate&#34;]
+        if rate &lt; 8000:
+            rate = 16000
+        chunks: List[bytes] = []
+        cb_hits = 0
+
+        def _probe_cb(indata, frames, time_info, status):
+            nonlocal cb_hits
+            cb_hits += 1
+            chunks.append(bytes(indata))
+
+        audio = None
+        try:
+            with sd.InputStream(
+                samplerate=rate,
+                channels=1,
+                dtype=&#34;int16&#34;,
+                device=idx,
+                blocksize=max(1, int(rate * 0.1)),
+                callback=_probe_cb,
+            ):
+                _time.sleep(duration_sec)
+            if cb_hits &gt; 0:
+                audio = b&#34;&#34;.join(chunks)
+        except Exception:
+            audio = None
+
+        if audio is None or len(audio) &lt; 2:
+            entry[&#34;status&#34;] = &#34;error&#34;
+            entry[&#34;error&#34;] = &#34;open_failed&#34; if cb_hits == 0 else &#34;no_callbacks&#34;
+            results.append(entry)
+            continue
+
+        samples = np.frombuffer(audio, dtype=np.int16).astype(np.float32)
+        mean = float(np.mean(np.abs(samples)))
+        peak = float(np.max(np.abs(samples)))
+        clipped_frac = float(np.mean(np.abs(samples) &gt; 30000))
+        win_len = max(1, len(samples) // window)
+        nonzero = 0
+        total_windows = 0
+        for start in range(0, len(samples), win_len):
+            chunk = samples[start : start + win_len]
+            if chunk.size == 0:
+                continue
+            total_windows += 1
+            if float(np.sqrt((chunk**2).mean())) &gt; 5.0:
+                nonzero += 1
+        nonzero_frac = (nonzero / total_windows) if total_windows else 0.0
+
+        entry.update(
+            {
+                &#34;rate&#34;: rate,
+                &#34;mean&#34;: round(mean, 2),
+                &#34;peak&#34;: round(peak, 1),
+                &#34;clipped_frac&#34;: round(clipped_frac, 4),
+                &#34;nonzero_window_frac&#34;: round(nonzero_frac, 3),
+            }
+        )
+        if mean &lt; min_mean:
+            entry[&#34;status&#34;] = &#34;silent&#34;
+            # Additive honesty: a NONZERO mean is a working microphone in a
+            # quiet room (usable for wake listening); exact digital silence
+            # with peak==0 is muted/hidden hardware (not usable).
+            entry[&#34;usable&#34;] = mean &gt; 0.0
+        elif mean &gt;= max_mean or clipped_frac &gt;= max_clipped_frac:
+            entry[&#34;status&#34;] = &#34;glitch&#34;
+        elif nonzero_frac &lt; min_nonzero_window_frac:
+            entry[&#34;status&#34;] = &#34;glitch&#34;
+        else:
+            entry[&#34;status&#34;] = &#34;live&#34;
+        results.append(entry)
+    return results</code></pre>
+</details>
+<div class="desc"><p>Records a short sample from every input device and classifies it.</p>
+<p>Measured with the SAME mechanism the daemon uses (sounddevice InputStream
+callbacks), because several Realtek devices on this host pass a one-shot
+<code>sd.rec</code> sample yet deliver ZERO live callbacks (12/20 measured on this
+machine). Status meanings (First Law - measured, not assumed):
+live
+- sustained acoustic signal (noise floor &gt;= min_mean, no dropouts,
+no full-scale glitching) -&gt; safe for wake-word listening
+silent - stream delivers but carries near-digital silence (muted mic)
+glitch - full-scale noise or intermittent dropouts (driver fault)
+error
+- device could not be opened OR never delivers callbacks</p></div>
+</dd>
+<dt id="jarvis.voice.daemon.select_input_device"><code class="name flex">
+<span>def <span class="ident">select_input_device</span></span>(<span>explicit: Optional[int] = None, probe: Optional[List[Dict[str, Any]]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def select_input_device(
+    explicit: Optional[int] = None,
+    probe: Optional[List[Dict[str, Any]]] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Picks the best capture device: explicit/env &gt; live shared-mode &gt; live &gt; default.
+
+    Returns {&#34;device&#34;: Optional[int], &#34;name&#34;: str, &#34;live&#34;: bool, &#34;source&#34;: str, ...}
+    &#34;&#34;&#34;
+    try:
+        import sounddevice as sd
+    except Exception:  # pragma: no cover
+        return {&#34;device&#34;: None, &#34;name&#34;: &#34;&#34;, &#34;live&#34;: False, &#34;source&#34;: &#34;no_sounddevice&#34;}
+
+    default_idx = None
+    try:
+        default_idx = sd.default.device[0]
+    except Exception:
+        default_idx = None
+
+    env_raw = os.environ.get(&#34;JARVIS_MIC_DEVICE&#34;, &#34;&#34;).strip()
+    if explicit is None and env_raw:
+        try:
+            explicit = int(env_raw)
+        except ValueError:
+            explicit = None
+    if explicit is not None:
+        try:
+            info = sd.query_devices(explicit)
+            return {
+                &#34;device&#34;: explicit,
+                &#34;name&#34;: info.get(&#34;name&#34;, &#34;&#34;),
+                &#34;live&#34;: False,  # not measured when forced
+                &#34;source&#34;: &#34;explicit&#34;,
+            }
+        except Exception:
+            pass
+
+    if probe is None:
+        probe = probe_input_devices()
+
+    usable = [
+        e
+        for e in probe
+        if (e.get(&#34;status&#34;) == &#34;live&#34; or e.get(&#34;usable&#34;) is True)
+        and not any(tag in (e.get(&#34;name&#34;) or &#34;&#34;).lower() for tag in (&#34;stereo mix&#34;, &#34;pc speaker&#34;))
+    ]
+    if usable:
+        # Intent-first selection (measured on this host): the physically
+        # present far-field device is the Realtek &#34;Microphone Array&#34;; its MME
+        # alias accepted 16 kHz but stalled, while native-rate capture flows
+        # clean - the daemon resamples to 16 kHz in its callback.
+        def rank(entry: Dict[str, Any]) -&gt; tuple:
+            name_l = (entry.get(&#34;name&#34;) or &#34;&#34;).lower()
+            tier = 0 if &#34;array&#34; in name_l else (1 if name_l.startswith(&#34;microphone&#34;) else 2)
+            return (tier, -(entry.get(&#34;mean&#34;) or 0.0), entry.get(&#34;index&#34;, 0))
+
+        ranked = sorted(usable, key=rank)
+        head_api = ranked[0].get(&#34;hostapi&#34;, &#34;&#34;)
+        tier = [e for e in ranked if e.get(&#34;hostapi&#34;) == head_api] or ranked
+        shared = [e for e in tier if e.get(&#34;hostapi&#34;) in (&#34;MME&#34;, &#34;Windows DirectSound&#34;, &#34;Windows WASAPI&#34;)]
+        chosen = (shared or tier or ranked)[0]
+        return {
+            &#34;device&#34;: chosen[&#34;index&#34;],
+            &#34;name&#34;: chosen.get(&#34;name&#34;, &#34;&#34;),
+            &#34;live&#34;: True,
+            &#34;source&#34;: &#34;probe&#34;,
+            &#34;probe_entry&#34;: chosen,
+        }
+
+    name = &#34;&#34;
+    if default_idx is not None:
+        try:
+            name = sd.query_devices(default_idx).get(&#34;name&#34;, &#34;&#34;)
+        except Exception:
+            name = &#34;&#34;
+    return {
+        &#34;device&#34;: default_idx,
+        &#34;name&#34;: name,
+        &#34;live&#34;: False,
+        &#34;source&#34;: &#34;default_fallback&#34;,
+        &#34;probe_summary&#34;: {
+            &#34;live&#34;: 0,
+            &#34;silent&#34;: sum(1 for e in probe if e.get(&#34;status&#34;) == &#34;silent&#34;),
+            &#34;glitch&#34;: sum(1 for e in probe if e.get(&#34;status&#34;) == &#34;glitch&#34;),
+            &#34;error&#34;: sum(1 for e in probe if e.get(&#34;status&#34;) == &#34;error&#34;),
+        },
+    }</code></pre>
+</details>
+<div class="desc"><p>Picks the best capture device: explicit/env &gt; live shared-mode &gt; live &gt; default.</p>
+<p>Returns {"device": Optional[int], "name": str, "live": bool, "source": str, &hellip;}</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.voice.daemon.VoiceDaemon"><code class="flex name class">
+<span>class <span class="ident">VoiceDaemon</span></span>
+<span>(</span><span>audio_stream: Any = None,<br>stt: Any = None,<br>tts: Any = None,<br>orchestrator: Any = None,<br>wake_detector: Any = None,<br>wake_phrases: Optional[List[str]] = None,<br>speech_callback: Optional[Callable[[Dict[str, Any]], None]] = None,<br>speak_replies: bool = True,<br>mic_device: Optional[int] = None,<br>probe_devices: bool = True,<br>gate: Any = None,<br>acoustic_gate_enabled: Optional[bool] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class VoiceDaemon:
+    &#34;&#34;&#34;Always-on wake-word voice daemon (PWR-006 family).&#34;&#34;&#34;
+
+    SAMPLE_RATE = 16000
+    CHANNELS = 1
+    BLOCK_MS = 100
+    BLOCK_FRAMES = SAMPLE_RATE * BLOCK_MS // 1000
+    SILENCE_END_SEC = 0.7
+    TRAILING_SILENCE_SEC = 0.35
+    MIN_SPEECH_SEC = 0.25
+    MAX_COMMAND_SEC = 10.0
+    MAX_QUEUE_BLOCKS = 300
+    MEAN_ABS_THRESHOLD = 500.0
+
+    SILENCE_END_BLOCKS = max(1, int(round(SILENCE_END_SEC * 1000 / BLOCK_MS)))
+    TRAILING_SILENCE_BLOCKS = max(1, int(round(TRAILING_SILENCE_SEC * 1000 / BLOCK_MS)))
+    MIN_SPEECH_BLOCKS = max(1, int(round(MIN_SPEECH_SEC * 1000 / BLOCK_MS)))
+    MAX_COMMAND_BLOCKS = max(1, int(round(MAX_COMMAND_SEC * 1000 / BLOCK_MS)))
+
+    STATES = (&#34;IDLE&#34;, &#34;LISTENING_FOR_WAKE&#34;, &#34;CAPTURING_COMMAND&#34;, &#34;PROCESSING&#34;, &#34;SPEAKING&#34;)
+
+    def __init__(
+        self,
+        audio_stream: Any = None,
+        stt: Any = None,
+        tts: Any = None,
+        orchestrator: Any = None,
+        wake_detector: Any = None,
+        wake_phrases: Optional[List[str]] = None,
+        speech_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
+        speak_replies: bool = True,
+        mic_device: Optional[int] = None,
+        probe_devices: bool = True,
+        gate: Any = None,
+        acoustic_gate_enabled: Optional[bool] = None,
+    ):
+        self.state = &#34;IDLE&#34;
+        self.running = False
+
+        self._audio_stream = audio_stream
+        self._stt = stt
+        self._tts = tts
+        self._orchestrator = orchestrator
+        self._wake = wake_detector
+        self.wake_phrases = [
+            p.lower().strip()
+            for p in (wake_phrases or getattr(settings, &#34;voice_wake_phrases&#34;, [&#34;hey jarvis&#34;, &#34;jarvis&#34;, &#34;ok jarvis&#34;]))
+        ]
+        self._speech_callback = speech_callback
+        self._speak_replies = speak_replies
+        self._mic_device = mic_device
+        self._probe_devices = probe_devices
+        self._gate = gate  # injectable for tests; lazily resolves to the global acoustic gate
+        if acoustic_gate_enabled is None:
+            # Env lever: JARVIS_ACOUSTIC_GATE=off restores the pure legacy wake
+            # path (useful for deterministic test runs / constrained hosts).
+            env_val = os.getenv(&#34;JARVIS_ACOUSTIC_GATE&#34;, &#34;on&#34;).strip().lower()
+            acoustic_gate_enabled = env_val not in (&#34;0&#34;, &#34;off&#34;, &#34;false&#34;, &#34;no&#34;, &#34;disabled&#34;)
+        self._gate_enabled = bool(acoustic_gate_enabled)
+        self._gate_hit_in_utterance = False
+        self._last_gate_score = 0.0
+        self._gate_cooldown_until: float = 0.0
+        self._capture_rate = self.SAMPLE_RATE
+        self._mic_info: Dict[str, Any] = {&#34;device&#34;: None, &#34;name&#34;: &#34;&#34;, &#34;live&#34;: False, &#34;source&#34;: &#34;not_started&#34;}
+
+        self._queue: &#34;queue.Queue[bytes]&#34; = queue.Queue(maxsize=self.MAX_QUEUE_BLOCKS)
+        self._worker: Optional[threading.Thread] = None
+        self._stream: Any = None
+        self._running_flag = threading.Event()
+        self._stats_lock = threading.Lock()
+
+        self._buffer = bytearray()
+        self._speech_blocks = 0
+        self._silence_blocks = 0
+        self._utterance_active = False
+
+        self.wake_count = 0
+        self.acoustic_wake_count = 0
+        self.gated_utterance_count = 0
+        self.command_count = 0
+        self.error_count = 0
+        self.last_wake_ts: Optional[float] = None
+        self.last_transcript = &#34;&#34;
+        self.last_reply = &#34;&#34;
+        self.last_command = &#34;&#34;
+        self.started_at: Optional[float] = None
+        self.evidence_log: List[Dict[str, Any]] = []
+
+    # ------------------------------------------------------------------ #
+    #  Component access (lazy)                                            #
+    # ------------------------------------------------------------------ #
+
+    @property
+    def stt(self) -&gt; Any:
+        if self._stt is None:
+            from jarvis.voice.stt import stt_engine
+
+            self._stt = stt_engine
+        return self._stt
+
+    @property
+    def tts(self) -&gt; Any:
+        if self._tts is None:
+            from jarvis.voice.tts import tts_engine
+
+            self._tts = tts_engine
+        return self._tts
+
+    @property
+    def orchestrator(self) -&gt; Any:
+        if self._orchestrator is None:
+            from jarvis.core.orchestrator import orchestrator as orch
+
+            self._orchestrator = orch
+        return self._orchestrator
+
+    @property
+    def wake(self) -&gt; Any:
+        if self._wake is None:
+            from jarvis.voice.wake import wake_detector
+
+            self._wake = wake_detector
+        return self._wake
+
+    @property
+    def gate(self) -&gt; Any:
+        &#34;&#34;&#34;Acoustic wake gate. Resolves to the process-wide singleton on first use;
+        loading openWakeWord is deferred until real audio hits the gate.&#34;&#34;&#34;
+        if self._gate is None:
+            from jarvis.voice.wake import get_acoustic_gate
+
+            self._gate = get_acoustic_gate()
+        return self._gate
+
+    def _gate_ready(self) -&gt; bool:
+        &#34;&#34;&#34;True when the acoustic gate is enabled and actually loaded/available.
+
+        Every failure mode (disabled, not installed, model load failed) lands
+        here as False, which restores the legacy transcription-based wake path
+        (Whisper on every utterance). Fail-closed, never silent.
+        &#34;&#34;&#34;
+        if not self._gate_enabled:
+            return False
+        if self._gate is None:
+            return False  # not loaded yet: legacy path until audio arrives
+        try:
+            return bool(self._gate.available)
+        except Exception:
+            return False
+
+    def _gate_ready_for_listening(self) -&gt; bool:
+        &#34;&#34;&#34;Gate armed AND actively scoring right now.
+
+        During the post-wake cooldown the acoustic gate is deliberately muted;
+        the utterance short-circuit that skips Whisper must not treat that
+        window as &#34;gate listening&#34; — transcription fallback covers it instead.
+        &#34;&#34;&#34;
+        if time.time() &lt; self._gate_cooldown_until:
+            return False
+        return self._gate_ready()
+
+    # ------------------------------------------------------------------ #
+    #  Iron Man HUD bridge + app-connection intents                       #
+    # ------------------------------------------------------------------ #
+
+    def _write_hud_state(self, source: str = &#34;&#34;) -&gt; None:
+        &#34;&#34;&#34;Drops a tiny state file the always-on HUD overlay polls. Cosmetic
+        path: every failure is swallowed, never logged, never raised.&#34;&#34;&#34;
+        try:
+            from jarvis.hud.state import write_hud_state
+
+            with self._stats_lock:
+                payload = {
+                    &#34;state&#34;: self.state,
+                    &#34;source&#34;: source,
+                    &#34;wake_at&#34;: self.last_wake_ts,
+                    &#34;wake_count&#34;: self.wake_count,
+                    &#34;command_count&#34;: self.command_count,
+                    &#34;last_command&#34;: self.last_command,
+                    &#34;last_transcript&#34;: self.last_transcript,
+                    &#34;last_reply&#34;: self.last_reply,
+                }
+            write_hud_state(payload)
+        except Exception:
+            pass
+
+    def _run_app_intent(self, command: str) -&gt; Optional[Dict[str, Any]]:
+        &#34;&#34;&#34;Fast-path app-connection intents (launch / delegate) without the LLM.
+
+        Returns a result dict shaped like the orchestrator output, or None to
+        fall through to the orchestrator (also on any failure — never fragile).
+        &#34;&#34;&#34;
+        if os.getenv(&#34;JARVIS_APP_INTENTS&#34;, &#34;on&#34;).strip().lower() in (&#34;0&#34;, &#34;off&#34;, &#34;false&#34;, &#34;no&#34;):
+            return None
+        try:
+            from jarvis.automation.app_connector import (
+                match_app_intent,
+                launch_app,
+                opencode_delegate,
+                antigravity_delegate,
+            )
+        except Exception:
+            return None
+        try:
+            intent = match_app_intent(command)
+        except Exception:
+            return None
+        if not intent:
+            return None
+
+        if intent[&#34;kind&#34;] == &#34;launch&#34;:
+            res = launch_app(intent[&#34;app&#34;])
+            reply = (
+                f&#34;Opened {intent[&#39;app&#39;].replace(&#39;_&#39;, &#39; &#39;)}.&#34; if res.get(&#34;ok&#34;) else res.get(&#34;error&#34;, &#34;Launch failed.&#34;)
+            )
+        elif intent[&#34;kind&#34;] == &#34;opencode_in&#34;:
+            path = intent[&#34;path&#34;]
+            if not os.path.isdir(path):
+                res = {&#34;ok&#34;: False, &#34;error&#34;: f&#34;&#39;{path}&#39; is not a folder on this host&#34;}
+                reply = res[&#34;error&#34;]
+            else:
+                # Interactive coding session: visible console, fresh opencode.
+                from jarvis.automation.app_connector import launch_in_console
+
+                res = launch_in_console(&#34;opencode&#34;, args=[path])
+                reply = f&#34;OpenCode session opening in {path}.&#34; if res.get(&#34;ok&#34;) else res.get(&#34;error&#34;, &#34;opencode failed&#34;)
+        elif intent[&#34;kind&#34;] == &#34;delegate&#34; and intent[&#34;agent&#34;] == &#34;opencode&#34;:
+            res = opencode_delegate(intent[&#34;task&#34;], auto_approve=True)
+            reply = &#34;OpenCode is on it.&#34; if res.get(&#34;ok&#34;) else res.get(&#34;error&#34;, &#34;opencode failed&#34;)
+        elif intent[&#34;kind&#34;] == &#34;delegate&#34;:
+            res = antigravity_delegate(intent[&#34;task&#34;], agent=intent[&#34;agent&#34;])
+            reply = (
+                f&#34;Antigravity open. Task on your clipboard — Ctrl+V in the agent panel.&#34;
+                if res.get(&#34;ok&#34;)
+                else res.get(&#34;error&#34;, &#34;Antigravity failed&#34;)
+            )
+        else:
+            return None
+
+        ok = bool(res.get(&#34;ok&#34;))
+        self._record_evidence(
+            source=&#34;voice_daemon.app_task&#34;,
+            data={
+                &#34;intent&#34;: intent,
+                &#34;result_ok&#34;: ok,
+                &#34;pid&#34;: res.get(&#34;pid&#34;),
+                &#34;log&#34;: res.get(&#34;log&#34;),
+                &#34;error&#34;: res.get(&#34;error&#34;),
+            },
+        )
+        return {
+            &#34;task_id&#34;: f&#34;app_{int(time.time())}&#34;,
+            &#34;status&#34;: &#34;COMPLETED&#34; if ok else &#34;FAILED&#34;,
+            &#34;response&#34;: {&#34;message&#34;: reply},
+            &#34;app_intent&#34;: True,
+        }
+
+    @staticmethod
+    def openwakeword_installed() -&gt; bool:
+        &#34;&#34;&#34;Cheap availability probe (no model load): is openwakeword importable?&#34;&#34;&#34;
+        try:
+            import importlib.util
+
+            return importlib.util.find_spec(&#34;openwakeword&#34;) is not None
+        except Exception:
+            return False
+
+    def _run_gate(self, block: bytes) -&gt; Optional[Dict[str, Any]]:
+        &#34;&#34;&#34;Feeds one block through the acoustic gate, lazily loading it on first use.
+
+        Returns the gate event dict when the gate is armed, or None when the
+        legacy transcription path applies (gate disabled/unavailable/failed).
+        &#34;&#34;&#34;
+        now = time.time()
+        if not self._gate_enabled:
+            return None
+        if now &lt; self._gate_cooldown_until:
+            # Post-wake suppression window (prevents model state re-triggering).
+            return None
+        if self._gate is None:
+            try:
+                _ = self.gate  # first-use resolve: loads openWakeWord once
+            except Exception as exc:
+                logger.warning(f&#34;Acoustic wake gate init failed ({exc}); using transcription-based wake.&#34;)
+                self._gate_enabled = False
+                return None
+        if not self._gate_ready():
+            return None
+        try:
+            event = self._gate.gate(block)
+        except Exception as exc:
+            logger.warning(f&#34;Acoustic gate error: {exc}&#34;)
+            return None
+        if str(event.get(&#34;source&#34;) or &#34;&#34;) != &#34;acoustic&#34;:
+            return None
+        return event
+
+    def _sleep_gate(self, seconds: float = 2.5) -&gt; None:
+        &#34;&#34;&#34;Post-wake suppression: cooldown window + clearing model state.
+
+        After a wake or command the openWakeWord model still carries the
+        phrase&#39;s smoothed activation; without this reset it can instantly
+        re-trigger when the daemon returns to LISTENING_FOR_WAKE.
+        &#34;&#34;&#34;
+        self._gate_cooldown_until = time.time() + seconds
+        if self._gate is not None:
+            try:
+                self._gate.reset()
+            except Exception:
+                pass
+
+    # ------------------------------------------------------------------ #
+    #  Evidence helpers                                                   #
+    # ------------------------------------------------------------------ #
+
+    def _record_evidence(self, source: str, data: Dict[str, Any]) -&gt; Dict[str, Any]:
+        from jarvis.core.evidence import Evidence
+
+        evidence = Evidence(source=source, data=data, timestamp=time.time(), trust_level=&#34;verified&#34;)
+        record = evidence.to_dict()
+        with self._stats_lock:
+            self.evidence_log.append(record)
+            if len(self.evidence_log) &gt; 500:
+                self.evidence_log.pop(0)
+        return record
+
+    # ------------------------------------------------------------------ #
+    #  Audio helpers                                                      #
+    # ------------------------------------------------------------------ #
+
+    def _energy(self, pcm: bytes) -&gt; float:
+        if not pcm or len(pcm) &lt; 2:
+            return 0.0
+        if np is not None:
+            samples = np.frombuffer(pcm, dtype=np.int16)
+            if samples.size == 0:
+                return 0.0
+            return float(np.mean(np.abs(samples.astype(np.float32))))
+        total = 0
+        count = len(pcm) // 2
+        for i in range(count):
+            val = int.from_bytes(pcm[i * 2 : i * 2 + 2], &#34;little&#34;, signed=True)
+            total += abs(val)
+        return total / max(count, 1)
+
+    def _pcm_to_wav(self, pcm: bytes) -&gt; bytes:
+        buf = io.BytesIO()
+        with wave.open(buf, &#34;wb&#34;) as wf:
+            wf.setnchannels(self.CHANNELS)
+            wf.setsampwidth(2)
+            wf.setframerate(self.SAMPLE_RATE)
+            wf.writeframes(pcm)
+        return buf.getvalue()
+
+    def _transcribe(self, pcm: bytes) -&gt; Dict[str, Any]:
+        wav = self._pcm_to_wav(pcm)
+        try:
+            return self.stt.transcribe(wav, sample_rate=self.SAMPLE_RATE)
+        except Exception as exc:
+            logger.error(f&#34;STT transcription failed: {exc}&#34;)
+            with self._stats_lock:
+                self.error_count += 1
+            return {&#34;text&#34;: &#34;&#34;, &#34;confidence&#34;: 0.0, &#34;error&#34;: str(exc)}
+
+    def _strip_wake(self, text: str) -&gt; str:
+        low = text.lower().strip()
+        for phrase in sorted(self.wake_phrases, key=len, reverse=True):
+            idx = low.find(phrase)
+            if idx &gt;= 0:
+                remainder = text[idx + len(phrase) :]
+                return remainder.strip(&#34; ,.!?;:&#34;)
+        return &#34;&#34;
+
+    # ------------------------------------------------------------------ #
+    #  Core utterance state machine                                       #
+    # ------------------------------------------------------------------ #
+
+    def feed(self, block: bytes) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Processes one PCM block. Returns a list of emitted events.
+
+        Timing is block-count based (each block spans BLOCK_MS), so utterance
+        segmentation behaves identically for real-time microphone streams and
+        directly-injected test audio.
+        &#34;&#34;&#34;
+        events: List[Dict[str, Any]] = []
+        if not block:
+            return events
+
+        energy = self._energy(block)
+        now = time.time()
+        is_speech = energy &gt;= self.MEAN_ABS_THRESHOLD
+
+        if self.state == &#34;IDLE&#34;:
+            return events
+
+        if self.state == &#34;SPEAKING&#34;:
+            if is_speech and energy &gt;= self.MEAN_ABS_THRESHOLD * 2:
+                try:
+                    self.tts.cancel_speech()
+                except Exception:
+                    pass
+                self._reset_buffer()
+                self.state = &#34;LISTENING_FOR_WAKE&#34;
+                self._sleep_gate()  # suppress TTS-echo activation remnants
+                self._write_hud_state(&#34;barge_in&#34;)
+                event = {&#34;type&#34;: &#34;barge_in&#34;, &#34;energy&#34;: round(energy, 1), &#34;timestamp&#34;: now}
+                self._emit(event, events)
+            return events
+
+        if self.state == &#34;PROCESSING&#34;:
+            return events
+
+        # Acoustic wake gate: scored on EVERY block while listening (speech and
+        # silence). Required by the model&#39;s behavior: &#34;hey jarvis&#34; scores climb
+        # through the phrase and persist across trailing frames, so the verdict
+        # lands on post-phrase frames (measured: 0.93-0.9986 on trailing
+        # silence). The low-power win over legacy is skipping Whisper, not
+        # skipping frames. Barge-in suppression is inherent: while SPEAKING/
+        # PROCESSING the gate is not fed at all.
+        if self.state == &#34;LISTENING_FOR_WAKE&#34;:
+            gate_event = self._run_gate(block)
+            if gate_event is not None:
+                score = float(gate_event.get(&#34;score&#34;) or 0.0)
+                if score &gt; self._last_gate_score:
+                    self._last_gate_score = score
+                if gate_event.get(&#34;wake&#34;):
+                    self._gate_hit_in_utterance = True
+                    self._record_evidence(
+                        source=&#34;voice_daemon.acoustic_wake_frame&#34;,
+                        data={&#34;score&#34;: score, &#34;threshold&#34;: gate_event.get(&#34;threshold&#34;)},
+                    )
+
+        if is_speech:
+            if not self._utterance_active:
+                self._utterance_active = True
+                self._speech_blocks = 0
+                self._silence_blocks = 0
+                self._buffer.clear()
+                self._gate_hit_in_utterance = False
+            self._speech_blocks += 1
+            self._silence_blocks = 0
+            self._buffer.extend(block)
+            return events
+
+        if not self._utterance_active:
+            return events
+
+        self._silence_blocks += 1
+        if self._silence_blocks &lt;= self.TRAILING_SILENCE_BLOCKS:
+            self._buffer.extend(block)
+
+        total_blocks = self._speech_blocks + self._silence_blocks
+        command_maxed = self.state == &#34;CAPTURING_COMMAND&#34; and total_blocks &gt;= self.MAX_COMMAND_BLOCKS
+        utterance_end = self._silence_blocks &gt;= self.SILENCE_END_BLOCKS or command_maxed
+
+        if not utterance_end:
+            return events
+
+        if self._speech_blocks &gt;= self.MIN_SPEECH_BLOCKS or command_maxed:
+            if (
+                self.state == &#34;LISTENING_FOR_WAKE&#34;
+                and self._gate_ready_for_listening()
+                and not self._gate_hit_in_utterance
+            ):
+                # Acoustic gate armed and this utterance scored below threshold:
+                # ambient speech never reaches Whisper (the low-power path).
+                with self._stats_lock:
+                    self.gated_utterance_count += 1
+                self._reset_buffer()
+                return events
+            pcm = bytes(self._buffer)
+            self._reset_buffer()
+            events.extend(self._handle_utterance(pcm))
+        else:
+            self._reset_buffer()
+        return events
+
+    def _handle_utterance(self, pcm: bytes) -&gt; List[Dict[str, Any]]:
+        events: List[Dict[str, Any]] = []
+        result = self._transcribe(pcm)
+        text = (result.get(&#34;text&#34;) or &#34;&#34;).strip()
+        with self._stats_lock:
+            self.last_transcript = text
+        if not text and not (self.state == &#34;LISTENING_FOR_WAKE&#34; and self._gate_hit_in_utterance):
+            return events
+
+        if self.state == &#34;LISTENING_FOR_WAKE&#34;:
+            gate_hit = self._gate_hit_in_utterance
+            self._gate_hit_in_utterance = False
+            phrase_match = any(p in text.lower() for p in self.wake_phrases)
+            if not phrase_match and not gate_hit:
+                return events
+
+            acoustic_only = gate_hit and not phrase_match
+            self.wake_count += 1
+            if gate_hit:
+                self.acoustic_wake_count += 1
+            self.last_wake_ts = time.time()
+            if phrase_match:
+                self._record_evidence(
+                    source=&#34;voice_daemon.wake&#34;,
+                    data={
+                        &#34;transcript&#34;: text,
+                        &#34;confidence&#34;: result.get(&#34;confidence&#34;, 0.0),
+                        &#34;acoustic_confirmed&#34;: bool(gate_hit),
+                        &#34;source&#34;: &#34;transcription+acoustic&#34; if gate_hit else &#34;transcription&#34;,
+                    },
+                )
+            else:
+                self._record_evidence(
+                    source=&#34;voice_daemon.wake_acoustic&#34;,
+                    data={
+                        &#34;transcript&#34;: text,
+                        &#34;acoustic_score&#34;: self._last_gate_score,
+                        &#34;confidence&#34;: result.get(&#34;confidence&#34;, 0.0),
+                        &#34;source&#34;: &#34;acoustic&#34;,
+                    },
+                )
+            if self._gate_ready():
+                self._sleep_gate()  # clear model state so the phrase can&#39;t re-trigger
+            command = self._strip_wake(text) if phrase_match else text
+            if command:
+                events.extend(self._execute_command(command, trigger=&#34;wake_with_command&#34;, wake_transcript=text))
+            else:
+                self.state = &#34;CAPTURING_COMMAND&#34;
+                self._write_hud_state(&#34;capture&#34;)
+                if self._speak_replies:
+                    try:
+                        # Iron Man acknowledgment: short, spoken, on the wake.
+                        self.tts.speak_live(&#34;Yes?&#34;, async_mode=True)
+                    except Exception:
+                        pass
+                event = {
+                    &#34;type&#34;: &#34;wake_detected&#34;,
+                    &#34;source&#34;: &#34;acoustic&#34; if acoustic_only else &#34;transcription&#34;,
+                    &#34;transcript&#34;: text,
+                    &#34;timestamp&#34;: self.last_wake_ts,
+                }
+                self._emit(event, events)
+            return events
+
+        if self.state == &#34;CAPTURING_COMMAND&#34;:
+            events.extend(self._execute_command(text, trigger=&#34;command_capture&#34;, wake_transcript=&#34;&#34;))
+            return events
+
+        return events
+
+    def _execute_command(self, command: str, trigger: str, wake_transcript: str) -&gt; List[Dict[str, Any]]:
+        events: List[Dict[str, Any]] = []
+        self.state = &#34;PROCESSING&#34;
+        with self._stats_lock:
+            self.last_command = command
+        self._write_hud_state(&#34;processing&#34;)
+        start = time.time()
+
+        # Fast-path: app-connection intents (launch / delegate) need no LLM.
+        app_outcome = self._run_app_intent(command)
+        if app_outcome is not None:
+            orch_result = app_outcome
+        else:
+            try:
+                try:
+                    orch_result = asyncio.run(self.orchestrator.process_user_query(command))
+                except RuntimeError as loop_err:
+                    if &#34;running event loop&#34; not in str(loop_err):
+                        raise
+                    loop = asyncio.new_event_loop()
+                    try:
+                        orch_result = loop.run_until_complete(self.orchestrator.process_user_query(command))
+                    finally:
+                        loop.close()
+            except Exception as exc:
+                with self._stats_lock:
+                    self.error_count += 1
+                self.state = &#34;LISTENING_FOR_WAKE&#34;
+                self._sleep_gate()
+                self._write_hud_state(&#34;command_failed&#34;)
+                self._record_evidence(
+                    source=&#34;voice_daemon.command&#34;,
+                    data={&#34;command&#34;: command, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)},
+                )
+                event = {&#34;type&#34;: &#34;command_failed&#34;, &#34;command&#34;: command, &#34;error&#34;: str(exc)}
+                self._emit(event, events)
+                return events
+
+        reply_data = orch_result.get(&#34;response&#34;, {})
+        if isinstance(reply_data, dict):
+            reply_text = (
+                reply_data.get(&#34;message&#34;) or reply_data.get(&#34;reply&#34;) or reply_data.get(&#34;type&#34;) or str(reply_data)
+            )
+        else:
+            reply_text = str(reply_data)
+
+        duration_ms = round((time.time() - start) * 1000, 2)
+        with self._stats_lock:
+            self.command_count += 1
+            self.last_reply = reply_text
+        self._record_evidence(
+            source=&#34;voice_daemon.command&#34;,
+            data={
+                &#34;command&#34;: command,
+                &#34;task_id&#34;: orch_result.get(&#34;task_id&#34;),
+                &#34;status&#34;: orch_result.get(&#34;status&#34;),
+                &#34;reply_preview&#34;: reply_text[:200],
+                &#34;duration_ms&#34;: duration_ms,
+            },
+        )
+
+        self.state = &#34;SPEAKING&#34;
+        self._sleep_gate()  # speaking window: gate idle, clear activation remnants
+        self._write_hud_state(&#34;speaking&#34;)
+        if self._speak_replies and reply_text:
+            try:
+                self.tts.speak_live(reply_text, async_mode=True)
+                estimated = min(15.0, 0.5 + 0.06 * len(reply_text))
+                timer = threading.Timer(estimated, self._end_speaking)
+                timer.daemon = True
+                timer.start()
+            except Exception as exc:
+                logger.warning(f&#34;TTS speak failed: {exc}&#34;)
+                self.state = &#34;LISTENING_FOR_WAKE&#34;
+        else:
+            self.state = &#34;LISTENING_FOR_WAKE&#34;
+
+        event = {
+            &#34;type&#34;: &#34;command_executed&#34;,
+            &#34;trigger&#34;: trigger,
+            &#34;wake_transcript&#34;: wake_transcript,
+            &#34;command&#34;: command,
+            &#34;task_id&#34;: orch_result.get(&#34;task_id&#34;),
+            &#34;status&#34;: orch_result.get(&#34;status&#34;),
+            &#34;reply_text&#34;: reply_text,
+            &#34;duration_ms&#34;: duration_ms,
+            &#34;timestamp&#34;: time.time(),
+        }
+        self._emit(event, events)
+        return events
+
+    def _end_speaking(self) -&gt; None:
+        if self.state == &#34;SPEAKING&#34;:
+            self.state = &#34;LISTENING_FOR_WAKE&#34;
+            self._sleep_gate()
+            self._write_hud_state(&#34;listening&#34;)
+
+    def _reset_buffer(self) -&gt; None:
+        self._buffer.clear()
+        self._speech_blocks = 0
+        self._silence_blocks = 0
+        self._utterance_active = False
+
+    def _emit(self, event: Dict[str, Any], events: List[Dict[str, Any]]) -&gt; None:
+        events.append(event)
+        logger.info(f&#34;VoiceDaemon event: {event.get(&#39;type&#39;)} - {str(event)[:160]}&#34;)
+        if self._speech_callback:
+            try:
+                self._speech_callback(event)
+            except Exception as exc:
+                logger.error(f&#34;Speech callback error: {exc}&#34;)
+
+    # ------------------------------------------------------------------ #
+    #  Microphone / worker lifecycle                                      #
+    # ------------------------------------------------------------------ #
+
+    def _audio_callback(self, indata, frames, time_info, status) -&gt; None:  # pragma: no cover - device dependent
+        if status:
+            logger.warning(f&#34;Audio stream status: {status}&#34;)
+        try:
+            raw = bytes(indata)
+            if self._capture_rate != self.SAMPLE_RATE and np is not None:
+                raw = _resample_linear(raw, self._capture_rate, self.SAMPLE_RATE)
+            self._queue.put_nowait(raw)
+        except queue.Full:
+            try:
+                self._queue.get_nowait()
+            except queue.Empty:
+                pass
+            try:
+                self._queue.put_nowait(raw)
+            except queue.Full:
+                pass
+
+    def _worker_loop(self) -&gt; None:
+        while self._running_flag.is_set():
+            try:
+                block = self._queue.get(timeout=0.2)
+            except queue.Empty:
+                continue
+            try:
+                self.feed(block)
+            except Exception as exc:
+                with self._stats_lock:
+                    self.error_count += 1
+                logger.error(f&#34;Voice worker error: {exc}&#34;)
+
+    def start(self, use_microphone: bool = True) -&gt; Dict[str, Any]:
+        if self.running:
+            return self.health()
+
+        self._running_flag.set()
+        self.state = &#34;LISTENING_FOR_WAKE&#34;
+        self._sleep_gate(0.0)  # fresh start: arm the gate immediately
+        self._write_hud_state(&#34;start&#34;)
+        self.started_at = time.time()
+
+        self._worker = threading.Thread(target=self._worker_loop, name=&#34;jarvis-voice-worker&#34;, daemon=True)
+        self._worker.start()
+
+        mic_opened = False
+        if use_microphone:
+            try:
+                import sounddevice as sd
+
+                probe = probe_input_devices() if self._probe_devices else []
+                selection = select_input_device(explicit=self._mic_device, probe=probe)
+                self._mic_info = selection
+                device = selection.get(&#34;device&#34;)
+
+                # Resolve a capture rate the selected device accepts. Measured on
+                # this host (First Law evidence): opening directly at 16 kHz on
+                # 44.1/48 kHz-native devices produced stream status errors and
+                # delayed delivery, while native-rate capture flows clean -
+                # so capture at the device&#39;s native rate and resample to 16 kHz
+                # in the callback (pipelines and tests inject 16k PCM directly).
+                capture_rate = self.SAMPLE_RATE
+                if device is not None:
+                    try:
+                        dev_info = sd.query_devices(device)
+                        native = int(dev_info.get(&#34;default_samplerate&#34;, self.SAMPLE_RATE) or self.SAMPLE_RATE)
+                        if native in (44100, 48000, 96000, 22050, 24000):
+                            capture_rate = native
+                    except Exception:
+                        capture_rate = self.SAMPLE_RATE
+
+                self._capture_rate = capture_rate
+                block_frames = max(1, int(capture_rate * self.BLOCK_MS // 1000))
+                self._stream = sd.InputStream(
+                    samplerate=capture_rate,
+                    channels=self.CHANNELS,
+                    dtype=&#34;int16&#34;,
+                    blocksize=block_frames,
+                    device=device,
+                    callback=self._audio_callback,
+                )
+                self._stream.start()
+                mic_opened = True
+                self._mic_info = {
+                    **selection,
+                    &#34;rate&#34;: capture_rate,
+                    &#34;resampled_to&#34;: self.SAMPLE_RATE,
+                }
+                logger.info(
+                    f&#34;VoiceDaemon microphone opened: device={device} &#34;
+                    f&#34;({selection.get(&#39;name&#39;, &#39;?&#39;)}) rate={capture_rate} Hz &#34;
+                    f&#34;source={selection.get(&#39;source&#39;)} live={selection.get(&#39;live&#39;)}&#34;
+                )
+                if selection.get(&#34;source&#34;) == &#34;default_fallback&#34; and selection.get(&#34;probe_summary&#34;):
+                    logger.warning(
+                        &#34;No live microphone detected by probe &#34;
+                        f&#34;({selection[&#39;probe_summary&#39;]}). Check the hardware &#34;
+                        &#34;privacy shutter / Fn mic-mute key.&#34;
+                    )
+            except Exception as exc:
+                logger.error(f&#34;VoiceDaemon microphone open failed: {exc}&#34;)
+                with self._stats_lock:
+                    self.error_count += 1
+                self._mic_info = {**self._mic_info, &#34;error&#34;: str(exc)}
+
+        self.running = True
+        self._record_evidence(
+            source=&#34;voice_daemon.started&#34;,
+            data={
+                &#34;microphone&#34;: mic_opened,
+                &#34;mic&#34;: self._mic_info,
+                &#34;wake_phrases&#34;: self.wake_phrases,
+                &#34;pid&#34;: uuid.uuid4().hex[:8],
+            },
+        )
+        logger.info(f&#34;VoiceDaemon started (mic={mic_opened}, state={self.state}, wake_phrases={self.wake_phrases})&#34;)
+        return self.health()
+
+    def stop(self) -&gt; Dict[str, Any]:
+        self.running = False
+        self._running_flag.clear()
+        if self._stream is not None:
+            try:
+                self._stream.stop()
+                self._stream.close()
+            except Exception:
+                pass
+            self._stream = None
+        if self._worker and self._worker.is_alive():
+            self._worker.join(timeout=3.0)
+        self._worker = None
+        self.state = &#34;IDLE&#34;
+        self._reset_buffer()
+        self._write_hud_state(&#34;stop&#34;)
+        self._gate_hit_in_utterance = False
+        if self._gate is not None:
+            try:
+                self._gate.reset()
+            except Exception:
+                pass
+        self._record_evidence(source=&#34;voice_daemon.stopped&#34;, data={&#34;state&#34;: &#34;IDLE&#34;})
+        logger.info(&#34;VoiceDaemon stopped.&#34;)
+        return self.health()
+
+    def health(self) -&gt; Dict[str, Any]:
+        with self._stats_lock:
+            return {
+                &#34;running&#34;: self.running,
+                &#34;state&#34;: self.state,
+                &#34;microphone_open&#34;: self._stream is not None,
+                &#34;mic_device&#34;: self._mic_info.get(&#34;device&#34;),
+                &#34;mic_device_name&#34;: self._mic_info.get(&#34;name&#34;, &#34;&#34;),
+                &#34;mic_live&#34;: self._mic_info.get(&#34;live&#34;, False),
+                &#34;mic_source&#34;: self._mic_info.get(&#34;source&#34;, &#34;&#34;),
+                &#34;mic_capture_rate&#34;: self._capture_rate,
+                &#34;wake_phrases&#34;: self.wake_phrases,
+                &#34;wake_count&#34;: self.wake_count,
+                &#34;acoustic_gate_enabled&#34;: self._gate_enabled,
+                &#34;acoustic_gate_installed&#34;: self.openwakeword_installed(),
+                &#34;acoustic_gate_armed&#34;: self._gate_ready(),
+                &#34;acoustic_gate_engine&#34;: &#34;openwakeword-onnx&#34; if self._gate_ready() else None,
+                &#34;acoustic_gate_model&#34;: (
+                    (self._gate.model_names or [&#34;(default set)&#34;])[0]
+                    if self._gate is not None and self._gate_ready()
+                    else None
+                ),
+                &#34;acoustic_gate_threshold&#34;: (
+                    self._gate.threshold if self._gate is not None and self._gate_ready() else None
+                ),
+                &#34;acoustic_gate_unavailable_reason&#34;: (
+                    (self._gate.unavailable_reason or None)
+                    if self._gate is not None and not self._gate_ready() and self._gate_enabled
+                    else None
+                ),
+                &#34;acoustic_wake_count&#34;: self.acoustic_wake_count,
+                &#34;gated_utterance_count&#34;: self.gated_utterance_count,
+                &#34;last_acoustic_score&#34;: self._last_gate_score,
+                &#34;command_count&#34;: self.command_count,
+                &#34;error_count&#34;: self.error_count,
+                &#34;last_wake_ts&#34;: self.last_wake_ts,
+                &#34;last_transcript&#34;: self.last_transcript,
+                &#34;last_command&#34;: self.last_command,
+                &#34;last_reply&#34;: self.last_reply,
+                &#34;evidence_count&#34;: len(self.evidence_log),
+                &#34;started_at&#34;: self.started_at,
+                &#34;sample_rate&#34;: self.SAMPLE_RATE,
+                &#34;stt_backend&#34;: &#34;faster-whisper&#34;,
+                &#34;tts_backend&#34;: &#34;windows_sapi&#34;,
+            }</code></pre>
+</details>
+<div class="desc"><p>Always-on wake-word voice daemon (PWR-006 family).</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.voice.daemon.VoiceDaemon.BLOCK_FRAMES"><code class="name">var <span class="ident">BLOCK_FRAMES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.BLOCK_MS"><code class="name">var <span class="ident">BLOCK_MS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.CHANNELS"><code class="name">var <span class="ident">CHANNELS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.MAX_COMMAND_BLOCKS"><code class="name">var <span class="ident">MAX_COMMAND_BLOCKS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.MAX_COMMAND_SEC"><code class="name">var <span class="ident">MAX_COMMAND_SEC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.MAX_QUEUE_BLOCKS"><code class="name">var <span class="ident">MAX_QUEUE_BLOCKS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.MEAN_ABS_THRESHOLD"><code class="name">var <span class="ident">MEAN_ABS_THRESHOLD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.MIN_SPEECH_BLOCKS"><code class="name">var <span class="ident">MIN_SPEECH_BLOCKS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.MIN_SPEECH_SEC"><code class="name">var <span class="ident">MIN_SPEECH_SEC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.SAMPLE_RATE"><code class="name">var <span class="ident">SAMPLE_RATE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.SILENCE_END_BLOCKS"><code class="name">var <span class="ident">SILENCE_END_BLOCKS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.SILENCE_END_SEC"><code class="name">var <span class="ident">SILENCE_END_SEC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.STATES"><code class="name">var <span class="ident">STATES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.TRAILING_SILENCE_BLOCKS"><code class="name">var <span class="ident">TRAILING_SILENCE_BLOCKS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.TRAILING_SILENCE_SEC"><code class="name">var <span class="ident">TRAILING_SILENCE_SEC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.voice.daemon.VoiceDaemon.openwakeword_installed"><code class="name flex">
+<span>def <span class="ident">openwakeword_installed</span></span>(<span>) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def openwakeword_installed() -&gt; bool:
+    &#34;&#34;&#34;Cheap availability probe (no model load): is openwakeword importable?&#34;&#34;&#34;
+    try:
+        import importlib.util
+
+        return importlib.util.find_spec(&#34;openwakeword&#34;) is not None
+    except Exception:
+        return False</code></pre>
+</details>
+<div class="desc"><p>Cheap availability probe (no model load): is openwakeword importable?</p></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.voice.daemon.VoiceDaemon.gate"><code class="name">prop <span class="ident">gate</span> : Any</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def gate(self) -&gt; Any:
+    &#34;&#34;&#34;Acoustic wake gate. Resolves to the process-wide singleton on first use;
+    loading openWakeWord is deferred until real audio hits the gate.&#34;&#34;&#34;
+    if self._gate is None:
+        from jarvis.voice.wake import get_acoustic_gate
+
+        self._gate = get_acoustic_gate()
+    return self._gate</code></pre>
+</details>
+<div class="desc"><p>Acoustic wake gate. Resolves to the process-wide singleton on first use;
+loading openWakeWord is deferred until real audio hits the gate.</p></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.orchestrator"><code class="name">prop <span class="ident">orchestrator</span> : Any</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def orchestrator(self) -&gt; Any:
+    if self._orchestrator is None:
+        from jarvis.core.orchestrator import orchestrator as orch
+
+        self._orchestrator = orch
+    return self._orchestrator</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.stt"><code class="name">prop <span class="ident">stt</span> : Any</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def stt(self) -&gt; Any:
+    if self._stt is None:
+        from jarvis.voice.stt import stt_engine
+
+        self._stt = stt_engine
+    return self._stt</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.tts"><code class="name">prop <span class="ident">tts</span> : Any</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def tts(self) -&gt; Any:
+    if self._tts is None:
+        from jarvis.voice.tts import tts_engine
+
+        self._tts = tts_engine
+    return self._tts</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.wake"><code class="name">prop <span class="ident">wake</span> : Any</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def wake(self) -&gt; Any:
+    if self._wake is None:
+        from jarvis.voice.wake import wake_detector
+
+        self._wake = wake_detector
+    return self._wake</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.voice.daemon.VoiceDaemon.feed"><code class="name flex">
+<span>def <span class="ident">feed</span></span>(<span>self, block: bytes) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def feed(self, block: bytes) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Processes one PCM block. Returns a list of emitted events.
+
+    Timing is block-count based (each block spans BLOCK_MS), so utterance
+    segmentation behaves identically for real-time microphone streams and
+    directly-injected test audio.
+    &#34;&#34;&#34;
+    events: List[Dict[str, Any]] = []
+    if not block:
+        return events
+
+    energy = self._energy(block)
+    now = time.time()
+    is_speech = energy &gt;= self.MEAN_ABS_THRESHOLD
+
+    if self.state == &#34;IDLE&#34;:
+        return events
+
+    if self.state == &#34;SPEAKING&#34;:
+        if is_speech and energy &gt;= self.MEAN_ABS_THRESHOLD * 2:
+            try:
+                self.tts.cancel_speech()
+            except Exception:
+                pass
+            self._reset_buffer()
+            self.state = &#34;LISTENING_FOR_WAKE&#34;
+            self._sleep_gate()  # suppress TTS-echo activation remnants
+            self._write_hud_state(&#34;barge_in&#34;)
+            event = {&#34;type&#34;: &#34;barge_in&#34;, &#34;energy&#34;: round(energy, 1), &#34;timestamp&#34;: now}
+            self._emit(event, events)
+        return events
+
+    if self.state == &#34;PROCESSING&#34;:
+        return events
+
+    # Acoustic wake gate: scored on EVERY block while listening (speech and
+    # silence). Required by the model&#39;s behavior: &#34;hey jarvis&#34; scores climb
+    # through the phrase and persist across trailing frames, so the verdict
+    # lands on post-phrase frames (measured: 0.93-0.9986 on trailing
+    # silence). The low-power win over legacy is skipping Whisper, not
+    # skipping frames. Barge-in suppression is inherent: while SPEAKING/
+    # PROCESSING the gate is not fed at all.
+    if self.state == &#34;LISTENING_FOR_WAKE&#34;:
+        gate_event = self._run_gate(block)
+        if gate_event is not None:
+            score = float(gate_event.get(&#34;score&#34;) or 0.0)
+            if score &gt; self._last_gate_score:
+                self._last_gate_score = score
+            if gate_event.get(&#34;wake&#34;):
+                self._gate_hit_in_utterance = True
+                self._record_evidence(
+                    source=&#34;voice_daemon.acoustic_wake_frame&#34;,
+                    data={&#34;score&#34;: score, &#34;threshold&#34;: gate_event.get(&#34;threshold&#34;)},
+                )
+
+    if is_speech:
+        if not self._utterance_active:
+            self._utterance_active = True
+            self._speech_blocks = 0
+            self._silence_blocks = 0
+            self._buffer.clear()
+            self._gate_hit_in_utterance = False
+        self._speech_blocks += 1
+        self._silence_blocks = 0
+        self._buffer.extend(block)
+        return events
+
+    if not self._utterance_active:
+        return events
+
+    self._silence_blocks += 1
+    if self._silence_blocks &lt;= self.TRAILING_SILENCE_BLOCKS:
+        self._buffer.extend(block)
+
+    total_blocks = self._speech_blocks + self._silence_blocks
+    command_maxed = self.state == &#34;CAPTURING_COMMAND&#34; and total_blocks &gt;= self.MAX_COMMAND_BLOCKS
+    utterance_end = self._silence_blocks &gt;= self.SILENCE_END_BLOCKS or command_maxed
+
+    if not utterance_end:
+        return events
+
+    if self._speech_blocks &gt;= self.MIN_SPEECH_BLOCKS or command_maxed:
+        if (
+            self.state == &#34;LISTENING_FOR_WAKE&#34;
+            and self._gate_ready_for_listening()
+            and not self._gate_hit_in_utterance
+        ):
+            # Acoustic gate armed and this utterance scored below threshold:
+            # ambient speech never reaches Whisper (the low-power path).
+            with self._stats_lock:
+                self.gated_utterance_count += 1
+            self._reset_buffer()
+            return events
+        pcm = bytes(self._buffer)
+        self._reset_buffer()
+        events.extend(self._handle_utterance(pcm))
+    else:
+        self._reset_buffer()
+    return events</code></pre>
+</details>
+<div class="desc"><p>Processes one PCM block. Returns a list of emitted events.</p>
+<p>Timing is block-count based (each block spans BLOCK_MS), so utterance
+segmentation behaves identically for real-time microphone streams and
+directly-injected test audio.</p></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.health"><code class="name flex">
+<span>def <span class="ident">health</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def health(self) -&gt; Dict[str, Any]:
+    with self._stats_lock:
+        return {
+            &#34;running&#34;: self.running,
+            &#34;state&#34;: self.state,
+            &#34;microphone_open&#34;: self._stream is not None,
+            &#34;mic_device&#34;: self._mic_info.get(&#34;device&#34;),
+            &#34;mic_device_name&#34;: self._mic_info.get(&#34;name&#34;, &#34;&#34;),
+            &#34;mic_live&#34;: self._mic_info.get(&#34;live&#34;, False),
+            &#34;mic_source&#34;: self._mic_info.get(&#34;source&#34;, &#34;&#34;),
+            &#34;mic_capture_rate&#34;: self._capture_rate,
+            &#34;wake_phrases&#34;: self.wake_phrases,
+            &#34;wake_count&#34;: self.wake_count,
+            &#34;acoustic_gate_enabled&#34;: self._gate_enabled,
+            &#34;acoustic_gate_installed&#34;: self.openwakeword_installed(),
+            &#34;acoustic_gate_armed&#34;: self._gate_ready(),
+            &#34;acoustic_gate_engine&#34;: &#34;openwakeword-onnx&#34; if self._gate_ready() else None,
+            &#34;acoustic_gate_model&#34;: (
+                (self._gate.model_names or [&#34;(default set)&#34;])[0]
+                if self._gate is not None and self._gate_ready()
+                else None
+            ),
+            &#34;acoustic_gate_threshold&#34;: (
+                self._gate.threshold if self._gate is not None and self._gate_ready() else None
+            ),
+            &#34;acoustic_gate_unavailable_reason&#34;: (
+                (self._gate.unavailable_reason or None)
+                if self._gate is not None and not self._gate_ready() and self._gate_enabled
+                else None
+            ),
+            &#34;acoustic_wake_count&#34;: self.acoustic_wake_count,
+            &#34;gated_utterance_count&#34;: self.gated_utterance_count,
+            &#34;last_acoustic_score&#34;: self._last_gate_score,
+            &#34;command_count&#34;: self.command_count,
+            &#34;error_count&#34;: self.error_count,
+            &#34;last_wake_ts&#34;: self.last_wake_ts,
+            &#34;last_transcript&#34;: self.last_transcript,
+            &#34;last_command&#34;: self.last_command,
+            &#34;last_reply&#34;: self.last_reply,
+            &#34;evidence_count&#34;: len(self.evidence_log),
+            &#34;started_at&#34;: self.started_at,
+            &#34;sample_rate&#34;: self.SAMPLE_RATE,
+            &#34;stt_backend&#34;: &#34;faster-whisper&#34;,
+            &#34;tts_backend&#34;: &#34;windows_sapi&#34;,
+        }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.start"><code class="name flex">
+<span>def <span class="ident">start</span></span>(<span>self, use_microphone: bool = True) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start(self, use_microphone: bool = True) -&gt; Dict[str, Any]:
+    if self.running:
+        return self.health()
+
+    self._running_flag.set()
+    self.state = &#34;LISTENING_FOR_WAKE&#34;
+    self._sleep_gate(0.0)  # fresh start: arm the gate immediately
+    self._write_hud_state(&#34;start&#34;)
+    self.started_at = time.time()
+
+    self._worker = threading.Thread(target=self._worker_loop, name=&#34;jarvis-voice-worker&#34;, daemon=True)
+    self._worker.start()
+
+    mic_opened = False
+    if use_microphone:
+        try:
+            import sounddevice as sd
+
+            probe = probe_input_devices() if self._probe_devices else []
+            selection = select_input_device(explicit=self._mic_device, probe=probe)
+            self._mic_info = selection
+            device = selection.get(&#34;device&#34;)
+
+            # Resolve a capture rate the selected device accepts. Measured on
+            # this host (First Law evidence): opening directly at 16 kHz on
+            # 44.1/48 kHz-native devices produced stream status errors and
+            # delayed delivery, while native-rate capture flows clean -
+            # so capture at the device&#39;s native rate and resample to 16 kHz
+            # in the callback (pipelines and tests inject 16k PCM directly).
+            capture_rate = self.SAMPLE_RATE
+            if device is not None:
+                try:
+                    dev_info = sd.query_devices(device)
+                    native = int(dev_info.get(&#34;default_samplerate&#34;, self.SAMPLE_RATE) or self.SAMPLE_RATE)
+                    if native in (44100, 48000, 96000, 22050, 24000):
+                        capture_rate = native
+                except Exception:
+                    capture_rate = self.SAMPLE_RATE
+
+            self._capture_rate = capture_rate
+            block_frames = max(1, int(capture_rate * self.BLOCK_MS // 1000))
+            self._stream = sd.InputStream(
+                samplerate=capture_rate,
+                channels=self.CHANNELS,
+                dtype=&#34;int16&#34;,
+                blocksize=block_frames,
+                device=device,
+                callback=self._audio_callback,
+            )
+            self._stream.start()
+            mic_opened = True
+            self._mic_info = {
+                **selection,
+                &#34;rate&#34;: capture_rate,
+                &#34;resampled_to&#34;: self.SAMPLE_RATE,
+            }
+            logger.info(
+                f&#34;VoiceDaemon microphone opened: device={device} &#34;
+                f&#34;({selection.get(&#39;name&#39;, &#39;?&#39;)}) rate={capture_rate} Hz &#34;
+                f&#34;source={selection.get(&#39;source&#39;)} live={selection.get(&#39;live&#39;)}&#34;
+            )
+            if selection.get(&#34;source&#34;) == &#34;default_fallback&#34; and selection.get(&#34;probe_summary&#34;):
+                logger.warning(
+                    &#34;No live microphone detected by probe &#34;
+                    f&#34;({selection[&#39;probe_summary&#39;]}). Check the hardware &#34;
+                    &#34;privacy shutter / Fn mic-mute key.&#34;
+                )
+        except Exception as exc:
+            logger.error(f&#34;VoiceDaemon microphone open failed: {exc}&#34;)
+            with self._stats_lock:
+                self.error_count += 1
+            self._mic_info = {**self._mic_info, &#34;error&#34;: str(exc)}
+
+    self.running = True
+    self._record_evidence(
+        source=&#34;voice_daemon.started&#34;,
+        data={
+            &#34;microphone&#34;: mic_opened,
+            &#34;mic&#34;: self._mic_info,
+            &#34;wake_phrases&#34;: self.wake_phrases,
+            &#34;pid&#34;: uuid.uuid4().hex[:8],
+        },
+    )
+    logger.info(f&#34;VoiceDaemon started (mic={mic_opened}, state={self.state}, wake_phrases={self.wake_phrases})&#34;)
+    return self.health()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.voice.daemon.VoiceDaemon.stop"><code class="name flex">
+<span>def <span class="ident">stop</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def stop(self) -&gt; Dict[str, Any]:
+    self.running = False
+    self._running_flag.clear()
+    if self._stream is not None:
+        try:
+            self._stream.stop()
+            self._stream.close()
+        except Exception:
+            pass
+        self._stream = None
+    if self._worker and self._worker.is_alive():
+        self._worker.join(timeout=3.0)
+    self._worker = None
+    self.state = &#34;IDLE&#34;
+    self._reset_buffer()
+    self._write_hud_state(&#34;stop&#34;)
+    self._gate_hit_in_utterance = False
+    if self._gate is not None:
+        try:
+            self._gate.reset()
+        except Exception:
+            pass
+    self._record_evidence(source=&#34;voice_daemon.stopped&#34;, data={&#34;state&#34;: &#34;IDLE&#34;})
+    logger.info(&#34;VoiceDaemon stopped.&#34;)
+    return self.health()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.voice" href="index.html">jarvis.voice</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.voice.daemon.main" href="#jarvis.voice.daemon.main">main</a></code></li>
+<li><code><a title="jarvis.voice.daemon.probe_input_devices" href="#jarvis.voice.daemon.probe_input_devices">probe_input_devices</a></code></li>
+<li><code><a title="jarvis.voice.daemon.select_input_device" href="#jarvis.voice.daemon.select_input_device">select_input_device</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.voice.daemon.VoiceDaemon" href="#jarvis.voice.daemon.VoiceDaemon">VoiceDaemon</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.BLOCK_FRAMES" href="#jarvis.voice.daemon.VoiceDaemon.BLOCK_FRAMES">BLOCK_FRAMES</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.BLOCK_MS" href="#jarvis.voice.daemon.VoiceDaemon.BLOCK_MS">BLOCK_MS</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.CHANNELS" href="#jarvis.voice.daemon.VoiceDaemon.CHANNELS">CHANNELS</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.MAX_COMMAND_BLOCKS" href="#jarvis.voice.daemon.VoiceDaemon.MAX_COMMAND_BLOCKS">MAX_COMMAND_BLOCKS</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.MAX_COMMAND_SEC" href="#jarvis.voice.daemon.VoiceDaemon.MAX_COMMAND_SEC">MAX_COMMAND_SEC</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.MAX_QUEUE_BLOCKS" href="#jarvis.voice.daemon.VoiceDaemon.MAX_QUEUE_BLOCKS">MAX_QUEUE_BLOCKS</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.MEAN_ABS_THRESHOLD" href="#jarvis.voice.daemon.VoiceDaemon.MEAN_ABS_THRESHOLD">MEAN_ABS_THRESHOLD</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.MIN_SPEECH_BLOCKS" href="#jarvis.voice.daemon.VoiceDaemon.MIN_SPEECH_BLOCKS">MIN_SPEECH_BLOCKS</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.MIN_SPEECH_SEC" href="#jarvis.voice.daemon.VoiceDaemon.MIN_SPEECH_SEC">MIN_SPEECH_SEC</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.SAMPLE_RATE" href="#jarvis.voice.daemon.VoiceDaemon.SAMPLE_RATE">SAMPLE_RATE</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.SILENCE_END_BLOCKS" href="#jarvis.voice.daemon.VoiceDaemon.SILENCE_END_BLOCKS">SILENCE_END_BLOCKS</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.SILENCE_END_SEC" href="#jarvis.voice.daemon.VoiceDaemon.SILENCE_END_SEC">SILENCE_END_SEC</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.STATES" href="#jarvis.voice.daemon.VoiceDaemon.STATES">STATES</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.TRAILING_SILENCE_BLOCKS" href="#jarvis.voice.daemon.VoiceDaemon.TRAILING_SILENCE_BLOCKS">TRAILING_SILENCE_BLOCKS</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.TRAILING_SILENCE_SEC" href="#jarvis.voice.daemon.VoiceDaemon.TRAILING_SILENCE_SEC">TRAILING_SILENCE_SEC</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.feed" href="#jarvis.voice.daemon.VoiceDaemon.feed">feed</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.gate" href="#jarvis.voice.daemon.VoiceDaemon.gate">gate</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.health" href="#jarvis.voice.daemon.VoiceDaemon.health">health</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.openwakeword_installed" href="#jarvis.voice.daemon.VoiceDaemon.openwakeword_installed">openwakeword_installed</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.orchestrator" href="#jarvis.voice.daemon.VoiceDaemon.orchestrator">orchestrator</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.start" href="#jarvis.voice.daemon.VoiceDaemon.start">start</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.stop" href="#jarvis.voice.daemon.VoiceDaemon.stop">stop</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.stt" href="#jarvis.voice.daemon.VoiceDaemon.stt">stt</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.tts" href="#jarvis.voice.daemon.VoiceDaemon.tts">tts</a></code></li>
+<li><code><a title="jarvis.voice.daemon.VoiceDaemon.wake" href="#jarvis.voice.daemon.VoiceDaemon.wake">wake</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

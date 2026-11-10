@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.evidence API documentation</title>
+<meta name="description" content="JARVIS First Law Compliance: Evidence &amp; TrustResult …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.evidence</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS First Law Compliance: Evidence &amp; TrustResult.</p>
+<p>First Law of JARVIS: <em>"No Evidence, No Claim"</em></p>
+<p>Every action-producing capability must return a TrustResult wrapping
+verifiable Evidence. Without Evidence, the system cannot legitimately
+claim an action occurred.</p>
+<p>Classes
+-----=
+Evidence: Immutable data record with source, data, timestamp, trust_level.
+TrustResult: Verdict (success/fail) with associated Evidence + description.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.evidence.Evidence"><code class="flex name class">
+<span>class <span class="ident">Evidence</span></span>
+<span>(</span><span>source: str,<br>data: Any,<br>timestamp: float = &lt;factory&gt;,<br>trust_level: str = 'verified',<br>evidence_id: str = &lt;factory&gt;)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Evidence:
+    &#34;&#34;&#34;Immutable evidence record supporting the First Law of JARVIS.
+
+    Attributes:
+        source: Identifier of the component that generated this evidence.
+        data: The raw data/content that serves as proof of execution.
+        timestamp: UNIX epoch time when the evidence was created.
+        trust_level: &#34;verified&#34;, &#34;self_generated&#34;, &#34;unverified&#34;, &#34;audited&#34;.
+        evidence_id: Cryptographic hash of (source + data + timestamp) for tamper evidence.
+    &#34;&#34;&#34;
+
+    source: str
+    data: Any
+    timestamp: float = field(default_factory=time.time)
+    trust_level: str = &#34;verified&#34;
+    evidence_id: str = field(default_factory=lambda: f&#34;ev_{uuid.uuid4().hex[:16]}&#34;)
+
+    def to_dict(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Serialize evidence to dictionary for JSON routing/API transport.&#34;&#34;&#34;
+        return {
+            &#34;evidence_id&#34;: self.evidence_id,
+            &#34;source&#34;: self.source,
+            &#34;data&#34;: (self.data.to_dict() if hasattr(self.data, &#34;to_dict&#34;) else self.data),
+            &#34;timestamp&#34;: self.timestamp,
+            &#34;trust_level&#34;: self.trust_level,
+        }
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -&gt; &#34;Evidence&#34;:
+        &#34;&#34;&#34;Deserialize evidence from dictionary.&#34;&#34;&#34;
+        return cls(
+            source=d[&#34;source&#34;],
+            data=d[&#34;data&#34;] if not isinstance(d.get(&#34;data&#34;), dict) else d[&#34;data&#34;],
+            timestamp=d.get(&#34;timestamp&#34;, time.time()),
+            trust_level=d.get(&#34;trust_level&#34;, &#34;verified&#34;),
+            evidence_id=d.get(&#34;evidence_id&#34;, f&#34;ev_{uuid.uuid4().hex[:16]}&#34;),
+        )</code></pre>
+</details>
+<div class="desc"><p>Immutable evidence record supporting the First Law of JARVIS.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>source</code></strong></dt>
+<dd>Identifier of the component that generated this evidence.</dd>
+<dt><strong><code>data</code></strong></dt>
+<dd>The raw data/content that serves as proof of execution.</dd>
+<dt><strong><code>timestamp</code></strong></dt>
+<dd>UNIX epoch time when the evidence was created.</dd>
+<dt><strong><code>trust_level</code></strong></dt>
+<dd>"verified", "self_generated", "unverified", "audited".</dd>
+<dt><strong><code>evidence_id</code></strong></dt>
+<dd>Cryptographic hash of (source + data + timestamp) for tamper evidence.</dd>
+</dl></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.core.evidence.Evidence.from_dict"><code class="name flex">
+<span>def <span class="ident">from_dict</span></span>(<span>d: Dict[str, Any]) ‑> <a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deserialize evidence from dictionary.</p></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.core.evidence.Evidence.data"><code class="name">var <span class="ident">data</span> : Any</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.Evidence.evidence_id"><code class="name">var <span class="ident">evidence_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.Evidence.source"><code class="name">var <span class="ident">source</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.Evidence.timestamp"><code class="name">var <span class="ident">timestamp</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.Evidence.trust_level"><code class="name">var <span class="ident">trust_level</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.evidence.Evidence.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Serialize evidence to dictionary for JSON routing/API transport.&#34;&#34;&#34;
+    return {
+        &#34;evidence_id&#34;: self.evidence_id,
+        &#34;source&#34;: self.source,
+        &#34;data&#34;: (self.data.to_dict() if hasattr(self.data, &#34;to_dict&#34;) else self.data),
+        &#34;timestamp&#34;: self.timestamp,
+        &#34;trust_level&#34;: self.trust_level,
+    }</code></pre>
+</details>
+<div class="desc"><p>Serialize evidence to dictionary for JSON routing/API transport.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult"><code class="flex name class">
+<span>class <span class="ident">TrustResult</span></span>
+<span>(</span><span>verdict: str,<br>evidence: <a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a>,<br>description: str,<br>requires_approval: bool = False,<br>approval_token: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class TrustResult:
+    &#34;&#34;&#34;Verdict result wrapping Evidence, enforcing First Law: No Evidence = No Claim.
+
+    Attributes:
+        verdict: &#34;success&#34; or &#34;fail&#34;.
+        evidence: Associated Evidence object (REQUIRED - cannot be None).
+        description: Human-readable explanation of the verdict.
+        requires_approval: Whether this result triggers an approval gate.
+        approval_token: Optional cryptographic token if approval is required.
+    &#34;&#34;&#34;
+
+    verdict: str
+    evidence: Evidence
+    description: str
+    requires_approval: bool = False
+    approval_token: Optional[str] = None
+
+    def to_dict(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Serialize trust result to dictionary for JSON routing/API transport.&#34;&#34;&#34;
+        return {
+            &#34;verdict&#34;: self.verdict,
+            &#34;evidence&#34;: self.evidence.to_dict(),
+            &#34;description&#34;: self.description,
+            &#34;requires_approval&#34;: self.requires_approval,
+            &#34;approval_token&#34;: self.approval_token,
+        }
+
+    @classmethod
+    def success(
+        cls,
+        evidence: Evidence,
+        description: str = &#34;Operation completed successfully&#34;,
+        requires_approval: bool = False,
+        approval_token: Optional[str] = None,
+    ) -&gt; &#34;TrustResult&#34;:
+        &#34;&#34;&#34;Factory for a successful TrustResult.&#34;&#34;&#34;
+        return cls(
+            verdict=&#34;success&#34;,
+            evidence=evidence,
+            description=description,
+            requires_approval=requires_approval,
+            approval_token=approval_token,
+        )
+
+    @classmethod
+    def fail(
+        cls,
+        evidence: Evidence,
+        description: str = &#34;Operation failed&#34;,
+        requires_approval: bool = False,
+        approval_token: Optional[str] = None,
+    ) -&gt; &#34;TrustResult&#34;:
+        &#34;&#34;&#34;Factory for a failed TrustResult.&#34;&#34;&#34;
+        return cls(
+            verdict=&#34;fail&#34;,
+            evidence=evidence,
+            description=description,
+            requires_approval=requires_approval,
+            approval_token=approval_token,
+        )
+
+    def assert_evidence_present(self) -&gt; None:
+        &#34;&#34;&#34;Enforce First Law: raise if evidence is missing or empty.&#34;&#34;&#34;
+        if self.evidence is None:
+            raise AssertionError(&#34;First Law violation: TrustResult.verdict=&#39;success&#39; without Evidence&#34;)
+        if not str(self.evidence.source).strip():
+            raise AssertionError(&#34;First Law violation: Evidence source is empty&#34;)</code></pre>
+</details>
+<div class="desc"><p>Verdict result wrapping Evidence, enforcing First Law: No Evidence = No Claim.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>verdict</code></strong></dt>
+<dd>"success" or "fail".</dd>
+<dt><strong><code>evidence</code></strong></dt>
+<dd>Associated Evidence object (REQUIRED - cannot be None).</dd>
+<dt><strong><code>description</code></strong></dt>
+<dd>Human-readable explanation of the verdict.</dd>
+<dt><strong><code>requires_approval</code></strong></dt>
+<dd>Whether this result triggers an approval gate.</dd>
+<dt><strong><code>approval_token</code></strong></dt>
+<dd>Optional cryptographic token if approval is required.</dd>
+</dl></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.core.evidence.TrustResult.fail"><code class="name flex">
+<span>def <span class="ident">fail</span></span>(<span>evidence: <a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a>,<br>description: str = 'Operation failed',<br>requires_approval: bool = False,<br>approval_token: Optional[str] = None) ‑> <a title="jarvis.core.evidence.TrustResult" href="#jarvis.core.evidence.TrustResult">TrustResult</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Factory for a failed TrustResult.</p></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.success"><code class="name flex">
+<span>def <span class="ident">success</span></span>(<span>evidence: <a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a>,<br>description: str = 'Operation completed successfully',<br>requires_approval: bool = False,<br>approval_token: Optional[str] = None) ‑> <a title="jarvis.core.evidence.TrustResult" href="#jarvis.core.evidence.TrustResult">TrustResult</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Factory for a successful TrustResult.</p></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.core.evidence.TrustResult.approval_token"><code class="name">var <span class="ident">approval_token</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.evidence"><code class="name">var <span class="ident">evidence</span> : <a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.requires_approval"><code class="name">var <span class="ident">requires_approval</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.verdict"><code class="name">var <span class="ident">verdict</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.evidence.TrustResult.assert_evidence_present"><code class="name flex">
+<span>def <span class="ident">assert_evidence_present</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def assert_evidence_present(self) -&gt; None:
+    &#34;&#34;&#34;Enforce First Law: raise if evidence is missing or empty.&#34;&#34;&#34;
+    if self.evidence is None:
+        raise AssertionError(&#34;First Law violation: TrustResult.verdict=&#39;success&#39; without Evidence&#34;)
+    if not str(self.evidence.source).strip():
+        raise AssertionError(&#34;First Law violation: Evidence source is empty&#34;)</code></pre>
+</details>
+<div class="desc"><p>Enforce First Law: raise if evidence is missing or empty.</p></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Serialize trust result to dictionary for JSON routing/API transport.&#34;&#34;&#34;
+    return {
+        &#34;verdict&#34;: self.verdict,
+        &#34;evidence&#34;: self.evidence.to_dict(),
+        &#34;description&#34;: self.description,
+        &#34;requires_approval&#34;: self.requires_approval,
+        &#34;approval_token&#34;: self.approval_token,
+    }</code></pre>
+</details>
+<div class="desc"><p>Serialize trust result to dictionary for JSON routing/API transport.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult"><code class="flex name class">
+<span>class <span class="ident">trust_result_dispatch</span></span>
+<span>(</span><span>verdict: str,<br>evidence: <a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a>,<br>description: str,<br>requires_approval: bool = False,<br>approval_token: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class TrustResult:
+    &#34;&#34;&#34;Verdict result wrapping Evidence, enforcing First Law: No Evidence = No Claim.
+
+    Attributes:
+        verdict: &#34;success&#34; or &#34;fail&#34;.
+        evidence: Associated Evidence object (REQUIRED - cannot be None).
+        description: Human-readable explanation of the verdict.
+        requires_approval: Whether this result triggers an approval gate.
+        approval_token: Optional cryptographic token if approval is required.
+    &#34;&#34;&#34;
+
+    verdict: str
+    evidence: Evidence
+    description: str
+    requires_approval: bool = False
+    approval_token: Optional[str] = None
+
+    def to_dict(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Serialize trust result to dictionary for JSON routing/API transport.&#34;&#34;&#34;
+        return {
+            &#34;verdict&#34;: self.verdict,
+            &#34;evidence&#34;: self.evidence.to_dict(),
+            &#34;description&#34;: self.description,
+            &#34;requires_approval&#34;: self.requires_approval,
+            &#34;approval_token&#34;: self.approval_token,
+        }
+
+    @classmethod
+    def success(
+        cls,
+        evidence: Evidence,
+        description: str = &#34;Operation completed successfully&#34;,
+        requires_approval: bool = False,
+        approval_token: Optional[str] = None,
+    ) -&gt; &#34;TrustResult&#34;:
+        &#34;&#34;&#34;Factory for a successful TrustResult.&#34;&#34;&#34;
+        return cls(
+            verdict=&#34;success&#34;,
+            evidence=evidence,
+            description=description,
+            requires_approval=requires_approval,
+            approval_token=approval_token,
+        )
+
+    @classmethod
+    def fail(
+        cls,
+        evidence: Evidence,
+        description: str = &#34;Operation failed&#34;,
+        requires_approval: bool = False,
+        approval_token: Optional[str] = None,
+    ) -&gt; &#34;TrustResult&#34;:
+        &#34;&#34;&#34;Factory for a failed TrustResult.&#34;&#34;&#34;
+        return cls(
+            verdict=&#34;fail&#34;,
+            evidence=evidence,
+            description=description,
+            requires_approval=requires_approval,
+            approval_token=approval_token,
+        )
+
+    def assert_evidence_present(self) -&gt; None:
+        &#34;&#34;&#34;Enforce First Law: raise if evidence is missing or empty.&#34;&#34;&#34;
+        if self.evidence is None:
+            raise AssertionError(&#34;First Law violation: TrustResult.verdict=&#39;success&#39; without Evidence&#34;)
+        if not str(self.evidence.source).strip():
+            raise AssertionError(&#34;First Law violation: Evidence source is empty&#34;)</code></pre>
+</details>
+<div class="desc"><p>Verdict result wrapping Evidence, enforcing First Law: No Evidence = No Claim.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>verdict</code></strong></dt>
+<dd>"success" or "fail".</dd>
+<dt><strong><code>evidence</code></strong></dt>
+<dd>Associated Evidence object (REQUIRED - cannot be None).</dd>
+<dt><strong><code>description</code></strong></dt>
+<dd>Human-readable explanation of the verdict.</dd>
+<dt><strong><code>requires_approval</code></strong></dt>
+<dd>Whether this result triggers an approval gate.</dd>
+<dt><strong><code>approval_token</code></strong></dt>
+<dd>Optional cryptographic token if approval is required.</dd>
+</dl></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.core.evidence.TrustResult.fail"><code class="name flex">
+<span>def <span class="ident">fail</span></span>(<span>evidence: <a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a>,<br>description: str = 'Operation failed',<br>requires_approval: bool = False,<br>approval_token: Optional[str] = None) ‑> <a title="jarvis.core.evidence.TrustResult" href="#jarvis.core.evidence.TrustResult">TrustResult</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Factory for a failed TrustResult.</p></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.success"><code class="name flex">
+<span>def <span class="ident">success</span></span>(<span>evidence: <a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a>,<br>description: str = 'Operation completed successfully',<br>requires_approval: bool = False,<br>approval_token: Optional[str] = None) ‑> <a title="jarvis.core.evidence.TrustResult" href="#jarvis.core.evidence.TrustResult">TrustResult</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Factory for a successful TrustResult.</p></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.core.evidence.TrustResult.approval_token"><code class="name">var <span class="ident">approval_token</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.evidence"><code class="name">var <span class="ident">evidence</span> : <a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.requires_approval"><code class="name">var <span class="ident">requires_approval</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.verdict"><code class="name">var <span class="ident">verdict</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.evidence.TrustResult.assert_evidence_present"><code class="name flex">
+<span>def <span class="ident">assert_evidence_present</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def assert_evidence_present(self) -&gt; None:
+    &#34;&#34;&#34;Enforce First Law: raise if evidence is missing or empty.&#34;&#34;&#34;
+    if self.evidence is None:
+        raise AssertionError(&#34;First Law violation: TrustResult.verdict=&#39;success&#39; without Evidence&#34;)
+    if not str(self.evidence.source).strip():
+        raise AssertionError(&#34;First Law violation: Evidence source is empty&#34;)</code></pre>
+</details>
+<div class="desc"><p>Enforce First Law: raise if evidence is missing or empty.</p></div>
+</dd>
+<dt id="jarvis.core.evidence.TrustResult.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Serialize trust result to dictionary for JSON routing/API transport.&#34;&#34;&#34;
+    return {
+        &#34;verdict&#34;: self.verdict,
+        &#34;evidence&#34;: self.evidence.to_dict(),
+        &#34;description&#34;: self.description,
+        &#34;requires_approval&#34;: self.requires_approval,
+        &#34;approval_token&#34;: self.approval_token,
+    }</code></pre>
+</details>
+<div class="desc"><p>Serialize trust result to dictionary for JSON routing/API transport.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.evidence.Evidence" href="#jarvis.core.evidence.Evidence">Evidence</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.evidence.Evidence.data" href="#jarvis.core.evidence.Evidence.data">data</a></code></li>
+<li><code><a title="jarvis.core.evidence.Evidence.evidence_id" href="#jarvis.core.evidence.Evidence.evidence_id">evidence_id</a></code></li>
+<li><code><a title="jarvis.core.evidence.Evidence.from_dict" href="#jarvis.core.evidence.Evidence.from_dict">from_dict</a></code></li>
+<li><code><a title="jarvis.core.evidence.Evidence.source" href="#jarvis.core.evidence.Evidence.source">source</a></code></li>
+<li><code><a title="jarvis.core.evidence.Evidence.timestamp" href="#jarvis.core.evidence.Evidence.timestamp">timestamp</a></code></li>
+<li><code><a title="jarvis.core.evidence.Evidence.to_dict" href="#jarvis.core.evidence.Evidence.to_dict">to_dict</a></code></li>
+<li><code><a title="jarvis.core.evidence.Evidence.trust_level" href="#jarvis.core.evidence.Evidence.trust_level">trust_level</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.evidence.TrustResult" href="#jarvis.core.evidence.TrustResult">TrustResult</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.evidence.TrustResult.approval_token" href="#jarvis.core.evidence.TrustResult.approval_token">approval_token</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.assert_evidence_present" href="#jarvis.core.evidence.TrustResult.assert_evidence_present">assert_evidence_present</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.description" href="#jarvis.core.evidence.TrustResult.description">description</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.evidence" href="#jarvis.core.evidence.TrustResult.evidence">evidence</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.fail" href="#jarvis.core.evidence.TrustResult.fail">fail</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.requires_approval" href="#jarvis.core.evidence.TrustResult.requires_approval">requires_approval</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.success" href="#jarvis.core.evidence.TrustResult.success">success</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.to_dict" href="#jarvis.core.evidence.TrustResult.to_dict">to_dict</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.verdict" href="#jarvis.core.evidence.TrustResult.verdict">verdict</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.evidence.TrustResult" href="#jarvis.core.evidence.TrustResult">TrustResult</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.evidence.TrustResult.approval_token" href="#jarvis.core.evidence.TrustResult.approval_token">approval_token</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.assert_evidence_present" href="#jarvis.core.evidence.TrustResult.assert_evidence_present">assert_evidence_present</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.description" href="#jarvis.core.evidence.TrustResult.description">description</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.evidence" href="#jarvis.core.evidence.TrustResult.evidence">evidence</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.fail" href="#jarvis.core.evidence.TrustResult.fail">fail</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.requires_approval" href="#jarvis.core.evidence.TrustResult.requires_approval">requires_approval</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.success" href="#jarvis.core.evidence.TrustResult.success">success</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.to_dict" href="#jarvis.core.evidence.TrustResult.to_dict">to_dict</a></code></li>
+<li><code><a title="jarvis.core.evidence.TrustResult.verdict" href="#jarvis.core.evidence.TrustResult.verdict">verdict</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

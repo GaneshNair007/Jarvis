@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.task_executor API documentation</title>
+<meta name="description" content="JARVIS Task Graph Executor (Async Parallel DAG Execution Engine)
+Coordinates the complete end-to-end cognitive loop:
+Goal -&gt; TaskGraph (DAG) -&gt; …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.task_executor</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Task Graph Executor (Async Parallel DAG Execution Engine)
+Coordinates the complete end-to-end cognitive loop:
+Goal -&gt; TaskGraph (DAG) -&gt; Departments -&gt; Agents -&gt; Tools -&gt; Verification -&gt; Memory -&gt; Reflection.
+Executes parallel task layers concurrently with multi-stage QA gates and automated memory recording.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.task_executor.ExecutionReport"><code class="flex name class">
+<span>class <span class="ident">ExecutionReport</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ExecutionReport(BaseModel):
+    goal_id: str
+    status: TaskStatus
+    total_tasks: int
+    completed_tasks: int
+    failed_tasks: int
+    cancelled_tasks: int
+    duration_seconds: float
+    reflection: Optional[ReflectionRecord] = None
+    fourth_law_compliant: bool = True  # Fourth Law: reflection record persisted before COMPLETED
+    task_results: Dict[str, Any] = Field(default_factory=dict)
+    timestamp: str = Field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.task_executor.ExecutionReport.cancelled_tasks"><code class="name">var <span class="ident">cancelled_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.completed_tasks"><code class="name">var <span class="ident">completed_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.duration_seconds"><code class="name">var <span class="ident">duration_seconds</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.failed_tasks"><code class="name">var <span class="ident">failed_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.fourth_law_compliant"><code class="name">var <span class="ident">fourth_law_compliant</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.goal_id"><code class="name">var <span class="ident">goal_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.reflection"><code class="name">var <span class="ident">reflection</span> : <a title="jarvis.core.task_reflection.ReflectionRecord" href="task_reflection.html#jarvis.core.task_reflection.ReflectionRecord">ReflectionRecord</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.status"><code class="name">var <span class="ident">status</span> : <a title="jarvis.core.task_graph.TaskStatus" href="task_graph.html#jarvis.core.task_graph.TaskStatus">TaskStatus</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.task_results"><code class="name">var <span class="ident">task_results</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.timestamp"><code class="name">var <span class="ident">timestamp</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_executor.ExecutionReport.total_tasks"><code class="name">var <span class="ident">total_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.task_executor.TaskExecutor"><code class="flex name class">
+<span>class <span class="ident">TaskExecutor</span></span>
+<span>(</span><span>router: Optional[TaskRouter] = None,<br>scheduler: Optional[TaskScheduler] = None,<br>verifier: Optional[TaskVerifier] = None,<br>memory_writer: Optional[TaskMemoryWriter] = None,<br>reflection_engine: Optional[TaskReflectionEngine] = None,<br>max_concurrency: int = 5)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskExecutor:
+    &#34;&#34;&#34;
+    High-level orchestrator for executing Task Graphs with multi-agent routing,
+    verification gates, and episodic memory persistence.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        router: Optional[TaskRouter] = None,
+        scheduler: Optional[TaskScheduler] = None,
+        verifier: Optional[TaskVerifier] = None,
+        memory_writer: Optional[TaskMemoryWriter] = None,
+        reflection_engine: Optional[TaskReflectionEngine] = None,
+        max_concurrency: int = 5,
+    ):
+        self.router = router or TaskRouter()
+        self.scheduler = scheduler or TaskScheduler(max_concurrency=max_concurrency)
+        self.verifier = verifier or TaskVerifier()
+        self.memory_writer = memory_writer or TaskMemoryWriter()
+        self.reflection_engine = reflection_engine or TaskReflectionEngine()
+
+    async def execute_task(
+        self,
+        graph: TaskGraph,
+        task: TaskNode,
+        handler: Optional[Callable[[TaskNode, Dict[str, Any]], Any]] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Executes a single ready task node:
+        1. Central CEO Router assigns worker agent.
+        2. Context from dependency outputs is injected.
+        3. Handler runs task logic.
+        4. Quality and Security Gates verify outputs.
+        5. State is updated and memory is recorded.
+        &#34;&#34;&#34;
+        # Step 1: Assign Agent
+        assignment = self.router.assign_agent(task)
+        self.scheduler.mark_started(graph, task.task_id, agent_id=assignment.agent_id)
+
+        # Step 2: Assemble Context from dependencies
+        parent_context = {}
+        for dep_id in task.dependencies:
+            dep_node = graph.nodes.get(dep_id)
+            if dep_node and dep_node.outputs:
+                parent_context[dep_id] = dep_node.outputs
+
+        # Step 3: Run Handler or default executor
+        try:
+            if handler:
+                if inspect.iscoroutinefunction(handler):
+                    raw_output = await handler(task, parent_context)
+                else:
+                    raw_output = handler(task, parent_context)
+            else:
+                raw_output = await self._default_agent_execution(task, parent_context)
+
+            if not isinstance(raw_output, dict):
+                outputs = {&#34;result&#34;: raw_output}
+            else:
+                outputs = raw_output
+        except Exception as e:
+            logger.error(f&#34;Task &#39;{task.task_id}&#39; raised exception during execution: {e}&#34;)
+            outputs = {&#34;error&#34;: str(e), &#34;status&#34;: &#34;failed&#34;}
+
+        # Step 4: Verification Quality Gate
+        verification = self.verifier.verify_task(task, outputs, reviewer_agent=f&#34;{task.department}_qa_gate&#34;)
+        task.metadata[&#34;verification&#34;] = verification.model_dump()
+
+        if verification.passed:
+            # Step 5a: Success Transition &amp; Memory Writing
+            self.scheduler.mark_completed(graph, task.task_id, outputs)
+            self.memory_writer.record_task_memory(task)
+            logger.info(f&#34;Task &#39;{task.task_id}&#39; successfully completed and verified (score: {verification.score}).&#34;)
+        else:
+            # Step 5b: Failure &amp; Retry Handling
+            self.scheduler.mark_failed(graph, task.task_id, verification.comments)
+            logger.warning(f&#34;Task &#39;{task.task_id}&#39; rejected by verifier: {verification.comments}&#34;)
+
+        return outputs
+
+    async def _default_agent_execution(self, task: TaskNode, context: Dict[str, Any]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Default agent simulation/execution if no custom handler is provided.&#34;&#34;&#34;
+        await asyncio.sleep(0.01)  # Minimal async yield
+        return {
+            &#34;task_id&#34;: task.task_id,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;summary&#34;: f&#34;Executed &#39;{task.name}&#39; successfully via agent &#39;{task.assigned_agent}&#39;.&#34;,
+            &#34;department&#34;: task.department,
+            &#34;context_inputs_count&#34;: len(context),
+            &#34;tools_used&#34;: task.tool_requirements or [&#34;default_executor&#34;],
+        }
+
+    async def run(
+        self,
+        graph: TaskGraph,
+        handler: Optional[Callable[[TaskNode, Dict[str, Any]], Any]] = None,
+        timeout: float = 60.0,
+    ) -&gt; ExecutionReport:
+        &#34;&#34;&#34;
+        Executes the entire TaskGraph to completion:
+        Loops through dispatchable tasks, runs them concurrently,
+        and generates a final post-goal reflection.
+        &#34;&#34;&#34;
+        start_time = time.time()
+        logger.info(f&#34;Starting execution of TaskGraph for Goal &#39;{graph.goal_id}&#39; ({len(graph.nodes)} tasks).&#34;)
+
+        # Validate DAG topology
+        if graph.is_cyclic():
+            raise ValueError(f&#34;Cannot execute cyclic TaskGraph &#39;{graph.goal_id}&#39;!&#34;)
+
+        active_futures: Dict[str, asyncio.Task] = {}
+
+        while not self.scheduler.is_finished(graph):
+            # Check timeout
+            if time.time() - start_time &gt; timeout:
+                logger.error(f&#34;TaskGraph execution timed out after {timeout} seconds.&#34;)
+                break
+
+            # 1. Fetch dispatchable tasks
+            ready_tasks = self.scheduler.get_dispatchable_tasks(graph)
+
+            # 2. Launch execution tasks for each ready candidate
+            for task_node in ready_tasks:
+                if task_node.task_id not in active_futures:
+                    coro = self.execute_task(graph, task_node, handler=handler)
+                    fut = asyncio.create_task(coro)
+                    active_futures[task_node.task_id] = fut
+
+            # 3. If there are running tasks, wait for at least one to finish
+            if active_futures:
+                done, pending = await asyncio.wait(
+                    active_futures.values(),
+                    return_when=asyncio.FIRST_COMPLETED,
+                    timeout=0.1,
+                )
+                # Cleanup completed futures
+                finished_ids = [tid for tid, fut in active_futures.items() if fut in done]
+                for fid in finished_ids:
+                    del active_futures[fid]
+            else:
+                # No running tasks and no dispatchable tasks, but scheduler not finished.
+                # This happens if all remaining tasks are BLOCKED with no remaining running tasks to unblock them.
+                logger.warning(&#34;No runnable tasks available and no active tasks running. Graph execution halted.&#34;)
+                break
+
+            await asyncio.sleep(0.01)
+
+        duration = round(time.time() - start_time, 3)
+
+        # Post-Goal Reflection (FOURTH LAW: NO MEMORY WITHOUT REFLECTION)
+        reflection = self.reflection_engine.reflect_on_goal(graph)
+
+        # Compute summary
+        completed = sum(1 for n in graph.nodes.values() if n.status == TaskStatus.COMPLETED)
+        failed = sum(1 for n in graph.nodes.values() if n.status == TaskStatus.FAILED)
+        cancelled = sum(1 for n in graph.nodes.values() if n.status == TaskStatus.CANCELLED)
+
+        # Fourth Law completion gate (constitution §2, §10.5):
+        # a goal may only be declared COMPLETED once a substantive reflection
+        # record (lessons/failures/successes/gaps) exists in permanent storage.
+        all_tasks_done = completed == len(graph.nodes) and len(graph.nodes) &gt; 0
+        reflection_record = self.reflection_engine.get_reflection(graph.goal_id)
+        fourth_law_ok = bool(reflection_record) if all_tasks_done else True
+        if all_tasks_done and not fourth_law_ok:
+            logger.error(
+                f&#34;FOURTH LAW VIOLATION: Goal &#39;{graph.goal_id}&#39; finished all tasks but no &#34;
+                &#34;reflection record was persisted. Goal marked INCOMPLETE, not COMPLETED.&#34;
+            )
+            overall_status = TaskStatus.INCOMPLETE
+        else:
+            overall_status = TaskStatus.COMPLETED if all_tasks_done else TaskStatus.FAILED
+
+        report = ExecutionReport(
+            goal_id=graph.goal_id,
+            status=overall_status,
+            total_tasks=len(graph.nodes),
+            completed_tasks=completed,
+            failed_tasks=failed,
+            cancelled_tasks=cancelled,
+            duration_seconds=duration,
+            reflection=reflection,
+            fourth_law_compliant=fourth_law_ok,
+            task_results={tid: n.outputs for tid, n in graph.nodes.items()},
+        )
+
+        logger.info(
+            f&#34;TaskGraph &#39;{graph.goal_id}&#39; execution concluded in {duration}s. &#34;
+            f&#34;Status: {overall_status.value} (Completed: {completed}, Failed: {failed}, Cancelled: {cancelled})&#34;
+        )
+        return report
+
+    def run_sync(
+        self,
+        graph: TaskGraph,
+        handler: Optional[Callable[[TaskNode, Dict[str, Any]], Any]] = None,
+        timeout: float = 60.0,
+    ) -&gt; ExecutionReport:
+        &#34;&#34;&#34;Synchronous convenience wrapper for run().&#34;&#34;&#34;
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+
+        if loop.is_running():
+            # If already inside an event loop, create a new loop in a thread or run
+            import nest_asyncio
+
+            nest_asyncio.apply()
+            return loop.run_until_complete(self.run(graph, handler=handler, timeout=timeout))
+        else:
+            return loop.run_until_complete(self.run(graph, handler=handler, timeout=timeout))</code></pre>
+</details>
+<div class="desc"><p>High-level orchestrator for executing Task Graphs with multi-agent routing,
+verification gates, and episodic memory persistence.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.task_executor.TaskExecutor.execute_task"><code class="name flex">
+<span>async def <span class="ident">execute_task</span></span>(<span>self,<br>graph: TaskGraph,<br>task: TaskNode,<br>handler: Optional[Callable[[TaskNode, Dict[str, Any]], Any]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def execute_task(
+    self,
+    graph: TaskGraph,
+    task: TaskNode,
+    handler: Optional[Callable[[TaskNode, Dict[str, Any]], Any]] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Executes a single ready task node:
+    1. Central CEO Router assigns worker agent.
+    2. Context from dependency outputs is injected.
+    3. Handler runs task logic.
+    4. Quality and Security Gates verify outputs.
+    5. State is updated and memory is recorded.
+    &#34;&#34;&#34;
+    # Step 1: Assign Agent
+    assignment = self.router.assign_agent(task)
+    self.scheduler.mark_started(graph, task.task_id, agent_id=assignment.agent_id)
+
+    # Step 2: Assemble Context from dependencies
+    parent_context = {}
+    for dep_id in task.dependencies:
+        dep_node = graph.nodes.get(dep_id)
+        if dep_node and dep_node.outputs:
+            parent_context[dep_id] = dep_node.outputs
+
+    # Step 3: Run Handler or default executor
+    try:
+        if handler:
+            if inspect.iscoroutinefunction(handler):
+                raw_output = await handler(task, parent_context)
+            else:
+                raw_output = handler(task, parent_context)
+        else:
+            raw_output = await self._default_agent_execution(task, parent_context)
+
+        if not isinstance(raw_output, dict):
+            outputs = {&#34;result&#34;: raw_output}
+        else:
+            outputs = raw_output
+    except Exception as e:
+        logger.error(f&#34;Task &#39;{task.task_id}&#39; raised exception during execution: {e}&#34;)
+        outputs = {&#34;error&#34;: str(e), &#34;status&#34;: &#34;failed&#34;}
+
+    # Step 4: Verification Quality Gate
+    verification = self.verifier.verify_task(task, outputs, reviewer_agent=f&#34;{task.department}_qa_gate&#34;)
+    task.metadata[&#34;verification&#34;] = verification.model_dump()
+
+    if verification.passed:
+        # Step 5a: Success Transition &amp; Memory Writing
+        self.scheduler.mark_completed(graph, task.task_id, outputs)
+        self.memory_writer.record_task_memory(task)
+        logger.info(f&#34;Task &#39;{task.task_id}&#39; successfully completed and verified (score: {verification.score}).&#34;)
+    else:
+        # Step 5b: Failure &amp; Retry Handling
+        self.scheduler.mark_failed(graph, task.task_id, verification.comments)
+        logger.warning(f&#34;Task &#39;{task.task_id}&#39; rejected by verifier: {verification.comments}&#34;)
+
+    return outputs</code></pre>
+</details>
+<div class="desc"><p>Executes a single ready task node:
+1. Central CEO Router assigns worker agent.
+2. Context from dependency outputs is injected.
+3. Handler runs task logic.
+4. Quality and Security Gates verify outputs.
+5. State is updated and memory is recorded.</p></div>
+</dd>
+<dt id="jarvis.core.task_executor.TaskExecutor.run"><code class="name flex">
+<span>async def <span class="ident">run</span></span>(<span>self,<br>graph: TaskGraph,<br>handler: Optional[Callable[[TaskNode, Dict[str, Any]], Any]] = None,<br>timeout: float = 60.0) ‑> <a title="jarvis.core.task_executor.ExecutionReport" href="#jarvis.core.task_executor.ExecutionReport">ExecutionReport</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def run(
+    self,
+    graph: TaskGraph,
+    handler: Optional[Callable[[TaskNode, Dict[str, Any]], Any]] = None,
+    timeout: float = 60.0,
+) -&gt; ExecutionReport:
+    &#34;&#34;&#34;
+    Executes the entire TaskGraph to completion:
+    Loops through dispatchable tasks, runs them concurrently,
+    and generates a final post-goal reflection.
+    &#34;&#34;&#34;
+    start_time = time.time()
+    logger.info(f&#34;Starting execution of TaskGraph for Goal &#39;{graph.goal_id}&#39; ({len(graph.nodes)} tasks).&#34;)
+
+    # Validate DAG topology
+    if graph.is_cyclic():
+        raise ValueError(f&#34;Cannot execute cyclic TaskGraph &#39;{graph.goal_id}&#39;!&#34;)
+
+    active_futures: Dict[str, asyncio.Task] = {}
+
+    while not self.scheduler.is_finished(graph):
+        # Check timeout
+        if time.time() - start_time &gt; timeout:
+            logger.error(f&#34;TaskGraph execution timed out after {timeout} seconds.&#34;)
+            break
+
+        # 1. Fetch dispatchable tasks
+        ready_tasks = self.scheduler.get_dispatchable_tasks(graph)
+
+        # 2. Launch execution tasks for each ready candidate
+        for task_node in ready_tasks:
+            if task_node.task_id not in active_futures:
+                coro = self.execute_task(graph, task_node, handler=handler)
+                fut = asyncio.create_task(coro)
+                active_futures[task_node.task_id] = fut
+
+        # 3. If there are running tasks, wait for at least one to finish
+        if active_futures:
+            done, pending = await asyncio.wait(
+                active_futures.values(),
+                return_when=asyncio.FIRST_COMPLETED,
+                timeout=0.1,
+            )
+            # Cleanup completed futures
+            finished_ids = [tid for tid, fut in active_futures.items() if fut in done]
+            for fid in finished_ids:
+                del active_futures[fid]
+        else:
+            # No running tasks and no dispatchable tasks, but scheduler not finished.
+            # This happens if all remaining tasks are BLOCKED with no remaining running tasks to unblock them.
+            logger.warning(&#34;No runnable tasks available and no active tasks running. Graph execution halted.&#34;)
+            break
+
+        await asyncio.sleep(0.01)
+
+    duration = round(time.time() - start_time, 3)
+
+    # Post-Goal Reflection (FOURTH LAW: NO MEMORY WITHOUT REFLECTION)
+    reflection = self.reflection_engine.reflect_on_goal(graph)
+
+    # Compute summary
+    completed = sum(1 for n in graph.nodes.values() if n.status == TaskStatus.COMPLETED)
+    failed = sum(1 for n in graph.nodes.values() if n.status == TaskStatus.FAILED)
+    cancelled = sum(1 for n in graph.nodes.values() if n.status == TaskStatus.CANCELLED)
+
+    # Fourth Law completion gate (constitution §2, §10.5):
+    # a goal may only be declared COMPLETED once a substantive reflection
+    # record (lessons/failures/successes/gaps) exists in permanent storage.
+    all_tasks_done = completed == len(graph.nodes) and len(graph.nodes) &gt; 0
+    reflection_record = self.reflection_engine.get_reflection(graph.goal_id)
+    fourth_law_ok = bool(reflection_record) if all_tasks_done else True
+    if all_tasks_done and not fourth_law_ok:
+        logger.error(
+            f&#34;FOURTH LAW VIOLATION: Goal &#39;{graph.goal_id}&#39; finished all tasks but no &#34;
+            &#34;reflection record was persisted. Goal marked INCOMPLETE, not COMPLETED.&#34;
+        )
+        overall_status = TaskStatus.INCOMPLETE
+    else:
+        overall_status = TaskStatus.COMPLETED if all_tasks_done else TaskStatus.FAILED
+
+    report = ExecutionReport(
+        goal_id=graph.goal_id,
+        status=overall_status,
+        total_tasks=len(graph.nodes),
+        completed_tasks=completed,
+        failed_tasks=failed,
+        cancelled_tasks=cancelled,
+        duration_seconds=duration,
+        reflection=reflection,
+        fourth_law_compliant=fourth_law_ok,
+        task_results={tid: n.outputs for tid, n in graph.nodes.items()},
+    )
+
+    logger.info(
+        f&#34;TaskGraph &#39;{graph.goal_id}&#39; execution concluded in {duration}s. &#34;
+        f&#34;Status: {overall_status.value} (Completed: {completed}, Failed: {failed}, Cancelled: {cancelled})&#34;
+    )
+    return report</code></pre>
+</details>
+<div class="desc"><p>Executes the entire TaskGraph to completion:
+Loops through dispatchable tasks, runs them concurrently,
+and generates a final post-goal reflection.</p></div>
+</dd>
+<dt id="jarvis.core.task_executor.TaskExecutor.run_sync"><code class="name flex">
+<span>def <span class="ident">run_sync</span></span>(<span>self,<br>graph: TaskGraph,<br>handler: Optional[Callable[[TaskNode, Dict[str, Any]], Any]] = None,<br>timeout: float = 60.0) ‑> <a title="jarvis.core.task_executor.ExecutionReport" href="#jarvis.core.task_executor.ExecutionReport">ExecutionReport</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_sync(
+    self,
+    graph: TaskGraph,
+    handler: Optional[Callable[[TaskNode, Dict[str, Any]], Any]] = None,
+    timeout: float = 60.0,
+) -&gt; ExecutionReport:
+    &#34;&#34;&#34;Synchronous convenience wrapper for run().&#34;&#34;&#34;
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    if loop.is_running():
+        # If already inside an event loop, create a new loop in a thread or run
+        import nest_asyncio
+
+        nest_asyncio.apply()
+        return loop.run_until_complete(self.run(graph, handler=handler, timeout=timeout))
+    else:
+        return loop.run_until_complete(self.run(graph, handler=handler, timeout=timeout))</code></pre>
+</details>
+<div class="desc"><p>Synchronous convenience wrapper for run().</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.task_executor.ExecutionReport" href="#jarvis.core.task_executor.ExecutionReport">ExecutionReport</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.cancelled_tasks" href="#jarvis.core.task_executor.ExecutionReport.cancelled_tasks">cancelled_tasks</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.completed_tasks" href="#jarvis.core.task_executor.ExecutionReport.completed_tasks">completed_tasks</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.duration_seconds" href="#jarvis.core.task_executor.ExecutionReport.duration_seconds">duration_seconds</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.failed_tasks" href="#jarvis.core.task_executor.ExecutionReport.failed_tasks">failed_tasks</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.fourth_law_compliant" href="#jarvis.core.task_executor.ExecutionReport.fourth_law_compliant">fourth_law_compliant</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.goal_id" href="#jarvis.core.task_executor.ExecutionReport.goal_id">goal_id</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.model_config" href="#jarvis.core.task_executor.ExecutionReport.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.reflection" href="#jarvis.core.task_executor.ExecutionReport.reflection">reflection</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.status" href="#jarvis.core.task_executor.ExecutionReport.status">status</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.task_results" href="#jarvis.core.task_executor.ExecutionReport.task_results">task_results</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.timestamp" href="#jarvis.core.task_executor.ExecutionReport.timestamp">timestamp</a></code></li>
+<li><code><a title="jarvis.core.task_executor.ExecutionReport.total_tasks" href="#jarvis.core.task_executor.ExecutionReport.total_tasks">total_tasks</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.task_executor.TaskExecutor" href="#jarvis.core.task_executor.TaskExecutor">TaskExecutor</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.task_executor.TaskExecutor.execute_task" href="#jarvis.core.task_executor.TaskExecutor.execute_task">execute_task</a></code></li>
+<li><code><a title="jarvis.core.task_executor.TaskExecutor.run" href="#jarvis.core.task_executor.TaskExecutor.run">run</a></code></li>
+<li><code><a title="jarvis.core.task_executor.TaskExecutor.run_sync" href="#jarvis.core.task_executor.TaskExecutor.run_sync">run_sync</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

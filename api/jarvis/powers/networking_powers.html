@@ -1,0 +1,1731 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.networking_powers API documentation</title>
+<meta name="description" content="JARVIS Networking Powers (PWR-127 to PWR-143)
+Full-stack network diagnostics and monitoring:
+- Ping, traceroute, DNS lookup, port scanning
+- …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.networking_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Networking Powers (PWR-127 to PWR-143)
+Full-stack network diagnostics and monitoring:
+- Ping, traceroute, DNS lookup, port scanning
+- Internet connectivity checks, SSL cert inspection
+- Public IP, speed estimates, bandwidth monitoring
+- ARP table, netstat, DNS flush, WiFi scan, VPN status</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers"><code class="flex name class">
+<span>class <span class="ident">NetworkingPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NetworkingPowers:
+    &#34;&#34;&#34;Network diagnostics, scanning, and monitoring powers.&#34;&#34;&#34;
+
+    # Default ports to scan when none specified
+    DEFAULT_PORTS: List[int] = [22, 80, 443, 3000, 5432, 6379, 8000, 11434]
+
+    # ------------------------------------------------------------------ #
+    # PWR-127  Ping
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def ping(host: str, count: int = 4) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-127: ICMP/TCP ping with latency statistics.&#34;&#34;&#34;
+        try:
+            flag = &#34;-n&#34; if os.name == &#34;nt&#34; else &#34;-c&#34;
+            result = subprocess.run(
+                [&#34;ping&#34;, flag, str(count), host],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            output = result.stdout + result.stderr
+
+            # Parse latency stats from Windows ping output
+            stats: Dict[str, Any] = {&#34;raw&#34;: output.strip()}
+            # Windows: Minimum = 1ms, Maximum = 3ms, Average = 2ms
+            avg_match = re.search(r&#34;Average\s*=\s*(\d+)\s*ms&#34;, output, re.IGNORECASE)
+            min_match = re.search(r&#34;Minimum\s*=\s*(\d+)\s*ms&#34;, output, re.IGNORECASE)
+            max_match = re.search(r&#34;Maximum\s*=\s*(\d+)\s*ms&#34;, output, re.IGNORECASE)
+            # Linux: rtt min/avg/max/mdev = ...
+            rtt_match = re.search(
+                r&#34;rtt\s+min/avg/max/mdev\s*=\s*([\d.]+)/([\d.]+)/([\d.]+)/([\d.]+)&#34;,
+                output,
+            )
+
+            if avg_match:
+                stats[&#34;avg_ms&#34;] = float(avg_match.group(1))
+            if min_match:
+                stats[&#34;min_ms&#34;] = float(min_match.group(1))
+            if max_match:
+                stats[&#34;max_ms&#34;] = float(max_match.group(1))
+            if rtt_match:
+                stats[&#34;min_ms&#34;] = float(rtt_match.group(1))
+                stats[&#34;avg_ms&#34;] = float(rtt_match.group(2))
+                stats[&#34;max_ms&#34;] = float(rtt_match.group(3))
+
+            # Packet loss
+            loss_match = re.search(r&#34;(\d+)%\s*(packet\s+)?loss&#34;, output, re.IGNORECASE)
+            if loss_match:
+                stats[&#34;packet_loss_pct&#34;] = int(loss_match.group(1))
+
+            reachable = result.returncode == 0
+            return {
+                &#34;power_id&#34;: &#34;PWR-127&#34;,
+                &#34;status&#34;: &#34;success&#34; if reachable else &#34;host_unreachable&#34;,
+                &#34;host&#34;: host,
+                &#34;count&#34;: count,
+                &#34;reachable&#34;: reachable,
+                **stats,
+            }
+        except subprocess.TimeoutExpired:
+            return {&#34;power_id&#34;: &#34;PWR-127&#34;, &#34;status&#34;: &#34;timeout&#34;, &#34;host&#34;: host, &#34;message&#34;: &#34;Ping timed out&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-127&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-128  Traceroute
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def traceroute(host: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-128: Multi-hop network path trace.&#34;&#34;&#34;
+        try:
+            cmd = [&#34;tracert&#34;, &#34;-d&#34;, host] if os.name == &#34;nt&#34; else [&#34;traceroute&#34;, &#34;-n&#34;, host]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+            output = (result.stdout + result.stderr).strip()
+
+            hops: List[Dict[str, Any]] = []
+            for line in output.splitlines():
+                # Windows: &#34;  1    &lt;1 ms    &lt;1 ms    &lt;1 ms  192.168.1.1&#34;
+                hop_match = re.match(r&#34;\s*(\d+)\s+(.+?)\s+([\d.]+)\s*$&#34;, line)
+                if hop_match:
+                    hops.append(
+                        {
+                            &#34;hop&#34;: int(hop_match.group(1)),
+                            &#34;ip&#34;: hop_match.group(3),
+                            &#34;timing&#34;: hop_match.group(2).strip(),
+                        }
+                    )
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-128&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;host&#34;: host,
+                &#34;hop_count&#34;: len(hops),
+                &#34;hops&#34;: hops,
+                &#34;raw&#34;: output,
+            }
+        except subprocess.TimeoutExpired:
+            return {&#34;power_id&#34;: &#34;PWR-128&#34;, &#34;status&#34;: &#34;timeout&#34;, &#34;host&#34;: host, &#34;message&#34;: &#34;Traceroute timed out (60s)&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-128&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-129  DNS Lookup
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def dns_lookup(domain: str, record_type: str = &#34;A&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-129: DNS resolution using socket and nslookup fallback.&#34;&#34;&#34;
+        try:
+            results: List[str] = []
+
+            if record_type.upper() == &#34;A&#34;:
+                # Fast path via socket
+                infos = socket.getaddrinfo(domain, None, socket.AF_INET, socket.SOCK_STREAM)
+                results = list({info[4][0] for info in infos})
+            elif record_type.upper() == &#34;AAAA&#34;:
+                infos = socket.getaddrinfo(domain, None, socket.AF_INET6, socket.SOCK_STREAM)
+                results = list({info[4][0] for info in infos})
+            else:
+                # Fallback to nslookup for MX, CNAME, TXT, etc.
+                proc = subprocess.run(
+                    [&#34;nslookup&#34;, f&#34;-type={record_type}&#34;, domain],
+                    capture_output=True,
+                    text=True,
+                    timeout=15,
+                )
+                results = [proc.stdout.strip()]
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-129&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;domain&#34;: domain,
+                &#34;record_type&#34;: record_type.upper(),
+                &#34;addresses&#34;: results,
+            }
+        except socket.gaierror as e:
+            return {
+                &#34;power_id&#34;: &#34;PWR-129&#34;,
+                &#34;status&#34;: &#34;dns_failure&#34;,
+                &#34;domain&#34;: domain,
+                &#34;record_type&#34;: record_type.upper(),
+                &#34;message&#34;: str(e),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-129&#34;, &#34;status&#34;: &#34;error&#34;, &#34;domain&#34;: domain, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-130  Port Scan
+    # ------------------------------------------------------------------ #
+    def port_scan(self, host: str = &#34;127.0.0.1&#34;, ports: Optional[List[int]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-130: TCP connect scan on specified or common ports.&#34;&#34;&#34;
+        scan_ports = ports or self.DEFAULT_PORTS
+        open_ports: List[Dict[str, Any]] = []
+        closed_ports: List[int] = []
+
+        try:
+            for port in scan_ports:
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                sock.settimeout(1.0)
+                try:
+                    result = sock.connect_ex((host, port))
+                    if result == 0:
+                        # Try to grab service banner
+                        service = &#34;&#34;
+                        try:
+                            service = socket.getservbyport(port, &#34;tcp&#34;)
+                        except OSError:
+                            pass
+                        open_ports.append({&#34;port&#34;: port, &#34;state&#34;: &#34;open&#34;, &#34;service&#34;: service})
+                    else:
+                        closed_ports.append(port)
+                finally:
+                    sock.close()
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-130&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;host&#34;: host,
+                &#34;open_ports&#34;: open_ports,
+                &#34;closed_ports&#34;: closed_ports,
+                &#34;total_scanned&#34;: len(scan_ports),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-130&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-131  Internet Connectivity Check
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def check_internet() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-131: Quick internet connectivity test via DNS + TCP.&#34;&#34;&#34;
+        checks: Dict[str, Any] = {&#34;dns&#34;: False, &#34;tcp&#34;: False}
+        try:
+            # DNS resolution test
+            addr = socket.getaddrinfo(&#34;google.com&#34;, 443, socket.AF_INET, socket.SOCK_STREAM)
+            if addr:
+                checks[&#34;dns&#34;] = True
+                ip = addr[0][4][0]
+
+                # TCP connect test
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                sock.settimeout(5)
+                try:
+                    sock.connect((ip, 443))
+                    checks[&#34;tcp&#34;] = True
+                finally:
+                    sock.close()
+
+            connected = checks[&#34;dns&#34;] and checks[&#34;tcp&#34;]
+            return {
+                &#34;power_id&#34;: &#34;PWR-131&#34;,
+                &#34;status&#34;: &#34;connected&#34; if connected else &#34;limited&#34;,
+                &#34;checks&#34;: checks,
+                &#34;connected&#34;: connected,
+            }
+        except Exception as e:
+            return {
+                &#34;power_id&#34;: &#34;PWR-131&#34;,
+                &#34;status&#34;: &#34;disconnected&#34;,
+                &#34;checks&#34;: checks,
+                &#34;connected&#34;: False,
+                &#34;message&#34;: str(e),
+            }
+
+    # ------------------------------------------------------------------ #
+    # PWR-132  Network Interfaces
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def get_network_interfaces() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-132: List local network interfaces and IP addresses.&#34;&#34;&#34;
+        try:
+            interfaces: List[Dict[str, Any]] = []
+
+            # Try psutil first for rich info
+            try:
+                import psutil
+
+                addrs = psutil.net_if_addrs()
+                stats = psutil.net_if_stats()
+                for iface_name, addr_list in addrs.items():
+                    iface_info: Dict[str, Any] = {
+                        &#34;name&#34;: iface_name,
+                        &#34;addresses&#34;: [],
+                    }
+                    if iface_name in stats:
+                        s = stats[iface_name]
+                        iface_info[&#34;is_up&#34;] = s.isup
+                        iface_info[&#34;speed_mbps&#34;] = s.speed
+                        iface_info[&#34;mtu&#34;] = s.mtu
+
+                    for addr in addr_list:
+                        entry: Dict[str, str] = {&#34;address&#34;: addr.address}
+                        if addr.family == socket.AF_INET:
+                            entry[&#34;family&#34;] = &#34;IPv4&#34;
+                        elif addr.family == socket.AF_INET6:
+                            entry[&#34;family&#34;] = &#34;IPv6&#34;
+                        else:
+                            entry[&#34;family&#34;] = &#34;MAC&#34; if addr.family.name == &#34;AF_LINK&#34; else str(addr.family)
+                        if addr.netmask:
+                            entry[&#34;netmask&#34;] = addr.netmask
+                        iface_info[&#34;addresses&#34;].append(entry)
+
+                    interfaces.append(iface_info)
+            except ImportError:
+                # Fallback: hostname-based
+                hostname = socket.gethostname()
+                ips = socket.getaddrinfo(hostname, None)
+                seen = set()
+                for info in ips:
+                    ip = info[4][0]
+                    if ip not in seen:
+                        seen.add(ip)
+                        interfaces.append({&#34;name&#34;: &#34;unknown&#34;, &#34;addresses&#34;: [{&#34;address&#34;: ip}]})
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-132&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;hostname&#34;: socket.gethostname(),
+                &#34;interface_count&#34;: len(interfaces),
+                &#34;interfaces&#34;: interfaces,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-132&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-133  Whois Lookup
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def whois_lookup(domain: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-133: Basic WHOIS lookup via subprocess.&#34;&#34;&#34;
+        try:
+            # Try system whois command
+            result = subprocess.run(
+                [&#34;whois&#34;, domain],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            output = (result.stdout + result.stderr).strip()
+
+            if result.returncode != 0 and not output:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-133&#34;,
+                    &#34;status&#34;: &#34;unavailable&#34;,
+                    &#34;domain&#34;: domain,
+                    &#34;message&#34;: &#34;whois command not found or failed. Install a whois client.&#34;,
+                }
+
+            # Parse common fields
+            parsed: Dict[str, str] = {}
+            for key in [&#34;Registrar&#34;, &#34;Creation Date&#34;, &#34;Expiration Date&#34;, &#34;Name Server&#34;, &#34;Domain Name&#34;]:
+                match = re.search(rf&#34;{key}:\s*(.+)&#34;, output, re.IGNORECASE)
+                if match:
+                    parsed[key.lower().replace(&#34; &#34;, &#34;_&#34;)] = match.group(1).strip()
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-133&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;domain&#34;: domain,
+                &#34;parsed&#34;: parsed,
+                &#34;raw&#34;: output[:2000],
+            }
+        except FileNotFoundError:
+            return {
+                &#34;power_id&#34;: &#34;PWR-133&#34;,
+                &#34;status&#34;: &#34;unavailable&#34;,
+                &#34;domain&#34;: domain,
+                &#34;message&#34;: &#34;whois command not found on this system.&#34;,
+            }
+        except subprocess.TimeoutExpired:
+            return {&#34;power_id&#34;: &#34;PWR-133&#34;, &#34;status&#34;: &#34;timeout&#34;, &#34;domain&#34;: domain, &#34;message&#34;: &#34;Whois timed out&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-133&#34;, &#34;status&#34;: &#34;error&#34;, &#34;domain&#34;: domain, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-135  Speed Test Estimate
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def speed_test_estimate() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-135: Rough download speed estimate by timing a small HTTP fetch.&#34;&#34;&#34;
+        try:
+            import urllib.request
+
+            # ~1 MB test file from a public CDN
+            test_urls = [
+                &#34;http://speedtest.tele2.net/1MB.zip&#34;,
+                &#34;http://proof.ovh.net/files/1Mb.dat&#34;,
+            ]
+
+            for url in test_urls:
+                try:
+                    req = urllib.request.Request(url, headers={&#34;User-Agent&#34;: &#34;JARVIS-SpeedTest/1.0&#34;})
+                    start = time.perf_counter()
+                    with urllib.request.urlopen(req, timeout=20) as resp:
+                        data = resp.read()
+                    elapsed = time.perf_counter() - start
+
+                    bytes_downloaded = len(data)
+                    mbps = (bytes_downloaded * 8) / (elapsed * 1_000_000)
+
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-135&#34;,
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;url&#34;: url,
+                        &#34;bytes_downloaded&#34;: bytes_downloaded,
+                        &#34;elapsed_seconds&#34;: round(elapsed, 3),
+                        &#34;estimated_mbps&#34;: round(mbps, 2),
+                        &#34;note&#34;: &#34;Rough estimate based on a small file download&#34;,
+                    }
+                except Exception:
+                    continue
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-135&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: &#34;All test URLs failed. Check internet connectivity.&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-135&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-136  Public IP
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def get_public_ip() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-136: Fetch the machine&#39;s public IP address.&#34;&#34;&#34;
+        try:
+            import urllib.request
+            import json
+
+            services = [
+                (&#34;https://httpbin.org/ip&#34;, lambda d: json.loads(d).get(&#34;origin&#34;, &#34;&#34;)),
+                (&#34;https://api.ipify.org?format=json&#34;, lambda d: json.loads(d).get(&#34;ip&#34;, &#34;&#34;)),
+                (&#34;https://ifconfig.me/ip&#34;, lambda d: d.strip()),
+            ]
+
+            for url, parser in services:
+                try:
+                    req = urllib.request.Request(url, headers={&#34;User-Agent&#34;: &#34;JARVIS/1.0&#34;})
+                    with urllib.request.urlopen(req, timeout=10) as resp:
+                        raw = resp.read().decode(&#34;utf-8&#34;)
+                    ip = parser(raw)
+                    if ip:
+                        return {
+                            &#34;power_id&#34;: &#34;PWR-136&#34;,
+                            &#34;status&#34;: &#34;success&#34;,
+                            &#34;public_ip&#34;: ip,
+                            &#34;source&#34;: url,
+                        }
+                except Exception:
+                    continue
+
+            return {&#34;power_id&#34;: &#34;PWR-136&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;All public IP services unreachable.&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-136&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-137  SSL Certificate Check
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def check_ssl_cert(host: str, port: int = 443) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-137: TLS handshake to inspect remote SSL certificate.&#34;&#34;&#34;
+        try:
+            context = ssl.create_default_context()
+            with socket.create_connection((host, port), timeout=10) as sock:
+                with context.wrap_socket(sock, server_hostname=host) as ssock:
+                    cert = ssock.getpeercert()
+
+            if not cert:
+                return {&#34;power_id&#34;: &#34;PWR-137&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: &#34;No certificate returned&#34;}
+
+            not_after = cert.get(&#34;notAfter&#34;, &#34;&#34;)
+            not_before = cert.get(&#34;notBefore&#34;, &#34;&#34;)
+            subject = dict(x[0] for x in cert.get(&#34;subject&#34;, ()))
+            issuer = dict(x[0] for x in cert.get(&#34;issuer&#34;, ()))
+
+            # Parse expiry
+            days_remaining = None
+            if not_after:
+                try:
+                    expiry_dt = datetime.strptime(not_after, &#34;%b %d %H:%M:%S %Y %Z&#34;).replace(tzinfo=timezone.utc)
+                    days_remaining = (expiry_dt - datetime.now(timezone.utc)).days
+                except ValueError:
+                    pass
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-137&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;host&#34;: host,
+                &#34;port&#34;: port,
+                &#34;subject&#34;: subject,
+                &#34;issuer&#34;: issuer,
+                &#34;not_before&#34;: not_before,
+                &#34;not_after&#34;: not_after,
+                &#34;days_remaining&#34;: days_remaining,
+                &#34;san&#34;: [entry[1] for entry in cert.get(&#34;subjectAltName&#34;, ())],
+                &#34;serial_number&#34;: cert.get(&#34;serialNumber&#34;, &#34;&#34;),
+                &#34;expired&#34;: days_remaining is not None and days_remaining &lt; 0,
+            }
+        except ssl.SSLCertVerificationError as e:
+            return {&#34;power_id&#34;: &#34;PWR-137&#34;, &#34;status&#34;: &#34;cert_invalid&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-137&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-138  ARP Table
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def arp_table() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-138: Dump the local ARP cache.&#34;&#34;&#34;
+        try:
+            result = subprocess.run([&#34;arp&#34;, &#34;-a&#34;], capture_output=True, text=True, timeout=10)
+            output = result.stdout.strip()
+
+            entries: List[Dict[str, str]] = []
+            for line in output.splitlines():
+                # Windows: &#34;  192.168.1.1          aa-bb-cc-dd-ee-ff     dynamic&#34;
+                match = re.match(
+                    r&#34;\s*([\d.]+)\s+([\da-fA-F:-]+)\s+(\w+)&#34;,
+                    line,
+                )
+                if match:
+                    entries.append(
+                        {
+                            &#34;ip&#34;: match.group(1),
+                            &#34;mac&#34;: match.group(2),
+                            &#34;type&#34;: match.group(3),
+                        }
+                    )
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-138&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;entry_count&#34;: len(entries),
+                &#34;entries&#34;: entries,
+                &#34;raw&#34;: output,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-138&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-139  Netstat Listeners
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def netstat_listeners() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-139: List active listening ports via netstat.&#34;&#34;&#34;
+        try:
+            result = subprocess.run(
+                [&#34;netstat&#34;, &#34;-an&#34;],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            output = result.stdout.strip()
+
+            listeners: List[Dict[str, Any]] = []
+            for line in output.splitlines():
+                if &#34;LISTENING&#34; in line or &#34;LISTEN&#34; in line:
+                    parts = line.split()
+                    if len(parts) &gt;= 4:
+                        local_addr = parts[1]
+                        # Split address and port
+                        if &#34;:&#34; in local_addr:
+                            sep_idx = local_addr.rfind(&#34;:&#34;)
+                            addr = local_addr[:sep_idx]
+                            port_str = local_addr[sep_idx + 1 :]
+                            try:
+                                port_num = int(port_str)
+                            except ValueError:
+                                port_num = port_str
+                            listeners.append(
+                                {
+                                    &#34;protocol&#34;: parts[0],
+                                    &#34;local_address&#34;: addr,
+                                    &#34;port&#34;: port_num,
+                                    &#34;state&#34;: &#34;LISTENING&#34;,
+                                }
+                            )
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-139&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;listener_count&#34;: len(listeners),
+                &#34;listeners&#34;: listeners,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-139&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-140  DNS Flush
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def dns_flush() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-140: Flush the local DNS resolver cache.&#34;&#34;&#34;
+        try:
+            if os.name == &#34;nt&#34;:
+                result = subprocess.run(
+                    [&#34;ipconfig&#34;, &#34;/flushdns&#34;],
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                )
+            else:
+                # Linux: systemd-resolve --flush-caches
+                result = subprocess.run(
+                    [&#34;systemd-resolve&#34;, &#34;--flush-caches&#34;],
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                )
+
+            output = (result.stdout + result.stderr).strip()
+            success = result.returncode == 0
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-140&#34;,
+                &#34;status&#34;: &#34;success&#34; if success else &#34;error&#34;,
+                &#34;message&#34;: output,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-140&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-141  Bandwidth Monitor
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def bandwidth_monitor() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-141: Snapshot of current network bytes sent/received.&#34;&#34;&#34;
+        try:
+            import psutil
+
+            counters = psutil.net_io_counters()
+            per_nic = psutil.net_io_counters(pernic=True)
+
+            nic_stats: List[Dict[str, Any]] = []
+            for nic, c in per_nic.items():
+                nic_stats.append(
+                    {
+                        &#34;interface&#34;: nic,
+                        &#34;bytes_sent&#34;: c.bytes_sent,
+                        &#34;bytes_recv&#34;: c.bytes_recv,
+                        &#34;packets_sent&#34;: c.packets_sent,
+                        &#34;packets_recv&#34;: c.packets_recv,
+                        &#34;errin&#34;: c.errin,
+                        &#34;errout&#34;: c.errout,
+                        &#34;dropin&#34;: c.dropin,
+                        &#34;dropout&#34;: c.dropout,
+                    }
+                )
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-141&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;total&#34;: {
+                    &#34;bytes_sent&#34;: counters.bytes_sent,
+                    &#34;bytes_recv&#34;: counters.bytes_recv,
+                    &#34;bytes_sent_mb&#34;: round(counters.bytes_sent / (1024 * 1024), 2),
+                    &#34;bytes_recv_mb&#34;: round(counters.bytes_recv / (1024 * 1024), 2),
+                    &#34;packets_sent&#34;: counters.packets_sent,
+                    &#34;packets_recv&#34;: counters.packets_recv,
+                },
+                &#34;per_interface&#34;: nic_stats,
+                &#34;timestamp&#34;: datetime.now(timezone.utc).isoformat(),
+            }
+        except ImportError:
+            return {
+                &#34;power_id&#34;: &#34;PWR-141&#34;,
+                &#34;status&#34;: &#34;unavailable&#34;,
+                &#34;message&#34;: &#34;psutil is required for bandwidth monitoring. Install via: pip install psutil&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-141&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-142  WiFi Networks
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def wifi_networks() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-142: Scan nearby WiFi SSIDs (Windows netsh).&#34;&#34;&#34;
+        try:
+            if os.name != &#34;nt&#34;:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-142&#34;,
+                    &#34;status&#34;: &#34;unsupported&#34;,
+                    &#34;message&#34;: &#34;WiFi scan via netsh is only available on Windows.&#34;,
+                }
+
+            result = subprocess.run(
+                [&#34;netsh&#34;, &#34;wlan&#34;, &#34;show&#34;, &#34;networks&#34;, &#34;mode=bssid&#34;],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            output = result.stdout.strip()
+
+            if &#34;is not running&#34; in output.lower() or result.returncode != 0:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-142&#34;,
+                    &#34;status&#34;: &#34;unavailable&#34;,
+                    &#34;message&#34;: &#34;WLAN service is not running or no wireless adapter found.&#34;,
+                    &#34;raw&#34;: output,
+                }
+
+            networks: List[Dict[str, str]] = []
+            current: Dict[str, str] = {}
+            for line in output.splitlines():
+                line = line.strip()
+                if line.startswith(&#34;SSID&#34;) and &#34;BSSID&#34; not in line:
+                    if current and current.get(&#34;ssid&#34;):
+                        networks.append(current)
+                    ssid_match = re.match(r&#34;SSID\s+\d+\s*:\s*(.*)&#34;, line)
+                    current = {&#34;ssid&#34;: ssid_match.group(1).strip() if ssid_match else &#34;&#34;}
+                elif line.startswith(&#34;Signal&#34;):
+                    sig_match = re.match(r&#34;Signal\s*:\s*(\d+%)&#34;, line)
+                    if sig_match:
+                        current[&#34;signal&#34;] = sig_match.group(1)
+                elif line.startswith(&#34;Authentication&#34;):
+                    auth_match = re.match(r&#34;Authentication\s*:\s*(.*)&#34;, line)
+                    if auth_match:
+                        current[&#34;authentication&#34;] = auth_match.group(1).strip()
+                elif line.startswith(&#34;Encryption&#34;):
+                    enc_match = re.match(r&#34;Encryption\s*:\s*(.*)&#34;, line)
+                    if enc_match:
+                        current[&#34;encryption&#34;] = enc_match.group(1).strip()
+                elif line.startswith(&#34;Channel&#34;):
+                    ch_match = re.match(r&#34;Channel\s*:\s*(\d+)&#34;, line)
+                    if ch_match:
+                        current[&#34;channel&#34;] = ch_match.group(1)
+
+            if current and current.get(&#34;ssid&#34;):
+                networks.append(current)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-142&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;network_count&#34;: len(networks),
+                &#34;networks&#34;: networks,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-142&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------ #
+    # PWR-143  VPN Status
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def vpn_status() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-143: Check if a VPN adapter/tunnel is currently active.&#34;&#34;&#34;
+        try:
+            vpn_indicators = [&#34;vpn&#34;, &#34;tun&#34;, &#34;tap&#34;, &#34;wg&#34;, &#34;wireguard&#34;, &#34;proton&#34;, &#34;mullvad&#34;, &#34;nord&#34;, &#34;openvpn&#34;]
+            vpn_adapters: List[Dict[str, Any]] = []
+
+            try:
+                import psutil
+
+                interfaces = psutil.net_if_stats()
+                addrs = psutil.net_if_addrs()
+                for iface_name, stat in interfaces.items():
+                    name_lower = iface_name.lower()
+                    if stat.isup and any(vpn_key in name_lower for vpn_key in vpn_indicators):
+                        adapter_info: Dict[str, Any] = {
+                            &#34;name&#34;: iface_name,
+                            &#34;is_up&#34;: stat.isup,
+                            &#34;speed_mbps&#34;: stat.speed,
+                        }
+                        if iface_name in addrs:
+                            adapter_info[&#34;addresses&#34;] = [
+                                a.address for a in addrs[iface_name] if a.family == socket.AF_INET
+                            ]
+                        vpn_adapters.append(adapter_info)
+            except ImportError:
+                # Fallback: check ipconfig output
+                result = subprocess.run([&#34;ipconfig&#34;], capture_output=True, text=True, timeout=10)
+                output = result.stdout.lower()
+                for keyword in vpn_indicators:
+                    if keyword in output:
+                        vpn_adapters.append({&#34;name&#34;: keyword, &#34;detected_in&#34;: &#34;ipconfig&#34;})
+                        break
+
+            vpn_active = len(vpn_adapters) &gt; 0
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-143&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;vpn_active&#34;: vpn_active,
+                &#34;vpn_adapters&#34;: vpn_adapters,
+                &#34;message&#34;: &#34;VPN tunnel detected&#34; if vpn_active else &#34;No VPN adapter detected&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-143&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>Network diagnostics, scanning, and monitoring powers.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.DEFAULT_PORTS"><code class="name">var <span class="ident">DEFAULT_PORTS</span> : List[int]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.arp_table"><code class="name flex">
+<span>def <span class="ident">arp_table</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def arp_table() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-138: Dump the local ARP cache.&#34;&#34;&#34;
+    try:
+        result = subprocess.run([&#34;arp&#34;, &#34;-a&#34;], capture_output=True, text=True, timeout=10)
+        output = result.stdout.strip()
+
+        entries: List[Dict[str, str]] = []
+        for line in output.splitlines():
+            # Windows: &#34;  192.168.1.1          aa-bb-cc-dd-ee-ff     dynamic&#34;
+            match = re.match(
+                r&#34;\s*([\d.]+)\s+([\da-fA-F:-]+)\s+(\w+)&#34;,
+                line,
+            )
+            if match:
+                entries.append(
+                    {
+                        &#34;ip&#34;: match.group(1),
+                        &#34;mac&#34;: match.group(2),
+                        &#34;type&#34;: match.group(3),
+                    }
+                )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-138&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;entry_count&#34;: len(entries),
+            &#34;entries&#34;: entries,
+            &#34;raw&#34;: output,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-138&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-138: Dump the local ARP cache.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.bandwidth_monitor"><code class="name flex">
+<span>def <span class="ident">bandwidth_monitor</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def bandwidth_monitor() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-141: Snapshot of current network bytes sent/received.&#34;&#34;&#34;
+    try:
+        import psutil
+
+        counters = psutil.net_io_counters()
+        per_nic = psutil.net_io_counters(pernic=True)
+
+        nic_stats: List[Dict[str, Any]] = []
+        for nic, c in per_nic.items():
+            nic_stats.append(
+                {
+                    &#34;interface&#34;: nic,
+                    &#34;bytes_sent&#34;: c.bytes_sent,
+                    &#34;bytes_recv&#34;: c.bytes_recv,
+                    &#34;packets_sent&#34;: c.packets_sent,
+                    &#34;packets_recv&#34;: c.packets_recv,
+                    &#34;errin&#34;: c.errin,
+                    &#34;errout&#34;: c.errout,
+                    &#34;dropin&#34;: c.dropin,
+                    &#34;dropout&#34;: c.dropout,
+                }
+            )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-141&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;total&#34;: {
+                &#34;bytes_sent&#34;: counters.bytes_sent,
+                &#34;bytes_recv&#34;: counters.bytes_recv,
+                &#34;bytes_sent_mb&#34;: round(counters.bytes_sent / (1024 * 1024), 2),
+                &#34;bytes_recv_mb&#34;: round(counters.bytes_recv / (1024 * 1024), 2),
+                &#34;packets_sent&#34;: counters.packets_sent,
+                &#34;packets_recv&#34;: counters.packets_recv,
+            },
+            &#34;per_interface&#34;: nic_stats,
+            &#34;timestamp&#34;: datetime.now(timezone.utc).isoformat(),
+        }
+    except ImportError:
+        return {
+            &#34;power_id&#34;: &#34;PWR-141&#34;,
+            &#34;status&#34;: &#34;unavailable&#34;,
+            &#34;message&#34;: &#34;psutil is required for bandwidth monitoring. Install via: pip install psutil&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-141&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-141: Snapshot of current network bytes sent/received.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.check_internet"><code class="name flex">
+<span>def <span class="ident">check_internet</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def check_internet() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-131: Quick internet connectivity test via DNS + TCP.&#34;&#34;&#34;
+    checks: Dict[str, Any] = {&#34;dns&#34;: False, &#34;tcp&#34;: False}
+    try:
+        # DNS resolution test
+        addr = socket.getaddrinfo(&#34;google.com&#34;, 443, socket.AF_INET, socket.SOCK_STREAM)
+        if addr:
+            checks[&#34;dns&#34;] = True
+            ip = addr[0][4][0]
+
+            # TCP connect test
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(5)
+            try:
+                sock.connect((ip, 443))
+                checks[&#34;tcp&#34;] = True
+            finally:
+                sock.close()
+
+        connected = checks[&#34;dns&#34;] and checks[&#34;tcp&#34;]
+        return {
+            &#34;power_id&#34;: &#34;PWR-131&#34;,
+            &#34;status&#34;: &#34;connected&#34; if connected else &#34;limited&#34;,
+            &#34;checks&#34;: checks,
+            &#34;connected&#34;: connected,
+        }
+    except Exception as e:
+        return {
+            &#34;power_id&#34;: &#34;PWR-131&#34;,
+            &#34;status&#34;: &#34;disconnected&#34;,
+            &#34;checks&#34;: checks,
+            &#34;connected&#34;: False,
+            &#34;message&#34;: str(e),
+        }</code></pre>
+</details>
+<div class="desc"><p>PWR-131: Quick internet connectivity test via DNS + TCP.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.check_ssl_cert"><code class="name flex">
+<span>def <span class="ident">check_ssl_cert</span></span>(<span>host: str, port: int = 443) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def check_ssl_cert(host: str, port: int = 443) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-137: TLS handshake to inspect remote SSL certificate.&#34;&#34;&#34;
+    try:
+        context = ssl.create_default_context()
+        with socket.create_connection((host, port), timeout=10) as sock:
+            with context.wrap_socket(sock, server_hostname=host) as ssock:
+                cert = ssock.getpeercert()
+
+        if not cert:
+            return {&#34;power_id&#34;: &#34;PWR-137&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: &#34;No certificate returned&#34;}
+
+        not_after = cert.get(&#34;notAfter&#34;, &#34;&#34;)
+        not_before = cert.get(&#34;notBefore&#34;, &#34;&#34;)
+        subject = dict(x[0] for x in cert.get(&#34;subject&#34;, ()))
+        issuer = dict(x[0] for x in cert.get(&#34;issuer&#34;, ()))
+
+        # Parse expiry
+        days_remaining = None
+        if not_after:
+            try:
+                expiry_dt = datetime.strptime(not_after, &#34;%b %d %H:%M:%S %Y %Z&#34;).replace(tzinfo=timezone.utc)
+                days_remaining = (expiry_dt - datetime.now(timezone.utc)).days
+            except ValueError:
+                pass
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-137&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;host&#34;: host,
+            &#34;port&#34;: port,
+            &#34;subject&#34;: subject,
+            &#34;issuer&#34;: issuer,
+            &#34;not_before&#34;: not_before,
+            &#34;not_after&#34;: not_after,
+            &#34;days_remaining&#34;: days_remaining,
+            &#34;san&#34;: [entry[1] for entry in cert.get(&#34;subjectAltName&#34;, ())],
+            &#34;serial_number&#34;: cert.get(&#34;serialNumber&#34;, &#34;&#34;),
+            &#34;expired&#34;: days_remaining is not None and days_remaining &lt; 0,
+        }
+    except ssl.SSLCertVerificationError as e:
+        return {&#34;power_id&#34;: &#34;PWR-137&#34;, &#34;status&#34;: &#34;cert_invalid&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-137&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-137: TLS handshake to inspect remote SSL certificate.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.dns_flush"><code class="name flex">
+<span>def <span class="ident">dns_flush</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def dns_flush() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-140: Flush the local DNS resolver cache.&#34;&#34;&#34;
+    try:
+        if os.name == &#34;nt&#34;:
+            result = subprocess.run(
+                [&#34;ipconfig&#34;, &#34;/flushdns&#34;],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+        else:
+            # Linux: systemd-resolve --flush-caches
+            result = subprocess.run(
+                [&#34;systemd-resolve&#34;, &#34;--flush-caches&#34;],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+
+        output = (result.stdout + result.stderr).strip()
+        success = result.returncode == 0
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-140&#34;,
+            &#34;status&#34;: &#34;success&#34; if success else &#34;error&#34;,
+            &#34;message&#34;: output,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-140&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-140: Flush the local DNS resolver cache.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.dns_lookup"><code class="name flex">
+<span>def <span class="ident">dns_lookup</span></span>(<span>domain: str, record_type: str = 'A') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def dns_lookup(domain: str, record_type: str = &#34;A&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-129: DNS resolution using socket and nslookup fallback.&#34;&#34;&#34;
+    try:
+        results: List[str] = []
+
+        if record_type.upper() == &#34;A&#34;:
+            # Fast path via socket
+            infos = socket.getaddrinfo(domain, None, socket.AF_INET, socket.SOCK_STREAM)
+            results = list({info[4][0] for info in infos})
+        elif record_type.upper() == &#34;AAAA&#34;:
+            infos = socket.getaddrinfo(domain, None, socket.AF_INET6, socket.SOCK_STREAM)
+            results = list({info[4][0] for info in infos})
+        else:
+            # Fallback to nslookup for MX, CNAME, TXT, etc.
+            proc = subprocess.run(
+                [&#34;nslookup&#34;, f&#34;-type={record_type}&#34;, domain],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            results = [proc.stdout.strip()]
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-129&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;domain&#34;: domain,
+            &#34;record_type&#34;: record_type.upper(),
+            &#34;addresses&#34;: results,
+        }
+    except socket.gaierror as e:
+        return {
+            &#34;power_id&#34;: &#34;PWR-129&#34;,
+            &#34;status&#34;: &#34;dns_failure&#34;,
+            &#34;domain&#34;: domain,
+            &#34;record_type&#34;: record_type.upper(),
+            &#34;message&#34;: str(e),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-129&#34;, &#34;status&#34;: &#34;error&#34;, &#34;domain&#34;: domain, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-129: DNS resolution using socket and nslookup fallback.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.get_network_interfaces"><code class="name flex">
+<span>def <span class="ident">get_network_interfaces</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_network_interfaces() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-132: List local network interfaces and IP addresses.&#34;&#34;&#34;
+    try:
+        interfaces: List[Dict[str, Any]] = []
+
+        # Try psutil first for rich info
+        try:
+            import psutil
+
+            addrs = psutil.net_if_addrs()
+            stats = psutil.net_if_stats()
+            for iface_name, addr_list in addrs.items():
+                iface_info: Dict[str, Any] = {
+                    &#34;name&#34;: iface_name,
+                    &#34;addresses&#34;: [],
+                }
+                if iface_name in stats:
+                    s = stats[iface_name]
+                    iface_info[&#34;is_up&#34;] = s.isup
+                    iface_info[&#34;speed_mbps&#34;] = s.speed
+                    iface_info[&#34;mtu&#34;] = s.mtu
+
+                for addr in addr_list:
+                    entry: Dict[str, str] = {&#34;address&#34;: addr.address}
+                    if addr.family == socket.AF_INET:
+                        entry[&#34;family&#34;] = &#34;IPv4&#34;
+                    elif addr.family == socket.AF_INET6:
+                        entry[&#34;family&#34;] = &#34;IPv6&#34;
+                    else:
+                        entry[&#34;family&#34;] = &#34;MAC&#34; if addr.family.name == &#34;AF_LINK&#34; else str(addr.family)
+                    if addr.netmask:
+                        entry[&#34;netmask&#34;] = addr.netmask
+                    iface_info[&#34;addresses&#34;].append(entry)
+
+                interfaces.append(iface_info)
+        except ImportError:
+            # Fallback: hostname-based
+            hostname = socket.gethostname()
+            ips = socket.getaddrinfo(hostname, None)
+            seen = set()
+            for info in ips:
+                ip = info[4][0]
+                if ip not in seen:
+                    seen.add(ip)
+                    interfaces.append({&#34;name&#34;: &#34;unknown&#34;, &#34;addresses&#34;: [{&#34;address&#34;: ip}]})
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-132&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;hostname&#34;: socket.gethostname(),
+            &#34;interface_count&#34;: len(interfaces),
+            &#34;interfaces&#34;: interfaces,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-132&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-132: List local network interfaces and IP addresses.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.get_public_ip"><code class="name flex">
+<span>def <span class="ident">get_public_ip</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_public_ip() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-136: Fetch the machine&#39;s public IP address.&#34;&#34;&#34;
+    try:
+        import urllib.request
+        import json
+
+        services = [
+            (&#34;https://httpbin.org/ip&#34;, lambda d: json.loads(d).get(&#34;origin&#34;, &#34;&#34;)),
+            (&#34;https://api.ipify.org?format=json&#34;, lambda d: json.loads(d).get(&#34;ip&#34;, &#34;&#34;)),
+            (&#34;https://ifconfig.me/ip&#34;, lambda d: d.strip()),
+        ]
+
+        for url, parser in services:
+            try:
+                req = urllib.request.Request(url, headers={&#34;User-Agent&#34;: &#34;JARVIS/1.0&#34;})
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    raw = resp.read().decode(&#34;utf-8&#34;)
+                ip = parser(raw)
+                if ip:
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-136&#34;,
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;public_ip&#34;: ip,
+                        &#34;source&#34;: url,
+                    }
+            except Exception:
+                continue
+
+        return {&#34;power_id&#34;: &#34;PWR-136&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;All public IP services unreachable.&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-136&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-136: Fetch the machine's public IP address.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.netstat_listeners"><code class="name flex">
+<span>def <span class="ident">netstat_listeners</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def netstat_listeners() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-139: List active listening ports via netstat.&#34;&#34;&#34;
+    try:
+        result = subprocess.run(
+            [&#34;netstat&#34;, &#34;-an&#34;],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        output = result.stdout.strip()
+
+        listeners: List[Dict[str, Any]] = []
+        for line in output.splitlines():
+            if &#34;LISTENING&#34; in line or &#34;LISTEN&#34; in line:
+                parts = line.split()
+                if len(parts) &gt;= 4:
+                    local_addr = parts[1]
+                    # Split address and port
+                    if &#34;:&#34; in local_addr:
+                        sep_idx = local_addr.rfind(&#34;:&#34;)
+                        addr = local_addr[:sep_idx]
+                        port_str = local_addr[sep_idx + 1 :]
+                        try:
+                            port_num = int(port_str)
+                        except ValueError:
+                            port_num = port_str
+                        listeners.append(
+                            {
+                                &#34;protocol&#34;: parts[0],
+                                &#34;local_address&#34;: addr,
+                                &#34;port&#34;: port_num,
+                                &#34;state&#34;: &#34;LISTENING&#34;,
+                            }
+                        )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-139&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;listener_count&#34;: len(listeners),
+            &#34;listeners&#34;: listeners,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-139&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-139: List active listening ports via netstat.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.ping"><code class="name flex">
+<span>def <span class="ident">ping</span></span>(<span>host: str, count: int = 4) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ping(host: str, count: int = 4) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-127: ICMP/TCP ping with latency statistics.&#34;&#34;&#34;
+    try:
+        flag = &#34;-n&#34; if os.name == &#34;nt&#34; else &#34;-c&#34;
+        result = subprocess.run(
+            [&#34;ping&#34;, flag, str(count), host],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        output = result.stdout + result.stderr
+
+        # Parse latency stats from Windows ping output
+        stats: Dict[str, Any] = {&#34;raw&#34;: output.strip()}
+        # Windows: Minimum = 1ms, Maximum = 3ms, Average = 2ms
+        avg_match = re.search(r&#34;Average\s*=\s*(\d+)\s*ms&#34;, output, re.IGNORECASE)
+        min_match = re.search(r&#34;Minimum\s*=\s*(\d+)\s*ms&#34;, output, re.IGNORECASE)
+        max_match = re.search(r&#34;Maximum\s*=\s*(\d+)\s*ms&#34;, output, re.IGNORECASE)
+        # Linux: rtt min/avg/max/mdev = ...
+        rtt_match = re.search(
+            r&#34;rtt\s+min/avg/max/mdev\s*=\s*([\d.]+)/([\d.]+)/([\d.]+)/([\d.]+)&#34;,
+            output,
+        )
+
+        if avg_match:
+            stats[&#34;avg_ms&#34;] = float(avg_match.group(1))
+        if min_match:
+            stats[&#34;min_ms&#34;] = float(min_match.group(1))
+        if max_match:
+            stats[&#34;max_ms&#34;] = float(max_match.group(1))
+        if rtt_match:
+            stats[&#34;min_ms&#34;] = float(rtt_match.group(1))
+            stats[&#34;avg_ms&#34;] = float(rtt_match.group(2))
+            stats[&#34;max_ms&#34;] = float(rtt_match.group(3))
+
+        # Packet loss
+        loss_match = re.search(r&#34;(\d+)%\s*(packet\s+)?loss&#34;, output, re.IGNORECASE)
+        if loss_match:
+            stats[&#34;packet_loss_pct&#34;] = int(loss_match.group(1))
+
+        reachable = result.returncode == 0
+        return {
+            &#34;power_id&#34;: &#34;PWR-127&#34;,
+            &#34;status&#34;: &#34;success&#34; if reachable else &#34;host_unreachable&#34;,
+            &#34;host&#34;: host,
+            &#34;count&#34;: count,
+            &#34;reachable&#34;: reachable,
+            **stats,
+        }
+    except subprocess.TimeoutExpired:
+        return {&#34;power_id&#34;: &#34;PWR-127&#34;, &#34;status&#34;: &#34;timeout&#34;, &#34;host&#34;: host, &#34;message&#34;: &#34;Ping timed out&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-127&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-127: ICMP/TCP ping with latency statistics.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.speed_test_estimate"><code class="name flex">
+<span>def <span class="ident">speed_test_estimate</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def speed_test_estimate() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-135: Rough download speed estimate by timing a small HTTP fetch.&#34;&#34;&#34;
+    try:
+        import urllib.request
+
+        # ~1 MB test file from a public CDN
+        test_urls = [
+            &#34;http://speedtest.tele2.net/1MB.zip&#34;,
+            &#34;http://proof.ovh.net/files/1Mb.dat&#34;,
+        ]
+
+        for url in test_urls:
+            try:
+                req = urllib.request.Request(url, headers={&#34;User-Agent&#34;: &#34;JARVIS-SpeedTest/1.0&#34;})
+                start = time.perf_counter()
+                with urllib.request.urlopen(req, timeout=20) as resp:
+                    data = resp.read()
+                elapsed = time.perf_counter() - start
+
+                bytes_downloaded = len(data)
+                mbps = (bytes_downloaded * 8) / (elapsed * 1_000_000)
+
+                return {
+                    &#34;power_id&#34;: &#34;PWR-135&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;url&#34;: url,
+                    &#34;bytes_downloaded&#34;: bytes_downloaded,
+                    &#34;elapsed_seconds&#34;: round(elapsed, 3),
+                    &#34;estimated_mbps&#34;: round(mbps, 2),
+                    &#34;note&#34;: &#34;Rough estimate based on a small file download&#34;,
+                }
+            except Exception:
+                continue
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-135&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: &#34;All test URLs failed. Check internet connectivity.&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-135&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-135: Rough download speed estimate by timing a small HTTP fetch.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.traceroute"><code class="name flex">
+<span>def <span class="ident">traceroute</span></span>(<span>host: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def traceroute(host: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-128: Multi-hop network path trace.&#34;&#34;&#34;
+    try:
+        cmd = [&#34;tracert&#34;, &#34;-d&#34;, host] if os.name == &#34;nt&#34; else [&#34;traceroute&#34;, &#34;-n&#34;, host]
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        output = (result.stdout + result.stderr).strip()
+
+        hops: List[Dict[str, Any]] = []
+        for line in output.splitlines():
+            # Windows: &#34;  1    &lt;1 ms    &lt;1 ms    &lt;1 ms  192.168.1.1&#34;
+            hop_match = re.match(r&#34;\s*(\d+)\s+(.+?)\s+([\d.]+)\s*$&#34;, line)
+            if hop_match:
+                hops.append(
+                    {
+                        &#34;hop&#34;: int(hop_match.group(1)),
+                        &#34;ip&#34;: hop_match.group(3),
+                        &#34;timing&#34;: hop_match.group(2).strip(),
+                    }
+                )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-128&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;host&#34;: host,
+            &#34;hop_count&#34;: len(hops),
+            &#34;hops&#34;: hops,
+            &#34;raw&#34;: output,
+        }
+    except subprocess.TimeoutExpired:
+        return {&#34;power_id&#34;: &#34;PWR-128&#34;, &#34;status&#34;: &#34;timeout&#34;, &#34;host&#34;: host, &#34;message&#34;: &#34;Traceroute timed out (60s)&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-128&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-128: Multi-hop network path trace.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.vpn_status"><code class="name flex">
+<span>def <span class="ident">vpn_status</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def vpn_status() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-143: Check if a VPN adapter/tunnel is currently active.&#34;&#34;&#34;
+    try:
+        vpn_indicators = [&#34;vpn&#34;, &#34;tun&#34;, &#34;tap&#34;, &#34;wg&#34;, &#34;wireguard&#34;, &#34;proton&#34;, &#34;mullvad&#34;, &#34;nord&#34;, &#34;openvpn&#34;]
+        vpn_adapters: List[Dict[str, Any]] = []
+
+        try:
+            import psutil
+
+            interfaces = psutil.net_if_stats()
+            addrs = psutil.net_if_addrs()
+            for iface_name, stat in interfaces.items():
+                name_lower = iface_name.lower()
+                if stat.isup and any(vpn_key in name_lower for vpn_key in vpn_indicators):
+                    adapter_info: Dict[str, Any] = {
+                        &#34;name&#34;: iface_name,
+                        &#34;is_up&#34;: stat.isup,
+                        &#34;speed_mbps&#34;: stat.speed,
+                    }
+                    if iface_name in addrs:
+                        adapter_info[&#34;addresses&#34;] = [
+                            a.address for a in addrs[iface_name] if a.family == socket.AF_INET
+                        ]
+                    vpn_adapters.append(adapter_info)
+        except ImportError:
+            # Fallback: check ipconfig output
+            result = subprocess.run([&#34;ipconfig&#34;], capture_output=True, text=True, timeout=10)
+            output = result.stdout.lower()
+            for keyword in vpn_indicators:
+                if keyword in output:
+                    vpn_adapters.append({&#34;name&#34;: keyword, &#34;detected_in&#34;: &#34;ipconfig&#34;})
+                    break
+
+        vpn_active = len(vpn_adapters) &gt; 0
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-143&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;vpn_active&#34;: vpn_active,
+            &#34;vpn_adapters&#34;: vpn_adapters,
+            &#34;message&#34;: &#34;VPN tunnel detected&#34; if vpn_active else &#34;No VPN adapter detected&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-143&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-143: Check if a VPN adapter/tunnel is currently active.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.whois_lookup"><code class="name flex">
+<span>def <span class="ident">whois_lookup</span></span>(<span>domain: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def whois_lookup(domain: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-133: Basic WHOIS lookup via subprocess.&#34;&#34;&#34;
+    try:
+        # Try system whois command
+        result = subprocess.run(
+            [&#34;whois&#34;, domain],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        output = (result.stdout + result.stderr).strip()
+
+        if result.returncode != 0 and not output:
+            return {
+                &#34;power_id&#34;: &#34;PWR-133&#34;,
+                &#34;status&#34;: &#34;unavailable&#34;,
+                &#34;domain&#34;: domain,
+                &#34;message&#34;: &#34;whois command not found or failed. Install a whois client.&#34;,
+            }
+
+        # Parse common fields
+        parsed: Dict[str, str] = {}
+        for key in [&#34;Registrar&#34;, &#34;Creation Date&#34;, &#34;Expiration Date&#34;, &#34;Name Server&#34;, &#34;Domain Name&#34;]:
+            match = re.search(rf&#34;{key}:\s*(.+)&#34;, output, re.IGNORECASE)
+            if match:
+                parsed[key.lower().replace(&#34; &#34;, &#34;_&#34;)] = match.group(1).strip()
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-133&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;domain&#34;: domain,
+            &#34;parsed&#34;: parsed,
+            &#34;raw&#34;: output[:2000],
+        }
+    except FileNotFoundError:
+        return {
+            &#34;power_id&#34;: &#34;PWR-133&#34;,
+            &#34;status&#34;: &#34;unavailable&#34;,
+            &#34;domain&#34;: domain,
+            &#34;message&#34;: &#34;whois command not found on this system.&#34;,
+        }
+    except subprocess.TimeoutExpired:
+        return {&#34;power_id&#34;: &#34;PWR-133&#34;, &#34;status&#34;: &#34;timeout&#34;, &#34;domain&#34;: domain, &#34;message&#34;: &#34;Whois timed out&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-133&#34;, &#34;status&#34;: &#34;error&#34;, &#34;domain&#34;: domain, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-133: Basic WHOIS lookup via subprocess.</p></div>
+</dd>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.wifi_networks"><code class="name flex">
+<span>def <span class="ident">wifi_networks</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def wifi_networks() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-142: Scan nearby WiFi SSIDs (Windows netsh).&#34;&#34;&#34;
+    try:
+        if os.name != &#34;nt&#34;:
+            return {
+                &#34;power_id&#34;: &#34;PWR-142&#34;,
+                &#34;status&#34;: &#34;unsupported&#34;,
+                &#34;message&#34;: &#34;WiFi scan via netsh is only available on Windows.&#34;,
+            }
+
+        result = subprocess.run(
+            [&#34;netsh&#34;, &#34;wlan&#34;, &#34;show&#34;, &#34;networks&#34;, &#34;mode=bssid&#34;],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        output = result.stdout.strip()
+
+        if &#34;is not running&#34; in output.lower() or result.returncode != 0:
+            return {
+                &#34;power_id&#34;: &#34;PWR-142&#34;,
+                &#34;status&#34;: &#34;unavailable&#34;,
+                &#34;message&#34;: &#34;WLAN service is not running or no wireless adapter found.&#34;,
+                &#34;raw&#34;: output,
+            }
+
+        networks: List[Dict[str, str]] = []
+        current: Dict[str, str] = {}
+        for line in output.splitlines():
+            line = line.strip()
+            if line.startswith(&#34;SSID&#34;) and &#34;BSSID&#34; not in line:
+                if current and current.get(&#34;ssid&#34;):
+                    networks.append(current)
+                ssid_match = re.match(r&#34;SSID\s+\d+\s*:\s*(.*)&#34;, line)
+                current = {&#34;ssid&#34;: ssid_match.group(1).strip() if ssid_match else &#34;&#34;}
+            elif line.startswith(&#34;Signal&#34;):
+                sig_match = re.match(r&#34;Signal\s*:\s*(\d+%)&#34;, line)
+                if sig_match:
+                    current[&#34;signal&#34;] = sig_match.group(1)
+            elif line.startswith(&#34;Authentication&#34;):
+                auth_match = re.match(r&#34;Authentication\s*:\s*(.*)&#34;, line)
+                if auth_match:
+                    current[&#34;authentication&#34;] = auth_match.group(1).strip()
+            elif line.startswith(&#34;Encryption&#34;):
+                enc_match = re.match(r&#34;Encryption\s*:\s*(.*)&#34;, line)
+                if enc_match:
+                    current[&#34;encryption&#34;] = enc_match.group(1).strip()
+            elif line.startswith(&#34;Channel&#34;):
+                ch_match = re.match(r&#34;Channel\s*:\s*(\d+)&#34;, line)
+                if ch_match:
+                    current[&#34;channel&#34;] = ch_match.group(1)
+
+        if current and current.get(&#34;ssid&#34;):
+            networks.append(current)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-142&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;network_count&#34;: len(networks),
+            &#34;networks&#34;: networks,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-142&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-142: Scan nearby WiFi SSIDs (Windows netsh).</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.networking_powers.NetworkingPowers.port_scan"><code class="name flex">
+<span>def <span class="ident">port_scan</span></span>(<span>self, host: str = '127.0.0.1', ports: Optional[List[int]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def port_scan(self, host: str = &#34;127.0.0.1&#34;, ports: Optional[List[int]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-130: TCP connect scan on specified or common ports.&#34;&#34;&#34;
+    scan_ports = ports or self.DEFAULT_PORTS
+    open_ports: List[Dict[str, Any]] = []
+    closed_ports: List[int] = []
+
+    try:
+        for port in scan_ports:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(1.0)
+            try:
+                result = sock.connect_ex((host, port))
+                if result == 0:
+                    # Try to grab service banner
+                    service = &#34;&#34;
+                    try:
+                        service = socket.getservbyport(port, &#34;tcp&#34;)
+                    except OSError:
+                        pass
+                    open_ports.append({&#34;port&#34;: port, &#34;state&#34;: &#34;open&#34;, &#34;service&#34;: service})
+                else:
+                    closed_ports.append(port)
+            finally:
+                sock.close()
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-130&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;host&#34;: host,
+            &#34;open_ports&#34;: open_ports,
+            &#34;closed_ports&#34;: closed_ports,
+            &#34;total_scanned&#34;: len(scan_ports),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-130&#34;, &#34;status&#34;: &#34;error&#34;, &#34;host&#34;: host, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-130: TCP connect scan on specified or common ports.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.networking_powers.NetworkingPowers" href="#jarvis.powers.networking_powers.NetworkingPowers">NetworkingPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.DEFAULT_PORTS" href="#jarvis.powers.networking_powers.NetworkingPowers.DEFAULT_PORTS">DEFAULT_PORTS</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.arp_table" href="#jarvis.powers.networking_powers.NetworkingPowers.arp_table">arp_table</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.bandwidth_monitor" href="#jarvis.powers.networking_powers.NetworkingPowers.bandwidth_monitor">bandwidth_monitor</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.check_internet" href="#jarvis.powers.networking_powers.NetworkingPowers.check_internet">check_internet</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.check_ssl_cert" href="#jarvis.powers.networking_powers.NetworkingPowers.check_ssl_cert">check_ssl_cert</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.dns_flush" href="#jarvis.powers.networking_powers.NetworkingPowers.dns_flush">dns_flush</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.dns_lookup" href="#jarvis.powers.networking_powers.NetworkingPowers.dns_lookup">dns_lookup</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.get_network_interfaces" href="#jarvis.powers.networking_powers.NetworkingPowers.get_network_interfaces">get_network_interfaces</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.get_public_ip" href="#jarvis.powers.networking_powers.NetworkingPowers.get_public_ip">get_public_ip</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.netstat_listeners" href="#jarvis.powers.networking_powers.NetworkingPowers.netstat_listeners">netstat_listeners</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.ping" href="#jarvis.powers.networking_powers.NetworkingPowers.ping">ping</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.port_scan" href="#jarvis.powers.networking_powers.NetworkingPowers.port_scan">port_scan</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.speed_test_estimate" href="#jarvis.powers.networking_powers.NetworkingPowers.speed_test_estimate">speed_test_estimate</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.traceroute" href="#jarvis.powers.networking_powers.NetworkingPowers.traceroute">traceroute</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.vpn_status" href="#jarvis.powers.networking_powers.NetworkingPowers.vpn_status">vpn_status</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.whois_lookup" href="#jarvis.powers.networking_powers.NetworkingPowers.whois_lookup">whois_lookup</a></code></li>
+<li><code><a title="jarvis.powers.networking_powers.NetworkingPowers.wifi_networks" href="#jarvis.powers.networking_powers.NetworkingPowers.wifi_networks">wifi_networks</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

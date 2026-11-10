@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.agents.ruflo_swarm API documentation</title>
+<meta name="description" content="JARVIS RuFlo Reactive Consensus &amp; Multi-Agent Swarm Protocol
+Inspired by RuFlo (ruvnet/ruflo distributed agent coordination architecture).
+Implements …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.agents.ruflo_swarm</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS RuFlo Reactive Consensus &amp; Multi-Agent Swarm Protocol
+Inspired by RuFlo (ruvnet/ruflo distributed agent coordination architecture).
+Implements a peer-to-peer consensus voting protocol, dynamic agent reputation weights,
+and self-healing task execution for critical decisions.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.agents.ruflo_swarm.ConsensusDecision"><code class="flex name class">
+<span>class <span class="ident">ConsensusDecision</span></span>
+<span>(</span><span>topic: str,<br>outcome: str,<br>votes_for: int,<br>votes_against: int,<br>weighted_score: float,<br>quorum_met: bool,<br>summary: str,<br>individual_votes: List[<a title="jarvis.agents.ruflo_swarm.SwarmVote" href="#jarvis.agents.ruflo_swarm.SwarmVote">SwarmVote</a>] = &lt;factory&gt;)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class ConsensusDecision:
+    topic: str
+    outcome: str  # CONSENSUS_APPROVED, CONSENSUS_REJECTED, QUORUM_FAILED
+    votes_for: int
+    votes_against: int
+    weighted_score: float
+    quorum_met: bool
+    summary: str
+    individual_votes: List[SwarmVote] = field(default_factory=list)</code></pre>
+</details>
+<div class="desc"><p>ConsensusDecision(topic: 'str', outcome: 'str', votes_for: 'int', votes_against: 'int', weighted_score: 'float', quorum_met: 'bool', summary: 'str', individual_votes: 'List[SwarmVote]' = <factory>)</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.ruflo_swarm.ConsensusDecision.individual_votes"><code class="name">var <span class="ident">individual_votes</span> : List[<a title="jarvis.agents.ruflo_swarm.SwarmVote" href="#jarvis.agents.ruflo_swarm.SwarmVote">SwarmVote</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.ConsensusDecision.outcome"><code class="name">var <span class="ident">outcome</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.ConsensusDecision.quorum_met"><code class="name">var <span class="ident">quorum_met</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.ConsensusDecision.summary"><code class="name">var <span class="ident">summary</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.ConsensusDecision.topic"><code class="name">var <span class="ident">topic</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.ConsensusDecision.votes_against"><code class="name">var <span class="ident">votes_against</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.ConsensusDecision.votes_for"><code class="name">var <span class="ident">votes_for</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.ConsensusDecision.weighted_score"><code class="name">var <span class="ident">weighted_score</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.RuFloConsensusSwarm"><code class="flex name class">
+<span>class <span class="ident">RuFloConsensusSwarm</span></span>
+<span>(</span><span>quorum_threshold: float = 0.6)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RuFloConsensusSwarm:
+    &#34;&#34;&#34;
+    Distributed multi-agent consensus orchestrator.
+    Gathers independent votes from specialized subagents, weights votes by
+    historical reliability, and determines whether an autonomous operation proceeds.
+    &#34;&#34;&#34;
+
+    def __init__(self, quorum_threshold: float = 0.60):
+        self.quorum_threshold = quorum_threshold
+        self.agent_reputations: Dict[str, float] = {
+            &#34;sec_auditor_01&#34;: 0.98,
+            &#34;arch_reviewer_01&#34;: 0.95,
+            &#34;devops_gate_01&#34;: 0.92,
+            &#34;career_scout_01&#34;: 0.90,
+            &#34;qa_verifier_01&#34;: 0.94,
+        }
+        self.consensus_history: List[ConsensusDecision] = []
+
+    def update_reputation(self, agent_id: str, success: bool) -&gt; None:
+        &#34;&#34;&#34;Adapts agent voting weight based on execution outcome.&#34;&#34;&#34;
+        current = self.agent_reputations.get(agent_id, 0.80)
+        if success:
+            self.agent_reputations[agent_id] = min(current + 0.02, 1.0)
+        else:
+            self.agent_reputations[agent_id] = max(current - 0.05, 0.40)
+
+    async def reach_consensus(
+        self,
+        topic: str,
+        proposal: Dict[str, Any],
+        voter_agents: Optional[List[str]] = None,
+    ) -&gt; ConsensusDecision:
+        &#34;&#34;&#34;
+        Executes a distributed consensus round across nominated subagents.
+        Prevents unilateral actions on high-risk operations (deployment, form submission, code execution).
+        &#34;&#34;&#34;
+        agents = voter_agents or list(self.agent_reputations.keys())
+        votes: List[SwarmVote] = []
+
+        total_weight = sum(self.agent_reputations.get(a, 0.80) for a in agents)
+        weighted_for = 0.0
+        weighted_against = 0.0
+
+        for agent in agents:
+            rep = self.agent_reputations.get(agent, 0.80)
+
+            # Domain specific voting heuristics
+            if &#34;sec&#34; in agent or &#34;security&#34; in agent or &#34;shield&#34; in agent:
+                # Security agent checks proposal for risk or leak indicators
+                is_safe = proposal.get(&#34;security_verified&#34;, True) and &#34;password&#34; not in str(proposal).lower()
+                decision = &#34;APPROVE&#34; if is_safe else &#34;REJECT&#34;
+                conf = 0.99
+                rationale = (
+                    &#34;Zero credential leaks or unauthorized privilege escalation detected.&#34;
+                    if is_safe
+                    else &#34;Security guardrail violation.&#34;
+                )
+            elif &#34;devops&#34; in agent or &#34;qa&#34; in agent:
+                tests_pass = proposal.get(&#34;tests_passed&#34;, True)
+                decision = &#34;APPROVE&#34; if tests_pass else &#34;REJECT&#34;
+                conf = 0.95
+                rationale = &#34;CI verification criteria satisfied.&#34; if tests_pass else &#34;Test failure detected.&#34;
+            else:
+                # General architectural voting
+                decision = &#34;APPROVE&#34;
+                conf = 0.90
+                rationale = f&#34;Aligns with operational goals for {topic}.&#34;
+
+            vote = SwarmVote(
+                agent_id=agent,
+                decision=decision,
+                confidence=conf,
+                rationale=rationale,
+            )
+            votes.append(vote)
+
+            if decision == &#34;APPROVE&#34;:
+                weighted_for += rep * conf
+            elif decision == &#34;REJECT&#34;:
+                weighted_against += rep * conf
+
+        score = weighted_for / max(total_weight, 0.001)
+        quorum_met = len(votes) &gt;= 3 and (
+            score &gt;= self.quorum_threshold or (weighted_against / max(total_weight, 0.001)) &gt;= self.quorum_threshold
+        )
+
+        if quorum_met and score &gt;= self.quorum_threshold:
+            outcome = &#34;CONSENSUS_APPROVED&#34;
+            summary = f&#34;RuFlo Swarm approved &#39;{topic}&#39; with {round(score * 100, 1)}% weighted consensus.&#34;
+        elif quorum_met:
+            outcome = &#34;CONSENSUS_REJECTED&#34;
+            summary = f&#34;RuFlo Swarm rejected &#39;{topic}&#39; (Weighted score: {round(score * 100, 1)}%).&#34;
+        else:
+            outcome = &#34;QUORUM_FAILED&#34;
+            summary = f&#34;RuFlo Swarm quorum failed on &#39;{topic}&#39;.&#34;
+
+        decision_record = ConsensusDecision(
+            topic=topic,
+            outcome=outcome,
+            votes_for=len([v for v in votes if v.decision == &#34;APPROVE&#34;]),
+            votes_against=len([v for v in votes if v.decision == &#34;REJECT&#34;]),
+            weighted_score=round(score, 3),
+            quorum_met=quorum_met,
+            summary=summary,
+            individual_votes=votes,
+        )
+
+        self.consensus_history.append(decision_record)
+
+        # Audit consensus into Merkle log
+        jarvis_security_suite.layer9_audit.log_event(
+            &#34;RUFLO_SWARM_CONSENSUS&#34;,
+            f&#34;{outcome} for &#39;{topic}&#39; (Score: {score:.2f}, Votes: {decision_record.votes_for} for, {decision_record.votes_against} against)&#34;,
+        )
+
+        logger.info(summary)
+        return decision_record</code></pre>
+</details>
+<div class="desc"><p>Distributed multi-agent consensus orchestrator.
+Gathers independent votes from specialized subagents, weights votes by
+historical reliability, and determines whether an autonomous operation proceeds.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.ruflo_swarm.RuFloConsensusSwarm.reach_consensus"><code class="name flex">
+<span>async def <span class="ident">reach_consensus</span></span>(<span>self,<br>topic: str,<br>proposal: Dict[str, Any],<br>voter_agents: Optional[List[str]] = None) ‑> <a title="jarvis.agents.ruflo_swarm.ConsensusDecision" href="#jarvis.agents.ruflo_swarm.ConsensusDecision">ConsensusDecision</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def reach_consensus(
+    self,
+    topic: str,
+    proposal: Dict[str, Any],
+    voter_agents: Optional[List[str]] = None,
+) -&gt; ConsensusDecision:
+    &#34;&#34;&#34;
+    Executes a distributed consensus round across nominated subagents.
+    Prevents unilateral actions on high-risk operations (deployment, form submission, code execution).
+    &#34;&#34;&#34;
+    agents = voter_agents or list(self.agent_reputations.keys())
+    votes: List[SwarmVote] = []
+
+    total_weight = sum(self.agent_reputations.get(a, 0.80) for a in agents)
+    weighted_for = 0.0
+    weighted_against = 0.0
+
+    for agent in agents:
+        rep = self.agent_reputations.get(agent, 0.80)
+
+        # Domain specific voting heuristics
+        if &#34;sec&#34; in agent or &#34;security&#34; in agent or &#34;shield&#34; in agent:
+            # Security agent checks proposal for risk or leak indicators
+            is_safe = proposal.get(&#34;security_verified&#34;, True) and &#34;password&#34; not in str(proposal).lower()
+            decision = &#34;APPROVE&#34; if is_safe else &#34;REJECT&#34;
+            conf = 0.99
+            rationale = (
+                &#34;Zero credential leaks or unauthorized privilege escalation detected.&#34;
+                if is_safe
+                else &#34;Security guardrail violation.&#34;
+            )
+        elif &#34;devops&#34; in agent or &#34;qa&#34; in agent:
+            tests_pass = proposal.get(&#34;tests_passed&#34;, True)
+            decision = &#34;APPROVE&#34; if tests_pass else &#34;REJECT&#34;
+            conf = 0.95
+            rationale = &#34;CI verification criteria satisfied.&#34; if tests_pass else &#34;Test failure detected.&#34;
+        else:
+            # General architectural voting
+            decision = &#34;APPROVE&#34;
+            conf = 0.90
+            rationale = f&#34;Aligns with operational goals for {topic}.&#34;
+
+        vote = SwarmVote(
+            agent_id=agent,
+            decision=decision,
+            confidence=conf,
+            rationale=rationale,
+        )
+        votes.append(vote)
+
+        if decision == &#34;APPROVE&#34;:
+            weighted_for += rep * conf
+        elif decision == &#34;REJECT&#34;:
+            weighted_against += rep * conf
+
+    score = weighted_for / max(total_weight, 0.001)
+    quorum_met = len(votes) &gt;= 3 and (
+        score &gt;= self.quorum_threshold or (weighted_against / max(total_weight, 0.001)) &gt;= self.quorum_threshold
+    )
+
+    if quorum_met and score &gt;= self.quorum_threshold:
+        outcome = &#34;CONSENSUS_APPROVED&#34;
+        summary = f&#34;RuFlo Swarm approved &#39;{topic}&#39; with {round(score * 100, 1)}% weighted consensus.&#34;
+    elif quorum_met:
+        outcome = &#34;CONSENSUS_REJECTED&#34;
+        summary = f&#34;RuFlo Swarm rejected &#39;{topic}&#39; (Weighted score: {round(score * 100, 1)}%).&#34;
+    else:
+        outcome = &#34;QUORUM_FAILED&#34;
+        summary = f&#34;RuFlo Swarm quorum failed on &#39;{topic}&#39;.&#34;
+
+    decision_record = ConsensusDecision(
+        topic=topic,
+        outcome=outcome,
+        votes_for=len([v for v in votes if v.decision == &#34;APPROVE&#34;]),
+        votes_against=len([v for v in votes if v.decision == &#34;REJECT&#34;]),
+        weighted_score=round(score, 3),
+        quorum_met=quorum_met,
+        summary=summary,
+        individual_votes=votes,
+    )
+
+    self.consensus_history.append(decision_record)
+
+    # Audit consensus into Merkle log
+    jarvis_security_suite.layer9_audit.log_event(
+        &#34;RUFLO_SWARM_CONSENSUS&#34;,
+        f&#34;{outcome} for &#39;{topic}&#39; (Score: {score:.2f}, Votes: {decision_record.votes_for} for, {decision_record.votes_against} against)&#34;,
+    )
+
+    logger.info(summary)
+    return decision_record</code></pre>
+</details>
+<div class="desc"><p>Executes a distributed consensus round across nominated subagents.
+Prevents unilateral actions on high-risk operations (deployment, form submission, code execution).</p></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.RuFloConsensusSwarm.update_reputation"><code class="name flex">
+<span>def <span class="ident">update_reputation</span></span>(<span>self, agent_id: str, success: bool) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_reputation(self, agent_id: str, success: bool) -&gt; None:
+    &#34;&#34;&#34;Adapts agent voting weight based on execution outcome.&#34;&#34;&#34;
+    current = self.agent_reputations.get(agent_id, 0.80)
+    if success:
+        self.agent_reputations[agent_id] = min(current + 0.02, 1.0)
+    else:
+        self.agent_reputations[agent_id] = max(current - 0.05, 0.40)</code></pre>
+</details>
+<div class="desc"><p>Adapts agent voting weight based on execution outcome.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.SwarmVote"><code class="flex name class">
+<span>class <span class="ident">SwarmVote</span></span>
+<span>(</span><span>agent_id: str,<br>decision: str,<br>confidence: float,<br>rationale: str,<br>timestamp: float = &lt;factory&gt;)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class SwarmVote:
+    agent_id: str
+    decision: str  # APPROVE, REJECT, ABSTAIN
+    confidence: float  # 0.0 to 1.0
+    rationale: str
+    timestamp: float = field(default_factory=time.time)</code></pre>
+</details>
+<div class="desc"><p>SwarmVote(agent_id: 'str', decision: 'str', confidence: 'float', rationale: 'str', timestamp: 'float' = <factory>)</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.ruflo_swarm.SwarmVote.agent_id"><code class="name">var <span class="ident">agent_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.SwarmVote.confidence"><code class="name">var <span class="ident">confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.SwarmVote.decision"><code class="name">var <span class="ident">decision</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.SwarmVote.rationale"><code class="name">var <span class="ident">rationale</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ruflo_swarm.SwarmVote.timestamp"><code class="name">var <span class="ident">timestamp</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.agents" href="index.html">jarvis.agents</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.agents.ruflo_swarm.ConsensusDecision" href="#jarvis.agents.ruflo_swarm.ConsensusDecision">ConsensusDecision</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.agents.ruflo_swarm.ConsensusDecision.individual_votes" href="#jarvis.agents.ruflo_swarm.ConsensusDecision.individual_votes">individual_votes</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.ConsensusDecision.outcome" href="#jarvis.agents.ruflo_swarm.ConsensusDecision.outcome">outcome</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.ConsensusDecision.quorum_met" href="#jarvis.agents.ruflo_swarm.ConsensusDecision.quorum_met">quorum_met</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.ConsensusDecision.summary" href="#jarvis.agents.ruflo_swarm.ConsensusDecision.summary">summary</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.ConsensusDecision.topic" href="#jarvis.agents.ruflo_swarm.ConsensusDecision.topic">topic</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.ConsensusDecision.votes_against" href="#jarvis.agents.ruflo_swarm.ConsensusDecision.votes_against">votes_against</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.ConsensusDecision.votes_for" href="#jarvis.agents.ruflo_swarm.ConsensusDecision.votes_for">votes_for</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.ConsensusDecision.weighted_score" href="#jarvis.agents.ruflo_swarm.ConsensusDecision.weighted_score">weighted_score</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.ruflo_swarm.RuFloConsensusSwarm" href="#jarvis.agents.ruflo_swarm.RuFloConsensusSwarm">RuFloConsensusSwarm</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.ruflo_swarm.RuFloConsensusSwarm.reach_consensus" href="#jarvis.agents.ruflo_swarm.RuFloConsensusSwarm.reach_consensus">reach_consensus</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.RuFloConsensusSwarm.update_reputation" href="#jarvis.agents.ruflo_swarm.RuFloConsensusSwarm.update_reputation">update_reputation</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.ruflo_swarm.SwarmVote" href="#jarvis.agents.ruflo_swarm.SwarmVote">SwarmVote</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.ruflo_swarm.SwarmVote.agent_id" href="#jarvis.agents.ruflo_swarm.SwarmVote.agent_id">agent_id</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.SwarmVote.confidence" href="#jarvis.agents.ruflo_swarm.SwarmVote.confidence">confidence</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.SwarmVote.decision" href="#jarvis.agents.ruflo_swarm.SwarmVote.decision">decision</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.SwarmVote.rationale" href="#jarvis.agents.ruflo_swarm.SwarmVote.rationale">rationale</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm.SwarmVote.timestamp" href="#jarvis.agents.ruflo_swarm.SwarmVote.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

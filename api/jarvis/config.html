@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.config API documentation</title>
+<meta name="description" content="JARVIS Centralized Configuration Module.
+Typed configuration using Pydantic Settings. Manages all environment variables,
+endpoints, secrets, timeouts, …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.config</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Centralized Configuration Module.
+Typed configuration using Pydantic Settings. Manages all environment variables,
+endpoints, secrets, timeouts, storage paths, limits, and runtime validation.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.config.Settings"><code class="flex name class">
+<span>class <span class="ident">Settings</span></span>
+<span>(</span><span>**values: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Settings(BaseSettings):
+    &#34;&#34;&#34;Centralized, typed application settings.&#34;&#34;&#34;
+
+    # ─── Core Application Settings ──────────────────────────────────────────
+    data_dir: Path = Field(default=PROJECT_ROOT / &#34;data&#34;, description=&#34;Data directory&#34;)
+    jarvis_env: str = Field(
+        default=&#34;development&#34;,
+        description=&#34;Environment: development, test, production&#34;,
+    )
+    jarvis_host: str = Field(default=&#34;127.0.0.1&#34;, description=&#34;Binding host&#34;)
+    jarvis_port: int = Field(default=8000, description=&#34;Binding port&#34;)
+    jarvis_debug: bool = Field(default=True, description=&#34;Debug mode&#34;)
+    jarvis_secret_key: str = Field(
+        default=&#34;dev_secret_key_change_in_production_32b&#34;,
+        description=&#34;Secret key for HMAC signing and token auth&#34;,
+    )
+    jarvis_user_name: str = Field(default=&#34;Ganesh Nair&#34;, description=&#34;Primary authorized user name&#34;)
+    jarvis_user_id: str = Field(default=&#34;ganesh&#34;, description=&#34;Primary user ID&#34;)
+
+    # JARVIS assistant identity (separate from the owner&#39;s personal identity)
+    assistant_email: str = Field(
+        default=&#34;jarvis33246146@gmail.com&#34;,
+        description=&#34;Dedicated JARVIS Google account used for assistant communication&#34;,
+    )
+    assistant_display_name: str = Field(default=&#34;JARVIS&#34;, description=&#34;Assistant display name&#34;)
+    owner_email: Optional[str] = Field(
+        default=None,
+        description=&#34;Owner destination email; must be explicitly configured, never assumed&#34;,
+    )
+    owner_display_name: Optional[str] = Field(default=None, description=&#34;Owner display name&#34;)
+    authorized_recipients: List[str] = Field(
+        default_factory=list,
+        description=&#34;Explicit allow-list for outbound email recipients beyond the owner&#34;,
+    )
+    cors_allow_origins: List[str] = Field(
+        default_factory=lambda: [&#34;*&#34;],
+        description=&#34;Allowed CORS origin domains&#34;,
+    )
+    disk_mount_path: str = Field(
+        default=&#34;C:\\&#34; if os.name == &#34;nt&#34; else &#34;/&#34;,
+        description=&#34;Root mount path for disk health inspection&#34;,
+    )
+
+    # ─── Tier 1: Local Reflex (Ollama) ──────────────────────────────────────
+    ollama_base_url: str = Field(default=&#34;http://localhost:11434&#34;)
+    ollama_default_model: str = Field(default=&#34;llama3.1&#34;)
+    ollama_embed_model: str = Field(default=&#34;nomic-embed-text&#34;)
+    ollama_timeout_sec: float = Field(default=30.0)
+
+    # ─── Tier 2: Private GPU Reasoning (vLLM OpenAI-Compatible Server) ─────
+    vllm_base_url: str = Field(default=&#34;http://localhost:8001/v1&#34;)
+    vllm_api_key: Optional[str] = Field(default=None)
+    vllm_default_model: str = Field(default=&#34;Qwen/Qwen2.5-32B-Instruct&#34;)
+    vllm_timeout_sec: float = Field(default=60.0)
+
+    # ─── LiteLLM Gateway &amp; Local Model Alias ────────────────────────────────
+    litellm_base_url: str = Field(default=&#34;http://localhost:4000&#34;)
+    litellm_master_key: Optional[str] = Field(default=None)
+    local_model: str = Field(default=&#34;ollama/llama3.1&#34;)
+
+    # ─── Tier 3: Frontier Cloud Gateway &amp; OpenRouter Free Tier ──────────────
+    claude_api_key: Optional[str] = Field(default=None)
+    openai_api_key: Optional[str] = Field(default=None)
+    gemini_api_key: Optional[str] = Field(default=None)
+    gemini_key_account_1: Optional[str] = Field(default=None)
+    gemini_key_account_2: Optional[str] = Field(default=None)
+    gemini_key_account_3: Optional[str] = Field(default=None)
+    gemini_api_keys: Optional[str] = Field(default=None)
+    openrouter_api_key: Optional[str] = Field(default=None)
+    openrouter_api_keys: Optional[str] = Field(default=None)
+    mcp_config_path: Path = Field(default=PROJECT_ROOT / &#34;config&#34; / &#34;mcp_servers.json&#34;)
+    openrouter_base_url: str = Field(default=&#34;https://openrouter.ai/api/v1&#34;)
+    openrouter_default_model: str = Field(default=&#34;openrouter/free&#34;)
+    openrouter_site_url: str = Field(default=&#34;https://github.com/GaneshNair007/Jarvis&#34;)
+    openrouter_app_title: str = Field(default=&#34;JARVIS AI OS&#34;)
+    openrouter_models_cache_ttl_sec: int = Field(default=3600)
+    openrouter_http_timeout_sec: float = Field(default=15.0)
+    cloud_gateway_timeout_sec: float = Field(default=45.0)
+
+    # ─── GitHub Developer Integration ───────────────────────────────────────
+    github_default_repo: str = Field(default=&#34;GaneshNair007/Jarvis&#34;)
+    github_api_base_url: str = Field(default=&#34;https://api.github.com&#34;)
+
+    # ─── Mem0 Long-Term Memory ──────────────────────────────────────────────
+    mem0_api_key: Optional[str] = Field(default=None)
+    mem0_user_id: Optional[str] = Field(default=None)
+
+    # ─── Cost Governor Limits (USD) ─────────────────────────────────────────
+    daily_budget_limit: float = Field(default=5.00)
+    monthly_budget_limit: float = Field(default=50.00)
+    max_per_task_budget: float = Field(default=0.50)
+
+    # ─── Security &amp; Policy Settings ─────────────────────────────────────────
+    policy_strict_mode: bool = Field(default=True)
+    allow_unapproved_reads: bool = Field(default=True)
+    approval_token_expiry_minutes: int = Field(default=15)
+    kill_switch_hotkey: str = Field(default=&#34;ctrl+alt+shift+k&#34;)
+    allowed_domains: List[str] = Field(
+        default_factory=lambda: [
+            &#34;github.com&#34;,
+            &#34;arxiv.org&#34;,
+            &#34;wikipedia.org&#34;,
+            &#34;python.org&#34;,
+            &#34;pypi.org&#34;,
+            &#34;huggingface.co&#34;,
+        ]
+    )
+    allowed_directories: List[str] = Field(
+        default_factory=lambda: [
+            str(PROJECT_ROOT / &#34;data&#34;),
+            str(PROJECT_ROOT / &#34;scratch&#34;),
+        ]
+    )
+
+    # ─── Storage &amp; Database Paths ───────────────────────────────────────────
+    database_url: Optional[str] = Field(
+        default=None,
+        description=&#34;Optional PostgreSQL connection URL (defaults to local SQLite)&#34;,
+    )
+    db_path: Path = Field(default=PROJECT_ROOT / &#34;data&#34; / &#34;jarvis.db&#34;)
+    search_db_path: Path = Field(default=PROJECT_ROOT / &#34;data&#34; / &#34;jarvis_search.db&#34;)
+    audit_log_path: Path = Field(default=PROJECT_ROOT / &#34;data&#34; / &#34;logs&#34; / &#34;audit.jsonl&#34;)
+    screenshot_dir: Path = Field(default=PROJECT_ROOT / &#34;data&#34; / &#34;screenshots&#34;)
+    catalog_path: Path = Field(default=PROJECT_ROOT / &#34;data&#34; / &#34;powers_catalog.json&#34;)
+    jarvis_artifact_dir: Path = Field(default=PROJECT_ROOT / &#34;data&#34; / &#34;artifacts&#34;)
+    config_dir: Path = Field(default=PROJECT_ROOT / &#34;config&#34;)
+
+    # ─── Local Search Engine Settings ───────────────────────────────────────
+    redis_url: str = Field(default=&#34;redis://localhost:6379/0&#34;)
+    redis_socket_timeout_sec: float = Field(default=1.0)
+    meilisearch_url: str = Field(default=&#34;http://localhost:7700&#34;)
+    meilisearch_master_key: str = Field(default=&#34;masterKey123&#34;)
+    qdrant_url: str = Field(default=&#34;http://localhost:6333&#34;)
+    qdrant_collection: str = Field(default=&#34;jarvis_docs&#34;)
+    searxng_url: str = Field(default=&#34;http://localhost:8888&#34;)
+    search_cache_ttl_sec: int = Field(default=3600)
+
+    # ─── Search Ranker &amp; Ingestion Config ───────────────────────────────────
+    rrf_k: int = Field(default=60)
+    rrf_keyword_weight: float = Field(default=0.40)
+    rrf_semantic_weight: float = Field(default=0.35)
+    rrf_instant_weight: float = Field(default=0.25)
+    ingest_chunk_size: int = Field(default=1200)
+    ingest_chunk_overlap: int = Field(default=200)
+
+    # ─── Browser &amp; Desktop Worker Settings ──────────────────────────────────
+    browser_headless: bool = Field(default=True)
+    browser_timeout_ms: int = Field(default=15000)
+    browser_search_timeout_sec: float = Field(default=10.0)
+    desktop_action_pause_sec: float = Field(default=0.1)
+    desktop_allowed_apps: List[str] = Field(
+        default_factory=lambda: [
+            &#34;notepad&#34;,
+            &#34;code&#34;,
+            &#34;cmd&#34;,
+            &#34;powershell&#34;,
+            &#34;explorer&#34;,
+            &#34;calculator&#34;,
+            &#34;terminal&#34;,
+        ]
+    )
+
+    # ─── Voice Engine Settings ──────────────────────────────────────────────
+    voice_wake_phrases: List[str] = Field(default_factory=lambda: [&#34;hey jarvis&#34;, &#34;jarvis&#34;, &#34;ok jarvis&#34;])
+    voice_sensitivity: float = Field(default=0.5)
+    voice_energy_threshold: float = Field(default=85.0)
+    tts_speed: int = Field(default=1)
+    tts_volume: int = Field(default=100)
+
+    # ─── Pydantic Configuration ─────────────────────────────────────────────
+    model_config = SettingsConfigDict(
+        env_file=str(PROJECT_ROOT / &#34;.env&#34;),
+        env_file_encoding=&#34;utf-8&#34;,
+        extra=&#34;ignore&#34;,
+    )
+
+    @field_validator(&#34;jarvis_env&#34;)
+    @classmethod
+    def validate_env_mode(cls, v: str) -&gt; str:
+        valid_modes = {&#34;development&#34;, &#34;test&#34;, &#34;production&#34;, &#34;staging&#34;}
+        v_clean = v.strip().lower()
+        if v_clean not in valid_modes:
+            raise ValueError(f&#34;Invalid JARVIS_ENV &#39;{v}&#39;. Must be one of: {&#39;, &#39;.join(sorted(valid_modes))}&#34;)
+        return v_clean
+
+    def ensure_directories(self) -&gt; None:
+        &#34;&#34;&#34;Create required runtime directories if they do not exist.&#34;&#34;&#34;
+        self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        self.search_db_path.parent.mkdir(parents=True, exist_ok=True)
+        self.audit_log_path.parent.mkdir(parents=True, exist_ok=True)
+        self.screenshot_dir.mkdir(parents=True, exist_ok=True)
+        self.jarvis_artifact_dir.mkdir(parents=True, exist_ok=True)
+
+    def validate_startup(self) -&gt; None:
+        &#34;&#34;&#34;
+        Actionable startup verification for critical configuration keys.
+        Ensures unsafe development secrets are not used in production.
+        &#34;&#34;&#34;
+        self.ensure_directories()
+
+        if self.jarvis_env == &#34;production&#34;:
+            insecure_secret = &#34;dev_secret_key_change_in_production_32b&#34;
+            if self.jarvis_secret_key == insecure_secret or len(self.jarvis_secret_key) &lt; 32:
+                raise ValueError(
+                    &#34;STARTUP ERROR: Insecure or default JARVIS_SECRET_KEY detected in production. &#34;
+                    &#34;Generate a cryptographically secure 32+ character key and set it in your environment.&#34;
+                )
+
+            if self.meilisearch_master_key == &#34;masterKey123&#34;:
+                raise ValueError(
+                    &#34;STARTUP ERROR: Default MEILISEARCH_MASTER_KEY (&#39;masterKey123&#39;) detected in production. &#34;
+                    &#34;Rotate MEILISEARCH_MASTER_KEY to a secure token in .env or your secret manager.&#34;
+                )</code></pre>
+</details>
+<div class="desc"><p>Centralized, typed application settings.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic_settings.main.BaseSettings</li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.config.Settings.allow_unapproved_reads"><code class="name">var <span class="ident">allow_unapproved_reads</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.allowed_directories"><code class="name">var <span class="ident">allowed_directories</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.allowed_domains"><code class="name">var <span class="ident">allowed_domains</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.approval_token_expiry_minutes"><code class="name">var <span class="ident">approval_token_expiry_minutes</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.assistant_display_name"><code class="name">var <span class="ident">assistant_display_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.assistant_email"><code class="name">var <span class="ident">assistant_email</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.audit_log_path"><code class="name">var <span class="ident">audit_log_path</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.authorized_recipients"><code class="name">var <span class="ident">authorized_recipients</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.browser_headless"><code class="name">var <span class="ident">browser_headless</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.browser_search_timeout_sec"><code class="name">var <span class="ident">browser_search_timeout_sec</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.browser_timeout_ms"><code class="name">var <span class="ident">browser_timeout_ms</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.catalog_path"><code class="name">var <span class="ident">catalog_path</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.claude_api_key"><code class="name">var <span class="ident">claude_api_key</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.cloud_gateway_timeout_sec"><code class="name">var <span class="ident">cloud_gateway_timeout_sec</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.config_dir"><code class="name">var <span class="ident">config_dir</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.cors_allow_origins"><code class="name">var <span class="ident">cors_allow_origins</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.daily_budget_limit"><code class="name">var <span class="ident">daily_budget_limit</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.data_dir"><code class="name">var <span class="ident">data_dir</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.database_url"><code class="name">var <span class="ident">database_url</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.db_path"><code class="name">var <span class="ident">db_path</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.desktop_action_pause_sec"><code class="name">var <span class="ident">desktop_action_pause_sec</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.desktop_allowed_apps"><code class="name">var <span class="ident">desktop_allowed_apps</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.disk_mount_path"><code class="name">var <span class="ident">disk_mount_path</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.gemini_api_key"><code class="name">var <span class="ident">gemini_api_key</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.gemini_api_keys"><code class="name">var <span class="ident">gemini_api_keys</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.gemini_key_account_1"><code class="name">var <span class="ident">gemini_key_account_1</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.gemini_key_account_2"><code class="name">var <span class="ident">gemini_key_account_2</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.gemini_key_account_3"><code class="name">var <span class="ident">gemini_key_account_3</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.github_api_base_url"><code class="name">var <span class="ident">github_api_base_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.github_default_repo"><code class="name">var <span class="ident">github_default_repo</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.ingest_chunk_overlap"><code class="name">var <span class="ident">ingest_chunk_overlap</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.ingest_chunk_size"><code class="name">var <span class="ident">ingest_chunk_size</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.jarvis_artifact_dir"><code class="name">var <span class="ident">jarvis_artifact_dir</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.jarvis_debug"><code class="name">var <span class="ident">jarvis_debug</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.jarvis_env"><code class="name">var <span class="ident">jarvis_env</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.jarvis_host"><code class="name">var <span class="ident">jarvis_host</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.jarvis_port"><code class="name">var <span class="ident">jarvis_port</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.jarvis_secret_key"><code class="name">var <span class="ident">jarvis_secret_key</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.jarvis_user_id"><code class="name">var <span class="ident">jarvis_user_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.jarvis_user_name"><code class="name">var <span class="ident">jarvis_user_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.kill_switch_hotkey"><code class="name">var <span class="ident">kill_switch_hotkey</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.litellm_base_url"><code class="name">var <span class="ident">litellm_base_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.litellm_master_key"><code class="name">var <span class="ident">litellm_master_key</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.local_model"><code class="name">var <span class="ident">local_model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.max_per_task_budget"><code class="name">var <span class="ident">max_per_task_budget</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.mcp_config_path"><code class="name">var <span class="ident">mcp_config_path</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.meilisearch_master_key"><code class="name">var <span class="ident">meilisearch_master_key</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.meilisearch_url"><code class="name">var <span class="ident">meilisearch_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.mem0_api_key"><code class="name">var <span class="ident">mem0_api_key</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.mem0_user_id"><code class="name">var <span class="ident">mem0_user_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.model_config"><code class="name">var <span class="ident">model_config</span> : ClassVar[pydantic_settings.main.SettingsConfigDict]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.monthly_budget_limit"><code class="name">var <span class="ident">monthly_budget_limit</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.ollama_base_url"><code class="name">var <span class="ident">ollama_base_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.ollama_default_model"><code class="name">var <span class="ident">ollama_default_model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.ollama_embed_model"><code class="name">var <span class="ident">ollama_embed_model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.ollama_timeout_sec"><code class="name">var <span class="ident">ollama_timeout_sec</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.openai_api_key"><code class="name">var <span class="ident">openai_api_key</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.openrouter_api_key"><code class="name">var <span class="ident">openrouter_api_key</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.openrouter_api_keys"><code class="name">var <span class="ident">openrouter_api_keys</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.openrouter_app_title"><code class="name">var <span class="ident">openrouter_app_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.openrouter_base_url"><code class="name">var <span class="ident">openrouter_base_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.openrouter_default_model"><code class="name">var <span class="ident">openrouter_default_model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.openrouter_http_timeout_sec"><code class="name">var <span class="ident">openrouter_http_timeout_sec</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.openrouter_models_cache_ttl_sec"><code class="name">var <span class="ident">openrouter_models_cache_ttl_sec</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.openrouter_site_url"><code class="name">var <span class="ident">openrouter_site_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.owner_display_name"><code class="name">var <span class="ident">owner_display_name</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.owner_email"><code class="name">var <span class="ident">owner_email</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.policy_strict_mode"><code class="name">var <span class="ident">policy_strict_mode</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.qdrant_collection"><code class="name">var <span class="ident">qdrant_collection</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.qdrant_url"><code class="name">var <span class="ident">qdrant_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.redis_socket_timeout_sec"><code class="name">var <span class="ident">redis_socket_timeout_sec</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.redis_url"><code class="name">var <span class="ident">redis_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.rrf_instant_weight"><code class="name">var <span class="ident">rrf_instant_weight</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.rrf_k"><code class="name">var <span class="ident">rrf_k</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.rrf_keyword_weight"><code class="name">var <span class="ident">rrf_keyword_weight</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.rrf_semantic_weight"><code class="name">var <span class="ident">rrf_semantic_weight</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.screenshot_dir"><code class="name">var <span class="ident">screenshot_dir</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.search_cache_ttl_sec"><code class="name">var <span class="ident">search_cache_ttl_sec</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.search_db_path"><code class="name">var <span class="ident">search_db_path</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.searxng_url"><code class="name">var <span class="ident">searxng_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.tts_speed"><code class="name">var <span class="ident">tts_speed</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.tts_volume"><code class="name">var <span class="ident">tts_volume</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.vllm_api_key"><code class="name">var <span class="ident">vllm_api_key</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.vllm_base_url"><code class="name">var <span class="ident">vllm_base_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.vllm_default_model"><code class="name">var <span class="ident">vllm_default_model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.vllm_timeout_sec"><code class="name">var <span class="ident">vllm_timeout_sec</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.voice_energy_threshold"><code class="name">var <span class="ident">voice_energy_threshold</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.voice_sensitivity"><code class="name">var <span class="ident">voice_sensitivity</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.config.Settings.voice_wake_phrases"><code class="name">var <span class="ident">voice_wake_phrases</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.config.Settings.validate_env_mode"><code class="name flex">
+<span>def <span class="ident">validate_env_mode</span></span>(<span>v: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.config.Settings.ensure_directories"><code class="name flex">
+<span>def <span class="ident">ensure_directories</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ensure_directories(self) -&gt; None:
+    &#34;&#34;&#34;Create required runtime directories if they do not exist.&#34;&#34;&#34;
+    self.db_path.parent.mkdir(parents=True, exist_ok=True)
+    self.search_db_path.parent.mkdir(parents=True, exist_ok=True)
+    self.audit_log_path.parent.mkdir(parents=True, exist_ok=True)
+    self.screenshot_dir.mkdir(parents=True, exist_ok=True)
+    self.jarvis_artifact_dir.mkdir(parents=True, exist_ok=True)</code></pre>
+</details>
+<div class="desc"><p>Create required runtime directories if they do not exist.</p></div>
+</dd>
+<dt id="jarvis.config.Settings.validate_startup"><code class="name flex">
+<span>def <span class="ident">validate_startup</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate_startup(self) -&gt; None:
+    &#34;&#34;&#34;
+    Actionable startup verification for critical configuration keys.
+    Ensures unsafe development secrets are not used in production.
+    &#34;&#34;&#34;
+    self.ensure_directories()
+
+    if self.jarvis_env == &#34;production&#34;:
+        insecure_secret = &#34;dev_secret_key_change_in_production_32b&#34;
+        if self.jarvis_secret_key == insecure_secret or len(self.jarvis_secret_key) &lt; 32:
+            raise ValueError(
+                &#34;STARTUP ERROR: Insecure or default JARVIS_SECRET_KEY detected in production. &#34;
+                &#34;Generate a cryptographically secure 32+ character key and set it in your environment.&#34;
+            )
+
+        if self.meilisearch_master_key == &#34;masterKey123&#34;:
+            raise ValueError(
+                &#34;STARTUP ERROR: Default MEILISEARCH_MASTER_KEY (&#39;masterKey123&#39;) detected in production. &#34;
+                &#34;Rotate MEILISEARCH_MASTER_KEY to a secure token in .env or your secret manager.&#34;
+            )</code></pre>
+</details>
+<div class="desc"><p>Actionable startup verification for critical configuration keys.
+Ensures unsafe development secrets are not used in production.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis" href="index.html">jarvis</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.config.Settings" href="#jarvis.config.Settings">Settings</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.config.Settings.allow_unapproved_reads" href="#jarvis.config.Settings.allow_unapproved_reads">allow_unapproved_reads</a></code></li>
+<li><code><a title="jarvis.config.Settings.allowed_directories" href="#jarvis.config.Settings.allowed_directories">allowed_directories</a></code></li>
+<li><code><a title="jarvis.config.Settings.allowed_domains" href="#jarvis.config.Settings.allowed_domains">allowed_domains</a></code></li>
+<li><code><a title="jarvis.config.Settings.approval_token_expiry_minutes" href="#jarvis.config.Settings.approval_token_expiry_minutes">approval_token_expiry_minutes</a></code></li>
+<li><code><a title="jarvis.config.Settings.assistant_display_name" href="#jarvis.config.Settings.assistant_display_name">assistant_display_name</a></code></li>
+<li><code><a title="jarvis.config.Settings.assistant_email" href="#jarvis.config.Settings.assistant_email">assistant_email</a></code></li>
+<li><code><a title="jarvis.config.Settings.audit_log_path" href="#jarvis.config.Settings.audit_log_path">audit_log_path</a></code></li>
+<li><code><a title="jarvis.config.Settings.authorized_recipients" href="#jarvis.config.Settings.authorized_recipients">authorized_recipients</a></code></li>
+<li><code><a title="jarvis.config.Settings.browser_headless" href="#jarvis.config.Settings.browser_headless">browser_headless</a></code></li>
+<li><code><a title="jarvis.config.Settings.browser_search_timeout_sec" href="#jarvis.config.Settings.browser_search_timeout_sec">browser_search_timeout_sec</a></code></li>
+<li><code><a title="jarvis.config.Settings.browser_timeout_ms" href="#jarvis.config.Settings.browser_timeout_ms">browser_timeout_ms</a></code></li>
+<li><code><a title="jarvis.config.Settings.catalog_path" href="#jarvis.config.Settings.catalog_path">catalog_path</a></code></li>
+<li><code><a title="jarvis.config.Settings.claude_api_key" href="#jarvis.config.Settings.claude_api_key">claude_api_key</a></code></li>
+<li><code><a title="jarvis.config.Settings.cloud_gateway_timeout_sec" href="#jarvis.config.Settings.cloud_gateway_timeout_sec">cloud_gateway_timeout_sec</a></code></li>
+<li><code><a title="jarvis.config.Settings.config_dir" href="#jarvis.config.Settings.config_dir">config_dir</a></code></li>
+<li><code><a title="jarvis.config.Settings.cors_allow_origins" href="#jarvis.config.Settings.cors_allow_origins">cors_allow_origins</a></code></li>
+<li><code><a title="jarvis.config.Settings.daily_budget_limit" href="#jarvis.config.Settings.daily_budget_limit">daily_budget_limit</a></code></li>
+<li><code><a title="jarvis.config.Settings.data_dir" href="#jarvis.config.Settings.data_dir">data_dir</a></code></li>
+<li><code><a title="jarvis.config.Settings.database_url" href="#jarvis.config.Settings.database_url">database_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.db_path" href="#jarvis.config.Settings.db_path">db_path</a></code></li>
+<li><code><a title="jarvis.config.Settings.desktop_action_pause_sec" href="#jarvis.config.Settings.desktop_action_pause_sec">desktop_action_pause_sec</a></code></li>
+<li><code><a title="jarvis.config.Settings.desktop_allowed_apps" href="#jarvis.config.Settings.desktop_allowed_apps">desktop_allowed_apps</a></code></li>
+<li><code><a title="jarvis.config.Settings.disk_mount_path" href="#jarvis.config.Settings.disk_mount_path">disk_mount_path</a></code></li>
+<li><code><a title="jarvis.config.Settings.ensure_directories" href="#jarvis.config.Settings.ensure_directories">ensure_directories</a></code></li>
+<li><code><a title="jarvis.config.Settings.gemini_api_key" href="#jarvis.config.Settings.gemini_api_key">gemini_api_key</a></code></li>
+<li><code><a title="jarvis.config.Settings.gemini_api_keys" href="#jarvis.config.Settings.gemini_api_keys">gemini_api_keys</a></code></li>
+<li><code><a title="jarvis.config.Settings.gemini_key_account_1" href="#jarvis.config.Settings.gemini_key_account_1">gemini_key_account_1</a></code></li>
+<li><code><a title="jarvis.config.Settings.gemini_key_account_2" href="#jarvis.config.Settings.gemini_key_account_2">gemini_key_account_2</a></code></li>
+<li><code><a title="jarvis.config.Settings.gemini_key_account_3" href="#jarvis.config.Settings.gemini_key_account_3">gemini_key_account_3</a></code></li>
+<li><code><a title="jarvis.config.Settings.github_api_base_url" href="#jarvis.config.Settings.github_api_base_url">github_api_base_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.github_default_repo" href="#jarvis.config.Settings.github_default_repo">github_default_repo</a></code></li>
+<li><code><a title="jarvis.config.Settings.ingest_chunk_overlap" href="#jarvis.config.Settings.ingest_chunk_overlap">ingest_chunk_overlap</a></code></li>
+<li><code><a title="jarvis.config.Settings.ingest_chunk_size" href="#jarvis.config.Settings.ingest_chunk_size">ingest_chunk_size</a></code></li>
+<li><code><a title="jarvis.config.Settings.jarvis_artifact_dir" href="#jarvis.config.Settings.jarvis_artifact_dir">jarvis_artifact_dir</a></code></li>
+<li><code><a title="jarvis.config.Settings.jarvis_debug" href="#jarvis.config.Settings.jarvis_debug">jarvis_debug</a></code></li>
+<li><code><a title="jarvis.config.Settings.jarvis_env" href="#jarvis.config.Settings.jarvis_env">jarvis_env</a></code></li>
+<li><code><a title="jarvis.config.Settings.jarvis_host" href="#jarvis.config.Settings.jarvis_host">jarvis_host</a></code></li>
+<li><code><a title="jarvis.config.Settings.jarvis_port" href="#jarvis.config.Settings.jarvis_port">jarvis_port</a></code></li>
+<li><code><a title="jarvis.config.Settings.jarvis_secret_key" href="#jarvis.config.Settings.jarvis_secret_key">jarvis_secret_key</a></code></li>
+<li><code><a title="jarvis.config.Settings.jarvis_user_id" href="#jarvis.config.Settings.jarvis_user_id">jarvis_user_id</a></code></li>
+<li><code><a title="jarvis.config.Settings.jarvis_user_name" href="#jarvis.config.Settings.jarvis_user_name">jarvis_user_name</a></code></li>
+<li><code><a title="jarvis.config.Settings.kill_switch_hotkey" href="#jarvis.config.Settings.kill_switch_hotkey">kill_switch_hotkey</a></code></li>
+<li><code><a title="jarvis.config.Settings.litellm_base_url" href="#jarvis.config.Settings.litellm_base_url">litellm_base_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.litellm_master_key" href="#jarvis.config.Settings.litellm_master_key">litellm_master_key</a></code></li>
+<li><code><a title="jarvis.config.Settings.local_model" href="#jarvis.config.Settings.local_model">local_model</a></code></li>
+<li><code><a title="jarvis.config.Settings.max_per_task_budget" href="#jarvis.config.Settings.max_per_task_budget">max_per_task_budget</a></code></li>
+<li><code><a title="jarvis.config.Settings.mcp_config_path" href="#jarvis.config.Settings.mcp_config_path">mcp_config_path</a></code></li>
+<li><code><a title="jarvis.config.Settings.meilisearch_master_key" href="#jarvis.config.Settings.meilisearch_master_key">meilisearch_master_key</a></code></li>
+<li><code><a title="jarvis.config.Settings.meilisearch_url" href="#jarvis.config.Settings.meilisearch_url">meilisearch_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.mem0_api_key" href="#jarvis.config.Settings.mem0_api_key">mem0_api_key</a></code></li>
+<li><code><a title="jarvis.config.Settings.mem0_user_id" href="#jarvis.config.Settings.mem0_user_id">mem0_user_id</a></code></li>
+<li><code><a title="jarvis.config.Settings.model_config" href="#jarvis.config.Settings.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.config.Settings.monthly_budget_limit" href="#jarvis.config.Settings.monthly_budget_limit">monthly_budget_limit</a></code></li>
+<li><code><a title="jarvis.config.Settings.ollama_base_url" href="#jarvis.config.Settings.ollama_base_url">ollama_base_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.ollama_default_model" href="#jarvis.config.Settings.ollama_default_model">ollama_default_model</a></code></li>
+<li><code><a title="jarvis.config.Settings.ollama_embed_model" href="#jarvis.config.Settings.ollama_embed_model">ollama_embed_model</a></code></li>
+<li><code><a title="jarvis.config.Settings.ollama_timeout_sec" href="#jarvis.config.Settings.ollama_timeout_sec">ollama_timeout_sec</a></code></li>
+<li><code><a title="jarvis.config.Settings.openai_api_key" href="#jarvis.config.Settings.openai_api_key">openai_api_key</a></code></li>
+<li><code><a title="jarvis.config.Settings.openrouter_api_key" href="#jarvis.config.Settings.openrouter_api_key">openrouter_api_key</a></code></li>
+<li><code><a title="jarvis.config.Settings.openrouter_api_keys" href="#jarvis.config.Settings.openrouter_api_keys">openrouter_api_keys</a></code></li>
+<li><code><a title="jarvis.config.Settings.openrouter_app_title" href="#jarvis.config.Settings.openrouter_app_title">openrouter_app_title</a></code></li>
+<li><code><a title="jarvis.config.Settings.openrouter_base_url" href="#jarvis.config.Settings.openrouter_base_url">openrouter_base_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.openrouter_default_model" href="#jarvis.config.Settings.openrouter_default_model">openrouter_default_model</a></code></li>
+<li><code><a title="jarvis.config.Settings.openrouter_http_timeout_sec" href="#jarvis.config.Settings.openrouter_http_timeout_sec">openrouter_http_timeout_sec</a></code></li>
+<li><code><a title="jarvis.config.Settings.openrouter_models_cache_ttl_sec" href="#jarvis.config.Settings.openrouter_models_cache_ttl_sec">openrouter_models_cache_ttl_sec</a></code></li>
+<li><code><a title="jarvis.config.Settings.openrouter_site_url" href="#jarvis.config.Settings.openrouter_site_url">openrouter_site_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.owner_display_name" href="#jarvis.config.Settings.owner_display_name">owner_display_name</a></code></li>
+<li><code><a title="jarvis.config.Settings.owner_email" href="#jarvis.config.Settings.owner_email">owner_email</a></code></li>
+<li><code><a title="jarvis.config.Settings.policy_strict_mode" href="#jarvis.config.Settings.policy_strict_mode">policy_strict_mode</a></code></li>
+<li><code><a title="jarvis.config.Settings.qdrant_collection" href="#jarvis.config.Settings.qdrant_collection">qdrant_collection</a></code></li>
+<li><code><a title="jarvis.config.Settings.qdrant_url" href="#jarvis.config.Settings.qdrant_url">qdrant_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.redis_socket_timeout_sec" href="#jarvis.config.Settings.redis_socket_timeout_sec">redis_socket_timeout_sec</a></code></li>
+<li><code><a title="jarvis.config.Settings.redis_url" href="#jarvis.config.Settings.redis_url">redis_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.rrf_instant_weight" href="#jarvis.config.Settings.rrf_instant_weight">rrf_instant_weight</a></code></li>
+<li><code><a title="jarvis.config.Settings.rrf_k" href="#jarvis.config.Settings.rrf_k">rrf_k</a></code></li>
+<li><code><a title="jarvis.config.Settings.rrf_keyword_weight" href="#jarvis.config.Settings.rrf_keyword_weight">rrf_keyword_weight</a></code></li>
+<li><code><a title="jarvis.config.Settings.rrf_semantic_weight" href="#jarvis.config.Settings.rrf_semantic_weight">rrf_semantic_weight</a></code></li>
+<li><code><a title="jarvis.config.Settings.screenshot_dir" href="#jarvis.config.Settings.screenshot_dir">screenshot_dir</a></code></li>
+<li><code><a title="jarvis.config.Settings.search_cache_ttl_sec" href="#jarvis.config.Settings.search_cache_ttl_sec">search_cache_ttl_sec</a></code></li>
+<li><code><a title="jarvis.config.Settings.search_db_path" href="#jarvis.config.Settings.search_db_path">search_db_path</a></code></li>
+<li><code><a title="jarvis.config.Settings.searxng_url" href="#jarvis.config.Settings.searxng_url">searxng_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.tts_speed" href="#jarvis.config.Settings.tts_speed">tts_speed</a></code></li>
+<li><code><a title="jarvis.config.Settings.tts_volume" href="#jarvis.config.Settings.tts_volume">tts_volume</a></code></li>
+<li><code><a title="jarvis.config.Settings.validate_env_mode" href="#jarvis.config.Settings.validate_env_mode">validate_env_mode</a></code></li>
+<li><code><a title="jarvis.config.Settings.validate_startup" href="#jarvis.config.Settings.validate_startup">validate_startup</a></code></li>
+<li><code><a title="jarvis.config.Settings.vllm_api_key" href="#jarvis.config.Settings.vllm_api_key">vllm_api_key</a></code></li>
+<li><code><a title="jarvis.config.Settings.vllm_base_url" href="#jarvis.config.Settings.vllm_base_url">vllm_base_url</a></code></li>
+<li><code><a title="jarvis.config.Settings.vllm_default_model" href="#jarvis.config.Settings.vllm_default_model">vllm_default_model</a></code></li>
+<li><code><a title="jarvis.config.Settings.vllm_timeout_sec" href="#jarvis.config.Settings.vllm_timeout_sec">vllm_timeout_sec</a></code></li>
+<li><code><a title="jarvis.config.Settings.voice_energy_threshold" href="#jarvis.config.Settings.voice_energy_threshold">voice_energy_threshold</a></code></li>
+<li><code><a title="jarvis.config.Settings.voice_sensitivity" href="#jarvis.config.Settings.voice_sensitivity">voice_sensitivity</a></code></li>
+<li><code><a title="jarvis.config.Settings.voice_wake_phrases" href="#jarvis.config.Settings.voice_wake_phrases">voice_wake_phrases</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

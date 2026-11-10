@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.brain.schemas API documentation</title>
+<meta name="description" content="Strongly typed cognitive schemas, enums, and data models for JARVIS Brain.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.brain.schemas</code></h1>
+</header>
+<section id="section-intro">
+<p>Strongly typed cognitive schemas, enums, and data models for JARVIS Brain.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord"><code class="flex name class">
+<span>class <span class="ident">CanonicalMemoryRecord</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CanonicalMemoryRecord(BaseModel):
+    &#34;&#34;&#34;Authoritative memory representation conforming to Milestone M1 specifications.&#34;&#34;&#34;
+
+    id: str = Field(default_factory=lambda: f&#34;mem_{uuid.uuid4().hex[:12]}&#34;)
+    user_id: str = Field(..., description=&#34;Owner user identifier&#34;)
+    project_id: Optional[str] = Field(None, description=&#34;Scoped project identifier&#34;)
+    category: MemoryCategory = Field(default=MemoryCategory.FACT)
+    content: str = Field(..., description=&#34;Clean memory text assertion&#34;)
+    source_type: MemorySourceType = Field(default=MemorySourceType.EXPLICIT_USER)
+    source_reference: Optional[str] = Field(None, description=&#34;Origin provenance link&#34;)
+    evidence_references: List[str] = Field(default_factory=list, description=&#34;Audit hash or evidence IDs&#34;)
+    created_at: float = Field(default_factory=time.time)
+    updated_at: float = Field(default_factory=time.time)
+    valid_from: float = Field(default_factory=time.time)
+    valid_until: Optional[float] = Field(None, description=&#34;Expiration epoch; None if indefinite&#34;)
+    status: MemoryStatus = Field(default=MemoryStatus.ACTIVE)
+    sensitivity: str = Field(default=&#34;internal&#34;)
+    retention_policy: str = Field(default=&#34;permanent&#34;)
+    supersedes_id: Optional[str] = Field(None, description=&#34;Memory ID superseded by this record&#34;)
+    extraction_model: Optional[str] = Field(None)
+    embedding_model: Optional[str] = Field(None)
+    metadata: Dict[str, Any] = Field(default_factory=dict)</code></pre>
+</details>
+<div class="desc"><p>Authoritative memory representation conforming to Milestone M1 specifications.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.category"><code class="name">var <span class="ident">category</span> : <a title="jarvis.brain.schemas.MemoryCategory" href="#jarvis.brain.schemas.MemoryCategory">MemoryCategory</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.created_at"><code class="name">var <span class="ident">created_at</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.embedding_model"><code class="name">var <span class="ident">embedding_model</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.evidence_references"><code class="name">var <span class="ident">evidence_references</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.extraction_model"><code class="name">var <span class="ident">extraction_model</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.project_id"><code class="name">var <span class="ident">project_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.retention_policy"><code class="name">var <span class="ident">retention_policy</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.sensitivity"><code class="name">var <span class="ident">sensitivity</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.source_reference"><code class="name">var <span class="ident">source_reference</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.source_type"><code class="name">var <span class="ident">source_type</span> : <a title="jarvis.brain.schemas.MemorySourceType" href="#jarvis.brain.schemas.MemorySourceType">MemorySourceType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.status"><code class="name">var <span class="ident">status</span> : <a title="jarvis.brain.schemas.MemoryStatus" href="#jarvis.brain.schemas.MemoryStatus">MemoryStatus</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.supersedes_id"><code class="name">var <span class="ident">supersedes_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.updated_at"><code class="name">var <span class="ident">updated_at</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.user_id"><code class="name">var <span class="ident">user_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.valid_from"><code class="name">var <span class="ident">valid_from</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.CanonicalMemoryRecord.valid_until"><code class="name">var <span class="ident">valid_until</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryCategory"><code class="flex name class">
+<span>class <span class="ident">MemoryCategory</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MemoryCategory(str, Enum):
+    &#34;&#34;&#34;Explicit functional memory categories.&#34;&#34;&#34;
+
+    PREFERENCE = &#34;preference&#34;
+    FACT = &#34;fact&#34;
+    EPISODE = &#34;episode&#34;
+    PROCEDURE = &#34;procedure&#34;
+    DOCUMENT_REFERENCE = &#34;document_reference&#34;
+    HYPOTHESIS = &#34;hypothesis&#34;</code></pre>
+</details>
+<div class="desc"><p>Explicit functional memory categories.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.schemas.MemoryCategory.DOCUMENT_REFERENCE"><code class="name">var <span class="ident">DOCUMENT_REFERENCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryCategory.EPISODE"><code class="name">var <span class="ident">EPISODE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryCategory.FACT"><code class="name">var <span class="ident">FACT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryCategory.HYPOTHESIS"><code class="name">var <span class="ident">HYPOTHESIS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryCategory.PREFERENCE"><code class="name">var <span class="ident">PREFERENCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryCategory.PROCEDURE"><code class="name">var <span class="ident">PROCEDURE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter"><code class="flex name class">
+<span>class <span class="ident">MemoryQueryFilter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MemoryQueryFilter(BaseModel):
+    &#34;&#34;&#34;Scoped query parameters for memory retrieval.&#34;&#34;&#34;
+
+    user_id: str
+    project_id: Optional[str] = None
+    category: Optional[MemoryCategory] = None
+    query: Optional[str] = None
+    status: MemoryStatus = MemoryStatus.ACTIVE
+    include_global_project: bool = True
+    limit: int = 20
+    offset: int = 0</code></pre>
+</details>
+<div class="desc"><p>Scoped query parameters for memory retrieval.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter.category"><code class="name">var <span class="ident">category</span> : <a title="jarvis.brain.schemas.MemoryCategory" href="#jarvis.brain.schemas.MemoryCategory">MemoryCategory</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter.include_global_project"><code class="name">var <span class="ident">include_global_project</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter.limit"><code class="name">var <span class="ident">limit</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter.offset"><code class="name">var <span class="ident">offset</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter.project_id"><code class="name">var <span class="ident">project_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter.query"><code class="name">var <span class="ident">query</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter.status"><code class="name">var <span class="ident">status</span> : <a title="jarvis.brain.schemas.MemoryStatus" href="#jarvis.brain.schemas.MemoryStatus">MemoryStatus</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryQueryFilter.user_id"><code class="name">var <span class="ident">user_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.schemas.MemorySourceType"><code class="flex name class">
+<span>class <span class="ident">MemorySourceType</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MemorySourceType(str, Enum):
+    &#34;&#34;&#34;Authority classifications for memory provenance.&#34;&#34;&#34;
+
+    EXPLICIT_USER = &#34;explicit_user&#34;
+    VERIFIED_TOOL = &#34;verified_tool&#34;
+    IMPORTED_DOCUMENT = &#34;imported_document&#34;
+    MODEL_INFERENCE = &#34;model_inference&#34;</code></pre>
+</details>
+<div class="desc"><p>Authority classifications for memory provenance.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.schemas.MemorySourceType.EXPLICIT_USER"><code class="name">var <span class="ident">EXPLICIT_USER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemorySourceType.IMPORTED_DOCUMENT"><code class="name">var <span class="ident">IMPORTED_DOCUMENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemorySourceType.MODEL_INFERENCE"><code class="name">var <span class="ident">MODEL_INFERENCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemorySourceType.VERIFIED_TOOL"><code class="name">var <span class="ident">VERIFIED_TOOL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryStatus"><code class="flex name class">
+<span>class <span class="ident">MemoryStatus</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MemoryStatus(str, Enum):
+    &#34;&#34;&#34;Lifecycle status of memory records.&#34;&#34;&#34;
+
+    ACTIVE = &#34;active&#34;
+    SUPERSEDED = &#34;superseded&#34;
+    CONTRADICTED = &#34;contradicted&#34;
+    EXPIRED = &#34;expired&#34;
+    DELETED = &#34;deleted&#34;</code></pre>
+</details>
+<div class="desc"><p>Lifecycle status of memory records.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.schemas.MemoryStatus.ACTIVE"><code class="name">var <span class="ident">ACTIVE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryStatus.CONTRADICTED"><code class="name">var <span class="ident">CONTRADICTED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryStatus.DELETED"><code class="name">var <span class="ident">DELETED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryStatus.EXPIRED"><code class="name">var <span class="ident">EXPIRED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.schemas.MemoryStatus.SUPERSEDED"><code class="name">var <span class="ident">SUPERSEDED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.brain" href="index.html">jarvis.brain</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord" href="#jarvis.brain.schemas.CanonicalMemoryRecord">CanonicalMemoryRecord</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.category" href="#jarvis.brain.schemas.CanonicalMemoryRecord.category">category</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.content" href="#jarvis.brain.schemas.CanonicalMemoryRecord.content">content</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.created_at" href="#jarvis.brain.schemas.CanonicalMemoryRecord.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.embedding_model" href="#jarvis.brain.schemas.CanonicalMemoryRecord.embedding_model">embedding_model</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.evidence_references" href="#jarvis.brain.schemas.CanonicalMemoryRecord.evidence_references">evidence_references</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.extraction_model" href="#jarvis.brain.schemas.CanonicalMemoryRecord.extraction_model">extraction_model</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.id" href="#jarvis.brain.schemas.CanonicalMemoryRecord.id">id</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.metadata" href="#jarvis.brain.schemas.CanonicalMemoryRecord.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.model_config" href="#jarvis.brain.schemas.CanonicalMemoryRecord.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.project_id" href="#jarvis.brain.schemas.CanonicalMemoryRecord.project_id">project_id</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.retention_policy" href="#jarvis.brain.schemas.CanonicalMemoryRecord.retention_policy">retention_policy</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.sensitivity" href="#jarvis.brain.schemas.CanonicalMemoryRecord.sensitivity">sensitivity</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.source_reference" href="#jarvis.brain.schemas.CanonicalMemoryRecord.source_reference">source_reference</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.source_type" href="#jarvis.brain.schemas.CanonicalMemoryRecord.source_type">source_type</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.status" href="#jarvis.brain.schemas.CanonicalMemoryRecord.status">status</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.supersedes_id" href="#jarvis.brain.schemas.CanonicalMemoryRecord.supersedes_id">supersedes_id</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.updated_at" href="#jarvis.brain.schemas.CanonicalMemoryRecord.updated_at">updated_at</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.user_id" href="#jarvis.brain.schemas.CanonicalMemoryRecord.user_id">user_id</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.valid_from" href="#jarvis.brain.schemas.CanonicalMemoryRecord.valid_from">valid_from</a></code></li>
+<li><code><a title="jarvis.brain.schemas.CanonicalMemoryRecord.valid_until" href="#jarvis.brain.schemas.CanonicalMemoryRecord.valid_until">valid_until</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.schemas.MemoryCategory" href="#jarvis.brain.schemas.MemoryCategory">MemoryCategory</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.schemas.MemoryCategory.DOCUMENT_REFERENCE" href="#jarvis.brain.schemas.MemoryCategory.DOCUMENT_REFERENCE">DOCUMENT_REFERENCE</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryCategory.EPISODE" href="#jarvis.brain.schemas.MemoryCategory.EPISODE">EPISODE</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryCategory.FACT" href="#jarvis.brain.schemas.MemoryCategory.FACT">FACT</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryCategory.HYPOTHESIS" href="#jarvis.brain.schemas.MemoryCategory.HYPOTHESIS">HYPOTHESIS</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryCategory.PREFERENCE" href="#jarvis.brain.schemas.MemoryCategory.PREFERENCE">PREFERENCE</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryCategory.PROCEDURE" href="#jarvis.brain.schemas.MemoryCategory.PROCEDURE">PROCEDURE</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.schemas.MemoryQueryFilter" href="#jarvis.brain.schemas.MemoryQueryFilter">MemoryQueryFilter</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.schemas.MemoryQueryFilter.category" href="#jarvis.brain.schemas.MemoryQueryFilter.category">category</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryQueryFilter.include_global_project" href="#jarvis.brain.schemas.MemoryQueryFilter.include_global_project">include_global_project</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryQueryFilter.limit" href="#jarvis.brain.schemas.MemoryQueryFilter.limit">limit</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryQueryFilter.model_config" href="#jarvis.brain.schemas.MemoryQueryFilter.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryQueryFilter.offset" href="#jarvis.brain.schemas.MemoryQueryFilter.offset">offset</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryQueryFilter.project_id" href="#jarvis.brain.schemas.MemoryQueryFilter.project_id">project_id</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryQueryFilter.query" href="#jarvis.brain.schemas.MemoryQueryFilter.query">query</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryQueryFilter.status" href="#jarvis.brain.schemas.MemoryQueryFilter.status">status</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryQueryFilter.user_id" href="#jarvis.brain.schemas.MemoryQueryFilter.user_id">user_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.schemas.MemorySourceType" href="#jarvis.brain.schemas.MemorySourceType">MemorySourceType</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.schemas.MemorySourceType.EXPLICIT_USER" href="#jarvis.brain.schemas.MemorySourceType.EXPLICIT_USER">EXPLICIT_USER</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemorySourceType.IMPORTED_DOCUMENT" href="#jarvis.brain.schemas.MemorySourceType.IMPORTED_DOCUMENT">IMPORTED_DOCUMENT</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemorySourceType.MODEL_INFERENCE" href="#jarvis.brain.schemas.MemorySourceType.MODEL_INFERENCE">MODEL_INFERENCE</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemorySourceType.VERIFIED_TOOL" href="#jarvis.brain.schemas.MemorySourceType.VERIFIED_TOOL">VERIFIED_TOOL</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.schemas.MemoryStatus" href="#jarvis.brain.schemas.MemoryStatus">MemoryStatus</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.schemas.MemoryStatus.ACTIVE" href="#jarvis.brain.schemas.MemoryStatus.ACTIVE">ACTIVE</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryStatus.CONTRADICTED" href="#jarvis.brain.schemas.MemoryStatus.CONTRADICTED">CONTRADICTED</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryStatus.DELETED" href="#jarvis.brain.schemas.MemoryStatus.DELETED">DELETED</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryStatus.EXPIRED" href="#jarvis.brain.schemas.MemoryStatus.EXPIRED">EXPIRED</a></code></li>
+<li><code><a title="jarvis.brain.schemas.MemoryStatus.SUPERSEDED" href="#jarvis.brain.schemas.MemoryStatus.SUPERSEDED">SUPERSEDED</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

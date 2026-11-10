@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.agents.swarm API documentation</title>
+<meta name="description" content="Multi-Agent Swarm and Sub-Agent Orchestration Framework (PWR-288 to PWR-307) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.agents.swarm</code></h1>
+</header>
+<section id="section-intro">
+<p>Multi-Agent Swarm and Sub-Agent Orchestration Framework (PWR-288 to PWR-307).</p>
+<p>Provides specialized sub-agents, dynamic task decomposition, agent handoffs,
+parallel execution pools (bounded to max 2-3 concurrent workers), cost accounting,
+and cancellation tokens.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.agents.swarm.AgentRole"><code class="flex name class">
+<span>class <span class="ident">AgentRole</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AgentRole(str, Enum):
+    ORCHESTRATOR = &#34;orchestrator&#34;
+    PLANNER = &#34;planner&#34;
+    RESEARCHER = &#34;researcher&#34;
+    CODER = &#34;coder&#34;
+    CODER_CLAUDE = &#34;coder_claude&#34;
+    CODER_CURSOR = &#34;coder_cursor&#34;
+    CODER_CODEX = &#34;coder_codex&#34;
+    CODER_OPENAI = &#34;coder_openai&#34;
+    CODER_ANTIGRAVITY = &#34;coder_antigravity&#34;
+    CODER_GROKBOT = &#34;coder_grokbot&#34;
+    CODER_OPENALL = &#34;coder_openall&#34;
+    FILE_AGENT = &#34;file_agent&#34;
+    BROWSER = &#34;browser&#34;
+    SYSADMIN = &#34;system_admin&#34;
+    FINANCE = &#34;finance&#34;
+    CONTENT = &#34;content_strategist&#34;
+    REVIEWER = &#34;reviewer_critic&#34;
+    SECURITY = &#34;security_guard&#34;
+    APPROVAL = &#34;approval_manager&#34;
+    MEMORY = &#34;memory_manager&#34;
+    TOOL_SELECTOR = &#34;tool_selector&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.swarm.AgentRole.APPROVAL"><code class="name">var <span class="ident">APPROVAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.BROWSER"><code class="name">var <span class="ident">BROWSER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.CODER"><code class="name">var <span class="ident">CODER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.CODER_ANTIGRAVITY"><code class="name">var <span class="ident">CODER_ANTIGRAVITY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.CODER_CLAUDE"><code class="name">var <span class="ident">CODER_CLAUDE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.CODER_CODEX"><code class="name">var <span class="ident">CODER_CODEX</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.CODER_CURSOR"><code class="name">var <span class="ident">CODER_CURSOR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.CODER_GROKBOT"><code class="name">var <span class="ident">CODER_GROKBOT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.CODER_OPENAI"><code class="name">var <span class="ident">CODER_OPENAI</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.CODER_OPENALL"><code class="name">var <span class="ident">CODER_OPENALL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.CONTENT"><code class="name">var <span class="ident">CONTENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.FILE_AGENT"><code class="name">var <span class="ident">FILE_AGENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.FINANCE"><code class="name">var <span class="ident">FINANCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.MEMORY"><code class="name">var <span class="ident">MEMORY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.ORCHESTRATOR"><code class="name">var <span class="ident">ORCHESTRATOR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.PLANNER"><code class="name">var <span class="ident">PLANNER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.RESEARCHER"><code class="name">var <span class="ident">RESEARCHER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.REVIEWER"><code class="name">var <span class="ident">REVIEWER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.SECURITY"><code class="name">var <span class="ident">SECURITY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.SYSADMIN"><code class="name">var <span class="ident">SYSADMIN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentRole.TOOL_SELECTOR"><code class="name">var <span class="ident">TOOL_SELECTOR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.swarm.AgentSwarmCoordinator"><code class="flex name class">
+<span>class <span class="ident">AgentSwarmCoordinator</span></span>
+<span>(</span><span>max_concurrent_agents: int = 3)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AgentSwarmCoordinator:
+    &#34;&#34;&#34;Coordinates specialized agent swarms with bounded concurrency (PWR-288 to PWR-307).&#34;&#34;&#34;
+
+    def __init__(self, max_concurrent_agents: int = 3):
+        self.semaphore = asyncio.Semaphore(max_concurrent_agents)
+        self.active_plans: Dict[str, SwarmExecutionPlan] = {}
+        self.cancellation_tokens: Dict[str, CancellationToken] = {}
+        self.cumulative_cost_usd: float = 0.0
+        self.agent_registry: Dict[AgentRole, Dict[str, Any]] = {
+            AgentRole.ORCHESTRATOR: {&#34;power_id&#34;: &#34;PWR-288&#34;, &#34;description&#34;: &#34;Master coordination and dispatch&#34;},
+            AgentRole.PLANNER: {&#34;power_id&#34;: &#34;PWR-289&#34;, &#34;description&#34;: &#34;Goal decomposition into subtasks&#34;},
+            AgentRole.RESEARCHER: {&#34;power_id&#34;: &#34;PWR-290&#34;, &#34;description&#34;: &#34;Web and documentation research&#34;},
+            AgentRole.CODER: {&#34;power_id&#34;: &#34;PWR-291&#34;, &#34;description&#34;: &#34;Code generation, refactoring, tests&#34;},
+            AgentRole.CODER_CLAUDE: {
+                &#34;power_id&#34;: &#34;PWR-309&#34;,
+                &#34;description&#34;: &#34;Claude Code integration for code generation&#34;,
+            },
+            AgentRole.CODER_CURSOR: {&#34;power_id&#34;: &#34;PWR-310&#34;, &#34;description&#34;: &#34;Cursor integration for code generation&#34;},
+            AgentRole.CODER_CODEX: {&#34;power_id&#34;: &#34;PWR-311&#34;, &#34;description&#34;: &#34;Codex integration for code generation&#34;},
+            AgentRole.CODER_OPENAI: {&#34;power_id&#34;: &#34;PWR-312&#34;, &#34;description&#34;: &#34;OpenAI code completion&#34;},
+            AgentRole.CODER_ANTIGRAVITY: {
+                &#34;power_id&#34;: &#34;PWR-313&#34;,
+                &#34;description&#34;: &#34;Antigravity self-improvement pipeline&#34;,
+            },
+            AgentRole.CODER_GROKBOT: {&#34;power_id&#34;: &#34;PWR-314&#34;, &#34;description&#34;: &#34;Grokbot reasoning and code analysis&#34;},
+            AgentRole.CODER_OPENALL: {&#34;power_id&#34;: &#34;PWR-315&#34;, &#34;description&#34;: &#34;OpenAll code models orchestration&#34;},
+            AgentRole.FILE_AGENT: {&#34;power_id&#34;: &#34;PWR-292&#34;, &#34;description&#34;: &#34;File operations and directory inspection&#34;},
+            AgentRole.BROWSER: {&#34;power_id&#34;: &#34;PWR-293&#34;, &#34;description&#34;: &#34;Browser automation and screen capture&#34;},
+            AgentRole.SYSADMIN: {&#34;power_id&#34;: &#34;PWR-294&#34;, &#34;description&#34;: &#34;OS telemetry and system administration&#34;},
+            AgentRole.FINANCE: {&#34;power_id&#34;: &#34;PWR-295&#34;, &#34;description&#34;: &#34;Financial modeling and expense tracking&#34;},
+            AgentRole.CONTENT: {&#34;power_id&#34;: &#34;PWR-296&#34;, &#34;description&#34;: &#34;Content strategy and text synthesis&#34;},
+            AgentRole.REVIEWER: {&#34;power_id&#34;: &#34;PWR-297&#34;, &#34;description&#34;: &#34;Output verification and critique&#34;},
+            AgentRole.SECURITY: {&#34;power_id&#34;: &#34;PWR-298&#34;, &#34;description&#34;: &#34;DLP scanning and SSRF validation&#34;},
+            AgentRole.APPROVAL: {&#34;power_id&#34;: &#34;PWR-299&#34;, &#34;description&#34;: &#34;Human cryptographic approval checks&#34;},
+            AgentRole.MEMORY: {&#34;power_id&#34;: &#34;PWR-300&#34;, &#34;description&#34;: &#34;Memory consolidation and fact storage&#34;},
+            AgentRole.TOOL_SELECTOR: {&#34;power_id&#34;: &#34;PWR-301&#34;, &#34;description&#34;: &#34;Dynamic MCP tool routing&#34;},
+        }
+
+    def decompose_goal(self, goal: str) -&gt; SwarmExecutionPlan:
+        &#34;&#34;&#34;PWR-289 / PWR-302: Decomposes a user goal into an ordered subtask list.&#34;&#34;&#34;
+        plan_id = f&#34;plan_{uuid.uuid4().hex[:8]}&#34;
+        tasks: List[SubTask] = []
+
+        g_lower = goal.lower()
+        if &#34;research&#34; in g_lower or &#34;search&#34; in g_lower:
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_1&#34;,
+                    title=f&#34;Research technical background: {goal[:50]}&#34;,
+                    role=AgentRole.RESEARCHER,
+                    inputs={&#34;query&#34;: goal},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_2&#34;,
+                    title=f&#34;Synthesize findings and recommendations&#34;,
+                    role=AgentRole.CONTENT,
+                    inputs={&#34;context_from&#34;: f&#34;{plan_id}_1&#34;},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_3&#34;,
+                    title=f&#34;Review and verify source citations&#34;,
+                    role=AgentRole.REVIEWER,
+                    inputs={&#34;verify_task&#34;: f&#34;{plan_id}_2&#34;},
+                )
+            )
+        elif &#34;code&#34; in g_lower or &#34;build&#34; in g_lower or &#34;implement&#34; in g_lower:
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_1&#34;,
+                    title=f&#34;Plan architectural interfaces and dependencies&#34;,
+                    role=AgentRole.PLANNER,
+                    inputs={&#34;objective&#34;: goal},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_2&#34;,
+                    title=f&#34;Implement source code and automated tests&#34;,
+                    role=AgentRole.CODER,
+                    inputs={&#34;spec_from&#34;: f&#34;{plan_id}_1&#34;},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_3&#34;,
+                    title=f&#34;Verify security policy and DLP compliance&#34;,
+                    role=AgentRole.SECURITY,
+                    inputs={&#34;code_task&#34;: f&#34;{plan_id}_2&#34;},
+                )
+            )
+        else:
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_1&#34;,
+                    title=f&#34;Analyze intent and select tools&#34;,
+                    role=AgentRole.TOOL_SELECTOR,
+                    inputs={&#34;user_query&#34;: goal},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_2&#34;,
+                    title=f&#34;Execute coordinated sub-agent action&#34;,
+                    role=AgentRole.ORCHESTRATOR,
+                    inputs={&#34;task&#34;: goal},
+                )
+            )
+
+        plan = SwarmExecutionPlan(plan_id=plan_id, goal=goal, tasks=tasks)
+        self.active_plans[plan_id] = plan
+        self.cancellation_tokens[plan_id] = CancellationToken()
+        logger.info(f&#34;Decomposed goal &#39;{goal[:40]}&#39; into {len(tasks)} subtasks (Plan: {plan_id})&#34;)
+        return plan
+
+    async def execute_plan(
+        self, plan_id: str, execution_handler: Optional[Callable[[SubTask], Dict[str, Any]]] = None
+    ) -&gt; SwarmExecutionPlan:
+        &#34;&#34;&#34;PWR-305: Executes subtasks in parallel (bounded by max 2-3 workers).&#34;&#34;&#34;
+        if plan_id not in self.active_plans:
+            raise ValueError(f&#34;Plan {plan_id} not found&#34;)
+
+        plan = self.active_plans[plan_id]
+        token = self.cancellation_tokens.get(plan_id) or CancellationToken()
+        plan.status = &#34;RUNNING&#34;
+
+        async def _run_one(task: SubTask):
+            async with self.semaphore:
+                if token.is_cancelled:
+                    task.status = &#34;CANCELLED&#34;
+                    task.outputs = {&#34;error&#34;: f&#34;Cancelled: {token.reason}&#34;}
+                    return
+
+                task.status = &#34;RUNNING&#34;
+                task.assigned_worker_id = f&#34;worker_{uuid.uuid4().hex[:6]}&#34;
+                start = time.perf_counter()
+
+                try:
+                    if execution_handler:
+                        res = await asyncio.to_thread(execution_handler, task)
+                    else:
+                        # Local reflex execution per sub-agent role (no external LLM required)
+                        res = {
+                            &#34;role&#34;: task.role.value,
+                            &#34;power_id&#34;: self.agent_registry[task.role][&#34;power_id&#34;],
+                            &#34;result&#34;: f&#34;Executed subtask &#39;{task.title}&#39; successfully.&#34;,
+                            &#34;timestamp&#34;: time.time(),
+                        }
+                    task.outputs = res
+                    task.status = &#34;COMPLETED&#34;
+                    task.cost_usd = 0.00015
+                except Exception as e:
+                    task.status = &#34;FAILED&#34;
+                    task.outputs = {&#34;error&#34;: str(e)}
+                finally:
+                    task.duration_ms = round((time.perf_counter() - start) * 1000, 2)
+                    self.cumulative_cost_usd += task.cost_usd
+
+        # Execute subtasks with bounded concurrency (parallel sub-agent workers)
+        await asyncio.gather(*[_run_one(t) for t in plan.tasks])
+
+        # Handoff context (PWR-304) and update total plan status
+        all_completed = all(t.status == &#34;COMPLETED&#34; for t in plan.tasks)
+        any_cancelled = any(t.status == &#34;CANCELLED&#34; for t in plan.tasks)
+
+        if any_cancelled:
+            plan.status = &#34;CANCELLED&#34;
+        elif all_completed:
+            plan.status = &#34;COMPLETED&#34;
+        else:
+            plan.status = &#34;PARTIAL_FAILURE&#34;
+
+        plan.total_cost_usd = sum(t.cost_usd for t in plan.tasks)
+        logger.info(f&#34;Plan {plan_id} execution finished: status={plan.status}, cost=${plan.total_cost_usd:.5f}&#34;)
+        return plan
+
+    def cancel_plan(self, plan_id: str, reason: str = &#34;User initiated abort&#34;) -&gt; bool:
+        &#34;&#34;&#34;PWR-307: Signals immediate graceful cancellation of an active agent swarm.&#34;&#34;&#34;
+        if plan_id in self.cancellation_tokens:
+            self.cancellation_tokens[plan_id].cancel(reason)
+            if plan_id in self.active_plans:
+                self.active_plans[plan_id].status = &#34;CANCELLED&#34;
+            logger.info(f&#34;Cancelled plan {plan_id}: {reason}&#34;)
+            return True
+        return False
+
+    def get_dashboard_state(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-303: Surfaces live dashboard state of agent swarms, costs, and tasks.&#34;&#34;&#34;
+        return {
+            &#34;total_plans&#34;: len(self.active_plans),
+            &#34;cumulative_cost_usd&#34;: round(self.cumulative_cost_usd, 6),
+            &#34;registered_agents_count&#34;: len(self.agent_registry),
+            &#34;registered_agents&#34;: {role.value: meta for role, meta in self.agent_registry.items()},
+            &#34;plans&#34;: [
+                {
+                    &#34;plan_id&#34;: p.plan_id,
+                    &#34;goal&#34;: p.goal,
+                    &#34;status&#34;: p.status,
+                    &#34;subtasks_count&#34;: len(p.tasks),
+                    &#34;total_cost_usd&#34;: p.total_cost_usd,
+                    &#34;tasks&#34;: [
+                        {
+                            &#34;task_id&#34;: t.task_id,
+                            &#34;title&#34;: t.title,
+                            &#34;role&#34;: t.role.value,
+                            &#34;status&#34;: t.status,
+                            &#34;duration_ms&#34;: t.duration_ms,
+                        }
+                        for t in p.tasks
+                    ],
+                }
+                for p in list(self.active_plans.values())[-10:]
+            ],
+        }</code></pre>
+</details>
+<div class="desc"><p>Coordinates specialized agent swarms with bounded concurrency (PWR-288 to PWR-307).</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.swarm.AgentSwarmCoordinator.cancel_plan"><code class="name flex">
+<span>def <span class="ident">cancel_plan</span></span>(<span>self, plan_id: str, reason: str = 'User initiated abort') ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cancel_plan(self, plan_id: str, reason: str = &#34;User initiated abort&#34;) -&gt; bool:
+    &#34;&#34;&#34;PWR-307: Signals immediate graceful cancellation of an active agent swarm.&#34;&#34;&#34;
+    if plan_id in self.cancellation_tokens:
+        self.cancellation_tokens[plan_id].cancel(reason)
+        if plan_id in self.active_plans:
+            self.active_plans[plan_id].status = &#34;CANCELLED&#34;
+        logger.info(f&#34;Cancelled plan {plan_id}: {reason}&#34;)
+        return True
+    return False</code></pre>
+</details>
+<div class="desc"><p>PWR-307: Signals immediate graceful cancellation of an active agent swarm.</p></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentSwarmCoordinator.decompose_goal"><code class="name flex">
+<span>def <span class="ident">decompose_goal</span></span>(<span>self, goal: str) ‑> <a title="jarvis.agents.swarm.SwarmExecutionPlan" href="#jarvis.agents.swarm.SwarmExecutionPlan">SwarmExecutionPlan</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decompose_goal(self, goal: str) -&gt; SwarmExecutionPlan:
+    &#34;&#34;&#34;PWR-289 / PWR-302: Decomposes a user goal into an ordered subtask list.&#34;&#34;&#34;
+    plan_id = f&#34;plan_{uuid.uuid4().hex[:8]}&#34;
+    tasks: List[SubTask] = []
+
+    g_lower = goal.lower()
+    if &#34;research&#34; in g_lower or &#34;search&#34; in g_lower:
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_1&#34;,
+                title=f&#34;Research technical background: {goal[:50]}&#34;,
+                role=AgentRole.RESEARCHER,
+                inputs={&#34;query&#34;: goal},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_2&#34;,
+                title=f&#34;Synthesize findings and recommendations&#34;,
+                role=AgentRole.CONTENT,
+                inputs={&#34;context_from&#34;: f&#34;{plan_id}_1&#34;},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_3&#34;,
+                title=f&#34;Review and verify source citations&#34;,
+                role=AgentRole.REVIEWER,
+                inputs={&#34;verify_task&#34;: f&#34;{plan_id}_2&#34;},
+            )
+        )
+    elif &#34;code&#34; in g_lower or &#34;build&#34; in g_lower or &#34;implement&#34; in g_lower:
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_1&#34;,
+                title=f&#34;Plan architectural interfaces and dependencies&#34;,
+                role=AgentRole.PLANNER,
+                inputs={&#34;objective&#34;: goal},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_2&#34;,
+                title=f&#34;Implement source code and automated tests&#34;,
+                role=AgentRole.CODER,
+                inputs={&#34;spec_from&#34;: f&#34;{plan_id}_1&#34;},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_3&#34;,
+                title=f&#34;Verify security policy and DLP compliance&#34;,
+                role=AgentRole.SECURITY,
+                inputs={&#34;code_task&#34;: f&#34;{plan_id}_2&#34;},
+            )
+        )
+    else:
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_1&#34;,
+                title=f&#34;Analyze intent and select tools&#34;,
+                role=AgentRole.TOOL_SELECTOR,
+                inputs={&#34;user_query&#34;: goal},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_2&#34;,
+                title=f&#34;Execute coordinated sub-agent action&#34;,
+                role=AgentRole.ORCHESTRATOR,
+                inputs={&#34;task&#34;: goal},
+            )
+        )
+
+    plan = SwarmExecutionPlan(plan_id=plan_id, goal=goal, tasks=tasks)
+    self.active_plans[plan_id] = plan
+    self.cancellation_tokens[plan_id] = CancellationToken()
+    logger.info(f&#34;Decomposed goal &#39;{goal[:40]}&#39; into {len(tasks)} subtasks (Plan: {plan_id})&#34;)
+    return plan</code></pre>
+</details>
+<div class="desc"><p>PWR-289 / PWR-302: Decomposes a user goal into an ordered subtask list.</p></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentSwarmCoordinator.execute_plan"><code class="name flex">
+<span>async def <span class="ident">execute_plan</span></span>(<span>self,<br>plan_id: str,<br>execution_handler: Optional[Callable[[<a title="jarvis.agents.swarm.SubTask" href="#jarvis.agents.swarm.SubTask">SubTask</a>], Dict[str, Any]]] = None) ‑> <a title="jarvis.agents.swarm.SwarmExecutionPlan" href="#jarvis.agents.swarm.SwarmExecutionPlan">SwarmExecutionPlan</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def execute_plan(
+    self, plan_id: str, execution_handler: Optional[Callable[[SubTask], Dict[str, Any]]] = None
+) -&gt; SwarmExecutionPlan:
+    &#34;&#34;&#34;PWR-305: Executes subtasks in parallel (bounded by max 2-3 workers).&#34;&#34;&#34;
+    if plan_id not in self.active_plans:
+        raise ValueError(f&#34;Plan {plan_id} not found&#34;)
+
+    plan = self.active_plans[plan_id]
+    token = self.cancellation_tokens.get(plan_id) or CancellationToken()
+    plan.status = &#34;RUNNING&#34;
+
+    async def _run_one(task: SubTask):
+        async with self.semaphore:
+            if token.is_cancelled:
+                task.status = &#34;CANCELLED&#34;
+                task.outputs = {&#34;error&#34;: f&#34;Cancelled: {token.reason}&#34;}
+                return
+
+            task.status = &#34;RUNNING&#34;
+            task.assigned_worker_id = f&#34;worker_{uuid.uuid4().hex[:6]}&#34;
+            start = time.perf_counter()
+
+            try:
+                if execution_handler:
+                    res = await asyncio.to_thread(execution_handler, task)
+                else:
+                    # Local reflex execution per sub-agent role (no external LLM required)
+                    res = {
+                        &#34;role&#34;: task.role.value,
+                        &#34;power_id&#34;: self.agent_registry[task.role][&#34;power_id&#34;],
+                        &#34;result&#34;: f&#34;Executed subtask &#39;{task.title}&#39; successfully.&#34;,
+                        &#34;timestamp&#34;: time.time(),
+                    }
+                task.outputs = res
+                task.status = &#34;COMPLETED&#34;
+                task.cost_usd = 0.00015
+            except Exception as e:
+                task.status = &#34;FAILED&#34;
+                task.outputs = {&#34;error&#34;: str(e)}
+            finally:
+                task.duration_ms = round((time.perf_counter() - start) * 1000, 2)
+                self.cumulative_cost_usd += task.cost_usd
+
+    # Execute subtasks with bounded concurrency (parallel sub-agent workers)
+    await asyncio.gather(*[_run_one(t) for t in plan.tasks])
+
+    # Handoff context (PWR-304) and update total plan status
+    all_completed = all(t.status == &#34;COMPLETED&#34; for t in plan.tasks)
+    any_cancelled = any(t.status == &#34;CANCELLED&#34; for t in plan.tasks)
+
+    if any_cancelled:
+        plan.status = &#34;CANCELLED&#34;
+    elif all_completed:
+        plan.status = &#34;COMPLETED&#34;
+    else:
+        plan.status = &#34;PARTIAL_FAILURE&#34;
+
+    plan.total_cost_usd = sum(t.cost_usd for t in plan.tasks)
+    logger.info(f&#34;Plan {plan_id} execution finished: status={plan.status}, cost=${plan.total_cost_usd:.5f}&#34;)
+    return plan</code></pre>
+</details>
+<div class="desc"><p>PWR-305: Executes subtasks in parallel (bounded by max 2-3 workers).</p></div>
+</dd>
+<dt id="jarvis.agents.swarm.AgentSwarmCoordinator.get_dashboard_state"><code class="name flex">
+<span>def <span class="ident">get_dashboard_state</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dashboard_state(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-303: Surfaces live dashboard state of agent swarms, costs, and tasks.&#34;&#34;&#34;
+    return {
+        &#34;total_plans&#34;: len(self.active_plans),
+        &#34;cumulative_cost_usd&#34;: round(self.cumulative_cost_usd, 6),
+        &#34;registered_agents_count&#34;: len(self.agent_registry),
+        &#34;registered_agents&#34;: {role.value: meta for role, meta in self.agent_registry.items()},
+        &#34;plans&#34;: [
+            {
+                &#34;plan_id&#34;: p.plan_id,
+                &#34;goal&#34;: p.goal,
+                &#34;status&#34;: p.status,
+                &#34;subtasks_count&#34;: len(p.tasks),
+                &#34;total_cost_usd&#34;: p.total_cost_usd,
+                &#34;tasks&#34;: [
+                    {
+                        &#34;task_id&#34;: t.task_id,
+                        &#34;title&#34;: t.title,
+                        &#34;role&#34;: t.role.value,
+                        &#34;status&#34;: t.status,
+                        &#34;duration_ms&#34;: t.duration_ms,
+                    }
+                    for t in p.tasks
+                ],
+            }
+            for p in list(self.active_plans.values())[-10:]
+        ],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-303: Surfaces live dashboard state of agent swarms, costs, and tasks.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.swarm.CancellationToken"><code class="flex name class">
+<span>class <span class="ident">CancellationToken</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CancellationToken:
+    &#34;&#34;&#34;Provides thread-safe and async cancellation signalling for agents.&#34;&#34;&#34;
+
+    def __init__(self):
+        self._cancelled = False
+        self._reason = &#34;&#34;
+
+    def cancel(self, reason: str = &#34;User cancelled execution&#34;):
+        self._cancelled = True
+        self._reason = reason
+
+    @property
+    def is_cancelled(self) -&gt; bool:
+        return self._cancelled
+
+    @property
+    def reason(self) -&gt; str:
+        return self._reason</code></pre>
+</details>
+<div class="desc"><p>Provides thread-safe and async cancellation signalling for agents.</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.swarm.CancellationToken.is_cancelled"><code class="name">prop <span class="ident">is_cancelled</span> : bool</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def is_cancelled(self) -&gt; bool:
+    return self._cancelled</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.CancellationToken.reason"><code class="name">prop <span class="ident">reason</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def reason(self) -&gt; str:
+    return self._reason</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.swarm.CancellationToken.cancel"><code class="name flex">
+<span>def <span class="ident">cancel</span></span>(<span>self, reason: str = 'User cancelled execution')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cancel(self, reason: str = &#34;User cancelled execution&#34;):
+    self._cancelled = True
+    self._reason = reason</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.swarm.SubTask"><code class="flex name class">
+<span>class <span class="ident">SubTask</span></span>
+<span>(</span><span>task_id: str,<br>title: str,<br>role: <a title="jarvis.agents.swarm.AgentRole" href="#jarvis.agents.swarm.AgentRole">AgentRole</a>,<br>inputs: Dict[str, Any],<br>status: str = 'PENDING',<br>outputs: Dict[str, Any] = &lt;factory&gt;,<br>cost_usd: float = 0.0,<br>duration_ms: float = 0.0,<br>assigned_worker_id: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class SubTask:
+    task_id: str
+    title: str
+    role: AgentRole
+    inputs: Dict[str, Any]
+    status: str = &#34;PENDING&#34;  # PENDING, RUNNING, COMPLETED, CANCELLED, FAILED
+    outputs: Dict[str, Any] = field(default_factory=dict)
+    cost_usd: float = 0.0
+    duration_ms: float = 0.0
+    assigned_worker_id: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><p>SubTask(task_id: 'str', title: 'str', role: 'AgentRole', inputs: 'Dict[str, Any]', status: 'str' = 'PENDING', outputs: 'Dict[str, Any]' = <factory>, cost_usd: 'float' = 0.0, duration_ms: 'float' = 0.0, assigned_worker_id: 'Optional[str]' = None)</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.swarm.SubTask.assigned_worker_id"><code class="name">var <span class="ident">assigned_worker_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SubTask.cost_usd"><code class="name">var <span class="ident">cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SubTask.duration_ms"><code class="name">var <span class="ident">duration_ms</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SubTask.inputs"><code class="name">var <span class="ident">inputs</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SubTask.outputs"><code class="name">var <span class="ident">outputs</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SubTask.role"><code class="name">var <span class="ident">role</span> : <a title="jarvis.agents.swarm.AgentRole" href="#jarvis.agents.swarm.AgentRole">AgentRole</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SubTask.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SubTask.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SubTask.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.swarm.SwarmExecutionPlan"><code class="flex name class">
+<span>class <span class="ident">SwarmExecutionPlan</span></span>
+<span>(</span><span>plan_id: str,<br>goal: str,<br>tasks: List[<a title="jarvis.agents.swarm.SubTask" href="#jarvis.agents.swarm.SubTask">SubTask</a>],<br>total_cost_usd: float = 0.0,<br>status: str = 'INITIALIZED')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class SwarmExecutionPlan:
+    plan_id: str
+    goal: str
+    tasks: List[SubTask]
+    total_cost_usd: float = 0.0
+    status: str = &#34;INITIALIZED&#34;</code></pre>
+</details>
+<div class="desc"><p>SwarmExecutionPlan(plan_id: 'str', goal: 'str', tasks: 'List[SubTask]', total_cost_usd: 'float' = 0.0, status: 'str' = 'INITIALIZED')</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.swarm.SwarmExecutionPlan.goal"><code class="name">var <span class="ident">goal</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SwarmExecutionPlan.plan_id"><code class="name">var <span class="ident">plan_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SwarmExecutionPlan.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SwarmExecutionPlan.tasks"><code class="name">var <span class="ident">tasks</span> : List[<a title="jarvis.agents.swarm.SubTask" href="#jarvis.agents.swarm.SubTask">SubTask</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.swarm.SwarmExecutionPlan.total_cost_usd"><code class="name">var <span class="ident">total_cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.agents" href="index.html">jarvis.agents</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.agents.swarm.AgentRole" href="#jarvis.agents.swarm.AgentRole">AgentRole</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.agents.swarm.AgentRole.APPROVAL" href="#jarvis.agents.swarm.AgentRole.APPROVAL">APPROVAL</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.BROWSER" href="#jarvis.agents.swarm.AgentRole.BROWSER">BROWSER</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.CODER" href="#jarvis.agents.swarm.AgentRole.CODER">CODER</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.CODER_ANTIGRAVITY" href="#jarvis.agents.swarm.AgentRole.CODER_ANTIGRAVITY">CODER_ANTIGRAVITY</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.CODER_CLAUDE" href="#jarvis.agents.swarm.AgentRole.CODER_CLAUDE">CODER_CLAUDE</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.CODER_CODEX" href="#jarvis.agents.swarm.AgentRole.CODER_CODEX">CODER_CODEX</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.CODER_CURSOR" href="#jarvis.agents.swarm.AgentRole.CODER_CURSOR">CODER_CURSOR</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.CODER_GROKBOT" href="#jarvis.agents.swarm.AgentRole.CODER_GROKBOT">CODER_GROKBOT</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.CODER_OPENAI" href="#jarvis.agents.swarm.AgentRole.CODER_OPENAI">CODER_OPENAI</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.CODER_OPENALL" href="#jarvis.agents.swarm.AgentRole.CODER_OPENALL">CODER_OPENALL</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.CONTENT" href="#jarvis.agents.swarm.AgentRole.CONTENT">CONTENT</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.FILE_AGENT" href="#jarvis.agents.swarm.AgentRole.FILE_AGENT">FILE_AGENT</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.FINANCE" href="#jarvis.agents.swarm.AgentRole.FINANCE">FINANCE</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.MEMORY" href="#jarvis.agents.swarm.AgentRole.MEMORY">MEMORY</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.ORCHESTRATOR" href="#jarvis.agents.swarm.AgentRole.ORCHESTRATOR">ORCHESTRATOR</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.PLANNER" href="#jarvis.agents.swarm.AgentRole.PLANNER">PLANNER</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.RESEARCHER" href="#jarvis.agents.swarm.AgentRole.RESEARCHER">RESEARCHER</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.REVIEWER" href="#jarvis.agents.swarm.AgentRole.REVIEWER">REVIEWER</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.SECURITY" href="#jarvis.agents.swarm.AgentRole.SECURITY">SECURITY</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.SYSADMIN" href="#jarvis.agents.swarm.AgentRole.SYSADMIN">SYSADMIN</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentRole.TOOL_SELECTOR" href="#jarvis.agents.swarm.AgentRole.TOOL_SELECTOR">TOOL_SELECTOR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.swarm.AgentSwarmCoordinator" href="#jarvis.agents.swarm.AgentSwarmCoordinator">AgentSwarmCoordinator</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.swarm.AgentSwarmCoordinator.cancel_plan" href="#jarvis.agents.swarm.AgentSwarmCoordinator.cancel_plan">cancel_plan</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentSwarmCoordinator.decompose_goal" href="#jarvis.agents.swarm.AgentSwarmCoordinator.decompose_goal">decompose_goal</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentSwarmCoordinator.execute_plan" href="#jarvis.agents.swarm.AgentSwarmCoordinator.execute_plan">execute_plan</a></code></li>
+<li><code><a title="jarvis.agents.swarm.AgentSwarmCoordinator.get_dashboard_state" href="#jarvis.agents.swarm.AgentSwarmCoordinator.get_dashboard_state">get_dashboard_state</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.swarm.CancellationToken" href="#jarvis.agents.swarm.CancellationToken">CancellationToken</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.swarm.CancellationToken.cancel" href="#jarvis.agents.swarm.CancellationToken.cancel">cancel</a></code></li>
+<li><code><a title="jarvis.agents.swarm.CancellationToken.is_cancelled" href="#jarvis.agents.swarm.CancellationToken.is_cancelled">is_cancelled</a></code></li>
+<li><code><a title="jarvis.agents.swarm.CancellationToken.reason" href="#jarvis.agents.swarm.CancellationToken.reason">reason</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.swarm.SubTask" href="#jarvis.agents.swarm.SubTask">SubTask</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.agents.swarm.SubTask.assigned_worker_id" href="#jarvis.agents.swarm.SubTask.assigned_worker_id">assigned_worker_id</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SubTask.cost_usd" href="#jarvis.agents.swarm.SubTask.cost_usd">cost_usd</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SubTask.duration_ms" href="#jarvis.agents.swarm.SubTask.duration_ms">duration_ms</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SubTask.inputs" href="#jarvis.agents.swarm.SubTask.inputs">inputs</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SubTask.outputs" href="#jarvis.agents.swarm.SubTask.outputs">outputs</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SubTask.role" href="#jarvis.agents.swarm.SubTask.role">role</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SubTask.status" href="#jarvis.agents.swarm.SubTask.status">status</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SubTask.task_id" href="#jarvis.agents.swarm.SubTask.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SubTask.title" href="#jarvis.agents.swarm.SubTask.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.swarm.SwarmExecutionPlan" href="#jarvis.agents.swarm.SwarmExecutionPlan">SwarmExecutionPlan</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.swarm.SwarmExecutionPlan.goal" href="#jarvis.agents.swarm.SwarmExecutionPlan.goal">goal</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SwarmExecutionPlan.plan_id" href="#jarvis.agents.swarm.SwarmExecutionPlan.plan_id">plan_id</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SwarmExecutionPlan.status" href="#jarvis.agents.swarm.SwarmExecutionPlan.status">status</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SwarmExecutionPlan.tasks" href="#jarvis.agents.swarm.SwarmExecutionPlan.tasks">tasks</a></code></li>
+<li><code><a title="jarvis.agents.swarm.SwarmExecutionPlan.total_cost_usd" href="#jarvis.agents.swarm.SwarmExecutionPlan.total_cost_usd">total_cost_usd</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

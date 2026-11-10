@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.agents.hackathon_scout API documentation</title>
+<meta name="description" content="JARVIS Autonomous Hackathon &amp; Opportunity Multi-Agent Workforce
+Coordinates a 4-agent swarm:
+1. ScoutAgent: Scrapes Devpost, Unstop, SIH, GSoC via …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.agents.hackathon_scout</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Autonomous Hackathon &amp; Opportunity Multi-Agent Workforce
+Coordinates a 4-agent swarm:
+1. ScoutAgent: Scrapes Devpost, Unstop, SIH, GSoC via Obscura Browser
+2. AnalystAgent: Ingests guidelines, filters for high-impact AI/Systems alignment
+3. ArchitectAgent: Scaffolds project repository and drafts PROBLEM_STATEMENT.md
+4. DispatcherAgent: Pushes executive WhatsApp digest to Ganesh (+91 9324094474)</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.agents.hackathon_scout.AnalystAgent"><code class="flex name class">
+<span>class <span class="ident">AnalystAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AnalystAgent:
+    &#34;&#34;&#34;Agent 2: Analyzes competition guidelines, scores problem statements, and selects winner.&#34;&#34;&#34;
+
+    PROFILE_KEYWORDS = [&#34;python&#34;, &#34;ai&#34;, &#34;llm&#34;, &#34;agent&#34;, &#34;systems&#34;, &#34;fastapi&#34;, &#34;gpu&#34;, &#34;gsoc&#34;]
+
+    def evaluate_opportunities(self, raw_opps: List[Dict[str, Any]]) -&gt; List[Dict[str, Any]]:
+        scored = []
+        for opp in raw_opps:
+            text = f&#34;{opp.get(&#39;title&#39;, &#39;&#39;)} {opp.get(&#39;snippet&#39;, &#39;&#39;)}&#34;.lower()
+            match_score = sum(15 for kw in self.PROFILE_KEYWORDS if kw in text)
+            # Baseline confidence
+            final_score = min(98, 50 + match_score)
+            analyzed = dict(opp)
+            analyzed[&#34;relevance_score&#34;] = final_score
+            analyzed[&#34;feasibility&#34;] = &#34;HIGH&#34; if final_score &gt; 70 else &#34;MEDIUM&#34;
+            analyzed[&#34;recommended_tech&#34;] = [&#34;Python&#34;, &#34;FastAPI&#34;, &#34;RTX 4050 PyTorch&#34;, &#34;Local LLM&#34;, &#34;Docker&#34;]
+            scored.append(analyzed)
+
+        scored.sort(key=lambda x: x[&#34;relevance_score&#34;], reverse=True)
+        return scored</code></pre>
+</details>
+<div class="desc"><p>Agent 2: Analyzes competition guidelines, scores problem statements, and selects winner.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.hackathon_scout.AnalystAgent.PROFILE_KEYWORDS"><code class="name">var <span class="ident">PROFILE_KEYWORDS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.hackathon_scout.AnalystAgent.evaluate_opportunities"><code class="name flex">
+<span>def <span class="ident">evaluate_opportunities</span></span>(<span>self, raw_opps: List[Dict[str, Any]]) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_opportunities(self, raw_opps: List[Dict[str, Any]]) -&gt; List[Dict[str, Any]]:
+    scored = []
+    for opp in raw_opps:
+        text = f&#34;{opp.get(&#39;title&#39;, &#39;&#39;)} {opp.get(&#39;snippet&#39;, &#39;&#39;)}&#34;.lower()
+        match_score = sum(15 for kw in self.PROFILE_KEYWORDS if kw in text)
+        # Baseline confidence
+        final_score = min(98, 50 + match_score)
+        analyzed = dict(opp)
+        analyzed[&#34;relevance_score&#34;] = final_score
+        analyzed[&#34;feasibility&#34;] = &#34;HIGH&#34; if final_score &gt; 70 else &#34;MEDIUM&#34;
+        analyzed[&#34;recommended_tech&#34;] = [&#34;Python&#34;, &#34;FastAPI&#34;, &#34;RTX 4050 PyTorch&#34;, &#34;Local LLM&#34;, &#34;Docker&#34;]
+        scored.append(analyzed)
+
+    scored.sort(key=lambda x: x[&#34;relevance_score&#34;], reverse=True)
+    return scored</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.hackathon_scout.ArchitectAgent"><code class="flex name class">
+<span>class <span class="ident">ArchitectAgent</span></span>
+<span>(</span><span>workspace_root: Optional[Path] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ArchitectAgent:
+    &#34;&#34;&#34;Agent 3: Creates project scaffolding, architecture blueprint, and PROBLEM_STATEMENT.md.&#34;&#34;&#34;
+
+    def __init__(self, workspace_root: Optional[Path] = None):
+        self.workspace_root = workspace_root or Path(&#34;workspace/hackathons&#34;)
+
+    def scaffold_top_opportunity(self, opportunity: Dict[str, Any]) -&gt; Path:
+        title = opportunity.get(&#34;title&#34;, &#34;Hackathon Project&#34;)
+        slug = &#34;&#34;.join(c if c.isalnum() else &#34;_&#34; for c in title.lower()).strip(&#34;_&#34;)[:30]
+        project_dir = self.workspace_root / slug
+        project_dir.mkdir(parents=True, exist_ok=True)
+
+        # 1. Generate PROBLEM_STATEMENT.md
+        problem_statement_content = f&#34;&#34;&#34;# {title} — Autonomous Solution Blueprint
+**Target Challenge:** {title}  
+**Portal / Source:** {opportunity.get(&#34;url&#34;, &#34;N/A&#34;)}  
+**Mode / Location:** {opportunity.get(&#34;mode&#34;, &#34;India / Hybrid&#34;)}  
+**Scored Relevance:** {opportunity.get(&#34;relevance_score&#34;, 95)}% (Analyzed by JARVIS Swarm)  
+**Date Created:** {time.strftime(&#34;%Y-%m-%d %H:%M:%S&#34;)}
+
+---
+
+## 1. Challenge &amp; Problem Statement Analysis
+The challenge seeks an intelligent, production-ready system capable of autonomous multimodal reasoning, low-latency execution, and edge-to-cloud resilience.
+
+### Core Objectives:
+- Deliver an autonomous agent workflow that solves domain-specific bottlenecks.
+- Operate within strict latency (&lt;200ms) and privacy-first local hardware constraints.
+- Provide measurable impact, verifiable benchmarks, and comprehensive test coverage.
+
+---
+
+## 2. Technical Architecture &amp; Component Design
+```mermaid
+flowchart TD
+    Client[User / Webhook Interface] --&gt; Gateway[FastAPI Asynchronous Gateway]
+    Gateway --&gt; Security[JARVIS 10-Layer Security Shield]
+    Security --&gt; Router[Hybrid Compute Model Router]
+    Router --&gt; LocalPerception[RTX 4050 Local Perception: Whisper + Kokoro]
+    Router --&gt; CloudMultiplex[Cloud LPU Multiplex: Gemini + Groq]
+    LocalPerception --&gt; CoreEngine[State Machine &amp; Tool Orchestration]
+    CloudMultiplex --&gt; CoreEngine
+    CoreEngine --&gt; PersistentMemory[SQLite / Merkle Audit Trail]
+```
+
+---
+
+## 3. Recommended Technology Stack
+- **Language:** Python 3.12+
+- **Backend Framework:** FastAPI &amp; Uvicorn
+- **Perception:** Faster-Whisper, Kokoro-82M, UI-TARS 4-bit (Local RTX 4050)
+- **Cloud Inference:** Multiplexed Google Gemini Pro / Flash + Groq LPU
+- **Storage &amp; Security:** Genuine AES-256-GCM Vault, Merkle Hash Chain Audit
+- **Deployment:** Docker &amp; GitHub Actions CI/CD
+
+---
+
+## 4. Execution Milestones
+1. **Phase 1 (Hour 0-6):** Repo scaffolding, core schemas, security boundary validation.
+2. **Phase 2 (Hour 6-18):** Agent workflow integration, perceptual pipelines, local model binding.
+3. **Phase 3 (Hour 18-30):** End-to-end integration testing, UI telemetry dashboard, Docker packaging.
+4. **Phase 4 (Hour 30-36):** Final pitch deck, benchmark video demonstration, live submission.
+&#34;&#34;&#34;
+        (project_dir / &#34;PROBLEM_STATEMENT.md&#34;).write_text(problem_statement_content, encoding=&#34;utf-8&#34;)
+
+        # 2. Generate README.md
+        readme_content = f&#34;&#34;&#34;# {title}
+Autonomous AI submission scaffolded by JARVIS Multi-Agent Swarm.
+
+## Quickstart
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Or .venv\\Scripts\\activate on Windows
+pip install -r requirements.txt
+python main.py
+```
+&#34;&#34;&#34;
+        (project_dir / &#34;README.md&#34;).write_text(readme_content, encoding=&#34;utf-8&#34;)
+
+        # 3. Generate requirements.txt
+        reqs = &#34;fastapi&gt;=0.115.0\nuvicorn&gt;=0.30.0\nhttpx&gt;=0.27.0\npydantic&gt;=2.8.0\npytest&gt;=8.0.0\n&#34;
+        (project_dir / &#34;requirements.txt&#34;).write_text(reqs, encoding=&#34;utf-8&#34;)
+
+        # 4. Generate main.py starter
+        main_py = &#34;&#34;&#34;import uvicorn
+from fastapi import FastAPI
+
+app = FastAPI(title=&#34;Autonomous Hackathon Service&#34;)
+
+@app.get(&#34;/&#34;)
+def read_root():
+    return {&#34;status&#34;: &#34;online&#34;, &#34;system&#34;: &#34;Autonomous AI Agent&#34;}
+
+if __name__ == &#34;__main__&#34;:
+    uvicorn.run(app, host=&#34;0.0.0.0&#34;, port=8080)
+&#34;&#34;&#34;
+        (project_dir / &#34;main.py&#34;).write_text(main_py, encoding=&#34;utf-8&#34;)
+
+        return project_dir</code></pre>
+</details>
+<div class="desc"><p>Agent 3: Creates project scaffolding, architecture blueprint, and PROBLEM_STATEMENT.md.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.hackathon_scout.ArchitectAgent.scaffold_top_opportunity"><code class="name flex">
+<span>def <span class="ident">scaffold_top_opportunity</span></span>(<span>self, opportunity: Dict[str, Any]) ‑> pathlib.Path</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">    def scaffold_top_opportunity(self, opportunity: Dict[str, Any]) -&gt; Path:
+        title = opportunity.get(&#34;title&#34;, &#34;Hackathon Project&#34;)
+        slug = &#34;&#34;.join(c if c.isalnum() else &#34;_&#34; for c in title.lower()).strip(&#34;_&#34;)[:30]
+        project_dir = self.workspace_root / slug
+        project_dir.mkdir(parents=True, exist_ok=True)
+
+        # 1. Generate PROBLEM_STATEMENT.md
+        problem_statement_content = f&#34;&#34;&#34;# {title} — Autonomous Solution Blueprint
+**Target Challenge:** {title}  
+**Portal / Source:** {opportunity.get(&#34;url&#34;, &#34;N/A&#34;)}  
+**Mode / Location:** {opportunity.get(&#34;mode&#34;, &#34;India / Hybrid&#34;)}  
+**Scored Relevance:** {opportunity.get(&#34;relevance_score&#34;, 95)}% (Analyzed by JARVIS Swarm)  
+**Date Created:** {time.strftime(&#34;%Y-%m-%d %H:%M:%S&#34;)}
+
+---
+
+## 1. Challenge &amp; Problem Statement Analysis
+The challenge seeks an intelligent, production-ready system capable of autonomous multimodal reasoning, low-latency execution, and edge-to-cloud resilience.
+
+### Core Objectives:
+- Deliver an autonomous agent workflow that solves domain-specific bottlenecks.
+- Operate within strict latency (&lt;200ms) and privacy-first local hardware constraints.
+- Provide measurable impact, verifiable benchmarks, and comprehensive test coverage.
+
+---
+
+## 2. Technical Architecture &amp; Component Design
+```mermaid
+flowchart TD
+    Client[User / Webhook Interface] --&gt; Gateway[FastAPI Asynchronous Gateway]
+    Gateway --&gt; Security[JARVIS 10-Layer Security Shield]
+    Security --&gt; Router[Hybrid Compute Model Router]
+    Router --&gt; LocalPerception[RTX 4050 Local Perception: Whisper + Kokoro]
+    Router --&gt; CloudMultiplex[Cloud LPU Multiplex: Gemini + Groq]
+    LocalPerception --&gt; CoreEngine[State Machine &amp; Tool Orchestration]
+    CloudMultiplex --&gt; CoreEngine
+    CoreEngine --&gt; PersistentMemory[SQLite / Merkle Audit Trail]
+```
+
+---
+
+## 3. Recommended Technology Stack
+- **Language:** Python 3.12+
+- **Backend Framework:** FastAPI &amp; Uvicorn
+- **Perception:** Faster-Whisper, Kokoro-82M, UI-TARS 4-bit (Local RTX 4050)
+- **Cloud Inference:** Multiplexed Google Gemini Pro / Flash + Groq LPU
+- **Storage &amp; Security:** Genuine AES-256-GCM Vault, Merkle Hash Chain Audit
+- **Deployment:** Docker &amp; GitHub Actions CI/CD
+
+---
+
+## 4. Execution Milestones
+1. **Phase 1 (Hour 0-6):** Repo scaffolding, core schemas, security boundary validation.
+2. **Phase 2 (Hour 6-18):** Agent workflow integration, perceptual pipelines, local model binding.
+3. **Phase 3 (Hour 18-30):** End-to-end integration testing, UI telemetry dashboard, Docker packaging.
+4. **Phase 4 (Hour 30-36):** Final pitch deck, benchmark video demonstration, live submission.
+&#34;&#34;&#34;
+        (project_dir / &#34;PROBLEM_STATEMENT.md&#34;).write_text(problem_statement_content, encoding=&#34;utf-8&#34;)
+
+        # 2. Generate README.md
+        readme_content = f&#34;&#34;&#34;# {title}
+Autonomous AI submission scaffolded by JARVIS Multi-Agent Swarm.
+
+## Quickstart
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Or .venv\\Scripts\\activate on Windows
+pip install -r requirements.txt
+python main.py
+```
+&#34;&#34;&#34;
+        (project_dir / &#34;README.md&#34;).write_text(readme_content, encoding=&#34;utf-8&#34;)
+
+        # 3. Generate requirements.txt
+        reqs = &#34;fastapi&gt;=0.115.0\nuvicorn&gt;=0.30.0\nhttpx&gt;=0.27.0\npydantic&gt;=2.8.0\npytest&gt;=8.0.0\n&#34;
+        (project_dir / &#34;requirements.txt&#34;).write_text(reqs, encoding=&#34;utf-8&#34;)
+
+        # 4. Generate main.py starter
+        main_py = &#34;&#34;&#34;import uvicorn
+from fastapi import FastAPI
+
+app = FastAPI(title=&#34;Autonomous Hackathon Service&#34;)
+
+@app.get(&#34;/&#34;)
+def read_root():
+    return {&#34;status&#34;: &#34;online&#34;, &#34;system&#34;: &#34;Autonomous AI Agent&#34;}
+
+if __name__ == &#34;__main__&#34;:
+    uvicorn.run(app, host=&#34;0.0.0.0&#34;, port=8080)
+&#34;&#34;&#34;
+        (project_dir / &#34;main.py&#34;).write_text(main_py, encoding=&#34;utf-8&#34;)
+
+        return project_dir</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.hackathon_scout.DispatcherAgent"><code class="flex name class">
+<span>class <span class="ident">DispatcherAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DispatcherAgent:
+    &#34;&#34;&#34;Agent 4: Dispatches executive opportunity report to Ganesh via WhatsApp.&#34;&#34;&#34;
+
+    async def notify_user(
+        self,
+        opportunities: List[Dict[str, Any]],
+        phone_number: str = &#34;+91 9324094474&#34;,
+    ) -&gt; Dict[str, Any]:
+        logger.info(f&#34;[DispatcherAgent] Formatting and sending WhatsApp alert to {phone_number}&#34;)
+        message = opportunity_notifier.format_whatsapp_hackathon_digest(
+            opportunities=opportunities,
+            recipient_name=&#34;Ganesh&#34;,
+            location=&#34;Mumbai / India &amp; Remote&#34;,
+        )
+        dispatch_result = await opportunity_notifier.send_whatsapp_message(
+            phone_number=phone_number,
+            message=message,
+        )
+        return {
+            &#34;dispatch_result&#34;: dispatch_result,
+            &#34;formatted_message&#34;: message,
+        }</code></pre>
+</details>
+<div class="desc"><p>Agent 4: Dispatches executive opportunity report to Ganesh via WhatsApp.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.hackathon_scout.DispatcherAgent.notify_user"><code class="name flex">
+<span>async def <span class="ident">notify_user</span></span>(<span>self, opportunities: List[Dict[str, Any]], phone_number: str = '+91 9324094474') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def notify_user(
+    self,
+    opportunities: List[Dict[str, Any]],
+    phone_number: str = &#34;+91 9324094474&#34;,
+) -&gt; Dict[str, Any]:
+    logger.info(f&#34;[DispatcherAgent] Formatting and sending WhatsApp alert to {phone_number}&#34;)
+    message = opportunity_notifier.format_whatsapp_hackathon_digest(
+        opportunities=opportunities,
+        recipient_name=&#34;Ganesh&#34;,
+        location=&#34;Mumbai / India &amp; Remote&#34;,
+    )
+    dispatch_result = await opportunity_notifier.send_whatsapp_message(
+        phone_number=phone_number,
+        message=message,
+    )
+    return {
+        &#34;dispatch_result&#34;: dispatch_result,
+        &#34;formatted_message&#34;: message,
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.hackathon_scout.HackathonScoutSwarm"><code class="flex name class">
+<span>class <span class="ident">HackathonScoutSwarm</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HackathonScoutSwarm:
+    &#34;&#34;&#34;
+    Coordinator of the 4-Agent Workforce:
+    Scout -&gt; Analyst -&gt; Architect -&gt; Dispatcher
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        self.scout = ScoutAgent()
+        self.analyst = AnalystAgent()
+        self.architect = ArchitectAgent()
+        self.dispatcher = DispatcherAgent()
+
+    async def execute_autonomous_scout_cycle(
+        self,
+        target_phone: str = &#34;+91 9324094474&#34;,
+        search_query: str = &#34;AI Agent Hackathons 2026 GSoC India&#34;,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Runs complete autonomous lifecycle from discovery to code scaffold and notification.&#34;&#34;&#34;
+        cycle_start = time.time()
+        jarvis_security_suite.layer9_audit.log_event(
+            &#34;HACKATHON_SWARM_START&#34;,
+            f&#34;Autonomous scout swarm launched for query &#39;{search_query}&#39;&#34;,
+        )
+
+        # 1. Discovery
+        raw_opps = await self.scout.scan_opportunities(search_query)
+
+        # 2. Analysis
+        analyzed_opps = self.analyst.evaluate_opportunities(raw_opps)
+
+        # 3. Architecture &amp; Scaffolding of top 2 opportunities
+        for opp in analyzed_opps[:2]:
+            scaffold_path = self.architect.scaffold_top_opportunity(opp)
+            opp[&#34;scaffold_path&#34;] = str(scaffold_path)
+
+        # 4. Dispatch Alert via WhatsApp
+        notification_info = await self.dispatcher.notify_user(
+            opportunities=analyzed_opps,
+            phone_number=target_phone,
+        )
+
+        duration_sec = round(time.time() - cycle_start, 2)
+        jarvis_security_suite.layer9_audit.log_event(
+            &#34;HACKATHON_SWARM_COMPLETE&#34;,
+            f&#34;Completed scout cycle in {duration_sec}s with {len(analyzed_opps)} opportunities&#34;,
+        )
+
+        return {
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;duration_sec&#34;: duration_sec,
+            &#34;target_recipient&#34;: target_phone,
+            &#34;total_discovered&#34;: len(raw_opps),
+            &#34;opportunities&#34;: analyzed_opps,
+            &#34;notification&#34;: notification_info,
+        }</code></pre>
+</details>
+<div class="desc"><p>Coordinator of the 4-Agent Workforce:
+Scout -&gt; Analyst -&gt; Architect -&gt; Dispatcher</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.hackathon_scout.HackathonScoutSwarm.execute_autonomous_scout_cycle"><code class="name flex">
+<span>async def <span class="ident">execute_autonomous_scout_cycle</span></span>(<span>self,<br>target_phone: str = '+91 9324094474',<br>search_query: str = 'AI Agent Hackathons 2026 GSoC India') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def execute_autonomous_scout_cycle(
+    self,
+    target_phone: str = &#34;+91 9324094474&#34;,
+    search_query: str = &#34;AI Agent Hackathons 2026 GSoC India&#34;,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Runs complete autonomous lifecycle from discovery to code scaffold and notification.&#34;&#34;&#34;
+    cycle_start = time.time()
+    jarvis_security_suite.layer9_audit.log_event(
+        &#34;HACKATHON_SWARM_START&#34;,
+        f&#34;Autonomous scout swarm launched for query &#39;{search_query}&#39;&#34;,
+    )
+
+    # 1. Discovery
+    raw_opps = await self.scout.scan_opportunities(search_query)
+
+    # 2. Analysis
+    analyzed_opps = self.analyst.evaluate_opportunities(raw_opps)
+
+    # 3. Architecture &amp; Scaffolding of top 2 opportunities
+    for opp in analyzed_opps[:2]:
+        scaffold_path = self.architect.scaffold_top_opportunity(opp)
+        opp[&#34;scaffold_path&#34;] = str(scaffold_path)
+
+    # 4. Dispatch Alert via WhatsApp
+    notification_info = await self.dispatcher.notify_user(
+        opportunities=analyzed_opps,
+        phone_number=target_phone,
+    )
+
+    duration_sec = round(time.time() - cycle_start, 2)
+    jarvis_security_suite.layer9_audit.log_event(
+        &#34;HACKATHON_SWARM_COMPLETE&#34;,
+        f&#34;Completed scout cycle in {duration_sec}s with {len(analyzed_opps)} opportunities&#34;,
+    )
+
+    return {
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;duration_sec&#34;: duration_sec,
+        &#34;target_recipient&#34;: target_phone,
+        &#34;total_discovered&#34;: len(raw_opps),
+        &#34;opportunities&#34;: analyzed_opps,
+        &#34;notification&#34;: notification_info,
+    }</code></pre>
+</details>
+<div class="desc"><p>Runs complete autonomous lifecycle from discovery to code scaffold and notification.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.hackathon_scout.ScoutAgent"><code class="flex name class">
+<span>class <span class="ident">ScoutAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ScoutAgent:
+    &#34;&#34;&#34;Agent 1: Scans the web for live hackathons and competitive opportunities.&#34;&#34;&#34;
+
+    async def scan_opportunities(self, query: str = &#34;AI hackathon India 2026 GSoC&#34;) -&gt; List[Dict[str, Any]]:
+        logger.info(f&#34;[ScoutAgent] Scanning opportunities with query: {query}&#34;)
+        results = await obscura_browser.search_opportunities(query, limit=5)
+        return results</code></pre>
+</details>
+<div class="desc"><p>Agent 1: Scans the web for live hackathons and competitive opportunities.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.hackathon_scout.ScoutAgent.scan_opportunities"><code class="name flex">
+<span>async def <span class="ident">scan_opportunities</span></span>(<span>self, query: str = 'AI hackathon India 2026 GSoC') ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def scan_opportunities(self, query: str = &#34;AI hackathon India 2026 GSoC&#34;) -&gt; List[Dict[str, Any]]:
+    logger.info(f&#34;[ScoutAgent] Scanning opportunities with query: {query}&#34;)
+    results = await obscura_browser.search_opportunities(query, limit=5)
+    return results</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.agents" href="index.html">jarvis.agents</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.agents.hackathon_scout.AnalystAgent" href="#jarvis.agents.hackathon_scout.AnalystAgent">AnalystAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.hackathon_scout.AnalystAgent.PROFILE_KEYWORDS" href="#jarvis.agents.hackathon_scout.AnalystAgent.PROFILE_KEYWORDS">PROFILE_KEYWORDS</a></code></li>
+<li><code><a title="jarvis.agents.hackathon_scout.AnalystAgent.evaluate_opportunities" href="#jarvis.agents.hackathon_scout.AnalystAgent.evaluate_opportunities">evaluate_opportunities</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.hackathon_scout.ArchitectAgent" href="#jarvis.agents.hackathon_scout.ArchitectAgent">ArchitectAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.hackathon_scout.ArchitectAgent.scaffold_top_opportunity" href="#jarvis.agents.hackathon_scout.ArchitectAgent.scaffold_top_opportunity">scaffold_top_opportunity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.hackathon_scout.DispatcherAgent" href="#jarvis.agents.hackathon_scout.DispatcherAgent">DispatcherAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.hackathon_scout.DispatcherAgent.notify_user" href="#jarvis.agents.hackathon_scout.DispatcherAgent.notify_user">notify_user</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.hackathon_scout.HackathonScoutSwarm" href="#jarvis.agents.hackathon_scout.HackathonScoutSwarm">HackathonScoutSwarm</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.hackathon_scout.HackathonScoutSwarm.execute_autonomous_scout_cycle" href="#jarvis.agents.hackathon_scout.HackathonScoutSwarm.execute_autonomous_scout_cycle">execute_autonomous_scout_cycle</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.hackathon_scout.ScoutAgent" href="#jarvis.agents.hackathon_scout.ScoutAgent">ScoutAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.hackathon_scout.ScoutAgent.scan_opportunities" href="#jarvis.agents.hackathon_scout.ScoutAgent.scan_opportunities">scan_opportunities</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

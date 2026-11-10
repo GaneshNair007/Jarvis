@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.voice_powers API documentation</title>
+<meta name="description" content="JARVIS Voice &amp; Audio Interaction Powers (PWR-001 to PWR-005)
+Wake word detection, speech-to-text, text-to-speech, voice profiles,
+and interrupt …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.voice_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Voice &amp; Audio Interaction Powers (PWR-001 to PWR-005)
+Wake word detection, speech-to-text, text-to-speech, voice profiles,
+and interrupt handling for the JARVIS voice pipeline.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.voice_powers.VoicePowers"><code class="flex name class">
+<span>class <span class="ident">VoicePowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class VoicePowers:
+    &#34;&#34;&#34;Voice input/output powers for JARVIS.&#34;&#34;&#34;
+
+    def __init__(self) -&gt; None:
+        self._tts_process: Optional[subprocess.Popen] = None
+        self._stopwatch_start: Optional[float] = None
+
+    # ------------------------------------------------------------------ #
+    #  PWR-001 — Wake Word Status                                         #
+    # ------------------------------------------------------------------ #
+    def wake_word_status(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-001: Returns wake word engine status (active/inactive, engine type).
+
+        Honest by design: `active` means a listener process is actually running
+        (legacy process probe). The acoustic (openWakeWord) layer is reported
+        separately as installed/armed so the status never gets faked.
+        &#34;&#34;&#34;
+        # 1. Acoustic layer (openWakeWord): installed? armed/loaded?
+        acoustic: Dict[str, Any] = {&#34;engine&#34;: &#34;openwakeword&#34;, &#34;installed&#34;: False, &#34;armed&#34;: False}
+        try:
+            import importlib.util
+
+            acoustic[&#34;installed&#34;] = importlib.util.find_spec(&#34;openwakeword&#34;) is not None
+            if acoustic[&#34;installed&#34;]:
+                from jarvis.voice.wake import get_acoustic_gate
+
+                gate = get_acoustic_gate()
+                acoustic[&#34;armed&#34;] = bool(gate.available)
+                acoustic[&#34;threshold&#34;] = gate.threshold if gate.available else None
+                acoustic[&#34;models&#34;] = list(gate.model_names) if gate.available else []
+                if not gate.available:
+                    acoustic[&#34;unavailable_reason&#34;] = gate.unavailable_reason
+        except Exception as exc:
+            acoustic[&#34;error&#34;] = str(exc)[:200]
+
+        try:
+            # Legacy process probe: is a wake-word listener running right now?
+            engine_type = &#34;unknown&#34;
+            active = False
+
+            result = subprocess.run(
+                [&#34;tasklist&#34;, &#34;/FO&#34;, &#34;CSV&#34;, &#34;/NH&#34;],
+                capture_output=True,
+                text=True,
+                timeout=5,
+            )
+            running = result.stdout.lower()
+
+            if &#34;porcupine&#34; in running or &#34;pvporcupine&#34; in running:
+                engine_type = &#34;porcupine&#34;
+                active = True
+            elif &#34;snowboy&#34; in running:
+                engine_type = &#34;snowboy&#34;
+                active = True
+            elif &#34;vosk&#34; in running:
+                engine_type = &#34;vosk&#34;
+                active = True
+
+            # The acoustic gate itself is not a listener process; report it honestly.
+            if active:
+                message = f&#34;Interactive wake word listener running ({engine_type})&#34;
+            elif acoustic[&#34;installed&#34;] and acoustic[&#34;armed&#34;]:
+                engine_type = &#34;openwakeword&#34;
+                message = (
+                    &#34;Acoustic wake gate armed (openWakeWord/onnx, &#39;hey jarvis&#39; model) - &#34;
+                    &#34;farms available, but no VoiceDaemon is currently listening&#34;
+                )
+            else:
+                message = &#34;No wake word listener running; acoustic gate &#34; + (
+                    &#34;armed&#34; if acoustic[&#34;installed&#34;] else &#34;not installed&#34;
+                )
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-001&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;active&#34;: active,
+                &#34;engine_type&#34;: engine_type,
+                &#34;acoustic_gate&#34;: acoustic,
+                &#34;message&#34;: message,
+            }
+        except Exception as e:
+            return {
+                &#34;power_id&#34;: &#34;PWR-001&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;active&#34;: False,
+                &#34;engine_type&#34;: &#34;unknown&#34;,
+                &#34;acoustic_gate&#34;: acoustic,
+                &#34;message&#34;: f&#34;Could not query wake word status: {e}&#34;,
+            }
+
+    # ------------------------------------------------------------------ #
+    #  PWR-002 — Speech to Text                                           #
+    # ------------------------------------------------------------------ #
+    def speech_to_text(self, audio_path: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-002: Convert speech to text.
+
+        Tries OpenAI Whisper (local model) first, then falls back to a
+        Windows Speech Recognition stub via PowerShell.
+        &#34;&#34;&#34;
+        try:
+            # ---- Try whisper (pip install openai-whisper) ----
+            try:
+                import whisper  # type: ignore[import-untyped]
+
+                model = whisper.load_model(&#34;base&#34;)
+                if audio_path and os.path.isfile(audio_path):
+                    result = model.transcribe(audio_path)
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-002&#34;,
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;engine&#34;: &#34;whisper&#34;,
+                        &#34;text&#34;: result.get(&#34;text&#34;, &#34;&#34;),
+                        &#34;language&#34;: result.get(&#34;language&#34;, &#34;unknown&#34;),
+                    }
+                else:
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-002&#34;,
+                        &#34;status&#34;: &#34;error&#34;,
+                        &#34;engine&#34;: &#34;whisper&#34;,
+                        &#34;message&#34;: f&#34;Audio file not found: {audio_path}&#34;,
+                    }
+            except ImportError:
+                pass  # Fall through to Windows fallback
+
+            # ---- Fallback: Windows Speech Recognition via PowerShell ----
+            if audio_path and os.path.isfile(audio_path):
+                ps_script = (
+                    &#34;Add-Type -AssemblyName System.Speech; &#34;
+                    &#34;$sr = New-Object System.Speech.Recognition.SpeechRecognitionEngine; &#34;
+                    &#34;$sr.SetInputToWaveFile(&#39;{}&#39;); &#34;
+                    &#34;$sr.LoadGrammar((New-Object System.Speech.Recognition.DictationGrammar)); &#34;
+                    &#34;$result = $sr.Recognize(); &#34;
+                    &#34;if ($result) {{ $result.Text }} else {{ &#39;&lt;no speech detected&gt;&#39; }}&#34;
+                ).format(audio_path.replace(&#34;&#39;&#34;, &#34;&#39;&#39;&#34;))
+
+                proc = subprocess.run(
+                    [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                )
+                text = proc.stdout.strip() or &#34;&lt;no speech detected&gt;&#34;
+                return {
+                    &#34;power_id&#34;: &#34;PWR-002&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;engine&#34;: &#34;windows_sapi&#34;,
+                    &#34;text&#34;: text,
+                }
+            else:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-002&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;engine&#34;: &#34;none&#34;,
+                    &#34;message&#34;: &#34;No audio path provided or file not found, and whisper is not installed.&#34;,
+                }
+        except Exception as e:
+            return {
+                &#34;power_id&#34;: &#34;PWR-002&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;Speech-to-text failed: {e}&#34;,
+            }
+
+    # ------------------------------------------------------------------ #
+    #  PWR-003 — Text to Speech                                           #
+    # ------------------------------------------------------------------ #
+    def text_to_speech(self, text: str, voice: str = &#34;jarvis&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-003: Speak text aloud using pyttsx3 or Windows SAPI.&#34;&#34;&#34;
+        try:
+            # ---- Try pyttsx3 first ----
+            try:
+                import pyttsx3  # type: ignore[import-untyped]
+
+                engine = pyttsx3.init()
+                voices = engine.getProperty(&#34;voices&#34;)
+                # Try to match the requested voice name
+                for v in voices:
+                    if voice.lower() in v.name.lower():
+                        engine.setProperty(&#34;voice&#34;, v.id)
+                        break
+                engine.say(text)
+                engine.runAndWait()
+                engine.stop()
+                return {
+                    &#34;power_id&#34;: &#34;PWR-003&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;engine&#34;: &#34;pyttsx3&#34;,
+                    &#34;text&#34;: text,
+                    &#34;voice&#34;: voice,
+                }
+            except ImportError:
+                pass  # Fall through to SAPI
+
+            # ---- Fallback: Windows SAPI via PowerShell ----
+            safe_text = text.replace(&#34;&#39;&#34;, &#34;&#39;&#39;&#34;).replace(&#39;&#34;&#39;, &#39;`&#34;&#39;)
+            ps_cmd = (
+                &#34;Add-Type -AssemblyName System.Speech; &#34;
+                &#34;$synth = New-Object System.Speech.Synthesis.SpeechSynthesizer; &#34;
+                f&#34;$synth.Speak(&#39;{safe_text}&#39;)&#34;
+            )
+            self._tts_process = subprocess.Popen(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_cmd],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            self._tts_process.wait(timeout=60)
+            return {
+                &#34;power_id&#34;: &#34;PWR-003&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;engine&#34;: &#34;windows_sapi&#34;,
+                &#34;text&#34;: text,
+                &#34;voice&#34;: voice,
+            }
+        except Exception as e:
+            return {
+                &#34;power_id&#34;: &#34;PWR-003&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;Text-to-speech failed: {e}&#34;,
+            }
+
+    # ------------------------------------------------------------------ #
+    #  PWR-004 — Voice Profile Status                                     #
+    # ------------------------------------------------------------------ #
+    def voice_profile_status(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-004: Return voice profile/biometric status.
+
+        Checks the Windows Speech Recognition profile training level.
+        &#34;&#34;&#34;
+        try:
+            ps_script = (
+                &#34;Add-Type -AssemblyName System.Speech; &#34;
+                &#34;$ri = New-Object System.Speech.Recognition.SpeechRecognitionEngine; &#34;
+                &#34;try { $ri.SetInputToDefaultAudioDevice() } catch {}; &#34;
+                &#34;Write-Output &#39;profile_available&#39;&#34;
+            )
+            proc = subprocess.run(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            available = &#34;profile_available&#34; in proc.stdout
+            return {
+                &#34;power_id&#34;: &#34;PWR-004&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;profile_available&#34;: available,
+                &#34;engine&#34;: &#34;windows_sapi&#34;,
+                &#34;message&#34;: &#34;Voice profile detected&#34; if available else &#34;No voice profile configured&#34;,
+            }
+        except Exception as e:
+            return {
+                &#34;power_id&#34;: &#34;PWR-004&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;profile_available&#34;: False,
+                &#34;message&#34;: f&#34;Could not query voice profile: {e}&#34;,
+            }
+
+    # ------------------------------------------------------------------ #
+    #  PWR-005 — Interrupt Handling                                       #
+    # ------------------------------------------------------------------ #
+    def interrupt_handling(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-005: Handle voice interruption by stopping any active TTS playback.&#34;&#34;&#34;
+        try:
+            killed = False
+            # Kill tracked TTS subprocess
+            if self._tts_process is not None and self._tts_process.poll() is None:
+                self._tts_process.terminate()
+                self._tts_process = None
+                killed = True
+
+            # Also kill any lingering PowerShell SAPI processes
+            result = subprocess.run(
+                [&#34;tasklist&#34;, &#34;/FI&#34;, &#34;IMAGENAME eq powershell.exe&#34;, &#34;/FO&#34;, &#34;CSV&#34;, &#34;/NH&#34;],
+                capture_output=True,
+                text=True,
+                timeout=5,
+            )
+            # We won&#39;t aggressively kill all PowerShells — only our tracked one
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-005&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;interrupted&#34;: killed,
+                &#34;message&#34;: &#34;TTS playback interrupted&#34; if killed else &#34;No active TTS to interrupt&#34;,
+            }
+        except Exception as e:
+            return {
+                &#34;power_id&#34;: &#34;PWR-005&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;Interrupt handling failed: {e}&#34;,
+            }</code></pre>
+</details>
+<div class="desc"><p>Voice input/output powers for JARVIS.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.voice_powers.VoicePowers.interrupt_handling"><code class="name flex">
+<span>def <span class="ident">interrupt_handling</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def interrupt_handling(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-005: Handle voice interruption by stopping any active TTS playback.&#34;&#34;&#34;
+    try:
+        killed = False
+        # Kill tracked TTS subprocess
+        if self._tts_process is not None and self._tts_process.poll() is None:
+            self._tts_process.terminate()
+            self._tts_process = None
+            killed = True
+
+        # Also kill any lingering PowerShell SAPI processes
+        result = subprocess.run(
+            [&#34;tasklist&#34;, &#34;/FI&#34;, &#34;IMAGENAME eq powershell.exe&#34;, &#34;/FO&#34;, &#34;CSV&#34;, &#34;/NH&#34;],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        # We won&#39;t aggressively kill all PowerShells — only our tracked one
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-005&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;interrupted&#34;: killed,
+            &#34;message&#34;: &#34;TTS playback interrupted&#34; if killed else &#34;No active TTS to interrupt&#34;,
+        }
+    except Exception as e:
+        return {
+            &#34;power_id&#34;: &#34;PWR-005&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: f&#34;Interrupt handling failed: {e}&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>PWR-005: Handle voice interruption by stopping any active TTS playback.</p></div>
+</dd>
+<dt id="jarvis.powers.voice_powers.VoicePowers.speech_to_text"><code class="name flex">
+<span>def <span class="ident">speech_to_text</span></span>(<span>self, audio_path: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def speech_to_text(self, audio_path: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-002: Convert speech to text.
+
+    Tries OpenAI Whisper (local model) first, then falls back to a
+    Windows Speech Recognition stub via PowerShell.
+    &#34;&#34;&#34;
+    try:
+        # ---- Try whisper (pip install openai-whisper) ----
+        try:
+            import whisper  # type: ignore[import-untyped]
+
+            model = whisper.load_model(&#34;base&#34;)
+            if audio_path and os.path.isfile(audio_path):
+                result = model.transcribe(audio_path)
+                return {
+                    &#34;power_id&#34;: &#34;PWR-002&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;engine&#34;: &#34;whisper&#34;,
+                    &#34;text&#34;: result.get(&#34;text&#34;, &#34;&#34;),
+                    &#34;language&#34;: result.get(&#34;language&#34;, &#34;unknown&#34;),
+                }
+            else:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-002&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;engine&#34;: &#34;whisper&#34;,
+                    &#34;message&#34;: f&#34;Audio file not found: {audio_path}&#34;,
+                }
+        except ImportError:
+            pass  # Fall through to Windows fallback
+
+        # ---- Fallback: Windows Speech Recognition via PowerShell ----
+        if audio_path and os.path.isfile(audio_path):
+            ps_script = (
+                &#34;Add-Type -AssemblyName System.Speech; &#34;
+                &#34;$sr = New-Object System.Speech.Recognition.SpeechRecognitionEngine; &#34;
+                &#34;$sr.SetInputToWaveFile(&#39;{}&#39;); &#34;
+                &#34;$sr.LoadGrammar((New-Object System.Speech.Recognition.DictationGrammar)); &#34;
+                &#34;$result = $sr.Recognize(); &#34;
+                &#34;if ($result) {{ $result.Text }} else {{ &#39;&lt;no speech detected&gt;&#39; }}&#34;
+            ).format(audio_path.replace(&#34;&#39;&#34;, &#34;&#39;&#39;&#34;))
+
+            proc = subprocess.run(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            text = proc.stdout.strip() or &#34;&lt;no speech detected&gt;&#34;
+            return {
+                &#34;power_id&#34;: &#34;PWR-002&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;engine&#34;: &#34;windows_sapi&#34;,
+                &#34;text&#34;: text,
+            }
+        else:
+            return {
+                &#34;power_id&#34;: &#34;PWR-002&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;engine&#34;: &#34;none&#34;,
+                &#34;message&#34;: &#34;No audio path provided or file not found, and whisper is not installed.&#34;,
+            }
+    except Exception as e:
+        return {
+            &#34;power_id&#34;: &#34;PWR-002&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: f&#34;Speech-to-text failed: {e}&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>PWR-002: Convert speech to text.</p>
+<p>Tries OpenAI Whisper (local model) first, then falls back to a
+Windows Speech Recognition stub via PowerShell.</p></div>
+</dd>
+<dt id="jarvis.powers.voice_powers.VoicePowers.text_to_speech"><code class="name flex">
+<span>def <span class="ident">text_to_speech</span></span>(<span>self, text: str, voice: str = 'jarvis') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def text_to_speech(self, text: str, voice: str = &#34;jarvis&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-003: Speak text aloud using pyttsx3 or Windows SAPI.&#34;&#34;&#34;
+    try:
+        # ---- Try pyttsx3 first ----
+        try:
+            import pyttsx3  # type: ignore[import-untyped]
+
+            engine = pyttsx3.init()
+            voices = engine.getProperty(&#34;voices&#34;)
+            # Try to match the requested voice name
+            for v in voices:
+                if voice.lower() in v.name.lower():
+                    engine.setProperty(&#34;voice&#34;, v.id)
+                    break
+            engine.say(text)
+            engine.runAndWait()
+            engine.stop()
+            return {
+                &#34;power_id&#34;: &#34;PWR-003&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;engine&#34;: &#34;pyttsx3&#34;,
+                &#34;text&#34;: text,
+                &#34;voice&#34;: voice,
+            }
+        except ImportError:
+            pass  # Fall through to SAPI
+
+        # ---- Fallback: Windows SAPI via PowerShell ----
+        safe_text = text.replace(&#34;&#39;&#34;, &#34;&#39;&#39;&#34;).replace(&#39;&#34;&#39;, &#39;`&#34;&#39;)
+        ps_cmd = (
+            &#34;Add-Type -AssemblyName System.Speech; &#34;
+            &#34;$synth = New-Object System.Speech.Synthesis.SpeechSynthesizer; &#34;
+            f&#34;$synth.Speak(&#39;{safe_text}&#39;)&#34;
+        )
+        self._tts_process = subprocess.Popen(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_cmd],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        self._tts_process.wait(timeout=60)
+        return {
+            &#34;power_id&#34;: &#34;PWR-003&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;engine&#34;: &#34;windows_sapi&#34;,
+            &#34;text&#34;: text,
+            &#34;voice&#34;: voice,
+        }
+    except Exception as e:
+        return {
+            &#34;power_id&#34;: &#34;PWR-003&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;message&#34;: f&#34;Text-to-speech failed: {e}&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>PWR-003: Speak text aloud using pyttsx3 or Windows SAPI.</p></div>
+</dd>
+<dt id="jarvis.powers.voice_powers.VoicePowers.voice_profile_status"><code class="name flex">
+<span>def <span class="ident">voice_profile_status</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def voice_profile_status(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-004: Return voice profile/biometric status.
+
+    Checks the Windows Speech Recognition profile training level.
+    &#34;&#34;&#34;
+    try:
+        ps_script = (
+            &#34;Add-Type -AssemblyName System.Speech; &#34;
+            &#34;$ri = New-Object System.Speech.Recognition.SpeechRecognitionEngine; &#34;
+            &#34;try { $ri.SetInputToDefaultAudioDevice() } catch {}; &#34;
+            &#34;Write-Output &#39;profile_available&#39;&#34;
+        )
+        proc = subprocess.run(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        available = &#34;profile_available&#34; in proc.stdout
+        return {
+            &#34;power_id&#34;: &#34;PWR-004&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;profile_available&#34;: available,
+            &#34;engine&#34;: &#34;windows_sapi&#34;,
+            &#34;message&#34;: &#34;Voice profile detected&#34; if available else &#34;No voice profile configured&#34;,
+        }
+    except Exception as e:
+        return {
+            &#34;power_id&#34;: &#34;PWR-004&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;profile_available&#34;: False,
+            &#34;message&#34;: f&#34;Could not query voice profile: {e}&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>PWR-004: Return voice profile/biometric status.</p>
+<p>Checks the Windows Speech Recognition profile training level.</p></div>
+</dd>
+<dt id="jarvis.powers.voice_powers.VoicePowers.wake_word_status"><code class="name flex">
+<span>def <span class="ident">wake_word_status</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wake_word_status(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-001: Returns wake word engine status (active/inactive, engine type).
+
+    Honest by design: `active` means a listener process is actually running
+    (legacy process probe). The acoustic (openWakeWord) layer is reported
+    separately as installed/armed so the status never gets faked.
+    &#34;&#34;&#34;
+    # 1. Acoustic layer (openWakeWord): installed? armed/loaded?
+    acoustic: Dict[str, Any] = {&#34;engine&#34;: &#34;openwakeword&#34;, &#34;installed&#34;: False, &#34;armed&#34;: False}
+    try:
+        import importlib.util
+
+        acoustic[&#34;installed&#34;] = importlib.util.find_spec(&#34;openwakeword&#34;) is not None
+        if acoustic[&#34;installed&#34;]:
+            from jarvis.voice.wake import get_acoustic_gate
+
+            gate = get_acoustic_gate()
+            acoustic[&#34;armed&#34;] = bool(gate.available)
+            acoustic[&#34;threshold&#34;] = gate.threshold if gate.available else None
+            acoustic[&#34;models&#34;] = list(gate.model_names) if gate.available else []
+            if not gate.available:
+                acoustic[&#34;unavailable_reason&#34;] = gate.unavailable_reason
+    except Exception as exc:
+        acoustic[&#34;error&#34;] = str(exc)[:200]
+
+    try:
+        # Legacy process probe: is a wake-word listener running right now?
+        engine_type = &#34;unknown&#34;
+        active = False
+
+        result = subprocess.run(
+            [&#34;tasklist&#34;, &#34;/FO&#34;, &#34;CSV&#34;, &#34;/NH&#34;],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        running = result.stdout.lower()
+
+        if &#34;porcupine&#34; in running or &#34;pvporcupine&#34; in running:
+            engine_type = &#34;porcupine&#34;
+            active = True
+        elif &#34;snowboy&#34; in running:
+            engine_type = &#34;snowboy&#34;
+            active = True
+        elif &#34;vosk&#34; in running:
+            engine_type = &#34;vosk&#34;
+            active = True
+
+        # The acoustic gate itself is not a listener process; report it honestly.
+        if active:
+            message = f&#34;Interactive wake word listener running ({engine_type})&#34;
+        elif acoustic[&#34;installed&#34;] and acoustic[&#34;armed&#34;]:
+            engine_type = &#34;openwakeword&#34;
+            message = (
+                &#34;Acoustic wake gate armed (openWakeWord/onnx, &#39;hey jarvis&#39; model) - &#34;
+                &#34;farms available, but no VoiceDaemon is currently listening&#34;
+            )
+        else:
+            message = &#34;No wake word listener running; acoustic gate &#34; + (
+                &#34;armed&#34; if acoustic[&#34;installed&#34;] else &#34;not installed&#34;
+            )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-001&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;active&#34;: active,
+            &#34;engine_type&#34;: engine_type,
+            &#34;acoustic_gate&#34;: acoustic,
+            &#34;message&#34;: message,
+        }
+    except Exception as e:
+        return {
+            &#34;power_id&#34;: &#34;PWR-001&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;active&#34;: False,
+            &#34;engine_type&#34;: &#34;unknown&#34;,
+            &#34;acoustic_gate&#34;: acoustic,
+            &#34;message&#34;: f&#34;Could not query wake word status: {e}&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>PWR-001: Returns wake word engine status (active/inactive, engine type).</p>
+<p>Honest by design: <code>active</code> means a listener process is actually running
+(legacy process probe). The acoustic (openWakeWord) layer is reported
+separately as installed/armed so the status never gets faked.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.voice_powers.VoicePowers" href="#jarvis.powers.voice_powers.VoicePowers">VoicePowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.voice_powers.VoicePowers.interrupt_handling" href="#jarvis.powers.voice_powers.VoicePowers.interrupt_handling">interrupt_handling</a></code></li>
+<li><code><a title="jarvis.powers.voice_powers.VoicePowers.speech_to_text" href="#jarvis.powers.voice_powers.VoicePowers.speech_to_text">speech_to_text</a></code></li>
+<li><code><a title="jarvis.powers.voice_powers.VoicePowers.text_to_speech" href="#jarvis.powers.voice_powers.VoicePowers.text_to_speech">text_to_speech</a></code></li>
+<li><code><a title="jarvis.powers.voice_powers.VoicePowers.voice_profile_status" href="#jarvis.powers.voice_powers.VoicePowers.voice_profile_status">voice_profile_status</a></code></li>
+<li><code><a title="jarvis.powers.voice_powers.VoicePowers.wake_word_status" href="#jarvis.powers.voice_powers.VoicePowers.wake_word_status">wake_word_status</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

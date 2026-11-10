@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.api.routes_career API documentation</title>
+<meta name="description" content="Career-Ops REST API Routes (PWR-328 to PWR-337) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.api.routes_career</code></h1>
+</header>
+<section id="section-intro">
+<p>Career-Ops REST API Routes (PWR-328 to PWR-337).</p>
+<p>Exposes endpoints for job scanning, ATS resume generation, cover letter creation,
+company research, contact discovery, application tracking, interview prep, and offer negotiation.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.api.routes_career.analyze_offer"><code class="name flex">
+<span>def <span class="ident">analyze_offer</span></span>(<span>request: <a title="jarvis.api.routes_career.OfferAnalysisRequest" href="#jarvis.api.routes_career.OfferAnalysisRequest">OfferAnalysisRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/offer-analysis&#34;)
+def analyze_offer(request: OfferAnalysisRequest):
+    &#34;&#34;&#34;PWR-337: Compensation and salary-gap analysis.&#34;&#34;&#34;
+    try:
+        return career_powers.analyze_offer_and_salary_gap(
+            company_name=request.company_name,
+            role_title=request.role_title,
+            base_salary=request.base_salary,
+            bonus=request.bonus,
+            equity_annual_val=request.equity_annual_val,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>PWR-337: Compensation and salary-gap analysis.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.draft_email"><code class="name flex">
+<span>def <span class="ident">draft_email</span></span>(<span>request: <a title="jarvis.api.routes_career.EmailDraftRequest" href="#jarvis.api.routes_career.EmailDraftRequest">EmailDraftRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/draft-email&#34;)
+def draft_email(request: EmailDraftRequest):
+    &#34;&#34;&#34;PWR-334: Application email draft.&#34;&#34;&#34;
+    try:
+        return career_powers.draft_application_email(
+            recipient_name=request.recipient_name, company_name=request.company_name, role_title=request.role_title
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>PWR-334: Application email draft.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.find_contacts"><code class="name flex">
+<span>def <span class="ident">find_contacts</span></span>(<span>request: <a title="jarvis.api.routes_career.ContactFinderRequest" href="#jarvis.api.routes_career.ContactFinderRequest">ContactFinderRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/contacts&#34;)
+def find_contacts(request: ContactFinderRequest):
+    &#34;&#34;&#34;PWR-333: Contact discovery and outreach draft.&#34;&#34;&#34;
+    try:
+        return career_powers.find_company_contacts(company_name=request.company_name, role_title=request.role_title)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>PWR-333: Contact discovery and outreach draft.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.generate_cover_letter"><code class="name flex">
+<span>def <span class="ident">generate_cover_letter</span></span>(<span>request: <a title="jarvis.api.routes_career.CoverLetterRequest" href="#jarvis.api.routes_career.CoverLetterRequest">CoverLetterRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/cover-letter&#34;)
+def generate_cover_letter(request: CoverLetterRequest):
+    &#34;&#34;&#34;PWR-331: Tailored cover letter generation.&#34;&#34;&#34;
+    try:
+        return career_powers.generate_cover_letter(
+            job_title=request.job_title, company_name=request.company_name, key_challenges=request.key_challenges
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>PWR-331: Tailored cover letter generation.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.generate_resume"><code class="name flex">
+<span>def <span class="ident">generate_resume</span></span>(<span>request: <a title="jarvis.api.routes_career.ResumeRequest" href="#jarvis.api.routes_career.ResumeRequest">ResumeRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/resume&#34;)
+def generate_resume(request: ResumeRequest):
+    &#34;&#34;&#34;PWR-330: Tailored ATS resume generation.&#34;&#34;&#34;
+    try:
+        return career_powers.generate_tailored_resume(
+            job_title=request.job_title, company_name=request.company_name, target_keywords=request.target_keywords
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>PWR-330: Tailored ATS resume generation.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.get_career_status"><code class="name flex">
+<span>def <span class="ident">get_career_status</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/status&#34;)
+def get_career_status():
+    &#34;&#34;&#34;PWR-328: Career service status and candidate overview.&#34;&#34;&#34;
+    return career_powers.get_service_status()</code></pre>
+</details>
+<div class="desc"><p>PWR-328: Career service status and candidate overview.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.get_pipeline"><code class="name flex">
+<span>def <span class="ident">get_pipeline</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/pipeline&#34;)
+def get_pipeline():
+    &#34;&#34;&#34;PWR-335: Application pipeline analytics and funnel stats.&#34;&#34;&#34;
+    return career_powers.analyze_application_pipeline()</code></pre>
+</details>
+<div class="desc"><p>PWR-335: Application pipeline analytics and funnel stats.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.list_applications"><code class="name flex">
+<span>def <span class="ident">list_applications</span></span>(<span>status: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/applications&#34;)
+def list_applications(status: Optional[str] = None):
+    &#34;&#34;&#34;Lists tracked job applications.&#34;&#34;&#34;
+    apps = career_powers.service.list_applications(status)
+    return {&#34;applications&#34;: [a.model_dump() for a in apps]}</code></pre>
+</details>
+<div class="desc"><p>Lists tracked job applications.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.prepare_interview"><code class="name flex">
+<span>def <span class="ident">prepare_interview</span></span>(<span>request: <a title="jarvis.api.routes_career.InterviewPrepRequest" href="#jarvis.api.routes_career.InterviewPrepRequest">InterviewPrepRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/interview-prep&#34;)
+def prepare_interview(request: InterviewPrepRequest):
+    &#34;&#34;&#34;PWR-336: Interview preparation, STAR questions, and red-flag checking.&#34;&#34;&#34;
+    try:
+        return career_powers.interview_prep_and_red_flags(
+            role_title=request.role_title,
+            company_name=request.company_name,
+            job_description=request.job_description,
+            focus_tech=request.focus_tech,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>PWR-336: Interview preparation, STAR questions, and red-flag checking.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.research_company"><code class="name flex">
+<span>def <span class="ident">research_company</span></span>(<span>request: <a title="jarvis.api.routes_career.CompanyResearchRequest" href="#jarvis.api.routes_career.CompanyResearchRequest">CompanyResearchRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/company-research&#34;)
+def research_company(request: CompanyResearchRequest):
+    &#34;&#34;&#34;PWR-332: Company research dossier.&#34;&#34;&#34;
+    try:
+        return career_powers.research_company_brief(company_name=request.company_name, domain=request.domain)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>PWR-332: Company research dossier.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.scan_job"><code class="name flex">
+<span>def <span class="ident">scan_job</span></span>(<span>request: <a title="jarvis.api.routes_career.JobScanRequest" href="#jarvis.api.routes_career.JobScanRequest">JobScanRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/scan&#34;)
+def scan_job(request: JobScanRequest):
+    &#34;&#34;&#34;PWR-329: Job scan and ATS fit score calculation.&#34;&#34;&#34;
+    try:
+        return career_powers.scan_job_listing(
+            job_title=request.job_title,
+            company_name=request.company_name,
+            description=request.description,
+            job_url=request.job_url,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+</details>
+<div class="desc"><p>PWR-329: Job scan and ATS fit score calculation.</p></div>
+</dd>
+<dt id="jarvis.api.routes_career.update_application_status"><code class="name flex">
+<span>def <span class="ident">update_application_status</span></span>(<span>application_id: str,<br>request: <a title="jarvis.api.routes_career.UpdateStatusRequest" href="#jarvis.api.routes_career.UpdateStatusRequest">UpdateStatusRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.patch(&#34;/applications/{application_id}/status&#34;)
+def update_application_status(application_id: str, request: UpdateStatusRequest):
+    &#34;&#34;&#34;Updates the status of a tracked application.&#34;&#34;&#34;
+    updated = career_powers.service.update_application_status(
+        application_id=application_id, new_status=request.status, note=request.note
+    )
+    if not updated:
+        raise HTTPException(status_code=404, detail=&#34;Application not found&#34;)
+    return updated.model_dump()</code></pre>
+</details>
+<div class="desc"><p>Updates the status of a tracked application.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.api.routes_career.CompanyResearchRequest"><code class="flex name class">
+<span>class <span class="ident">CompanyResearchRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CompanyResearchRequest(BaseModel):
+    company_name: str
+    domain: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_career.CompanyResearchRequest.company_name"><code class="name">var <span class="ident">company_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.CompanyResearchRequest.domain"><code class="name">var <span class="ident">domain</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.CompanyResearchRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_career.ContactFinderRequest"><code class="flex name class">
+<span>class <span class="ident">ContactFinderRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ContactFinderRequest(BaseModel):
+    company_name: str
+    role_title: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_career.ContactFinderRequest.company_name"><code class="name">var <span class="ident">company_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.ContactFinderRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.ContactFinderRequest.role_title"><code class="name">var <span class="ident">role_title</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_career.CoverLetterRequest"><code class="flex name class">
+<span>class <span class="ident">CoverLetterRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CoverLetterRequest(BaseModel):
+    job_title: str
+    company_name: str
+    key_challenges: Optional[List[str]] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_career.CoverLetterRequest.company_name"><code class="name">var <span class="ident">company_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.CoverLetterRequest.job_title"><code class="name">var <span class="ident">job_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.CoverLetterRequest.key_challenges"><code class="name">var <span class="ident">key_challenges</span> : List[str] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.CoverLetterRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_career.EmailDraftRequest"><code class="flex name class">
+<span>class <span class="ident">EmailDraftRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EmailDraftRequest(BaseModel):
+    recipient_name: str
+    company_name: str
+    role_title: str</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_career.EmailDraftRequest.company_name"><code class="name">var <span class="ident">company_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.EmailDraftRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.EmailDraftRequest.recipient_name"><code class="name">var <span class="ident">recipient_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.EmailDraftRequest.role_title"><code class="name">var <span class="ident">role_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_career.InterviewPrepRequest"><code class="flex name class">
+<span>class <span class="ident">InterviewPrepRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InterviewPrepRequest(BaseModel):
+    role_title: str
+    company_name: str
+    job_description: Optional[str] = None
+    focus_tech: Optional[List[str]] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_career.InterviewPrepRequest.company_name"><code class="name">var <span class="ident">company_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.InterviewPrepRequest.focus_tech"><code class="name">var <span class="ident">focus_tech</span> : List[str] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.InterviewPrepRequest.job_description"><code class="name">var <span class="ident">job_description</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.InterviewPrepRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.InterviewPrepRequest.role_title"><code class="name">var <span class="ident">role_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_career.JobScanRequest"><code class="flex name class">
+<span>class <span class="ident">JobScanRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class JobScanRequest(BaseModel):
+    job_title: str
+    company_name: str
+    description: str
+    job_url: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_career.JobScanRequest.company_name"><code class="name">var <span class="ident">company_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.JobScanRequest.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.JobScanRequest.job_title"><code class="name">var <span class="ident">job_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.JobScanRequest.job_url"><code class="name">var <span class="ident">job_url</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.JobScanRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_career.OfferAnalysisRequest"><code class="flex name class">
+<span>class <span class="ident">OfferAnalysisRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OfferAnalysisRequest(BaseModel):
+    company_name: str
+    role_title: str
+    base_salary: float
+    bonus: float = 0.0
+    equity_annual_val: float = 0.0</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_career.OfferAnalysisRequest.base_salary"><code class="name">var <span class="ident">base_salary</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.OfferAnalysisRequest.bonus"><code class="name">var <span class="ident">bonus</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.OfferAnalysisRequest.company_name"><code class="name">var <span class="ident">company_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.OfferAnalysisRequest.equity_annual_val"><code class="name">var <span class="ident">equity_annual_val</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.OfferAnalysisRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.OfferAnalysisRequest.role_title"><code class="name">var <span class="ident">role_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_career.ResumeRequest"><code class="flex name class">
+<span>class <span class="ident">ResumeRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ResumeRequest(BaseModel):
+    job_title: str
+    company_name: str
+    target_keywords: Optional[List[str]] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_career.ResumeRequest.company_name"><code class="name">var <span class="ident">company_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.ResumeRequest.job_title"><code class="name">var <span class="ident">job_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.ResumeRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.ResumeRequest.target_keywords"><code class="name">var <span class="ident">target_keywords</span> : List[str] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_career.UpdateStatusRequest"><code class="flex name class">
+<span>class <span class="ident">UpdateStatusRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UpdateStatusRequest(BaseModel):
+    status: str
+    note: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_career.UpdateStatusRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.UpdateStatusRequest.note"><code class="name">var <span class="ident">note</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_career.UpdateStatusRequest.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.api" href="index.html">jarvis.api</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.api.routes_career.analyze_offer" href="#jarvis.api.routes_career.analyze_offer">analyze_offer</a></code></li>
+<li><code><a title="jarvis.api.routes_career.draft_email" href="#jarvis.api.routes_career.draft_email">draft_email</a></code></li>
+<li><code><a title="jarvis.api.routes_career.find_contacts" href="#jarvis.api.routes_career.find_contacts">find_contacts</a></code></li>
+<li><code><a title="jarvis.api.routes_career.generate_cover_letter" href="#jarvis.api.routes_career.generate_cover_letter">generate_cover_letter</a></code></li>
+<li><code><a title="jarvis.api.routes_career.generate_resume" href="#jarvis.api.routes_career.generate_resume">generate_resume</a></code></li>
+<li><code><a title="jarvis.api.routes_career.get_career_status" href="#jarvis.api.routes_career.get_career_status">get_career_status</a></code></li>
+<li><code><a title="jarvis.api.routes_career.get_pipeline" href="#jarvis.api.routes_career.get_pipeline">get_pipeline</a></code></li>
+<li><code><a title="jarvis.api.routes_career.list_applications" href="#jarvis.api.routes_career.list_applications">list_applications</a></code></li>
+<li><code><a title="jarvis.api.routes_career.prepare_interview" href="#jarvis.api.routes_career.prepare_interview">prepare_interview</a></code></li>
+<li><code><a title="jarvis.api.routes_career.research_company" href="#jarvis.api.routes_career.research_company">research_company</a></code></li>
+<li><code><a title="jarvis.api.routes_career.scan_job" href="#jarvis.api.routes_career.scan_job">scan_job</a></code></li>
+<li><code><a title="jarvis.api.routes_career.update_application_status" href="#jarvis.api.routes_career.update_application_status">update_application_status</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.api.routes_career.CompanyResearchRequest" href="#jarvis.api.routes_career.CompanyResearchRequest">CompanyResearchRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_career.CompanyResearchRequest.company_name" href="#jarvis.api.routes_career.CompanyResearchRequest.company_name">company_name</a></code></li>
+<li><code><a title="jarvis.api.routes_career.CompanyResearchRequest.domain" href="#jarvis.api.routes_career.CompanyResearchRequest.domain">domain</a></code></li>
+<li><code><a title="jarvis.api.routes_career.CompanyResearchRequest.model_config" href="#jarvis.api.routes_career.CompanyResearchRequest.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_career.ContactFinderRequest" href="#jarvis.api.routes_career.ContactFinderRequest">ContactFinderRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_career.ContactFinderRequest.company_name" href="#jarvis.api.routes_career.ContactFinderRequest.company_name">company_name</a></code></li>
+<li><code><a title="jarvis.api.routes_career.ContactFinderRequest.model_config" href="#jarvis.api.routes_career.ContactFinderRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_career.ContactFinderRequest.role_title" href="#jarvis.api.routes_career.ContactFinderRequest.role_title">role_title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_career.CoverLetterRequest" href="#jarvis.api.routes_career.CoverLetterRequest">CoverLetterRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_career.CoverLetterRequest.company_name" href="#jarvis.api.routes_career.CoverLetterRequest.company_name">company_name</a></code></li>
+<li><code><a title="jarvis.api.routes_career.CoverLetterRequest.job_title" href="#jarvis.api.routes_career.CoverLetterRequest.job_title">job_title</a></code></li>
+<li><code><a title="jarvis.api.routes_career.CoverLetterRequest.key_challenges" href="#jarvis.api.routes_career.CoverLetterRequest.key_challenges">key_challenges</a></code></li>
+<li><code><a title="jarvis.api.routes_career.CoverLetterRequest.model_config" href="#jarvis.api.routes_career.CoverLetterRequest.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_career.EmailDraftRequest" href="#jarvis.api.routes_career.EmailDraftRequest">EmailDraftRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_career.EmailDraftRequest.company_name" href="#jarvis.api.routes_career.EmailDraftRequest.company_name">company_name</a></code></li>
+<li><code><a title="jarvis.api.routes_career.EmailDraftRequest.model_config" href="#jarvis.api.routes_career.EmailDraftRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_career.EmailDraftRequest.recipient_name" href="#jarvis.api.routes_career.EmailDraftRequest.recipient_name">recipient_name</a></code></li>
+<li><code><a title="jarvis.api.routes_career.EmailDraftRequest.role_title" href="#jarvis.api.routes_career.EmailDraftRequest.role_title">role_title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_career.InterviewPrepRequest" href="#jarvis.api.routes_career.InterviewPrepRequest">InterviewPrepRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_career.InterviewPrepRequest.company_name" href="#jarvis.api.routes_career.InterviewPrepRequest.company_name">company_name</a></code></li>
+<li><code><a title="jarvis.api.routes_career.InterviewPrepRequest.focus_tech" href="#jarvis.api.routes_career.InterviewPrepRequest.focus_tech">focus_tech</a></code></li>
+<li><code><a title="jarvis.api.routes_career.InterviewPrepRequest.job_description" href="#jarvis.api.routes_career.InterviewPrepRequest.job_description">job_description</a></code></li>
+<li><code><a title="jarvis.api.routes_career.InterviewPrepRequest.model_config" href="#jarvis.api.routes_career.InterviewPrepRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_career.InterviewPrepRequest.role_title" href="#jarvis.api.routes_career.InterviewPrepRequest.role_title">role_title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_career.JobScanRequest" href="#jarvis.api.routes_career.JobScanRequest">JobScanRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_career.JobScanRequest.company_name" href="#jarvis.api.routes_career.JobScanRequest.company_name">company_name</a></code></li>
+<li><code><a title="jarvis.api.routes_career.JobScanRequest.description" href="#jarvis.api.routes_career.JobScanRequest.description">description</a></code></li>
+<li><code><a title="jarvis.api.routes_career.JobScanRequest.job_title" href="#jarvis.api.routes_career.JobScanRequest.job_title">job_title</a></code></li>
+<li><code><a title="jarvis.api.routes_career.JobScanRequest.job_url" href="#jarvis.api.routes_career.JobScanRequest.job_url">job_url</a></code></li>
+<li><code><a title="jarvis.api.routes_career.JobScanRequest.model_config" href="#jarvis.api.routes_career.JobScanRequest.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_career.OfferAnalysisRequest" href="#jarvis.api.routes_career.OfferAnalysisRequest">OfferAnalysisRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_career.OfferAnalysisRequest.base_salary" href="#jarvis.api.routes_career.OfferAnalysisRequest.base_salary">base_salary</a></code></li>
+<li><code><a title="jarvis.api.routes_career.OfferAnalysisRequest.bonus" href="#jarvis.api.routes_career.OfferAnalysisRequest.bonus">bonus</a></code></li>
+<li><code><a title="jarvis.api.routes_career.OfferAnalysisRequest.company_name" href="#jarvis.api.routes_career.OfferAnalysisRequest.company_name">company_name</a></code></li>
+<li><code><a title="jarvis.api.routes_career.OfferAnalysisRequest.equity_annual_val" href="#jarvis.api.routes_career.OfferAnalysisRequest.equity_annual_val">equity_annual_val</a></code></li>
+<li><code><a title="jarvis.api.routes_career.OfferAnalysisRequest.model_config" href="#jarvis.api.routes_career.OfferAnalysisRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_career.OfferAnalysisRequest.role_title" href="#jarvis.api.routes_career.OfferAnalysisRequest.role_title">role_title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_career.ResumeRequest" href="#jarvis.api.routes_career.ResumeRequest">ResumeRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_career.ResumeRequest.company_name" href="#jarvis.api.routes_career.ResumeRequest.company_name">company_name</a></code></li>
+<li><code><a title="jarvis.api.routes_career.ResumeRequest.job_title" href="#jarvis.api.routes_career.ResumeRequest.job_title">job_title</a></code></li>
+<li><code><a title="jarvis.api.routes_career.ResumeRequest.model_config" href="#jarvis.api.routes_career.ResumeRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_career.ResumeRequest.target_keywords" href="#jarvis.api.routes_career.ResumeRequest.target_keywords">target_keywords</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_career.UpdateStatusRequest" href="#jarvis.api.routes_career.UpdateStatusRequest">UpdateStatusRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_career.UpdateStatusRequest.model_config" href="#jarvis.api.routes_career.UpdateStatusRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_career.UpdateStatusRequest.note" href="#jarvis.api.routes_career.UpdateStatusRequest.note">note</a></code></li>
+<li><code><a title="jarvis.api.routes_career.UpdateStatusRequest.status" href="#jarvis.api.routes_career.UpdateStatusRequest.status">status</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

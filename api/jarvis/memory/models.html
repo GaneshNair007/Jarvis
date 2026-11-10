@@ -1,0 +1,3521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.memory.models API documentation</title>
+<meta name="description" content="JARVIS SQLAlchemy Database Schema &amp; Persistence Models
+Supports PostgreSQL in Docker Compose and SQLite for local development.
+Defines:
+- users, …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.memory.models</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS SQLAlchemy Database Schema &amp; Persistence Models
+Supports PostgreSQL in Docker Compose and SQLite for local development.</p>
+<p>Defines
+-----=
+- users, conversations, messages
+- tasks, task_steps, task_events
+- approvals, audit_events, powers
+- memories, documents, document_chunks, embeddings</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.memory.models.get_db_engine"><code class="name flex">
+<span>def <span class="ident">get_db_engine</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_db_engine():
+    &#34;&#34;&#34;Returns SQLAlchemy engine connecting to configured database_url or SQLite fallback.&#34;&#34;&#34;
+    db_url = settings.database_url
+    if db_url and &#34;postgres&#34; in db_url:
+        return create_engine(db_url, echo=False)
+    # Default to local SQLite database
+    sqlite_path = settings.db_path.parent / &#34;jarvis_orm.db&#34;
+    return create_engine(f&#34;sqlite:///{sqlite_path}&#34;, echo=False)</code></pre>
+</details>
+<div class="desc"><p>Returns SQLAlchemy engine connecting to configured database_url or SQLite fallback.</p></div>
+</dd>
+<dt id="jarvis.memory.models.init_db"><code class="name flex">
+<span>def <span class="ident">init_db</span></span>(<span>engine=None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def init_db(engine=None):
+    &#34;&#34;&#34;Creates all database tables.&#34;&#34;&#34;
+    eng = engine or get_db_engine()
+    Base.metadata.create_all(bind=eng)
+    return eng</code></pre>
+</details>
+<div class="desc"><p>Creates all database tables.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.memory.models.Approval"><code class="flex name class">
+<span>class <span class="ident">Approval</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Approval(Base):
+    __tablename__ = &#34;approvals&#34;
+    id = Column(String(64), primary_key=True)
+    task_id = Column(String(64), nullable=False)
+    power_id = Column(String(64), nullable=False)
+    action_summary = Column(Text, nullable=False)
+    payload_hash = Column(String(64), nullable=False)
+    token = Column(String(256), nullable=False)
+    status = Column(String(32), default=&#34;PENDING&#34;)
+    created_at = Column(Float, default=time.time)
+    expires_at = Column(Float, nullable=False)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Approval.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Approval.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Approval.action_summary"><code class="name">var <span class="ident">action_summary</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Approval.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Approval.expires_at"><code class="name">var <span class="ident">expires_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Approval.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Approval.payload_hash"><code class="name">var <span class="ident">payload_hash</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Approval.power_id"><code class="name">var <span class="ident">power_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Approval.status"><code class="name">var <span class="ident">status</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Approval.task_id"><code class="name">var <span class="ident">task_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Approval.token"><code class="name">var <span class="ident">token</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent"><code class="flex name class">
+<span>class <span class="ident">AuditEvent</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuditEvent(Base):
+    __tablename__ = &#34;audit_events&#34;
+    event_id = Column(String(64), primary_key=True)
+    task_id = Column(String(64), nullable=True)
+    user_id = Column(String(64), default=&#34;ganesh&#34;)
+    actor = Column(String(64), default=&#34;system&#34;)
+    action = Column(String(128), nullable=False)
+    tool = Column(String(64), nullable=True)
+    model = Column(String(64), nullable=True)
+    input_hash = Column(String(64), nullable=True)
+    output_hash = Column(String(64), nullable=True)
+    policy_decision = Column(String(64), nullable=True)
+    approval_id = Column(String(64), nullable=True)
+    cost = Column(Float, default=0.0)
+    latency = Column(Float, default=0.0)
+    result = Column(String(32), default=&#34;SUCCESS&#34;)
+    error = Column(Text, nullable=True)
+    entry_hash = Column(String(64), nullable=True)
+    prev_hash = Column(String(64), nullable=True)
+    timestamp = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.AuditEvent.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.AuditEvent.action"><code class="name">var <span class="ident">action</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.actor"><code class="name">var <span class="ident">actor</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.approval_id"><code class="name">var <span class="ident">approval_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.cost"><code class="name">var <span class="ident">cost</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.entry_hash"><code class="name">var <span class="ident">entry_hash</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.error"><code class="name">var <span class="ident">error</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.event_id"><code class="name">var <span class="ident">event_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.input_hash"><code class="name">var <span class="ident">input_hash</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.latency"><code class="name">var <span class="ident">latency</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.model"><code class="name">var <span class="ident">model</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.output_hash"><code class="name">var <span class="ident">output_hash</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.policy_decision"><code class="name">var <span class="ident">policy_decision</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.prev_hash"><code class="name">var <span class="ident">prev_hash</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.result"><code class="name">var <span class="ident">result</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.task_id"><code class="name">var <span class="ident">task_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.timestamp"><code class="name">var <span class="ident">timestamp</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.tool"><code class="name">var <span class="ident">tool</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.AuditEvent.user_id"><code class="name">var <span class="ident">user_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.Conversation"><code class="flex name class">
+<span>class <span class="ident">Conversation</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Conversation(Base):
+    __tablename__ = &#34;conversations&#34;
+    id = Column(String(64), primary_key=True)
+    user_id = Column(String(64), ForeignKey(&#34;users.id&#34;), nullable=False)
+    title = Column(String(256), default=&#34;New Session&#34;)
+    created_at = Column(Float, default=time.time)
+    updated_at = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Conversation.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Conversation.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Conversation.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Conversation.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Conversation.title"><code class="name">var <span class="ident">title</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Conversation.updated_at"><code class="name">var <span class="ident">updated_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Conversation.user_id"><code class="name">var <span class="ident">user_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.Document"><code class="flex name class">
+<span>class <span class="ident">Document</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Document(Base):
+    __tablename__ = &#34;documents&#34;
+    id = Column(String(64), primary_key=True)
+    file_path = Column(String(512), nullable=False)
+    file_name = Column(String(256), nullable=False)
+    file_type = Column(String(32), default=&#34;pdf&#34;)
+    sha256 = Column(String(64), unique=True, nullable=False)
+    total_pages = Column(Integer, default=1)
+    total_chunks = Column(Integer, default=0)
+    file_size = Column(Integer, default=0)
+    metadata_json = Column(Text, nullable=True)
+    created_at = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Document.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Document.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.file_name"><code class="name">var <span class="ident">file_name</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.file_path"><code class="name">var <span class="ident">file_path</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.file_size"><code class="name">var <span class="ident">file_size</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.file_type"><code class="name">var <span class="ident">file_type</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.metadata_json"><code class="name">var <span class="ident">metadata_json</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.sha256"><code class="name">var <span class="ident">sha256</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.total_chunks"><code class="name">var <span class="ident">total_chunks</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Document.total_pages"><code class="name">var <span class="ident">total_pages</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.DocumentChunk"><code class="flex name class">
+<span>class <span class="ident">DocumentChunk</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DocumentChunk(Base):
+    __tablename__ = &#34;document_chunks&#34;
+    id = Column(String(64), primary_key=True)
+    doc_id = Column(String(64), ForeignKey(&#34;documents.id&#34;), nullable=False)
+    page_number = Column(Integer, default=1)
+    chunk_index = Column(Integer, default=0)
+    content = Column(Text, nullable=False)
+    metadata_json = Column(Text, nullable=True)
+    created_at = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.DocumentChunk.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.DocumentChunk.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.DocumentChunk.chunk_index"><code class="name">var <span class="ident">chunk_index</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.DocumentChunk.content"><code class="name">var <span class="ident">content</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.DocumentChunk.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.DocumentChunk.doc_id"><code class="name">var <span class="ident">doc_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.DocumentChunk.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.DocumentChunk.metadata_json"><code class="name">var <span class="ident">metadata_json</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.DocumentChunk.page_number"><code class="name">var <span class="ident">page_number</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.Embedding"><code class="flex name class">
+<span>class <span class="ident">Embedding</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Embedding(Base):
+    __tablename__ = &#34;embeddings&#34;
+    id = Column(String(64), primary_key=True)
+    source_id = Column(String(64), nullable=False)
+    source_type = Column(String(32), default=&#34;chunk&#34;)
+    vector_dims = Column(Integer, default=384)
+    model = Column(String(64), default=&#34;nomic-embed-text&#34;)
+    created_at = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Embedding.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Embedding.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Embedding.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Embedding.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Embedding.model"><code class="name">var <span class="ident">model</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Embedding.source_id"><code class="name">var <span class="ident">source_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Embedding.source_type"><code class="name">var <span class="ident">source_type</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Embedding.vector_dims"><code class="name">var <span class="ident">vector_dims</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.Memory"><code class="flex name class">
+<span>class <span class="ident">Memory</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Memory(Base):
+    __tablename__ = &#34;memories&#34;
+    id = Column(String(64), primary_key=True)
+    user_id = Column(String(64), default=&#34;ganesh&#34;)
+    layer = Column(String(32), default=&#34;SEMANTIC&#34;)
+    content = Column(Text, nullable=False)
+    is_hypothesis = Column(Boolean, default=False)
+    confidence = Column(Float, default=1.0)
+    evidence_count = Column(Integer, default=1)
+    metadata_json = Column(Text, nullable=True)
+    created_at = Column(Float, default=time.time)
+    updated_at = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Memory.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Memory.confidence"><code class="name">var <span class="ident">confidence</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.content"><code class="name">var <span class="ident">content</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.evidence_count"><code class="name">var <span class="ident">evidence_count</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.is_hypothesis"><code class="name">var <span class="ident">is_hypothesis</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.layer"><code class="name">var <span class="ident">layer</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.metadata_json"><code class="name">var <span class="ident">metadata_json</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.updated_at"><code class="name">var <span class="ident">updated_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Memory.user_id"><code class="name">var <span class="ident">user_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.Message"><code class="flex name class">
+<span>class <span class="ident">Message</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Message(Base):
+    __tablename__ = &#34;messages&#34;
+    id = Column(String(64), primary_key=True)
+    conversation_id = Column(String(64), ForeignKey(&#34;conversations.id&#34;), nullable=False)
+    role = Column(String(32), nullable=False)  # user, assistant, system
+    content = Column(Text, nullable=False)
+    model = Column(String(64), nullable=True)
+    tokens = Column(Integer, default=0)
+    created_at = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Message.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Message.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Message.content"><code class="name">var <span class="ident">content</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Message.conversation_id"><code class="name">var <span class="ident">conversation_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Message.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Message.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Message.model"><code class="name">var <span class="ident">model</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Message.role"><code class="name">var <span class="ident">role</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Message.tokens"><code class="name">var <span class="ident">tokens</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.Power"><code class="flex name class">
+<span>class <span class="ident">Power</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Power(Base):
+    __tablename__ = &#34;powers&#34;
+    power_id = Column(String(64), primary_key=True)
+    name = Column(String(128), nullable=False)
+    category = Column(String(128), nullable=False)
+    description = Column(Text, nullable=False)
+    enabled = Column(Boolean, default=True)
+    approval_required = Column(Boolean, default=False)
+    danger_level = Column(String(32), default=&#34;low&#34;)
+    version = Column(String(32), default=&#34;1.0.0&#34;)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Power.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Power.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Power.approval_required"><code class="name">var <span class="ident">approval_required</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Power.category"><code class="name">var <span class="ident">category</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Power.danger_level"><code class="name">var <span class="ident">danger_level</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Power.description"><code class="name">var <span class="ident">description</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Power.enabled"><code class="name">var <span class="ident">enabled</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Power.name"><code class="name">var <span class="ident">name</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Power.power_id"><code class="name">var <span class="ident">power_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Power.version"><code class="name">var <span class="ident">version</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.Task"><code class="flex name class">
+<span>class <span class="ident">Task</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Task(Base):
+    __tablename__ = &#34;tasks&#34;
+    id = Column(String(64), primary_key=True)
+    title = Column(String(256), nullable=False)
+    status = Column(String(32), default=&#34;NEW&#34;)
+    priority = Column(String(16), default=&#34;P1&#34;)
+    power_id = Column(String(64), nullable=True)
+    inputs = Column(Text, nullable=True)
+    outputs = Column(Text, nullable=True)
+    error = Column(Text, nullable=True)
+    created_at = Column(Float, default=time.time)
+    updated_at = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Task.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.Task.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.error"><code class="name">var <span class="ident">error</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.inputs"><code class="name">var <span class="ident">inputs</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.outputs"><code class="name">var <span class="ident">outputs</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.power_id"><code class="name">var <span class="ident">power_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.priority"><code class="name">var <span class="ident">priority</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.status"><code class="name">var <span class="ident">status</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.title"><code class="name">var <span class="ident">title</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.Task.updated_at"><code class="name">var <span class="ident">updated_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.TaskEvent"><code class="flex name class">
+<span>class <span class="ident">TaskEvent</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskEvent(Base):
+    __tablename__ = &#34;task_events&#34;
+    id = Column(String(64), primary_key=True)
+    task_id = Column(String(64), ForeignKey(&#34;tasks.id&#34;), nullable=False)
+    event_type = Column(String(64), nullable=False)
+    payload = Column(Text, nullable=True)
+    timestamp = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.TaskEvent.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskEvent.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.TaskEvent.event_type"><code class="name">var <span class="ident">event_type</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskEvent.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskEvent.payload"><code class="name">var <span class="ident">payload</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskEvent.task_id"><code class="name">var <span class="ident">task_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskEvent.timestamp"><code class="name">var <span class="ident">timestamp</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.TaskStep"><code class="flex name class">
+<span>class <span class="ident">TaskStep</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskStep(Base):
+    __tablename__ = &#34;task_steps&#34;
+    id = Column(String(64), primary_key=True)
+    task_id = Column(String(64), ForeignKey(&#34;tasks.id&#34;), nullable=False)
+    step_number = Column(Integer, nullable=False)
+    agent = Column(String(64), default=&#34;coordinator&#34;)
+    action = Column(String(128), nullable=False)
+    status = Column(String(32), default=&#34;PENDING&#34;)
+    artifact = Column(String(256), nullable=True)
+    created_at = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.TaskStep.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskStep.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.TaskStep.action"><code class="name">var <span class="ident">action</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskStep.agent"><code class="name">var <span class="ident">agent</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskStep.artifact"><code class="name">var <span class="ident">artifact</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskStep.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskStep.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskStep.status"><code class="name">var <span class="ident">status</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskStep.step_number"><code class="name">var <span class="ident">step_number</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.TaskStep.task_id"><code class="name">var <span class="ident">task_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.memory.models.User"><code class="flex name class">
+<span>class <span class="ident">User</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class User(Base):
+    __tablename__ = &#34;users&#34;
+    id = Column(String(64), primary_key=True)
+    username = Column(String(128), unique=True, nullable=False)
+    role = Column(String(64), default=&#34;owner&#34;)
+    created_at = Column(Float, default=time.time)</code></pre>
+</details>
+<div class="desc"><p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.Base</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.memory.models.User.metadata"><code class="name">var <span class="ident">metadata</span> : MetaData</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.User.registry"><code class="name">var <span class="ident">registry</span> : RegistryType</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.memory.models.User.created_at"><code class="name">var <span class="ident">created_at</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.User.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.User.role"><code class="name">var <span class="ident">role</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.models.User.username"><code class="name">var <span class="ident">username</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.memory" href="index.html">jarvis.memory</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.memory.models.get_db_engine" href="#jarvis.memory.models.get_db_engine">get_db_engine</a></code></li>
+<li><code><a title="jarvis.memory.models.init_db" href="#jarvis.memory.models.init_db">init_db</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.memory.models.Approval" href="#jarvis.memory.models.Approval">Approval</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.Approval.action_summary" href="#jarvis.memory.models.Approval.action_summary">action_summary</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.created_at" href="#jarvis.memory.models.Approval.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.expires_at" href="#jarvis.memory.models.Approval.expires_at">expires_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.id" href="#jarvis.memory.models.Approval.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.metadata" href="#jarvis.memory.models.Approval.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.payload_hash" href="#jarvis.memory.models.Approval.payload_hash">payload_hash</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.power_id" href="#jarvis.memory.models.Approval.power_id">power_id</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.registry" href="#jarvis.memory.models.Approval.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.status" href="#jarvis.memory.models.Approval.status">status</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.task_id" href="#jarvis.memory.models.Approval.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.memory.models.Approval.token" href="#jarvis.memory.models.Approval.token">token</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.AuditEvent" href="#jarvis.memory.models.AuditEvent">AuditEvent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.AuditEvent.action" href="#jarvis.memory.models.AuditEvent.action">action</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.actor" href="#jarvis.memory.models.AuditEvent.actor">actor</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.approval_id" href="#jarvis.memory.models.AuditEvent.approval_id">approval_id</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.cost" href="#jarvis.memory.models.AuditEvent.cost">cost</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.entry_hash" href="#jarvis.memory.models.AuditEvent.entry_hash">entry_hash</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.error" href="#jarvis.memory.models.AuditEvent.error">error</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.event_id" href="#jarvis.memory.models.AuditEvent.event_id">event_id</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.input_hash" href="#jarvis.memory.models.AuditEvent.input_hash">input_hash</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.latency" href="#jarvis.memory.models.AuditEvent.latency">latency</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.metadata" href="#jarvis.memory.models.AuditEvent.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.model" href="#jarvis.memory.models.AuditEvent.model">model</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.output_hash" href="#jarvis.memory.models.AuditEvent.output_hash">output_hash</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.policy_decision" href="#jarvis.memory.models.AuditEvent.policy_decision">policy_decision</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.prev_hash" href="#jarvis.memory.models.AuditEvent.prev_hash">prev_hash</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.registry" href="#jarvis.memory.models.AuditEvent.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.result" href="#jarvis.memory.models.AuditEvent.result">result</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.task_id" href="#jarvis.memory.models.AuditEvent.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.timestamp" href="#jarvis.memory.models.AuditEvent.timestamp">timestamp</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.tool" href="#jarvis.memory.models.AuditEvent.tool">tool</a></code></li>
+<li><code><a title="jarvis.memory.models.AuditEvent.user_id" href="#jarvis.memory.models.AuditEvent.user_id">user_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.Conversation" href="#jarvis.memory.models.Conversation">Conversation</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.Conversation.created_at" href="#jarvis.memory.models.Conversation.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Conversation.id" href="#jarvis.memory.models.Conversation.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.Conversation.metadata" href="#jarvis.memory.models.Conversation.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.Conversation.registry" href="#jarvis.memory.models.Conversation.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.Conversation.title" href="#jarvis.memory.models.Conversation.title">title</a></code></li>
+<li><code><a title="jarvis.memory.models.Conversation.updated_at" href="#jarvis.memory.models.Conversation.updated_at">updated_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Conversation.user_id" href="#jarvis.memory.models.Conversation.user_id">user_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.Document" href="#jarvis.memory.models.Document">Document</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.Document.created_at" href="#jarvis.memory.models.Document.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.file_name" href="#jarvis.memory.models.Document.file_name">file_name</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.file_path" href="#jarvis.memory.models.Document.file_path">file_path</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.file_size" href="#jarvis.memory.models.Document.file_size">file_size</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.file_type" href="#jarvis.memory.models.Document.file_type">file_type</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.id" href="#jarvis.memory.models.Document.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.metadata" href="#jarvis.memory.models.Document.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.metadata_json" href="#jarvis.memory.models.Document.metadata_json">metadata_json</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.registry" href="#jarvis.memory.models.Document.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.sha256" href="#jarvis.memory.models.Document.sha256">sha256</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.total_chunks" href="#jarvis.memory.models.Document.total_chunks">total_chunks</a></code></li>
+<li><code><a title="jarvis.memory.models.Document.total_pages" href="#jarvis.memory.models.Document.total_pages">total_pages</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.DocumentChunk" href="#jarvis.memory.models.DocumentChunk">DocumentChunk</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.DocumentChunk.chunk_index" href="#jarvis.memory.models.DocumentChunk.chunk_index">chunk_index</a></code></li>
+<li><code><a title="jarvis.memory.models.DocumentChunk.content" href="#jarvis.memory.models.DocumentChunk.content">content</a></code></li>
+<li><code><a title="jarvis.memory.models.DocumentChunk.created_at" href="#jarvis.memory.models.DocumentChunk.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.DocumentChunk.doc_id" href="#jarvis.memory.models.DocumentChunk.doc_id">doc_id</a></code></li>
+<li><code><a title="jarvis.memory.models.DocumentChunk.id" href="#jarvis.memory.models.DocumentChunk.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.DocumentChunk.metadata" href="#jarvis.memory.models.DocumentChunk.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.DocumentChunk.metadata_json" href="#jarvis.memory.models.DocumentChunk.metadata_json">metadata_json</a></code></li>
+<li><code><a title="jarvis.memory.models.DocumentChunk.page_number" href="#jarvis.memory.models.DocumentChunk.page_number">page_number</a></code></li>
+<li><code><a title="jarvis.memory.models.DocumentChunk.registry" href="#jarvis.memory.models.DocumentChunk.registry">registry</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.Embedding" href="#jarvis.memory.models.Embedding">Embedding</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.Embedding.created_at" href="#jarvis.memory.models.Embedding.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Embedding.id" href="#jarvis.memory.models.Embedding.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.Embedding.metadata" href="#jarvis.memory.models.Embedding.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.Embedding.model" href="#jarvis.memory.models.Embedding.model">model</a></code></li>
+<li><code><a title="jarvis.memory.models.Embedding.registry" href="#jarvis.memory.models.Embedding.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.Embedding.source_id" href="#jarvis.memory.models.Embedding.source_id">source_id</a></code></li>
+<li><code><a title="jarvis.memory.models.Embedding.source_type" href="#jarvis.memory.models.Embedding.source_type">source_type</a></code></li>
+<li><code><a title="jarvis.memory.models.Embedding.vector_dims" href="#jarvis.memory.models.Embedding.vector_dims">vector_dims</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.Memory" href="#jarvis.memory.models.Memory">Memory</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.Memory.confidence" href="#jarvis.memory.models.Memory.confidence">confidence</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.content" href="#jarvis.memory.models.Memory.content">content</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.created_at" href="#jarvis.memory.models.Memory.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.evidence_count" href="#jarvis.memory.models.Memory.evidence_count">evidence_count</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.id" href="#jarvis.memory.models.Memory.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.is_hypothesis" href="#jarvis.memory.models.Memory.is_hypothesis">is_hypothesis</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.layer" href="#jarvis.memory.models.Memory.layer">layer</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.metadata" href="#jarvis.memory.models.Memory.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.metadata_json" href="#jarvis.memory.models.Memory.metadata_json">metadata_json</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.registry" href="#jarvis.memory.models.Memory.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.updated_at" href="#jarvis.memory.models.Memory.updated_at">updated_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Memory.user_id" href="#jarvis.memory.models.Memory.user_id">user_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.Message" href="#jarvis.memory.models.Message">Message</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.Message.content" href="#jarvis.memory.models.Message.content">content</a></code></li>
+<li><code><a title="jarvis.memory.models.Message.conversation_id" href="#jarvis.memory.models.Message.conversation_id">conversation_id</a></code></li>
+<li><code><a title="jarvis.memory.models.Message.created_at" href="#jarvis.memory.models.Message.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Message.id" href="#jarvis.memory.models.Message.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.Message.metadata" href="#jarvis.memory.models.Message.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.Message.model" href="#jarvis.memory.models.Message.model">model</a></code></li>
+<li><code><a title="jarvis.memory.models.Message.registry" href="#jarvis.memory.models.Message.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.Message.role" href="#jarvis.memory.models.Message.role">role</a></code></li>
+<li><code><a title="jarvis.memory.models.Message.tokens" href="#jarvis.memory.models.Message.tokens">tokens</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.Power" href="#jarvis.memory.models.Power">Power</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.Power.approval_required" href="#jarvis.memory.models.Power.approval_required">approval_required</a></code></li>
+<li><code><a title="jarvis.memory.models.Power.category" href="#jarvis.memory.models.Power.category">category</a></code></li>
+<li><code><a title="jarvis.memory.models.Power.danger_level" href="#jarvis.memory.models.Power.danger_level">danger_level</a></code></li>
+<li><code><a title="jarvis.memory.models.Power.description" href="#jarvis.memory.models.Power.description">description</a></code></li>
+<li><code><a title="jarvis.memory.models.Power.enabled" href="#jarvis.memory.models.Power.enabled">enabled</a></code></li>
+<li><code><a title="jarvis.memory.models.Power.metadata" href="#jarvis.memory.models.Power.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.Power.name" href="#jarvis.memory.models.Power.name">name</a></code></li>
+<li><code><a title="jarvis.memory.models.Power.power_id" href="#jarvis.memory.models.Power.power_id">power_id</a></code></li>
+<li><code><a title="jarvis.memory.models.Power.registry" href="#jarvis.memory.models.Power.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.Power.version" href="#jarvis.memory.models.Power.version">version</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.Task" href="#jarvis.memory.models.Task">Task</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.Task.created_at" href="#jarvis.memory.models.Task.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.error" href="#jarvis.memory.models.Task.error">error</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.id" href="#jarvis.memory.models.Task.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.inputs" href="#jarvis.memory.models.Task.inputs">inputs</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.metadata" href="#jarvis.memory.models.Task.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.outputs" href="#jarvis.memory.models.Task.outputs">outputs</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.power_id" href="#jarvis.memory.models.Task.power_id">power_id</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.priority" href="#jarvis.memory.models.Task.priority">priority</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.registry" href="#jarvis.memory.models.Task.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.status" href="#jarvis.memory.models.Task.status">status</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.title" href="#jarvis.memory.models.Task.title">title</a></code></li>
+<li><code><a title="jarvis.memory.models.Task.updated_at" href="#jarvis.memory.models.Task.updated_at">updated_at</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.TaskEvent" href="#jarvis.memory.models.TaskEvent">TaskEvent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.TaskEvent.event_type" href="#jarvis.memory.models.TaskEvent.event_type">event_type</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskEvent.id" href="#jarvis.memory.models.TaskEvent.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskEvent.metadata" href="#jarvis.memory.models.TaskEvent.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskEvent.payload" href="#jarvis.memory.models.TaskEvent.payload">payload</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskEvent.registry" href="#jarvis.memory.models.TaskEvent.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskEvent.task_id" href="#jarvis.memory.models.TaskEvent.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskEvent.timestamp" href="#jarvis.memory.models.TaskEvent.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.TaskStep" href="#jarvis.memory.models.TaskStep">TaskStep</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.TaskStep.action" href="#jarvis.memory.models.TaskStep.action">action</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskStep.agent" href="#jarvis.memory.models.TaskStep.agent">agent</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskStep.artifact" href="#jarvis.memory.models.TaskStep.artifact">artifact</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskStep.created_at" href="#jarvis.memory.models.TaskStep.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskStep.id" href="#jarvis.memory.models.TaskStep.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskStep.metadata" href="#jarvis.memory.models.TaskStep.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskStep.registry" href="#jarvis.memory.models.TaskStep.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskStep.status" href="#jarvis.memory.models.TaskStep.status">status</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskStep.step_number" href="#jarvis.memory.models.TaskStep.step_number">step_number</a></code></li>
+<li><code><a title="jarvis.memory.models.TaskStep.task_id" href="#jarvis.memory.models.TaskStep.task_id">task_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.memory.models.User" href="#jarvis.memory.models.User">User</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.memory.models.User.created_at" href="#jarvis.memory.models.User.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.memory.models.User.id" href="#jarvis.memory.models.User.id">id</a></code></li>
+<li><code><a title="jarvis.memory.models.User.metadata" href="#jarvis.memory.models.User.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.memory.models.User.registry" href="#jarvis.memory.models.User.registry">registry</a></code></li>
+<li><code><a title="jarvis.memory.models.User.role" href="#jarvis.memory.models.User.role">role</a></code></li>
+<li><code><a title="jarvis.memory.models.User.username" href="#jarvis.memory.models.User.username">username</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

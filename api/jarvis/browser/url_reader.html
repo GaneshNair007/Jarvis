@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.browser.url_reader API documentation</title>
+<meta name="description" content="DOM Content Reader and Sanitizer …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.browser.url_reader</code></h1>
+</header>
+<section id="section-intro">
+<p>DOM Content Reader and Sanitizer.</p>
+<p>Extracts structured text, headings, and links from web pages while defending
+against indirect prompt injection and excessive content extraction.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.browser.url_reader.ExtractedLink"><code class="flex name class">
+<span>class <span class="ident">ExtractedLink</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ExtractedLink(BaseModel):
+    text: str
+    url: str</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.browser.url_reader.ExtractedLink.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.ExtractedLink.text"><code class="name">var <span class="ident">text</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.ExtractedLink.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent"><code class="flex name class">
+<span>class <span class="ident">PageContent</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PageContent(BaseModel):
+    url: str
+    title: str
+    meta_description: str = &#34;&#34;
+    headings: list[str] = Field(default_factory=list)
+    text_content: str
+    links: list[ExtractedLink] = Field(default_factory=list)
+    has_injection_flag: bool = False
+    injection_warnings: list[str] = Field(default_factory=list)
+    status_code: int = 200</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.browser.url_reader.PageContent.has_injection_flag"><code class="name">var <span class="ident">has_injection_flag</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent.headings"><code class="name">var <span class="ident">headings</span> : list[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent.injection_warnings"><code class="name">var <span class="ident">injection_warnings</span> : list[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent.links"><code class="name">var <span class="ident">links</span> : list[<a title="jarvis.browser.url_reader.ExtractedLink" href="#jarvis.browser.url_reader.ExtractedLink">ExtractedLink</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent.meta_description"><code class="name">var <span class="ident">meta_description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent.status_code"><code class="name">var <span class="ident">status_code</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent.text_content"><code class="name">var <span class="ident">text_content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.browser.url_reader.PageContent.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.browser.url_reader.URLReader"><code class="flex name class">
+<span>class <span class="ident">URLReader</span></span>
+<span>(</span><span>context_manager: Optional[BrowserContextManager] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class URLReader:
+    &#34;&#34;&#34;Reads and sanitizes web pages through an ephemeral browser context.&#34;&#34;&#34;
+
+    def __init__(self, context_manager: Optional[BrowserContextManager] = None):
+        self.ctx_mgr = context_manager or BrowserContextManager()
+
+    def read_url(self, url: str, allow_private: bool = False) -&gt; PageContent:
+        &#34;&#34;&#34;Navigates to a URL, extracts DOM content, and sanitizes against prompt injection.
+
+        Args:
+            url: Target web URL.
+            allow_private: Whether private/internal network addresses are allowed.
+
+        Returns:
+            PageContent: Structured page metadata and clean text.
+        &#34;&#34;&#34;
+        validated_url = self.ctx_mgr.validate_url(url, allow_private=allow_private)
+        logger.info(f&#34;Reading URL: {validated_url}&#34;)
+
+        with self.ctx_mgr.research_context(allow_private=allow_private) as (context, page):
+            response = page.goto(validated_url, wait_until=&#34;domcontentloaded&#34;, timeout=self.ctx_mgr.timeout_ms)
+            status_code = response.status if response else 200
+            return self.extract_from_page(page, validated_url, status_code=status_code)
+
+    def extract_from_page(self, page: Any, url: str, status_code: int = 200) -&gt; PageContent:
+        &#34;&#34;&#34;Extracts clean DOM structure from an already loaded Playwright Page.&#34;&#34;&#34;
+        title = page.title() or &#34;&#34;
+
+        # Extract meta description
+        meta_desc = &#34;&#34;
+        try:
+            desc_tag = page.locator(&#34;meta[name=&#39;description&#39;]&#34;).first
+            if desc_tag.count() &gt; 0:
+                meta_desc = desc_tag.get_attribute(&#34;content&#34;) or &#34;&#34;
+        except Exception:
+            pass
+
+        # Extract headings
+        headings: list[str] = []
+        try:
+            heading_elements = page.locator(&#34;h1, h2, h3&#34;).all()
+            for h in heading_elements[:15]:
+                try:
+                    txt = h.inner_text().strip()
+                    if txt:
+                        headings.append(txt)
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+        # Extract main readable text by removing script, style, noscript
+        raw_text = page.evaluate(&#34;&#34;&#34;
+            () =&gt; {
+                const cloned = document.body.cloneNode(true);
+                const toRemove = cloned.querySelectorAll(&#39;script, style, noscript, svg, nav, footer&#39;);
+                toRemove.forEach(el =&gt; el.remove());
+                return cloned.innerText || &#39;&#39;;
+            }
+        &#34;&#34;&#34;)
+
+        clean_text = self._clean_whitespace(raw_text)
+
+        # Extract links
+        links: list[ExtractedLink] = []
+        try:
+            anchor_elements = page.locator(&#34;a[href]&#34;).all()
+            for a in anchor_elements[:40]:
+                try:
+                    href = a.get_attribute(&#34;href&#34;)
+                    anchor_text = a.inner_text().strip()
+                    if href and not href.startswith((&#34;#&#34;, &#34;javascript:&#34;, &#34;mailto:&#34;)):
+                        full_url = urljoin(url, href)
+                        parsed = urlparse(full_url)
+                        if parsed.scheme in (&#34;http&#34;, &#34;https&#34;):
+                            links.append(ExtractedLink(text=anchor_text or full_url, url=full_url))
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+        # Prompt injection scan
+        injections_found: list[str] = []
+        for pattern in INJECTION_PATTERNS:
+            matches = re.findall(pattern, clean_text)
+            if matches:
+                injections_found.extend(matches)
+
+        has_flag = len(injections_found) &gt; 0
+        if has_flag:
+            logger.warning(
+                f&#34;INDIRECT PROMPT INJECTION DETECTED on &#39;{url}&#39;: &#34;
+                f&#34;{len(injections_found)} patterns matched! Content quarantined.&#34;
+            )
+
+        return PageContent(
+            url=url,
+            title=title,
+            meta_description=meta_desc,
+            headings=headings,
+            text_content=clean_text[:15000],  # Bound context window
+            links=links[:25],
+            has_injection_flag=has_flag,
+            injection_warnings=injections_found,
+            status_code=status_code,
+        )
+
+    @staticmethod
+    def _clean_whitespace(text: str) -&gt; str:
+        &#34;&#34;&#34;Normalizes multiple blank lines and whitespace.&#34;&#34;&#34;
+        text = re.sub(r&#34;\r\n|\r&#34;, &#34;\n&#34;, text)
+        text = re.sub(r&#34;\n{3,}&#34;, &#34;\n\n&#34;, text)
+        text = re.sub(r&#34;[ \t]+&#34;, &#34; &#34;, text)
+        return text.strip()</code></pre>
+</details>
+<div class="desc"><p>Reads and sanitizes web pages through an ephemeral browser context.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.browser.url_reader.URLReader.extract_from_page"><code class="name flex">
+<span>def <span class="ident">extract_from_page</span></span>(<span>self, page: Any, url: str, status_code: int = 200) ‑> <a title="jarvis.browser.url_reader.PageContent" href="#jarvis.browser.url_reader.PageContent">PageContent</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extract_from_page(self, page: Any, url: str, status_code: int = 200) -&gt; PageContent:
+    &#34;&#34;&#34;Extracts clean DOM structure from an already loaded Playwright Page.&#34;&#34;&#34;
+    title = page.title() or &#34;&#34;
+
+    # Extract meta description
+    meta_desc = &#34;&#34;
+    try:
+        desc_tag = page.locator(&#34;meta[name=&#39;description&#39;]&#34;).first
+        if desc_tag.count() &gt; 0:
+            meta_desc = desc_tag.get_attribute(&#34;content&#34;) or &#34;&#34;
+    except Exception:
+        pass
+
+    # Extract headings
+    headings: list[str] = []
+    try:
+        heading_elements = page.locator(&#34;h1, h2, h3&#34;).all()
+        for h in heading_elements[:15]:
+            try:
+                txt = h.inner_text().strip()
+                if txt:
+                    headings.append(txt)
+            except Exception:
+                pass
+    except Exception:
+        pass
+
+    # Extract main readable text by removing script, style, noscript
+    raw_text = page.evaluate(&#34;&#34;&#34;
+        () =&gt; {
+            const cloned = document.body.cloneNode(true);
+            const toRemove = cloned.querySelectorAll(&#39;script, style, noscript, svg, nav, footer&#39;);
+            toRemove.forEach(el =&gt; el.remove());
+            return cloned.innerText || &#39;&#39;;
+        }
+    &#34;&#34;&#34;)
+
+    clean_text = self._clean_whitespace(raw_text)
+
+    # Extract links
+    links: list[ExtractedLink] = []
+    try:
+        anchor_elements = page.locator(&#34;a[href]&#34;).all()
+        for a in anchor_elements[:40]:
+            try:
+                href = a.get_attribute(&#34;href&#34;)
+                anchor_text = a.inner_text().strip()
+                if href and not href.startswith((&#34;#&#34;, &#34;javascript:&#34;, &#34;mailto:&#34;)):
+                    full_url = urljoin(url, href)
+                    parsed = urlparse(full_url)
+                    if parsed.scheme in (&#34;http&#34;, &#34;https&#34;):
+                        links.append(ExtractedLink(text=anchor_text or full_url, url=full_url))
+            except Exception:
+                pass
+    except Exception:
+        pass
+
+    # Prompt injection scan
+    injections_found: list[str] = []
+    for pattern in INJECTION_PATTERNS:
+        matches = re.findall(pattern, clean_text)
+        if matches:
+            injections_found.extend(matches)
+
+    has_flag = len(injections_found) &gt; 0
+    if has_flag:
+        logger.warning(
+            f&#34;INDIRECT PROMPT INJECTION DETECTED on &#39;{url}&#39;: &#34;
+            f&#34;{len(injections_found)} patterns matched! Content quarantined.&#34;
+        )
+
+    return PageContent(
+        url=url,
+        title=title,
+        meta_description=meta_desc,
+        headings=headings,
+        text_content=clean_text[:15000],  # Bound context window
+        links=links[:25],
+        has_injection_flag=has_flag,
+        injection_warnings=injections_found,
+        status_code=status_code,
+    )</code></pre>
+</details>
+<div class="desc"><p>Extracts clean DOM structure from an already loaded Playwright Page.</p></div>
+</dd>
+<dt id="jarvis.browser.url_reader.URLReader.read_url"><code class="name flex">
+<span>def <span class="ident">read_url</span></span>(<span>self, url: str, allow_private: bool = False) ‑> <a title="jarvis.browser.url_reader.PageContent" href="#jarvis.browser.url_reader.PageContent">PageContent</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_url(self, url: str, allow_private: bool = False) -&gt; PageContent:
+    &#34;&#34;&#34;Navigates to a URL, extracts DOM content, and sanitizes against prompt injection.
+
+    Args:
+        url: Target web URL.
+        allow_private: Whether private/internal network addresses are allowed.
+
+    Returns:
+        PageContent: Structured page metadata and clean text.
+    &#34;&#34;&#34;
+    validated_url = self.ctx_mgr.validate_url(url, allow_private=allow_private)
+    logger.info(f&#34;Reading URL: {validated_url}&#34;)
+
+    with self.ctx_mgr.research_context(allow_private=allow_private) as (context, page):
+        response = page.goto(validated_url, wait_until=&#34;domcontentloaded&#34;, timeout=self.ctx_mgr.timeout_ms)
+        status_code = response.status if response else 200
+        return self.extract_from_page(page, validated_url, status_code=status_code)</code></pre>
+</details>
+<div class="desc"><p>Navigates to a URL, extracts DOM content, and sanitizes against prompt injection.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>url</code></strong></dt>
+<dd>Target web URL.</dd>
+<dt><strong><code>allow_private</code></strong></dt>
+<dd>Whether private/internal network addresses are allowed.</dd>
+<dt>Returns</dt>
+<dt>-----=</dt>
+<dt><code><a title="jarvis.browser.url_reader.PageContent" href="#jarvis.browser.url_reader.PageContent">PageContent</a></code></dt>
+<dd>Structured page metadata and clean text.</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.browser" href="index.html">jarvis.browser</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.browser.url_reader.ExtractedLink" href="#jarvis.browser.url_reader.ExtractedLink">ExtractedLink</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.browser.url_reader.ExtractedLink.model_config" href="#jarvis.browser.url_reader.ExtractedLink.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.ExtractedLink.text" href="#jarvis.browser.url_reader.ExtractedLink.text">text</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.ExtractedLink.url" href="#jarvis.browser.url_reader.ExtractedLink.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.browser.url_reader.PageContent" href="#jarvis.browser.url_reader.PageContent">PageContent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.browser.url_reader.PageContent.has_injection_flag" href="#jarvis.browser.url_reader.PageContent.has_injection_flag">has_injection_flag</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.PageContent.headings" href="#jarvis.browser.url_reader.PageContent.headings">headings</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.PageContent.injection_warnings" href="#jarvis.browser.url_reader.PageContent.injection_warnings">injection_warnings</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.PageContent.links" href="#jarvis.browser.url_reader.PageContent.links">links</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.PageContent.meta_description" href="#jarvis.browser.url_reader.PageContent.meta_description">meta_description</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.PageContent.model_config" href="#jarvis.browser.url_reader.PageContent.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.PageContent.status_code" href="#jarvis.browser.url_reader.PageContent.status_code">status_code</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.PageContent.text_content" href="#jarvis.browser.url_reader.PageContent.text_content">text_content</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.PageContent.title" href="#jarvis.browser.url_reader.PageContent.title">title</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.PageContent.url" href="#jarvis.browser.url_reader.PageContent.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.browser.url_reader.URLReader" href="#jarvis.browser.url_reader.URLReader">URLReader</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.browser.url_reader.URLReader.extract_from_page" href="#jarvis.browser.url_reader.URLReader.extract_from_page">extract_from_page</a></code></li>
+<li><code><a title="jarvis.browser.url_reader.URLReader.read_url" href="#jarvis.browser.url_reader.URLReader.read_url">read_url</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.main API documentation</title>
+<meta name="description" content="JARVIS Unified CLI &amp; Server Entry Point
+Usage:
+python -m jarvis.main serve
+# Run production FastAPI &amp; WebSocket server
+python -m jarvis.main …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.main</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Unified CLI &amp; Server Entry Point</p>
+<p>Usage
+-----=
+python -m jarvis.main serve
+# Run production FastAPI &amp; WebSocket server
+python -m jarvis.main chat "text" # Process a single query via terminal
+python -m jarvis.main health
+# Print live host health metrics
+python -m jarvis.main audit
+# Verify cryptographic audit chain integrity
+python -m jarvis.main powers
+# List catalog power statistics</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.main.cli_entrypoint"><code class="name flex">
+<span>def <span class="ident">cli_entrypoint</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cli_entrypoint():
+    args = sys.argv[1:]
+    if not args or args[0] == &#34;serve&#34;:
+        run_server()
+    elif args[0] == &#34;chat&#34;:
+        if len(args) &lt; 2:
+            print(&#34;Error: Please provide a query string. Example: python -m jarvis.main chat &#39;System health&#39;&#34;)
+            sys.exit(1)
+        run_cli_chat(args[1])
+    elif args[0] == &#34;health&#34;:
+        run_health()
+    elif args[0] == &#34;audit&#34;:
+        run_audit_verify()
+    elif args[0] == &#34;powers&#34;:
+        run_powers_summary()
+    elif args[0] == &#34;voice&#34;:
+        run_voice_mode()
+    elif args[0] in [&#34;--help&#34;, &#34;-h&#34;, &#34;help&#34;]:
+        print(&#34;&#34;&#34;
+JARVIS Operating System CLI
+Usage:
+  python -m jarvis.main serve       # Run production FastAPI &amp; WebSocket server
+  python -m jarvis.main chat &#34;text&#34; # Process a single query via terminal
+  python -m jarvis.main health      # Print live host health metrics
+  python -m jarvis.main audit       # Verify cryptographic audit chain integrity
+  python -m jarvis.main powers      # List catalog power statistics
+  python -m jarvis.main voice       # Launch interactive full-duplex voice console
+&#34;&#34;&#34;)
+    else:
+        print(f&#34;Unknown command &#39;{args[0]}&#39;. Use: serve, chat, health, audit, powers, voice, --help&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.main.run_audit_verify"><code class="name flex">
+<span>def <span class="ident">run_audit_verify</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_audit_verify():
+    valid, count, msg = audit_ledger.verify_integrity()
+    status_icon = &#34;✅&#34; if valid else &#34;❌&#34;
+    print(f&#34;\n{status_icon} Audit Ledger Verification: {msg}&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.main.run_cli_chat"><code class="name flex">
+<span>def <span class="ident">run_cli_chat</span></span>(<span>query: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_cli_chat(query: str):
+    print(f&#34;\n[USER]: {query}&#34;)
+    result = asyncio.run(orchestrator.process_user_query(query))
+    print(f&#34;[JARVIS ({result.get(&#39;tier&#39;)})]: {json.dumps(result.get(&#39;response&#39;), indent=2)}\n&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.main.run_health"><code class="name flex">
+<span>def <span class="ident">run_health</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_health():
+    report = it_admin_powers.system_health_report()
+    print(&#34;\n══════════════════════ JARVIS SYSTEM HEALTH ══════════════════════&#34;)
+    print(f&#34;Status      : {report[&#39;status&#39;].upper()}&#34;)
+    print(f&#34;CPU Usage   : {report[&#39;cpu&#39;][&#39;percent&#39;]}% ({report[&#39;cpu&#39;][&#39;cores_logical&#39;]} cores)&#34;)
+    print(
+        f&#34;Memory Usage: {report[&#39;memory&#39;][&#39;percent&#39;]}% ({report[&#39;memory&#39;][&#39;used_gb&#39;]} GB / {report[&#39;memory&#39;][&#39;total_gb&#39;]} GB)&#34;
+    )
+    print(
+        f&#34;Disk Usage  : {report[&#39;disk&#39;][&#39;percent&#39;]}% ({report[&#39;disk&#39;][&#39;used_gb&#39;]} GB / {report[&#39;disk&#39;][&#39;total_gb&#39;]} GB)&#34;
+    )
+    print(&#34;═════════════════════════════════════════════════════════════════\n&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.main.run_powers_summary"><code class="name flex">
+<span>def <span class="ident">run_powers_summary</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_powers_summary():
+    total = power_registry.total_count()
+    cats = power_registry.list_categories()
+    print(f&#34;\n⚡ JARVIS Power Registry: {total} powers across {len(cats)} categories.&#34;)
+    for cat in cats:
+        p_count = len(power_registry.get_powers_by_category(cat))
+        print(f&#34;  - {cat:30}: {p_count} powers&#34;)
+    print()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.main.run_server"><code class="name flex">
+<span>def <span class="ident">run_server</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_server():
+    print(f&#34;🚀 Starting JARVIS Operating System on http://{settings.jarvis_host}:{settings.jarvis_port}&#34;)
+    uvicorn.run(
+        &#34;jarvis.api.server:app&#34;, host=settings.jarvis_host, port=settings.jarvis_port, reload=settings.jarvis_debug
+    )</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.main.run_voice_mode"><code class="name flex">
+<span>def <span class="ident">run_voice_mode</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_voice_mode():
+    from jarvis.voice.wake import wake_detector
+    from jarvis.voice.tts import tts_engine
+
+    print(&#34;\n🎙️  JARVIS Full-Duplex Voice Mode Active&#34;)
+    print(&#34;Wake word: &#39;Hey Jarvis&#39; or press Enter for Push-to-Talk. Type &#39;exit&#39; to quit.\n&#34;)
+    tts_engine.speak_live(&#34;Jarvis voice subsystem online.&#34;, async_mode=True)
+    wake_detector.start_listening()
+
+    while True:
+        try:
+            cmd = input(&#34;voice&gt; &#34;)
+            if cmd.strip().lower() in [&#34;exit&#34;, &#34;quit&#34;]:
+                wake_detector.stop_listening()
+                print(&#34;Voice mode deactivated.&#34;)
+                break
+            elif not cmd.strip():
+                wake_detector.trigger_push_to_talk(&#34;console_enter&#34;)
+                print(&#34;Activated via Push-to-Talk.&#34;)
+            else:
+                run_cli_chat(cmd)
+        except (KeyboardInterrupt, EOFError):
+            wake_detector.stop_listening()
+            break</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis" href="index.html">jarvis</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="jarvis.main.cli_entrypoint" href="#jarvis.main.cli_entrypoint">cli_entrypoint</a></code></li>
+<li><code><a title="jarvis.main.run_audit_verify" href="#jarvis.main.run_audit_verify">run_audit_verify</a></code></li>
+<li><code><a title="jarvis.main.run_cli_chat" href="#jarvis.main.run_cli_chat">run_cli_chat</a></code></li>
+<li><code><a title="jarvis.main.run_health" href="#jarvis.main.run_health">run_health</a></code></li>
+<li><code><a title="jarvis.main.run_powers_summary" href="#jarvis.main.run_powers_summary">run_powers_summary</a></code></li>
+<li><code><a title="jarvis.main.run_server" href="#jarvis.main.run_server">run_server</a></code></li>
+<li><code><a title="jarvis.main.run_voice_mode" href="#jarvis.main.run_voice_mode">run_voice_mode</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

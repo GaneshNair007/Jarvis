@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.visual_grounding API documentation</title>
+<meta name="description" content="JARVIS GUI Visual Grounding &amp; Safe Desktop Control …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.visual_grounding</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS GUI Visual Grounding &amp; Safe Desktop Control.</p>
+<p>Implements UI-TARS-1.5-7B vision-language-action grounding substrate:
+- 0-1000 normalized coordinate &lt;-&gt; absolute screen pixel transformation
+- Desktop screenshot capture pipeline
+- UI-TARS action syntax parser
+- Inline permission broker with restricted zone collision detection
+- Safe desktop hardware action dispatching with dry-run support</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.visual_grounding.RestrictedZone"><code class="flex name class">
+<span>class <span class="ident">RestrictedZone</span></span>
+<span>(</span><span>name: str,<br>norm_xmin: float,<br>norm_ymin: float,<br>norm_xmax: float,<br>norm_ymax: float,<br>severity: str = 'critical',<br>description: str = '')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class RestrictedZone:
+    &#34;&#34;&#34;Designates a protected screen boundary that blocks or gates automation clicks.&#34;&#34;&#34;
+
+    name: str
+    norm_xmin: float
+    norm_ymin: float
+    norm_xmax: float
+    norm_ymax: float
+    severity: str = &#34;critical&#34;  # &#34;critical&#34;, &#34;high&#34;, &#34;prompt_user&#34;
+    description: str = &#34;&#34;
+
+    def contains(self, norm_x: float, norm_y: float) -&gt; bool:
+        return self.norm_xmin &lt;= norm_x &lt;= self.norm_xmax and self.norm_ymin &lt;= norm_y &lt;= self.norm_ymax</code></pre>
+</details>
+<div class="desc"><p>Designates a protected screen boundary that blocks or gates automation clicks.</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.core.visual_grounding.RestrictedZone.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.RestrictedZone.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.RestrictedZone.norm_xmax"><code class="name">var <span class="ident">norm_xmax</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.RestrictedZone.norm_xmin"><code class="name">var <span class="ident">norm_xmin</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.RestrictedZone.norm_ymax"><code class="name">var <span class="ident">norm_ymax</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.RestrictedZone.norm_ymin"><code class="name">var <span class="ident">norm_ymin</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.RestrictedZone.severity"><code class="name">var <span class="ident">severity</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.visual_grounding.RestrictedZone.contains"><code class="name flex">
+<span>def <span class="ident">contains</span></span>(<span>self, norm_x: float, norm_y: float) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def contains(self, norm_x: float, norm_y: float) -&gt; bool:
+    return self.norm_xmin &lt;= norm_x &lt;= self.norm_xmax and self.norm_ymin &lt;= norm_y &lt;= self.norm_ymax</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualAction"><code class="flex name class">
+<span>class <span class="ident">VisualAction</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class VisualAction(BaseModel):
+    action_type: str  # &#34;click&#34;, &#34;double_click&#34;, &#34;right_click&#34;, &#34;type&#34;, &#34;drag&#34;, &#34;scroll&#34;, &#34;hotkey&#34;
+    norm_x: Optional[float] = None
+    norm_y: Optional[float] = None
+    target_text: Optional[str] = None
+    keys: Optional[str] = None
+    drag_to_norm_x: Optional[float] = None
+    drag_to_norm_y: Optional[float] = None
+    confidence: float = 1.0</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.visual_grounding.VisualAction.action_type"><code class="name">var <span class="ident">action_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualAction.confidence"><code class="name">var <span class="ident">confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualAction.drag_to_norm_x"><code class="name">var <span class="ident">drag_to_norm_x</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualAction.drag_to_norm_y"><code class="name">var <span class="ident">drag_to_norm_y</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualAction.keys"><code class="name">var <span class="ident">keys</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualAction.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualAction.norm_x"><code class="name">var <span class="ident">norm_x</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualAction.norm_y"><code class="name">var <span class="ident">norm_y</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualAction.target_text"><code class="name">var <span class="ident">target_text</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine"><code class="flex name class">
+<span>class <span class="ident">VisualGroundingEngine</span></span>
+<span>(</span><span>display_width: Optional[int] = None, display_height: Optional[int] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class VisualGroundingEngine:
+    &#34;&#34;&#34;
+    Translates UI-TARS 0-1000 normalized coordinates to display hardware coordinates
+    and enforces safety boundaries before executing OS mouse/keyboard actions.
+    &#34;&#34;&#34;
+
+    DEFAULT_SCREEN_WIDTH: int = 1920
+    DEFAULT_SCREEN_HEIGHT: int = 1080
+
+    # Default safety guardrail zones on 0-1000 scale
+    DEFAULT_RESTRICTED_ZONES: List[RestrictedZone] = [
+        # Top-right window close button (accidental app termination guard)
+        RestrictedZone(
+            name=&#34;top_right_system_close&#34;,
+            norm_xmin=975,
+            norm_ymin=0,
+            norm_xmax=1000,
+            norm_ymax=40,
+            severity=&#34;prompt_user&#34;,
+            description=&#34;Window close button region&#34;,
+        ),
+        # Windows Start button / Taskbar critical system corner
+        RestrictedZone(
+            name=&#34;taskbar_system_privilege&#34;,
+            norm_xmin=0,
+            norm_ymin=960,
+            norm_xmax=50,
+            norm_ymax=1000,
+            severity=&#34;prompt_user&#34;,
+            description=&#34;Start menu administrative area&#34;,
+        ),
+        # Common UAC / elevated credential dialog center zone
+        RestrictedZone(
+            name=&#34;uac_prompt_shield&#34;,
+            norm_xmin=400,
+            norm_ymin=450,
+            norm_xmax=600,
+            norm_ymax=550,
+            severity=&#34;critical&#34;,
+            description=&#34;Elevated Administrator prompt sensitive zone&#34;,
+        ),
+    ]
+
+    def __init__(self, display_width: Optional[int] = None, display_height: Optional[int] = None):
+        self.screen_width = display_width or self._detect_screen_width()
+        self.screen_height = display_height or self._detect_screen_height()
+        self.restricted_zones: List[RestrictedZone] = list(self.DEFAULT_RESTRICTED_ZONES)
+        self.action_history: List[Dict[str, Any]] = []
+
+    def _detect_screen_width(self) -&gt; int:
+        try:
+            import ctypes
+
+            user32 = ctypes.windll.user32
+            return int(user32.GetSystemMetrics(0))
+        except Exception:
+            return self.DEFAULT_SCREEN_WIDTH
+
+    def _detect_screen_height(self) -&gt; int:
+        try:
+            import ctypes
+
+            user32 = ctypes.windll.user32
+            return int(user32.GetSystemMetrics(1))
+        except Exception:
+            return self.DEFAULT_SCREEN_HEIGHT
+
+    def add_restricted_zone(self, zone: RestrictedZone) -&gt; None:
+        &#34;&#34;&#34;Appends a custom restricted zone to safety broker.&#34;&#34;&#34;
+        self.restricted_zones.append(zone)
+
+    def normalized_to_absolute(
+        self,
+        norm_x: float,
+        norm_y: float,
+        width: Optional[int] = None,
+        height: Optional[int] = None,
+    ) -&gt; Tuple[int, int]:
+        &#34;&#34;&#34;
+        Converts 0-1000 relative UI-TARS coordinate to exact screen pixel coordinates.
+        Clamps inputs safely to [0, 1000].
+        &#34;&#34;&#34;
+        w = width or self.screen_width
+        h = height or self.screen_height
+
+        clamped_x = max(0.0, min(1000.0, float(norm_x)))
+        clamped_y = max(0.0, min(1000.0, float(norm_y)))
+
+        abs_x = int(round((clamped_x / 1000.0) * w))
+        abs_y = int(round((clamped_y / 1000.0) * h))
+
+        # Clamp pixels to bounds
+        abs_x = max(0, min(w - 1, abs_x))
+        abs_y = max(0, min(h - 1, abs_y))
+
+        return abs_x, abs_y
+
+    def absolute_to_normalized(
+        self,
+        abs_x: int,
+        abs_y: int,
+        width: Optional[int] = None,
+        height: Optional[int] = None,
+    ) -&gt; Tuple[float, float]:
+        &#34;&#34;&#34;Converts screen pixel coordinates to 0-1000 UI-TARS normalized float.&#34;&#34;&#34;
+        w = width or self.screen_width
+        h = height or self.screen_height
+
+        norm_x = round((float(abs_x) / float(w)) * 1000.0, 2)
+        norm_y = round((float(abs_y) / float(h)) * 1000.0, 2)
+
+        return max(0.0, min(1000.0, norm_x)), max(0.0, min(1000.0, norm_y))
+
+    def parse_uitars_output(self, raw_output: str) -&gt; List[VisualAction]:
+        &#34;&#34;&#34;
+        Parses UI-TARS / Agent S formatted action responses into executable VisualActions.
+        Supports standard UI-TARS 1.5 output formats:
+          - click(point=&#39;[500, 250]&#39;) or click(point=[500, 250])
+          - click(point=&#39;(500, 250)&#39;) or click(point=(500, 250))
+          - click(start_box=&#39;[ymin, xmin, ymax, xmax]&#39;) -&gt; centroid calculation
+          - click(start_box=&#39;[500, 250]&#39;)
+          - double_click(point=...) / double_click(start_box=...)
+          - right_click(point=...) / right_click(start_box=...)
+          - type(content=&#39;hello&#39;) / type(text=&#39;hello&#39;)
+          - hotkey(key=&#39;ctrl+s&#39;)
+          - scroll(direction=&#39;down&#39;) / scroll(direction=&#39;up&#39;)
+          - drag(start=[100, 100], end=[500, 500])
+        &#34;&#34;&#34;
+        ordered_actions: List[Tuple[int, VisualAction]] = []
+        text = raw_output.strip()
+
+        # Helper to parse coordinates from point or start_box
+        def _extract_coords(arg_str: str) -&gt; Optional[Tuple[float, float]]:
+            nums = [float(n) for n in re.findall(r&#34;(\d+(?:\.\d+)?)&#34;, arg_str)]
+            if len(nums) == 2:
+                return nums[0], nums[1]
+            elif len(nums) == 4:
+                # Bounding box [ymin, xmin, ymax, xmax] or [x1, y1, x2, y2] -&gt; centroid
+                cx = round((nums[0] + nums[2]) / 2.0, 2)
+                cy = round((nums[1] + nums[3]) / 2.0, 2)
+                return cx, cy
+            return None
+
+        # 1. Matches click, double_click, right_click
+        click_pattern = re.finditer(
+            r&#34;(click|double_click|right_click)\s*\(\s*(?:point|start_box)\s*=\s*([&#39;\&#34;].*?[&#39;\&#34;]|\[.*?\]|\(.*?\))(?:,\s*[^)]*)?\)&#34;,
+            text,
+            re.IGNORECASE,
+        )
+        for m in click_pattern:
+            act_type = m.group(1).lower()
+            coords = _extract_coords(m.group(2))
+            if coords:
+                ordered_actions.append(
+                    (m.start(), VisualAction(action_type=act_type, norm_x=coords[0], norm_y=coords[1]))
+                )
+
+        # 2. Match type(content=&#39;...&#39;) or type(text=&#39;...&#39;)
+        type_matches = re.finditer(
+            r&#34;type\s*\(\s*(?:content|text)\s*=\s*[&#39;\&#34;](.*?)[&#39;\&#34;]\s*(?:,\s*[^)]*)?\)&#34;,
+            text,
+            re.IGNORECASE,
+        )
+        for m in type_matches:
+            ordered_actions.append((m.start(), VisualAction(action_type=&#34;type&#34;, target_text=m.group(1))))
+
+        # 3. Match hotkey(key=&#39;...&#39;)
+        hotkey_matches = re.finditer(
+            r&#34;hotkey\s*\(\s*key\s*=\s*[&#39;\&#34;](.*?)[&#39;\&#34;]\s*(?:,\s*[^)]*)?\)&#34;,
+            text,
+            re.IGNORECASE,
+        )
+        for m in hotkey_matches:
+            ordered_actions.append((m.start(), VisualAction(action_type=&#34;hotkey&#34;, keys=m.group(1))))
+
+        # 4. Match scroll(direction=&#39;...&#39;)
+        scroll_matches = re.finditer(
+            r&#34;scroll\s*\(\s*(?:direction\s*=\s*)?[&#39;\&#34;]?(up|down|left|right)[&#39;\&#34;]?\s*(?:,\s*[^)]*)?\)&#34;,
+            text,
+            re.IGNORECASE,
+        )
+        for m in scroll_matches:
+            ordered_actions.append((m.start(), VisualAction(action_type=&#34;scroll&#34;, keys=m.group(1).lower())))
+
+        # 5. Match drag(start=[x1, y1], end=[x2, y2])
+        drag_matches = re.finditer(
+            r&#34;drag\s*\(\s*start\s*=\s*[&#39;\&#34;]?[\[\(]\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*[\]\)][&#39;\&#34;]?\s*,\s*end\s*=\s*[&#39;\&#34;]?[\[\(]\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*[\]\)][&#39;\&#34;]?\s*\)&#34;,
+            text,
+            re.IGNORECASE,
+        )
+        for m in drag_matches:
+            ordered_actions.append(
+                (
+                    m.start(),
+                    VisualAction(
+                        action_type=&#34;drag&#34;,
+                        norm_x=float(m.group(1)),
+                        norm_y=float(m.group(2)),
+                        drag_to_norm_x=float(m.group(3)),
+                        drag_to_norm_y=float(m.group(4)),
+                    ),
+                )
+            )
+
+        ordered_actions.sort(key=lambda item: item[0])
+        return [act for _, act in ordered_actions]
+
+    def validate_action_safety(self, action: VisualAction) -&gt; Tuple[bool, Optional[str]]:
+        &#34;&#34;&#34;
+        Inline permission broker checks whether coordinate falls in a restricted zone.
+        Returns (is_safe, violation_reason).
+        &#34;&#34;&#34;
+        if action.norm_x is not None and action.norm_y is not None:
+            for zone in self.restricted_zones:
+                if zone.contains(action.norm_x, action.norm_y):
+                    reason = (
+                        f&#34;Blocked dangerous coordinate ({action.norm_x}, {action.norm_y}): &#34;
+                        f&#34;Target intersects restricted zone &#39;{zone.name}&#39; ({zone.description}). &#34;
+                        f&#34;Severity: {zone.severity}.&#34;
+                    )
+                    logger.warning(reason)
+                    return False, reason
+
+        if action.drag_to_norm_x is not None and action.drag_to_norm_y is not None:
+            for zone in self.restricted_zones:
+                if zone.contains(action.drag_to_norm_x, action.drag_to_norm_y):
+                    reason = f&#34;Blocked drag destination: target intersects restricted zone &#39;{zone.name}&#39;.&#34;
+                    return False, reason
+
+        return True, None
+
+    def capture_screen(self, save_path: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Captures active desktop display buffer.
+        Saves screenshot if path provided; returns perception metadata.
+        &#34;&#34;&#34;
+        timestamp = time.time()
+        try:
+            from PIL import ImageGrab
+
+            screenshot = ImageGrab.grab()
+            w, h = screenshot.size
+            if save_path:
+                Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+                screenshot.save(save_path)
+            return {
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;width&#34;: w,
+                &#34;height&#34;: h,
+                &#34;timestamp&#34;: timestamp,
+                &#34;saved_to&#34;: save_path,
+                &#34;mode&#34;: &#34;live_display&#34;,
+            }
+        except Exception as e:
+            logger.info(f&#34;Using synthetic display buffer fallback: {e}&#34;)
+            return {
+                &#34;status&#34;: &#34;simulated&#34;,
+                &#34;width&#34;: self.screen_width,
+                &#34;height&#34;: self.screen_height,
+                &#34;timestamp&#34;: timestamp,
+                &#34;saved_to&#34;: None,
+                &#34;mode&#34;: &#34;synthetic_buffer&#34;,
+            }
+
+    def execute_action(self, action: VisualAction, dry_run: bool = True) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Dispatches action to desktop with safety validation.
+        Defaults to dry_run=True to ensure safety in test suites.
+        &#34;&#34;&#34;
+        is_safe, violation = self.validate_action_safety(action)
+        if not is_safe:
+            return {
+                &#34;status&#34;: &#34;blocked&#34;,
+                &#34;action&#34;: action.action_type,
+                &#34;reason&#34;: violation,
+                &#34;executed&#34;: False,
+            }
+
+        abs_x, abs_y = None, None
+        if action.norm_x is not None and action.norm_y is not None:
+            abs_x, abs_y = self.normalized_to_absolute(action.norm_x, action.norm_y)
+
+        result = {
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;action&#34;: action.action_type,
+            &#34;norm_coords&#34;: (action.norm_x, action.norm_y) if action.norm_x is not None else None,
+            &#34;abs_coords&#34;: (abs_x, abs_y) if abs_x is not None else None,
+            &#34;dry_run&#34;: dry_run,
+            &#34;executed&#34;: True,
+        }
+
+        if not dry_run:
+            try:
+                import pyautogui
+
+                if action.action_type == &#34;click&#34; and abs_x is not None and abs_y is not None:
+                    pyautogui.click(abs_x, abs_y)
+                elif action.action_type == &#34;double_click&#34; and abs_x is not None and abs_y is not None:
+                    pyautogui.doubleClick(abs_x, abs_y)
+                elif action.action_type == &#34;type&#34; and action.target_text:
+                    pyautogui.write(action.target_text)
+                elif action.action_type == &#34;hotkey&#34; and action.keys:
+                    pyautogui.hotkey(*action.keys.split(&#34;+&#34;))
+            except Exception as e:
+                result[&#34;status&#34;] = &#34;error&#34;
+                result[&#34;error&#34;] = str(e)
+
+        self.action_history.append(result)
+        return result</code></pre>
+</details>
+<div class="desc"><p>Translates UI-TARS 0-1000 normalized coordinates to display hardware coordinates
+and enforces safety boundaries before executing OS mouse/keyboard actions.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.DEFAULT_RESTRICTED_ZONES"><code class="name">var <span class="ident">DEFAULT_RESTRICTED_ZONES</span> : List[<a title="jarvis.core.visual_grounding.RestrictedZone" href="#jarvis.core.visual_grounding.RestrictedZone">RestrictedZone</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.DEFAULT_SCREEN_HEIGHT"><code class="name">var <span class="ident">DEFAULT_SCREEN_HEIGHT</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.DEFAULT_SCREEN_WIDTH"><code class="name">var <span class="ident">DEFAULT_SCREEN_WIDTH</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.absolute_to_normalized"><code class="name flex">
+<span>def <span class="ident">absolute_to_normalized</span></span>(<span>self,<br>abs_x: int,<br>abs_y: int,<br>width: Optional[int] = None,<br>height: Optional[int] = None) ‑> Tuple[float, float]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def absolute_to_normalized(
+    self,
+    abs_x: int,
+    abs_y: int,
+    width: Optional[int] = None,
+    height: Optional[int] = None,
+) -&gt; Tuple[float, float]:
+    &#34;&#34;&#34;Converts screen pixel coordinates to 0-1000 UI-TARS normalized float.&#34;&#34;&#34;
+    w = width or self.screen_width
+    h = height or self.screen_height
+
+    norm_x = round((float(abs_x) / float(w)) * 1000.0, 2)
+    norm_y = round((float(abs_y) / float(h)) * 1000.0, 2)
+
+    return max(0.0, min(1000.0, norm_x)), max(0.0, min(1000.0, norm_y))</code></pre>
+</details>
+<div class="desc"><p>Converts screen pixel coordinates to 0-1000 UI-TARS normalized float.</p></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.add_restricted_zone"><code class="name flex">
+<span>def <span class="ident">add_restricted_zone</span></span>(<span>self,<br>zone: <a title="jarvis.core.visual_grounding.RestrictedZone" href="#jarvis.core.visual_grounding.RestrictedZone">RestrictedZone</a>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_restricted_zone(self, zone: RestrictedZone) -&gt; None:
+    &#34;&#34;&#34;Appends a custom restricted zone to safety broker.&#34;&#34;&#34;
+    self.restricted_zones.append(zone)</code></pre>
+</details>
+<div class="desc"><p>Appends a custom restricted zone to safety broker.</p></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.capture_screen"><code class="name flex">
+<span>def <span class="ident">capture_screen</span></span>(<span>self, save_path: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def capture_screen(self, save_path: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Captures active desktop display buffer.
+    Saves screenshot if path provided; returns perception metadata.
+    &#34;&#34;&#34;
+    timestamp = time.time()
+    try:
+        from PIL import ImageGrab
+
+        screenshot = ImageGrab.grab()
+        w, h = screenshot.size
+        if save_path:
+            Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+            screenshot.save(save_path)
+        return {
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;width&#34;: w,
+            &#34;height&#34;: h,
+            &#34;timestamp&#34;: timestamp,
+            &#34;saved_to&#34;: save_path,
+            &#34;mode&#34;: &#34;live_display&#34;,
+        }
+    except Exception as e:
+        logger.info(f&#34;Using synthetic display buffer fallback: {e}&#34;)
+        return {
+            &#34;status&#34;: &#34;simulated&#34;,
+            &#34;width&#34;: self.screen_width,
+            &#34;height&#34;: self.screen_height,
+            &#34;timestamp&#34;: timestamp,
+            &#34;saved_to&#34;: None,
+            &#34;mode&#34;: &#34;synthetic_buffer&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>Captures active desktop display buffer.
+Saves screenshot if path provided; returns perception metadata.</p></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.execute_action"><code class="name flex">
+<span>def <span class="ident">execute_action</span></span>(<span>self,<br>action: <a title="jarvis.core.visual_grounding.VisualAction" href="#jarvis.core.visual_grounding.VisualAction">VisualAction</a>,<br>dry_run: bool = True) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute_action(self, action: VisualAction, dry_run: bool = True) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Dispatches action to desktop with safety validation.
+    Defaults to dry_run=True to ensure safety in test suites.
+    &#34;&#34;&#34;
+    is_safe, violation = self.validate_action_safety(action)
+    if not is_safe:
+        return {
+            &#34;status&#34;: &#34;blocked&#34;,
+            &#34;action&#34;: action.action_type,
+            &#34;reason&#34;: violation,
+            &#34;executed&#34;: False,
+        }
+
+    abs_x, abs_y = None, None
+    if action.norm_x is not None and action.norm_y is not None:
+        abs_x, abs_y = self.normalized_to_absolute(action.norm_x, action.norm_y)
+
+    result = {
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;action&#34;: action.action_type,
+        &#34;norm_coords&#34;: (action.norm_x, action.norm_y) if action.norm_x is not None else None,
+        &#34;abs_coords&#34;: (abs_x, abs_y) if abs_x is not None else None,
+        &#34;dry_run&#34;: dry_run,
+        &#34;executed&#34;: True,
+    }
+
+    if not dry_run:
+        try:
+            import pyautogui
+
+            if action.action_type == &#34;click&#34; and abs_x is not None and abs_y is not None:
+                pyautogui.click(abs_x, abs_y)
+            elif action.action_type == &#34;double_click&#34; and abs_x is not None and abs_y is not None:
+                pyautogui.doubleClick(abs_x, abs_y)
+            elif action.action_type == &#34;type&#34; and action.target_text:
+                pyautogui.write(action.target_text)
+            elif action.action_type == &#34;hotkey&#34; and action.keys:
+                pyautogui.hotkey(*action.keys.split(&#34;+&#34;))
+        except Exception as e:
+            result[&#34;status&#34;] = &#34;error&#34;
+            result[&#34;error&#34;] = str(e)
+
+    self.action_history.append(result)
+    return result</code></pre>
+</details>
+<div class="desc"><p>Dispatches action to desktop with safety validation.
+Defaults to dry_run=True to ensure safety in test suites.</p></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.normalized_to_absolute"><code class="name flex">
+<span>def <span class="ident">normalized_to_absolute</span></span>(<span>self,<br>norm_x: float,<br>norm_y: float,<br>width: Optional[int] = None,<br>height: Optional[int] = None) ‑> Tuple[int, int]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def normalized_to_absolute(
+    self,
+    norm_x: float,
+    norm_y: float,
+    width: Optional[int] = None,
+    height: Optional[int] = None,
+) -&gt; Tuple[int, int]:
+    &#34;&#34;&#34;
+    Converts 0-1000 relative UI-TARS coordinate to exact screen pixel coordinates.
+    Clamps inputs safely to [0, 1000].
+    &#34;&#34;&#34;
+    w = width or self.screen_width
+    h = height or self.screen_height
+
+    clamped_x = max(0.0, min(1000.0, float(norm_x)))
+    clamped_y = max(0.0, min(1000.0, float(norm_y)))
+
+    abs_x = int(round((clamped_x / 1000.0) * w))
+    abs_y = int(round((clamped_y / 1000.0) * h))
+
+    # Clamp pixels to bounds
+    abs_x = max(0, min(w - 1, abs_x))
+    abs_y = max(0, min(h - 1, abs_y))
+
+    return abs_x, abs_y</code></pre>
+</details>
+<div class="desc"><p>Converts 0-1000 relative UI-TARS coordinate to exact screen pixel coordinates.
+Clamps inputs safely to [0, 1000].</p></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.parse_uitars_output"><code class="name flex">
+<span>def <span class="ident">parse_uitars_output</span></span>(<span>self, raw_output: str) ‑> List[<a title="jarvis.core.visual_grounding.VisualAction" href="#jarvis.core.visual_grounding.VisualAction">VisualAction</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parse_uitars_output(self, raw_output: str) -&gt; List[VisualAction]:
+    &#34;&#34;&#34;
+    Parses UI-TARS / Agent S formatted action responses into executable VisualActions.
+    Supports standard UI-TARS 1.5 output formats:
+      - click(point=&#39;[500, 250]&#39;) or click(point=[500, 250])
+      - click(point=&#39;(500, 250)&#39;) or click(point=(500, 250))
+      - click(start_box=&#39;[ymin, xmin, ymax, xmax]&#39;) -&gt; centroid calculation
+      - click(start_box=&#39;[500, 250]&#39;)
+      - double_click(point=...) / double_click(start_box=...)
+      - right_click(point=...) / right_click(start_box=...)
+      - type(content=&#39;hello&#39;) / type(text=&#39;hello&#39;)
+      - hotkey(key=&#39;ctrl+s&#39;)
+      - scroll(direction=&#39;down&#39;) / scroll(direction=&#39;up&#39;)
+      - drag(start=[100, 100], end=[500, 500])
+    &#34;&#34;&#34;
+    ordered_actions: List[Tuple[int, VisualAction]] = []
+    text = raw_output.strip()
+
+    # Helper to parse coordinates from point or start_box
+    def _extract_coords(arg_str: str) -&gt; Optional[Tuple[float, float]]:
+        nums = [float(n) for n in re.findall(r&#34;(\d+(?:\.\d+)?)&#34;, arg_str)]
+        if len(nums) == 2:
+            return nums[0], nums[1]
+        elif len(nums) == 4:
+            # Bounding box [ymin, xmin, ymax, xmax] or [x1, y1, x2, y2] -&gt; centroid
+            cx = round((nums[0] + nums[2]) / 2.0, 2)
+            cy = round((nums[1] + nums[3]) / 2.0, 2)
+            return cx, cy
+        return None
+
+    # 1. Matches click, double_click, right_click
+    click_pattern = re.finditer(
+        r&#34;(click|double_click|right_click)\s*\(\s*(?:point|start_box)\s*=\s*([&#39;\&#34;].*?[&#39;\&#34;]|\[.*?\]|\(.*?\))(?:,\s*[^)]*)?\)&#34;,
+        text,
+        re.IGNORECASE,
+    )
+    for m in click_pattern:
+        act_type = m.group(1).lower()
+        coords = _extract_coords(m.group(2))
+        if coords:
+            ordered_actions.append(
+                (m.start(), VisualAction(action_type=act_type, norm_x=coords[0], norm_y=coords[1]))
+            )
+
+    # 2. Match type(content=&#39;...&#39;) or type(text=&#39;...&#39;)
+    type_matches = re.finditer(
+        r&#34;type\s*\(\s*(?:content|text)\s*=\s*[&#39;\&#34;](.*?)[&#39;\&#34;]\s*(?:,\s*[^)]*)?\)&#34;,
+        text,
+        re.IGNORECASE,
+    )
+    for m in type_matches:
+        ordered_actions.append((m.start(), VisualAction(action_type=&#34;type&#34;, target_text=m.group(1))))
+
+    # 3. Match hotkey(key=&#39;...&#39;)
+    hotkey_matches = re.finditer(
+        r&#34;hotkey\s*\(\s*key\s*=\s*[&#39;\&#34;](.*?)[&#39;\&#34;]\s*(?:,\s*[^)]*)?\)&#34;,
+        text,
+        re.IGNORECASE,
+    )
+    for m in hotkey_matches:
+        ordered_actions.append((m.start(), VisualAction(action_type=&#34;hotkey&#34;, keys=m.group(1))))
+
+    # 4. Match scroll(direction=&#39;...&#39;)
+    scroll_matches = re.finditer(
+        r&#34;scroll\s*\(\s*(?:direction\s*=\s*)?[&#39;\&#34;]?(up|down|left|right)[&#39;\&#34;]?\s*(?:,\s*[^)]*)?\)&#34;,
+        text,
+        re.IGNORECASE,
+    )
+    for m in scroll_matches:
+        ordered_actions.append((m.start(), VisualAction(action_type=&#34;scroll&#34;, keys=m.group(1).lower())))
+
+    # 5. Match drag(start=[x1, y1], end=[x2, y2])
+    drag_matches = re.finditer(
+        r&#34;drag\s*\(\s*start\s*=\s*[&#39;\&#34;]?[\[\(]\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*[\]\)][&#39;\&#34;]?\s*,\s*end\s*=\s*[&#39;\&#34;]?[\[\(]\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*[\]\)][&#39;\&#34;]?\s*\)&#34;,
+        text,
+        re.IGNORECASE,
+    )
+    for m in drag_matches:
+        ordered_actions.append(
+            (
+                m.start(),
+                VisualAction(
+                    action_type=&#34;drag&#34;,
+                    norm_x=float(m.group(1)),
+                    norm_y=float(m.group(2)),
+                    drag_to_norm_x=float(m.group(3)),
+                    drag_to_norm_y=float(m.group(4)),
+                ),
+            )
+        )
+
+    ordered_actions.sort(key=lambda item: item[0])
+    return [act for _, act in ordered_actions]</code></pre>
+</details>
+<div class="desc"><p>Parses UI-TARS / Agent S formatted action responses into executable VisualActions.
+Supports standard UI-TARS 1.5 output formats:
+- click(point='[500, 250]') or click(point=[500, 250])
+- click(point='(500, 250)') or click(point=(500, 250))
+- click(start_box='[ymin, xmin, ymax, xmax]') -&gt; centroid calculation
+- click(start_box='[500, 250]')
+- double_click(point=&hellip;) / double_click(start_box=&hellip;)
+- right_click(point=&hellip;) / right_click(start_box=&hellip;)
+- type(content='hello') / type(text='hello')
+- hotkey(key='ctrl+s')
+- scroll(direction='down') / scroll(direction='up')
+- drag(start=[100, 100], end=[500, 500])</p></div>
+</dd>
+<dt id="jarvis.core.visual_grounding.VisualGroundingEngine.validate_action_safety"><code class="name flex">
+<span>def <span class="ident">validate_action_safety</span></span>(<span>self,<br>action: <a title="jarvis.core.visual_grounding.VisualAction" href="#jarvis.core.visual_grounding.VisualAction">VisualAction</a>) ‑> Tuple[bool, str | None]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate_action_safety(self, action: VisualAction) -&gt; Tuple[bool, Optional[str]]:
+    &#34;&#34;&#34;
+    Inline permission broker checks whether coordinate falls in a restricted zone.
+    Returns (is_safe, violation_reason).
+    &#34;&#34;&#34;
+    if action.norm_x is not None and action.norm_y is not None:
+        for zone in self.restricted_zones:
+            if zone.contains(action.norm_x, action.norm_y):
+                reason = (
+                    f&#34;Blocked dangerous coordinate ({action.norm_x}, {action.norm_y}): &#34;
+                    f&#34;Target intersects restricted zone &#39;{zone.name}&#39; ({zone.description}). &#34;
+                    f&#34;Severity: {zone.severity}.&#34;
+                )
+                logger.warning(reason)
+                return False, reason
+
+    if action.drag_to_norm_x is not None and action.drag_to_norm_y is not None:
+        for zone in self.restricted_zones:
+            if zone.contains(action.drag_to_norm_x, action.drag_to_norm_y):
+                reason = f&#34;Blocked drag destination: target intersects restricted zone &#39;{zone.name}&#39;.&#34;
+                return False, reason
+
+    return True, None</code></pre>
+</details>
+<div class="desc"><p>Inline permission broker checks whether coordinate falls in a restricted zone.
+Returns (is_safe, violation_reason).</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.visual_grounding.RestrictedZone" href="#jarvis.core.visual_grounding.RestrictedZone">RestrictedZone</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.visual_grounding.RestrictedZone.contains" href="#jarvis.core.visual_grounding.RestrictedZone.contains">contains</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.RestrictedZone.description" href="#jarvis.core.visual_grounding.RestrictedZone.description">description</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.RestrictedZone.name" href="#jarvis.core.visual_grounding.RestrictedZone.name">name</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.RestrictedZone.norm_xmax" href="#jarvis.core.visual_grounding.RestrictedZone.norm_xmax">norm_xmax</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.RestrictedZone.norm_xmin" href="#jarvis.core.visual_grounding.RestrictedZone.norm_xmin">norm_xmin</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.RestrictedZone.norm_ymax" href="#jarvis.core.visual_grounding.RestrictedZone.norm_ymax">norm_ymax</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.RestrictedZone.norm_ymin" href="#jarvis.core.visual_grounding.RestrictedZone.norm_ymin">norm_ymin</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.RestrictedZone.severity" href="#jarvis.core.visual_grounding.RestrictedZone.severity">severity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.visual_grounding.VisualAction" href="#jarvis.core.visual_grounding.VisualAction">VisualAction</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.visual_grounding.VisualAction.action_type" href="#jarvis.core.visual_grounding.VisualAction.action_type">action_type</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualAction.confidence" href="#jarvis.core.visual_grounding.VisualAction.confidence">confidence</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualAction.drag_to_norm_x" href="#jarvis.core.visual_grounding.VisualAction.drag_to_norm_x">drag_to_norm_x</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualAction.drag_to_norm_y" href="#jarvis.core.visual_grounding.VisualAction.drag_to_norm_y">drag_to_norm_y</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualAction.keys" href="#jarvis.core.visual_grounding.VisualAction.keys">keys</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualAction.model_config" href="#jarvis.core.visual_grounding.VisualAction.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualAction.norm_x" href="#jarvis.core.visual_grounding.VisualAction.norm_x">norm_x</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualAction.norm_y" href="#jarvis.core.visual_grounding.VisualAction.norm_y">norm_y</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualAction.target_text" href="#jarvis.core.visual_grounding.VisualAction.target_text">target_text</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine" href="#jarvis.core.visual_grounding.VisualGroundingEngine">VisualGroundingEngine</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.DEFAULT_RESTRICTED_ZONES" href="#jarvis.core.visual_grounding.VisualGroundingEngine.DEFAULT_RESTRICTED_ZONES">DEFAULT_RESTRICTED_ZONES</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.DEFAULT_SCREEN_HEIGHT" href="#jarvis.core.visual_grounding.VisualGroundingEngine.DEFAULT_SCREEN_HEIGHT">DEFAULT_SCREEN_HEIGHT</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.DEFAULT_SCREEN_WIDTH" href="#jarvis.core.visual_grounding.VisualGroundingEngine.DEFAULT_SCREEN_WIDTH">DEFAULT_SCREEN_WIDTH</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.absolute_to_normalized" href="#jarvis.core.visual_grounding.VisualGroundingEngine.absolute_to_normalized">absolute_to_normalized</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.add_restricted_zone" href="#jarvis.core.visual_grounding.VisualGroundingEngine.add_restricted_zone">add_restricted_zone</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.capture_screen" href="#jarvis.core.visual_grounding.VisualGroundingEngine.capture_screen">capture_screen</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.execute_action" href="#jarvis.core.visual_grounding.VisualGroundingEngine.execute_action">execute_action</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.normalized_to_absolute" href="#jarvis.core.visual_grounding.VisualGroundingEngine.normalized_to_absolute">normalized_to_absolute</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.parse_uitars_output" href="#jarvis.core.visual_grounding.VisualGroundingEngine.parse_uitars_output">parse_uitars_output</a></code></li>
+<li><code><a title="jarvis.core.visual_grounding.VisualGroundingEngine.validate_action_safety" href="#jarvis.core.visual_grounding.VisualGroundingEngine.validate_action_safety">validate_action_safety</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

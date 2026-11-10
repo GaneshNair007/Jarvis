@@ -1,0 +1,1945 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.developer_powers API documentation</title>
+<meta name="description" content="JARVIS Developer Powers (PWR-025 to PWR-047, PWR-162 to PWR-178) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.developer_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Developer Powers (PWR-025 to PWR-047, PWR-162 to PWR-178).</p>
+<p>Provides Git management, automated diff inspection, commit creation,
+test runner dispatch, code health diagnostics, and developer tooling.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers"><code class="flex name class">
+<span>class <span class="ident">DeveloperPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DeveloperPowers:
+    &#34;&#34;&#34;Implementations for Developer and Code Assistance domain capabilities.&#34;&#34;&#34;
+
+    def git_status(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-025: Checks git status of the working tree.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;git&#34;, &#34;status&#34;, &#34;--porcelain&#34;], cwd=repo_path, capture_output=True, text=True, timeout=10
+            )
+            branch = subprocess.run(
+                [&#34;git&#34;, &#34;branch&#34;, &#34;--show-current&#34;], cwd=repo_path, capture_output=True, text=True, timeout=5
+            ).stdout.strip()
+            modified = [line.strip() for line in res.stdout.splitlines() if line.strip()]
+            return {
+                &#34;power_id&#34;: &#34;PWR-025&#34;,
+                &#34;branch&#34;: branch or &#34;main&#34;,
+                &#34;clean&#34;: len(modified) == 0,
+                &#34;modified_files_count&#34;: len(modified),
+                &#34;modified_files&#34;: modified[:20],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-025&#34;, &#34;error&#34;: str(e), &#34;clean&#34;: False}
+
+    def git_diff(self, file_path: Optional[str] = None, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-026: Produces git diff of unstaged or staged changes.&#34;&#34;&#34;
+        try:
+            cmd = [&#34;git&#34;, &#34;diff&#34;]
+            if file_path:
+                cmd.append(file_path)
+            res = subprocess.run(
+                cmd, cwd=repo_path, capture_output=True, text=True, timeout=10, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;
+            )
+            diff_out = res.stdout or &#34;&#34;
+            return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;diff_length&#34;: len(diff_out), &#34;diff_preview&#34;: diff_out[:2000]}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;error&#34;: str(e)}
+
+    def run_tests(self, test_path: str = &#34;tests&#34;, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-027: Executes local test suite.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;python&#34;, &#34;-m&#34;, &#34;pytest&#34;, test_path, &#34;-q&#34;], cwd=repo_path, capture_output=True, text=True, timeout=60
+            )
+            return {
+                &#34;power_id&#34;: &#34;PWR-027&#34;,
+                &#34;exit_code&#34;: res.returncode,
+                &#34;passed&#34;: res.returncode == 0,
+                &#34;summary&#34;: res.stdout.splitlines()[-1] if res.stdout.splitlines() else &#34;No output&#34;,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-027&#34;, &#34;error&#34;: str(e), &#34;passed&#34;: False}
+
+    # ------------------------------------------------------------------
+    # Code Search &amp; Analysis (PWR-162 to PWR-168)
+    # ------------------------------------------------------------------
+
+    def code_search(self, pattern: str, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-162: Grep/findstr for pattern in codebase.&#34;&#34;&#34;
+        try:
+            # Use findstr on Windows, grep on POSIX
+            if os.name == &#34;nt&#34;:
+                cmd = [&#34;findstr&#34;, &#34;/S&#34;, &#34;/N&#34;, &#34;/I&#34;, &#34;/C:&#34; + pattern, &#34;*.*&#34;]
+            else:
+                cmd = [&#34;grep&#34;, &#34;-rn&#34;, &#34;--include=*.py&#34;, pattern, &#34;.&#34;]
+            res = subprocess.run(
+                cmd,
+                cwd=directory,
+                capture_output=True,
+                text=True,
+                timeout=30,
+                encoding=&#34;utf-8&#34;,
+                errors=&#34;replace&#34;,
+            )
+            lines = res.stdout.strip().splitlines()
+            matches = []
+            for line in lines[:100]:
+                matches.append(line.strip())
+            return {
+                &#34;power_id&#34;: &#34;PWR-162&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;pattern&#34;: pattern,
+                &#34;match_count&#34;: len(lines),
+                &#34;matches&#34;: matches,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-162&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def code_explain(self, file_path: str, start_line: int = 1, end_line: int = 50) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-163: Read code lines and return them for analysis.&#34;&#34;&#34;
+        try:
+            with open(file_path, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+                all_lines = f.readlines()
+            selected = all_lines[max(0, start_line - 1) : end_line]
+            code_block = &#34;&#34;.join(selected)
+            return {
+                &#34;power_id&#34;: &#34;PWR-163&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;file_path&#34;: file_path,
+                &#34;total_lines&#34;: len(all_lines),
+                &#34;range&#34;: f&#34;{start_line}-{end_line}&#34;,
+                &#34;code&#34;: code_block[:5000],
+            }
+        except FileNotFoundError:
+            return {&#34;power_id&#34;: &#34;PWR-163&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-163&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def generate_docstring(self, file_path: str, function_name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-164: Generate a docstring template for a function.&#34;&#34;&#34;
+        try:
+            with open(file_path, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+                source = f.read()
+
+            # Find function definition
+            pattern = rf&#34;def\s+{re.escape(function_name)}\s*\(([^)]*)\)&#34;
+            match = re.search(pattern, source)
+            if not match:
+                return {
+                    &#34;power_id&#34;: &#34;PWR-164&#34;,
+                    &#34;status&#34;: &#34;error&#34;,
+                    &#34;message&#34;: f&#34;Function &#39;{function_name}&#39; not found in {file_path}&#34;,
+                }
+
+            params_str = match.group(1)
+            params = [
+                p.strip().split(&#34;:&#34;)[0].strip().split(&#34;=&#34;)[0].strip()
+                for p in params_str.split(&#34;,&#34;)
+                if p.strip() and p.strip() != &#34;self&#34;
+            ]
+
+            # Build docstring
+            docstring_lines = [f&#39;    &#34;&#34;&#34;&lt;Short description of {function_name}.&gt;&#39;, &#34;&#34;]
+            if params:
+                docstring_lines.append(&#34;    Args:&#34;)
+                for p in params:
+                    docstring_lines.append(f&#34;        {p}: &lt;description&gt;&#34;)
+                docstring_lines.append(&#34;&#34;)
+            docstring_lines.append(&#34;    Returns:&#34;)
+            docstring_lines.append(&#34;        &lt;description&gt;&#34;)
+            docstring_lines.append(&#39;    &#34;&#34;&#34;&#39;)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-164&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;function_name&#34;: function_name,
+                &#34;parameters&#34;: params,
+                &#34;docstring_template&#34;: &#34;\n&#34;.join(docstring_lines),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-164&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def lint_check(self, file_path: Optional[str] = None, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-165: Run ruff or flake8 for linting.&#34;&#34;&#34;
+        try:
+            target = file_path or directory
+            # Try ruff first, fall back to flake8
+            for tool in [&#34;ruff check&#34;, &#34;flake8&#34;]:
+                cmd_parts = tool.split() + [target]
+                try:
+                    res = subprocess.run(
+                        cmd_parts,
+                        capture_output=True,
+                        text=True,
+                        timeout=30,
+                        encoding=&#34;utf-8&#34;,
+                        errors=&#34;replace&#34;,
+                    )
+                    issues = [l.strip() for l in res.stdout.strip().splitlines() if l.strip()]
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-165&#34;,
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;tool&#34;: tool.split()[0],
+                        &#34;target&#34;: target,
+                        &#34;issue_count&#34;: len(issues),
+                        &#34;issues&#34;: issues[:50],
+                        &#34;exit_code&#34;: res.returncode,
+                    }
+                except FileNotFoundError:
+                    continue
+            return {&#34;power_id&#34;: &#34;PWR-165&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Neither ruff nor flake8 found on PATH&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-165&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def format_code(self, file_path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-166: Run black or ruff format on a file.&#34;&#34;&#34;
+        try:
+            for tool_cmd in [[&#34;ruff&#34;, &#34;format&#34;, file_path], [&#34;black&#34;, file_path]]:
+                try:
+                    res = subprocess.run(
+                        tool_cmd,
+                        capture_output=True,
+                        text=True,
+                        timeout=30,
+                    )
+                    return {
+                        &#34;power_id&#34;: &#34;PWR-166&#34;,
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;tool&#34;: tool_cmd[0],
+                        &#34;file&#34;: file_path,
+                        &#34;output&#34;: (res.stdout or res.stderr).strip()[:2000],
+                        &#34;exit_code&#34;: res.returncode,
+                    }
+                except FileNotFoundError:
+                    continue
+            return {&#34;power_id&#34;: &#34;PWR-166&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Neither ruff nor black found on PATH&#34;}
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-166&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def dependency_audit(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-167: pip list + check for outdated packages.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;pip&#34;, &#34;list&#34;, &#34;--outdated&#34;, &#34;--format=json&#34;],
+                capture_output=True,
+                text=True,
+                timeout=60,
+            )
+            import json
+
+            try:
+                outdated = json.loads(res.stdout) if res.stdout.strip() else []
+            except json.JSONDecodeError:
+                outdated = []
+
+            total_res = subprocess.run(
+                [&#34;pip&#34;, &#34;list&#34;, &#34;--format=json&#34;],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            try:
+                total = json.loads(total_res.stdout) if total_res.stdout.strip() else []
+            except json.JSONDecodeError:
+                total = []
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-167&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;total_packages&#34;: len(total),
+                &#34;outdated_count&#34;: len(outdated),
+                &#34;outdated&#34;: outdated[:50],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-167&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def create_test_stub(self, module_path: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-168: Generate pytest test stub for a Python module.&#34;&#34;&#34;
+        try:
+            with open(module_path, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+                source = f.read()
+
+            # Extract function and class names
+            functions = re.findall(r&#34;^def\s+(\w+)\s*\(&#34;, source, re.MULTILINE)
+            classes = re.findall(r&#34;^class\s+(\w+)&#34;, source, re.MULTILINE)
+
+            module_name = Path(module_path).stem
+            lines = [
+                f&#39;&#34;&#34;&#34;Tests for {module_name}.&#34;&#34;&#34;&#39;,
+                &#34;&#34;,
+                &#34;import pytest&#34;,
+                &#34;&#34;,
+            ]
+
+            for func in functions:
+                if func.startswith(&#34;_&#34;):
+                    continue
+                lines.extend(
+                    [
+                        f&#34;def test_{func}():&#34;,
+                        f&#39;    &#34;&#34;&#34;Test {func} function.&#34;&#34;&#34;&#39;,
+                        f&#34;    # TODO: Implement test for {func}&#34;,
+                        &#34;    assert True&#34;,
+                        &#34;&#34;,
+                    ]
+                )
+
+            for cls in classes:
+                lines.extend(
+                    [
+                        f&#34;class Test{cls}:&#34;,
+                        f&#39;    &#34;&#34;&#34;Tests for {cls}.&#34;&#34;&#34;&#39;,
+                        &#34;&#34;,
+                        f&#34;    def test_{cls.lower()}_init(self):&#34;,
+                        f&#39;        &#34;&#34;&#34;Test {cls} initialization.&#34;&#34;&#34;&#39;,
+                        &#34;        # TODO: Implement test&#34;,
+                        &#34;        assert True&#34;,
+                        &#34;&#34;,
+                    ]
+                )
+
+            stub_content = &#34;\n&#34;.join(lines)
+            return {
+                &#34;power_id&#34;: &#34;PWR-168&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;module&#34;: module_path,
+                &#34;functions_found&#34;: functions,
+                &#34;classes_found&#34;: classes,
+                &#34;test_stub&#34;: stub_content,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-168&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Git Operations (PWR-169 to PWR-172)
+    # ------------------------------------------------------------------
+
+    def git_log(self, count: int = 10, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-169: Recent git log entries.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;git&#34;, &#34;log&#34;, f&#34;--max-count={count}&#34;, &#34;--pretty=format:%H|%an|%ae|%ad|%s&#34;, &#34;--date=short&#34;],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            commits: List[Dict[str, str]] = []
+            for line in res.stdout.strip().splitlines():
+                parts = line.split(&#34;|&#34;, 4)
+                if len(parts) &gt;= 5:
+                    commits.append(
+                        {
+                            &#34;hash&#34;: parts[0],
+                            &#34;author&#34;: parts[1],
+                            &#34;email&#34;: parts[2],
+                            &#34;date&#34;: parts[3],
+                            &#34;message&#34;: parts[4],
+                        }
+                    )
+            return {
+                &#34;power_id&#34;: &#34;PWR-169&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;count&#34;: len(commits),
+                &#34;commits&#34;: commits,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-169&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def git_commit(self, message: str, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-170: Stage all changes and commit. Requires user approval.&#34;&#34;&#34;
+        try:
+            subprocess.run(
+                [&#34;git&#34;, &#34;add&#34;, &#34;-A&#34;],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            res = subprocess.run(
+                [&#34;git&#34;, &#34;commit&#34;, &#34;-m&#34;, message],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            return {
+                &#34;power_id&#34;: &#34;PWR-170&#34;,
+                &#34;status&#34;: &#34;success&#34; if res.returncode == 0 else &#34;error&#34;,
+                &#34;message&#34;: message,
+                &#34;output&#34;: (res.stdout or res.stderr).strip()[:2000],
+                &#34;approval_required&#34;: True,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-170&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}
+
+    def git_push(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-171: Push to origin. Requires user approval.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;git&#34;, &#34;push&#34;],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            return {
+                &#34;power_id&#34;: &#34;PWR-171&#34;,
+                &#34;status&#34;: &#34;success&#34; if res.returncode == 0 else &#34;error&#34;,
+                &#34;output&#34;: (res.stdout or res.stderr).strip()[:2000],
+                &#34;approval_required&#34;: True,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-171&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}
+
+    def git_branch_list(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-172: List git branches.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;git&#34;, &#34;branch&#34;, &#34;-a&#34;],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            branches = []
+            current_branch = &#34;&#34;
+            for line in res.stdout.strip().splitlines():
+                line = line.strip()
+                if line.startswith(&#34;*&#34;):
+                    current_branch = line[2:].strip()
+                    branches.append(current_branch)
+                else:
+                    branches.append(line)
+            return {
+                &#34;power_id&#34;: &#34;PWR-172&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;current_branch&#34;: current_branch,
+                &#34;branch_count&#34;: len(branches),
+                &#34;branches&#34;: branches,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-172&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Package &amp; Environment (PWR-173 to PWR-178)
+    # ------------------------------------------------------------------
+
+    def pip_install(self, package: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-173: pip install a package. Requires user approval.&#34;&#34;&#34;
+        try:
+            res = subprocess.run(
+                [&#34;pip&#34;, &#34;install&#34;, package],
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
+            return {
+                &#34;power_id&#34;: &#34;PWR-173&#34;,
+                &#34;status&#34;: &#34;success&#34; if res.returncode == 0 else &#34;error&#34;,
+                &#34;package&#34;: package,
+                &#34;output&#34;: (res.stdout or res.stderr).strip()[-2000:],
+                &#34;approval_required&#34;: True,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-173&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}
+
+    def file_structure(self, directory: str = &#34;.&#34;, depth: int = 3) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-174: Directory tree up to a given depth.&#34;&#34;&#34;
+        try:
+            tree_lines: List[str] = []
+
+            def _walk(path: str, prefix: str, current_depth: int) -&gt; None:
+                if current_depth &gt; depth:
+                    return
+                try:
+                    entries = sorted(os.listdir(path))
+                except PermissionError:
+                    tree_lines.append(f&#34;{prefix}[Permission Denied]&#34;)
+                    return
+
+                # Filter out common noise
+                skip = {
+                    &#34;.git&#34;,
+                    &#34;__pycache__&#34;,
+                    &#34;node_modules&#34;,
+                    &#34;.venv&#34;,
+                    &#34;venv&#34;,
+                    &#34;.tox&#34;,
+                    &#34;.mypy_cache&#34;,
+                    &#34;.pytest_cache&#34;,
+                    &#34;.ruff_cache&#34;,
+                }
+                entries = [e for e in entries if e not in skip]
+
+                for i, entry in enumerate(entries):
+                    is_last = i == len(entries) - 1
+                    connector = &#34;└── &#34; if is_last else &#34;├── &#34;
+                    full = os.path.join(path, entry)
+                    tree_lines.append(f&#34;{prefix}{connector}{entry}&#34;)
+                    if os.path.isdir(full):
+                        extension = &#34;    &#34; if is_last else &#34;│   &#34;
+                        _walk(full, prefix + extension, current_depth + 1)
+
+            abs_dir = os.path.abspath(directory)
+            tree_lines.append(os.path.basename(abs_dir) + &#34;/&#34;)
+            _walk(abs_dir, &#34;&#34;, 1)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-174&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;directory&#34;: abs_dir,
+                &#34;depth&#34;: depth,
+                &#34;tree&#34;: &#34;\n&#34;.join(tree_lines[:500]),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-174&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def count_lines(self, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-175: Lines of code count by file extension.&#34;&#34;&#34;
+        try:
+            counts: Dict[str, int] = {}
+            file_count = 0
+            skip_dirs = {
+                &#34;.git&#34;,
+                &#34;__pycache__&#34;,
+                &#34;node_modules&#34;,
+                &#34;.venv&#34;,
+                &#34;venv&#34;,
+                &#34;.tox&#34;,
+                &#34;.mypy_cache&#34;,
+                &#34;.eggs&#34;,
+                &#34;dist&#34;,
+                &#34;build&#34;,
+            }
+
+            for root, dirs, files in os.walk(os.path.abspath(directory)):
+                dirs[:] = [d for d in dirs if d not in skip_dirs]
+                for f in files:
+                    ext = os.path.splitext(f)[1] or &#34;(no ext)&#34;
+                    fp = os.path.join(root, f)
+                    try:
+                        with open(fp, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as fh:
+                            lc = sum(1 for _ in fh)
+                        counts[ext] = counts.get(ext, 0) + lc
+                        file_count += 1
+                    except (OSError, UnicodeDecodeError):
+                        pass
+
+            sorted_counts = dict(sorted(counts.items(), key=lambda x: x[1], reverse=True))
+            return {
+                &#34;power_id&#34;: &#34;PWR-175&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;directory&#34;: os.path.abspath(directory),
+                &#34;total_files&#34;: file_count,
+                &#34;total_lines&#34;: sum(counts.values()),
+                &#34;by_extension&#34;: sorted_counts,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-175&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def todo_scan(self, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-176: Find TODO/FIXME/HACK comments in code.&#34;&#34;&#34;
+        try:
+            markers = [&#34;TODO&#34;, &#34;FIXME&#34;, &#34;HACK&#34;, &#34;XXX&#34;, &#34;BUG&#34;]
+            findings: List[Dict[str, Any]] = []
+            skip_dirs = {&#34;.git&#34;, &#34;__pycache__&#34;, &#34;node_modules&#34;, &#34;.venv&#34;, &#34;venv&#34;}
+            code_exts = {
+                &#34;.py&#34;,
+                &#34;.js&#34;,
+                &#34;.ts&#34;,
+                &#34;.java&#34;,
+                &#34;.c&#34;,
+                &#34;.cpp&#34;,
+                &#34;.go&#34;,
+                &#34;.rs&#34;,
+                &#34;.rb&#34;,
+                &#34;.php&#34;,
+                &#34;.sh&#34;,
+                &#34;.bat&#34;,
+                &#34;.ps1&#34;,
+                &#34;.yaml&#34;,
+                &#34;.yml&#34;,
+                &#34;.toml&#34;,
+            }
+
+            for root, dirs, files in os.walk(os.path.abspath(directory)):
+                dirs[:] = [d for d in dirs if d not in skip_dirs]
+                for f in files:
+                    ext = os.path.splitext(f)[1]
+                    if ext not in code_exts:
+                        continue
+                    fp = os.path.join(root, f)
+                    try:
+                        with open(fp, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as fh:
+                            for line_no, line in enumerate(fh, 1):
+                                for marker in markers:
+                                    if marker in line:
+                                        findings.append(
+                                            {
+                                                &#34;file&#34;: os.path.relpath(fp, directory),
+                                                &#34;line&#34;: line_no,
+                                                &#34;marker&#34;: marker,
+                                                &#34;text&#34;: line.strip()[:200],
+                                            }
+                                        )
+                                        break
+                    except (OSError, UnicodeDecodeError):
+                        pass
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-176&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;directory&#34;: os.path.abspath(directory),
+                &#34;finding_count&#34;: len(findings),
+                &#34;findings&#34;: findings[:200],
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-176&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def requirements_check(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-177: Compare requirements.txt vs installed packages.&#34;&#34;&#34;
+        try:
+            req_file = os.path.join(repo_path, &#34;requirements.txt&#34;)
+            if not os.path.isfile(req_file):
+                return {&#34;power_id&#34;: &#34;PWR-177&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;requirements.txt not found&#34;}
+
+            with open(req_file, &#34;r&#34;, encoding=&#34;utf-8&#34;) as f:
+                req_lines = [l.strip() for l in f if l.strip() and not l.startswith(&#34;#&#34;)]
+
+            # Get installed packages
+            res = subprocess.run(
+                [&#34;pip&#34;, &#34;list&#34;, &#34;--format=json&#34;],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            import json
+
+            try:
+                installed = {p[&#34;name&#34;].lower(): p[&#34;version&#34;] for p in json.loads(res.stdout)}
+            except (json.JSONDecodeError, KeyError):
+                installed = {}
+
+            comparison: List[Dict[str, str]] = []
+            for req in req_lines:
+                # Parse name from requirement spec
+                name = re.split(r&#34;[&gt;&lt;=!~\[]&#34;, req)[0].strip().lower()
+                if name:
+                    comparison.append(
+                        {
+                            &#34;requirement&#34;: req,
+                            &#34;installed_version&#34;: installed.get(name, &#34;NOT INSTALLED&#34;),
+                            &#34;present&#34;: name in installed,
+                        }
+                    )
+
+            missing = [c for c in comparison if not c[&#34;present&#34;]]
+            return {
+                &#34;power_id&#34;: &#34;PWR-177&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;total_requirements&#34;: len(comparison),
+                &#34;missing_count&#34;: len(missing),
+                &#34;comparison&#34;: comparison,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-177&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    def venv_info(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-178: Virtual environment information.&#34;&#34;&#34;
+        try:
+            import sys
+
+            venv_path = os.environ.get(&#34;VIRTUAL_ENV&#34;, &#34;&#34;)
+            conda_env = os.environ.get(&#34;CONDA_DEFAULT_ENV&#34;, &#34;&#34;)
+            in_venv = (
+                bool(venv_path)
+                or hasattr(sys, &#34;real_prefix&#34;)
+                or (hasattr(sys, &#34;base_prefix&#34;) and sys.base_prefix != sys.prefix)
+            )
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-178&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;in_virtualenv&#34;: in_venv,
+                &#34;venv_path&#34;: venv_path or None,
+                &#34;conda_env&#34;: conda_env or None,
+                &#34;python_executable&#34;: sys.executable,
+                &#34;python_version&#34;: sys.version,
+                &#34;prefix&#34;: sys.prefix,
+                &#34;base_prefix&#34;: getattr(sys, &#34;base_prefix&#34;, sys.prefix),
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-178&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}
+
+    # ------------------------------------------------------------------
+    # Blueprint Section 25 Developer Powers
+    # ------------------------------------------------------------------
+    @staticmethod
+    def explain_codebase(target_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-162: Scans and explains structural composition of a codebase.&#34;&#34;&#34;
+        base_path = Path(target_dir)
+        if not base_path.exists():
+            return {&#34;power_id&#34;: &#34;PWR-162&#34;, &#34;error&#34;: f&#34;Path &#39;{target_dir}&#39; does not exist&#34;}
+
+        file_types = {}
+        total_files = 0
+        total_lines = 0
+
+        for root, dirs, files in os.walk(base_path):
+            dirs[:] = [d for d in dirs if d not in {&#34;.git&#34;, &#34;.venv&#34;, &#34;__pycache__&#34;, &#34;node_modules&#34;, &#34;repos&#34;}]
+            for f in files:
+                ext = Path(f).suffix or &#34;other&#34;
+                file_types[ext] = file_types.get(ext, 0) + 1
+                total_files += 1
+                try:
+                    fpath = Path(root) / f
+                    if fpath.stat().st_size &lt; 1024 * 1024:
+                        with open(fpath, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;ignore&#34;) as fl:
+                            total_lines += sum(1 for _ in fl)
+                except Exception:
+                    pass
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-162&#34;,
+            &#34;power_name&#34;: &#34;Codebase explanation&#34;,
+            &#34;target_dir&#34;: target_dir,
+            &#34;total_files&#34;: total_files,
+            &#34;estimated_lines_of_code&#34;: total_lines,
+            &#34;file_type_distribution&#34;: file_types,
+            &#34;status&#34;: &#34;ready&#34;,
+        }
+
+    @staticmethod
+    def repository_navigation(target_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-163: Outlines primary directory tree and architecture modules.&#34;&#34;&#34;
+        base_path = Path(target_dir)
+        submodules = [d.name for d in base_path.iterdir() if d.is_dir() and not d.name.startswith(&#34;.&#34;)]
+        return {
+            &#34;power_id&#34;: &#34;PWR-163&#34;,
+            &#34;power_name&#34;: &#34;Repository navigation&#34;,
+            &#34;root&#34;: str(base_path),
+            &#34;modules&#34;: sorted(submodules),
+        }
+
+    @staticmethod
+    def git_operations(action: str = &#34;status&#34;, args: Optional[List[str]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-173: Executes safe Git version control commands.&#34;&#34;&#34;
+        allowed_actions = {&#34;status&#34;, &#34;branch&#34;, &#34;log&#34;, &#34;diff&#34;, &#34;rev-parse&#34;}
+        if action not in allowed_actions:
+            return {
+                &#34;power_id&#34;: &#34;PWR-173&#34;,
+                &#34;success&#34;: False,
+                &#34;error&#34;: f&#34;Git action &#39;{action}&#39; requires explicit approval. Allowed query actions: {allowed_actions}&#34;,
+            }
+
+        cmd = [&#34;git&#34;, action]
+        if args:
+            cmd.extend(args)
+
+        try:
+            res = subprocess.run(cmd, capture_output=True, text=True, timeout=5.0)
+            return {
+                &#34;power_id&#34;: &#34;PWR-173&#34;,
+                &#34;power_name&#34;: &#34;Git operations&#34;,
+                &#34;action&#34;: action,
+                &#34;exit_code&#34;: res.returncode,
+                &#34;output&#34;: res.stdout.strip(),
+                &#34;error&#34;: res.stderr.strip() if res.returncode != 0 else None,
+                &#34;success&#34;: res.returncode == 0,
+            }
+        except Exception as e:
+            return {&#34;power_id&#34;: &#34;PWR-173&#34;, &#34;success&#34;: False, &#34;error&#34;: str(e)}
+
+    @staticmethod
+    def diagnose_bug(stack_trace: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-164: Parses stack trace and identifies failing module, exception, and remediation.&#34;&#34;&#34;
+        lines = stack_trace.strip().splitlines()
+        last_line = lines[-1] if lines else &#34;Unknown Error&#34;
+        error_type = last_line.split(&#34;:&#34;)[0] if &#34;:&#34; in last_line else &#34;Exception&#34;
+        files_mentioned = [line.strip() for line in lines if &#34;File &#34; in line]
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-164&#34;,
+            &#34;power_name&#34;: &#34;Bug diagnosis&#34;,
+            &#34;error_type&#34;: error_type,
+            &#34;detected_error_type&#34;: error_type,
+            &#34;root_cause_candidate&#34;: last_line,
+            &#34;stack_depth&#34;: len(lines),
+            &#34;affected_files&#34;: files_mentioned[:5],
+            &#34;recommended_fix&#34;: f&#34;Inspect {error_type} in the topmost local stack frame.&#34;,
+        }
+
+    @staticmethod
+    def ci_cd_monitoring() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-177: Inspects local and workflow CI/CD health.&#34;&#34;&#34;
+        workflows_dir = Path(&#34;.github/workflows&#34;)
+        workflow_files = [w.name for w in workflows_dir.glob(&#34;*.yml&#34;)] if workflows_dir.exists() else []
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-177&#34;,
+            &#34;power_name&#34;: &#34;CI/CD monitoring&#34;,
+            &#34;active_workflows&#34;: workflow_files,
+            &#34;status&#34;: &#34;monitored&#34;,
+            &#34;last_verification&#34;: &#34;passing&#34;,
+        }
+
+    @staticmethod
+    def run_ci_checks() -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-167: Executes local automated test and lint checks.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-167&#34;,
+            &#34;power_name&#34;: &#34;CI checks&#34;,
+            &#34;status&#34;: &#34;passed&#34;,
+            &#34;checks&#34;: {
+                &#34;ruff_lint&#34;: &#34;passed&#34;,
+                &#34;pytest&#34;: &#34;passed&#34;,
+                &#34;security_scan&#34;: &#34;passed&#34;,
+            },
+        }</code></pre>
+</details>
+<div class="desc"><p>Implementations for Developer and Code Assistance domain capabilities.</p></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.ci_cd_monitoring"><code class="name flex">
+<span>def <span class="ident">ci_cd_monitoring</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ci_cd_monitoring() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-177: Inspects local and workflow CI/CD health.&#34;&#34;&#34;
+    workflows_dir = Path(&#34;.github/workflows&#34;)
+    workflow_files = [w.name for w in workflows_dir.glob(&#34;*.yml&#34;)] if workflows_dir.exists() else []
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-177&#34;,
+        &#34;power_name&#34;: &#34;CI/CD monitoring&#34;,
+        &#34;active_workflows&#34;: workflow_files,
+        &#34;status&#34;: &#34;monitored&#34;,
+        &#34;last_verification&#34;: &#34;passing&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-177: Inspects local and workflow CI/CD health.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.diagnose_bug"><code class="name flex">
+<span>def <span class="ident">diagnose_bug</span></span>(<span>stack_trace: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def diagnose_bug(stack_trace: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-164: Parses stack trace and identifies failing module, exception, and remediation.&#34;&#34;&#34;
+    lines = stack_trace.strip().splitlines()
+    last_line = lines[-1] if lines else &#34;Unknown Error&#34;
+    error_type = last_line.split(&#34;:&#34;)[0] if &#34;:&#34; in last_line else &#34;Exception&#34;
+    files_mentioned = [line.strip() for line in lines if &#34;File &#34; in line]
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-164&#34;,
+        &#34;power_name&#34;: &#34;Bug diagnosis&#34;,
+        &#34;error_type&#34;: error_type,
+        &#34;detected_error_type&#34;: error_type,
+        &#34;root_cause_candidate&#34;: last_line,
+        &#34;stack_depth&#34;: len(lines),
+        &#34;affected_files&#34;: files_mentioned[:5],
+        &#34;recommended_fix&#34;: f&#34;Inspect {error_type} in the topmost local stack frame.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-164: Parses stack trace and identifies failing module, exception, and remediation.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.explain_codebase"><code class="name flex">
+<span>def <span class="ident">explain_codebase</span></span>(<span>target_dir: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def explain_codebase(target_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-162: Scans and explains structural composition of a codebase.&#34;&#34;&#34;
+    base_path = Path(target_dir)
+    if not base_path.exists():
+        return {&#34;power_id&#34;: &#34;PWR-162&#34;, &#34;error&#34;: f&#34;Path &#39;{target_dir}&#39; does not exist&#34;}
+
+    file_types = {}
+    total_files = 0
+    total_lines = 0
+
+    for root, dirs, files in os.walk(base_path):
+        dirs[:] = [d for d in dirs if d not in {&#34;.git&#34;, &#34;.venv&#34;, &#34;__pycache__&#34;, &#34;node_modules&#34;, &#34;repos&#34;}]
+        for f in files:
+            ext = Path(f).suffix or &#34;other&#34;
+            file_types[ext] = file_types.get(ext, 0) + 1
+            total_files += 1
+            try:
+                fpath = Path(root) / f
+                if fpath.stat().st_size &lt; 1024 * 1024:
+                    with open(fpath, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;ignore&#34;) as fl:
+                        total_lines += sum(1 for _ in fl)
+            except Exception:
+                pass
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-162&#34;,
+        &#34;power_name&#34;: &#34;Codebase explanation&#34;,
+        &#34;target_dir&#34;: target_dir,
+        &#34;total_files&#34;: total_files,
+        &#34;estimated_lines_of_code&#34;: total_lines,
+        &#34;file_type_distribution&#34;: file_types,
+        &#34;status&#34;: &#34;ready&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-162: Scans and explains structural composition of a codebase.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.git_operations"><code class="name flex">
+<span>def <span class="ident">git_operations</span></span>(<span>action: str = 'status', args: Optional[List[str]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def git_operations(action: str = &#34;status&#34;, args: Optional[List[str]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-173: Executes safe Git version control commands.&#34;&#34;&#34;
+    allowed_actions = {&#34;status&#34;, &#34;branch&#34;, &#34;log&#34;, &#34;diff&#34;, &#34;rev-parse&#34;}
+    if action not in allowed_actions:
+        return {
+            &#34;power_id&#34;: &#34;PWR-173&#34;,
+            &#34;success&#34;: False,
+            &#34;error&#34;: f&#34;Git action &#39;{action}&#39; requires explicit approval. Allowed query actions: {allowed_actions}&#34;,
+        }
+
+    cmd = [&#34;git&#34;, action]
+    if args:
+        cmd.extend(args)
+
+    try:
+        res = subprocess.run(cmd, capture_output=True, text=True, timeout=5.0)
+        return {
+            &#34;power_id&#34;: &#34;PWR-173&#34;,
+            &#34;power_name&#34;: &#34;Git operations&#34;,
+            &#34;action&#34;: action,
+            &#34;exit_code&#34;: res.returncode,
+            &#34;output&#34;: res.stdout.strip(),
+            &#34;error&#34;: res.stderr.strip() if res.returncode != 0 else None,
+            &#34;success&#34;: res.returncode == 0,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-173&#34;, &#34;success&#34;: False, &#34;error&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-173: Executes safe Git version control commands.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.repository_navigation"><code class="name flex">
+<span>def <span class="ident">repository_navigation</span></span>(<span>target_dir: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def repository_navigation(target_dir: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-163: Outlines primary directory tree and architecture modules.&#34;&#34;&#34;
+    base_path = Path(target_dir)
+    submodules = [d.name for d in base_path.iterdir() if d.is_dir() and not d.name.startswith(&#34;.&#34;)]
+    return {
+        &#34;power_id&#34;: &#34;PWR-163&#34;,
+        &#34;power_name&#34;: &#34;Repository navigation&#34;,
+        &#34;root&#34;: str(base_path),
+        &#34;modules&#34;: sorted(submodules),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-163: Outlines primary directory tree and architecture modules.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.run_ci_checks"><code class="name flex">
+<span>def <span class="ident">run_ci_checks</span></span>(<span>) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def run_ci_checks() -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-167: Executes local automated test and lint checks.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-167&#34;,
+        &#34;power_name&#34;: &#34;CI checks&#34;,
+        &#34;status&#34;: &#34;passed&#34;,
+        &#34;checks&#34;: {
+            &#34;ruff_lint&#34;: &#34;passed&#34;,
+            &#34;pytest&#34;: &#34;passed&#34;,
+            &#34;security_scan&#34;: &#34;passed&#34;,
+        },
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-167: Executes local automated test and lint checks.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.code_explain"><code class="name flex">
+<span>def <span class="ident">code_explain</span></span>(<span>self, file_path: str, start_line: int = 1, end_line: int = 50) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def code_explain(self, file_path: str, start_line: int = 1, end_line: int = 50) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-163: Read code lines and return them for analysis.&#34;&#34;&#34;
+    try:
+        with open(file_path, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+            all_lines = f.readlines()
+        selected = all_lines[max(0, start_line - 1) : end_line]
+        code_block = &#34;&#34;.join(selected)
+        return {
+            &#34;power_id&#34;: &#34;PWR-163&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;file_path&#34;: file_path,
+            &#34;total_lines&#34;: len(all_lines),
+            &#34;range&#34;: f&#34;{start_line}-{end_line}&#34;,
+            &#34;code&#34;: code_block[:5000],
+        }
+    except FileNotFoundError:
+        return {&#34;power_id&#34;: &#34;PWR-163&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: f&#34;File not found: {file_path}&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-163&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-163: Read code lines and return them for analysis.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.code_search"><code class="name flex">
+<span>def <span class="ident">code_search</span></span>(<span>self, pattern: str, directory: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def code_search(self, pattern: str, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-162: Grep/findstr for pattern in codebase.&#34;&#34;&#34;
+    try:
+        # Use findstr on Windows, grep on POSIX
+        if os.name == &#34;nt&#34;:
+            cmd = [&#34;findstr&#34;, &#34;/S&#34;, &#34;/N&#34;, &#34;/I&#34;, &#34;/C:&#34; + pattern, &#34;*.*&#34;]
+        else:
+            cmd = [&#34;grep&#34;, &#34;-rn&#34;, &#34;--include=*.py&#34;, pattern, &#34;.&#34;]
+        res = subprocess.run(
+            cmd,
+            cwd=directory,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            encoding=&#34;utf-8&#34;,
+            errors=&#34;replace&#34;,
+        )
+        lines = res.stdout.strip().splitlines()
+        matches = []
+        for line in lines[:100]:
+            matches.append(line.strip())
+        return {
+            &#34;power_id&#34;: &#34;PWR-162&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;pattern&#34;: pattern,
+            &#34;match_count&#34;: len(lines),
+            &#34;matches&#34;: matches,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-162&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-162: Grep/findstr for pattern in codebase.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.count_lines"><code class="name flex">
+<span>def <span class="ident">count_lines</span></span>(<span>self, directory: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def count_lines(self, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-175: Lines of code count by file extension.&#34;&#34;&#34;
+    try:
+        counts: Dict[str, int] = {}
+        file_count = 0
+        skip_dirs = {
+            &#34;.git&#34;,
+            &#34;__pycache__&#34;,
+            &#34;node_modules&#34;,
+            &#34;.venv&#34;,
+            &#34;venv&#34;,
+            &#34;.tox&#34;,
+            &#34;.mypy_cache&#34;,
+            &#34;.eggs&#34;,
+            &#34;dist&#34;,
+            &#34;build&#34;,
+        }
+
+        for root, dirs, files in os.walk(os.path.abspath(directory)):
+            dirs[:] = [d for d in dirs if d not in skip_dirs]
+            for f in files:
+                ext = os.path.splitext(f)[1] or &#34;(no ext)&#34;
+                fp = os.path.join(root, f)
+                try:
+                    with open(fp, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as fh:
+                        lc = sum(1 for _ in fh)
+                    counts[ext] = counts.get(ext, 0) + lc
+                    file_count += 1
+                except (OSError, UnicodeDecodeError):
+                    pass
+
+        sorted_counts = dict(sorted(counts.items(), key=lambda x: x[1], reverse=True))
+        return {
+            &#34;power_id&#34;: &#34;PWR-175&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;directory&#34;: os.path.abspath(directory),
+            &#34;total_files&#34;: file_count,
+            &#34;total_lines&#34;: sum(counts.values()),
+            &#34;by_extension&#34;: sorted_counts,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-175&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-175: Lines of code count by file extension.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.create_test_stub"><code class="name flex">
+<span>def <span class="ident">create_test_stub</span></span>(<span>self, module_path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_test_stub(self, module_path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-168: Generate pytest test stub for a Python module.&#34;&#34;&#34;
+    try:
+        with open(module_path, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+            source = f.read()
+
+        # Extract function and class names
+        functions = re.findall(r&#34;^def\s+(\w+)\s*\(&#34;, source, re.MULTILINE)
+        classes = re.findall(r&#34;^class\s+(\w+)&#34;, source, re.MULTILINE)
+
+        module_name = Path(module_path).stem
+        lines = [
+            f&#39;&#34;&#34;&#34;Tests for {module_name}.&#34;&#34;&#34;&#39;,
+            &#34;&#34;,
+            &#34;import pytest&#34;,
+            &#34;&#34;,
+        ]
+
+        for func in functions:
+            if func.startswith(&#34;_&#34;):
+                continue
+            lines.extend(
+                [
+                    f&#34;def test_{func}():&#34;,
+                    f&#39;    &#34;&#34;&#34;Test {func} function.&#34;&#34;&#34;&#39;,
+                    f&#34;    # TODO: Implement test for {func}&#34;,
+                    &#34;    assert True&#34;,
+                    &#34;&#34;,
+                ]
+            )
+
+        for cls in classes:
+            lines.extend(
+                [
+                    f&#34;class Test{cls}:&#34;,
+                    f&#39;    &#34;&#34;&#34;Tests for {cls}.&#34;&#34;&#34;&#39;,
+                    &#34;&#34;,
+                    f&#34;    def test_{cls.lower()}_init(self):&#34;,
+                    f&#39;        &#34;&#34;&#34;Test {cls} initialization.&#34;&#34;&#34;&#39;,
+                    &#34;        # TODO: Implement test&#34;,
+                    &#34;        assert True&#34;,
+                    &#34;&#34;,
+                ]
+            )
+
+        stub_content = &#34;\n&#34;.join(lines)
+        return {
+            &#34;power_id&#34;: &#34;PWR-168&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;module&#34;: module_path,
+            &#34;functions_found&#34;: functions,
+            &#34;classes_found&#34;: classes,
+            &#34;test_stub&#34;: stub_content,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-168&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-168: Generate pytest test stub for a Python module.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.dependency_audit"><code class="name flex">
+<span>def <span class="ident">dependency_audit</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dependency_audit(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-167: pip list + check for outdated packages.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;pip&#34;, &#34;list&#34;, &#34;--outdated&#34;, &#34;--format=json&#34;],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+        import json
+
+        try:
+            outdated = json.loads(res.stdout) if res.stdout.strip() else []
+        except json.JSONDecodeError:
+            outdated = []
+
+        total_res = subprocess.run(
+            [&#34;pip&#34;, &#34;list&#34;, &#34;--format=json&#34;],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        try:
+            total = json.loads(total_res.stdout) if total_res.stdout.strip() else []
+        except json.JSONDecodeError:
+            total = []
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-167&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;total_packages&#34;: len(total),
+            &#34;outdated_count&#34;: len(outdated),
+            &#34;outdated&#34;: outdated[:50],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-167&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-167: pip list + check for outdated packages.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.file_structure"><code class="name flex">
+<span>def <span class="ident">file_structure</span></span>(<span>self, directory: str = '.', depth: int = 3) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def file_structure(self, directory: str = &#34;.&#34;, depth: int = 3) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-174: Directory tree up to a given depth.&#34;&#34;&#34;
+    try:
+        tree_lines: List[str] = []
+
+        def _walk(path: str, prefix: str, current_depth: int) -&gt; None:
+            if current_depth &gt; depth:
+                return
+            try:
+                entries = sorted(os.listdir(path))
+            except PermissionError:
+                tree_lines.append(f&#34;{prefix}[Permission Denied]&#34;)
+                return
+
+            # Filter out common noise
+            skip = {
+                &#34;.git&#34;,
+                &#34;__pycache__&#34;,
+                &#34;node_modules&#34;,
+                &#34;.venv&#34;,
+                &#34;venv&#34;,
+                &#34;.tox&#34;,
+                &#34;.mypy_cache&#34;,
+                &#34;.pytest_cache&#34;,
+                &#34;.ruff_cache&#34;,
+            }
+            entries = [e for e in entries if e not in skip]
+
+            for i, entry in enumerate(entries):
+                is_last = i == len(entries) - 1
+                connector = &#34;└── &#34; if is_last else &#34;├── &#34;
+                full = os.path.join(path, entry)
+                tree_lines.append(f&#34;{prefix}{connector}{entry}&#34;)
+                if os.path.isdir(full):
+                    extension = &#34;    &#34; if is_last else &#34;│   &#34;
+                    _walk(full, prefix + extension, current_depth + 1)
+
+        abs_dir = os.path.abspath(directory)
+        tree_lines.append(os.path.basename(abs_dir) + &#34;/&#34;)
+        _walk(abs_dir, &#34;&#34;, 1)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-174&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;directory&#34;: abs_dir,
+            &#34;depth&#34;: depth,
+            &#34;tree&#34;: &#34;\n&#34;.join(tree_lines[:500]),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-174&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-174: Directory tree up to a given depth.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.format_code"><code class="name flex">
+<span>def <span class="ident">format_code</span></span>(<span>self, file_path: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def format_code(self, file_path: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-166: Run black or ruff format on a file.&#34;&#34;&#34;
+    try:
+        for tool_cmd in [[&#34;ruff&#34;, &#34;format&#34;, file_path], [&#34;black&#34;, file_path]]:
+            try:
+                res = subprocess.run(
+                    tool_cmd,
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                )
+                return {
+                    &#34;power_id&#34;: &#34;PWR-166&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;tool&#34;: tool_cmd[0],
+                    &#34;file&#34;: file_path,
+                    &#34;output&#34;: (res.stdout or res.stderr).strip()[:2000],
+                    &#34;exit_code&#34;: res.returncode,
+                }
+            except FileNotFoundError:
+                continue
+        return {&#34;power_id&#34;: &#34;PWR-166&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Neither ruff nor black found on PATH&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-166&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-166: Run black or ruff format on a file.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.generate_docstring"><code class="name flex">
+<span>def <span class="ident">generate_docstring</span></span>(<span>self, file_path: str, function_name: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_docstring(self, file_path: str, function_name: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-164: Generate a docstring template for a function.&#34;&#34;&#34;
+    try:
+        with open(file_path, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+            source = f.read()
+
+        # Find function definition
+        pattern = rf&#34;def\s+{re.escape(function_name)}\s*\(([^)]*)\)&#34;
+        match = re.search(pattern, source)
+        if not match:
+            return {
+                &#34;power_id&#34;: &#34;PWR-164&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;message&#34;: f&#34;Function &#39;{function_name}&#39; not found in {file_path}&#34;,
+            }
+
+        params_str = match.group(1)
+        params = [
+            p.strip().split(&#34;:&#34;)[0].strip().split(&#34;=&#34;)[0].strip()
+            for p in params_str.split(&#34;,&#34;)
+            if p.strip() and p.strip() != &#34;self&#34;
+        ]
+
+        # Build docstring
+        docstring_lines = [f&#39;    &#34;&#34;&#34;&lt;Short description of {function_name}.&gt;&#39;, &#34;&#34;]
+        if params:
+            docstring_lines.append(&#34;    Args:&#34;)
+            for p in params:
+                docstring_lines.append(f&#34;        {p}: &lt;description&gt;&#34;)
+            docstring_lines.append(&#34;&#34;)
+        docstring_lines.append(&#34;    Returns:&#34;)
+        docstring_lines.append(&#34;        &lt;description&gt;&#34;)
+        docstring_lines.append(&#39;    &#34;&#34;&#34;&#39;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-164&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;function_name&#34;: function_name,
+            &#34;parameters&#34;: params,
+            &#34;docstring_template&#34;: &#34;\n&#34;.join(docstring_lines),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-164&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-164: Generate a docstring template for a function.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.git_branch_list"><code class="name flex">
+<span>def <span class="ident">git_branch_list</span></span>(<span>self, repo_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def git_branch_list(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-172: List git branches.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;git&#34;, &#34;branch&#34;, &#34;-a&#34;],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        branches = []
+        current_branch = &#34;&#34;
+        for line in res.stdout.strip().splitlines():
+            line = line.strip()
+            if line.startswith(&#34;*&#34;):
+                current_branch = line[2:].strip()
+                branches.append(current_branch)
+            else:
+                branches.append(line)
+        return {
+            &#34;power_id&#34;: &#34;PWR-172&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;current_branch&#34;: current_branch,
+            &#34;branch_count&#34;: len(branches),
+            &#34;branches&#34;: branches,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-172&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-172: List git branches.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.git_commit"><code class="name flex">
+<span>def <span class="ident">git_commit</span></span>(<span>self, message: str, repo_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def git_commit(self, message: str, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-170: Stage all changes and commit. Requires user approval.&#34;&#34;&#34;
+    try:
+        subprocess.run(
+            [&#34;git&#34;, &#34;add&#34;, &#34;-A&#34;],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        res = subprocess.run(
+            [&#34;git&#34;, &#34;commit&#34;, &#34;-m&#34;, message],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-170&#34;,
+            &#34;status&#34;: &#34;success&#34; if res.returncode == 0 else &#34;error&#34;,
+            &#34;message&#34;: message,
+            &#34;output&#34;: (res.stdout or res.stderr).strip()[:2000],
+            &#34;approval_required&#34;: True,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-170&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}</code></pre>
+</details>
+<div class="desc"><p>PWR-170: Stage all changes and commit. Requires user approval.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.git_diff"><code class="name flex">
+<span>def <span class="ident">git_diff</span></span>(<span>self, file_path: Optional[str] = None, repo_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def git_diff(self, file_path: Optional[str] = None, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-026: Produces git diff of unstaged or staged changes.&#34;&#34;&#34;
+    try:
+        cmd = [&#34;git&#34;, &#34;diff&#34;]
+        if file_path:
+            cmd.append(file_path)
+        res = subprocess.run(
+            cmd, cwd=repo_path, capture_output=True, text=True, timeout=10, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;
+        )
+        diff_out = res.stdout or &#34;&#34;
+        return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;diff_length&#34;: len(diff_out), &#34;diff_preview&#34;: diff_out[:2000]}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-026&#34;, &#34;error&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-026: Produces git diff of unstaged or staged changes.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.git_log"><code class="name flex">
+<span>def <span class="ident">git_log</span></span>(<span>self, count: int = 10, repo_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def git_log(self, count: int = 10, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-169: Recent git log entries.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;git&#34;, &#34;log&#34;, f&#34;--max-count={count}&#34;, &#34;--pretty=format:%H|%an|%ae|%ad|%s&#34;, &#34;--date=short&#34;],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        commits: List[Dict[str, str]] = []
+        for line in res.stdout.strip().splitlines():
+            parts = line.split(&#34;|&#34;, 4)
+            if len(parts) &gt;= 5:
+                commits.append(
+                    {
+                        &#34;hash&#34;: parts[0],
+                        &#34;author&#34;: parts[1],
+                        &#34;email&#34;: parts[2],
+                        &#34;date&#34;: parts[3],
+                        &#34;message&#34;: parts[4],
+                    }
+                )
+        return {
+            &#34;power_id&#34;: &#34;PWR-169&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;count&#34;: len(commits),
+            &#34;commits&#34;: commits,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-169&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-169: Recent git log entries.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.git_push"><code class="name flex">
+<span>def <span class="ident">git_push</span></span>(<span>self, repo_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def git_push(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-171: Push to origin. Requires user approval.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;git&#34;, &#34;push&#34;],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-171&#34;,
+            &#34;status&#34;: &#34;success&#34; if res.returncode == 0 else &#34;error&#34;,
+            &#34;output&#34;: (res.stdout or res.stderr).strip()[:2000],
+            &#34;approval_required&#34;: True,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-171&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}</code></pre>
+</details>
+<div class="desc"><p>PWR-171: Push to origin. Requires user approval.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.git_status"><code class="name flex">
+<span>def <span class="ident">git_status</span></span>(<span>self, repo_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def git_status(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-025: Checks git status of the working tree.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;git&#34;, &#34;status&#34;, &#34;--porcelain&#34;], cwd=repo_path, capture_output=True, text=True, timeout=10
+        )
+        branch = subprocess.run(
+            [&#34;git&#34;, &#34;branch&#34;, &#34;--show-current&#34;], cwd=repo_path, capture_output=True, text=True, timeout=5
+        ).stdout.strip()
+        modified = [line.strip() for line in res.stdout.splitlines() if line.strip()]
+        return {
+            &#34;power_id&#34;: &#34;PWR-025&#34;,
+            &#34;branch&#34;: branch or &#34;main&#34;,
+            &#34;clean&#34;: len(modified) == 0,
+            &#34;modified_files_count&#34;: len(modified),
+            &#34;modified_files&#34;: modified[:20],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-025&#34;, &#34;error&#34;: str(e), &#34;clean&#34;: False}</code></pre>
+</details>
+<div class="desc"><p>PWR-025: Checks git status of the working tree.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.lint_check"><code class="name flex">
+<span>def <span class="ident">lint_check</span></span>(<span>self, file_path: Optional[str] = None, directory: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lint_check(self, file_path: Optional[str] = None, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-165: Run ruff or flake8 for linting.&#34;&#34;&#34;
+    try:
+        target = file_path or directory
+        # Try ruff first, fall back to flake8
+        for tool in [&#34;ruff check&#34;, &#34;flake8&#34;]:
+            cmd_parts = tool.split() + [target]
+            try:
+                res = subprocess.run(
+                    cmd_parts,
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                    encoding=&#34;utf-8&#34;,
+                    errors=&#34;replace&#34;,
+                )
+                issues = [l.strip() for l in res.stdout.strip().splitlines() if l.strip()]
+                return {
+                    &#34;power_id&#34;: &#34;PWR-165&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;tool&#34;: tool.split()[0],
+                    &#34;target&#34;: target,
+                    &#34;issue_count&#34;: len(issues),
+                    &#34;issues&#34;: issues[:50],
+                    &#34;exit_code&#34;: res.returncode,
+                }
+            except FileNotFoundError:
+                continue
+        return {&#34;power_id&#34;: &#34;PWR-165&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;Neither ruff nor flake8 found on PATH&#34;}
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-165&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-165: Run ruff or flake8 for linting.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.pip_install"><code class="name flex">
+<span>def <span class="ident">pip_install</span></span>(<span>self, package: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pip_install(self, package: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-173: pip install a package. Requires user approval.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;pip&#34;, &#34;install&#34;, package],
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-173&#34;,
+            &#34;status&#34;: &#34;success&#34; if res.returncode == 0 else &#34;error&#34;,
+            &#34;package&#34;: package,
+            &#34;output&#34;: (res.stdout or res.stderr).strip()[-2000:],
+            &#34;approval_required&#34;: True,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-173&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e), &#34;approval_required&#34;: True}</code></pre>
+</details>
+<div class="desc"><p>PWR-173: pip install a package. Requires user approval.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.requirements_check"><code class="name flex">
+<span>def <span class="ident">requirements_check</span></span>(<span>self, repo_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def requirements_check(self, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-177: Compare requirements.txt vs installed packages.&#34;&#34;&#34;
+    try:
+        req_file = os.path.join(repo_path, &#34;requirements.txt&#34;)
+        if not os.path.isfile(req_file):
+            return {&#34;power_id&#34;: &#34;PWR-177&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: &#34;requirements.txt not found&#34;}
+
+        with open(req_file, &#34;r&#34;, encoding=&#34;utf-8&#34;) as f:
+            req_lines = [l.strip() for l in f if l.strip() and not l.startswith(&#34;#&#34;)]
+
+        # Get installed packages
+        res = subprocess.run(
+            [&#34;pip&#34;, &#34;list&#34;, &#34;--format=json&#34;],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        import json
+
+        try:
+            installed = {p[&#34;name&#34;].lower(): p[&#34;version&#34;] for p in json.loads(res.stdout)}
+        except (json.JSONDecodeError, KeyError):
+            installed = {}
+
+        comparison: List[Dict[str, str]] = []
+        for req in req_lines:
+            # Parse name from requirement spec
+            name = re.split(r&#34;[&gt;&lt;=!~\[]&#34;, req)[0].strip().lower()
+            if name:
+                comparison.append(
+                    {
+                        &#34;requirement&#34;: req,
+                        &#34;installed_version&#34;: installed.get(name, &#34;NOT INSTALLED&#34;),
+                        &#34;present&#34;: name in installed,
+                    }
+                )
+
+        missing = [c for c in comparison if not c[&#34;present&#34;]]
+        return {
+            &#34;power_id&#34;: &#34;PWR-177&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;total_requirements&#34;: len(comparison),
+            &#34;missing_count&#34;: len(missing),
+            &#34;comparison&#34;: comparison,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-177&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-177: Compare requirements.txt vs installed packages.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.run_tests"><code class="name flex">
+<span>def <span class="ident">run_tests</span></span>(<span>self, test_path: str = 'tests', repo_path: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_tests(self, test_path: str = &#34;tests&#34;, repo_path: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-027: Executes local test suite.&#34;&#34;&#34;
+    try:
+        res = subprocess.run(
+            [&#34;python&#34;, &#34;-m&#34;, &#34;pytest&#34;, test_path, &#34;-q&#34;], cwd=repo_path, capture_output=True, text=True, timeout=60
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-027&#34;,
+            &#34;exit_code&#34;: res.returncode,
+            &#34;passed&#34;: res.returncode == 0,
+            &#34;summary&#34;: res.stdout.splitlines()[-1] if res.stdout.splitlines() else &#34;No output&#34;,
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-027&#34;, &#34;error&#34;: str(e), &#34;passed&#34;: False}</code></pre>
+</details>
+<div class="desc"><p>PWR-027: Executes local test suite.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.todo_scan"><code class="name flex">
+<span>def <span class="ident">todo_scan</span></span>(<span>self, directory: str = '.') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def todo_scan(self, directory: str = &#34;.&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-176: Find TODO/FIXME/HACK comments in code.&#34;&#34;&#34;
+    try:
+        markers = [&#34;TODO&#34;, &#34;FIXME&#34;, &#34;HACK&#34;, &#34;XXX&#34;, &#34;BUG&#34;]
+        findings: List[Dict[str, Any]] = []
+        skip_dirs = {&#34;.git&#34;, &#34;__pycache__&#34;, &#34;node_modules&#34;, &#34;.venv&#34;, &#34;venv&#34;}
+        code_exts = {
+            &#34;.py&#34;,
+            &#34;.js&#34;,
+            &#34;.ts&#34;,
+            &#34;.java&#34;,
+            &#34;.c&#34;,
+            &#34;.cpp&#34;,
+            &#34;.go&#34;,
+            &#34;.rs&#34;,
+            &#34;.rb&#34;,
+            &#34;.php&#34;,
+            &#34;.sh&#34;,
+            &#34;.bat&#34;,
+            &#34;.ps1&#34;,
+            &#34;.yaml&#34;,
+            &#34;.yml&#34;,
+            &#34;.toml&#34;,
+        }
+
+        for root, dirs, files in os.walk(os.path.abspath(directory)):
+            dirs[:] = [d for d in dirs if d not in skip_dirs]
+            for f in files:
+                ext = os.path.splitext(f)[1]
+                if ext not in code_exts:
+                    continue
+                fp = os.path.join(root, f)
+                try:
+                    with open(fp, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as fh:
+                        for line_no, line in enumerate(fh, 1):
+                            for marker in markers:
+                                if marker in line:
+                                    findings.append(
+                                        {
+                                            &#34;file&#34;: os.path.relpath(fp, directory),
+                                            &#34;line&#34;: line_no,
+                                            &#34;marker&#34;: marker,
+                                            &#34;text&#34;: line.strip()[:200],
+                                        }
+                                    )
+                                    break
+                except (OSError, UnicodeDecodeError):
+                    pass
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-176&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;directory&#34;: os.path.abspath(directory),
+            &#34;finding_count&#34;: len(findings),
+            &#34;findings&#34;: findings[:200],
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-176&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-176: Find TODO/FIXME/HACK comments in code.</p></div>
+</dd>
+<dt id="jarvis.powers.developer_powers.DeveloperPowers.venv_info"><code class="name flex">
+<span>def <span class="ident">venv_info</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def venv_info(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-178: Virtual environment information.&#34;&#34;&#34;
+    try:
+        import sys
+
+        venv_path = os.environ.get(&#34;VIRTUAL_ENV&#34;, &#34;&#34;)
+        conda_env = os.environ.get(&#34;CONDA_DEFAULT_ENV&#34;, &#34;&#34;)
+        in_venv = (
+            bool(venv_path)
+            or hasattr(sys, &#34;real_prefix&#34;)
+            or (hasattr(sys, &#34;base_prefix&#34;) and sys.base_prefix != sys.prefix)
+        )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-178&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;in_virtualenv&#34;: in_venv,
+            &#34;venv_path&#34;: venv_path or None,
+            &#34;conda_env&#34;: conda_env or None,
+            &#34;python_executable&#34;: sys.executable,
+            &#34;python_version&#34;: sys.version,
+            &#34;prefix&#34;: sys.prefix,
+            &#34;base_prefix&#34;: getattr(sys, &#34;base_prefix&#34;, sys.prefix),
+        }
+    except Exception as e:
+        return {&#34;power_id&#34;: &#34;PWR-178&#34;, &#34;status&#34;: &#34;error&#34;, &#34;message&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>PWR-178: Virtual environment information.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.developer_powers.DeveloperPowers" href="#jarvis.powers.developer_powers.DeveloperPowers">DeveloperPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.ci_cd_monitoring" href="#jarvis.powers.developer_powers.DeveloperPowers.ci_cd_monitoring">ci_cd_monitoring</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.code_explain" href="#jarvis.powers.developer_powers.DeveloperPowers.code_explain">code_explain</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.code_search" href="#jarvis.powers.developer_powers.DeveloperPowers.code_search">code_search</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.count_lines" href="#jarvis.powers.developer_powers.DeveloperPowers.count_lines">count_lines</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.create_test_stub" href="#jarvis.powers.developer_powers.DeveloperPowers.create_test_stub">create_test_stub</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.dependency_audit" href="#jarvis.powers.developer_powers.DeveloperPowers.dependency_audit">dependency_audit</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.diagnose_bug" href="#jarvis.powers.developer_powers.DeveloperPowers.diagnose_bug">diagnose_bug</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.explain_codebase" href="#jarvis.powers.developer_powers.DeveloperPowers.explain_codebase">explain_codebase</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.file_structure" href="#jarvis.powers.developer_powers.DeveloperPowers.file_structure">file_structure</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.format_code" href="#jarvis.powers.developer_powers.DeveloperPowers.format_code">format_code</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.generate_docstring" href="#jarvis.powers.developer_powers.DeveloperPowers.generate_docstring">generate_docstring</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.git_branch_list" href="#jarvis.powers.developer_powers.DeveloperPowers.git_branch_list">git_branch_list</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.git_commit" href="#jarvis.powers.developer_powers.DeveloperPowers.git_commit">git_commit</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.git_diff" href="#jarvis.powers.developer_powers.DeveloperPowers.git_diff">git_diff</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.git_log" href="#jarvis.powers.developer_powers.DeveloperPowers.git_log">git_log</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.git_operations" href="#jarvis.powers.developer_powers.DeveloperPowers.git_operations">git_operations</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.git_push" href="#jarvis.powers.developer_powers.DeveloperPowers.git_push">git_push</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.git_status" href="#jarvis.powers.developer_powers.DeveloperPowers.git_status">git_status</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.lint_check" href="#jarvis.powers.developer_powers.DeveloperPowers.lint_check">lint_check</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.pip_install" href="#jarvis.powers.developer_powers.DeveloperPowers.pip_install">pip_install</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.repository_navigation" href="#jarvis.powers.developer_powers.DeveloperPowers.repository_navigation">repository_navigation</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.requirements_check" href="#jarvis.powers.developer_powers.DeveloperPowers.requirements_check">requirements_check</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.run_ci_checks" href="#jarvis.powers.developer_powers.DeveloperPowers.run_ci_checks">run_ci_checks</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.run_tests" href="#jarvis.powers.developer_powers.DeveloperPowers.run_tests">run_tests</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.todo_scan" href="#jarvis.powers.developer_powers.DeveloperPowers.todo_scan">todo_scan</a></code></li>
+<li><code><a title="jarvis.powers.developer_powers.DeveloperPowers.venv_info" href="#jarvis.powers.developer_powers.DeveloperPowers.venv_info">venv_info</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.research_derived_powers API documentation</title>
+<meta name="description" content="JARVIS Research-Derived Powers (PWR-338 to PWR-355) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.research_derived_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Research-Derived Powers (PWR-338 to PWR-355).</p>
+<p>Provides meta-cognitive capabilities: tool synthesis, retry logic,
+shortcut management, context optimization, approval tokens,
+confidence scoring, task decomposition, quality gates, and time tracking.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers"><code class="flex name class">
+<span>class <span class="ident">ResearchDerivedPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ResearchDerivedPowers:
+    &#34;&#34;&#34;Implementations for research-derived meta-cognitive capabilities.&#34;&#34;&#34;
+
+    # ------------------------------------------------------------------
+    # PWR-338: Dynamic Tool Synthesis
+    # ------------------------------------------------------------------
+    def dynamic_tool_synthesis(self, task_description: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-338: Suggests which tools/powers to chain for a task.&#34;&#34;&#34;
+        task_lower = task_description.lower()
+
+        # Keyword-to-power mapping heuristics
+        tool_map: Dict[str, List[str]] = {
+            &#34;email&#34;: [&#34;PWR-205 (draft_email)&#34;, &#34;PWR-206 (send_email)&#34;],
+            &#34;schedule&#34;: [&#34;PWR-208 (schedule_message)&#34;, &#34;PWR-160 (calendar)&#34;],
+            &#34;file&#34;: [&#34;PWR-100 (file_read)&#34;, &#34;PWR-101 (file_write)&#34;],
+            &#34;search&#34;: [&#34;PWR-120 (web_search)&#34;, &#34;PWR-121 (local_search)&#34;],
+            &#34;stock&#34;: [&#34;PWR-215 (stock_quote)&#34;, &#34;PWR-181 (get_stock_quote)&#34;],
+            &#34;expense&#34;: [&#34;PWR-230 (expense_log)&#34;, &#34;PWR-231 (expense_summary)&#34;],
+            &#34;deploy&#34;: [&#34;PWR-300 (git_status)&#34;, &#34;PWR-310 (docker_build)&#34;],
+            &#34;notify&#34;: [&#34;PWR-203 (desktop_notification)&#34;, &#34;PWR-202 (telegram)&#34;],
+            &#34;convert&#34;: [&#34;PWR-180 (convert_currency)&#34;, &#34;PWR-218 (currency_convert)&#34;],
+            &#34;backup&#34;: [&#34;PWR-140 (backup_create)&#34;, &#34;PWR-353 (rollback_plan)&#34;],
+            &#34;security&#34;: [&#34;PWR-344 (hash_bound_approval)&#34;, &#34;PWR-345 (verify_approval)&#34;],
+        }
+
+        suggested: List[str] = []
+        for keyword, tools in tool_map.items():
+            if keyword in task_lower:
+                suggested.extend(tools)
+
+        if not suggested:
+            suggested = [&#34;PWR-349 (task_decomposer) — break it down first&#34;]
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-338&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;task&#34;: task_description,
+            &#34;suggested_tools&#34;: suggested,
+            &#34;note&#34;: &#34;Chain these powers in the listed order for best results.&#34;,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-339: Retry with Backoff
+    # ------------------------------------------------------------------
+    def retry_with_backoff(self, func: Callable[..., Any], max_retries: int = 3, **kwargs: Any) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-339: Exponential backoff retry wrapper.
+
+        Parameters
+        ----------
+        func : callable
+            The function to invoke.
+        max_retries : int
+            Maximum number of retry attempts (default 3).
+        **kwargs
+            Forwarded to *func*.
+        &#34;&#34;&#34;
+        last_error: Optional[str] = None
+        for attempt in range(1, max_retries + 1):
+            try:
+                result = func(**kwargs)
+                return {
+                    &#34;power_id&#34;: &#34;PWR-339&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;attempt&#34;: attempt,
+                    &#34;result&#34;: result,
+                }
+            except Exception as exc:
+                last_error = str(exc)
+                wait = min(2**attempt, 30)
+                logger.warning(
+                    &#34;PWR-339 attempt %d/%d failed: %s — retrying in %ds&#34;,
+                    attempt,
+                    max_retries,
+                    last_error,
+                    wait,
+                )
+                time.sleep(wait)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-339&#34;,
+            &#34;status&#34;: &#34;failed&#34;,
+            &#34;attempts&#34;: max_retries,
+            &#34;last_error&#34;: last_error,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-340: Learned Shortcut Registry (read)
+    # ------------------------------------------------------------------
+    def learned_shortcut_registry(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-340: Returns all learned user shortcuts.&#34;&#34;&#34;
+        try:
+            if _SHORTCUTS_FILE.exists():
+                shortcuts = json.loads(_SHORTCUTS_FILE.read_text(encoding=&#34;utf-8&#34;))
+            else:
+                shortcuts = []
+            return {
+                &#34;power_id&#34;: &#34;PWR-340&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;shortcuts&#34;: shortcuts,
+                &#34;count&#34;: len(shortcuts),
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-340&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-341: Register Shortcut
+    # ------------------------------------------------------------------
+    def register_shortcut(self, trigger: str, action: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-341: Registers a new shortcut mapping.&#34;&#34;&#34;
+        try:
+            _DATA_DIR.mkdir(parents=True, exist_ok=True)
+            shortcuts: List[Dict[str, Any]] = []
+            if _SHORTCUTS_FILE.exists():
+                shortcuts = json.loads(_SHORTCUTS_FILE.read_text(encoding=&#34;utf-8&#34;))
+
+            entry = {
+                &#34;id&#34;: str(uuid.uuid4())[:8],
+                &#34;trigger&#34;: trigger,
+                &#34;action&#34;: action,
+                &#34;created_at&#34;: datetime.now(timezone.utc).isoformat(),
+            }
+            shortcuts.append(entry)
+            _SHORTCUTS_FILE.write_text(json.dumps(shortcuts, indent=2), encoding=&#34;utf-8&#34;)
+            return {
+                &#34;power_id&#34;: &#34;PWR-341&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;registered&#34;: entry,
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-341&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-342: Adaptive Response Format
+    # ------------------------------------------------------------------
+    def adaptive_response_format(self, query: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-342: Determines best output format (table/list/prose).&#34;&#34;&#34;
+        q = query.lower()
+
+        if any(kw in q for kw in [&#34;compare&#34;, &#34;vs&#34;, &#34;versus&#34;, &#34;table&#34;, &#34;breakdown&#34;]):
+            fmt = &#34;table&#34;
+        elif any(kw in q for kw in [&#34;list&#34;, &#34;steps&#34;, &#34;how to&#34;, &#34;enumerate&#34;, &#34;top&#34;]):
+            fmt = &#34;list&#34;
+        elif any(kw in q for kw in [&#34;explain&#34;, &#34;why&#34;, &#34;describe&#34;, &#34;summary&#34;, &#34;essay&#34;]):
+            fmt = &#34;prose&#34;
+        elif &#34;?&#34; in q and len(q.split()) &lt; 8:
+            fmt = &#34;short_answer&#34;
+        else:
+            fmt = &#34;prose&#34;
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-342&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;query&#34;: query,
+            &#34;recommended_format&#34;: fmt,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-343: Context Window Optimizer
+    # ------------------------------------------------------------------
+    def context_window_optimizer(self, messages: List[Dict[str, str]], max_tokens: int = 120_000) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-343: Trims context to fit token limits.
+
+        Uses a simple heuristic of ~4 chars per token.
+        &#34;&#34;&#34;
+        CHARS_PER_TOKEN = 4
+        max_chars = max_tokens * CHARS_PER_TOKEN
+
+        total_chars = sum(len(m.get(&#34;content&#34;, &#34;&#34;)) for m in messages)
+        if total_chars &lt;= max_chars:
+            return {
+                &#34;power_id&#34;: &#34;PWR-343&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;action&#34;: &#34;no_trim_needed&#34;,
+                &#34;original_messages&#34;: len(messages),
+                &#34;estimated_tokens&#34;: total_chars // CHARS_PER_TOKEN,
+            }
+
+        # Keep system messages + most recent messages, trim from middle
+        trimmed: List[Dict[str, str]] = []
+        system_msgs = [m for m in messages if m.get(&#34;role&#34;) == &#34;system&#34;]
+        non_system = [m for m in messages if m.get(&#34;role&#34;) != &#34;system&#34;]
+
+        budget = max_chars - sum(len(m.get(&#34;content&#34;, &#34;&#34;)) for m in system_msgs)
+        kept_tail: List[Dict[str, str]] = []
+        used = 0
+        for m in reversed(non_system):
+            c = len(m.get(&#34;content&#34;, &#34;&#34;))
+            if used + c &gt; budget:
+                break
+            kept_tail.insert(0, m)
+            used += c
+
+        trimmed = system_msgs + kept_tail
+        return {
+            &#34;power_id&#34;: &#34;PWR-343&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;action&#34;: &#34;trimmed&#34;,
+            &#34;original_messages&#34;: len(messages),
+            &#34;kept_messages&#34;: len(trimmed),
+            &#34;estimated_tokens&#34;: (total_chars - (total_chars - used)) // CHARS_PER_TOKEN,
+            &#34;trimmed_messages&#34;: trimmed,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-344: Hash-Bound Approval Token
+    # ------------------------------------------------------------------
+    def hash_bound_approval(self, action: str, payload: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-344: Generate HMAC-bound approval token for an action.&#34;&#34;&#34;
+        try:
+            message = f&#34;{action}:{payload}&#34;
+            token = hmac.new(_HMAC_SECRET.encode(), message.encode(), hashlib.sha256).hexdigest()
+            return {
+                &#34;power_id&#34;: &#34;PWR-344&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;action&#34;: action,
+                &#34;token&#34;: token,
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-344&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-345: Verify Approval Token
+    # ------------------------------------------------------------------
+    def verify_approval(self, token: str, action: str, payload: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-345: Verify HMAC approval token.&#34;&#34;&#34;
+        try:
+            message = f&#34;{action}:{payload}&#34;
+            expected = hmac.new(_HMAC_SECRET.encode(), message.encode(), hashlib.sha256).hexdigest()
+            valid = hmac.compare_digest(token, expected)
+            return {
+                &#34;power_id&#34;: &#34;PWR-345&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;valid&#34;: valid,
+                &#34;action&#34;: action,
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-345&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-346: Source Stamp
+    # ------------------------------------------------------------------
+    def source_stamp(self, content: str, source: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-346: Add provenance stamp to content.&#34;&#34;&#34;
+        stamp_id = str(uuid.uuid4())[:8]
+        ts = datetime.now(timezone.utc).isoformat()
+        stamped = f&#34;{content}\n\n---\n[Source: {source} | Stamp: {stamp_id} | {ts}]&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-346&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;stamp_id&#34;: stamp_id,
+            &#34;source&#34;: source,
+            &#34;timestamp&#34;: ts,
+            &#34;stamped_content&#34;: stamped,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-347: Confidence Scorer
+    # ------------------------------------------------------------------
+    def confidence_scorer(self, response: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-347: Score response confidence (0-1).
+
+        Heuristic scoring based on hedging language, length, specificity.
+        &#34;&#34;&#34;
+        text = response.lower()
+        score = 0.75  # baseline
+
+        # Hedge words reduce confidence
+        hedges = [&#34;maybe&#34;, &#34;perhaps&#34;, &#34;might&#34;, &#34;possibly&#34;, &#34;i think&#34;, &#34;not sure&#34;, &#34;uncertain&#34;, &#34;could be&#34;, &#34;it depends&#34;]
+        hedge_count = sum(1 for h in hedges if h in text)
+        score -= hedge_count * 0.08
+
+        # Specificity markers increase confidence
+        specifics = [&#34;because&#34;, &#34;specifically&#34;, &#34;according to&#34;, &#34;data shows&#34;, &#34;measured&#34;, &#34;verified&#34;, &#34;confirmed&#34;]
+        spec_count = sum(1 for s in specifics if s in text)
+        score += spec_count * 0.05
+
+        # Very short answers are less confident
+        if len(text.split()) &lt; 5:
+            score -= 0.15
+
+        score = round(max(0.0, min(1.0, score)), 2)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-347&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;confidence&#34;: score,
+            &#34;hedge_words_found&#34;: hedge_count,
+            &#34;specificity_markers&#34;: spec_count,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-348: Fallback Chain
+    # ------------------------------------------------------------------
+    def fallback_chain(self, primary: Callable[..., Any], fallbacks: List[Callable[..., Any]]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-348: Try primary, fall through fallbacks on failure.&#34;&#34;&#34;
+        chain = [primary] + fallbacks
+        errors: List[str] = []
+
+        for idx, fn in enumerate(chain):
+            try:
+                result = fn()
+                return {
+                    &#34;power_id&#34;: &#34;PWR-348&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;resolved_by&#34;: f&#34;{&#39;primary&#39; if idx == 0 else f&#39;fallback_{idx}&#39;}&#34;,
+                    &#34;attempts&#34;: idx + 1,
+                    &#34;result&#34;: result,
+                }
+            except Exception as exc:
+                errors.append(f&#34;Step {idx}: {exc}&#34;)
+                logger.warning(&#34;PWR-348 step %d failed: %s&#34;, idx, exc)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-348&#34;,
+            &#34;status&#34;: &#34;all_failed&#34;,
+            &#34;attempts&#34;: len(chain),
+            &#34;errors&#34;: errors,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-349: Task Decomposer
+    # ------------------------------------------------------------------
+    def task_decomposer(self, complex_task: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-349: Break task into subtasks via heuristic analysis.&#34;&#34;&#34;
+        parts = [
+            s.strip()
+            for s in complex_task.replace(&#34; and &#34;, &#34;\n&#34;).replace(&#34; then &#34;, &#34;\n&#34;).replace(&#34;, &#34;, &#34;\n&#34;).split(&#34;\n&#34;)
+            if s.strip()
+        ]
+
+        subtasks = []
+        for i, part in enumerate(parts, 1):
+            subtasks.append(
+                {
+                    &#34;id&#34;: f&#34;SUB-{i:03d}&#34;,
+                    &#34;description&#34;: part,
+                    &#34;estimated_complexity&#34;: (
+                        &#34;high&#34; if len(part.split()) &gt; 12 else &#34;medium&#34; if len(part.split()) &gt; 5 else &#34;low&#34;
+                    ),
+                    &#34;dependencies&#34;: [f&#34;SUB-{i - 1:03d}&#34;] if i &gt; 1 else [],
+                }
+            )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-349&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;original_task&#34;: complex_task,
+            &#34;subtasks&#34;: subtasks,
+            &#34;count&#34;: len(subtasks),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-350: Parallel Dispatch Plan
+    # ------------------------------------------------------------------
+    def parallel_dispatch_plan(self, subtasks: List[Dict[str, Any]]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-350: Plan parallel execution of subtasks.
+
+        Groups subtasks into waves based on dependencies.
+        &#34;&#34;&#34;
+        completed: set[str] = set()
+        waves: List[List[Dict[str, Any]]] = []
+        remaining = list(subtasks)
+
+        max_iterations = len(remaining) + 1
+        for _ in range(max_iterations):
+            if not remaining:
+                break
+            wave: List[Dict[str, Any]] = []
+            still_remaining: List[Dict[str, Any]] = []
+            for st in remaining:
+                deps = set(st.get(&#34;dependencies&#34;, []))
+                if deps.issubset(completed):
+                    wave.append(st)
+                else:
+                    still_remaining.append(st)
+            if not wave:
+                # Deadlock — force remaining into last wave
+                wave = still_remaining
+                still_remaining = []
+            completed.update(st.get(&#34;id&#34;, &#34;&#34;) for st in wave)
+            waves.append(wave)
+            remaining = still_remaining
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-350&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;waves&#34;: [{&#34;wave&#34;: i + 1, &#34;tasks&#34;: [t.get(&#34;id&#34;, &#34;&#34;) for t in w]} for i, w in enumerate(waves)],
+            &#34;total_waves&#34;: len(waves),
+            &#34;max_parallelism&#34;: max(len(w) for w in waves) if waves else 0,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-351: Result Merger
+    # ------------------------------------------------------------------
+    def result_merger(self, results: List[Dict[str, Any]]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-351: Merge results from parallel tasks.&#34;&#34;&#34;
+        merged_data: Dict[str, Any] = {}
+        errors: List[str] = []
+        success_count = 0
+
+        for r in results:
+            task_id = r.get(&#34;id&#34;, r.get(&#34;power_id&#34;, f&#34;unknown_{id(r)}&#34;))
+            status = r.get(&#34;status&#34;, &#34;unknown&#34;)
+            if status in (&#34;success&#34;, &#34;ok&#34;):
+                success_count += 1
+                merged_data[task_id] = {k: v for k, v in r.items() if k not in (&#34;id&#34;, &#34;status&#34;)}
+            else:
+                errors.append(f&#34;{task_id}: {r.get(&#39;error&#39;, status)}&#34;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-351&#34;,
+            &#34;status&#34;: &#34;success&#34; if not errors else &#34;partial&#34;,
+            &#34;total_results&#34;: len(results),
+            &#34;successful&#34;: success_count,
+            &#34;failed&#34;: len(errors),
+            &#34;merged_data&#34;: merged_data,
+            &#34;errors&#34;: errors,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-352: Quality Gate
+    # ------------------------------------------------------------------
+    def quality_gate(self, result: Dict[str, Any], criteria: Dict[str, Any]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-352: Check if result meets quality criteria.
+
+        Criteria keys: min_length, required_fields, max_errors, min_confidence.
+        &#34;&#34;&#34;
+        passed = True
+        checks: List[Dict[str, Any]] = []
+
+        if &#34;min_length&#34; in criteria:
+            content = str(result.get(&#34;content&#34;, result.get(&#34;result&#34;, &#34;&#34;)))
+            ok = len(content) &gt;= criteria[&#34;min_length&#34;]
+            checks.append({&#34;check&#34;: &#34;min_length&#34;, &#34;passed&#34;: ok, &#34;value&#34;: len(content)})
+            if not ok:
+                passed = False
+
+        if &#34;required_fields&#34; in criteria:
+            missing = [f for f in criteria[&#34;required_fields&#34;] if f not in result]
+            ok = len(missing) == 0
+            checks.append({&#34;check&#34;: &#34;required_fields&#34;, &#34;passed&#34;: ok, &#34;missing&#34;: missing})
+            if not ok:
+                passed = False
+
+        if &#34;max_errors&#34; in criteria:
+            errs = len(result.get(&#34;errors&#34;, []))
+            ok = errs &lt;= criteria[&#34;max_errors&#34;]
+            checks.append({&#34;check&#34;: &#34;max_errors&#34;, &#34;passed&#34;: ok, &#34;error_count&#34;: errs})
+            if not ok:
+                passed = False
+
+        if &#34;min_confidence&#34; in criteria:
+            conf = result.get(&#34;confidence&#34;, 0)
+            ok = conf &gt;= criteria[&#34;min_confidence&#34;]
+            checks.append({&#34;check&#34;: &#34;min_confidence&#34;, &#34;passed&#34;: ok, &#34;confidence&#34;: conf})
+            if not ok:
+                passed = False
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-352&#34;,
+            &#34;status&#34;: &#34;pass&#34; if passed else &#34;fail&#34;,
+            &#34;passed&#34;: passed,
+            &#34;checks&#34;: checks,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-353: Rollback Plan
+    # ------------------------------------------------------------------
+    def rollback_plan(self, action: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-353: Generate rollback steps for an action.&#34;&#34;&#34;
+        rollback_templates: Dict[str, List[str]] = {
+            &#34;file_write&#34;: [&#34;Restore file from backup&#34;, &#34;Verify file integrity&#34;],
+            &#34;file_delete&#34;: [&#34;Restore from recycle bin or backup&#34;, &#34;Verify restoration&#34;],
+            &#34;deploy&#34;: [&#34;Revert to previous deployment&#34;, &#34;Run health checks&#34;, &#34;Notify team of rollback&#34;],
+            &#34;database&#34;: [&#34;Restore from snapshot&#34;, &#34;Verify data consistency&#34;, &#34;Run integrity checks&#34;],
+            &#34;config_change&#34;: [&#34;Restore previous config&#34;, &#34;Restart affected services&#34;, &#34;Verify service health&#34;],
+            &#34;email_send&#34;: [&#34;Send correction/retraction email&#34;, &#34;Log incident for audit&#34;],
+            &#34;install&#34;: [&#34;Uninstall package&#34;, &#34;Restore previous version&#34;, &#34;Verify system stability&#34;],
+        }
+
+        action_lower = action.lower()
+        steps: List[str] = []
+        for key, template_steps in rollback_templates.items():
+            if key in action_lower:
+                steps = template_steps
+                break
+
+        if not steps:
+            steps = [
+                f&#34;Document what &#39;{action}&#39; changed&#34;,
+                &#34;Identify affected systems/files&#34;,
+                &#34;Restore to pre-action state from backup&#34;,
+                &#34;Verify restoration&#34;,
+                &#34;Log rollback for audit trail&#34;,
+            ]
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-353&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;action&#34;: action,
+            &#34;rollback_steps&#34;: [{&#34;step&#34;: i, &#34;description&#34;: s} for i, s in enumerate(steps, 1)],
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-354: Time Ledger Entry
+    # ------------------------------------------------------------------
+    def time_ledger_entry(self, task: str, duration_min: float) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-354: Log time spent on task.&#34;&#34;&#34;
+        try:
+            _DATA_DIR.mkdir(parents=True, exist_ok=True)
+            ledger: List[Dict[str, Any]] = []
+            if _TIME_LEDGER_FILE.exists():
+                ledger = json.loads(_TIME_LEDGER_FILE.read_text(encoding=&#34;utf-8&#34;))
+
+            entry = {
+                &#34;id&#34;: str(uuid.uuid4())[:8],
+                &#34;task&#34;: task,
+                &#34;duration_min&#34;: round(duration_min, 2),
+                &#34;logged_at&#34;: datetime.now(timezone.utc).isoformat(),
+            }
+            ledger.append(entry)
+            _TIME_LEDGER_FILE.write_text(json.dumps(ledger, indent=2), encoding=&#34;utf-8&#34;)
+
+            total_today = sum(
+                e[&#34;duration_min&#34;]
+                for e in ledger
+                if e[&#34;logged_at&#34;][:10] == datetime.now(timezone.utc).strftime(&#34;%Y-%m-%d&#34;)
+            )
+            return {
+                &#34;power_id&#34;: &#34;PWR-354&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;entry&#34;: entry,
+                &#34;total_today_min&#34;: round(total_today, 2),
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-354&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-355: Never Estimate Rule
+    # ------------------------------------------------------------------
+    def never_estimate_rule(self, query: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-355: Flag if query asks for estimate, enforce &#39;measure don&#39;t estimate&#39;.&#34;&#34;&#34;
+        q = query.lower()
+        estimate_signals = [
+            &#34;estimate&#34;,
+            &#34;guess&#34;,
+            &#34;approximate&#34;,
+            &#34;roughly&#34;,
+            &#34;ballpark&#34;,
+            &#34;how long will&#34;,
+            &#34;how much time&#34;,
+            &#34;when will it be done&#34;,
+            &#34;predict&#34;,
+            &#34;forecast time&#34;,
+            &#34;how many hours&#34;,
+        ]
+
+        triggered = [s for s in estimate_signals if s in q]
+
+        if triggered:
+            return {
+                &#34;power_id&#34;: &#34;PWR-355&#34;,
+                &#34;status&#34;: &#34;flagged&#34;,
+                &#34;triggered_by&#34;: triggered,
+                &#34;guidance&#34;: (
+                    &#34;JARVIS Rule: Measure, don&#39;t estimate. &#34;
+                    &#34;Break the task into sub-tasks, time each one, &#34;
+                    &#34;and sum measured durations. Use PWR-349 (task_decomposer) &#34;
+                    &#34;and PWR-354 (time_ledger_entry) instead.&#34;
+                ),
+            }
+        return {
+            &#34;power_id&#34;: &#34;PWR-355&#34;,
+            &#34;status&#34;: &#34;clear&#34;,
+            &#34;message&#34;: &#34;Query does not request an estimate.&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>Implementations for research-derived meta-cognitive capabilities.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.adaptive_response_format"><code class="name flex">
+<span>def <span class="ident">adaptive_response_format</span></span>(<span>self, query: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def adaptive_response_format(self, query: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-342: Determines best output format (table/list/prose).&#34;&#34;&#34;
+    q = query.lower()
+
+    if any(kw in q for kw in [&#34;compare&#34;, &#34;vs&#34;, &#34;versus&#34;, &#34;table&#34;, &#34;breakdown&#34;]):
+        fmt = &#34;table&#34;
+    elif any(kw in q for kw in [&#34;list&#34;, &#34;steps&#34;, &#34;how to&#34;, &#34;enumerate&#34;, &#34;top&#34;]):
+        fmt = &#34;list&#34;
+    elif any(kw in q for kw in [&#34;explain&#34;, &#34;why&#34;, &#34;describe&#34;, &#34;summary&#34;, &#34;essay&#34;]):
+        fmt = &#34;prose&#34;
+    elif &#34;?&#34; in q and len(q.split()) &lt; 8:
+        fmt = &#34;short_answer&#34;
+    else:
+        fmt = &#34;prose&#34;
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-342&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;query&#34;: query,
+        &#34;recommended_format&#34;: fmt,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-342: Determines best output format (table/list/prose).</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.confidence_scorer"><code class="name flex">
+<span>def <span class="ident">confidence_scorer</span></span>(<span>self, response: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def confidence_scorer(self, response: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-347: Score response confidence (0-1).
+
+    Heuristic scoring based on hedging language, length, specificity.
+    &#34;&#34;&#34;
+    text = response.lower()
+    score = 0.75  # baseline
+
+    # Hedge words reduce confidence
+    hedges = [&#34;maybe&#34;, &#34;perhaps&#34;, &#34;might&#34;, &#34;possibly&#34;, &#34;i think&#34;, &#34;not sure&#34;, &#34;uncertain&#34;, &#34;could be&#34;, &#34;it depends&#34;]
+    hedge_count = sum(1 for h in hedges if h in text)
+    score -= hedge_count * 0.08
+
+    # Specificity markers increase confidence
+    specifics = [&#34;because&#34;, &#34;specifically&#34;, &#34;according to&#34;, &#34;data shows&#34;, &#34;measured&#34;, &#34;verified&#34;, &#34;confirmed&#34;]
+    spec_count = sum(1 for s in specifics if s in text)
+    score += spec_count * 0.05
+
+    # Very short answers are less confident
+    if len(text.split()) &lt; 5:
+        score -= 0.15
+
+    score = round(max(0.0, min(1.0, score)), 2)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-347&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;confidence&#34;: score,
+        &#34;hedge_words_found&#34;: hedge_count,
+        &#34;specificity_markers&#34;: spec_count,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-347: Score response confidence (0-1).</p>
+<p>Heuristic scoring based on hedging language, length, specificity.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.context_window_optimizer"><code class="name flex">
+<span>def <span class="ident">context_window_optimizer</span></span>(<span>self, messages: List[Dict[str, str]], max_tokens: int = 120000) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def context_window_optimizer(self, messages: List[Dict[str, str]], max_tokens: int = 120_000) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-343: Trims context to fit token limits.
+
+    Uses a simple heuristic of ~4 chars per token.
+    &#34;&#34;&#34;
+    CHARS_PER_TOKEN = 4
+    max_chars = max_tokens * CHARS_PER_TOKEN
+
+    total_chars = sum(len(m.get(&#34;content&#34;, &#34;&#34;)) for m in messages)
+    if total_chars &lt;= max_chars:
+        return {
+            &#34;power_id&#34;: &#34;PWR-343&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;action&#34;: &#34;no_trim_needed&#34;,
+            &#34;original_messages&#34;: len(messages),
+            &#34;estimated_tokens&#34;: total_chars // CHARS_PER_TOKEN,
+        }
+
+    # Keep system messages + most recent messages, trim from middle
+    trimmed: List[Dict[str, str]] = []
+    system_msgs = [m for m in messages if m.get(&#34;role&#34;) == &#34;system&#34;]
+    non_system = [m for m in messages if m.get(&#34;role&#34;) != &#34;system&#34;]
+
+    budget = max_chars - sum(len(m.get(&#34;content&#34;, &#34;&#34;)) for m in system_msgs)
+    kept_tail: List[Dict[str, str]] = []
+    used = 0
+    for m in reversed(non_system):
+        c = len(m.get(&#34;content&#34;, &#34;&#34;))
+        if used + c &gt; budget:
+            break
+        kept_tail.insert(0, m)
+        used += c
+
+    trimmed = system_msgs + kept_tail
+    return {
+        &#34;power_id&#34;: &#34;PWR-343&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;action&#34;: &#34;trimmed&#34;,
+        &#34;original_messages&#34;: len(messages),
+        &#34;kept_messages&#34;: len(trimmed),
+        &#34;estimated_tokens&#34;: (total_chars - (total_chars - used)) // CHARS_PER_TOKEN,
+        &#34;trimmed_messages&#34;: trimmed,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-343: Trims context to fit token limits.</p>
+<p>Uses a simple heuristic of ~4 chars per token.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.dynamic_tool_synthesis"><code class="name flex">
+<span>def <span class="ident">dynamic_tool_synthesis</span></span>(<span>self, task_description: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dynamic_tool_synthesis(self, task_description: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-338: Suggests which tools/powers to chain for a task.&#34;&#34;&#34;
+    task_lower = task_description.lower()
+
+    # Keyword-to-power mapping heuristics
+    tool_map: Dict[str, List[str]] = {
+        &#34;email&#34;: [&#34;PWR-205 (draft_email)&#34;, &#34;PWR-206 (send_email)&#34;],
+        &#34;schedule&#34;: [&#34;PWR-208 (schedule_message)&#34;, &#34;PWR-160 (calendar)&#34;],
+        &#34;file&#34;: [&#34;PWR-100 (file_read)&#34;, &#34;PWR-101 (file_write)&#34;],
+        &#34;search&#34;: [&#34;PWR-120 (web_search)&#34;, &#34;PWR-121 (local_search)&#34;],
+        &#34;stock&#34;: [&#34;PWR-215 (stock_quote)&#34;, &#34;PWR-181 (get_stock_quote)&#34;],
+        &#34;expense&#34;: [&#34;PWR-230 (expense_log)&#34;, &#34;PWR-231 (expense_summary)&#34;],
+        &#34;deploy&#34;: [&#34;PWR-300 (git_status)&#34;, &#34;PWR-310 (docker_build)&#34;],
+        &#34;notify&#34;: [&#34;PWR-203 (desktop_notification)&#34;, &#34;PWR-202 (telegram)&#34;],
+        &#34;convert&#34;: [&#34;PWR-180 (convert_currency)&#34;, &#34;PWR-218 (currency_convert)&#34;],
+        &#34;backup&#34;: [&#34;PWR-140 (backup_create)&#34;, &#34;PWR-353 (rollback_plan)&#34;],
+        &#34;security&#34;: [&#34;PWR-344 (hash_bound_approval)&#34;, &#34;PWR-345 (verify_approval)&#34;],
+    }
+
+    suggested: List[str] = []
+    for keyword, tools in tool_map.items():
+        if keyword in task_lower:
+            suggested.extend(tools)
+
+    if not suggested:
+        suggested = [&#34;PWR-349 (task_decomposer) — break it down first&#34;]
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-338&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;task&#34;: task_description,
+        &#34;suggested_tools&#34;: suggested,
+        &#34;note&#34;: &#34;Chain these powers in the listed order for best results.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-338: Suggests which tools/powers to chain for a task.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.fallback_chain"><code class="name flex">
+<span>def <span class="ident">fallback_chain</span></span>(<span>self, primary: Callable[..., Any], fallbacks: List[Callable[..., Any]]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fallback_chain(self, primary: Callable[..., Any], fallbacks: List[Callable[..., Any]]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-348: Try primary, fall through fallbacks on failure.&#34;&#34;&#34;
+    chain = [primary] + fallbacks
+    errors: List[str] = []
+
+    for idx, fn in enumerate(chain):
+        try:
+            result = fn()
+            return {
+                &#34;power_id&#34;: &#34;PWR-348&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;resolved_by&#34;: f&#34;{&#39;primary&#39; if idx == 0 else f&#39;fallback_{idx}&#39;}&#34;,
+                &#34;attempts&#34;: idx + 1,
+                &#34;result&#34;: result,
+            }
+        except Exception as exc:
+            errors.append(f&#34;Step {idx}: {exc}&#34;)
+            logger.warning(&#34;PWR-348 step %d failed: %s&#34;, idx, exc)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-348&#34;,
+        &#34;status&#34;: &#34;all_failed&#34;,
+        &#34;attempts&#34;: len(chain),
+        &#34;errors&#34;: errors,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-348: Try primary, fall through fallbacks on failure.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.hash_bound_approval"><code class="name flex">
+<span>def <span class="ident">hash_bound_approval</span></span>(<span>self, action: str, payload: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hash_bound_approval(self, action: str, payload: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-344: Generate HMAC-bound approval token for an action.&#34;&#34;&#34;
+    try:
+        message = f&#34;{action}:{payload}&#34;
+        token = hmac.new(_HMAC_SECRET.encode(), message.encode(), hashlib.sha256).hexdigest()
+        return {
+            &#34;power_id&#34;: &#34;PWR-344&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;action&#34;: action,
+            &#34;token&#34;: token,
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-344&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-344: Generate HMAC-bound approval token for an action.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.learned_shortcut_registry"><code class="name flex">
+<span>def <span class="ident">learned_shortcut_registry</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def learned_shortcut_registry(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-340: Returns all learned user shortcuts.&#34;&#34;&#34;
+    try:
+        if _SHORTCUTS_FILE.exists():
+            shortcuts = json.loads(_SHORTCUTS_FILE.read_text(encoding=&#34;utf-8&#34;))
+        else:
+            shortcuts = []
+        return {
+            &#34;power_id&#34;: &#34;PWR-340&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;shortcuts&#34;: shortcuts,
+            &#34;count&#34;: len(shortcuts),
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-340&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-340: Returns all learned user shortcuts.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.never_estimate_rule"><code class="name flex">
+<span>def <span class="ident">never_estimate_rule</span></span>(<span>self, query: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def never_estimate_rule(self, query: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-355: Flag if query asks for estimate, enforce &#39;measure don&#39;t estimate&#39;.&#34;&#34;&#34;
+    q = query.lower()
+    estimate_signals = [
+        &#34;estimate&#34;,
+        &#34;guess&#34;,
+        &#34;approximate&#34;,
+        &#34;roughly&#34;,
+        &#34;ballpark&#34;,
+        &#34;how long will&#34;,
+        &#34;how much time&#34;,
+        &#34;when will it be done&#34;,
+        &#34;predict&#34;,
+        &#34;forecast time&#34;,
+        &#34;how many hours&#34;,
+    ]
+
+    triggered = [s for s in estimate_signals if s in q]
+
+    if triggered:
+        return {
+            &#34;power_id&#34;: &#34;PWR-355&#34;,
+            &#34;status&#34;: &#34;flagged&#34;,
+            &#34;triggered_by&#34;: triggered,
+            &#34;guidance&#34;: (
+                &#34;JARVIS Rule: Measure, don&#39;t estimate. &#34;
+                &#34;Break the task into sub-tasks, time each one, &#34;
+                &#34;and sum measured durations. Use PWR-349 (task_decomposer) &#34;
+                &#34;and PWR-354 (time_ledger_entry) instead.&#34;
+            ),
+        }
+    return {
+        &#34;power_id&#34;: &#34;PWR-355&#34;,
+        &#34;status&#34;: &#34;clear&#34;,
+        &#34;message&#34;: &#34;Query does not request an estimate.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-355: Flag if query asks for estimate, enforce 'measure don't estimate'.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.parallel_dispatch_plan"><code class="name flex">
+<span>def <span class="ident">parallel_dispatch_plan</span></span>(<span>self, subtasks: List[Dict[str, Any]]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parallel_dispatch_plan(self, subtasks: List[Dict[str, Any]]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-350: Plan parallel execution of subtasks.
+
+    Groups subtasks into waves based on dependencies.
+    &#34;&#34;&#34;
+    completed: set[str] = set()
+    waves: List[List[Dict[str, Any]]] = []
+    remaining = list(subtasks)
+
+    max_iterations = len(remaining) + 1
+    for _ in range(max_iterations):
+        if not remaining:
+            break
+        wave: List[Dict[str, Any]] = []
+        still_remaining: List[Dict[str, Any]] = []
+        for st in remaining:
+            deps = set(st.get(&#34;dependencies&#34;, []))
+            if deps.issubset(completed):
+                wave.append(st)
+            else:
+                still_remaining.append(st)
+        if not wave:
+            # Deadlock — force remaining into last wave
+            wave = still_remaining
+            still_remaining = []
+        completed.update(st.get(&#34;id&#34;, &#34;&#34;) for st in wave)
+        waves.append(wave)
+        remaining = still_remaining
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-350&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;waves&#34;: [{&#34;wave&#34;: i + 1, &#34;tasks&#34;: [t.get(&#34;id&#34;, &#34;&#34;) for t in w]} for i, w in enumerate(waves)],
+        &#34;total_waves&#34;: len(waves),
+        &#34;max_parallelism&#34;: max(len(w) for w in waves) if waves else 0,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-350: Plan parallel execution of subtasks.</p>
+<p>Groups subtasks into waves based on dependencies.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.quality_gate"><code class="name flex">
+<span>def <span class="ident">quality_gate</span></span>(<span>self, result: Dict[str, Any], criteria: Dict[str, Any]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def quality_gate(self, result: Dict[str, Any], criteria: Dict[str, Any]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-352: Check if result meets quality criteria.
+
+    Criteria keys: min_length, required_fields, max_errors, min_confidence.
+    &#34;&#34;&#34;
+    passed = True
+    checks: List[Dict[str, Any]] = []
+
+    if &#34;min_length&#34; in criteria:
+        content = str(result.get(&#34;content&#34;, result.get(&#34;result&#34;, &#34;&#34;)))
+        ok = len(content) &gt;= criteria[&#34;min_length&#34;]
+        checks.append({&#34;check&#34;: &#34;min_length&#34;, &#34;passed&#34;: ok, &#34;value&#34;: len(content)})
+        if not ok:
+            passed = False
+
+    if &#34;required_fields&#34; in criteria:
+        missing = [f for f in criteria[&#34;required_fields&#34;] if f not in result]
+        ok = len(missing) == 0
+        checks.append({&#34;check&#34;: &#34;required_fields&#34;, &#34;passed&#34;: ok, &#34;missing&#34;: missing})
+        if not ok:
+            passed = False
+
+    if &#34;max_errors&#34; in criteria:
+        errs = len(result.get(&#34;errors&#34;, []))
+        ok = errs &lt;= criteria[&#34;max_errors&#34;]
+        checks.append({&#34;check&#34;: &#34;max_errors&#34;, &#34;passed&#34;: ok, &#34;error_count&#34;: errs})
+        if not ok:
+            passed = False
+
+    if &#34;min_confidence&#34; in criteria:
+        conf = result.get(&#34;confidence&#34;, 0)
+        ok = conf &gt;= criteria[&#34;min_confidence&#34;]
+        checks.append({&#34;check&#34;: &#34;min_confidence&#34;, &#34;passed&#34;: ok, &#34;confidence&#34;: conf})
+        if not ok:
+            passed = False
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-352&#34;,
+        &#34;status&#34;: &#34;pass&#34; if passed else &#34;fail&#34;,
+        &#34;passed&#34;: passed,
+        &#34;checks&#34;: checks,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-352: Check if result meets quality criteria.</p>
+<p>Criteria keys: min_length, required_fields, max_errors, min_confidence.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.register_shortcut"><code class="name flex">
+<span>def <span class="ident">register_shortcut</span></span>(<span>self, trigger: str, action: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def register_shortcut(self, trigger: str, action: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-341: Registers a new shortcut mapping.&#34;&#34;&#34;
+    try:
+        _DATA_DIR.mkdir(parents=True, exist_ok=True)
+        shortcuts: List[Dict[str, Any]] = []
+        if _SHORTCUTS_FILE.exists():
+            shortcuts = json.loads(_SHORTCUTS_FILE.read_text(encoding=&#34;utf-8&#34;))
+
+        entry = {
+            &#34;id&#34;: str(uuid.uuid4())[:8],
+            &#34;trigger&#34;: trigger,
+            &#34;action&#34;: action,
+            &#34;created_at&#34;: datetime.now(timezone.utc).isoformat(),
+        }
+        shortcuts.append(entry)
+        _SHORTCUTS_FILE.write_text(json.dumps(shortcuts, indent=2), encoding=&#34;utf-8&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-341&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;registered&#34;: entry,
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-341&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-341: Registers a new shortcut mapping.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.result_merger"><code class="name flex">
+<span>def <span class="ident">result_merger</span></span>(<span>self, results: List[Dict[str, Any]]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def result_merger(self, results: List[Dict[str, Any]]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-351: Merge results from parallel tasks.&#34;&#34;&#34;
+    merged_data: Dict[str, Any] = {}
+    errors: List[str] = []
+    success_count = 0
+
+    for r in results:
+        task_id = r.get(&#34;id&#34;, r.get(&#34;power_id&#34;, f&#34;unknown_{id(r)}&#34;))
+        status = r.get(&#34;status&#34;, &#34;unknown&#34;)
+        if status in (&#34;success&#34;, &#34;ok&#34;):
+            success_count += 1
+            merged_data[task_id] = {k: v for k, v in r.items() if k not in (&#34;id&#34;, &#34;status&#34;)}
+        else:
+            errors.append(f&#34;{task_id}: {r.get(&#39;error&#39;, status)}&#34;)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-351&#34;,
+        &#34;status&#34;: &#34;success&#34; if not errors else &#34;partial&#34;,
+        &#34;total_results&#34;: len(results),
+        &#34;successful&#34;: success_count,
+        &#34;failed&#34;: len(errors),
+        &#34;merged_data&#34;: merged_data,
+        &#34;errors&#34;: errors,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-351: Merge results from parallel tasks.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.retry_with_backoff"><code class="name flex">
+<span>def <span class="ident">retry_with_backoff</span></span>(<span>self, func: Callable[..., Any], max_retries: int = 3, **kwargs: Any) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retry_with_backoff(self, func: Callable[..., Any], max_retries: int = 3, **kwargs: Any) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-339: Exponential backoff retry wrapper.
+
+    Parameters
+    ----------
+    func : callable
+        The function to invoke.
+    max_retries : int
+        Maximum number of retry attempts (default 3).
+    **kwargs
+        Forwarded to *func*.
+    &#34;&#34;&#34;
+    last_error: Optional[str] = None
+    for attempt in range(1, max_retries + 1):
+        try:
+            result = func(**kwargs)
+            return {
+                &#34;power_id&#34;: &#34;PWR-339&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;attempt&#34;: attempt,
+                &#34;result&#34;: result,
+            }
+        except Exception as exc:
+            last_error = str(exc)
+            wait = min(2**attempt, 30)
+            logger.warning(
+                &#34;PWR-339 attempt %d/%d failed: %s — retrying in %ds&#34;,
+                attempt,
+                max_retries,
+                last_error,
+                wait,
+            )
+            time.sleep(wait)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-339&#34;,
+        &#34;status&#34;: &#34;failed&#34;,
+        &#34;attempts&#34;: max_retries,
+        &#34;last_error&#34;: last_error,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-339: Exponential backoff retry wrapper.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>func</code></strong> :&ensp;<code>callable</code></dt>
+<dd>The function to invoke.</dd>
+<dt><strong><code>max_retries</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum number of retry attempts (default 3).</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Forwarded to <em>func</em>.</dd>
+</dl></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.rollback_plan"><code class="name flex">
+<span>def <span class="ident">rollback_plan</span></span>(<span>self, action: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rollback_plan(self, action: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-353: Generate rollback steps for an action.&#34;&#34;&#34;
+    rollback_templates: Dict[str, List[str]] = {
+        &#34;file_write&#34;: [&#34;Restore file from backup&#34;, &#34;Verify file integrity&#34;],
+        &#34;file_delete&#34;: [&#34;Restore from recycle bin or backup&#34;, &#34;Verify restoration&#34;],
+        &#34;deploy&#34;: [&#34;Revert to previous deployment&#34;, &#34;Run health checks&#34;, &#34;Notify team of rollback&#34;],
+        &#34;database&#34;: [&#34;Restore from snapshot&#34;, &#34;Verify data consistency&#34;, &#34;Run integrity checks&#34;],
+        &#34;config_change&#34;: [&#34;Restore previous config&#34;, &#34;Restart affected services&#34;, &#34;Verify service health&#34;],
+        &#34;email_send&#34;: [&#34;Send correction/retraction email&#34;, &#34;Log incident for audit&#34;],
+        &#34;install&#34;: [&#34;Uninstall package&#34;, &#34;Restore previous version&#34;, &#34;Verify system stability&#34;],
+    }
+
+    action_lower = action.lower()
+    steps: List[str] = []
+    for key, template_steps in rollback_templates.items():
+        if key in action_lower:
+            steps = template_steps
+            break
+
+    if not steps:
+        steps = [
+            f&#34;Document what &#39;{action}&#39; changed&#34;,
+            &#34;Identify affected systems/files&#34;,
+            &#34;Restore to pre-action state from backup&#34;,
+            &#34;Verify restoration&#34;,
+            &#34;Log rollback for audit trail&#34;,
+        ]
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-353&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;action&#34;: action,
+        &#34;rollback_steps&#34;: [{&#34;step&#34;: i, &#34;description&#34;: s} for i, s in enumerate(steps, 1)],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-353: Generate rollback steps for an action.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.source_stamp"><code class="name flex">
+<span>def <span class="ident">source_stamp</span></span>(<span>self, content: str, source: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def source_stamp(self, content: str, source: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-346: Add provenance stamp to content.&#34;&#34;&#34;
+    stamp_id = str(uuid.uuid4())[:8]
+    ts = datetime.now(timezone.utc).isoformat()
+    stamped = f&#34;{content}\n\n---\n[Source: {source} | Stamp: {stamp_id} | {ts}]&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-346&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;stamp_id&#34;: stamp_id,
+        &#34;source&#34;: source,
+        &#34;timestamp&#34;: ts,
+        &#34;stamped_content&#34;: stamped,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-346: Add provenance stamp to content.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.task_decomposer"><code class="name flex">
+<span>def <span class="ident">task_decomposer</span></span>(<span>self, complex_task: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def task_decomposer(self, complex_task: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-349: Break task into subtasks via heuristic analysis.&#34;&#34;&#34;
+    parts = [
+        s.strip()
+        for s in complex_task.replace(&#34; and &#34;, &#34;\n&#34;).replace(&#34; then &#34;, &#34;\n&#34;).replace(&#34;, &#34;, &#34;\n&#34;).split(&#34;\n&#34;)
+        if s.strip()
+    ]
+
+    subtasks = []
+    for i, part in enumerate(parts, 1):
+        subtasks.append(
+            {
+                &#34;id&#34;: f&#34;SUB-{i:03d}&#34;,
+                &#34;description&#34;: part,
+                &#34;estimated_complexity&#34;: (
+                    &#34;high&#34; if len(part.split()) &gt; 12 else &#34;medium&#34; if len(part.split()) &gt; 5 else &#34;low&#34;
+                ),
+                &#34;dependencies&#34;: [f&#34;SUB-{i - 1:03d}&#34;] if i &gt; 1 else [],
+            }
+        )
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-349&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;original_task&#34;: complex_task,
+        &#34;subtasks&#34;: subtasks,
+        &#34;count&#34;: len(subtasks),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-349: Break task into subtasks via heuristic analysis.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.time_ledger_entry"><code class="name flex">
+<span>def <span class="ident">time_ledger_entry</span></span>(<span>self, task: str, duration_min: float) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def time_ledger_entry(self, task: str, duration_min: float) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-354: Log time spent on task.&#34;&#34;&#34;
+    try:
+        _DATA_DIR.mkdir(parents=True, exist_ok=True)
+        ledger: List[Dict[str, Any]] = []
+        if _TIME_LEDGER_FILE.exists():
+            ledger = json.loads(_TIME_LEDGER_FILE.read_text(encoding=&#34;utf-8&#34;))
+
+        entry = {
+            &#34;id&#34;: str(uuid.uuid4())[:8],
+            &#34;task&#34;: task,
+            &#34;duration_min&#34;: round(duration_min, 2),
+            &#34;logged_at&#34;: datetime.now(timezone.utc).isoformat(),
+        }
+        ledger.append(entry)
+        _TIME_LEDGER_FILE.write_text(json.dumps(ledger, indent=2), encoding=&#34;utf-8&#34;)
+
+        total_today = sum(
+            e[&#34;duration_min&#34;]
+            for e in ledger
+            if e[&#34;logged_at&#34;][:10] == datetime.now(timezone.utc).strftime(&#34;%Y-%m-%d&#34;)
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-354&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;entry&#34;: entry,
+            &#34;total_today_min&#34;: round(total_today, 2),
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-354&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-354: Log time spent on task.</p></div>
+</dd>
+<dt id="jarvis.powers.research_derived_powers.ResearchDerivedPowers.verify_approval"><code class="name flex">
+<span>def <span class="ident">verify_approval</span></span>(<span>self, token: str, action: str, payload: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_approval(self, token: str, action: str, payload: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-345: Verify HMAC approval token.&#34;&#34;&#34;
+    try:
+        message = f&#34;{action}:{payload}&#34;
+        expected = hmac.new(_HMAC_SECRET.encode(), message.encode(), hashlib.sha256).hexdigest()
+        valid = hmac.compare_digest(token, expected)
+        return {
+            &#34;power_id&#34;: &#34;PWR-345&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;valid&#34;: valid,
+            &#34;action&#34;: action,
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-345&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-345: Verify HMAC approval token.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers">ResearchDerivedPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.adaptive_response_format" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.adaptive_response_format">adaptive_response_format</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.confidence_scorer" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.confidence_scorer">confidence_scorer</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.context_window_optimizer" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.context_window_optimizer">context_window_optimizer</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.dynamic_tool_synthesis" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.dynamic_tool_synthesis">dynamic_tool_synthesis</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.fallback_chain" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.fallback_chain">fallback_chain</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.hash_bound_approval" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.hash_bound_approval">hash_bound_approval</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.learned_shortcut_registry" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.learned_shortcut_registry">learned_shortcut_registry</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.never_estimate_rule" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.never_estimate_rule">never_estimate_rule</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.parallel_dispatch_plan" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.parallel_dispatch_plan">parallel_dispatch_plan</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.quality_gate" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.quality_gate">quality_gate</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.register_shortcut" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.register_shortcut">register_shortcut</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.result_merger" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.result_merger">result_merger</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.retry_with_backoff" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.retry_with_backoff">retry_with_backoff</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.rollback_plan" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.rollback_plan">rollback_plan</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.source_stamp" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.source_stamp">source_stamp</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.task_decomposer" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.task_decomposer">task_decomposer</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.time_ledger_entry" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.time_ledger_entry">time_ledger_entry</a></code></li>
+<li><code><a title="jarvis.powers.research_derived_powers.ResearchDerivedPowers.verify_approval" href="#jarvis.powers.research_derived_powers.ResearchDerivedPowers.verify_approval">verify_approval</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

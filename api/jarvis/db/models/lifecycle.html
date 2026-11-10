@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.db.models.lifecycle API documentation</title>
+<meta name="description" content="SQLAlchemy 2.x Agent Lifecycle Model for JARVIS
+Enables dynamic agent lifecycle management (created, paused, resumed, retired)
+so JARVIS dynamically …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.db.models.lifecycle</code></h1>
+</header>
+<section id="section-intro">
+<p>SQLAlchemy 2.x Agent Lifecycle Model for JARVIS
+Enables dynamic agent lifecycle management (created, paused, resumed, retired)
+so JARVIS dynamically spawns worker agents on-demand instead of keeping 100+ idle processes.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.db.models.lifecycle.AgentLifecycleModel"><code class="flex name class">
+<span>class <span class="ident">AgentLifecycleModel</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AgentLifecycleModel(Base):
+    __tablename__ = &#34;agent_lifecycle&#34;
+
+    id: Mapped[uuid.UUID] = mapped_column(GUID, primary_key=True, default=uuid.uuid4)
+    agent_id: Mapped[uuid.UUID] = mapped_column(
+        GUID, sa.ForeignKey(&#34;agents.id&#34;, ondelete=&#34;CASCADE&#34;), index=True, nullable=False
+    )
+    state: Mapped[str] = mapped_column(sa.String(50), index=True, nullable=False)
+    reason: Mapped[str] = mapped_column(sa.Text, default=&#34;&#34;, nullable=False)
+    timestamp: Mapped[datetime.datetime] = mapped_column(
+        sa.DateTime(timezone=True),
+        default=lambda: datetime.datetime.now(datetime.timezone.utc),
+        index=True,
+        nullable=False,
+    )
+
+    # Relationships
+    agent: Mapped[&#34;AgentModel&#34;] = relationship(&#34;AgentModel&#34;, back_populates=&#34;lifecycles&#34;)</code></pre>
+</details>
+<div class="desc"><p>Base class used for declarative class definitions.</p>
+<p>The :class:<code>_orm.DeclarativeBase</code> allows for the creation of new
+declarative bases in such a way that is compatible with type checkers::</p>
+<pre><code>from sqlalchemy.orm import DeclarativeBase
+
+
+class Base(DeclarativeBase):
+    pass
+</code></pre>
+<p>The above <code>Base</code> class is now usable as the base for new declarative
+mappings.
+The superclass makes use of the <code>__init_subclass__()</code>
+method to set up new classes and metaclasses aren't used.</p>
+<p>When first used, the :class:<code>_orm.DeclarativeBase</code> class instantiates a new
+:class:<code>_orm.registry</code> to be used with the base, assuming one was not
+provided explicitly. The :class:<code>_orm.DeclarativeBase</code> class supports
+class-level attributes which act as parameters for the construction of this
+registry; such as to indicate a specific :class:<code>_schema.MetaData</code>
+collection as well as a specific value for
+:paramref:<code>_orm.registry.type_annotation_map</code>::</p>
+<pre><code>from typing import Annotated
+
+from sqlalchemy import BigInteger
+from sqlalchemy import MetaData
+from sqlalchemy import String
+from sqlalchemy.orm import DeclarativeBase
+
+bigint = Annotated[int, "bigint"]
+my_metadata = MetaData()
+
+
+class Base(DeclarativeBase):
+    metadata = my_metadata
+    type_annotation_map = {
+        str: String().with_variant(String(255), "mysql", "mariadb"),
+        bigint: BigInteger(),
+    }
+</code></pre>
+<p>Class-level attributes which may be specified include:</p>
+<p>:param metadata: optional :class:<code>_schema.MetaData</code> collection.
+If a :class:<code>_orm.registry</code> is constructed automatically, this
+:class:<code>_schema.MetaData</code> collection will be used to construct it.
+Otherwise, the local :class:<code>_schema.MetaData</code> collection will supersede
+that used by an existing :class:<code>_orm.registry</code> passed using the
+:paramref:<code>_orm.DeclarativeBase.registry</code> parameter.
+:param type_annotation_map: optional type annotation map that will be
+passed to the :class:<code>_orm.registry</code> as
+:paramref:<code>_orm.registry.type_annotation_map</code>.
+:param registry: supply a pre-existing :class:<code>_orm.registry</code> directly.</p>
+<div class="admonition versionadded">
+<p class="admonition-title">Added in version:&ensp;2.0
+Added :class:<code>.DeclarativeBase</code>, so that declarative</p>
+<p>base classes may be constructed in such a way that is also recognized
+by :pep:<code>484</code> type checkers.
+As a result, :class:<code>.DeclarativeBase</code>
+and other subclassing-oriented APIs should be seen as
+superseding previous "class returned by a function" APIs, namely
+:func:<code>_orm.declarative_base</code> and :meth:<code>_orm.registry.generate_base</code>,
+where the base class returned cannot be recognized by type checkers
+without using plugins.</p>
+</div>
+<p><strong><strong>init</strong> behavior</strong></p>
+<p>In a plain Python class, the base-most <code>__init__()</code> method in the class
+hierarchy is <code>object.__init__()</code>, which accepts no arguments. However,
+when the :class:<code>_orm.DeclarativeBase</code> subclass is first declared, the
+class is given an <code>__init__()</code> method that links to the
+:paramref:<code>_orm.registry.constructor</code> constructor function, if no
+<code>__init__()</code> method is already present; this is the usual declarative
+constructor that will assign keyword arguments as attributes on the
+instance, assuming those attributes are established at the class level
+(i.e. are mapped, or are linked to a descriptor). This constructor is
+<strong>never accessed by a mapped class without being called explicitly via
+super()</strong>, as mapped classes are themselves given an <code>__init__()</code> method
+directly which calls :paramref:<code>_orm.registry.constructor</code>, so in the
+default case works independently of what the base-most <code>__init__()</code>
+method does.</p>
+<div class="admonition versionchanged">
+<p class="admonition-title">Changed in version:&ensp;2.0.1
+:class:<code>_orm.DeclarativeBase</code> has a default</p>
+<p>constructor that links to :paramref:<code>_orm.registry.constructor</code> by
+default, so that calls to <code>super().__init__()</code> can access this
+constructor. Previously, due to an implementation mistake, this default
+constructor was missing, and calling <code>super().__init__()</code> would invoke
+<code>object.__init__()</code>.</p>
+</div>
+<p>The :class:<code>_orm.DeclarativeBase</code> subclass may also declare an explicit
+<code>__init__()</code> method which will replace the use of the
+:paramref:<code>_orm.registry.constructor</code> function at this level::</p>
+<pre><code>class Base(DeclarativeBase):
+    def __init__(self, id=None):
+        self.id = id
+</code></pre>
+<p>Mapped classes still will not invoke this constructor implicitly; it
+remains only accessible by calling <code>super().__init__()</code>::</p>
+<pre><code>class MyClass(Base):
+    def __init__(self, id=None, name=None):
+        self.name = name
+        super().__init__(id=id)
+</code></pre>
+<p>Note that this is a different behavior from what functions like the legacy
+:func:<code>_orm.declarative_base</code> would do; the base created by those functions
+would always install :paramref:<code>_orm.registry.constructor</code> for
+<code>__init__()</code>.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="jarvis.db.models.base.Base" href="base.html#jarvis.db.models.base.Base">Base</a></li>
+<li>sqlalchemy.orm.decl_api.DeclarativeBase</li>
+<li>sqlalchemy.inspection.Inspectable</li>
+<li>typing.Generic</li>
+<li>sqlalchemy.orm.decl_api._DeclarativeTyping</li>
+<li>sqlalchemy.util.langhelpers.TypingOnly</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.db.models.lifecycle.AgentLifecycleModel.agent"><code class="name">var <span class="ident">agent</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.models.lifecycle.AgentLifecycleModel.agent_id"><code class="name">var <span class="ident">agent_id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.models.lifecycle.AgentLifecycleModel.id"><code class="name">var <span class="ident">id</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.models.lifecycle.AgentLifecycleModel.reason"><code class="name">var <span class="ident">reason</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.models.lifecycle.AgentLifecycleModel.state"><code class="name">var <span class="ident">state</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.models.lifecycle.AgentLifecycleModel.timestamp"><code class="name">var <span class="ident">timestamp</span> : Union[InstrumentedAttribute[_T_co], _T_co]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(
+    self, instance: Optional[object], owner: Any
+) -&gt; Union[InstrumentedAttribute[_T_co], _T_co]:
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self.impl.supports_population and self.key in dict_:
+        return dict_[self.key]  # type: ignore[no-any-return]
+    else:
+        try:
+            state = instance_state(instance)
+        except AttributeError as err:
+            raise orm_exc.UnmappedInstanceError(instance) from err
+        return self.impl.get(state, dict_)  # type: ignore[no-any-return]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.db.models" href="index.html">jarvis.db.models</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.db.models.lifecycle.AgentLifecycleModel" href="#jarvis.db.models.lifecycle.AgentLifecycleModel">AgentLifecycleModel</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.db.models.lifecycle.AgentLifecycleModel.agent" href="#jarvis.db.models.lifecycle.AgentLifecycleModel.agent">agent</a></code></li>
+<li><code><a title="jarvis.db.models.lifecycle.AgentLifecycleModel.agent_id" href="#jarvis.db.models.lifecycle.AgentLifecycleModel.agent_id">agent_id</a></code></li>
+<li><code><a title="jarvis.db.models.lifecycle.AgentLifecycleModel.id" href="#jarvis.db.models.lifecycle.AgentLifecycleModel.id">id</a></code></li>
+<li><code><a title="jarvis.db.models.lifecycle.AgentLifecycleModel.reason" href="#jarvis.db.models.lifecycle.AgentLifecycleModel.reason">reason</a></code></li>
+<li><code><a title="jarvis.db.models.lifecycle.AgentLifecycleModel.state" href="#jarvis.db.models.lifecycle.AgentLifecycleModel.state">state</a></code></li>
+<li><code><a title="jarvis.db.models.lifecycle.AgentLifecycleModel.timestamp" href="#jarvis.db.models.lifecycle.AgentLifecycleModel.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

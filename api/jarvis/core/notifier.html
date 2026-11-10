@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.notifier API documentation</title>
+<meta name="description" content="JARVIS Multi-Channel Alert &amp; Dispatch Engine
+Sends real-time proactive alerts via WhatsApp, native Windows Desktop Toast,
+and local audit logs to …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.notifier</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Multi-Channel Alert &amp; Dispatch Engine
+Sends real-time proactive alerts via WhatsApp, native Windows Desktop Toast,
+and local audit logs to Ganesh (+91 9324094474).</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.notifier.OpportunityNotifier"><code class="flex name class">
+<span>class <span class="ident">OpportunityNotifier</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OpportunityNotifier:
+    &#34;&#34;&#34;
+    Coordinates outbound communication across WhatsApp Cloud API / Webhook,
+    native desktop notifications, and structured audit logs.
+    &#34;&#34;&#34;
+
+    DEFAULT_TARGET_PHONE = &#34;+91 9324094474&#34;
+    DEFAULT_USER_NAME = &#34;Ganesh&#34;
+
+    def __init__(self):
+        self.whatsapp_api_token = os.getenv(&#34;WHATSAPP_API_TOKEN&#34;)
+        self.whatsapp_phone_number_id = os.getenv(&#34;WHATSAPP_PHONE_NUMBER_ID&#34;)
+        self.webhook_url = os.getenv(&#34;WHATSAPP_WEBHOOK_URL&#34;)
+
+    def format_whatsapp_hackathon_digest(
+        self,
+        opportunities: List[Dict[str, Any]],
+        recipient_name: str = &#34;Ganesh&#34;,
+        location: str = &#34;India / Remote&#34;,
+    ) -&gt; str:
+        &#34;&#34;&#34;Formats an executive, high-impact WhatsApp markdown message.&#34;&#34;&#34;
+        timestamp = time.strftime(&#34;%d %b %Y, %I:%M %p&#34;)
+        lines = [
+            f&#34;⚡ *JARVIS INTELLIGENCE BRIEFING* ⚡&#34;,
+            f&#34;👤 Recipient: {recipient_name}&#34;,
+            f&#34;📍 Target Region: {location}&#34;,
+            f&#34;🕒 Generated: {timestamp}&#34;,
+            f&#34;────────────────────────────&#34;,
+            f&#34;Hey Ganesh, here is the curated list of top hackathons &amp; high-stipend opportunities analyzed for your profile:\n&#34;,
+        ]
+
+        for i, opp in enumerate(opportunities, start=1):
+            title = opp.get(&#34;title&#34;, &#34;Hackathon Opportunity&#34;)
+            deadline = opp.get(&#34;deadline&#34;, &#34;Upcoming&#34;)
+            mode = opp.get(&#34;mode&#34;, &#34;Online / Hybrid&#34;)
+            tags = &#34;, &#34;.join(opp.get(&#34;tags&#34;, [&#34;AI&#34;, &#34;Tech&#34;]))
+            url = opp.get(&#34;url&#34;, &#34;https://devpost.com&#34;)
+
+            lines.append(f&#34;*{i}. {title}*&#34;)
+            lines.append(f&#34;   • *Mode / Location:* {mode}&#34;)
+            lines.append(f&#34;   • *Deadline:* {deadline}&#34;)
+            lines.append(f&#34;   • *Focus:* {tags}&#34;)
+            lines.append(f&#34;   • *Portal:* {url}&#34;)
+            if &#34;scaffold_path&#34; in opp:
+                lines.append(f&#34;   • *Scaffolded Repo:* `{opp[&#39;scaffold_path&#39;]}`&#34;)
+            lines.append(&#34;&#34;)
+
+        lines.append(&#34;────────────────────────────&#34;)
+        lines.append(&#34;🤖 _Autonomous Multi-Agent Swarm standing by to scaffold solutions &amp; test harnesses._&#34;)
+        return &#34;\n&#34;.join(lines)
+
+    async def send_whatsapp_message(
+        self,
+        phone_number: str = DEFAULT_TARGET_PHONE,
+        message: str = &#34;&#34;,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Dispatches message via WhatsApp Cloud API or configured webhook.
+        If live credentials are not set, logs the full payload and registers
+        dispatch in Merkle Audit Trail.
+        &#34;&#34;&#34;
+        clean_phone = phone_number.replace(&#34; &#34;, &#34;&#34;).replace(&#34;-&#34;, &#34;&#34;)
+
+        # 1. Attempt Cloud API if tokens provided
+        if self.whatsapp_api_token and self.whatsapp_phone_number_id:
+            try:
+                url = f&#34;https://graph.facebook.com/v19.0/{self.whatsapp_phone_number_id}/messages&#34;
+                headers = {
+                    &#34;Authorization&#34;: f&#34;Bearer {self.whatsapp_api_token}&#34;,
+                    &#34;Content-Type&#34;: &#34;application/json&#34;,
+                }
+                payload = {
+                    &#34;messaging_product&#34;: &#34;whatsapp&#34;,
+                    &#34;to&#34;: clean_phone,
+                    &#34;type&#34;: &#34;text&#34;,
+                    &#34;text&#34;: {&#34;body&#34;: message},
+                }
+                async with httpx.AsyncClient(timeout=10.0) as client:
+                    resp = await client.post(url, headers=headers, json=payload)
+                    success = resp.status_code in (200, 201)
+                    jarvis_security_suite.layer9_audit.log_event(
+                        &#34;WHATSAPP_DISPATCH&#34;,
+                        f&#34;Dispatched WhatsApp to {clean_phone[:4]}*** (Status: {resp.status_code})&#34;,
+                    )
+                    return {
+                        &#34;status&#34;: &#34;sent&#34; if success else &#34;failed&#34;,
+                        &#34;channel&#34;: &#34;whatsapp_cloud_api&#34;,
+                        &#34;recipient&#34;: clean_phone,
+                        &#34;status_code&#34;: resp.status_code,
+                        &#34;raw_response&#34;: resp.json() if success else resp.text,
+                    }
+            except Exception as e:
+                logger.warning(f&#34;WhatsApp Cloud API send failed: {e}&#34;)
+
+        # 2. Webhook Gateway
+        if self.webhook_url:
+            try:
+                async with httpx.AsyncClient(timeout=8.0) as client:
+                    resp = await client.post(self.webhook_url, json={&#34;to&#34;: clean_phone, &#34;text&#34;: message})
+                    return {
+                        &#34;status&#34;: &#34;sent&#34;,
+                        &#34;channel&#34;: &#34;webhook_gateway&#34;,
+                        &#34;recipient&#34;: clean_phone,
+                    }
+            except Exception as e:
+                logger.warning(f&#34;WhatsApp Webhook gateway failed: {e}&#34;)
+
+        # 3. Secure Simulated Dispatch &amp; Audit Registration
+        jarvis_security_suite.layer9_audit.log_event(
+            &#34;WHATSAPP_SIMULATED_DISPATCH&#34;,
+            f&#34;Simulated WhatsApp message to {clean_phone[:4]}*** ({len(message)} chars)&#34;,
+        )
+
+        # Trigger native desktop notification to ensure Ganesh receives the alert immediately
+        self.send_desktop_notification(
+            title=&#34;JARVIS Hackathon Scout Alert&#34;,
+            message=f&#34;Opportunity briefing prepared for Ganesh ({len(message.splitlines())} lines). Check terminal or dashboard.&#34;,
+        )
+
+        return {
+            &#34;status&#34;: &#34;simulated_success&#34;,
+            &#34;channel&#34;: &#34;local_dispatcher&#34;,
+            &#34;recipient&#34;: clean_phone,
+            &#34;message_length&#34;: len(message),
+            &#34;payload_preview&#34;: message[:300] + &#34;\n...&#34;,
+            &#34;note&#34;: &#34;Formatted message generated and audited. Configure WHATSAPP_API_TOKEN in .env for direct live transmission.&#34;,
+        }
+
+    def send_desktop_notification(self, title: str, message: str) -&gt; bool:
+        &#34;&#34;&#34;Fires an instant notification on Windows desktop using PowerShell.&#34;&#34;&#34;
+        try:
+            clean_title = title.replace(&#39;&#34;&#39;, &#39;`&#34;&#39;)
+            clean_msg = message.replace(&#39;&#34;&#39;, &#39;`&#34;&#39;).replace(&#34;\n&#34;, &#34; &#34;)[:160]
+            ps_script = (
+                f&#34;[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null; &#34;
+                f&#34;$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); &#34;
+                f&#39;$textNodes = $template.GetElementsByTagName(&#34;text&#34;); &#39;
+                f&#39;$textNodes.Item(0).AppendChild($template.CreateTextNode(&#34;{clean_title}&#34;)) | Out-Null; &#39;
+                f&#39;$textNodes.Item(1).AppendChild($template.CreateTextNode(&#34;{clean_msg}&#34;)) | Out-Null; &#39;
+                f&#34;$toast = [Windows.UI.Notifications.ToastNotification]::new($template); &#34;
+                f&#39;[Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier(&#34;JARVIS OS&#34;).Show($toast);&#39;
+            )
+            subprocess.run(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-NonInteractive&#34;, &#34;-Command&#34;, ps_script],
+                capture_output=True,
+                timeout=3.0,
+            )
+            return True
+        except Exception:
+            return False</code></pre>
+</details>
+<div class="desc"><p>Coordinates outbound communication across WhatsApp Cloud API / Webhook,
+native desktop notifications, and structured audit logs.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.notifier.OpportunityNotifier.DEFAULT_TARGET_PHONE"><code class="name">var <span class="ident">DEFAULT_TARGET_PHONE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.notifier.OpportunityNotifier.DEFAULT_USER_NAME"><code class="name">var <span class="ident">DEFAULT_USER_NAME</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.notifier.OpportunityNotifier.format_whatsapp_hackathon_digest"><code class="name flex">
+<span>def <span class="ident">format_whatsapp_hackathon_digest</span></span>(<span>self,<br>opportunities: List[Dict[str, Any]],<br>recipient_name: str = 'Ganesh',<br>location: str = 'India / Remote') ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def format_whatsapp_hackathon_digest(
+    self,
+    opportunities: List[Dict[str, Any]],
+    recipient_name: str = &#34;Ganesh&#34;,
+    location: str = &#34;India / Remote&#34;,
+) -&gt; str:
+    &#34;&#34;&#34;Formats an executive, high-impact WhatsApp markdown message.&#34;&#34;&#34;
+    timestamp = time.strftime(&#34;%d %b %Y, %I:%M %p&#34;)
+    lines = [
+        f&#34;⚡ *JARVIS INTELLIGENCE BRIEFING* ⚡&#34;,
+        f&#34;👤 Recipient: {recipient_name}&#34;,
+        f&#34;📍 Target Region: {location}&#34;,
+        f&#34;🕒 Generated: {timestamp}&#34;,
+        f&#34;────────────────────────────&#34;,
+        f&#34;Hey Ganesh, here is the curated list of top hackathons &amp; high-stipend opportunities analyzed for your profile:\n&#34;,
+    ]
+
+    for i, opp in enumerate(opportunities, start=1):
+        title = opp.get(&#34;title&#34;, &#34;Hackathon Opportunity&#34;)
+        deadline = opp.get(&#34;deadline&#34;, &#34;Upcoming&#34;)
+        mode = opp.get(&#34;mode&#34;, &#34;Online / Hybrid&#34;)
+        tags = &#34;, &#34;.join(opp.get(&#34;tags&#34;, [&#34;AI&#34;, &#34;Tech&#34;]))
+        url = opp.get(&#34;url&#34;, &#34;https://devpost.com&#34;)
+
+        lines.append(f&#34;*{i}. {title}*&#34;)
+        lines.append(f&#34;   • *Mode / Location:* {mode}&#34;)
+        lines.append(f&#34;   • *Deadline:* {deadline}&#34;)
+        lines.append(f&#34;   • *Focus:* {tags}&#34;)
+        lines.append(f&#34;   • *Portal:* {url}&#34;)
+        if &#34;scaffold_path&#34; in opp:
+            lines.append(f&#34;   • *Scaffolded Repo:* `{opp[&#39;scaffold_path&#39;]}`&#34;)
+        lines.append(&#34;&#34;)
+
+    lines.append(&#34;────────────────────────────&#34;)
+    lines.append(&#34;🤖 _Autonomous Multi-Agent Swarm standing by to scaffold solutions &amp; test harnesses._&#34;)
+    return &#34;\n&#34;.join(lines)</code></pre>
+</details>
+<div class="desc"><p>Formats an executive, high-impact WhatsApp markdown message.</p></div>
+</dd>
+<dt id="jarvis.core.notifier.OpportunityNotifier.send_desktop_notification"><code class="name flex">
+<span>def <span class="ident">send_desktop_notification</span></span>(<span>self, title: str, message: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_desktop_notification(self, title: str, message: str) -&gt; bool:
+    &#34;&#34;&#34;Fires an instant notification on Windows desktop using PowerShell.&#34;&#34;&#34;
+    try:
+        clean_title = title.replace(&#39;&#34;&#39;, &#39;`&#34;&#39;)
+        clean_msg = message.replace(&#39;&#34;&#39;, &#39;`&#34;&#39;).replace(&#34;\n&#34;, &#34; &#34;)[:160]
+        ps_script = (
+            f&#34;[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null; &#34;
+            f&#34;$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); &#34;
+            f&#39;$textNodes = $template.GetElementsByTagName(&#34;text&#34;); &#39;
+            f&#39;$textNodes.Item(0).AppendChild($template.CreateTextNode(&#34;{clean_title}&#34;)) | Out-Null; &#39;
+            f&#39;$textNodes.Item(1).AppendChild($template.CreateTextNode(&#34;{clean_msg}&#34;)) | Out-Null; &#39;
+            f&#34;$toast = [Windows.UI.Notifications.ToastNotification]::new($template); &#34;
+            f&#39;[Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier(&#34;JARVIS OS&#34;).Show($toast);&#39;
+        )
+        subprocess.run(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-NonInteractive&#34;, &#34;-Command&#34;, ps_script],
+            capture_output=True,
+            timeout=3.0,
+        )
+        return True
+    except Exception:
+        return False</code></pre>
+</details>
+<div class="desc"><p>Fires an instant notification on Windows desktop using PowerShell.</p></div>
+</dd>
+<dt id="jarvis.core.notifier.OpportunityNotifier.send_whatsapp_message"><code class="name flex">
+<span>async def <span class="ident">send_whatsapp_message</span></span>(<span>self, phone_number: str = '+91 9324094474', message: str = '') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def send_whatsapp_message(
+    self,
+    phone_number: str = DEFAULT_TARGET_PHONE,
+    message: str = &#34;&#34;,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Dispatches message via WhatsApp Cloud API or configured webhook.
+    If live credentials are not set, logs the full payload and registers
+    dispatch in Merkle Audit Trail.
+    &#34;&#34;&#34;
+    clean_phone = phone_number.replace(&#34; &#34;, &#34;&#34;).replace(&#34;-&#34;, &#34;&#34;)
+
+    # 1. Attempt Cloud API if tokens provided
+    if self.whatsapp_api_token and self.whatsapp_phone_number_id:
+        try:
+            url = f&#34;https://graph.facebook.com/v19.0/{self.whatsapp_phone_number_id}/messages&#34;
+            headers = {
+                &#34;Authorization&#34;: f&#34;Bearer {self.whatsapp_api_token}&#34;,
+                &#34;Content-Type&#34;: &#34;application/json&#34;,
+            }
+            payload = {
+                &#34;messaging_product&#34;: &#34;whatsapp&#34;,
+                &#34;to&#34;: clean_phone,
+                &#34;type&#34;: &#34;text&#34;,
+                &#34;text&#34;: {&#34;body&#34;: message},
+            }
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                resp = await client.post(url, headers=headers, json=payload)
+                success = resp.status_code in (200, 201)
+                jarvis_security_suite.layer9_audit.log_event(
+                    &#34;WHATSAPP_DISPATCH&#34;,
+                    f&#34;Dispatched WhatsApp to {clean_phone[:4]}*** (Status: {resp.status_code})&#34;,
+                )
+                return {
+                    &#34;status&#34;: &#34;sent&#34; if success else &#34;failed&#34;,
+                    &#34;channel&#34;: &#34;whatsapp_cloud_api&#34;,
+                    &#34;recipient&#34;: clean_phone,
+                    &#34;status_code&#34;: resp.status_code,
+                    &#34;raw_response&#34;: resp.json() if success else resp.text,
+                }
+        except Exception as e:
+            logger.warning(f&#34;WhatsApp Cloud API send failed: {e}&#34;)
+
+    # 2. Webhook Gateway
+    if self.webhook_url:
+        try:
+            async with httpx.AsyncClient(timeout=8.0) as client:
+                resp = await client.post(self.webhook_url, json={&#34;to&#34;: clean_phone, &#34;text&#34;: message})
+                return {
+                    &#34;status&#34;: &#34;sent&#34;,
+                    &#34;channel&#34;: &#34;webhook_gateway&#34;,
+                    &#34;recipient&#34;: clean_phone,
+                }
+        except Exception as e:
+            logger.warning(f&#34;WhatsApp Webhook gateway failed: {e}&#34;)
+
+    # 3. Secure Simulated Dispatch &amp; Audit Registration
+    jarvis_security_suite.layer9_audit.log_event(
+        &#34;WHATSAPP_SIMULATED_DISPATCH&#34;,
+        f&#34;Simulated WhatsApp message to {clean_phone[:4]}*** ({len(message)} chars)&#34;,
+    )
+
+    # Trigger native desktop notification to ensure Ganesh receives the alert immediately
+    self.send_desktop_notification(
+        title=&#34;JARVIS Hackathon Scout Alert&#34;,
+        message=f&#34;Opportunity briefing prepared for Ganesh ({len(message.splitlines())} lines). Check terminal or dashboard.&#34;,
+    )
+
+    return {
+        &#34;status&#34;: &#34;simulated_success&#34;,
+        &#34;channel&#34;: &#34;local_dispatcher&#34;,
+        &#34;recipient&#34;: clean_phone,
+        &#34;message_length&#34;: len(message),
+        &#34;payload_preview&#34;: message[:300] + &#34;\n...&#34;,
+        &#34;note&#34;: &#34;Formatted message generated and audited. Configure WHATSAPP_API_TOKEN in .env for direct live transmission.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>Dispatches message via WhatsApp Cloud API or configured webhook.
+If live credentials are not set, logs the full payload and registers
+dispatch in Merkle Audit Trail.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.notifier.OpportunityNotifier" href="#jarvis.core.notifier.OpportunityNotifier">OpportunityNotifier</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.notifier.OpportunityNotifier.DEFAULT_TARGET_PHONE" href="#jarvis.core.notifier.OpportunityNotifier.DEFAULT_TARGET_PHONE">DEFAULT_TARGET_PHONE</a></code></li>
+<li><code><a title="jarvis.core.notifier.OpportunityNotifier.DEFAULT_USER_NAME" href="#jarvis.core.notifier.OpportunityNotifier.DEFAULT_USER_NAME">DEFAULT_USER_NAME</a></code></li>
+<li><code><a title="jarvis.core.notifier.OpportunityNotifier.format_whatsapp_hackathon_digest" href="#jarvis.core.notifier.OpportunityNotifier.format_whatsapp_hackathon_digest">format_whatsapp_hackathon_digest</a></code></li>
+<li><code><a title="jarvis.core.notifier.OpportunityNotifier.send_desktop_notification" href="#jarvis.core.notifier.OpportunityNotifier.send_desktop_notification">send_desktop_notification</a></code></li>
+<li><code><a title="jarvis.core.notifier.OpportunityNotifier.send_whatsapp_message" href="#jarvis.core.notifier.OpportunityNotifier.send_whatsapp_message">send_whatsapp_message</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

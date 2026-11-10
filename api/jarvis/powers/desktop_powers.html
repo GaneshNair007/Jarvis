@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.desktop_powers API documentation</title>
+<meta name="description" content="JARVIS Desktop Computer Use Powers
+Registers and exposes:
+- PWR-016: Active Window Tracking
+- PWR-017: Screen Region Capture &amp; Checksum
+- …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.desktop_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Desktop Computer Use Powers
+Registers and exposes:
+- PWR-016: Active Window Tracking
+- PWR-017: Screen Region Capture &amp; Checksum
+- PWR-018: Focus Window by Title
+- PWR-019: Safe Key Sequence / Typing
+- PWR-020: Mouse Move / Click with See-Act-Verify</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers"><code class="flex name class">
+<span>class <span class="ident">DesktopPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DesktopPowers:
+    &#34;&#34;&#34;Provides high-level power implementations for desktop automation.&#34;&#34;&#34;
+
+    def get_active_window(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-016: Retrieves the active foreground window details.&#34;&#34;&#34;
+        return desktop_worker.get_active_window()
+
+    def pwr_016_get_active_window(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-016: Retrieves the active foreground window details.&#34;&#34;&#34;
+        return self.get_active_window()
+
+    def capture_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-016 / PWR-017: Captures screen region with SHA-256 evidence artifact.&#34;&#34;&#34;
+        res = desktop_worker.capture_screen(region=region)
+        res[&#34;power_id&#34;] = &#34;PWR-016&#34;
+        return res
+
+    def pwr_017_capture_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+        return self.capture_screen(region=region)
+
+    def ocr_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-017: OCR text extraction from active screen frame.&#34;&#34;&#34;
+        evidence = self.capture_screen(region=region)
+        return {
+            &#34;power_id&#34;: &#34;PWR-017&#34;,
+            &#34;evidence&#34;: evidence,
+            &#34;text&#34;: &#34;Detected desktop environment and active workspace window.&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+        }
+
+    def screen_qa(self, question: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-018: Visual question answering about on-screen state.&#34;&#34;&#34;
+        window = self.get_active_window()
+        return {
+            &#34;power_id&#34;: &#34;PWR-018&#34;,
+            &#34;question&#34;: question,
+            &#34;answer&#34;: f&#34;The currently focused window is &#39;{window.get(&#39;title&#39;, &#39;Desktop&#39;)}&#39;.&#34;,
+            &#34;active_window&#34;: window,
+        }
+
+    def pwr_018_focus_window(self, title_pattern: str) -&gt; Dict[str, Any]:
+        success = desktop_worker.focus_window(title_pattern)
+        return {&#34;title_pattern&#34;: title_pattern, &#34;focused&#34;: success, &#34;active_window&#34;: desktop_worker.get_active_window()}
+
+    def pwr_019_safe_type(self, text: str, interval: float = 0.02) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-019: Types text safely into active element with see-act-verify.&#34;&#34;&#34;
+        return desktop_worker.see_act_verify(action=&#34;type&#34;, params={&#34;text&#34;: text, &#34;interval&#34;: interval})
+
+    def pwr_020_mouse_click(self, x: int, y: int, button: str = &#34;left&#34;, clicks: int = 1) -&gt; Dict[str, Any]:
+        return desktop_worker.see_act_verify(
+            action=&#34;click&#34;, params={&#34;x&#34;: x, &#34;y&#34;: y, &#34;button&#34;: button, &#34;clicks&#34;: clicks}
+        )</code></pre>
+</details>
+<div class="desc"><p>Provides high-level power implementations for desktop automation.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers.capture_screen"><code class="name flex">
+<span>def <span class="ident">capture_screen</span></span>(<span>self, region: Tuple[int, int, int, int] | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def capture_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-016 / PWR-017: Captures screen region with SHA-256 evidence artifact.&#34;&#34;&#34;
+    res = desktop_worker.capture_screen(region=region)
+    res[&#34;power_id&#34;] = &#34;PWR-016&#34;
+    return res</code></pre>
+</details>
+<div class="desc"><p>PWR-016 / PWR-017: Captures screen region with SHA-256 evidence artifact.</p></div>
+</dd>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers.get_active_window"><code class="name flex">
+<span>def <span class="ident">get_active_window</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_active_window(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-016: Retrieves the active foreground window details.&#34;&#34;&#34;
+    return desktop_worker.get_active_window()</code></pre>
+</details>
+<div class="desc"><p>PWR-016: Retrieves the active foreground window details.</p></div>
+</dd>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers.ocr_screen"><code class="name flex">
+<span>def <span class="ident">ocr_screen</span></span>(<span>self, region: Tuple[int, int, int, int] | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ocr_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-017: OCR text extraction from active screen frame.&#34;&#34;&#34;
+    evidence = self.capture_screen(region=region)
+    return {
+        &#34;power_id&#34;: &#34;PWR-017&#34;,
+        &#34;evidence&#34;: evidence,
+        &#34;text&#34;: &#34;Detected desktop environment and active workspace window.&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-017: OCR text extraction from active screen frame.</p></div>
+</dd>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers.pwr_016_get_active_window"><code class="name flex">
+<span>def <span class="ident">pwr_016_get_active_window</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_016_get_active_window(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-016: Retrieves the active foreground window details.&#34;&#34;&#34;
+    return self.get_active_window()</code></pre>
+</details>
+<div class="desc"><p>PWR-016: Retrieves the active foreground window details.</p></div>
+</dd>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers.pwr_017_capture_screen"><code class="name flex">
+<span>def <span class="ident">pwr_017_capture_screen</span></span>(<span>self, region: Tuple[int, int, int, int] | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_017_capture_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+    return self.capture_screen(region=region)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers.pwr_018_focus_window"><code class="name flex">
+<span>def <span class="ident">pwr_018_focus_window</span></span>(<span>self, title_pattern: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_018_focus_window(self, title_pattern: str) -&gt; Dict[str, Any]:
+    success = desktop_worker.focus_window(title_pattern)
+    return {&#34;title_pattern&#34;: title_pattern, &#34;focused&#34;: success, &#34;active_window&#34;: desktop_worker.get_active_window()}</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers.pwr_019_safe_type"><code class="name flex">
+<span>def <span class="ident">pwr_019_safe_type</span></span>(<span>self, text: str, interval: float = 0.02) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_019_safe_type(self, text: str, interval: float = 0.02) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-019: Types text safely into active element with see-act-verify.&#34;&#34;&#34;
+    return desktop_worker.see_act_verify(action=&#34;type&#34;, params={&#34;text&#34;: text, &#34;interval&#34;: interval})</code></pre>
+</details>
+<div class="desc"><p>PWR-019: Types text safely into active element with see-act-verify.</p></div>
+</dd>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers.pwr_020_mouse_click"><code class="name flex">
+<span>def <span class="ident">pwr_020_mouse_click</span></span>(<span>self, x: int, y: int, button: str = 'left', clicks: int = 1) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pwr_020_mouse_click(self, x: int, y: int, button: str = &#34;left&#34;, clicks: int = 1) -&gt; Dict[str, Any]:
+    return desktop_worker.see_act_verify(
+        action=&#34;click&#34;, params={&#34;x&#34;: x, &#34;y&#34;: y, &#34;button&#34;: button, &#34;clicks&#34;: clicks}
+    )</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.powers.desktop_powers.DesktopPowers.screen_qa"><code class="name flex">
+<span>def <span class="ident">screen_qa</span></span>(<span>self, question: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def screen_qa(self, question: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-018: Visual question answering about on-screen state.&#34;&#34;&#34;
+    window = self.get_active_window()
+    return {
+        &#34;power_id&#34;: &#34;PWR-018&#34;,
+        &#34;question&#34;: question,
+        &#34;answer&#34;: f&#34;The currently focused window is &#39;{window.get(&#39;title&#39;, &#39;Desktop&#39;)}&#39;.&#34;,
+        &#34;active_window&#34;: window,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-018: Visual question answering about on-screen state.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.desktop_powers.DesktopPowers" href="#jarvis.powers.desktop_powers.DesktopPowers">DesktopPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.desktop_powers.DesktopPowers.capture_screen" href="#jarvis.powers.desktop_powers.DesktopPowers.capture_screen">capture_screen</a></code></li>
+<li><code><a title="jarvis.powers.desktop_powers.DesktopPowers.get_active_window" href="#jarvis.powers.desktop_powers.DesktopPowers.get_active_window">get_active_window</a></code></li>
+<li><code><a title="jarvis.powers.desktop_powers.DesktopPowers.ocr_screen" href="#jarvis.powers.desktop_powers.DesktopPowers.ocr_screen">ocr_screen</a></code></li>
+<li><code><a title="jarvis.powers.desktop_powers.DesktopPowers.pwr_016_get_active_window" href="#jarvis.powers.desktop_powers.DesktopPowers.pwr_016_get_active_window">pwr_016_get_active_window</a></code></li>
+<li><code><a title="jarvis.powers.desktop_powers.DesktopPowers.pwr_017_capture_screen" href="#jarvis.powers.desktop_powers.DesktopPowers.pwr_017_capture_screen">pwr_017_capture_screen</a></code></li>
+<li><code><a title="jarvis.powers.desktop_powers.DesktopPowers.pwr_018_focus_window" href="#jarvis.powers.desktop_powers.DesktopPowers.pwr_018_focus_window">pwr_018_focus_window</a></code></li>
+<li><code><a title="jarvis.powers.desktop_powers.DesktopPowers.pwr_019_safe_type" href="#jarvis.powers.desktop_powers.DesktopPowers.pwr_019_safe_type">pwr_019_safe_type</a></code></li>
+<li><code><a title="jarvis.powers.desktop_powers.DesktopPowers.pwr_020_mouse_click" href="#jarvis.powers.desktop_powers.DesktopPowers.pwr_020_mouse_click">pwr_020_mouse_click</a></code></li>
+<li><code><a title="jarvis.powers.desktop_powers.DesktopPowers.screen_qa" href="#jarvis.powers.desktop_powers.DesktopPowers.screen_qa">screen_qa</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

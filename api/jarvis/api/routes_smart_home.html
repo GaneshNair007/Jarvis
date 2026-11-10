@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.api.routes_smart_home API documentation</title>
+<meta name="description" content="JARVIS Smart Home &amp; Room Control REST API Routes …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.api.routes_smart_home</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Smart Home &amp; Room Control REST API Routes.</p>
+<p>Endpoints for BroadLink IR/RF AC and Projector control, Wi-Fi smart plugs (Geyser),
+smart lighting, synchronized room scenes, and natural voice command dispatch.
+Reference: Ayman William Stage 01 Smart Room Architecture.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.api.routes_smart_home.control_ac"><code class="name flex">
+<span>async def <span class="ident">control_ac</span></span>(<span>req: <a title="jarvis.api.routes_smart_home.ClimateRequest" href="#jarvis.api.routes_smart_home.ClimateRequest">ClimateRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/climate&#34;)
+async def control_ac(req: ClimateRequest):
+    &#34;&#34;&#34;Controls Room AC via BroadLink IR.&#34;&#34;&#34;
+    return smart_home_powers.control_climate(
+        action=req.action,
+        temperature=req.temperature,
+        mode=req.mode,
+        fan_speed=req.fan_speed,
+    )</code></pre>
+</details>
+<div class="desc"><p>Controls Room AC via BroadLink IR.</p></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.control_projector_tv"><code class="name flex">
+<span>async def <span class="ident">control_projector_tv</span></span>(<span>req: <a title="jarvis.api.routes_smart_home.MediaRequest" href="#jarvis.api.routes_smart_home.MediaRequest">MediaRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/media&#34;)
+async def control_projector_tv(req: MediaRequest):
+    &#34;&#34;&#34;Controls Projector / TV via BroadLink IR.&#34;&#34;&#34;
+    return smart_home_powers.control_media(
+        action=req.action,
+        device_id=req.device_id,
+        input_source=req.input_source,
+        volume=req.volume,
+        mute=req.mute,
+    )</code></pre>
+</details>
+<div class="desc"><p>Controls Projector / TV via BroadLink IR.</p></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.control_smart_lights"><code class="name flex">
+<span>async def <span class="ident">control_smart_lights</span></span>(<span>req: <a title="jarvis.api.routes_smart_home.LightRequest" href="#jarvis.api.routes_smart_home.LightRequest">LightRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/lights&#34;)
+async def control_smart_lights(req: LightRequest):
+    &#34;&#34;&#34;Controls Wi-Fi Smart Lighting brightness, color, and power.&#34;&#34;&#34;
+    return smart_home_powers.control_lights(
+        entity_id=req.entity_id,
+        state=req.state,
+        brightness=req.brightness,
+        rgb_color=req.rgb_color,
+        color_temp=req.color_temp,
+    )</code></pre>
+</details>
+<div class="desc"><p>Controls Wi-Fi Smart Lighting brightness, color, and power.</p></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.control_smart_plug"><code class="name flex">
+<span>async def <span class="ident">control_smart_plug</span></span>(<span>req: <a title="jarvis.api.routes_smart_home.PlugRequest" href="#jarvis.api.routes_smart_home.PlugRequest">PlugRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/plug&#34;)
+async def control_smart_plug(req: PlugRequest):
+    &#34;&#34;&#34;Controls Wi-Fi Smart Plug (Geyser / Workstation) with safety timer.&#34;&#34;&#34;
+    return smart_home_powers.control_plug(
+        entity_id=req.entity_id,
+        state=req.state,
+        auto_off_minutes=req.auto_off_minutes,
+    )</code></pre>
+</details>
+<div class="desc"><p>Controls Wi-Fi Smart Plug (Geyser / Workstation) with safety timer.</p></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.get_device"><code class="name flex">
+<span>async def <span class="ident">get_device</span></span>(<span>entity_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/devices/{entity_id}&#34;)
+async def get_device(entity_id: str):
+    &#34;&#34;&#34;Returns specific device state.&#34;&#34;&#34;
+    res = smart_home_powers.get_device_status(entity_id)
+    if &#34;error&#34; in res:
+        raise HTTPException(status_code=404, detail=res[&#34;error&#34;])
+    return res</code></pre>
+</details>
+<div class="desc"><p>Returns specific device state.</p></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.list_room_devices"><code class="name flex">
+<span>async def <span class="ident">list_room_devices</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/devices&#34;)
+async def list_room_devices():
+    &#34;&#34;&#34;Returns all registered room devices and current states.&#34;&#34;&#34;
+    return smart_home_powers.get_all_devices()</code></pre>
+</details>
+<div class="desc"><p>Returns all registered room devices and current states.</p></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.parse_smart_room_voice"><code class="name flex">
+<span>async def <span class="ident">parse_smart_room_voice</span></span>(<span>req: <a title="jarvis.api.routes_smart_home.VoiceCommandRequest" href="#jarvis.api.routes_smart_home.VoiceCommandRequest">VoiceCommandRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/voice&#34;)
+async def parse_smart_room_voice(req: VoiceCommandRequest):
+    &#34;&#34;&#34;Parses natural voice utterances into smart room actions.&#34;&#34;&#34;
+    return smart_home_powers.process_voice_command(req.transcript)</code></pre>
+</details>
+<div class="desc"><p>Parses natural voice utterances into smart room actions.</p></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.trigger_room_scene"><code class="name flex">
+<span>async def <span class="ident">trigger_room_scene</span></span>(<span>req: <a title="jarvis.api.routes_smart_home.SceneRequest" href="#jarvis.api.routes_smart_home.SceneRequest">SceneRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/scene&#34;)
+async def trigger_room_scene(req: SceneRequest):
+    &#34;&#34;&#34;Activates multi-device synchronized room scene.&#34;&#34;&#34;
+    return smart_home_powers.activate_scene(req.scene)</code></pre>
+</details>
+<div class="desc"><p>Activates multi-device synchronized room scene.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.api.routes_smart_home.ClimateRequest"><code class="flex name class">
+<span>class <span class="ident">ClimateRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ClimateRequest(BaseModel):
+    action: str = Field(default=&#34;toggle&#34;, description=&#34;&#39;on&#39;, &#39;off&#39;, or &#39;toggle&#39;&#34;)
+    temperature: Optional[int] = Field(default=None, description=&#34;Target temp in Celsius (16-30)&#34;)
+    mode: Optional[str] = Field(default=None, description=&#34;&#39;cool&#39;, &#39;heat&#39;, &#39;fan&#39;, &#39;dry&#39;, &#39;auto&#39;&#34;)
+    fan_speed: Optional[str] = Field(default=None, description=&#34;&#39;low&#39;, &#39;medium&#39;, &#39;high&#39;, &#39;auto&#39;&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_smart_home.ClimateRequest.action"><code class="name">var <span class="ident">action</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.ClimateRequest.fan_speed"><code class="name">var <span class="ident">fan_speed</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.ClimateRequest.mode"><code class="name">var <span class="ident">mode</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.ClimateRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.ClimateRequest.temperature"><code class="name">var <span class="ident">temperature</span> : int | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_smart_home.LightRequest"><code class="flex name class">
+<span>class <span class="ident">LightRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LightRequest(BaseModel):
+    entity_id: str = Field(default=&#34;light.ambient_rgb&#34;)
+    state: str = Field(default=&#34;toggle&#34;, description=&#34;&#39;on&#39;, &#39;off&#39;, or &#39;toggle&#39;&#34;)
+    brightness: Optional[int] = Field(default=None, description=&#34;0 to 100&#34;)
+    rgb_color: Optional[List[int]] = Field(default=None, description=&#34;[R, G, B] 0-255&#34;)
+    color_temp: Optional[int] = Field(default=None, description=&#34;2000K to 6500K&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_smart_home.LightRequest.brightness"><code class="name">var <span class="ident">brightness</span> : int | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.LightRequest.color_temp"><code class="name">var <span class="ident">color_temp</span> : int | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.LightRequest.entity_id"><code class="name">var <span class="ident">entity_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.LightRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.LightRequest.rgb_color"><code class="name">var <span class="ident">rgb_color</span> : List[int] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.LightRequest.state"><code class="name">var <span class="ident">state</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_smart_home.MediaRequest"><code class="flex name class">
+<span>class <span class="ident">MediaRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MediaRequest(BaseModel):
+    action: str = Field(default=&#34;toggle&#34;, description=&#34;&#39;on&#39;, &#39;off&#39;, or &#39;toggle&#39;&#34;)
+    device_id: str = Field(default=&#34;media.projector_tv&#34;)
+    input_source: Optional[str] = Field(default=None, description=&#34;&#39;HDMI1&#39;, &#39;HDMI2&#39;, &#39;PC&#39;&#34;)
+    volume: Optional[int] = Field(default=None, description=&#34;0 to 100&#34;)
+    mute: Optional[bool] = Field(default=None)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_smart_home.MediaRequest.action"><code class="name">var <span class="ident">action</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.MediaRequest.device_id"><code class="name">var <span class="ident">device_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.MediaRequest.input_source"><code class="name">var <span class="ident">input_source</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.MediaRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.MediaRequest.mute"><code class="name">var <span class="ident">mute</span> : bool | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.MediaRequest.volume"><code class="name">var <span class="ident">volume</span> : int | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_smart_home.PlugRequest"><code class="flex name class">
+<span>class <span class="ident">PlugRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PlugRequest(BaseModel):
+    entity_id: str = Field(..., description=&#34;e.g. &#39;switch.geyser&#39; or &#39;switch.workstation&#39;&#34;)
+    state: str = Field(default=&#34;toggle&#34;, description=&#34;&#39;on&#39;, &#39;off&#39;, or &#39;toggle&#39;&#34;)
+    auto_off_minutes: Optional[int] = Field(default=None, description=&#34;Safety timer in minutes&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_smart_home.PlugRequest.auto_off_minutes"><code class="name">var <span class="ident">auto_off_minutes</span> : int | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.PlugRequest.entity_id"><code class="name">var <span class="ident">entity_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.PlugRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.PlugRequest.state"><code class="name">var <span class="ident">state</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_smart_home.SceneRequest"><code class="flex name class">
+<span>class <span class="ident">SceneRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SceneRequest(BaseModel):
+    scene: str = Field(..., description=&#34;&#39;work_mode&#39;, &#39;movie_night&#39;, &#39;sleep_mode&#39;, &#39;morning_wake&#39;&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_smart_home.SceneRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.SceneRequest.scene"><code class="name">var <span class="ident">scene</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes_smart_home.VoiceCommandRequest"><code class="flex name class">
+<span>class <span class="ident">VoiceCommandRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class VoiceCommandRequest(BaseModel):
+    transcript: str = Field(..., description=&#34;Spoken utterance, e.g. &#39;Turn on the AC&#39;, &#39;Movie night&#39;&#34;)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes_smart_home.VoiceCommandRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes_smart_home.VoiceCommandRequest.transcript"><code class="name">var <span class="ident">transcript</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.api" href="index.html">jarvis.api</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.api.routes_smart_home.control_ac" href="#jarvis.api.routes_smart_home.control_ac">control_ac</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.control_projector_tv" href="#jarvis.api.routes_smart_home.control_projector_tv">control_projector_tv</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.control_smart_lights" href="#jarvis.api.routes_smart_home.control_smart_lights">control_smart_lights</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.control_smart_plug" href="#jarvis.api.routes_smart_home.control_smart_plug">control_smart_plug</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.get_device" href="#jarvis.api.routes_smart_home.get_device">get_device</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.list_room_devices" href="#jarvis.api.routes_smart_home.list_room_devices">list_room_devices</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.parse_smart_room_voice" href="#jarvis.api.routes_smart_home.parse_smart_room_voice">parse_smart_room_voice</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.trigger_room_scene" href="#jarvis.api.routes_smart_home.trigger_room_scene">trigger_room_scene</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.api.routes_smart_home.ClimateRequest" href="#jarvis.api.routes_smart_home.ClimateRequest">ClimateRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_smart_home.ClimateRequest.action" href="#jarvis.api.routes_smart_home.ClimateRequest.action">action</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.ClimateRequest.fan_speed" href="#jarvis.api.routes_smart_home.ClimateRequest.fan_speed">fan_speed</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.ClimateRequest.mode" href="#jarvis.api.routes_smart_home.ClimateRequest.mode">mode</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.ClimateRequest.model_config" href="#jarvis.api.routes_smart_home.ClimateRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.ClimateRequest.temperature" href="#jarvis.api.routes_smart_home.ClimateRequest.temperature">temperature</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_smart_home.LightRequest" href="#jarvis.api.routes_smart_home.LightRequest">LightRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_smart_home.LightRequest.brightness" href="#jarvis.api.routes_smart_home.LightRequest.brightness">brightness</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.LightRequest.color_temp" href="#jarvis.api.routes_smart_home.LightRequest.color_temp">color_temp</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.LightRequest.entity_id" href="#jarvis.api.routes_smart_home.LightRequest.entity_id">entity_id</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.LightRequest.model_config" href="#jarvis.api.routes_smart_home.LightRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.LightRequest.rgb_color" href="#jarvis.api.routes_smart_home.LightRequest.rgb_color">rgb_color</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.LightRequest.state" href="#jarvis.api.routes_smart_home.LightRequest.state">state</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_smart_home.MediaRequest" href="#jarvis.api.routes_smart_home.MediaRequest">MediaRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes_smart_home.MediaRequest.action" href="#jarvis.api.routes_smart_home.MediaRequest.action">action</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.MediaRequest.device_id" href="#jarvis.api.routes_smart_home.MediaRequest.device_id">device_id</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.MediaRequest.input_source" href="#jarvis.api.routes_smart_home.MediaRequest.input_source">input_source</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.MediaRequest.model_config" href="#jarvis.api.routes_smart_home.MediaRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.MediaRequest.mute" href="#jarvis.api.routes_smart_home.MediaRequest.mute">mute</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.MediaRequest.volume" href="#jarvis.api.routes_smart_home.MediaRequest.volume">volume</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_smart_home.PlugRequest" href="#jarvis.api.routes_smart_home.PlugRequest">PlugRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_smart_home.PlugRequest.auto_off_minutes" href="#jarvis.api.routes_smart_home.PlugRequest.auto_off_minutes">auto_off_minutes</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.PlugRequest.entity_id" href="#jarvis.api.routes_smart_home.PlugRequest.entity_id">entity_id</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.PlugRequest.model_config" href="#jarvis.api.routes_smart_home.PlugRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.PlugRequest.state" href="#jarvis.api.routes_smart_home.PlugRequest.state">state</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_smart_home.SceneRequest" href="#jarvis.api.routes_smart_home.SceneRequest">SceneRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_smart_home.SceneRequest.model_config" href="#jarvis.api.routes_smart_home.SceneRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.SceneRequest.scene" href="#jarvis.api.routes_smart_home.SceneRequest.scene">scene</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes_smart_home.VoiceCommandRequest" href="#jarvis.api.routes_smart_home.VoiceCommandRequest">VoiceCommandRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes_smart_home.VoiceCommandRequest.model_config" href="#jarvis.api.routes_smart_home.VoiceCommandRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes_smart_home.VoiceCommandRequest.transcript" href="#jarvis.api.routes_smart_home.VoiceCommandRequest.transcript">transcript</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

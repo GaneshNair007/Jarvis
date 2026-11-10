@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.gemini_rotator API documentation</title>
+<meta name="description" content="JARVIS Gemini Multi-Account API Key Rotator (Compatibility Re-export) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.gemini_rotator</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Gemini Multi-Account API Key Rotator (Compatibility Re-export).</p>
+<p>Maintains backward-compatibility while routing to the unified multi-account
+APIKeyRotator architecture in <code><a title="jarvis.core.api_key_rotator" href="api_key_rotator.html">jarvis.core.api_key_rotator</a></code>.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.gemini_rotator.GeminiKeyRotator"><code class="flex name class">
+<span>class <span class="ident">GeminiKeyRotator</span></span>
+<span>(</span><span>keys: Optional[List[str]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GeminiKeyRotator(BaseKeyRotator):
+    &#34;&#34;&#34;
+    Multi-account load-balancing rotator for Google Gemini (Pro/Flash).
+    Supports up to 3+ independent developer accounts (e.g. GEMINI_KEY_ACCOUNT_1,
+    GEMINI_KEY_ACCOUNT_2, GEMINI_KEY_ACCOUNT_3, GEMINI_API_KEYS, GEMINI_API_KEY).
+    Automatically fails over on HTTP 429 with exponential backoff.
+    &#34;&#34;&#34;
+
+    def __init__(self, keys: Optional[List[str]] = None):
+        super().__init__(provider=&#34;gemini&#34;)
+        self.clients: Dict[str, Any] = {}
+        self.key_cycle = None
+        if keys:
+            for k in keys:
+                self.add_key(k)
+        else:
+            self._discover_keys()
+        self._sync_blueprint_state()
+
+    @property
+    def valid_keys(self) -&gt; List[str]:
+        &#34;&#34;&#34;Returns all non-empty configured keys per architectural blueprint.&#34;&#34;&#34;
+        return [k for k in self.keys if k]
+
+    def _sync_blueprint_state(self) -&gt; None:
+        &#34;&#34;&#34;Synchronizes key_cycle and clients map per architectural blueprint.&#34;&#34;&#34;
+        self.key_cycle = itertools.cycle(self.valid_keys) if self.valid_keys else None
+        try:
+            from google import genai
+
+            for k in self.valid_keys:
+                if k not in self.clients:
+                    try:
+                        self.clients[k] = genai.Client(api_key=k)
+                    except Exception:
+                        pass
+        except ImportError:
+            pass
+
+    def add_key(self, key: str) -&gt; bool:
+        added = super().add_key(key)
+        if added:
+            self._sync_blueprint_state()
+        return added
+
+    def get_client(self) -&gt; Any:
+        &#34;&#34;&#34;
+        Cycles to next available key client to distribute request load per architectural blueprint.
+        Gracefully provides adapter if google-genai is not installed in the local environment.
+        &#34;&#34;&#34;
+        if not self.valid_keys:
+            raise ValueError(&#34;No valid Gemini API keys configured in environment.&#34;)
+
+        selected_key = self.get_next_key() or (next(self.key_cycle) if self.key_cycle else None)
+        if not selected_key:
+            raise ValueError(&#34;No valid Gemini API keys configured in environment.&#34;)
+
+        if selected_key in self.clients:
+            return self.clients[selected_key]
+
+        try:
+            from google import genai
+
+            client = genai.Client(api_key=selected_key)
+            self.clients[selected_key] = client
+            return client
+        except Exception:
+            # High-fidelity fallback client adapter providing .models.generate_content
+            class _ModelsAdapter:
+                def __init__(models_self, rotator: GeminiKeyRotator, k: str):
+                    models_self.rotator = rotator
+                    models_self.k = k
+
+                def generate_content(models_self, model: str, contents: Any, config: Any = None) -&gt; Any:
+                    prompt_str = contents if isinstance(contents, str) else json.dumps(contents)
+                    res = models_self.rotator.generate_chat_completion(prompt_str, model=model)
+                    if not res or not res.get(&#34;reply&#34;):
+                        raise RuntimeError(f&#34;Gemini API execution failed for model {model}&#34;)
+                    reply_text = res[&#34;reply&#34;]
+
+                    class _GenAIResponse:
+                        def __init__(self, text: str):
+                            self.text = text
+                            self.candidates = [{&#34;content&#34;: {&#34;parts&#34;: [{&#34;text&#34;: text}]}}]
+
+                        def __str__(self) -&gt; str:
+                            return self.text
+
+                    return _GenAIResponse(reply_text)
+
+            class _ClientAdapter:
+                def __init__(adapter_self, rotator: GeminiKeyRotator, k: str):
+                    adapter_self.key = k
+                    adapter_self.models = _ModelsAdapter(rotator, k)
+
+            return _ClientAdapter(self, selected_key)
+
+    def generate_content_with_retry(self, contents: Any, config: Any = None, model: str = &#34;gemini-2.0-flash&#34;) -&gt; Any:
+        &#34;&#34;&#34;
+        Executes API call with automatic key rotation upon rate-limit detection
+        as strictly defined in the architectural blueprint.
+        &#34;&#34;&#34;
+        if not self.valid_keys:
+            raise ValueError(&#34;No valid Gemini API keys configured in environment.&#34;)
+
+        for attempt in range(len(self.valid_keys)):
+            client = self.get_client()
+            used_key = getattr(client, &#34;key&#34;, None) or self.valid_keys[attempt % len(self.valid_keys)]
+            tracker = self._trackers.get(used_key)
+
+            try:
+                if hasattr(client, &#34;models&#34;) and hasattr(client.models, &#34;generate_content&#34;):
+                    response = client.models.generate_content(model=model, contents=contents, config=config)
+                    if tracker:
+                        tracker.record_success()
+                    return response
+            except Exception as e:
+                err_code = getattr(e, &#34;code&#34;, None)
+                err_str = str(e).lower()
+                is_429 = err_code == 429 or &#34;429&#34; in err_str or &#34;resource_exhausted&#34; in err_str or &#34;quota&#34; in err_str
+                if is_429:
+                    if tracker:
+                        tracker.record_429(cooldown_seconds=60.0)
+                    continue
+                if tracker:
+                    tracker.record_error()
+                raise e
+
+        raise RuntimeError(&#34;All configured Gemini API keys are currently rate-limited.&#34;)
+
+    def _discover_keys(self) -&gt; None:
+        &#34;&#34;&#34;Discovers keys from environment and settings.&#34;&#34;&#34;
+        discovered: List[str] = []
+
+        # Account-based variables (Architectural blueprint)
+        for var in [
+            &#34;GEMINI_KEY_ACCOUNT_1&#34;,
+            &#34;GEMINI_KEY_ACCOUNT_2&#34;,
+            &#34;GEMINI_KEY_ACCOUNT_3&#34;,
+            &#34;GEMINI_KEY_1&#34;,
+            &#34;GEMINI_KEY_2&#34;,
+            &#34;GEMINI_KEY_3&#34;,
+        ]:
+            val = os.getenv(var)
+            if val and val.strip():
+                discovered.append(val.strip())
+
+        # Comma-separated multi-key string
+        multi = os.getenv(&#34;GEMINI_API_KEYS&#34;) or getattr(settings, &#34;gemini_api_keys&#34;, None)
+        if multi and isinstance(multi, str):
+            for part in multi.split(&#34;,&#34;):
+                if part.strip():
+                    discovered.append(part.strip())
+
+        # Single key fallback
+        single = os.getenv(&#34;GEMINI_API_KEY&#34;) or getattr(settings, &#34;gemini_api_key&#34;, None)
+        if single and isinstance(single, str) and single.strip():
+            discovered.append(single.strip())
+
+        for k in discovered:
+            self.add_key(k)
+
+        logger.info(f&#34;GeminiKeyRotator initialized with {len(self.keys)} accounts.&#34;)
+
+    def generate_chat_completion(
+        self,
+        prompt: str,
+        system_instruction: str = &#34;You are JARVIS, an autonomous personal AI assistant.&#34;,
+        model: str = &#34;gemini-2.0-flash&#34;,
+        max_retries: Optional[int] = None,
+        timeout_sec: float = 12.0,
+        backoff_base_sec: float = 0.5,
+    ) -&gt; Optional[Dict[str, Any]]:
+        &#34;&#34;&#34;
+        Executes inference with automatic key rotation and backoff on HTTP 429.
+        &#34;&#34;&#34;
+        if not self.is_available:
+            return None
+
+        # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
+        try:
+            from jarvis.security.ten_layer_shield import jarvis_security_suite
+
+            prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+            if system_instruction:
+                system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
+        except Exception as _sec_err:
+            logger.critical(f&#34;Gemini egress firewall blocked inference: {_sec_err}&#34;)
+            raise RuntimeError(f&#34;Cloud egress blocked by Zero-Leak Firewall: {_sec_err}&#34;) from _sec_err
+
+        attempts = max_retries if max_retries is not None else max(len(self.keys) * 2, 2)
+        start_time = time.time()
+
+        for attempt in range(attempts):
+            api_key = self.get_next_key()
+            if not api_key:
+                break
+
+            tracker = self._trackers[api_key]
+
+            # Try modern google-genai SDK first if available
+            try:
+                from google import genai
+                from google.genai.errors import APIError
+
+                client = genai.Client(api_key=api_key)
+                response = client.models.generate_content(
+                    model=model,
+                    contents=prompt,
+                )
+                text = response.text if hasattr(response, &#34;text&#34;) else str(response)
+                tracker.record_success()
+                return {
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;model&#34;: f&#34;google/{model}&#34;,
+                    &#34;reply&#34;: text,
+                    &#34;key_used&#34;: tracker.redacted_key,
+                    &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+                }
+            except ImportError:
+                pass  # Fall back to native HTTP
+            except Exception as e:
+                # Check for rate-limiting in genai SDK
+                err_str = str(e).lower()
+                is_429 = &#34;429&#34; in err_str or &#34;resource_exhausted&#34; in err_str or &#34;quota&#34; in err_str
+                if is_429:
+                    tracker.record_429(cooldown_seconds=60.0)
+                    time.sleep(backoff_base_sec * (2 ** min(attempt, 3)))
+                    continue
+                else:
+                    tracker.record_error()
+                    logger.warning(f&#34;Google GenAI SDK error: {e}&#34;)
+
+            # Native HTTP fallback (robust urllib)
+            url = f&#34;https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}&#34;
+            headers = {&#34;Content-Type&#34;: &#34;application/json&#34;}
+            payload = json.dumps(
+                {
+                    &#34;contents&#34;: [{&#34;parts&#34;: [{&#34;text&#34;: prompt}]}],
+                    &#34;systemInstruction&#34;: {&#34;parts&#34;: [{&#34;text&#34;: system_instruction}]},
+                    &#34;generationConfig&#34;: {&#34;temperature&#34;: 0.7, &#34;maxOutputTokens&#34;: 1024},
+                }
+            ).encode(&#34;utf-8&#34;)
+
+            req = urllib.request.Request(url, data=payload, headers=headers, method=&#34;POST&#34;)
+            try:
+                with urllib.request.urlopen(req, timeout=timeout_sec) as resp:
+                    if resp.status == 200:
+                        data = json.loads(resp.read().decode(&#34;utf-8&#34;))
+                        text = data.get(&#34;candidates&#34;, [{}])[0].get(&#34;content&#34;, {}).get(&#34;parts&#34;, [{}])[0].get(&#34;text&#34;, &#34;&#34;)
+                        tracker.record_success()
+                        return {
+                            &#34;status&#34;: &#34;success&#34;,
+                            &#34;model&#34;: f&#34;google/{model}&#34;,
+                            &#34;reply&#34;: text,
+                            &#34;key_used&#34;: tracker.redacted_key,
+                            &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+                        }
+            except urllib.error.HTTPError as e:
+                if e.code == 429:
+                    tracker.record_429(cooldown_seconds=60.0)
+                    time.sleep(backoff_base_sec * (2 ** min(attempt, 3)))
+                    continue
+                elif e.code in (401, 403, 500, 502, 503, 504):
+                    tracker.record_error()
+                    logger.warning(
+                        f&#34;Gemini API HTTP Error {e.code} on key {tracker.redacted_key}. Rotating to next account.&#34;
+                    )
+                    time.sleep(backoff_base_sec)
+                    continue
+                else:
+                    tracker.record_error()
+                    logger.error(f&#34;Gemini API HTTP Error {e.code}: {e.read().decode(&#39;utf-8&#39;, errors=&#39;ignore&#39;)}&#34;)
+                    break
+            except Exception as e:
+                tracker.record_error()
+                logger.warning(f&#34;Gemini HTTP connection error: {e}&#34;)
+                time.sleep(backoff_base_sec)
+
+        return None</code></pre>
+</details>
+<div class="desc"><p>Multi-account load-balancing rotator for Google Gemini (Pro/Flash).
+Supports up to 3+ independent developer accounts (e.g. GEMINI_KEY_ACCOUNT_1,
+GEMINI_KEY_ACCOUNT_2, GEMINI_KEY_ACCOUNT_3, GEMINI_API_KEYS, GEMINI_API_KEY).
+Automatically fails over on HTTP 429 with exponential backoff.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="jarvis.core.api_key_rotator.BaseKeyRotator" href="api_key_rotator.html#jarvis.core.api_key_rotator.BaseKeyRotator">BaseKeyRotator</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.core.gemini_rotator.GeminiKeyRotator.valid_keys"><code class="name">prop <span class="ident">valid_keys</span> : List[str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def valid_keys(self) -&gt; List[str]:
+    &#34;&#34;&#34;Returns all non-empty configured keys per architectural blueprint.&#34;&#34;&#34;
+    return [k for k in self.keys if k]</code></pre>
+</details>
+<div class="desc"><p>Returns all non-empty configured keys per architectural blueprint.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.gemini_rotator.GeminiKeyRotator.generate_chat_completion"><code class="name flex">
+<span>def <span class="ident">generate_chat_completion</span></span>(<span>self,<br>prompt: str,<br>system_instruction: str = 'You are JARVIS, an autonomous personal AI assistant.',<br>model: str = 'gemini-2.0-flash',<br>max_retries: Optional[int] = None,<br>timeout_sec: float = 12.0,<br>backoff_base_sec: float = 0.5) ‑> Dict[str, Any] | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_chat_completion(
+    self,
+    prompt: str,
+    system_instruction: str = &#34;You are JARVIS, an autonomous personal AI assistant.&#34;,
+    model: str = &#34;gemini-2.0-flash&#34;,
+    max_retries: Optional[int] = None,
+    timeout_sec: float = 12.0,
+    backoff_base_sec: float = 0.5,
+) -&gt; Optional[Dict[str, Any]]:
+    &#34;&#34;&#34;
+    Executes inference with automatic key rotation and backoff on HTTP 429.
+    &#34;&#34;&#34;
+    if not self.is_available:
+        return None
+
+    # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
+    try:
+        from jarvis.security.ten_layer_shield import jarvis_security_suite
+
+        prompt = jarvis_security_suite.sanitize_outbound_prompt(prompt)
+        if system_instruction:
+            system_instruction = jarvis_security_suite.sanitize_outbound_prompt(system_instruction)
+    except Exception as _sec_err:
+        logger.critical(f&#34;Gemini egress firewall blocked inference: {_sec_err}&#34;)
+        raise RuntimeError(f&#34;Cloud egress blocked by Zero-Leak Firewall: {_sec_err}&#34;) from _sec_err
+
+    attempts = max_retries if max_retries is not None else max(len(self.keys) * 2, 2)
+    start_time = time.time()
+
+    for attempt in range(attempts):
+        api_key = self.get_next_key()
+        if not api_key:
+            break
+
+        tracker = self._trackers[api_key]
+
+        # Try modern google-genai SDK first if available
+        try:
+            from google import genai
+            from google.genai.errors import APIError
+
+            client = genai.Client(api_key=api_key)
+            response = client.models.generate_content(
+                model=model,
+                contents=prompt,
+            )
+            text = response.text if hasattr(response, &#34;text&#34;) else str(response)
+            tracker.record_success()
+            return {
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;model&#34;: f&#34;google/{model}&#34;,
+                &#34;reply&#34;: text,
+                &#34;key_used&#34;: tracker.redacted_key,
+                &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+            }
+        except ImportError:
+            pass  # Fall back to native HTTP
+        except Exception as e:
+            # Check for rate-limiting in genai SDK
+            err_str = str(e).lower()
+            is_429 = &#34;429&#34; in err_str or &#34;resource_exhausted&#34; in err_str or &#34;quota&#34; in err_str
+            if is_429:
+                tracker.record_429(cooldown_seconds=60.0)
+                time.sleep(backoff_base_sec * (2 ** min(attempt, 3)))
+                continue
+            else:
+                tracker.record_error()
+                logger.warning(f&#34;Google GenAI SDK error: {e}&#34;)
+
+        # Native HTTP fallback (robust urllib)
+        url = f&#34;https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}&#34;
+        headers = {&#34;Content-Type&#34;: &#34;application/json&#34;}
+        payload = json.dumps(
+            {
+                &#34;contents&#34;: [{&#34;parts&#34;: [{&#34;text&#34;: prompt}]}],
+                &#34;systemInstruction&#34;: {&#34;parts&#34;: [{&#34;text&#34;: system_instruction}]},
+                &#34;generationConfig&#34;: {&#34;temperature&#34;: 0.7, &#34;maxOutputTokens&#34;: 1024},
+            }
+        ).encode(&#34;utf-8&#34;)
+
+        req = urllib.request.Request(url, data=payload, headers=headers, method=&#34;POST&#34;)
+        try:
+            with urllib.request.urlopen(req, timeout=timeout_sec) as resp:
+                if resp.status == 200:
+                    data = json.loads(resp.read().decode(&#34;utf-8&#34;))
+                    text = data.get(&#34;candidates&#34;, [{}])[0].get(&#34;content&#34;, {}).get(&#34;parts&#34;, [{}])[0].get(&#34;text&#34;, &#34;&#34;)
+                    tracker.record_success()
+                    return {
+                        &#34;status&#34;: &#34;success&#34;,
+                        &#34;model&#34;: f&#34;google/{model}&#34;,
+                        &#34;reply&#34;: text,
+                        &#34;key_used&#34;: tracker.redacted_key,
+                        &#34;duration_ms&#34;: round((time.time() - start_time) * 1000, 2),
+                    }
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                tracker.record_429(cooldown_seconds=60.0)
+                time.sleep(backoff_base_sec * (2 ** min(attempt, 3)))
+                continue
+            elif e.code in (401, 403, 500, 502, 503, 504):
+                tracker.record_error()
+                logger.warning(
+                    f&#34;Gemini API HTTP Error {e.code} on key {tracker.redacted_key}. Rotating to next account.&#34;
+                )
+                time.sleep(backoff_base_sec)
+                continue
+            else:
+                tracker.record_error()
+                logger.error(f&#34;Gemini API HTTP Error {e.code}: {e.read().decode(&#39;utf-8&#39;, errors=&#39;ignore&#39;)}&#34;)
+                break
+        except Exception as e:
+            tracker.record_error()
+            logger.warning(f&#34;Gemini HTTP connection error: {e}&#34;)
+            time.sleep(backoff_base_sec)
+
+    return None</code></pre>
+</details>
+<div class="desc"><p>Executes inference with automatic key rotation and backoff on HTTP 429.</p></div>
+</dd>
+<dt id="jarvis.core.gemini_rotator.GeminiKeyRotator.generate_content_with_retry"><code class="name flex">
+<span>def <span class="ident">generate_content_with_retry</span></span>(<span>self, contents: Any, config: Any = None, model: str = 'gemini-2.0-flash') ‑> Any</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_content_with_retry(self, contents: Any, config: Any = None, model: str = &#34;gemini-2.0-flash&#34;) -&gt; Any:
+    &#34;&#34;&#34;
+    Executes API call with automatic key rotation upon rate-limit detection
+    as strictly defined in the architectural blueprint.
+    &#34;&#34;&#34;
+    if not self.valid_keys:
+        raise ValueError(&#34;No valid Gemini API keys configured in environment.&#34;)
+
+    for attempt in range(len(self.valid_keys)):
+        client = self.get_client()
+        used_key = getattr(client, &#34;key&#34;, None) or self.valid_keys[attempt % len(self.valid_keys)]
+        tracker = self._trackers.get(used_key)
+
+        try:
+            if hasattr(client, &#34;models&#34;) and hasattr(client.models, &#34;generate_content&#34;):
+                response = client.models.generate_content(model=model, contents=contents, config=config)
+                if tracker:
+                    tracker.record_success()
+                return response
+        except Exception as e:
+            err_code = getattr(e, &#34;code&#34;, None)
+            err_str = str(e).lower()
+            is_429 = err_code == 429 or &#34;429&#34; in err_str or &#34;resource_exhausted&#34; in err_str or &#34;quota&#34; in err_str
+            if is_429:
+                if tracker:
+                    tracker.record_429(cooldown_seconds=60.0)
+                continue
+            if tracker:
+                tracker.record_error()
+            raise e
+
+    raise RuntimeError(&#34;All configured Gemini API keys are currently rate-limited.&#34;)</code></pre>
+</details>
+<div class="desc"><p>Executes API call with automatic key rotation upon rate-limit detection
+as strictly defined in the architectural blueprint.</p></div>
+</dd>
+<dt id="jarvis.core.gemini_rotator.GeminiKeyRotator.get_client"><code class="name flex">
+<span>def <span class="ident">get_client</span></span>(<span>self) ‑> Any</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_client(self) -&gt; Any:
+    &#34;&#34;&#34;
+    Cycles to next available key client to distribute request load per architectural blueprint.
+    Gracefully provides adapter if google-genai is not installed in the local environment.
+    &#34;&#34;&#34;
+    if not self.valid_keys:
+        raise ValueError(&#34;No valid Gemini API keys configured in environment.&#34;)
+
+    selected_key = self.get_next_key() or (next(self.key_cycle) if self.key_cycle else None)
+    if not selected_key:
+        raise ValueError(&#34;No valid Gemini API keys configured in environment.&#34;)
+
+    if selected_key in self.clients:
+        return self.clients[selected_key]
+
+    try:
+        from google import genai
+
+        client = genai.Client(api_key=selected_key)
+        self.clients[selected_key] = client
+        return client
+    except Exception:
+        # High-fidelity fallback client adapter providing .models.generate_content
+        class _ModelsAdapter:
+            def __init__(models_self, rotator: GeminiKeyRotator, k: str):
+                models_self.rotator = rotator
+                models_self.k = k
+
+            def generate_content(models_self, model: str, contents: Any, config: Any = None) -&gt; Any:
+                prompt_str = contents if isinstance(contents, str) else json.dumps(contents)
+                res = models_self.rotator.generate_chat_completion(prompt_str, model=model)
+                if not res or not res.get(&#34;reply&#34;):
+                    raise RuntimeError(f&#34;Gemini API execution failed for model {model}&#34;)
+                reply_text = res[&#34;reply&#34;]
+
+                class _GenAIResponse:
+                    def __init__(self, text: str):
+                        self.text = text
+                        self.candidates = [{&#34;content&#34;: {&#34;parts&#34;: [{&#34;text&#34;: text}]}}]
+
+                    def __str__(self) -&gt; str:
+                        return self.text
+
+                return _GenAIResponse(reply_text)
+
+        class _ClientAdapter:
+            def __init__(adapter_self, rotator: GeminiKeyRotator, k: str):
+                adapter_self.key = k
+                adapter_self.models = _ModelsAdapter(rotator, k)
+
+        return _ClientAdapter(self, selected_key)</code></pre>
+</details>
+<div class="desc"><p>Cycles to next available key client to distribute request load per architectural blueprint.
+Gracefully provides adapter if google-genai is not installed in the local environment.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="jarvis.core.api_key_rotator.BaseKeyRotator" href="api_key_rotator.html#jarvis.core.api_key_rotator.BaseKeyRotator">BaseKeyRotator</a></b></code>:
+<ul class="hlist">
+<li><code><a title="jarvis.core.api_key_rotator.BaseKeyRotator.add_key" href="api_key_rotator.html#jarvis.core.api_key_rotator.BaseKeyRotator.add_key">add_key</a></code></li>
+<li><code><a title="jarvis.core.api_key_rotator.BaseKeyRotator.get_metrics" href="api_key_rotator.html#jarvis.core.api_key_rotator.BaseKeyRotator.get_metrics">get_metrics</a></code></li>
+<li><code><a title="jarvis.core.api_key_rotator.BaseKeyRotator.get_next_key" href="api_key_rotator.html#jarvis.core.api_key_rotator.BaseKeyRotator.get_next_key">get_next_key</a></code></li>
+<li><code><a title="jarvis.core.api_key_rotator.BaseKeyRotator.is_available" href="api_key_rotator.html#jarvis.core.api_key_rotator.BaseKeyRotator.is_available">is_available</a></code></li>
+<li><code><a title="jarvis.core.api_key_rotator.BaseKeyRotator.reset_metrics" href="api_key_rotator.html#jarvis.core.api_key_rotator.BaseKeyRotator.reset_metrics">reset_metrics</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.gemini_rotator.GeminiKeyRotator" href="#jarvis.core.gemini_rotator.GeminiKeyRotator">GeminiKeyRotator</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.gemini_rotator.GeminiKeyRotator.generate_chat_completion" href="#jarvis.core.gemini_rotator.GeminiKeyRotator.generate_chat_completion">generate_chat_completion</a></code></li>
+<li><code><a title="jarvis.core.gemini_rotator.GeminiKeyRotator.generate_content_with_retry" href="#jarvis.core.gemini_rotator.GeminiKeyRotator.generate_content_with_retry">generate_content_with_retry</a></code></li>
+<li><code><a title="jarvis.core.gemini_rotator.GeminiKeyRotator.get_client" href="#jarvis.core.gemini_rotator.GeminiKeyRotator.get_client">get_client</a></code></li>
+<li><code><a title="jarvis.core.gemini_rotator.GeminiKeyRotator.valid_keys" href="#jarvis.core.gemini_rotator.GeminiKeyRotator.valid_keys">valid_keys</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

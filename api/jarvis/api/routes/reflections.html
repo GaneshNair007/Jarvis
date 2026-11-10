@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.api.routes.reflections API documentation</title>
+<meta name="description" content="FastAPI Routes for Reflection Engine, Capabilities, and Self-Improvement Backlog
+Endpoints:
+POST /api/v1/reflections
+GET …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.api.routes.reflections</code></h1>
+</header>
+<section id="section-intro">
+<p>FastAPI Routes for Reflection Engine, Capabilities, and Self-Improvement Backlog</p>
+<p>Endpoints
+-----=
+POST /api/v1/reflections
+GET /api/v1/reflections/{reflection_id}
+GET /api/v1/goals/{goal_id}/reflections
+POST /api/v1/reflections/daily
+POST /api/v1/reflections/improvements
+GET /api/v1/capabilities
+GET /api/v1/improvements</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.api.routes.reflections.create_improvement"><code class="name flex">
+<span>async def <span class="ident">create_improvement</span></span>(<span>payload: <a title="jarvis.api.routes.reflections.ImprovementCreateRequest" href="#jarvis.api.routes.reflections.ImprovementCreateRequest">ImprovementCreateRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/reflections/improvements&#34;, response_model=ImprovementResponse, status_code=status.HTTP_201_CREATED)
+async def create_improvement(payload: ImprovementCreateRequest):
+    &#34;&#34;&#34;Emits an ImprovementRequest into the Engineering Backlog (NO direct main push).&#34;&#34;&#34;
+    imp_id = str(uuid.uuid4())
+    imp = ImprovementResponse(
+        id=imp_id,
+        title=payload.title,
+        description=payload.description,
+        category=payload.category,
+        priority=payload.priority,
+        status=&#34;PROPOSED&#34;,
+        proposed_changes=payload.proposed_changes,
+        created_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    )
+    _improvements_db[imp_id] = imp
+    return imp</code></pre>
+</details>
+<div class="desc"><p>Emits an ImprovementRequest into the Engineering Backlog (NO direct main push).</p></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.create_reflection"><code class="name flex">
+<span>async def <span class="ident">create_reflection</span></span>(<span>payload: <a title="jarvis.api.routes.reflections.ReflectionCreateRequest" href="#jarvis.api.routes.reflections.ReflectionCreateRequest">ReflectionCreateRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/reflections&#34;, response_model=ReflectionResponse, status_code=status.HTTP_201_CREATED)
+async def create_reflection(payload: ReflectionCreateRequest):
+    &#34;&#34;&#34;Generates and stores a new post-goal reflection.&#34;&#34;&#34;
+    graph = TaskGraph(goal_id=payload.goal_id)
+    # Synthesize dummy node for goal if empty
+    graph.add_node(
+        TaskNode(
+            task_id=&#34;t_root&#34;,
+            name=&#34;Goal Pipeline&#34;,
+            description=&#34;Execution trace for goal&#34;,
+            department=&#34;engineering&#34;,
+            parent_goal=payload.goal_id,
+            status=TaskStatus.COMPLETED,
+            outputs={&#34;status&#34;: &#34;completed&#34;, &#34;opportunity&#34;: &#34;Synthesize reusable skill&#34;},
+        )
+    )
+
+    report = _engine.generate_reflection(graph)
+    refl_id = str(uuid.uuid4())
+
+    response = ReflectionResponse(
+        id=refl_id,
+        goal_id=payload.goal_id,
+        successes=[f&#34;Goal &#39;{payload.goal_id}&#39; completed with 100% QA compliance.&#34;],
+        failures=[],
+        improvements=[p.title for p in report.improvement_proposals],
+        opportunities=[o.description for o in report.opportunities],
+        constitution_alignment_score=report.constitution_score.overall_score,
+        metrics=report.analysis.model_dump(),
+    )
+    _reflections_db[refl_id] = response
+    return response</code></pre>
+</details>
+<div class="desc"><p>Generates and stores a new post-goal reflection.</p></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.get_reflection"><code class="name flex">
+<span>async def <span class="ident">get_reflection</span></span>(<span>reflection_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/reflections/{reflection_id}&#34;, response_model=ReflectionResponse)
+async def get_reflection(reflection_id: str):
+    &#34;&#34;&#34;Retrieves a reflection by ID.&#34;&#34;&#34;
+    if reflection_id not in _reflections_db:
+        raise HTTPException(status_code=404, detail=f&#34;Reflection &#39;{reflection_id}&#39; not found.&#34;)
+    return _reflections_db[reflection_id]</code></pre>
+</details>
+<div class="desc"><p>Retrieves a reflection by ID.</p></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.get_reflections_for_goal"><code class="name flex">
+<span>async def <span class="ident">get_reflections_for_goal</span></span>(<span>goal_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/goals/{goal_id}/reflections&#34;, response_model=List[ReflectionResponse])
+async def get_reflections_for_goal(goal_id: str):
+    &#34;&#34;&#34;Lists all historical reflections for a specific goal.&#34;&#34;&#34;
+    return [r for r in _reflections_db.values() if r.goal_id == goal_id]</code></pre>
+</details>
+<div class="desc"><p>Lists all historical reflections for a specific goal.</p></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.list_capabilities"><code class="name flex">
+<span>async def <span class="ident">list_capabilities</span></span>(<span>level: Optional[str] = Query(None))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/capabilities&#34;, response_model=List[CapabilityResponse])
+async def list_capabilities(
+    level: Optional[str] = Query(None, description=&#34;MISSING, EXPERIMENTAL, BASIC, ADVANCED, ELITE&#34;),
+):
+    &#34;&#34;&#34;Lists system capabilities, optionally filtered by maturity level.&#34;&#34;&#34;
+    caps = list(_capabilities_db.values())
+    if level:
+        caps = [c for c in caps if c.level.upper() == level.upper()]
+    return caps</code></pre>
+</details>
+<div class="desc"><p>Lists system capabilities, optionally filtered by maturity level.</p></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.list_improvements"><code class="name flex">
+<span>async def <span class="ident">list_improvements</span></span>(<span>status: Optional[str] = Query(None))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/improvements&#34;, response_model=List[ImprovementResponse])
+async def list_improvements(status: Optional[str] = Query(None, description=&#34;PROPOSED, PLANNED, GENERATED, etc.&#34;)):
+    &#34;&#34;&#34;Lists improvement requests currently residing in the Engineering Backlog.&#34;&#34;&#34;
+    imps = list(_improvements_db.values())
+    if status:
+        imps = [i for i in imps if i.status.upper() == status.upper()]
+    return imps</code></pre>
+</details>
+<div class="desc"><p>Lists improvement requests currently residing in the Engineering Backlog.</p></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.run_daily_reflection"><code class="name flex">
+<span>async def <span class="ident">run_daily_reflection</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/reflections/daily&#34;, response_model=ReflectionResponse)
+async def run_daily_reflection():
+    &#34;&#34;&#34;Runs the daily retrospective comparing system telemetry against the Constitution.&#34;&#34;&#34;
+    daily_goal = f&#34;daily_audit_{datetime.datetime.now(datetime.timezone.utc).strftime(&#39;%Y_%m_%d&#39;)}&#34;
+    return await create_reflection(ReflectionCreateRequest(goal_id=daily_goal, include_constitution_audit=True))</code></pre>
+</details>
+<div class="desc"><p>Runs the daily retrospective comparing system telemetry against the Constitution.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.api.routes.reflections.CapabilityResponse"><code class="flex name class">
+<span>class <span class="ident">CapabilityResponse</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CapabilityResponse(BaseModel):
+    id: str
+    name: str
+    level: str  # MISSING, EXPERIMENTAL, BASIC, ADVANCED, ELITE
+    category: str
+    description: str
+    required_tools: List[str]
+    success_rate: float
+
+    model_config = {
+        &#34;json_schema_extra&#34;: {
+            &#34;example&#34;: {
+                &#34;id&#34;: &#34;f12c8491-0348-4cb6-a67b-4d436cf543ef&#34;,
+                &#34;name&#34;: &#34;ast_code_mapper&#34;,
+                &#34;level&#34;: &#34;ADVANCED&#34;,
+                &#34;category&#34;: &#34;engineering&#34;,
+                &#34;description&#34;: &#34;Parses repository AST and generates symbol and call graphs.&#34;,
+                &#34;required_tools&#34;: [&#34;ast_mapper&#34;, &#34;tree_sitter&#34;],
+                &#34;success_rate&#34;: 0.98,
+            }
+        }
+    }</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes.reflections.CapabilityResponse.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.CapabilityResponse.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.CapabilityResponse.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.CapabilityResponse.level"><code class="name">var <span class="ident">level</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.CapabilityResponse.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.CapabilityResponse.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.CapabilityResponse.required_tools"><code class="name">var <span class="ident">required_tools</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.CapabilityResponse.success_rate"><code class="name">var <span class="ident">success_rate</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementCreateRequest"><code class="flex name class">
+<span>class <span class="ident">ImprovementCreateRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImprovementCreateRequest(BaseModel):
+    title: str = Field(..., min_length=3, max_length=255)
+    description: str = Field(..., min_length=10)
+    category: str = Field(default=&#34;architecture&#34;, description=&#34;architecture, capability, security, performance&#34;)
+    priority: str = Field(default=&#34;MEDIUM&#34;, description=&#34;LOW, MEDIUM, HIGH, CRITICAL&#34;)
+    reflection_id: Optional[str] = None
+    capability_id: Optional[str] = None
+    proposed_changes: Dict[str, Any] = Field(default_factory=dict)
+
+    model_config = {
+        &#34;json_schema_extra&#34;: {
+            &#34;example&#34;: {
+                &#34;title&#34;: &#34;Add UI-TARS Grounding Visual Capability&#34;,
+                &#34;description&#34;: &#34;Integrate 0-1000 coordinate visual grounding for desktop element clicks.&#34;,
+                &#34;category&#34;: &#34;capability&#34;,
+                &#34;priority&#34;: &#34;HIGH&#34;,
+                &#34;proposed_changes&#34;: {&#34;tool_name&#34;: &#34;ui_tars_click&#34;, &#34;action&#34;: &#34;register_capability&#34;},
+            }
+        }
+    }</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes.reflections.ImprovementCreateRequest.capability_id"><code class="name">var <span class="ident">capability_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementCreateRequest.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementCreateRequest.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementCreateRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementCreateRequest.priority"><code class="name">var <span class="ident">priority</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementCreateRequest.proposed_changes"><code class="name">var <span class="ident">proposed_changes</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementCreateRequest.reflection_id"><code class="name">var <span class="ident">reflection_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementCreateRequest.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse"><code class="flex name class">
+<span>class <span class="ident">ImprovementResponse</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImprovementResponse(BaseModel):
+    id: str
+    title: str
+    description: str
+    category: str
+    priority: str
+    status: str
+    proposed_changes: Dict[str, Any]
+    created_at: str
+
+    model_config = {
+        &#34;json_schema_extra&#34;: {
+            &#34;example&#34;: {
+                &#34;id&#34;: &#34;e7b95a20-413d-4c3e-8f92-7d2d34a5d891&#34;,
+                &#34;title&#34;: &#34;Add UI-TARS Grounding Visual Capability&#34;,
+                &#34;description&#34;: &#34;Integrate 0-1000 coordinate visual grounding for desktop element clicks.&#34;,
+                &#34;category&#34;: &#34;capability&#34;,
+                &#34;priority&#34;: &#34;HIGH&#34;,
+                &#34;status&#34;: &#34;PROPOSED&#34;,
+                &#34;proposed_changes&#34;: {&#34;tool_name&#34;: &#34;ui_tars_click&#34;},
+                &#34;created_at&#34;: &#34;2026-11-02T16:35:00Z&#34;,
+            }
+        }
+    }</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse.created_at"><code class="name">var <span class="ident">created_at</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse.priority"><code class="name">var <span class="ident">priority</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse.proposed_changes"><code class="name">var <span class="ident">proposed_changes</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ImprovementResponse.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionCreateRequest"><code class="flex name class">
+<span>class <span class="ident">ReflectionCreateRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ReflectionCreateRequest(BaseModel):
+    goal_id: str = Field(..., description=&#34;Target Goal UUID or identifier to reflect upon&#34;)
+    include_constitution_audit: bool = Field(
+        default=True, description=&#34;Whether to compare against Constitution pillars&#34;
+    )
+
+    model_config = {
+        &#34;json_schema_extra&#34;: {&#34;example&#34;: {&#34;goal_id&#34;: &#34;goal_hackathon_pune_2026&#34;, &#34;include_constitution_audit&#34;: True}}
+    }</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes.reflections.ReflectionCreateRequest.goal_id"><code class="name">var <span class="ident">goal_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionCreateRequest.include_constitution_audit"><code class="name">var <span class="ident">include_constitution_audit</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionCreateRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse"><code class="flex name class">
+<span>class <span class="ident">ReflectionResponse</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ReflectionResponse(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    goal_id: str
+    timestamp: str = Field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
+    successes: List[str]
+    failures: List[str]
+    improvements: List[str]
+    opportunities: List[str]
+    constitution_alignment_score: float
+    metrics: Dict[str, Any]
+
+    model_config = {
+        &#34;json_schema_extra&#34;: {
+            &#34;example&#34;: {
+                &#34;id&#34;: &#34;c56a4180-65aa-42ec-a945-5fd21dec0538&#34;,
+                &#34;goal_id&#34;: &#34;goal_hackathon_pune_2026&#34;,
+                &#34;timestamp&#34;: &#34;2026-11-02T16:30:00Z&#34;,
+                &#34;successes&#34;: [&#34;Task &#39;Search Hackathons&#39; completed cleanly by [hackathon_scout].&#34;],
+                &#34;failures&#34;: [],
+                &#34;improvements&#34;: [&#34;Synthesize DAG topology into reusable skill.&#34;],
+                &#34;opportunities&#34;: [&#34;Opportunity from Select Best Problem: Publish as open standard.&#34;],
+                &#34;constitution_alignment_score&#34;: 0.98,
+                &#34;metrics&#34;: {&#34;total_tasks&#34;: 8, &#34;completed_tasks&#34;: 8, &#34;completion_rate&#34;: 100.0},
+            }
+        }
+    }</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.constitution_alignment_score"><code class="name">var <span class="ident">constitution_alignment_score</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.failures"><code class="name">var <span class="ident">failures</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.goal_id"><code class="name">var <span class="ident">goal_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.improvements"><code class="name">var <span class="ident">improvements</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.metrics"><code class="name">var <span class="ident">metrics</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.opportunities"><code class="name">var <span class="ident">opportunities</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.successes"><code class="name">var <span class="ident">successes</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.routes.reflections.ReflectionResponse.timestamp"><code class="name">var <span class="ident">timestamp</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.api.routes" href="index.html">jarvis.api.routes</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.api.routes.reflections.create_improvement" href="#jarvis.api.routes.reflections.create_improvement">create_improvement</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.create_reflection" href="#jarvis.api.routes.reflections.create_reflection">create_reflection</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.get_reflection" href="#jarvis.api.routes.reflections.get_reflection">get_reflection</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.get_reflections_for_goal" href="#jarvis.api.routes.reflections.get_reflections_for_goal">get_reflections_for_goal</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.list_capabilities" href="#jarvis.api.routes.reflections.list_capabilities">list_capabilities</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.list_improvements" href="#jarvis.api.routes.reflections.list_improvements">list_improvements</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.run_daily_reflection" href="#jarvis.api.routes.reflections.run_daily_reflection">run_daily_reflection</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.api.routes.reflections.CapabilityResponse" href="#jarvis.api.routes.reflections.CapabilityResponse">CapabilityResponse</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes.reflections.CapabilityResponse.category" href="#jarvis.api.routes.reflections.CapabilityResponse.category">category</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.CapabilityResponse.description" href="#jarvis.api.routes.reflections.CapabilityResponse.description">description</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.CapabilityResponse.id" href="#jarvis.api.routes.reflections.CapabilityResponse.id">id</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.CapabilityResponse.level" href="#jarvis.api.routes.reflections.CapabilityResponse.level">level</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.CapabilityResponse.model_config" href="#jarvis.api.routes.reflections.CapabilityResponse.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.CapabilityResponse.name" href="#jarvis.api.routes.reflections.CapabilityResponse.name">name</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.CapabilityResponse.required_tools" href="#jarvis.api.routes.reflections.CapabilityResponse.required_tools">required_tools</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.CapabilityResponse.success_rate" href="#jarvis.api.routes.reflections.CapabilityResponse.success_rate">success_rate</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes.reflections.ImprovementCreateRequest" href="#jarvis.api.routes.reflections.ImprovementCreateRequest">ImprovementCreateRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes.reflections.ImprovementCreateRequest.capability_id" href="#jarvis.api.routes.reflections.ImprovementCreateRequest.capability_id">capability_id</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementCreateRequest.category" href="#jarvis.api.routes.reflections.ImprovementCreateRequest.category">category</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementCreateRequest.description" href="#jarvis.api.routes.reflections.ImprovementCreateRequest.description">description</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementCreateRequest.model_config" href="#jarvis.api.routes.reflections.ImprovementCreateRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementCreateRequest.priority" href="#jarvis.api.routes.reflections.ImprovementCreateRequest.priority">priority</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementCreateRequest.proposed_changes" href="#jarvis.api.routes.reflections.ImprovementCreateRequest.proposed_changes">proposed_changes</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementCreateRequest.reflection_id" href="#jarvis.api.routes.reflections.ImprovementCreateRequest.reflection_id">reflection_id</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementCreateRequest.title" href="#jarvis.api.routes.reflections.ImprovementCreateRequest.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes.reflections.ImprovementResponse" href="#jarvis.api.routes.reflections.ImprovementResponse">ImprovementResponse</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.routes.reflections.ImprovementResponse.category" href="#jarvis.api.routes.reflections.ImprovementResponse.category">category</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementResponse.created_at" href="#jarvis.api.routes.reflections.ImprovementResponse.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementResponse.description" href="#jarvis.api.routes.reflections.ImprovementResponse.description">description</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementResponse.id" href="#jarvis.api.routes.reflections.ImprovementResponse.id">id</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementResponse.model_config" href="#jarvis.api.routes.reflections.ImprovementResponse.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementResponse.priority" href="#jarvis.api.routes.reflections.ImprovementResponse.priority">priority</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementResponse.proposed_changes" href="#jarvis.api.routes.reflections.ImprovementResponse.proposed_changes">proposed_changes</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementResponse.status" href="#jarvis.api.routes.reflections.ImprovementResponse.status">status</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ImprovementResponse.title" href="#jarvis.api.routes.reflections.ImprovementResponse.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes.reflections.ReflectionCreateRequest" href="#jarvis.api.routes.reflections.ReflectionCreateRequest">ReflectionCreateRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes.reflections.ReflectionCreateRequest.goal_id" href="#jarvis.api.routes.reflections.ReflectionCreateRequest.goal_id">goal_id</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionCreateRequest.include_constitution_audit" href="#jarvis.api.routes.reflections.ReflectionCreateRequest.include_constitution_audit">include_constitution_audit</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionCreateRequest.model_config" href="#jarvis.api.routes.reflections.ReflectionCreateRequest.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.routes.reflections.ReflectionResponse" href="#jarvis.api.routes.reflections.ReflectionResponse">ReflectionResponse</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.constitution_alignment_score" href="#jarvis.api.routes.reflections.ReflectionResponse.constitution_alignment_score">constitution_alignment_score</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.failures" href="#jarvis.api.routes.reflections.ReflectionResponse.failures">failures</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.goal_id" href="#jarvis.api.routes.reflections.ReflectionResponse.goal_id">goal_id</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.id" href="#jarvis.api.routes.reflections.ReflectionResponse.id">id</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.improvements" href="#jarvis.api.routes.reflections.ReflectionResponse.improvements">improvements</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.metrics" href="#jarvis.api.routes.reflections.ReflectionResponse.metrics">metrics</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.model_config" href="#jarvis.api.routes.reflections.ReflectionResponse.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.opportunities" href="#jarvis.api.routes.reflections.ReflectionResponse.opportunities">opportunities</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.successes" href="#jarvis.api.routes.reflections.ReflectionResponse.successes">successes</a></code></li>
+<li><code><a title="jarvis.api.routes.reflections.ReflectionResponse.timestamp" href="#jarvis.api.routes.reflections.ReflectionResponse.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

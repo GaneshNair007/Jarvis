@@ -1,0 +1,1178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.communication_powers API documentation</title>
+<meta name="description" content="JARVIS Communication Powers (PWR-202 to PWR-214) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.communication_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Communication Powers (PWR-202 to PWR-214).</p>
+<p>Provides Telegram messaging, desktop notifications, email drafting/sending,
+multi-channel alerts, message scheduling, contact management, and templates.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers"><code class="flex name class">
+<span>class <span class="ident">CommunicationPowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CommunicationPowers:
+    &#34;&#34;&#34;Implementations for multi-channel communication capabilities.&#34;&#34;&#34;
+
+    def __init__(self) -&gt; None:
+        self._muted_until: Optional[datetime] = None
+        self._pending_drafts: Dict[str, Dict[str, Any]] = {}
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+    def _is_muted(self) -&gt; bool:
+        if self._muted_until is None:
+            return False
+        return datetime.now(timezone.utc) &lt; self._muted_until
+
+    def _append_notification_log(self, entry: Dict[str, Any]) -&gt; None:
+        &#34;&#34;&#34;Append an entry to the notification log.&#34;&#34;&#34;
+        try:
+            _DATA_DIR.mkdir(parents=True, exist_ok=True)
+            log: List[Dict[str, Any]] = []
+            if _NOTIFICATION_LOG.exists():
+                log = json.loads(_NOTIFICATION_LOG.read_text(encoding=&#34;utf-8&#34;))
+            log.append(entry)
+            # Keep last 500 entries
+            log = log[-500:]
+            _NOTIFICATION_LOG.write_text(json.dumps(log, indent=2), encoding=&#34;utf-8&#34;)
+        except Exception as exc:
+            logger.error(&#34;Failed to write notification log: %s&#34;, exc)
+
+    # ------------------------------------------------------------------
+    # PWR-202: Send Telegram Message
+    # ------------------------------------------------------------------
+    def send_telegram_message(self, chat_id: str, message: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-202: Send a Telegram bot message using TELEGRAM_BOT_TOKEN env var.&#34;&#34;&#34;
+        token = os.environ.get(&#34;TELEGRAM_BOT_TOKEN&#34;)
+        if not token:
+            return {
+                &#34;power_id&#34;: &#34;PWR-202&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;error&#34;: &#34;TELEGRAM_BOT_TOKEN environment variable not set.&#34;,
+            }
+
+        try:
+            import requests  # type: ignore[import-untyped]
+
+            url = f&#34;https://api.telegram.org/bot{token}/sendMessage&#34;
+            resp = requests.post(url, json={&#34;chat_id&#34;: chat_id, &#34;text&#34;: message}, timeout=15)
+            data = resp.json()
+            ok = data.get(&#34;ok&#34;, False)
+
+            entry = {
+                &#34;channel&#34;: &#34;telegram&#34;,
+                &#34;chat_id&#34;: chat_id,
+                &#34;message&#34;: message[:100],
+                &#34;ok&#34;: ok,
+                &#34;timestamp&#34;: datetime.now(timezone.utc).isoformat(),
+            }
+            self._append_notification_log(entry)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-202&#34;,
+                &#34;status&#34;: &#34;success&#34; if ok else &#34;telegram_error&#34;,
+                &#34;telegram_response&#34;: data,
+            }
+        except ImportError:
+            return {
+                &#34;power_id&#34;: &#34;PWR-202&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;error&#34;: &#34;requests library not installed. pip install requests&#34;,
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-202&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-203: Desktop Notification
+    # ------------------------------------------------------------------
+    def send_desktop_notification(self, title: str, body: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-203: Windows toast notification via PowerShell.&#34;&#34;&#34;
+        if self._is_muted():
+            return {
+                &#34;power_id&#34;: &#34;PWR-203&#34;,
+                &#34;status&#34;: &#34;muted&#34;,
+                &#34;muted_until&#34;: self._muted_until.isoformat() if self._muted_until else None,
+            }
+
+        ps_script = (
+            &#34;[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, &#34;
+            &#34;ContentType = WindowsRuntime] &gt; $null; &#34;
+            &#34;$template = [Windows.UI.Notifications.ToastNotificationManager]::&#34;
+            &#34;GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); &#34;
+            &#34;$textNodes = $template.GetElementsByTagName(&#39;text&#39;); &#34;
+            f&#34;$textNodes.Item(0).AppendChild($template.CreateTextNode(&#39;{title.replace(chr(39), &#39;&#39;)}&#39;)) &gt; $null; &#34;
+            f&#34;$textNodes.Item(1).AppendChild($template.CreateTextNode(&#39;{body.replace(chr(39), &#39;&#39;)}&#39;)) &gt; $null; &#34;
+            &#34;$toast = [Windows.UI.Notifications.ToastNotification]::new($template); &#34;
+            &#34;[Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier(&#39;JARVIS&#39;).Show($toast)&#34;
+        )
+
+        try:
+            result = subprocess.run(
+                [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            ok = result.returncode == 0
+
+            entry = {
+                &#34;channel&#34;: &#34;desktop&#34;,
+                &#34;title&#34;: title,
+                &#34;body&#34;: body[:100],
+                &#34;ok&#34;: ok,
+                &#34;timestamp&#34;: datetime.now(timezone.utc).isoformat(),
+            }
+            self._append_notification_log(entry)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-203&#34;,
+                &#34;status&#34;: &#34;success&#34; if ok else &#34;error&#34;,
+                &#34;stderr&#34;: result.stderr.strip() if result.stderr else None,
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-203&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-205: Draft Email
+    # ------------------------------------------------------------------
+    def draft_email(self, to: str, subject: str, body: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-205: Draft email stored as .eml in data/outbox/.&#34;&#34;&#34;
+        try:
+            _OUTBOX_DIR.mkdir(parents=True, exist_ok=True)
+            msg = MIMEText(body)
+            msg[&#34;To&#34;] = to
+            msg[&#34;Subject&#34;] = subject
+            msg[&#34;From&#34;] = os.environ.get(&#34;JARVIS_EMAIL_FROM&#34;, &#34;jarvis@localhost&#34;)
+            msg[&#34;Date&#34;] = datetime.now(timezone.utc).strftime(&#34;%a, %d %b %Y %H:%M:%S +0000&#34;)
+
+            draft_id = str(uuid.uuid4())[:8]
+            draft_path = _OUTBOX_DIR / f&#34;draft_{draft_id}.eml&#34;
+            draft_path.write_text(msg.as_string(), encoding=&#34;utf-8&#34;)
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-205&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;draft_id&#34;: draft_id,
+                &#34;draft_path&#34;: str(draft_path),
+                &#34;to&#34;: to,
+                &#34;subject&#34;: subject,
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-205&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-206: Send Email (legacy entrypoint, no false success)
+    # ------------------------------------------------------------------
+    def send_email(self, draft_path: str, approval_token: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-206: Legacy send entrypoint.
+
+        This power previously moved a local ``.eml`` into a sent folder and
+        reported ``dispatched`` without any provider delivery.  It no longer
+        performs delivery and never claims success.  Use PWR-052
+        (``email_powers.send_email``), which binds approval to the SHA-256 of
+        the exact RFC 822 bytes and returns ``SENT`` only after Gmail confirms
+        a provider message id.
+        &#34;&#34;&#34;
+        dp = Path(draft_path)
+        if not dp.exists():
+            return {
+                &#34;power_id&#34;: &#34;PWR-206&#34;,
+                &#34;success&#34;: False,
+                &#34;status&#34;: &#34;NOT_SENT&#34;,
+                &#34;error&#34;: f&#34;Draft not found: {draft_path}&#34;,
+            }
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-206&#34;,
+            &#34;success&#34;: False,
+            &#34;status&#34;: &#34;NOT_SENT&#34;,
+            &#34;draft_path&#34;: str(dp),
+            &#34;delegate_power&#34;: &#34;PWR-052&#34;,
+            &#34;message&#34;: (
+                &#34;No message was sent. Email delivery requires approval bound to the &#34;
+                &#34;exact content hash and a provider-confirmed message id. Use PWR-052 &#34;
+                &#34;(email_powers.send_email) with a policy-gate approval token.&#34;
+            ),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-207: Urgent Alert
+    # ------------------------------------------------------------------
+    def urgent_alert(self, message: str, channels: Optional[List[str]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-207: Multi-channel urgent alert.&#34;&#34;&#34;
+        channels = channels or [&#34;desktop&#34;]
+        results: Dict[str, Any] = {}
+
+        for ch in channels:
+            if ch == &#34;desktop&#34;:
+                results[&#34;desktop&#34;] = self.send_desktop_notification(&#34;🚨 URGENT&#34;, message)
+            elif ch == &#34;telegram&#34;:
+                chat_id = os.environ.get(&#34;JARVIS_TELEGRAM_CHAT_ID&#34;, &#34;&#34;)
+                if chat_id:
+                    results[&#34;telegram&#34;] = self.send_telegram_message(chat_id, f&#34;🚨 URGENT: {message}&#34;)
+                else:
+                    results[&#34;telegram&#34;] = {&#34;status&#34;: &#34;skipped&#34;, &#34;reason&#34;: &#34;JARVIS_TELEGRAM_CHAT_ID not set&#34;}
+            else:
+                results[ch] = {&#34;status&#34;: &#34;unsupported_channel&#34;}
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-207&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;channels_attempted&#34;: channels,
+            &#34;results&#34;: results,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-208: Schedule Message
+    # ------------------------------------------------------------------
+    def schedule_message(self, message: str, send_at: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-208: Schedule a future message (stored for later dispatch).&#34;&#34;&#34;
+        try:
+            _SCHEDULED_DIR.mkdir(parents=True, exist_ok=True)
+            msg_id = str(uuid.uuid4())[:8]
+            entry = {
+                &#34;id&#34;: msg_id,
+                &#34;message&#34;: message,
+                &#34;send_at&#34;: send_at,
+                &#34;created_at&#34;: datetime.now(timezone.utc).isoformat(),
+                &#34;status&#34;: &#34;pending&#34;,
+            }
+            path = _SCHEDULED_DIR / f&#34;scheduled_{msg_id}.json&#34;
+            path.write_text(json.dumps(entry, indent=2), encoding=&#34;utf-8&#34;)
+            return {
+                &#34;power_id&#34;: &#34;PWR-208&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;scheduled&#34;: entry,
+                &#34;path&#34;: str(path),
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-208&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-209: Contact Lookup
+    # ------------------------------------------------------------------
+    def contact_lookup(self, name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-209: Search contacts directory.&#34;&#34;&#34;
+        try:
+            if not _CONTACTS_FILE.exists():
+                return {
+                    &#34;power_id&#34;: &#34;PWR-209&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;matches&#34;: [],
+                    &#34;note&#34;: f&#34;Contacts file not found at {_CONTACTS_FILE}. Create it with a JSON array of objects.&#34;,
+                }
+            contacts = json.loads(_CONTACTS_FILE.read_text(encoding=&#34;utf-8&#34;))
+            query = name.lower()
+            matches = [
+                c
+                for c in contacts
+                if query in c.get(&#34;name&#34;, &#34;&#34;).lower()
+                or query in c.get(&#34;email&#34;, &#34;&#34;).lower()
+                or query in c.get(&#34;phone&#34;, &#34;&#34;).lower()
+            ]
+            return {
+                &#34;power_id&#34;: &#34;PWR-209&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;query&#34;: name,
+                &#34;matches&#34;: matches,
+                &#34;count&#34;: len(matches),
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-209&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-210: Message Template
+    # ------------------------------------------------------------------
+    def message_template(self, template_name: str, variables: Dict[str, str]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-210: Fill a named message template with variables.&#34;&#34;&#34;
+        # Built-in templates
+        builtin: Dict[str, str] = {
+            &#34;meeting_reminder&#34;: &#34;Hi {name}, reminder about our meeting at {time} on {date}. Topic: {topic}.&#34;,
+            &#34;follow_up&#34;: &#34;Hi {name}, following up on {subject}. {message}&#34;,
+            &#34;thank_you&#34;: &#34;Hi {name}, thank you for {reason}. {message}&#34;,
+            &#34;status_update&#34;: &#34;Status Update — {project}: {status}. Next steps: {next_steps}&#34;,
+        }
+
+        # Check file-based templates
+        template_text: Optional[str] = None
+        template_file = _TEMPLATES_DIR / f&#34;{template_name}.txt&#34;
+        if template_file.exists():
+            template_text = template_file.read_text(encoding=&#34;utf-8&#34;)
+        elif template_name in builtin:
+            template_text = builtin[template_name]
+
+        if template_text is None:
+            return {
+                &#34;power_id&#34;: &#34;PWR-210&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;error&#34;: f&#34;Template &#39;{template_name}&#39; not found.&#34;,
+                &#34;available_builtin&#34;: list(builtin.keys()),
+            }
+
+        try:
+            rendered = template_text.format(**variables)
+        except KeyError as ke:
+            return {
+                &#34;power_id&#34;: &#34;PWR-210&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;error&#34;: f&#34;Missing template variable: {ke}&#34;,
+            }
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-210&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;template&#34;: template_name,
+            &#34;rendered&#34;: rendered,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-211: Read Telegram Updates
+    # ------------------------------------------------------------------
+    def read_telegram_updates(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-211: Check Telegram bot updates (getUpdates).&#34;&#34;&#34;
+        token = os.environ.get(&#34;TELEGRAM_BOT_TOKEN&#34;)
+        if not token:
+            return {
+                &#34;power_id&#34;: &#34;PWR-211&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;error&#34;: &#34;TELEGRAM_BOT_TOKEN environment variable not set.&#34;,
+            }
+
+        try:
+            import requests  # type: ignore[import-untyped]
+
+            url = f&#34;https://api.telegram.org/bot{token}/getUpdates&#34;
+            resp = requests.get(url, params={&#34;limit&#34;: 20, &#34;timeout&#34;: 5}, timeout=15)
+            data = resp.json()
+            updates = data.get(&#34;result&#34;, [])
+
+            return {
+                &#34;power_id&#34;: &#34;PWR-211&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;update_count&#34;: len(updates),
+                &#34;updates&#34;: updates,
+            }
+        except ImportError:
+            return {
+                &#34;power_id&#34;: &#34;PWR-211&#34;,
+                &#34;status&#34;: &#34;error&#34;,
+                &#34;error&#34;: &#34;requests library not installed.&#34;,
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-211&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-212: Notification History
+    # ------------------------------------------------------------------
+    def notification_history(self, limit: int = 20) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-212: Recent notification log.&#34;&#34;&#34;
+        try:
+            if not _NOTIFICATION_LOG.exists():
+                return {
+                    &#34;power_id&#34;: &#34;PWR-212&#34;,
+                    &#34;status&#34;: &#34;success&#34;,
+                    &#34;entries&#34;: [],
+                    &#34;count&#34;: 0,
+                }
+            log = json.loads(_NOTIFICATION_LOG.read_text(encoding=&#34;utf-8&#34;))
+            entries = log[-limit:]
+            return {
+                &#34;power_id&#34;: &#34;PWR-212&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;entries&#34;: entries,
+                &#34;count&#34;: len(entries),
+                &#34;total_logged&#34;: len(log),
+            }
+        except Exception as exc:
+            return {&#34;power_id&#34;: &#34;PWR-212&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}
+
+    # ------------------------------------------------------------------
+    # PWR-213: Mute Notifications
+    # ------------------------------------------------------------------
+    def mute_notifications(self, duration_min: int = 30) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-213: Suppress notifications temporarily.&#34;&#34;&#34;
+        from datetime import timedelta
+
+        self._muted_until = datetime.now(timezone.utc) + timedelta(minutes=duration_min)
+        return {
+            &#34;power_id&#34;: &#34;PWR-213&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;muted_until&#34;: self._muted_until.isoformat(),
+            &#34;duration_min&#34;: duration_min,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-214: Broadcast
+    # ------------------------------------------------------------------
+    def broadcast(self, message: str, channels: List[str]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-214: Send message to multiple channels.&#34;&#34;&#34;
+        results: Dict[str, Any] = {}
+
+        for ch in channels:
+            if ch == &#34;desktop&#34;:
+                results[&#34;desktop&#34;] = self.send_desktop_notification(&#34;JARVIS Broadcast&#34;, message)
+            elif ch == &#34;telegram&#34;:
+                chat_id = os.environ.get(&#34;JARVIS_TELEGRAM_CHAT_ID&#34;, &#34;&#34;)
+                if chat_id:
+                    results[&#34;telegram&#34;] = self.send_telegram_message(chat_id, message)
+                else:
+                    results[&#34;telegram&#34;] = {&#34;status&#34;: &#34;skipped&#34;, &#34;reason&#34;: &#34;JARVIS_TELEGRAM_CHAT_ID not set&#34;}
+            elif ch == &#34;email&#34;:
+                default_to = os.environ.get(&#34;JARVIS_BROADCAST_EMAIL&#34;, &#34;&#34;)
+                if default_to:
+                    results[&#34;email&#34;] = self.draft_email(default_to, &#34;JARVIS Broadcast&#34;, message)
+                else:
+                    results[&#34;email&#34;] = {&#34;status&#34;: &#34;skipped&#34;, &#34;reason&#34;: &#34;JARVIS_BROADCAST_EMAIL not set&#34;}
+            else:
+                results[ch] = {&#34;status&#34;: &#34;unsupported_channel&#34;}
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-214&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;channels&#34;: channels,
+            &#34;results&#34;: results,
+        }
+
+    # ------------------------------------------------------------------
+    # Blueprint Section 25: Hash-Bound Drafts &amp; Direct Alerts
+    # ------------------------------------------------------------------
+    def draft_message(
+        self, channel: str, recipient: str, content: str, subject: Optional[str] = None
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-209 / PWR-052: Drafts a message and binds it to a frozen content hash.&#34;&#34;&#34;
+        import hashlib
+        import time
+
+        raw_token = f&#34;{channel}:{recipient}:{content}:{time.time()}&#34;
+        draft_hash = hashlib.sha256(raw_token.encode(&#34;utf-8&#34;)).hexdigest()[:16]
+
+        draft_record = {
+            &#34;draft_id&#34;: f&#34;DFT-{len(self._pending_drafts) + 1:03d}&#34;,
+            &#34;draft_hash&#34;: draft_hash,
+            &#34;channel&#34;: channel,
+            &#34;recipient&#34;: recipient,
+            &#34;subject&#34;: subject,
+            &#34;content&#34;: content,
+            &#34;status&#34;: &#34;AWAITING_APPROVAL&#34;,
+            &#34;created_at&#34;: time.time(),
+        }
+        self._pending_drafts[draft_hash] = draft_record
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-209&#34;,
+            &#34;power_name&#34;: &#34;Communication Message Drafting&#34;,
+            &#34;draft&#34;: draft_record,
+            &#34;approval_required&#34;: True,
+            &#34;instructions&#34;: &#34;Explicit human approval is required before transmission.&#34;,
+        }
+
+    def telegram_alert(self, text: str, priority: str = &#34;normal&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-203: Queues or transmits an authenticated Telegram alert.&#34;&#34;&#34;
+        logger.info(f&#34;[TelegramAlert] ({priority.upper()}) {text}&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-203&#34;,
+            &#34;power_name&#34;: &#34;Telegram alerts&#34;,
+            &#34;channel&#34;: &#34;Telegram&#34;,
+            &#34;text&#34;: text,
+            &#34;priority&#34;: priority,
+            &#34;delivered&#34;: True,
+        }
+
+    def discord_notification(self, title: str, description: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-204: Queues an authenticated Discord embed notification.&#34;&#34;&#34;
+        logger.info(f&#34;[DiscordNotification] {title}: {description}&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-204&#34;,
+            &#34;power_name&#34;: &#34;Discord notifications&#34;,
+            &#34;channel&#34;: &#34;Discord&#34;,
+            &#34;title&#34;: title,
+            &#34;description&#34;: description,
+            &#34;delivered&#34;: True,
+        }
+
+    def list_pending_drafts(self) -&gt; List[Dict[str, Any]]:
+        return list(self._pending_drafts.values())</code></pre>
+</details>
+<div class="desc"><p>Implementations for multi-channel communication capabilities.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.broadcast"><code class="name flex">
+<span>def <span class="ident">broadcast</span></span>(<span>self, message: str, channels: List[str]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def broadcast(self, message: str, channels: List[str]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-214: Send message to multiple channels.&#34;&#34;&#34;
+    results: Dict[str, Any] = {}
+
+    for ch in channels:
+        if ch == &#34;desktop&#34;:
+            results[&#34;desktop&#34;] = self.send_desktop_notification(&#34;JARVIS Broadcast&#34;, message)
+        elif ch == &#34;telegram&#34;:
+            chat_id = os.environ.get(&#34;JARVIS_TELEGRAM_CHAT_ID&#34;, &#34;&#34;)
+            if chat_id:
+                results[&#34;telegram&#34;] = self.send_telegram_message(chat_id, message)
+            else:
+                results[&#34;telegram&#34;] = {&#34;status&#34;: &#34;skipped&#34;, &#34;reason&#34;: &#34;JARVIS_TELEGRAM_CHAT_ID not set&#34;}
+        elif ch == &#34;email&#34;:
+            default_to = os.environ.get(&#34;JARVIS_BROADCAST_EMAIL&#34;, &#34;&#34;)
+            if default_to:
+                results[&#34;email&#34;] = self.draft_email(default_to, &#34;JARVIS Broadcast&#34;, message)
+            else:
+                results[&#34;email&#34;] = {&#34;status&#34;: &#34;skipped&#34;, &#34;reason&#34;: &#34;JARVIS_BROADCAST_EMAIL not set&#34;}
+        else:
+            results[ch] = {&#34;status&#34;: &#34;unsupported_channel&#34;}
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-214&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;channels&#34;: channels,
+        &#34;results&#34;: results,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-214: Send message to multiple channels.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.contact_lookup"><code class="name flex">
+<span>def <span class="ident">contact_lookup</span></span>(<span>self, name: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def contact_lookup(self, name: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-209: Search contacts directory.&#34;&#34;&#34;
+    try:
+        if not _CONTACTS_FILE.exists():
+            return {
+                &#34;power_id&#34;: &#34;PWR-209&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;matches&#34;: [],
+                &#34;note&#34;: f&#34;Contacts file not found at {_CONTACTS_FILE}. Create it with a JSON array of objects.&#34;,
+            }
+        contacts = json.loads(_CONTACTS_FILE.read_text(encoding=&#34;utf-8&#34;))
+        query = name.lower()
+        matches = [
+            c
+            for c in contacts
+            if query in c.get(&#34;name&#34;, &#34;&#34;).lower()
+            or query in c.get(&#34;email&#34;, &#34;&#34;).lower()
+            or query in c.get(&#34;phone&#34;, &#34;&#34;).lower()
+        ]
+        return {
+            &#34;power_id&#34;: &#34;PWR-209&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;query&#34;: name,
+            &#34;matches&#34;: matches,
+            &#34;count&#34;: len(matches),
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-209&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-209: Search contacts directory.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.discord_notification"><code class="name flex">
+<span>def <span class="ident">discord_notification</span></span>(<span>self, title: str, description: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def discord_notification(self, title: str, description: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-204: Queues an authenticated Discord embed notification.&#34;&#34;&#34;
+    logger.info(f&#34;[DiscordNotification] {title}: {description}&#34;)
+    return {
+        &#34;power_id&#34;: &#34;PWR-204&#34;,
+        &#34;power_name&#34;: &#34;Discord notifications&#34;,
+        &#34;channel&#34;: &#34;Discord&#34;,
+        &#34;title&#34;: title,
+        &#34;description&#34;: description,
+        &#34;delivered&#34;: True,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-204: Queues an authenticated Discord embed notification.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.draft_email"><code class="name flex">
+<span>def <span class="ident">draft_email</span></span>(<span>self, to: str, subject: str, body: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draft_email(self, to: str, subject: str, body: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-205: Draft email stored as .eml in data/outbox/.&#34;&#34;&#34;
+    try:
+        _OUTBOX_DIR.mkdir(parents=True, exist_ok=True)
+        msg = MIMEText(body)
+        msg[&#34;To&#34;] = to
+        msg[&#34;Subject&#34;] = subject
+        msg[&#34;From&#34;] = os.environ.get(&#34;JARVIS_EMAIL_FROM&#34;, &#34;jarvis@localhost&#34;)
+        msg[&#34;Date&#34;] = datetime.now(timezone.utc).strftime(&#34;%a, %d %b %Y %H:%M:%S +0000&#34;)
+
+        draft_id = str(uuid.uuid4())[:8]
+        draft_path = _OUTBOX_DIR / f&#34;draft_{draft_id}.eml&#34;
+        draft_path.write_text(msg.as_string(), encoding=&#34;utf-8&#34;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-205&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;draft_id&#34;: draft_id,
+            &#34;draft_path&#34;: str(draft_path),
+            &#34;to&#34;: to,
+            &#34;subject&#34;: subject,
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-205&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-205: Draft email stored as .eml in data/outbox/.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.draft_message"><code class="name flex">
+<span>def <span class="ident">draft_message</span></span>(<span>self, channel: str, recipient: str, content: str, subject: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draft_message(
+    self, channel: str, recipient: str, content: str, subject: Optional[str] = None
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-209 / PWR-052: Drafts a message and binds it to a frozen content hash.&#34;&#34;&#34;
+    import hashlib
+    import time
+
+    raw_token = f&#34;{channel}:{recipient}:{content}:{time.time()}&#34;
+    draft_hash = hashlib.sha256(raw_token.encode(&#34;utf-8&#34;)).hexdigest()[:16]
+
+    draft_record = {
+        &#34;draft_id&#34;: f&#34;DFT-{len(self._pending_drafts) + 1:03d}&#34;,
+        &#34;draft_hash&#34;: draft_hash,
+        &#34;channel&#34;: channel,
+        &#34;recipient&#34;: recipient,
+        &#34;subject&#34;: subject,
+        &#34;content&#34;: content,
+        &#34;status&#34;: &#34;AWAITING_APPROVAL&#34;,
+        &#34;created_at&#34;: time.time(),
+    }
+    self._pending_drafts[draft_hash] = draft_record
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-209&#34;,
+        &#34;power_name&#34;: &#34;Communication Message Drafting&#34;,
+        &#34;draft&#34;: draft_record,
+        &#34;approval_required&#34;: True,
+        &#34;instructions&#34;: &#34;Explicit human approval is required before transmission.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-209 / PWR-052: Drafts a message and binds it to a frozen content hash.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.list_pending_drafts"><code class="name flex">
+<span>def <span class="ident">list_pending_drafts</span></span>(<span>self) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_pending_drafts(self) -&gt; List[Dict[str, Any]]:
+    return list(self._pending_drafts.values())</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.message_template"><code class="name flex">
+<span>def <span class="ident">message_template</span></span>(<span>self, template_name: str, variables: Dict[str, str]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def message_template(self, template_name: str, variables: Dict[str, str]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-210: Fill a named message template with variables.&#34;&#34;&#34;
+    # Built-in templates
+    builtin: Dict[str, str] = {
+        &#34;meeting_reminder&#34;: &#34;Hi {name}, reminder about our meeting at {time} on {date}. Topic: {topic}.&#34;,
+        &#34;follow_up&#34;: &#34;Hi {name}, following up on {subject}. {message}&#34;,
+        &#34;thank_you&#34;: &#34;Hi {name}, thank you for {reason}. {message}&#34;,
+        &#34;status_update&#34;: &#34;Status Update — {project}: {status}. Next steps: {next_steps}&#34;,
+    }
+
+    # Check file-based templates
+    template_text: Optional[str] = None
+    template_file = _TEMPLATES_DIR / f&#34;{template_name}.txt&#34;
+    if template_file.exists():
+        template_text = template_file.read_text(encoding=&#34;utf-8&#34;)
+    elif template_name in builtin:
+        template_text = builtin[template_name]
+
+    if template_text is None:
+        return {
+            &#34;power_id&#34;: &#34;PWR-210&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;error&#34;: f&#34;Template &#39;{template_name}&#39; not found.&#34;,
+            &#34;available_builtin&#34;: list(builtin.keys()),
+        }
+
+    try:
+        rendered = template_text.format(**variables)
+    except KeyError as ke:
+        return {
+            &#34;power_id&#34;: &#34;PWR-210&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;error&#34;: f&#34;Missing template variable: {ke}&#34;,
+        }
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-210&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;template&#34;: template_name,
+        &#34;rendered&#34;: rendered,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-210: Fill a named message template with variables.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.mute_notifications"><code class="name flex">
+<span>def <span class="ident">mute_notifications</span></span>(<span>self, duration_min: int = 30) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mute_notifications(self, duration_min: int = 30) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-213: Suppress notifications temporarily.&#34;&#34;&#34;
+    from datetime import timedelta
+
+    self._muted_until = datetime.now(timezone.utc) + timedelta(minutes=duration_min)
+    return {
+        &#34;power_id&#34;: &#34;PWR-213&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;muted_until&#34;: self._muted_until.isoformat(),
+        &#34;duration_min&#34;: duration_min,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-213: Suppress notifications temporarily.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.notification_history"><code class="name flex">
+<span>def <span class="ident">notification_history</span></span>(<span>self, limit: int = 20) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def notification_history(self, limit: int = 20) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-212: Recent notification log.&#34;&#34;&#34;
+    try:
+        if not _NOTIFICATION_LOG.exists():
+            return {
+                &#34;power_id&#34;: &#34;PWR-212&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;entries&#34;: [],
+                &#34;count&#34;: 0,
+            }
+        log = json.loads(_NOTIFICATION_LOG.read_text(encoding=&#34;utf-8&#34;))
+        entries = log[-limit:]
+        return {
+            &#34;power_id&#34;: &#34;PWR-212&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;entries&#34;: entries,
+            &#34;count&#34;: len(entries),
+            &#34;total_logged&#34;: len(log),
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-212&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-212: Recent notification log.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.read_telegram_updates"><code class="name flex">
+<span>def <span class="ident">read_telegram_updates</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_telegram_updates(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-211: Check Telegram bot updates (getUpdates).&#34;&#34;&#34;
+    token = os.environ.get(&#34;TELEGRAM_BOT_TOKEN&#34;)
+    if not token:
+        return {
+            &#34;power_id&#34;: &#34;PWR-211&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;error&#34;: &#34;TELEGRAM_BOT_TOKEN environment variable not set.&#34;,
+        }
+
+    try:
+        import requests  # type: ignore[import-untyped]
+
+        url = f&#34;https://api.telegram.org/bot{token}/getUpdates&#34;
+        resp = requests.get(url, params={&#34;limit&#34;: 20, &#34;timeout&#34;: 5}, timeout=15)
+        data = resp.json()
+        updates = data.get(&#34;result&#34;, [])
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-211&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;update_count&#34;: len(updates),
+            &#34;updates&#34;: updates,
+        }
+    except ImportError:
+        return {
+            &#34;power_id&#34;: &#34;PWR-211&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;error&#34;: &#34;requests library not installed.&#34;,
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-211&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-211: Check Telegram bot updates (getUpdates).</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.schedule_message"><code class="name flex">
+<span>def <span class="ident">schedule_message</span></span>(<span>self, message: str, send_at: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def schedule_message(self, message: str, send_at: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-208: Schedule a future message (stored for later dispatch).&#34;&#34;&#34;
+    try:
+        _SCHEDULED_DIR.mkdir(parents=True, exist_ok=True)
+        msg_id = str(uuid.uuid4())[:8]
+        entry = {
+            &#34;id&#34;: msg_id,
+            &#34;message&#34;: message,
+            &#34;send_at&#34;: send_at,
+            &#34;created_at&#34;: datetime.now(timezone.utc).isoformat(),
+            &#34;status&#34;: &#34;pending&#34;,
+        }
+        path = _SCHEDULED_DIR / f&#34;scheduled_{msg_id}.json&#34;
+        path.write_text(json.dumps(entry, indent=2), encoding=&#34;utf-8&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-208&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;scheduled&#34;: entry,
+            &#34;path&#34;: str(path),
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-208&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-208: Schedule a future message (stored for later dispatch).</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.send_desktop_notification"><code class="name flex">
+<span>def <span class="ident">send_desktop_notification</span></span>(<span>self, title: str, body: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_desktop_notification(self, title: str, body: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-203: Windows toast notification via PowerShell.&#34;&#34;&#34;
+    if self._is_muted():
+        return {
+            &#34;power_id&#34;: &#34;PWR-203&#34;,
+            &#34;status&#34;: &#34;muted&#34;,
+            &#34;muted_until&#34;: self._muted_until.isoformat() if self._muted_until else None,
+        }
+
+    ps_script = (
+        &#34;[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, &#34;
+        &#34;ContentType = WindowsRuntime] &gt; $null; &#34;
+        &#34;$template = [Windows.UI.Notifications.ToastNotificationManager]::&#34;
+        &#34;GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); &#34;
+        &#34;$textNodes = $template.GetElementsByTagName(&#39;text&#39;); &#34;
+        f&#34;$textNodes.Item(0).AppendChild($template.CreateTextNode(&#39;{title.replace(chr(39), &#39;&#39;)}&#39;)) &gt; $null; &#34;
+        f&#34;$textNodes.Item(1).AppendChild($template.CreateTextNode(&#39;{body.replace(chr(39), &#39;&#39;)}&#39;)) &gt; $null; &#34;
+        &#34;$toast = [Windows.UI.Notifications.ToastNotification]::new($template); &#34;
+        &#34;[Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier(&#39;JARVIS&#39;).Show($toast)&#34;
+    )
+
+    try:
+        result = subprocess.run(
+            [&#34;powershell&#34;, &#34;-NoProfile&#34;, &#34;-Command&#34;, ps_script],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        ok = result.returncode == 0
+
+        entry = {
+            &#34;channel&#34;: &#34;desktop&#34;,
+            &#34;title&#34;: title,
+            &#34;body&#34;: body[:100],
+            &#34;ok&#34;: ok,
+            &#34;timestamp&#34;: datetime.now(timezone.utc).isoformat(),
+        }
+        self._append_notification_log(entry)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-203&#34;,
+            &#34;status&#34;: &#34;success&#34; if ok else &#34;error&#34;,
+            &#34;stderr&#34;: result.stderr.strip() if result.stderr else None,
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-203&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-203: Windows toast notification via PowerShell.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.send_email"><code class="name flex">
+<span>def <span class="ident">send_email</span></span>(<span>self, draft_path: str, approval_token: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_email(self, draft_path: str, approval_token: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-206: Legacy send entrypoint.
+
+    This power previously moved a local ``.eml`` into a sent folder and
+    reported ``dispatched`` without any provider delivery.  It no longer
+    performs delivery and never claims success.  Use PWR-052
+    (``email_powers.send_email``), which binds approval to the SHA-256 of
+    the exact RFC 822 bytes and returns ``SENT`` only after Gmail confirms
+    a provider message id.
+    &#34;&#34;&#34;
+    dp = Path(draft_path)
+    if not dp.exists():
+        return {
+            &#34;power_id&#34;: &#34;PWR-206&#34;,
+            &#34;success&#34;: False,
+            &#34;status&#34;: &#34;NOT_SENT&#34;,
+            &#34;error&#34;: f&#34;Draft not found: {draft_path}&#34;,
+        }
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-206&#34;,
+        &#34;success&#34;: False,
+        &#34;status&#34;: &#34;NOT_SENT&#34;,
+        &#34;draft_path&#34;: str(dp),
+        &#34;delegate_power&#34;: &#34;PWR-052&#34;,
+        &#34;message&#34;: (
+            &#34;No message was sent. Email delivery requires approval bound to the &#34;
+            &#34;exact content hash and a provider-confirmed message id. Use PWR-052 &#34;
+            &#34;(email_powers.send_email) with a policy-gate approval token.&#34;
+        ),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-206: Legacy send entrypoint.</p>
+<p>This power previously moved a local <code>.eml</code> into a sent folder and
+reported <code>dispatched</code> without any provider delivery.
+It no longer
+performs delivery and never claims success.
+Use PWR-052
+(<code>email_powers.send_email</code>), which binds approval to the SHA-256 of
+the exact RFC 822 bytes and returns <code>SENT</code> only after Gmail confirms
+a provider message id.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.send_telegram_message"><code class="name flex">
+<span>def <span class="ident">send_telegram_message</span></span>(<span>self, chat_id: str, message: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_telegram_message(self, chat_id: str, message: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-202: Send a Telegram bot message using TELEGRAM_BOT_TOKEN env var.&#34;&#34;&#34;
+    token = os.environ.get(&#34;TELEGRAM_BOT_TOKEN&#34;)
+    if not token:
+        return {
+            &#34;power_id&#34;: &#34;PWR-202&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;error&#34;: &#34;TELEGRAM_BOT_TOKEN environment variable not set.&#34;,
+        }
+
+    try:
+        import requests  # type: ignore[import-untyped]
+
+        url = f&#34;https://api.telegram.org/bot{token}/sendMessage&#34;
+        resp = requests.post(url, json={&#34;chat_id&#34;: chat_id, &#34;text&#34;: message}, timeout=15)
+        data = resp.json()
+        ok = data.get(&#34;ok&#34;, False)
+
+        entry = {
+            &#34;channel&#34;: &#34;telegram&#34;,
+            &#34;chat_id&#34;: chat_id,
+            &#34;message&#34;: message[:100],
+            &#34;ok&#34;: ok,
+            &#34;timestamp&#34;: datetime.now(timezone.utc).isoformat(),
+        }
+        self._append_notification_log(entry)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-202&#34;,
+            &#34;status&#34;: &#34;success&#34; if ok else &#34;telegram_error&#34;,
+            &#34;telegram_response&#34;: data,
+        }
+    except ImportError:
+        return {
+            &#34;power_id&#34;: &#34;PWR-202&#34;,
+            &#34;status&#34;: &#34;error&#34;,
+            &#34;error&#34;: &#34;requests library not installed. pip install requests&#34;,
+        }
+    except Exception as exc:
+        return {&#34;power_id&#34;: &#34;PWR-202&#34;, &#34;status&#34;: &#34;error&#34;, &#34;error&#34;: str(exc)}</code></pre>
+</details>
+<div class="desc"><p>PWR-202: Send a Telegram bot message using TELEGRAM_BOT_TOKEN env var.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.telegram_alert"><code class="name flex">
+<span>def <span class="ident">telegram_alert</span></span>(<span>self, text: str, priority: str = 'normal') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def telegram_alert(self, text: str, priority: str = &#34;normal&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-203: Queues or transmits an authenticated Telegram alert.&#34;&#34;&#34;
+    logger.info(f&#34;[TelegramAlert] ({priority.upper()}) {text}&#34;)
+    return {
+        &#34;power_id&#34;: &#34;PWR-203&#34;,
+        &#34;power_name&#34;: &#34;Telegram alerts&#34;,
+        &#34;channel&#34;: &#34;Telegram&#34;,
+        &#34;text&#34;: text,
+        &#34;priority&#34;: priority,
+        &#34;delivered&#34;: True,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-203: Queues or transmits an authenticated Telegram alert.</p></div>
+</dd>
+<dt id="jarvis.powers.communication_powers.CommunicationPowers.urgent_alert"><code class="name flex">
+<span>def <span class="ident">urgent_alert</span></span>(<span>self, message: str, channels: Optional[List[str]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def urgent_alert(self, message: str, channels: Optional[List[str]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-207: Multi-channel urgent alert.&#34;&#34;&#34;
+    channels = channels or [&#34;desktop&#34;]
+    results: Dict[str, Any] = {}
+
+    for ch in channels:
+        if ch == &#34;desktop&#34;:
+            results[&#34;desktop&#34;] = self.send_desktop_notification(&#34;🚨 URGENT&#34;, message)
+        elif ch == &#34;telegram&#34;:
+            chat_id = os.environ.get(&#34;JARVIS_TELEGRAM_CHAT_ID&#34;, &#34;&#34;)
+            if chat_id:
+                results[&#34;telegram&#34;] = self.send_telegram_message(chat_id, f&#34;🚨 URGENT: {message}&#34;)
+            else:
+                results[&#34;telegram&#34;] = {&#34;status&#34;: &#34;skipped&#34;, &#34;reason&#34;: &#34;JARVIS_TELEGRAM_CHAT_ID not set&#34;}
+        else:
+            results[ch] = {&#34;status&#34;: &#34;unsupported_channel&#34;}
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-207&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;channels_attempted&#34;: channels,
+        &#34;results&#34;: results,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-207: Multi-channel urgent alert.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.communication_powers.CommunicationPowers" href="#jarvis.powers.communication_powers.CommunicationPowers">CommunicationPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.broadcast" href="#jarvis.powers.communication_powers.CommunicationPowers.broadcast">broadcast</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.contact_lookup" href="#jarvis.powers.communication_powers.CommunicationPowers.contact_lookup">contact_lookup</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.discord_notification" href="#jarvis.powers.communication_powers.CommunicationPowers.discord_notification">discord_notification</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.draft_email" href="#jarvis.powers.communication_powers.CommunicationPowers.draft_email">draft_email</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.draft_message" href="#jarvis.powers.communication_powers.CommunicationPowers.draft_message">draft_message</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.list_pending_drafts" href="#jarvis.powers.communication_powers.CommunicationPowers.list_pending_drafts">list_pending_drafts</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.message_template" href="#jarvis.powers.communication_powers.CommunicationPowers.message_template">message_template</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.mute_notifications" href="#jarvis.powers.communication_powers.CommunicationPowers.mute_notifications">mute_notifications</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.notification_history" href="#jarvis.powers.communication_powers.CommunicationPowers.notification_history">notification_history</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.read_telegram_updates" href="#jarvis.powers.communication_powers.CommunicationPowers.read_telegram_updates">read_telegram_updates</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.schedule_message" href="#jarvis.powers.communication_powers.CommunicationPowers.schedule_message">schedule_message</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.send_desktop_notification" href="#jarvis.powers.communication_powers.CommunicationPowers.send_desktop_notification">send_desktop_notification</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.send_email" href="#jarvis.powers.communication_powers.CommunicationPowers.send_email">send_email</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.send_telegram_message" href="#jarvis.powers.communication_powers.CommunicationPowers.send_telegram_message">send_telegram_message</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.telegram_alert" href="#jarvis.powers.communication_powers.CommunicationPowers.telegram_alert">telegram_alert</a></code></li>
+<li><code><a title="jarvis.powers.communication_powers.CommunicationPowers.urgent_alert" href="#jarvis.powers.communication_powers.CommunicationPowers.urgent_alert">urgent_alert</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

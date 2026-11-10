@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.task_graph API documentation</title>
+<meta name="description" content="JARVIS Task Graph Engine (DAG Schema V1 &amp; Graph Topology)
+Implements the Directed Acyclic Graph (DAG) foundation for goal-to-task decomposition,
+…">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.task_graph</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Task Graph Engine (DAG Schema V1 &amp; Graph Topology)
+Implements the Directed Acyclic Graph (DAG) foundation for goal-to-task decomposition,
+dependency resolution, cycle detection, parallel execution layering, and topological sorting.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.task_graph.Goal"><code class="flex name class">
+<span>class <span class="ident">Goal</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Goal(BaseModel):
+    goal_id: str
+    title: str
+    description: str
+    created_by: str = &#34;ganesh&#34;
+    priority: Priority = Priority.HIGH
+    tasks: List[str] = Field(default_factory=list)
+    status: TaskStatus = TaskStatus.PENDING
+    metadata: Dict[str, Any] = Field(default_factory=dict)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.task_graph.Goal.created_by"><code class="name">var <span class="ident">created_by</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Goal.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Goal.goal_id"><code class="name">var <span class="ident">goal_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Goal.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Goal.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Goal.priority"><code class="name">var <span class="ident">priority</span> : <a title="jarvis.core.task_graph.Priority" href="#jarvis.core.task_graph.Priority">Priority</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Goal.status"><code class="name">var <span class="ident">status</span> : <a title="jarvis.core.task_graph.TaskStatus" href="#jarvis.core.task_graph.TaskStatus">TaskStatus</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Goal.tasks"><code class="name">var <span class="ident">tasks</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Goal.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.task_graph.Priority"><code class="flex name class">
+<span>class <span class="ident">Priority</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Priority(str, Enum):
+    CRITICAL = &#34;critical&#34;
+    HIGH = &#34;high&#34;
+    MEDIUM = &#34;medium&#34;
+    LOW = &#34;low&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.task_graph.Priority.CRITICAL"><code class="name">var <span class="ident">CRITICAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Priority.HIGH"><code class="name">var <span class="ident">HIGH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Priority.LOW"><code class="name">var <span class="ident">LOW</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.Priority.MEDIUM"><code class="name">var <span class="ident">MEDIUM</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph"><code class="flex name class">
+<span>class <span class="ident">TaskGraph</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskGraph(BaseModel):
+    goal_id: str
+    nodes: Dict[str, TaskNode] = Field(default_factory=dict)
+    edges: Dict[str, List[str]] = Field(default_factory=dict)  # source_task -&gt; [target_tasks]
+
+    def add_node(self, node: TaskNode) -&gt; None:
+        &#34;&#34;&#34;Registers a node into the graph.&#34;&#34;&#34;
+        self.nodes[node.task_id] = node
+        if node.task_id not in self.edges:
+            self.edges[node.task_id] = []
+        # Ensure dependencies point edges to this node
+        for dep in node.dependencies:
+            if dep not in self.edges:
+                self.edges[dep] = []
+            if node.task_id not in self.edges[dep]:
+                self.edges[dep].append(node.task_id)
+
+    def add_edge(self, source_id: str, target_id: str) -&gt; None:
+        &#34;&#34;&#34;Adds a directed edge from source to target (target depends on source).&#34;&#34;&#34;
+        if source_id not in self.edges:
+            self.edges[source_id] = []
+        if target_id not in self.edges[source_id]:
+            self.edges[source_id].append(target_id)
+        if target_id in self.nodes:
+            if source_id not in self.nodes[target_id].dependencies:
+                self.nodes[target_id].dependencies.append(source_id)
+
+    def is_cyclic(self) -&gt; bool:
+        &#34;&#34;&#34;Kahn&#39;s Algorithm for cycle detection. Returns True if DAG has a cycle.&#34;&#34;&#34;
+        in_degree = {task_id: 0 for task_id in self.nodes}
+        for u in self.nodes:
+            for v in self.edges.get(u, []):
+                if v in in_degree:
+                    in_degree[v] += 1
+
+        queue = deque([u for u, deg in in_degree.items() if deg == 0])
+        visited_count = 0
+
+        while queue:
+            u = queue.popleft()
+            visited_count += 1
+            for v in self.edges.get(u, []):
+                if v in in_degree:
+                    in_degree[v] -= 1
+                    if in_degree[v] == 0:
+                        queue.append(v)
+
+        return visited_count != len(self.nodes)
+
+    def has_cycles(self) -&gt; bool:
+        &#34;&#34;&#34;Alias for is_cyclic.&#34;&#34;&#34;
+        return self.is_cyclic()
+
+    def topological_sort(self) -&gt; List[str]:
+        &#34;&#34;&#34;Returns valid topological execution sequence of task IDs.&#34;&#34;&#34;
+        if self.is_cyclic():
+            raise ValueError(f&#34;Graph contains circular dependencies: TaskGraph &#39;{self.goal_id}&#39;&#34;)
+
+        in_degree = {task_id: 0 for task_id in self.nodes}
+        for u in self.nodes:
+            for v in self.edges.get(u, []):
+                if v in in_degree:
+                    in_degree[v] += 1
+
+        queue = deque([u for u, deg in in_degree.items() if deg == 0])
+        ordered: List[str] = []
+
+        while queue:
+            u = queue.popleft()
+            ordered.append(u)
+            for v in self.edges.get(u, []):
+                if v in in_degree:
+                    in_degree[v] -= 1
+                    if in_degree[v] == 0:
+                        queue.append(v)
+
+        return ordered
+
+    def get_parallel_layers(self) -&gt; List[List[str]]:
+        &#34;&#34;&#34;
+        Groups tasks into parallel execution layers / waves.
+        Tasks within the same wave have no dependencies on each other and can execute concurrently.
+        &#34;&#34;&#34;
+        if self.is_cyclic():
+            raise ValueError(f&#34;TaskGraph for goal &#39;{self.goal_id}&#39; contains a circular dependency cycle!&#34;)
+
+        in_degree = {task_id: 0 for task_id in self.nodes}
+        for u in self.nodes:
+            for v in self.edges.get(u, []):
+                if v in in_degree:
+                    in_degree[v] += 1
+
+        current_layer = [u for u, deg in in_degree.items() if deg == 0]
+        layers: List[List[str]] = []
+
+        while current_layer:
+            layers.append(sorted(current_layer))
+            next_layer = []
+            for u in current_layer:
+                for v in self.edges.get(u, []):
+                    if v in in_degree:
+                        in_degree[v] -= 1
+                        if in_degree[v] == 0:
+                            next_layer.append(v)
+            current_layer = next_layer
+
+        return layers
+
+    def get_ready_tasks(self) -&gt; List[TaskNode]:
+        &#34;&#34;&#34;
+        Finds all tasks whose dependencies are 100% COMPLETED and whose status
+        is currently PENDING or READY.
+        &#34;&#34;&#34;
+        ready = []
+        for task_id, node in self.nodes.items():
+            if node.status in (TaskStatus.PENDING, TaskStatus.READY):
+                # Verify all dependencies are completed
+                deps_satisfied = True
+                for dep_id in node.dependencies:
+                    dep_node = self.nodes.get(dep_id)
+                    if not dep_node or dep_node.status != TaskStatus.COMPLETED:
+                        deps_satisfied = False
+                        break
+                if deps_satisfied:
+                    node.mark_ready()
+                    ready.append(node)
+                else:
+                    node.status = TaskStatus.BLOCKED
+            elif node.status == TaskStatus.BLOCKED:
+                # Re-check if blockers resolved
+                deps_satisfied = all(
+                    self.nodes.get(d) and self.nodes[d].status == TaskStatus.COMPLETED for d in node.dependencies
+                )
+                if deps_satisfied:
+                    node.mark_ready()
+                    ready.append(node)
+        return ready
+
+    def is_completed(self) -&gt; bool:
+        &#34;&#34;&#34;Returns True if every task node in the graph is COMPLETED.&#34;&#34;&#34;
+        if not self.nodes:
+            return False
+        return all(node.status == TaskStatus.COMPLETED for node in self.nodes.values())
+
+    def has_failed(self) -&gt; bool:
+        &#34;&#34;&#34;Returns True if any task node has irrevocably FAILED.&#34;&#34;&#34;
+        return any(node.status == TaskStatus.FAILED for node in self.nodes.values())
+
+    def get_progress(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Telemetry progress summary.&#34;&#34;&#34;
+        total = len(self.nodes)
+        if total == 0:
+            return {&#34;total&#34;: 0, &#34;completed&#34;: 0, &#34;percentage&#34;: 0.0}
+        completed = sum(1 for n in self.nodes.values() if n.status == TaskStatus.COMPLETED)
+        return {
+            &#34;total&#34;: total,
+            &#34;completed&#34;: completed,
+            &#34;percentage&#34;: round((completed / total) * 100, 1),
+            &#34;running&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.RUNNING),
+            &#34;failed&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.FAILED),
+            &#34;ready&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.READY),
+            &#34;pending&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.PENDING),
+            &#34;blocked&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.BLOCKED),
+        }</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.task_graph.TaskGraph.edges"><code class="name">var <span class="ident">edges</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.goal_id"><code class="name">var <span class="ident">goal_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.nodes"><code class="name">var <span class="ident">nodes</span> : Dict[str, <a title="jarvis.core.task_graph.TaskNode" href="#jarvis.core.task_graph.TaskNode">TaskNode</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.task_graph.TaskGraph.add_edge"><code class="name flex">
+<span>def <span class="ident">add_edge</span></span>(<span>self, source_id: str, target_id: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_edge(self, source_id: str, target_id: str) -&gt; None:
+    &#34;&#34;&#34;Adds a directed edge from source to target (target depends on source).&#34;&#34;&#34;
+    if source_id not in self.edges:
+        self.edges[source_id] = []
+    if target_id not in self.edges[source_id]:
+        self.edges[source_id].append(target_id)
+    if target_id in self.nodes:
+        if source_id not in self.nodes[target_id].dependencies:
+            self.nodes[target_id].dependencies.append(source_id)</code></pre>
+</details>
+<div class="desc"><p>Adds a directed edge from source to target (target depends on source).</p></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.add_node"><code class="name flex">
+<span>def <span class="ident">add_node</span></span>(<span>self,<br>node: <a title="jarvis.core.task_graph.TaskNode" href="#jarvis.core.task_graph.TaskNode">TaskNode</a>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_node(self, node: TaskNode) -&gt; None:
+    &#34;&#34;&#34;Registers a node into the graph.&#34;&#34;&#34;
+    self.nodes[node.task_id] = node
+    if node.task_id not in self.edges:
+        self.edges[node.task_id] = []
+    # Ensure dependencies point edges to this node
+    for dep in node.dependencies:
+        if dep not in self.edges:
+            self.edges[dep] = []
+        if node.task_id not in self.edges[dep]:
+            self.edges[dep].append(node.task_id)</code></pre>
+</details>
+<div class="desc"><p>Registers a node into the graph.</p></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.get_parallel_layers"><code class="name flex">
+<span>def <span class="ident">get_parallel_layers</span></span>(<span>self) ‑> List[List[str]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_parallel_layers(self) -&gt; List[List[str]]:
+    &#34;&#34;&#34;
+    Groups tasks into parallel execution layers / waves.
+    Tasks within the same wave have no dependencies on each other and can execute concurrently.
+    &#34;&#34;&#34;
+    if self.is_cyclic():
+        raise ValueError(f&#34;TaskGraph for goal &#39;{self.goal_id}&#39; contains a circular dependency cycle!&#34;)
+
+    in_degree = {task_id: 0 for task_id in self.nodes}
+    for u in self.nodes:
+        for v in self.edges.get(u, []):
+            if v in in_degree:
+                in_degree[v] += 1
+
+    current_layer = [u for u, deg in in_degree.items() if deg == 0]
+    layers: List[List[str]] = []
+
+    while current_layer:
+        layers.append(sorted(current_layer))
+        next_layer = []
+        for u in current_layer:
+            for v in self.edges.get(u, []):
+                if v in in_degree:
+                    in_degree[v] -= 1
+                    if in_degree[v] == 0:
+                        next_layer.append(v)
+        current_layer = next_layer
+
+    return layers</code></pre>
+</details>
+<div class="desc"><p>Groups tasks into parallel execution layers / waves.
+Tasks within the same wave have no dependencies on each other and can execute concurrently.</p></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.get_progress"><code class="name flex">
+<span>def <span class="ident">get_progress</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_progress(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Telemetry progress summary.&#34;&#34;&#34;
+    total = len(self.nodes)
+    if total == 0:
+        return {&#34;total&#34;: 0, &#34;completed&#34;: 0, &#34;percentage&#34;: 0.0}
+    completed = sum(1 for n in self.nodes.values() if n.status == TaskStatus.COMPLETED)
+    return {
+        &#34;total&#34;: total,
+        &#34;completed&#34;: completed,
+        &#34;percentage&#34;: round((completed / total) * 100, 1),
+        &#34;running&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.RUNNING),
+        &#34;failed&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.FAILED),
+        &#34;ready&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.READY),
+        &#34;pending&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.PENDING),
+        &#34;blocked&#34;: sum(1 for n in self.nodes.values() if n.status == TaskStatus.BLOCKED),
+    }</code></pre>
+</details>
+<div class="desc"><p>Telemetry progress summary.</p></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.get_ready_tasks"><code class="name flex">
+<span>def <span class="ident">get_ready_tasks</span></span>(<span>self) ‑> List[<a title="jarvis.core.task_graph.TaskNode" href="#jarvis.core.task_graph.TaskNode">TaskNode</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_ready_tasks(self) -&gt; List[TaskNode]:
+    &#34;&#34;&#34;
+    Finds all tasks whose dependencies are 100% COMPLETED and whose status
+    is currently PENDING or READY.
+    &#34;&#34;&#34;
+    ready = []
+    for task_id, node in self.nodes.items():
+        if node.status in (TaskStatus.PENDING, TaskStatus.READY):
+            # Verify all dependencies are completed
+            deps_satisfied = True
+            for dep_id in node.dependencies:
+                dep_node = self.nodes.get(dep_id)
+                if not dep_node or dep_node.status != TaskStatus.COMPLETED:
+                    deps_satisfied = False
+                    break
+            if deps_satisfied:
+                node.mark_ready()
+                ready.append(node)
+            else:
+                node.status = TaskStatus.BLOCKED
+        elif node.status == TaskStatus.BLOCKED:
+            # Re-check if blockers resolved
+            deps_satisfied = all(
+                self.nodes.get(d) and self.nodes[d].status == TaskStatus.COMPLETED for d in node.dependencies
+            )
+            if deps_satisfied:
+                node.mark_ready()
+                ready.append(node)
+    return ready</code></pre>
+</details>
+<div class="desc"><p>Finds all tasks whose dependencies are 100% COMPLETED and whose status
+is currently PENDING or READY.</p></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.has_cycles"><code class="name flex">
+<span>def <span class="ident">has_cycles</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def has_cycles(self) -&gt; bool:
+    &#34;&#34;&#34;Alias for is_cyclic.&#34;&#34;&#34;
+    return self.is_cyclic()</code></pre>
+</details>
+<div class="desc"><p>Alias for is_cyclic.</p></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.has_failed"><code class="name flex">
+<span>def <span class="ident">has_failed</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def has_failed(self) -&gt; bool:
+    &#34;&#34;&#34;Returns True if any task node has irrevocably FAILED.&#34;&#34;&#34;
+    return any(node.status == TaskStatus.FAILED for node in self.nodes.values())</code></pre>
+</details>
+<div class="desc"><p>Returns True if any task node has irrevocably FAILED.</p></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.is_completed"><code class="name flex">
+<span>def <span class="ident">is_completed</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_completed(self) -&gt; bool:
+    &#34;&#34;&#34;Returns True if every task node in the graph is COMPLETED.&#34;&#34;&#34;
+    if not self.nodes:
+        return False
+    return all(node.status == TaskStatus.COMPLETED for node in self.nodes.values())</code></pre>
+</details>
+<div class="desc"><p>Returns True if every task node in the graph is COMPLETED.</p></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.is_cyclic"><code class="name flex">
+<span>def <span class="ident">is_cyclic</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_cyclic(self) -&gt; bool:
+    &#34;&#34;&#34;Kahn&#39;s Algorithm for cycle detection. Returns True if DAG has a cycle.&#34;&#34;&#34;
+    in_degree = {task_id: 0 for task_id in self.nodes}
+    for u in self.nodes:
+        for v in self.edges.get(u, []):
+            if v in in_degree:
+                in_degree[v] += 1
+
+    queue = deque([u for u, deg in in_degree.items() if deg == 0])
+    visited_count = 0
+
+    while queue:
+        u = queue.popleft()
+        visited_count += 1
+        for v in self.edges.get(u, []):
+            if v in in_degree:
+                in_degree[v] -= 1
+                if in_degree[v] == 0:
+                    queue.append(v)
+
+    return visited_count != len(self.nodes)</code></pre>
+</details>
+<div class="desc"><p>Kahn's Algorithm for cycle detection. Returns True if DAG has a cycle.</p></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskGraph.topological_sort"><code class="name flex">
+<span>def <span class="ident">topological_sort</span></span>(<span>self) ‑> List[str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def topological_sort(self) -&gt; List[str]:
+    &#34;&#34;&#34;Returns valid topological execution sequence of task IDs.&#34;&#34;&#34;
+    if self.is_cyclic():
+        raise ValueError(f&#34;Graph contains circular dependencies: TaskGraph &#39;{self.goal_id}&#39;&#34;)
+
+    in_degree = {task_id: 0 for task_id in self.nodes}
+    for u in self.nodes:
+        for v in self.edges.get(u, []):
+            if v in in_degree:
+                in_degree[v] += 1
+
+    queue = deque([u for u, deg in in_degree.items() if deg == 0])
+    ordered: List[str] = []
+
+    while queue:
+        u = queue.popleft()
+        ordered.append(u)
+        for v in self.edges.get(u, []):
+            if v in in_degree:
+                in_degree[v] -= 1
+                if in_degree[v] == 0:
+                    queue.append(v)
+
+    return ordered</code></pre>
+</details>
+<div class="desc"><p>Returns valid topological execution sequence of task IDs.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode"><code class="flex name class">
+<span>class <span class="ident">TaskNode</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskNode(BaseModel):
+    task_id: str
+    name: str
+    description: str
+    department: str
+    assigned_agent: Optional[str] = None
+    priority: Priority = Priority.MEDIUM
+    status: TaskStatus = TaskStatus.PENDING
+    parent_goal: str
+    dependencies: List[str] = Field(default_factory=list)
+    tool_requirements: List[str] = Field(default_factory=list)
+    outputs: Dict[str, Any] = Field(default_factory=dict)
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+    retry_count: int = 0
+    max_retries: int = 3
+
+    def can_retry(self) -&gt; bool:
+        return self.retry_count &lt; self.max_retries
+
+    def mark_ready(self) -&gt; None:
+        if self.status == TaskStatus.PENDING:
+            self.status = TaskStatus.READY
+
+    def mark_running(self, agent_id: Optional[str] = None) -&gt; None:
+        self.status = TaskStatus.RUNNING
+        if agent_id:
+            self.assigned_agent = agent_id
+
+    def mark_completed(self, outputs: Optional[Dict[str, Any]] = None) -&gt; None:
+        self.status = TaskStatus.COMPLETED
+        if outputs:
+            self.outputs.update(outputs)
+
+    def mark_failed(self, error_message: str, force: bool = False) -&gt; None:
+        self.retry_count += 1
+        if force or self.retry_count &gt;= self.max_retries:
+            self.status = TaskStatus.FAILED
+        else:
+            self.status = TaskStatus.READY  # Back to ready for retry
+        self.metadata[&#34;last_error&#34;] = error_message</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.task_graph.TaskNode.assigned_agent"><code class="name">var <span class="ident">assigned_agent</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.department"><code class="name">var <span class="ident">department</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.dependencies"><code class="name">var <span class="ident">dependencies</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.max_retries"><code class="name">var <span class="ident">max_retries</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.outputs"><code class="name">var <span class="ident">outputs</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.parent_goal"><code class="name">var <span class="ident">parent_goal</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.priority"><code class="name">var <span class="ident">priority</span> : <a title="jarvis.core.task_graph.Priority" href="#jarvis.core.task_graph.Priority">Priority</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.retry_count"><code class="name">var <span class="ident">retry_count</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.status"><code class="name">var <span class="ident">status</span> : <a title="jarvis.core.task_graph.TaskStatus" href="#jarvis.core.task_graph.TaskStatus">TaskStatus</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.tool_requirements"><code class="name">var <span class="ident">tool_requirements</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.task_graph.TaskNode.can_retry"><code class="name flex">
+<span>def <span class="ident">can_retry</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def can_retry(self) -&gt; bool:
+    return self.retry_count &lt; self.max_retries</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.mark_completed"><code class="name flex">
+<span>def <span class="ident">mark_completed</span></span>(<span>self, outputs: Optional[Dict[str, Any]] = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mark_completed(self, outputs: Optional[Dict[str, Any]] = None) -&gt; None:
+    self.status = TaskStatus.COMPLETED
+    if outputs:
+        self.outputs.update(outputs)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.mark_failed"><code class="name flex">
+<span>def <span class="ident">mark_failed</span></span>(<span>self, error_message: str, force: bool = False) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mark_failed(self, error_message: str, force: bool = False) -&gt; None:
+    self.retry_count += 1
+    if force or self.retry_count &gt;= self.max_retries:
+        self.status = TaskStatus.FAILED
+    else:
+        self.status = TaskStatus.READY  # Back to ready for retry
+    self.metadata[&#34;last_error&#34;] = error_message</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.mark_ready"><code class="name flex">
+<span>def <span class="ident">mark_ready</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mark_ready(self) -&gt; None:
+    if self.status == TaskStatus.PENDING:
+        self.status = TaskStatus.READY</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskNode.mark_running"><code class="name flex">
+<span>def <span class="ident">mark_running</span></span>(<span>self, agent_id: Optional[str] = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mark_running(self, agent_id: Optional[str] = None) -&gt; None:
+    self.status = TaskStatus.RUNNING
+    if agent_id:
+        self.assigned_agent = agent_id</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.task_graph.TaskStatus"><code class="flex name class">
+<span>class <span class="ident">TaskStatus</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskStatus(str, Enum):
+    PENDING = &#34;pending&#34;
+    READY = &#34;ready&#34;
+    RUNNING = &#34;running&#34;
+    BLOCKED = &#34;blocked&#34;
+    COMPLETED = &#34;completed&#34;
+    FAILED = &#34;failed&#34;
+    CANCELLED = &#34;cancelled&#34;
+    INCOMPLETE = &#34;incomplete&#34;  # Fourth Law: execution finished but reflection record missing</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.task_graph.TaskStatus.BLOCKED"><code class="name">var <span class="ident">BLOCKED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskStatus.CANCELLED"><code class="name">var <span class="ident">CANCELLED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskStatus.COMPLETED"><code class="name">var <span class="ident">COMPLETED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskStatus.FAILED"><code class="name">var <span class="ident">FAILED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskStatus.INCOMPLETE"><code class="name">var <span class="ident">INCOMPLETE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskStatus.PENDING"><code class="name">var <span class="ident">PENDING</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskStatus.READY"><code class="name">var <span class="ident">READY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.task_graph.TaskStatus.RUNNING"><code class="name">var <span class="ident">RUNNING</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.task_graph.Goal" href="#jarvis.core.task_graph.Goal">Goal</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.task_graph.Goal.created_by" href="#jarvis.core.task_graph.Goal.created_by">created_by</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Goal.description" href="#jarvis.core.task_graph.Goal.description">description</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Goal.goal_id" href="#jarvis.core.task_graph.Goal.goal_id">goal_id</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Goal.metadata" href="#jarvis.core.task_graph.Goal.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Goal.model_config" href="#jarvis.core.task_graph.Goal.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Goal.priority" href="#jarvis.core.task_graph.Goal.priority">priority</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Goal.status" href="#jarvis.core.task_graph.Goal.status">status</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Goal.tasks" href="#jarvis.core.task_graph.Goal.tasks">tasks</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Goal.title" href="#jarvis.core.task_graph.Goal.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.task_graph.Priority" href="#jarvis.core.task_graph.Priority">Priority</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.task_graph.Priority.CRITICAL" href="#jarvis.core.task_graph.Priority.CRITICAL">CRITICAL</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Priority.HIGH" href="#jarvis.core.task_graph.Priority.HIGH">HIGH</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Priority.LOW" href="#jarvis.core.task_graph.Priority.LOW">LOW</a></code></li>
+<li><code><a title="jarvis.core.task_graph.Priority.MEDIUM" href="#jarvis.core.task_graph.Priority.MEDIUM">MEDIUM</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.task_graph.TaskGraph" href="#jarvis.core.task_graph.TaskGraph">TaskGraph</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.task_graph.TaskGraph.add_edge" href="#jarvis.core.task_graph.TaskGraph.add_edge">add_edge</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.add_node" href="#jarvis.core.task_graph.TaskGraph.add_node">add_node</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.edges" href="#jarvis.core.task_graph.TaskGraph.edges">edges</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.get_parallel_layers" href="#jarvis.core.task_graph.TaskGraph.get_parallel_layers">get_parallel_layers</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.get_progress" href="#jarvis.core.task_graph.TaskGraph.get_progress">get_progress</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.get_ready_tasks" href="#jarvis.core.task_graph.TaskGraph.get_ready_tasks">get_ready_tasks</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.goal_id" href="#jarvis.core.task_graph.TaskGraph.goal_id">goal_id</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.has_cycles" href="#jarvis.core.task_graph.TaskGraph.has_cycles">has_cycles</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.has_failed" href="#jarvis.core.task_graph.TaskGraph.has_failed">has_failed</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.is_completed" href="#jarvis.core.task_graph.TaskGraph.is_completed">is_completed</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.is_cyclic" href="#jarvis.core.task_graph.TaskGraph.is_cyclic">is_cyclic</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.model_config" href="#jarvis.core.task_graph.TaskGraph.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.nodes" href="#jarvis.core.task_graph.TaskGraph.nodes">nodes</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskGraph.topological_sort" href="#jarvis.core.task_graph.TaskGraph.topological_sort">topological_sort</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.task_graph.TaskNode" href="#jarvis.core.task_graph.TaskNode">TaskNode</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.task_graph.TaskNode.assigned_agent" href="#jarvis.core.task_graph.TaskNode.assigned_agent">assigned_agent</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.can_retry" href="#jarvis.core.task_graph.TaskNode.can_retry">can_retry</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.department" href="#jarvis.core.task_graph.TaskNode.department">department</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.dependencies" href="#jarvis.core.task_graph.TaskNode.dependencies">dependencies</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.description" href="#jarvis.core.task_graph.TaskNode.description">description</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.mark_completed" href="#jarvis.core.task_graph.TaskNode.mark_completed">mark_completed</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.mark_failed" href="#jarvis.core.task_graph.TaskNode.mark_failed">mark_failed</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.mark_ready" href="#jarvis.core.task_graph.TaskNode.mark_ready">mark_ready</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.mark_running" href="#jarvis.core.task_graph.TaskNode.mark_running">mark_running</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.max_retries" href="#jarvis.core.task_graph.TaskNode.max_retries">max_retries</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.metadata" href="#jarvis.core.task_graph.TaskNode.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.model_config" href="#jarvis.core.task_graph.TaskNode.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.name" href="#jarvis.core.task_graph.TaskNode.name">name</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.outputs" href="#jarvis.core.task_graph.TaskNode.outputs">outputs</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.parent_goal" href="#jarvis.core.task_graph.TaskNode.parent_goal">parent_goal</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.priority" href="#jarvis.core.task_graph.TaskNode.priority">priority</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.retry_count" href="#jarvis.core.task_graph.TaskNode.retry_count">retry_count</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.status" href="#jarvis.core.task_graph.TaskNode.status">status</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.task_id" href="#jarvis.core.task_graph.TaskNode.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskNode.tool_requirements" href="#jarvis.core.task_graph.TaskNode.tool_requirements">tool_requirements</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.task_graph.TaskStatus" href="#jarvis.core.task_graph.TaskStatus">TaskStatus</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.task_graph.TaskStatus.BLOCKED" href="#jarvis.core.task_graph.TaskStatus.BLOCKED">BLOCKED</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskStatus.CANCELLED" href="#jarvis.core.task_graph.TaskStatus.CANCELLED">CANCELLED</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskStatus.COMPLETED" href="#jarvis.core.task_graph.TaskStatus.COMPLETED">COMPLETED</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskStatus.FAILED" href="#jarvis.core.task_graph.TaskStatus.FAILED">FAILED</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskStatus.INCOMPLETE" href="#jarvis.core.task_graph.TaskStatus.INCOMPLETE">INCOMPLETE</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskStatus.PENDING" href="#jarvis.core.task_graph.TaskStatus.PENDING">PENDING</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskStatus.READY" href="#jarvis.core.task_graph.TaskStatus.READY">READY</a></code></li>
+<li><code><a title="jarvis.core.task_graph.TaskStatus.RUNNING" href="#jarvis.core.task_graph.TaskStatus.RUNNING">RUNNING</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.agents.researcher API documentation</title>
+<meta name="description" content="JARVIS Researcher Agent (PWR-290 / PWR-291)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.agents.researcher</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Researcher Agent (PWR-290 / PWR-291)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration</p>
+<p>Executes multi-source research tasks:
+- Local search brain (SQLite FTS5 + Qdrant vectors)
+- Web search via SearXNG / browser worker
+- URL deep-reading via Playwright
+- Synthesises results into a cited evidence package</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.agents.researcher.ResearchReport"><code class="flex name class">
+<span>class <span class="ident">ResearchReport</span></span>
+<span>(</span><span>report_id: str = &lt;factory&gt;,<br>query: str = '',<br>findings: List[<a title="jarvis.agents.researcher.ResearchResult" href="#jarvis.agents.researcher.ResearchResult">ResearchResult</a>] = &lt;factory&gt;,<br>synthesis: str = '',<br>sources_consulted: List[str] = &lt;factory&gt;,<br>duration_ms: float = 0.0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class ResearchReport:
+    &#34;&#34;&#34;Aggregated research output with synthesis.&#34;&#34;&#34;
+
+    report_id: str = field(default_factory=lambda: f&#34;res_{uuid.uuid4().hex[:8]}&#34;)
+    query: str = &#34;&#34;
+    findings: List[ResearchResult] = field(default_factory=list)
+    synthesis: str = &#34;&#34;
+    sources_consulted: List[str] = field(default_factory=list)
+    duration_ms: float = 0.0
+
+    def to_dict(self) -&gt; Dict[str, Any]:
+        return {
+            &#34;report_id&#34;: self.report_id,
+            &#34;query&#34;: self.query,
+            &#34;synthesis&#34;: self.synthesis,
+            &#34;sources_consulted&#34;: self.sources_consulted,
+            &#34;findings_count&#34;: len(self.findings),
+            &#34;findings&#34;: [f.to_dict() for f in self.findings],
+            &#34;duration_ms&#34;: self.duration_ms,
+        }</code></pre>
+</details>
+<div class="desc"><p>Aggregated research output with synthesis.</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.researcher.ResearchReport.duration_ms"><code class="name">var <span class="ident">duration_ms</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchReport.findings"><code class="name">var <span class="ident">findings</span> : List[<a title="jarvis.agents.researcher.ResearchResult" href="#jarvis.agents.researcher.ResearchResult">ResearchResult</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchReport.query"><code class="name">var <span class="ident">query</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchReport.report_id"><code class="name">var <span class="ident">report_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchReport.sources_consulted"><code class="name">var <span class="ident">sources_consulted</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchReport.synthesis"><code class="name">var <span class="ident">synthesis</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.researcher.ResearchReport.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; Dict[str, Any]:
+    return {
+        &#34;report_id&#34;: self.report_id,
+        &#34;query&#34;: self.query,
+        &#34;synthesis&#34;: self.synthesis,
+        &#34;sources_consulted&#34;: self.sources_consulted,
+        &#34;findings_count&#34;: len(self.findings),
+        &#34;findings&#34;: [f.to_dict() for f in self.findings],
+        &#34;duration_ms&#34;: self.duration_ms,
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchResult"><code class="flex name class">
+<span>class <span class="ident">ResearchResult</span></span>
+<span>(</span><span>source: str,<br>title: str,<br>snippet: str,<br>url: Optional[str] = None,<br>relevance_score: float = 0.0,<br>retrieved_at: float = &lt;factory&gt;)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class ResearchResult:
+    &#34;&#34;&#34;A single research finding with provenance.&#34;&#34;&#34;
+
+    source: str
+    title: str
+    snippet: str
+    url: Optional[str] = None
+    relevance_score: float = 0.0
+    retrieved_at: float = field(default_factory=time.time)
+
+    def to_dict(self) -&gt; Dict[str, Any]:
+        return {
+            &#34;source&#34;: self.source,
+            &#34;title&#34;: self.title,
+            &#34;snippet&#34;: self.snippet,
+            &#34;url&#34;: self.url,
+            &#34;relevance_score&#34;: self.relevance_score,
+            &#34;retrieved_at&#34;: self.retrieved_at,
+        }</code></pre>
+</details>
+<div class="desc"><p>A single research finding with provenance.</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.researcher.ResearchResult.relevance_score"><code class="name">var <span class="ident">relevance_score</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchResult.retrieved_at"><code class="name">var <span class="ident">retrieved_at</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchResult.snippet"><code class="name">var <span class="ident">snippet</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchResult.source"><code class="name">var <span class="ident">source</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchResult.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearchResult.url"><code class="name">var <span class="ident">url</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.researcher.ResearchResult.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; Dict[str, Any]:
+    return {
+        &#34;source&#34;: self.source,
+        &#34;title&#34;: self.title,
+        &#34;snippet&#34;: self.snippet,
+        &#34;url&#34;: self.url,
+        &#34;relevance_score&#34;: self.relevance_score,
+        &#34;retrieved_at&#34;: self.retrieved_at,
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.researcher.ResearcherAgent"><code class="flex name class">
+<span>class <span class="ident">ResearcherAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ResearcherAgent:
+    &#34;&#34;&#34;
+    Multi-source research agent that:
+    1. Queries local search brain (zero-latency hot cache)
+    2. Falls back to web search (SearXNG / DuckDuckGo)
+    3. Deep-reads URLs via browser worker
+    4. Synthesises findings into a concise report
+    &#34;&#34;&#34;
+
+    MAX_WEB_RESULTS = 5
+    MAX_LOCAL_RESULTS = 10
+
+    def research(
+        self,
+        query: str,
+        user_id: str = &#34;ganesh&#34;,
+        deep: bool = False,
+        url: Optional[str] = None,
+    ) -&gt; ResearchReport:
+        &#34;&#34;&#34;
+        Primary research entry point.
+
+        Args:
+            query: Research question or topic.
+            user_id: User context for memory retrieval.
+            deep: If True, also deep-reads top URL result.
+            url: If provided, deep-reads this specific URL.
+
+        Returns:
+            ResearchReport with findings and synthesis.
+        &#34;&#34;&#34;
+        start = time.time()
+        report_id = f&#34;res_{uuid.uuid4().hex[:8]}&#34;
+        logger.info(f&#34;ResearcherAgent: researching &#39;{query[:60]}&#39; (report={report_id})&#34;)
+
+        findings: List[ResearchResult] = []
+        sources: List[str] = []
+
+        # ── 1. Local memory search ────────────────────────────────────────────
+        local = self._search_local(query, user_id)
+        findings.extend(local)
+        if local:
+            sources.append(&#34;local_memory&#34;)
+
+        # ── 2. Local corpus / document search ────────────────────────────────
+        docs = self._search_documents(query)
+        findings.extend(docs)
+        if docs:
+            sources.append(&#34;local_documents&#34;)
+
+        # ── 3. Web search ────────────────────────────────────────────────────
+        web = self._search_web(query)
+        findings.extend(web)
+        if web:
+            sources.append(&#34;web_search&#34;)
+
+        # ── 4. URL deep-read (optional) ───────────────────────────────────────
+        if url:
+            url_result = self._read_url(url)
+            if url_result:
+                findings.append(url_result)
+                sources.append(f&#34;url:{url}&#34;)
+        elif deep and web:
+            top_url = web[0].url
+            if top_url:
+                url_result = self._read_url(top_url)
+                if url_result:
+                    findings.append(url_result)
+                    sources.append(f&#34;url:{top_url}&#34;)
+
+        # ── 5. Synthesise ─────────────────────────────────────────────────────
+        synthesis = self._synthesise(query, findings)
+
+        duration_ms = round((time.time() - start) * 1000, 2)
+        logger.info(
+            f&#34;ResearcherAgent: report={report_id} findings={len(findings)} sources={sources} duration={duration_ms}ms&#34;
+        )
+
+        return ResearchReport(
+            report_id=report_id,
+            query=query,
+            findings=findings,
+            synthesis=synthesis,
+            sources_consulted=sources,
+            duration_ms=duration_ms,
+        )
+
+    # ── Search backends ───────────────────────────────────────────────────────
+
+    def _search_local(self, query: str, user_id: str) -&gt; List[ResearchResult]:
+        try:
+            from jarvis.memory.mem0_client import mem0_client
+
+            results = mem0_client.search(query=query, user_id=user_id, limit=5)
+            if isinstance(results, dict):
+                results = results.get(&#34;results&#34;, [])
+            return [
+                ResearchResult(
+                    source=&#34;mem0_memory&#34;,
+                    title=f&#34;Memory: {item.get(&#39;memory&#39;, &#39;&#39;)[:60]}&#34;,
+                    snippet=item.get(&#34;memory&#34;, item.get(&#34;text&#34;, &#34;&#34;)),
+                    relevance_score=item.get(&#34;score&#34;, 0.8),
+                )
+                for item in (results or [])
+                if item
+            ]
+        except Exception as exc:
+            logger.debug(f&#34;_search_local: {exc}&#34;)
+            return []
+
+    def _search_documents(self, query: str) -&gt; List[ResearchResult]:
+        try:
+            from jarvis.memory.document_rag import document_rag
+
+            results = document_rag.search(query, top_k=5)
+            return [
+                ResearchResult(
+                    source=&#34;local_documents&#34;,
+                    title=r.get(&#34;title&#34;, r.get(&#34;filename&#34;, &#34;Document&#34;)),
+                    snippet=r.get(&#34;snippet&#34;, r.get(&#34;text&#34;, &#34;&#34;))[:500],
+                    relevance_score=r.get(&#34;score&#34;, 0.7),
+                )
+                for r in (results or [])
+            ]
+        except Exception as exc:
+            logger.debug(f&#34;_search_documents: {exc}&#34;)
+            return []
+
+    def _search_web(self, query: str) -&gt; List[ResearchResult]:
+        try:
+            from jarvis.browser.search_wrapper import search_wrapper
+
+            results = search_wrapper.search(query, max_results=self.MAX_WEB_RESULTS)
+            return [
+                ResearchResult(
+                    source=&#34;web_search&#34;,
+                    title=r.get(&#34;title&#34;, &#34;Web Result&#34;),
+                    snippet=r.get(&#34;snippet&#34;, r.get(&#34;description&#34;, &#34;&#34;))[:500],
+                    url=r.get(&#34;url&#34;, r.get(&#34;href&#34;)),
+                    relevance_score=0.6,
+                )
+                for r in (results or [])
+            ]
+        except Exception as exc:
+            logger.debug(f&#34;_search_web: {exc}&#34;)
+            return []
+
+    def _read_url(self, url: str) -&gt; Optional[ResearchResult]:
+        try:
+            from jarvis.browser.url_reader import url_reader
+
+            content = url_reader.read(url, max_chars=3000)
+            if content:
+                return ResearchResult(
+                    source=&#34;url_reader&#34;,
+                    title=f&#34;URL: {url[:80]}&#34;,
+                    snippet=content[:500],
+                    url=url,
+                    relevance_score=0.9,
+                )
+        except Exception as exc:
+            logger.debug(f&#34;_read_url: {exc}&#34;)
+        return None
+
+    # ── Synthesis ─────────────────────────────────────────────────────────────
+
+    def _synthesise(self, query: str, findings: List[ResearchResult]) -&gt; str:
+        if not findings:
+            return f&#34;No relevant information found for: {query}&#34;
+
+        top = sorted(findings, key=lambda f: f.relevance_score, reverse=True)[:5]
+        snippets = &#34;\n\n&#34;.join(f&#34;[{f.source}] {f.title}:\n{f.snippet}&#34; for f in top)
+
+        try:
+            from jarvis.core.model_router import model_router, RoutingRequest
+
+            prompt = (
+                f&#34;Synthesise these research findings into a concise, factual answer &#34;
+                f&#34;for the query: &#39;{query}&#39;\n\nFindings:\n{snippets}&#34;
+            )
+            req = RoutingRequest(
+                task_id=f&#34;synth_{uuid.uuid4().hex[:6]}&#34;,
+                user_intent=prompt,
+                sensitivity_level=&#34;low&#34;,
+            )
+            decision = model_router.route(req)
+            result = model_router.execute_inference(decision=decision, prompt=prompt)
+            content = (
+                result.get(&#34;choices&#34;, [{}])[0].get(&#34;message&#34;, {}).get(&#34;content&#34;, &#34;&#34;)
+                if isinstance(result, dict)
+                else str(result)
+            )
+            return content.strip() if content else snippets[:1000]
+        except Exception as exc:
+            logger.debug(f&#34;_synthesise LLM failed: {exc}&#34;)
+            # Fallback: concatenate top snippets
+            return f&#34;Research summary for &#39;{query}&#39;:\n\n&#34; + snippets[:1500]</code></pre>
+</details>
+<div class="desc"><p>Multi-source research agent that:
+1. Queries local search brain (zero-latency hot cache)
+2. Falls back to web search (SearXNG / DuckDuckGo)
+3. Deep-reads URLs via browser worker
+4. Synthesises findings into a concise report</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.researcher.ResearcherAgent.MAX_LOCAL_RESULTS"><code class="name">var <span class="ident">MAX_LOCAL_RESULTS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.researcher.ResearcherAgent.MAX_WEB_RESULTS"><code class="name">var <span class="ident">MAX_WEB_RESULTS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.researcher.ResearcherAgent.research"><code class="name flex">
+<span>def <span class="ident">research</span></span>(<span>self,<br>query: str,<br>user_id: str = 'ganesh',<br>deep: bool = False,<br>url: Optional[str] = None) ‑> <a title="jarvis.agents.researcher.ResearchReport" href="#jarvis.agents.researcher.ResearchReport">ResearchReport</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def research(
+    self,
+    query: str,
+    user_id: str = &#34;ganesh&#34;,
+    deep: bool = False,
+    url: Optional[str] = None,
+) -&gt; ResearchReport:
+    &#34;&#34;&#34;
+    Primary research entry point.
+
+    Args:
+        query: Research question or topic.
+        user_id: User context for memory retrieval.
+        deep: If True, also deep-reads top URL result.
+        url: If provided, deep-reads this specific URL.
+
+    Returns:
+        ResearchReport with findings and synthesis.
+    &#34;&#34;&#34;
+    start = time.time()
+    report_id = f&#34;res_{uuid.uuid4().hex[:8]}&#34;
+    logger.info(f&#34;ResearcherAgent: researching &#39;{query[:60]}&#39; (report={report_id})&#34;)
+
+    findings: List[ResearchResult] = []
+    sources: List[str] = []
+
+    # ── 1. Local memory search ────────────────────────────────────────────
+    local = self._search_local(query, user_id)
+    findings.extend(local)
+    if local:
+        sources.append(&#34;local_memory&#34;)
+
+    # ── 2. Local corpus / document search ────────────────────────────────
+    docs = self._search_documents(query)
+    findings.extend(docs)
+    if docs:
+        sources.append(&#34;local_documents&#34;)
+
+    # ── 3. Web search ────────────────────────────────────────────────────
+    web = self._search_web(query)
+    findings.extend(web)
+    if web:
+        sources.append(&#34;web_search&#34;)
+
+    # ── 4. URL deep-read (optional) ───────────────────────────────────────
+    if url:
+        url_result = self._read_url(url)
+        if url_result:
+            findings.append(url_result)
+            sources.append(f&#34;url:{url}&#34;)
+    elif deep and web:
+        top_url = web[0].url
+        if top_url:
+            url_result = self._read_url(top_url)
+            if url_result:
+                findings.append(url_result)
+                sources.append(f&#34;url:{top_url}&#34;)
+
+    # ── 5. Synthesise ─────────────────────────────────────────────────────
+    synthesis = self._synthesise(query, findings)
+
+    duration_ms = round((time.time() - start) * 1000, 2)
+    logger.info(
+        f&#34;ResearcherAgent: report={report_id} findings={len(findings)} sources={sources} duration={duration_ms}ms&#34;
+    )
+
+    return ResearchReport(
+        report_id=report_id,
+        query=query,
+        findings=findings,
+        synthesis=synthesis,
+        sources_consulted=sources,
+        duration_ms=duration_ms,
+    )</code></pre>
+</details>
+<div class="desc"><p>Primary research entry point.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>query</code></strong></dt>
+<dd>Research question or topic.</dd>
+<dt><strong><code>user_id</code></strong></dt>
+<dd>User context for memory retrieval.</dd>
+<dt><strong><code>deep</code></strong></dt>
+<dd>If True, also deep-reads top URL result.</dd>
+<dt><strong><code>url</code></strong></dt>
+<dd>If provided, deep-reads this specific URL.</dd>
+</dl>
+<p>Returns
+-----=
+ResearchReport with findings and synthesis.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.agents" href="index.html">jarvis.agents</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.agents.researcher.ResearchReport" href="#jarvis.agents.researcher.ResearchReport">ResearchReport</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.agents.researcher.ResearchReport.duration_ms" href="#jarvis.agents.researcher.ResearchReport.duration_ms">duration_ms</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchReport.findings" href="#jarvis.agents.researcher.ResearchReport.findings">findings</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchReport.query" href="#jarvis.agents.researcher.ResearchReport.query">query</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchReport.report_id" href="#jarvis.agents.researcher.ResearchReport.report_id">report_id</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchReport.sources_consulted" href="#jarvis.agents.researcher.ResearchReport.sources_consulted">sources_consulted</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchReport.synthesis" href="#jarvis.agents.researcher.ResearchReport.synthesis">synthesis</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchReport.to_dict" href="#jarvis.agents.researcher.ResearchReport.to_dict">to_dict</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.researcher.ResearchResult" href="#jarvis.agents.researcher.ResearchResult">ResearchResult</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.agents.researcher.ResearchResult.relevance_score" href="#jarvis.agents.researcher.ResearchResult.relevance_score">relevance_score</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchResult.retrieved_at" href="#jarvis.agents.researcher.ResearchResult.retrieved_at">retrieved_at</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchResult.snippet" href="#jarvis.agents.researcher.ResearchResult.snippet">snippet</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchResult.source" href="#jarvis.agents.researcher.ResearchResult.source">source</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchResult.title" href="#jarvis.agents.researcher.ResearchResult.title">title</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchResult.to_dict" href="#jarvis.agents.researcher.ResearchResult.to_dict">to_dict</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearchResult.url" href="#jarvis.agents.researcher.ResearchResult.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.researcher.ResearcherAgent" href="#jarvis.agents.researcher.ResearcherAgent">ResearcherAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.researcher.ResearcherAgent.MAX_LOCAL_RESULTS" href="#jarvis.agents.researcher.ResearcherAgent.MAX_LOCAL_RESULTS">MAX_LOCAL_RESULTS</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearcherAgent.MAX_WEB_RESULTS" href="#jarvis.agents.researcher.ResearcherAgent.MAX_WEB_RESULTS">MAX_WEB_RESULTS</a></code></li>
+<li><code><a title="jarvis.agents.researcher.ResearcherAgent.research" href="#jarvis.agents.researcher.ResearcherAgent.research">research</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

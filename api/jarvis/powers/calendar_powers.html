@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.calendar_powers API documentation</title>
+<meta name="description" content="JARVIS Local Calendar Powers (PWR-041 to PWR-045) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.calendar_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Local Calendar Powers (PWR-041 to PWR-045).</p>
+<p>Provides keyless, offline RFC 5545 (.ics) calendar reading, upcoming event extraction,
+event creation, and semantic keyword searching.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.calendar_powers.CalendarPowers"><code class="flex name class">
+<span>class <span class="ident">CalendarPowers</span></span>
+<span>(</span><span>default_calendar_path: Optional[Path] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalendarPowers:
+    &#34;&#34;&#34;Implementations for local offline calendar operations using RFC 5545 (.ics).&#34;&#34;&#34;
+
+    def __init__(self, default_calendar_path: Optional[Path] = None):
+        self.default_calendar_path = default_calendar_path or (settings.data_dir / &#34;calendar&#34; / &#34;jarvis_calendar.ics&#34;)
+        self.default_calendar_path.parent.mkdir(parents=True, exist_ok=True)
+        if not self.default_calendar_path.exists():
+            self._initialize_empty_ics(self.default_calendar_path)
+
+    def _initialize_empty_ics(self, path: Path) -&gt; None:
+        &#34;&#34;&#34;Creates an empty valid iCalendar structure.&#34;&#34;&#34;
+        content = (
+            &#34;BEGIN:VCALENDAR\r\n&#34;
+            &#34;VERSION:2.0\r\n&#34;
+            &#34;PRODID:-//JARVIS Local AI//EN\r\n&#34;
+            &#34;CALSCALE:GREGORIAN\r\n&#34;
+            &#34;METHOD:PUBLISH\r\n&#34;
+            &#34;END:VCALENDAR\r\n&#34;
+        )
+        path.write_text(content, encoding=&#34;utf-8&#34;)
+
+    def _parse_datetime(self, val_str: str) -&gt; Optional[datetime.datetime]:
+        &#34;&#34;&#34;Parses iCalendar date or datetime strings into datetime objects.&#34;&#34;&#34;
+        clean = val_str.strip().replace(&#34;Z&#34;, &#34;&#34;)
+        # Remove any inline TZID params if passed before colon
+        if &#34;:&#34; in clean:
+            clean = clean.split(&#34;:&#34;)[-1]
+
+        # Format: YYYYMMDDTHHMMSS
+        if len(clean) &gt;= 15 and &#34;T&#34; in clean:
+            try:
+                return datetime.datetime.strptime(clean[:15], &#34;%Y%m%dT%H%M%S&#34;)
+            except ValueError:
+                pass
+        # Format: YYYYMMDD
+        if len(clean) == 8 and clean.isdigit():
+            try:
+                dt = datetime.datetime.strptime(clean, &#34;%Y%m%d&#34;)
+                return dt
+            except ValueError:
+                pass
+        return None
+
+    def read_ics_file(self, file_path: Optional[str | Path] = None) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Parses all VEVENT blocks in a given .ics file.&#34;&#34;&#34;
+        target_path = Path(file_path) if file_path else self.default_calendar_path
+        if not target_path.exists():
+            return []
+
+        text = target_path.read_text(encoding=&#34;utf-8&#34;, errors=&#34;ignore&#34;)
+        # Unfold lines (RFC 5545: lines starting with space or tab continue previous line)
+        unfolded = re.sub(r&#34;\r?\n[ \t]&#34;, &#34;&#34;, text)
+
+        events: List[Dict[str, Any]] = []
+        raw_events = re.findall(r&#34;BEGIN:VEVENT(.*?)END:VEVENT&#34;, unfolded, re.DOTALL)
+
+        for raw_event in raw_events:
+            event_dict: Dict[str, Any] = {
+                &#34;uid&#34;: None,
+                &#34;summary&#34;: &#34;Untitled Event&#34;,
+                &#34;start&#34;: None,
+                &#34;end&#34;: None,
+                &#34;description&#34;: &#34;&#34;,
+                &#34;location&#34;: &#34;&#34;,
+                &#34;status&#34;: &#34;CONFIRMED&#34;,
+            }
+
+            for line in raw_event.strip().splitlines():
+                line = line.strip()
+                if not line or &#34;:&#34; not in line:
+                    continue
+                header, val = line.split(&#34;:&#34;, 1)
+                prop = header.split(&#34;;&#34;)[0].upper()
+
+                if prop == &#34;UID&#34;:
+                    event_dict[&#34;uid&#34;] = val
+                elif prop == &#34;SUMMARY&#34;:
+                    event_dict[&#34;summary&#34;] = val
+                elif prop == &#34;DTSTART&#34;:
+                    event_dict[&#34;start&#34;] = val
+                    event_dict[&#34;start_dt&#34;] = self._parse_datetime(val)
+                elif prop == &#34;DTEND&#34;:
+                    event_dict[&#34;end&#34;] = val
+                    event_dict[&#34;end_dt&#34;] = self._parse_datetime(val)
+                elif prop == &#34;DESCRIPTION&#34;:
+                    event_dict[&#34;description&#34;] = val.replace(&#34;\\n&#34;, &#34;\n&#34;).replace(&#34;\\,&#34;, &#34;,&#34;)
+                elif prop == &#34;LOCATION&#34;:
+                    event_dict[&#34;location&#34;] = val.replace(&#34;\\,&#34;, &#34;,&#34;)
+                elif prop == &#34;STATUS&#34;:
+                    event_dict[&#34;status&#34;] = val
+
+            events.append(event_dict)
+
+        return events
+
+    def get_upcoming_events(self, days: int = 7, file_path: Optional[str | Path] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-041: Retrieves upcoming calendar events within the specified day window.&#34;&#34;&#34;
+        events = self.read_ics_file(file_path)
+        now = datetime.datetime.now()
+        horizon = now + datetime.timedelta(days=days)
+
+        upcoming = []
+        for e in events:
+            s_dt = e.get(&#34;start_dt&#34;)
+            if s_dt:
+                # Include events that occur between now and horizon, or started today
+                if now.date() &lt;= s_dt.date() &lt;= horizon.date():
+                    clean_e = {k: v for k, v in e.items() if not k.endswith(&#34;_dt&#34;)}
+                    clean_e[&#34;start_iso&#34;] = s_dt.isoformat()
+                    upcoming.append(clean_e)
+
+        # Sort by start_iso
+        upcoming.sort(key=lambda x: x.get(&#34;start_iso&#34;, &#34;&#34;))
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-041&#34;,
+            &#34;horizon_days&#34;: days,
+            &#34;events_count&#34;: len(upcoming),
+            &#34;events&#34;: upcoming,
+        }
+
+    def add_event(
+        self,
+        summary: str,
+        start_time: str | datetime.datetime,
+        end_time: Optional[str | datetime.datetime] = None,
+        description: str = &#34;&#34;,
+        location: str = &#34;&#34;,
+        file_path: Optional[str | Path] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-042: Safely appends a new calendar event into the local RFC 5545 .ics file.&#34;&#34;&#34;
+        target_path = Path(file_path) if file_path else self.default_calendar_path
+        if not target_path.exists():
+            self._initialize_empty_ics(target_path)
+
+        # Normalize start_time
+        if isinstance(start_time, str):
+            try:
+                start_dt = datetime.datetime.fromisoformat(start_time)
+            except ValueError:
+                start_dt = self._parse_datetime(start_time) or datetime.datetime.now()
+        else:
+            start_dt = start_time
+
+        # Normalize end_time
+        if not end_time:
+            end_dt = start_dt + datetime.timedelta(hours=1)
+        elif isinstance(end_time, str):
+            try:
+                end_dt = datetime.datetime.fromisoformat(end_time)
+            except ValueError:
+                end_dt = self._parse_datetime(end_time) or (start_dt + datetime.timedelta(hours=1))
+        else:
+            end_dt = end_time
+
+        uid = f&#34;jarvis-{uuid.uuid4()}@localhost&#34;
+        dtstamp = datetime.datetime.now(datetime.timezone.utc).strftime(&#34;%Y%m%dT%H%M%SZ&#34;)
+        dtstart_str = start_dt.strftime(&#34;%Y%m%dT%H%M%S&#34;)
+        dtend_str = end_dt.strftime(&#34;%Y%m%dT%H%M%S&#34;)
+        clean_desc = description.strip().replace(&#34;\n&#34;, &#34;\\n&#34;)
+        clean_summary = summary.strip()
+        clean_loc = location.strip()
+
+        vevent_block = (
+            &#34;BEGIN:VEVENT\r\n&#34;
+            f&#34;UID:{uid}\r\n&#34;
+            f&#34;DTSTAMP:{dtstamp}\r\n&#34;
+            f&#34;DTSTART:{dtstart_str}\r\n&#34;
+            f&#34;DTEND:{dtend_str}\r\n&#34;
+            f&#34;SUMMARY:{clean_summary}\r\n&#34;
+            f&#34;DESCRIPTION:{clean_desc}\r\n&#34;
+            f&#34;LOCATION:{clean_loc}\r\n&#34;
+            &#34;STATUS:CONFIRMED\r\n&#34;
+            &#34;END:VEVENT\r\n&#34;
+        )
+
+        existing_text = target_path.read_text(encoding=&#34;utf-8&#34;)
+        if &#34;END:VCALENDAR&#34; in existing_text:
+            updated_text = existing_text.replace(&#34;END:VCALENDAR&#34;, vevent_block + &#34;END:VCALENDAR&#34;)
+        else:
+            updated_text = existing_text + &#34;\r\n&#34; + vevent_block + &#34;END:VCALENDAR\r\n&#34;
+
+        target_path.write_text(updated_text, encoding=&#34;utf-8&#34;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-042&#34;,
+            &#34;success&#34;: True,
+            &#34;uid&#34;: uid,
+            &#34;summary&#34;: summary,
+            &#34;start&#34;: dtstart_str,
+            &#34;end&#34;: dtend_str,
+            &#34;calendar_file&#34;: str(target_path),
+        }
+
+    def search_events(self, query: str, file_path: Optional[str | Path] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-043: Searches calendar events for matching keywords.&#34;&#34;&#34;
+        events = self.read_ics_file(file_path)
+        q = query.lower().strip()
+        matched = []
+
+        for e in events:
+            text_corpus = f&#34;{e.get(&#39;summary&#39;, &#39;&#39;)} {e.get(&#39;description&#39;, &#39;&#39;)} {e.get(&#39;location&#39;, &#39;&#39;)}&#34;.lower()
+            if q in text_corpus:
+                clean_e = {k: v for k, v in e.items() if not k.endswith(&#34;_dt&#34;)}
+                if e.get(&#34;start_dt&#34;):
+                    clean_e[&#34;start_iso&#34;] = e[&#34;start_dt&#34;].isoformat()
+                matched.append(clean_e)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-043&#34;,
+            &#34;query&#34;: query,
+            &#34;matches_count&#34;: len(matched),
+            &#34;events&#34;: matched,
+        }</code></pre>
+</details>
+<div class="desc"><p>Implementations for local offline calendar operations using RFC 5545 (.ics).</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.calendar_powers.CalendarPowers.add_event"><code class="name flex">
+<span>def <span class="ident">add_event</span></span>(<span>self,<br>summary: str,<br>start_time: str | datetime.datetime,<br>end_time: Optional[str | datetime.datetime] = None,<br>description: str = '',<br>location: str = '',<br>file_path: Optional[str | Path] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_event(
+    self,
+    summary: str,
+    start_time: str | datetime.datetime,
+    end_time: Optional[str | datetime.datetime] = None,
+    description: str = &#34;&#34;,
+    location: str = &#34;&#34;,
+    file_path: Optional[str | Path] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-042: Safely appends a new calendar event into the local RFC 5545 .ics file.&#34;&#34;&#34;
+    target_path = Path(file_path) if file_path else self.default_calendar_path
+    if not target_path.exists():
+        self._initialize_empty_ics(target_path)
+
+    # Normalize start_time
+    if isinstance(start_time, str):
+        try:
+            start_dt = datetime.datetime.fromisoformat(start_time)
+        except ValueError:
+            start_dt = self._parse_datetime(start_time) or datetime.datetime.now()
+    else:
+        start_dt = start_time
+
+    # Normalize end_time
+    if not end_time:
+        end_dt = start_dt + datetime.timedelta(hours=1)
+    elif isinstance(end_time, str):
+        try:
+            end_dt = datetime.datetime.fromisoformat(end_time)
+        except ValueError:
+            end_dt = self._parse_datetime(end_time) or (start_dt + datetime.timedelta(hours=1))
+    else:
+        end_dt = end_time
+
+    uid = f&#34;jarvis-{uuid.uuid4()}@localhost&#34;
+    dtstamp = datetime.datetime.now(datetime.timezone.utc).strftime(&#34;%Y%m%dT%H%M%SZ&#34;)
+    dtstart_str = start_dt.strftime(&#34;%Y%m%dT%H%M%S&#34;)
+    dtend_str = end_dt.strftime(&#34;%Y%m%dT%H%M%S&#34;)
+    clean_desc = description.strip().replace(&#34;\n&#34;, &#34;\\n&#34;)
+    clean_summary = summary.strip()
+    clean_loc = location.strip()
+
+    vevent_block = (
+        &#34;BEGIN:VEVENT\r\n&#34;
+        f&#34;UID:{uid}\r\n&#34;
+        f&#34;DTSTAMP:{dtstamp}\r\n&#34;
+        f&#34;DTSTART:{dtstart_str}\r\n&#34;
+        f&#34;DTEND:{dtend_str}\r\n&#34;
+        f&#34;SUMMARY:{clean_summary}\r\n&#34;
+        f&#34;DESCRIPTION:{clean_desc}\r\n&#34;
+        f&#34;LOCATION:{clean_loc}\r\n&#34;
+        &#34;STATUS:CONFIRMED\r\n&#34;
+        &#34;END:VEVENT\r\n&#34;
+    )
+
+    existing_text = target_path.read_text(encoding=&#34;utf-8&#34;)
+    if &#34;END:VCALENDAR&#34; in existing_text:
+        updated_text = existing_text.replace(&#34;END:VCALENDAR&#34;, vevent_block + &#34;END:VCALENDAR&#34;)
+    else:
+        updated_text = existing_text + &#34;\r\n&#34; + vevent_block + &#34;END:VCALENDAR\r\n&#34;
+
+    target_path.write_text(updated_text, encoding=&#34;utf-8&#34;)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-042&#34;,
+        &#34;success&#34;: True,
+        &#34;uid&#34;: uid,
+        &#34;summary&#34;: summary,
+        &#34;start&#34;: dtstart_str,
+        &#34;end&#34;: dtend_str,
+        &#34;calendar_file&#34;: str(target_path),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-042: Safely appends a new calendar event into the local RFC 5545 .ics file.</p></div>
+</dd>
+<dt id="jarvis.powers.calendar_powers.CalendarPowers.get_upcoming_events"><code class="name flex">
+<span>def <span class="ident">get_upcoming_events</span></span>(<span>self, days: int = 7, file_path: Optional[str | Path] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_upcoming_events(self, days: int = 7, file_path: Optional[str | Path] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-041: Retrieves upcoming calendar events within the specified day window.&#34;&#34;&#34;
+    events = self.read_ics_file(file_path)
+    now = datetime.datetime.now()
+    horizon = now + datetime.timedelta(days=days)
+
+    upcoming = []
+    for e in events:
+        s_dt = e.get(&#34;start_dt&#34;)
+        if s_dt:
+            # Include events that occur between now and horizon, or started today
+            if now.date() &lt;= s_dt.date() &lt;= horizon.date():
+                clean_e = {k: v for k, v in e.items() if not k.endswith(&#34;_dt&#34;)}
+                clean_e[&#34;start_iso&#34;] = s_dt.isoformat()
+                upcoming.append(clean_e)
+
+    # Sort by start_iso
+    upcoming.sort(key=lambda x: x.get(&#34;start_iso&#34;, &#34;&#34;))
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-041&#34;,
+        &#34;horizon_days&#34;: days,
+        &#34;events_count&#34;: len(upcoming),
+        &#34;events&#34;: upcoming,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-041: Retrieves upcoming calendar events within the specified day window.</p></div>
+</dd>
+<dt id="jarvis.powers.calendar_powers.CalendarPowers.read_ics_file"><code class="name flex">
+<span>def <span class="ident">read_ics_file</span></span>(<span>self, file_path: Optional[str | Path] = None) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_ics_file(self, file_path: Optional[str | Path] = None) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Parses all VEVENT blocks in a given .ics file.&#34;&#34;&#34;
+    target_path = Path(file_path) if file_path else self.default_calendar_path
+    if not target_path.exists():
+        return []
+
+    text = target_path.read_text(encoding=&#34;utf-8&#34;, errors=&#34;ignore&#34;)
+    # Unfold lines (RFC 5545: lines starting with space or tab continue previous line)
+    unfolded = re.sub(r&#34;\r?\n[ \t]&#34;, &#34;&#34;, text)
+
+    events: List[Dict[str, Any]] = []
+    raw_events = re.findall(r&#34;BEGIN:VEVENT(.*?)END:VEVENT&#34;, unfolded, re.DOTALL)
+
+    for raw_event in raw_events:
+        event_dict: Dict[str, Any] = {
+            &#34;uid&#34;: None,
+            &#34;summary&#34;: &#34;Untitled Event&#34;,
+            &#34;start&#34;: None,
+            &#34;end&#34;: None,
+            &#34;description&#34;: &#34;&#34;,
+            &#34;location&#34;: &#34;&#34;,
+            &#34;status&#34;: &#34;CONFIRMED&#34;,
+        }
+
+        for line in raw_event.strip().splitlines():
+            line = line.strip()
+            if not line or &#34;:&#34; not in line:
+                continue
+            header, val = line.split(&#34;:&#34;, 1)
+            prop = header.split(&#34;;&#34;)[0].upper()
+
+            if prop == &#34;UID&#34;:
+                event_dict[&#34;uid&#34;] = val
+            elif prop == &#34;SUMMARY&#34;:
+                event_dict[&#34;summary&#34;] = val
+            elif prop == &#34;DTSTART&#34;:
+                event_dict[&#34;start&#34;] = val
+                event_dict[&#34;start_dt&#34;] = self._parse_datetime(val)
+            elif prop == &#34;DTEND&#34;:
+                event_dict[&#34;end&#34;] = val
+                event_dict[&#34;end_dt&#34;] = self._parse_datetime(val)
+            elif prop == &#34;DESCRIPTION&#34;:
+                event_dict[&#34;description&#34;] = val.replace(&#34;\\n&#34;, &#34;\n&#34;).replace(&#34;\\,&#34;, &#34;,&#34;)
+            elif prop == &#34;LOCATION&#34;:
+                event_dict[&#34;location&#34;] = val.replace(&#34;\\,&#34;, &#34;,&#34;)
+            elif prop == &#34;STATUS&#34;:
+                event_dict[&#34;status&#34;] = val
+
+        events.append(event_dict)
+
+    return events</code></pre>
+</details>
+<div class="desc"><p>Parses all VEVENT blocks in a given .ics file.</p></div>
+</dd>
+<dt id="jarvis.powers.calendar_powers.CalendarPowers.search_events"><code class="name flex">
+<span>def <span class="ident">search_events</span></span>(<span>self, query: str, file_path: Optional[str | Path] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search_events(self, query: str, file_path: Optional[str | Path] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-043: Searches calendar events for matching keywords.&#34;&#34;&#34;
+    events = self.read_ics_file(file_path)
+    q = query.lower().strip()
+    matched = []
+
+    for e in events:
+        text_corpus = f&#34;{e.get(&#39;summary&#39;, &#39;&#39;)} {e.get(&#39;description&#39;, &#39;&#39;)} {e.get(&#39;location&#39;, &#39;&#39;)}&#34;.lower()
+        if q in text_corpus:
+            clean_e = {k: v for k, v in e.items() if not k.endswith(&#34;_dt&#34;)}
+            if e.get(&#34;start_dt&#34;):
+                clean_e[&#34;start_iso&#34;] = e[&#34;start_dt&#34;].isoformat()
+            matched.append(clean_e)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-043&#34;,
+        &#34;query&#34;: query,
+        &#34;matches_count&#34;: len(matched),
+        &#34;events&#34;: matched,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-043: Searches calendar events for matching keywords.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.calendar_powers.CalendarPowers" href="#jarvis.powers.calendar_powers.CalendarPowers">CalendarPowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.calendar_powers.CalendarPowers.add_event" href="#jarvis.powers.calendar_powers.CalendarPowers.add_event">add_event</a></code></li>
+<li><code><a title="jarvis.powers.calendar_powers.CalendarPowers.get_upcoming_events" href="#jarvis.powers.calendar_powers.CalendarPowers.get_upcoming_events">get_upcoming_events</a></code></li>
+<li><code><a title="jarvis.powers.calendar_powers.CalendarPowers.read_ics_file" href="#jarvis.powers.calendar_powers.CalendarPowers.read_ics_file">read_ics_file</a></code></li>
+<li><code><a title="jarvis.powers.calendar_powers.CalendarPowers.search_events" href="#jarvis.powers.calendar_powers.CalendarPowers.search_events">search_events</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

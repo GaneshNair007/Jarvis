@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.career.service API documentation</title>
+<meta name="description" content="Career-Ops Service Layer (PWR-328) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.career.service</code></h1>
+</header>
+<section id="section-intro">
+<p>Career-Ops Service Layer (PWR-328).</p>
+<p>Coordinates all career operations, concurrency limits (worker pool),
+profile persistence, file adapters, and execution queues.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.career.service.CareerOpsService"><code class="flex name class">
+<span>class <span class="ident">CareerOpsService</span></span>
+<span>(</span><span>profile_path: str = 'data/profile.yml',<br>cv_path: str = 'data/cv.md',<br>max_concurrent_workers: int = 3)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CareerOpsService:
+    &#34;&#34;&#34;Master service layer for all Career-Ops capabilities (PWR-328).&#34;&#34;&#34;
+
+    def __init__(
+        self, profile_path: str = &#34;data/profile.yml&#34;, cv_path: str = &#34;data/cv.md&#34;, max_concurrent_workers: int = 3
+    ):
+        self.profile_path = Path(profile_path)
+        self.cv_path = Path(cv_path)
+        self.semaphore = asyncio.Semaphore(max_concurrent_workers)
+        self.profile = self._load_profile()
+
+        # Initialize sub-engines
+        self.scanner = JobScanner(self.profile)
+        self.resume_generator = ResumeGenerator(master_cv_path=str(self.cv_path))
+        self.cover_generator = CoverLetterGenerator()
+        self.company_researcher = CompanyResearcher()
+        self.contact_finder = ContactFinder()
+        self.email_drafter = ApplicationEmailDrafter()
+        self.pipeline_analytics = CareerPipelineAnalytics()
+        self.interview_prep_engine = InterviewPrepEngine()
+        self.offer_analyzer = OfferAnalyzer()
+
+    def _load_profile(self) -&gt; UserCareerProfile:
+        &#34;&#34;&#34;Loads user profile from YAML or returns defaults.&#34;&#34;&#34;
+        if self.profile_path.exists():
+            try:
+                raw = yaml.safe_load(self.profile_path.read_text(encoding=&#34;utf-8&#34;))
+                if isinstance(raw, dict):
+                    return UserCareerProfile(**raw)
+            except Exception as e:
+                logger.warning(f&#34;Failed to load profile.yml: {e}&#34;)
+        return UserCareerProfile()
+
+    def reload_profile(self) -&gt; UserCareerProfile:
+        &#34;&#34;&#34;Refreshes the profile in-memory.&#34;&#34;&#34;
+        self.profile = self._load_profile()
+        self.scanner = JobScanner(self.profile)
+        return self.profile
+
+    async def scan_job(
+        self, job_title: str, company_name: str, description: str, job_url: Optional[str] = None
+    ) -&gt; JobFitScore:
+        &#34;&#34;&#34;PWR-329: Scans a job and returns fit score within concurrency boundary.&#34;&#34;&#34;
+        async with self.semaphore:
+            score = self.scanner.scan_job(
+                job_title=job_title, company_name=company_name, description=description, job_url=job_url
+            )
+            # Automatically record into pipeline ledger
+            self.pipeline_analytics.record_application(
+                company_name=company_name,
+                job_title=job_title,
+                job_url=job_url,
+                fit_score=score.global_score,
+                status=&#34;saved&#34;,
+            )
+            return score
+
+    async def generate_resume(
+        self, job_title: str, company_name: str, target_keywords: Optional[List[str]] = None
+    ) -&gt; ResumeArtifact:
+        &#34;&#34;&#34;PWR-330: Tailors ATS resume markdown and PDF output.&#34;&#34;&#34;
+        async with self.semaphore:
+            keywords = target_keywords or self.profile.core_skills
+            return self.resume_generator.generate_tailored_resume(
+                job_title=job_title, company_name=company_name, target_keywords=keywords, profile=self.profile
+            )
+
+    async def generate_cover_letter(
+        self, job_title: str, company_name: str, key_challenges: Optional[List[str]] = None
+    ) -&gt; CoverLetterArtifact:
+        &#34;&#34;&#34;PWR-331: Tailors role-specific cover letter.&#34;&#34;&#34;
+        async with self.semaphore:
+            return self.cover_generator.generate_cover_letter(
+                job_title=job_title, company_name=company_name, key_challenges=key_challenges, profile=self.profile
+            )
+
+    async def research_company(self, company_name: str, domain: Optional[str] = None) -&gt; CompanyDossier:
+        &#34;&#34;&#34;PWR-332: Conducts deep company background research.&#34;&#34;&#34;
+        async with self.semaphore:
+            return self.company_researcher.research_company(company_name=company_name, domain=domain)
+
+    async def find_contacts(self, company_name: str, role_title: Optional[str] = None) -&gt; List[ContactProfile]:
+        &#34;&#34;&#34;PWR-333: Finds key decision-maker contacts and prepares outreach drafts.&#34;&#34;&#34;
+        async with self.semaphore:
+            return self.contact_finder.find_contacts(company_name=company_name, role_title=role_title)
+
+    async def draft_email(self, recipient_name: str, company_name: str, role_title: str) -&gt; Dict[str, str]:
+        &#34;&#34;&#34;PWR-334: Drafts formal application email.&#34;&#34;&#34;
+        return self.email_drafter.draft_application_email(
+            recipient_name=recipient_name, company_name=company_name, role_title=role_title, profile=self.profile
+        )
+
+    def analyze_pipeline(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-335: Computes application pipeline conversion stats.&#34;&#34;&#34;
+        return self.pipeline_analytics.analyze_patterns()
+
+    def update_application_status(
+        self, application_id: str, new_status: str, note: Optional[str] = None
+    ) -&gt; Optional[ApplicationEntry]:
+        &#34;&#34;&#34;Updates status of a tracked application.&#34;&#34;&#34;
+        return self.pipeline_analytics.update_status(application_id, new_status, note)
+
+    def list_applications(self, status: Optional[str] = None) -&gt; List[ApplicationEntry]:
+        &#34;&#34;&#34;Lists tracked applications.&#34;&#34;&#34;
+        return self.pipeline_analytics.list_applications(status)
+
+    def prepare_interview(
+        self, role_title: str, company_name: str, focus_tech: Optional[List[str]] = None
+    ) -&gt; InterviewPrepSession:
+        &#34;&#34;&#34;PWR-336: Produces interview questions and STAR prep.&#34;&#34;&#34;
+        return self.interview_prep_engine.prepare_interview(
+            role_title=role_title, company_name=company_name, focus_tech=focus_tech
+        )
+
+    def check_red_flags(self, company_name: str, job_description: str) -&gt; List[str]:
+        &#34;&#34;&#34;PWR-336: Detects toxic workplace red flags in job descriptions.&#34;&#34;&#34;
+        return self.interview_prep_engine.check_red_flags(company_name, job_description)
+
+    def analyze_offer(
+        self, company_name: str, role_title: str, base_salary: float, bonus: float = 0.0, equity_annual_val: float = 0.0
+    ) -&gt; OfferAnalysis:
+        &#34;&#34;&#34;PWR-337: Analyzes compensation offer and provides negotiation script.&#34;&#34;&#34;
+        return self.offer_analyzer.analyze_offer(
+            company_name=company_name,
+            role_title=role_title,
+            base_salary=base_salary,
+            bonus=bonus,
+            equity_annual_val=equity_annual_val,
+            profile=self.profile,
+        )</code></pre>
+</details>
+<div class="desc"><p>Master service layer for all Career-Ops capabilities (PWR-328).</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.career.service.CareerOpsService.analyze_offer"><code class="name flex">
+<span>def <span class="ident">analyze_offer</span></span>(<span>self,<br>company_name: str,<br>role_title: str,<br>base_salary: float,<br>bonus: float = 0.0,<br>equity_annual_val: float = 0.0) ‑> <a title="jarvis.career.models.OfferAnalysis" href="models.html#jarvis.career.models.OfferAnalysis">OfferAnalysis</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analyze_offer(
+    self, company_name: str, role_title: str, base_salary: float, bonus: float = 0.0, equity_annual_val: float = 0.0
+) -&gt; OfferAnalysis:
+    &#34;&#34;&#34;PWR-337: Analyzes compensation offer and provides negotiation script.&#34;&#34;&#34;
+    return self.offer_analyzer.analyze_offer(
+        company_name=company_name,
+        role_title=role_title,
+        base_salary=base_salary,
+        bonus=bonus,
+        equity_annual_val=equity_annual_val,
+        profile=self.profile,
+    )</code></pre>
+</details>
+<div class="desc"><p>PWR-337: Analyzes compensation offer and provides negotiation script.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.analyze_pipeline"><code class="name flex">
+<span>def <span class="ident">analyze_pipeline</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analyze_pipeline(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-335: Computes application pipeline conversion stats.&#34;&#34;&#34;
+    return self.pipeline_analytics.analyze_patterns()</code></pre>
+</details>
+<div class="desc"><p>PWR-335: Computes application pipeline conversion stats.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.check_red_flags"><code class="name flex">
+<span>def <span class="ident">check_red_flags</span></span>(<span>self, company_name: str, job_description: str) ‑> List[str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_red_flags(self, company_name: str, job_description: str) -&gt; List[str]:
+    &#34;&#34;&#34;PWR-336: Detects toxic workplace red flags in job descriptions.&#34;&#34;&#34;
+    return self.interview_prep_engine.check_red_flags(company_name, job_description)</code></pre>
+</details>
+<div class="desc"><p>PWR-336: Detects toxic workplace red flags in job descriptions.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.draft_email"><code class="name flex">
+<span>async def <span class="ident">draft_email</span></span>(<span>self, recipient_name: str, company_name: str, role_title: str) ‑> Dict[str, str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def draft_email(self, recipient_name: str, company_name: str, role_title: str) -&gt; Dict[str, str]:
+    &#34;&#34;&#34;PWR-334: Drafts formal application email.&#34;&#34;&#34;
+    return self.email_drafter.draft_application_email(
+        recipient_name=recipient_name, company_name=company_name, role_title=role_title, profile=self.profile
+    )</code></pre>
+</details>
+<div class="desc"><p>PWR-334: Drafts formal application email.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.find_contacts"><code class="name flex">
+<span>async def <span class="ident">find_contacts</span></span>(<span>self, company_name: str, role_title: Optional[str] = None) ‑> List[<a title="jarvis.career.models.ContactProfile" href="models.html#jarvis.career.models.ContactProfile">ContactProfile</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def find_contacts(self, company_name: str, role_title: Optional[str] = None) -&gt; List[ContactProfile]:
+    &#34;&#34;&#34;PWR-333: Finds key decision-maker contacts and prepares outreach drafts.&#34;&#34;&#34;
+    async with self.semaphore:
+        return self.contact_finder.find_contacts(company_name=company_name, role_title=role_title)</code></pre>
+</details>
+<div class="desc"><p>PWR-333: Finds key decision-maker contacts and prepares outreach drafts.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.generate_cover_letter"><code class="name flex">
+<span>async def <span class="ident">generate_cover_letter</span></span>(<span>self,<br>job_title: str,<br>company_name: str,<br>key_challenges: Optional[List[str]] = None) ‑> <a title="jarvis.career.models.CoverLetterArtifact" href="models.html#jarvis.career.models.CoverLetterArtifact">CoverLetterArtifact</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def generate_cover_letter(
+    self, job_title: str, company_name: str, key_challenges: Optional[List[str]] = None
+) -&gt; CoverLetterArtifact:
+    &#34;&#34;&#34;PWR-331: Tailors role-specific cover letter.&#34;&#34;&#34;
+    async with self.semaphore:
+        return self.cover_generator.generate_cover_letter(
+            job_title=job_title, company_name=company_name, key_challenges=key_challenges, profile=self.profile
+        )</code></pre>
+</details>
+<div class="desc"><p>PWR-331: Tailors role-specific cover letter.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.generate_resume"><code class="name flex">
+<span>async def <span class="ident">generate_resume</span></span>(<span>self,<br>job_title: str,<br>company_name: str,<br>target_keywords: Optional[List[str]] = None) ‑> <a title="jarvis.career.models.ResumeArtifact" href="models.html#jarvis.career.models.ResumeArtifact">ResumeArtifact</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def generate_resume(
+    self, job_title: str, company_name: str, target_keywords: Optional[List[str]] = None
+) -&gt; ResumeArtifact:
+    &#34;&#34;&#34;PWR-330: Tailors ATS resume markdown and PDF output.&#34;&#34;&#34;
+    async with self.semaphore:
+        keywords = target_keywords or self.profile.core_skills
+        return self.resume_generator.generate_tailored_resume(
+            job_title=job_title, company_name=company_name, target_keywords=keywords, profile=self.profile
+        )</code></pre>
+</details>
+<div class="desc"><p>PWR-330: Tailors ATS resume markdown and PDF output.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.list_applications"><code class="name flex">
+<span>def <span class="ident">list_applications</span></span>(<span>self, status: Optional[str] = None) ‑> List[<a title="jarvis.career.models.ApplicationEntry" href="models.html#jarvis.career.models.ApplicationEntry">ApplicationEntry</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_applications(self, status: Optional[str] = None) -&gt; List[ApplicationEntry]:
+    &#34;&#34;&#34;Lists tracked applications.&#34;&#34;&#34;
+    return self.pipeline_analytics.list_applications(status)</code></pre>
+</details>
+<div class="desc"><p>Lists tracked applications.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.prepare_interview"><code class="name flex">
+<span>def <span class="ident">prepare_interview</span></span>(<span>self, role_title: str, company_name: str, focus_tech: Optional[List[str]] = None) ‑> <a title="jarvis.career.models.InterviewPrepSession" href="models.html#jarvis.career.models.InterviewPrepSession">InterviewPrepSession</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def prepare_interview(
+    self, role_title: str, company_name: str, focus_tech: Optional[List[str]] = None
+) -&gt; InterviewPrepSession:
+    &#34;&#34;&#34;PWR-336: Produces interview questions and STAR prep.&#34;&#34;&#34;
+    return self.interview_prep_engine.prepare_interview(
+        role_title=role_title, company_name=company_name, focus_tech=focus_tech
+    )</code></pre>
+</details>
+<div class="desc"><p>PWR-336: Produces interview questions and STAR prep.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.reload_profile"><code class="name flex">
+<span>def <span class="ident">reload_profile</span></span>(<span>self) ‑> <a title="jarvis.career.models.UserCareerProfile" href="models.html#jarvis.career.models.UserCareerProfile">UserCareerProfile</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reload_profile(self) -&gt; UserCareerProfile:
+    &#34;&#34;&#34;Refreshes the profile in-memory.&#34;&#34;&#34;
+    self.profile = self._load_profile()
+    self.scanner = JobScanner(self.profile)
+    return self.profile</code></pre>
+</details>
+<div class="desc"><p>Refreshes the profile in-memory.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.research_company"><code class="name flex">
+<span>async def <span class="ident">research_company</span></span>(<span>self, company_name: str, domain: Optional[str] = None) ‑> <a title="jarvis.career.models.CompanyDossier" href="models.html#jarvis.career.models.CompanyDossier">CompanyDossier</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def research_company(self, company_name: str, domain: Optional[str] = None) -&gt; CompanyDossier:
+    &#34;&#34;&#34;PWR-332: Conducts deep company background research.&#34;&#34;&#34;
+    async with self.semaphore:
+        return self.company_researcher.research_company(company_name=company_name, domain=domain)</code></pre>
+</details>
+<div class="desc"><p>PWR-332: Conducts deep company background research.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.scan_job"><code class="name flex">
+<span>async def <span class="ident">scan_job</span></span>(<span>self,<br>job_title: str,<br>company_name: str,<br>description: str,<br>job_url: Optional[str] = None) ‑> <a title="jarvis.career.models.JobFitScore" href="models.html#jarvis.career.models.JobFitScore">JobFitScore</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def scan_job(
+    self, job_title: str, company_name: str, description: str, job_url: Optional[str] = None
+) -&gt; JobFitScore:
+    &#34;&#34;&#34;PWR-329: Scans a job and returns fit score within concurrency boundary.&#34;&#34;&#34;
+    async with self.semaphore:
+        score = self.scanner.scan_job(
+            job_title=job_title, company_name=company_name, description=description, job_url=job_url
+        )
+        # Automatically record into pipeline ledger
+        self.pipeline_analytics.record_application(
+            company_name=company_name,
+            job_title=job_title,
+            job_url=job_url,
+            fit_score=score.global_score,
+            status=&#34;saved&#34;,
+        )
+        return score</code></pre>
+</details>
+<div class="desc"><p>PWR-329: Scans a job and returns fit score within concurrency boundary.</p></div>
+</dd>
+<dt id="jarvis.career.service.CareerOpsService.update_application_status"><code class="name flex">
+<span>def <span class="ident">update_application_status</span></span>(<span>self, application_id: str, new_status: str, note: Optional[str] = None) ‑> <a title="jarvis.career.models.ApplicationEntry" href="models.html#jarvis.career.models.ApplicationEntry">ApplicationEntry</a> | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_application_status(
+    self, application_id: str, new_status: str, note: Optional[str] = None
+) -&gt; Optional[ApplicationEntry]:
+    &#34;&#34;&#34;Updates status of a tracked application.&#34;&#34;&#34;
+    return self.pipeline_analytics.update_status(application_id, new_status, note)</code></pre>
+</details>
+<div class="desc"><p>Updates status of a tracked application.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.career" href="index.html">jarvis.career</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.career.service.CareerOpsService" href="#jarvis.career.service.CareerOpsService">CareerOpsService</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.career.service.CareerOpsService.analyze_offer" href="#jarvis.career.service.CareerOpsService.analyze_offer">analyze_offer</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.analyze_pipeline" href="#jarvis.career.service.CareerOpsService.analyze_pipeline">analyze_pipeline</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.check_red_flags" href="#jarvis.career.service.CareerOpsService.check_red_flags">check_red_flags</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.draft_email" href="#jarvis.career.service.CareerOpsService.draft_email">draft_email</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.find_contacts" href="#jarvis.career.service.CareerOpsService.find_contacts">find_contacts</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.generate_cover_letter" href="#jarvis.career.service.CareerOpsService.generate_cover_letter">generate_cover_letter</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.generate_resume" href="#jarvis.career.service.CareerOpsService.generate_resume">generate_resume</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.list_applications" href="#jarvis.career.service.CareerOpsService.list_applications">list_applications</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.prepare_interview" href="#jarvis.career.service.CareerOpsService.prepare_interview">prepare_interview</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.reload_profile" href="#jarvis.career.service.CareerOpsService.reload_profile">reload_profile</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.research_company" href="#jarvis.career.service.CareerOpsService.research_company">research_company</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.scan_job" href="#jarvis.career.service.CareerOpsService.scan_job">scan_job</a></code></li>
+<li><code><a title="jarvis.career.service.CareerOpsService.update_application_status" href="#jarvis.career.service.CareerOpsService.update_application_status">update_application_status</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

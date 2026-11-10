@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.smart_home_powers API documentation</title>
+<meta name="description" content="JARVIS Smart Home Powers (PWR-256 to PWR-269) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.smart_home_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Smart Home Powers (PWR-256 to PWR-269).</p>
+<p>Provides BroadLink IR/RF device control, smart plugs, Wi-Fi smart bulbs,
+scene automation, and voice command dispatch for room control.
+Reference: Ayman William Stage 01 Smart Room Architecture.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.smart_home_powers.SmartHomePowers"><code class="flex name class">
+<span>class <span class="ident">SmartHomePowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SmartHomePowers:
+    &#34;&#34;&#34;Implementations for Room Control and Smart Home capabilities.&#34;&#34;&#34;
+
+    def __init__(self):
+        self.device_states: Dict[str, Dict[str, Any]] = {
+            # BroadLink IR / RF Layer
+            &#34;climate.ac&#34;: {
+                &#34;name&#34;: &#34;Room AC&#34;,
+                &#34;type&#34;: &#34;broadlink_ir&#34;,
+                &#34;state&#34;: &#34;off&#34;,
+                &#34;temperature&#34;: 24,
+                &#34;target_temperature&#34;: 24,
+                &#34;mode&#34;: &#34;cool&#34;,
+                &#34;fan_speed&#34;: &#34;auto&#34;,
+            },
+            &#34;media.projector_tv&#34;: {
+                &#34;name&#34;: &#34;Living Room Projector / TV&#34;,
+                &#34;type&#34;: &#34;broadlink_ir&#34;,
+                &#34;state&#34;: &#34;off&#34;,
+                &#34;input_source&#34;: &#34;HDMI1&#34;,
+                &#34;volume&#34;: 35,
+                &#34;muted&#34;: False,
+            },
+            # Wi-Fi Smart Plugs (High-load / Appliance)
+            &#34;switch.geyser&#34;: {
+                &#34;name&#34;: &#34;Bathroom Geyser&#34;,
+                &#34;type&#34;: &#34;smart_plug&#34;,
+                &#34;state&#34;: &#34;off&#34;,
+                &#34;power_watts&#34;: 0,
+                &#34;auto_off_minutes&#34;: 15,
+                &#34;timer_active&#34;: False,
+            },
+            &#34;switch.workstation&#34;: {
+                &#34;name&#34;: &#34;Workstation Power Dock&#34;,
+                &#34;type&#34;: &#34;smart_plug&#34;,
+                &#34;state&#34;: &#34;on&#34;,
+                &#34;power_watts&#34;: 120,
+            },
+            # Wi-Fi Smart Bulbs &amp; Lighting
+            &#34;light.desk_lamp&#34;: {
+                &#34;name&#34;: &#34;Office Desk Lamp&#34;,
+                &#34;type&#34;: &#34;smart_bulb&#34;,
+                &#34;state&#34;: &#34;on&#34;,
+                &#34;brightness&#34;: 85,
+                &#34;color_temp&#34;: 4500,
+            },
+            &#34;light.ambient_rgb&#34;: {
+                &#34;name&#34;: &#34;Ambient Ceiling Strips&#34;,
+                &#34;type&#34;: &#34;smart_bulb&#34;,
+                &#34;state&#34;: &#34;off&#34;,
+                &#34;brightness&#34;: 0,
+                &#34;rgb_color&#34;: [0, 229, 255],  # Cyan
+            },
+            &#34;light.living_room&#34;: {
+                &#34;name&#34;: &#34;Main Room Lights&#34;,
+                &#34;type&#34;: &#34;smart_bulb&#34;,
+                &#34;state&#34;: &#34;off&#34;,
+                &#34;brightness&#34;: 0,
+                &#34;color_temp&#34;: 2700,
+            },
+            &#34;lock.front_door&#34;: {
+                &#34;name&#34;: &#34;Main Entrance Lock&#34;,
+                &#34;type&#34;: &#34;security_lock&#34;,
+                &#34;state&#34;: &#34;locked&#34;,
+            },
+        }
+
+    def get_all_devices(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-267: Queries all registered room devices and current states.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-267&#34;,
+            &#34;device_count&#34;: len(self.device_states),
+            &#34;devices&#34;: self.device_states,
+        }
+
+    def get_device_status(self, entity_id: Optional[str] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-238: Queries a specific device state, or all devices when entity_id is omitted.&#34;&#34;&#34;
+        if entity_id is None:
+            return self.get_all_devices()
+        dev = self.device_states.get(entity_id)
+        if not dev:
+            return {&#34;power_id&#34;: &#34;PWR-238&#34;, &#34;entity_id&#34;: entity_id, &#34;state&#34;: &#34;unknown&#34;, &#34;error&#34;: &#34;Device not found&#34;}
+        return {&#34;power_id&#34;: &#34;PWR-238&#34;, &#34;entity_id&#34;: entity_id, &#34;data&#34;: dev}
+
+    def control_climate(
+        self,
+        action: str = &#34;toggle&#34;,
+        temperature: Optional[int] = None,
+        mode: Optional[str] = None,
+        fan_speed: Optional[str] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-257: Controls AC and climate devices via BroadLink IR.&#34;&#34;&#34;
+        ac = self.device_states[&#34;climate.ac&#34;]
+
+        if action == &#34;on&#34;:
+            ac[&#34;state&#34;] = &#34;on&#34;
+        elif action == &#34;off&#34;:
+            ac[&#34;state&#34;] = &#34;off&#34;
+        elif action == &#34;toggle&#34;:
+            ac[&#34;state&#34;] = &#34;off&#34; if ac[&#34;state&#34;] == &#34;on&#34; else &#34;on&#34;
+
+        if temperature is not None:
+            ac[&#34;target_temperature&#34;] = max(16, min(30, int(temperature)))
+            ac[&#34;state&#34;] = &#34;on&#34;
+
+        if mode in [&#34;cool&#34;, &#34;heat&#34;, &#34;fan&#34;, &#34;dry&#34;, &#34;auto&#34;]:
+            ac[&#34;mode&#34;] = mode
+
+        if fan_speed in [&#34;low&#34;, &#34;medium&#34;, &#34;high&#34;, &#34;auto&#34;]:
+            ac[&#34;fan_speed&#34;] = fan_speed
+
+        logger.info(f&#34;BroadLink IR AC updated: {ac}&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-257&#34;,
+            &#34;device&#34;: &#34;climate.ac&#34;,
+            &#34;state&#34;: ac[&#34;state&#34;],
+            &#34;target_temperature&#34;: ac[&#34;target_temperature&#34;],
+            &#34;mode&#34;: ac[&#34;mode&#34;],
+            &#34;fan_speed&#34;: ac[&#34;fan_speed&#34;],
+            &#34;feedback&#34;: f&#34;Air conditioning is now {ac[&#39;state&#39;]} at {ac[&#39;target_temperature&#39;]} degrees Celsius ({ac[&#39;mode&#39;]} mode).&#34;,
+        }
+
+    def control_media(
+        self,
+        action: str = &#34;toggle&#34;,
+        device_id: str = &#34;media.projector_tv&#34;,
+        input_source: Optional[str] = None,
+        volume: Optional[int] = None,
+        mute: Optional[bool] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-259: Controls Projector / TV and media receivers via BroadLink IR.&#34;&#34;&#34;
+        media = self.device_states.get(device_id, self.device_states[&#34;media.projector_tv&#34;])
+
+        if action == &#34;on&#34;:
+            media[&#34;state&#34;] = &#34;on&#34;
+        elif action == &#34;off&#34;:
+            media[&#34;state&#34;] = &#34;off&#34;
+        elif action == &#34;toggle&#34;:
+            media[&#34;state&#34;] = &#34;off&#34; if media[&#34;state&#34;] == &#34;on&#34; else &#34;on&#34;
+
+        if input_source:
+            media[&#34;input_source&#34;] = input_source.upper()
+            media[&#34;state&#34;] = &#34;on&#34;
+
+        if volume is not None:
+            media[&#34;volume&#34;] = max(0, min(100, int(volume)))
+            media[&#34;muted&#34;] = False
+
+        if mute is not None:
+            media[&#34;muted&#34;] = bool(mute)
+
+        logger.info(f&#34;BroadLink IR Media updated: {media}&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-259&#34;,
+            &#34;device&#34;: device_id,
+            &#34;state&#34;: media[&#34;state&#34;],
+            &#34;input_source&#34;: media[&#34;input_source&#34;],
+            &#34;volume&#34;: media[&#34;volume&#34;],
+            &#34;muted&#34;: media[&#34;muted&#34;],
+            &#34;feedback&#34;: f&#34;{media[&#39;name&#39;]} is {media[&#39;state&#39;]}&#34;
+            + (f&#34; on {media[&#39;input_source&#39;]}.&#34; if media[&#34;state&#34;] == &#34;on&#34; else &#34;.&#34;),
+        }
+
+    def control_plug(
+        self,
+        entity_id: str,
+        state: str = &#34;toggle&#34;,
+        auto_off_minutes: Optional[int] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-258: Controls Wi-Fi smart plugs with safety timer support.&#34;&#34;&#34;
+        if entity_id not in self.device_states:
+            self.device_states[entity_id] = {&#34;name&#34;: entity_id, &#34;type&#34;: &#34;smart_plug&#34;, &#34;state&#34;: &#34;off&#34;}
+
+        dev = self.device_states[entity_id]
+
+        if state == &#34;toggle&#34;:
+            dev[&#34;state&#34;] = &#34;off&#34; if dev.get(&#34;state&#34;) == &#34;on&#34; else &#34;on&#34;
+        else:
+            dev[&#34;state&#34;] = state.lower()
+
+        if dev[&#34;state&#34;] == &#34;on&#34;:
+            timer = auto_off_minutes or dev.get(&#34;auto_off_minutes&#34;, 15)
+            dev[&#34;timer_active&#34;] = True
+            dev[&#34;auto_off_minutes&#34;] = timer
+            msg = f&#34;{dev[&#39;name&#39;]} turned ON with a {timer}-minute auto-off safety shutoff.&#34;
+        else:
+            dev[&#34;timer_active&#34;] = False
+            msg = f&#34;{dev[&#39;name&#39;]} turned OFF.&#34;
+
+        logger.info(f&#34;Smart Plug updated: {dev}&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-258&#34;,
+            &#34;entity_id&#34;: entity_id,
+            &#34;state&#34;: dev[&#34;state&#34;],
+            &#34;timer_active&#34;: dev.get(&#34;timer_active&#34;, False),
+            &#34;feedback&#34;: msg,
+        }
+
+    def control_lights(
+        self,
+        entity_id: str = &#34;light.ambient_rgb&#34;,
+        state: str = &#34;toggle&#34;,
+        brightness: Optional[int] = None,
+        rgb_color: Optional[List[int]] = None,
+        color_temp: Optional[int] = None,
+    ) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-256: Controls Wi-Fi smart bulb color, brightness, and state.&#34;&#34;&#34;
+        if entity_id not in self.device_states:
+            self.device_states[entity_id] = {&#34;name&#34;: entity_id, &#34;type&#34;: &#34;smart_bulb&#34;, &#34;state&#34;: &#34;off&#34;}
+
+        bulb = self.device_states[entity_id]
+
+        if state == &#34;toggle&#34;:
+            bulb[&#34;state&#34;] = &#34;off&#34; if bulb.get(&#34;state&#34;) == &#34;on&#34; else &#34;on&#34;
+        elif state in [&#34;on&#34;, &#34;off&#34;]:
+            bulb[&#34;state&#34;] = state
+
+        if brightness is not None:
+            bulb[&#34;brightness&#34;] = max(0, min(100, int(brightness)))
+            if bulb[&#34;brightness&#34;] &gt; 0:
+                bulb[&#34;state&#34;] = &#34;on&#34;
+            else:
+                bulb[&#34;state&#34;] = &#34;off&#34;
+
+        if rgb_color and len(rgb_color) == 3:
+            bulb[&#34;rgb_color&#34;] = [max(0, min(255, c)) for c in rgb_color]
+            bulb[&#34;state&#34;] = &#34;on&#34;
+
+        if color_temp is not None:
+            bulb[&#34;color_temp&#34;] = max(2000, min(6500, int(color_temp)))
+
+        logger.info(f&#34;Smart Light updated: {bulb}&#34;)
+        return {
+            &#34;power_id&#34;: &#34;PWR-256&#34;,
+            &#34;entity_id&#34;: entity_id,
+            &#34;state&#34;: bulb[&#34;state&#34;],
+            &#34;brightness&#34;: bulb.get(&#34;brightness&#34;, 100),
+            &#34;rgb_color&#34;: bulb.get(&#34;rgb_color&#34;),
+            &#34;feedback&#34;: f&#34;{bulb[&#39;name&#39;]} set to {bulb[&#39;state&#39;]} (Brightness: {bulb.get(&#39;brightness&#39;, 100)}%).&#34;,
+        }
+
+    def activate_scene(self, scene_name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-260: Executes synchronized multi-device room scene.&#34;&#34;&#34;
+        scene = scene_name.lower().strip()
+
+        if &#34;work&#34; in scene or &#34;focus&#34; in scene:
+            self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;on&#34;, brightness=100, color_temp=4500)
+            self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;on&#34;, brightness=30, rgb_color=[0, 229, 255])
+            self.control_climate(action=&#34;on&#34;, temperature=24, mode=&#34;cool&#34;)
+            self.control_media(action=&#34;off&#34;)
+            desc = &#34;Work Focus Scene activated. Desk lamp at 100%, ambient cyan accent at 30%, AC set to 24C, projector off.&#34;
+
+        elif &#34;movie&#34; in scene or &#34;cinema&#34; in scene:
+            self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;off&#34;)
+            self.control_lights(&#34;light.living_room&#34;, state=&#34;off&#34;)
+            self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;on&#34;, brightness=12, rgb_color=[10, 20, 90])
+            self.control_media(action=&#34;on&#34;, input_source=&#34;HDMI1&#34;, volume=45)
+            self.control_climate(action=&#34;on&#34;, temperature=22, mode=&#34;cool&#34;)
+            desc = &#34;Movie Night Scene activated. Room lights dimmed to 12% deep blue, projector powered on HDMI1, AC set to 22C.&#34;
+
+        elif &#34;sleep&#34; in scene or &#34;night&#34; in scene:
+            self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;off&#34;)
+            self.control_lights(&#34;light.living_room&#34;, state=&#34;off&#34;)
+            self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;off&#34;)
+            self.control_media(action=&#34;off&#34;)
+            self.control_plug(&#34;switch.geyser&#34;, state=&#34;off&#34;)
+            self.control_climate(action=&#34;on&#34;, temperature=25, mode=&#34;cool&#34;, fan_speed=&#34;low&#34;)
+            desc = &#34;Sleep Mode activated. All room lights and appliances powered down, AC set to sleep mode 25C.&#34;
+
+        elif &#34;morning&#34; in scene or &#34;wake&#34; in scene:
+            self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;on&#34;, brightness=45, rgb_color=[255, 180, 100])
+            self.control_plug(&#34;switch.geyser&#34;, state=&#34;on&#34;, auto_off_minutes=15)
+            self.control_climate(action=&#34;off&#34;)
+            desc = &#34;Morning Wake Scene activated. Warm sunrise lighting at 45%, geyser switched on with 15m timer.&#34;
+
+        else:
+            return {
+                &#34;power_id&#34;: &#34;PWR-260&#34;,
+                &#34;scene&#34;: scene_name,
+                &#34;status&#34;: &#34;unrecognized&#34;,
+                &#34;feedback&#34;: f&#34;Scene &#39;{scene_name}&#39; not defined. Available scenes: work_mode, movie_night, sleep_mode, morning_wake.&#34;,
+            }
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-260&#34;,
+            &#34;scene&#34;: scene_name,
+            &#34;status&#34;: &#34;active&#34;,
+            &#34;feedback&#34;: desc,
+        }
+
+    def process_voice_command(self, transcript: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-269: Parses natural language smart-room voice utterances into device actions.&#34;&#34;&#34;
+        t = transcript.lower().strip()
+
+        # 1. AC commands
+        if &#34;ac&#34; in t or &#34;air condition&#34; in t:
+            temp_match = re.search(r&#34;(\d{2})&#34;, t)
+            target_temp = int(temp_match.group(1)) if temp_match else None
+
+            if &#34;off&#34; in t:
+                return self.control_climate(action=&#34;off&#34;)
+            elif &#34;on&#34; in t or target_temp:
+                return self.control_climate(action=&#34;on&#34;, temperature=target_temp)
+            return self.control_climate(action=&#34;toggle&#34;)
+
+        # 2. Projector / TV commands
+        if &#34;projector&#34; in t or &#34;tv&#34; in t or &#34;television&#34; in t:
+            if &#34;off&#34; in t:
+                return self.control_media(action=&#34;off&#34;)
+            elif &#34;on&#34; in t:
+                return self.control_media(action=&#34;on&#34;)
+            return self.control_media(action=&#34;toggle&#34;)
+
+        # 3. Geyser commands
+        if &#34;geyser&#34; in t or &#34;water heater&#34; in t:
+            if &#34;off&#34; in t:
+                return self.control_plug(&#34;switch.geyser&#34;, state=&#34;off&#34;)
+            return self.control_plug(&#34;switch.geyser&#34;, state=&#34;on&#34;, auto_off_minutes=15)
+
+        # 4. Light commands
+        if &#34;light&#34; in t or &#34;lamp&#34; in t:
+            if &#34;off&#34; in t:
+                self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;off&#34;)
+                self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;off&#34;)
+                return self.control_lights(&#34;light.living_room&#34;, state=&#34;off&#34;)
+            elif &#34;on&#34; in t:
+                return self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;on&#34;, brightness=100)
+            elif &#34;dim&#34; in t:
+                return self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;on&#34;, brightness=20)
+            return self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;toggle&#34;)
+
+        # 5. Scene triggers
+        if &#34;movie&#34; in t:
+            return self.activate_scene(&#34;movie_night&#34;)
+        if &#34;work&#34; in t or &#34;focus&#34; in t:
+            return self.activate_scene(&#34;work_mode&#34;)
+        if &#34;sleep&#34; in t or &#34;goodnight&#34; in t:
+            return self.activate_scene(&#34;sleep_mode&#34;)
+        if &#34;morning&#34; in t or &#34;wake up&#34; in t:
+            return self.activate_scene(&#34;morning_wake&#34;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-269&#34;,
+            &#34;status&#34;: &#34;unhandled&#34;,
+            &#34;feedback&#34;: f&#34;No smart room command mapped for: &#39;{transcript}&#39;&#34;,
+        }</code></pre>
+</details>
+<div class="desc"><p>Implementations for Room Control and Smart Home capabilities.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.smart_home_powers.SmartHomePowers.activate_scene"><code class="name flex">
+<span>def <span class="ident">activate_scene</span></span>(<span>self, scene_name: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def activate_scene(self, scene_name: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-260: Executes synchronized multi-device room scene.&#34;&#34;&#34;
+    scene = scene_name.lower().strip()
+
+    if &#34;work&#34; in scene or &#34;focus&#34; in scene:
+        self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;on&#34;, brightness=100, color_temp=4500)
+        self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;on&#34;, brightness=30, rgb_color=[0, 229, 255])
+        self.control_climate(action=&#34;on&#34;, temperature=24, mode=&#34;cool&#34;)
+        self.control_media(action=&#34;off&#34;)
+        desc = &#34;Work Focus Scene activated. Desk lamp at 100%, ambient cyan accent at 30%, AC set to 24C, projector off.&#34;
+
+    elif &#34;movie&#34; in scene or &#34;cinema&#34; in scene:
+        self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;off&#34;)
+        self.control_lights(&#34;light.living_room&#34;, state=&#34;off&#34;)
+        self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;on&#34;, brightness=12, rgb_color=[10, 20, 90])
+        self.control_media(action=&#34;on&#34;, input_source=&#34;HDMI1&#34;, volume=45)
+        self.control_climate(action=&#34;on&#34;, temperature=22, mode=&#34;cool&#34;)
+        desc = &#34;Movie Night Scene activated. Room lights dimmed to 12% deep blue, projector powered on HDMI1, AC set to 22C.&#34;
+
+    elif &#34;sleep&#34; in scene or &#34;night&#34; in scene:
+        self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;off&#34;)
+        self.control_lights(&#34;light.living_room&#34;, state=&#34;off&#34;)
+        self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;off&#34;)
+        self.control_media(action=&#34;off&#34;)
+        self.control_plug(&#34;switch.geyser&#34;, state=&#34;off&#34;)
+        self.control_climate(action=&#34;on&#34;, temperature=25, mode=&#34;cool&#34;, fan_speed=&#34;low&#34;)
+        desc = &#34;Sleep Mode activated. All room lights and appliances powered down, AC set to sleep mode 25C.&#34;
+
+    elif &#34;morning&#34; in scene or &#34;wake&#34; in scene:
+        self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;on&#34;, brightness=45, rgb_color=[255, 180, 100])
+        self.control_plug(&#34;switch.geyser&#34;, state=&#34;on&#34;, auto_off_minutes=15)
+        self.control_climate(action=&#34;off&#34;)
+        desc = &#34;Morning Wake Scene activated. Warm sunrise lighting at 45%, geyser switched on with 15m timer.&#34;
+
+    else:
+        return {
+            &#34;power_id&#34;: &#34;PWR-260&#34;,
+            &#34;scene&#34;: scene_name,
+            &#34;status&#34;: &#34;unrecognized&#34;,
+            &#34;feedback&#34;: f&#34;Scene &#39;{scene_name}&#39; not defined. Available scenes: work_mode, movie_night, sleep_mode, morning_wake.&#34;,
+        }
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-260&#34;,
+        &#34;scene&#34;: scene_name,
+        &#34;status&#34;: &#34;active&#34;,
+        &#34;feedback&#34;: desc,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-260: Executes synchronized multi-device room scene.</p></div>
+</dd>
+<dt id="jarvis.powers.smart_home_powers.SmartHomePowers.control_climate"><code class="name flex">
+<span>def <span class="ident">control_climate</span></span>(<span>self,<br>action: str = 'toggle',<br>temperature: Optional[int] = None,<br>mode: Optional[str] = None,<br>fan_speed: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def control_climate(
+    self,
+    action: str = &#34;toggle&#34;,
+    temperature: Optional[int] = None,
+    mode: Optional[str] = None,
+    fan_speed: Optional[str] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-257: Controls AC and climate devices via BroadLink IR.&#34;&#34;&#34;
+    ac = self.device_states[&#34;climate.ac&#34;]
+
+    if action == &#34;on&#34;:
+        ac[&#34;state&#34;] = &#34;on&#34;
+    elif action == &#34;off&#34;:
+        ac[&#34;state&#34;] = &#34;off&#34;
+    elif action == &#34;toggle&#34;:
+        ac[&#34;state&#34;] = &#34;off&#34; if ac[&#34;state&#34;] == &#34;on&#34; else &#34;on&#34;
+
+    if temperature is not None:
+        ac[&#34;target_temperature&#34;] = max(16, min(30, int(temperature)))
+        ac[&#34;state&#34;] = &#34;on&#34;
+
+    if mode in [&#34;cool&#34;, &#34;heat&#34;, &#34;fan&#34;, &#34;dry&#34;, &#34;auto&#34;]:
+        ac[&#34;mode&#34;] = mode
+
+    if fan_speed in [&#34;low&#34;, &#34;medium&#34;, &#34;high&#34;, &#34;auto&#34;]:
+        ac[&#34;fan_speed&#34;] = fan_speed
+
+    logger.info(f&#34;BroadLink IR AC updated: {ac}&#34;)
+    return {
+        &#34;power_id&#34;: &#34;PWR-257&#34;,
+        &#34;device&#34;: &#34;climate.ac&#34;,
+        &#34;state&#34;: ac[&#34;state&#34;],
+        &#34;target_temperature&#34;: ac[&#34;target_temperature&#34;],
+        &#34;mode&#34;: ac[&#34;mode&#34;],
+        &#34;fan_speed&#34;: ac[&#34;fan_speed&#34;],
+        &#34;feedback&#34;: f&#34;Air conditioning is now {ac[&#39;state&#39;]} at {ac[&#39;target_temperature&#39;]} degrees Celsius ({ac[&#39;mode&#39;]} mode).&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-257: Controls AC and climate devices via BroadLink IR.</p></div>
+</dd>
+<dt id="jarvis.powers.smart_home_powers.SmartHomePowers.control_lights"><code class="name flex">
+<span>def <span class="ident">control_lights</span></span>(<span>self,<br>entity_id: str = 'light.ambient_rgb',<br>state: str = 'toggle',<br>brightness: Optional[int] = None,<br>rgb_color: Optional[List[int]] = None,<br>color_temp: Optional[int] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def control_lights(
+    self,
+    entity_id: str = &#34;light.ambient_rgb&#34;,
+    state: str = &#34;toggle&#34;,
+    brightness: Optional[int] = None,
+    rgb_color: Optional[List[int]] = None,
+    color_temp: Optional[int] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-256: Controls Wi-Fi smart bulb color, brightness, and state.&#34;&#34;&#34;
+    if entity_id not in self.device_states:
+        self.device_states[entity_id] = {&#34;name&#34;: entity_id, &#34;type&#34;: &#34;smart_bulb&#34;, &#34;state&#34;: &#34;off&#34;}
+
+    bulb = self.device_states[entity_id]
+
+    if state == &#34;toggle&#34;:
+        bulb[&#34;state&#34;] = &#34;off&#34; if bulb.get(&#34;state&#34;) == &#34;on&#34; else &#34;on&#34;
+    elif state in [&#34;on&#34;, &#34;off&#34;]:
+        bulb[&#34;state&#34;] = state
+
+    if brightness is not None:
+        bulb[&#34;brightness&#34;] = max(0, min(100, int(brightness)))
+        if bulb[&#34;brightness&#34;] &gt; 0:
+            bulb[&#34;state&#34;] = &#34;on&#34;
+        else:
+            bulb[&#34;state&#34;] = &#34;off&#34;
+
+    if rgb_color and len(rgb_color) == 3:
+        bulb[&#34;rgb_color&#34;] = [max(0, min(255, c)) for c in rgb_color]
+        bulb[&#34;state&#34;] = &#34;on&#34;
+
+    if color_temp is not None:
+        bulb[&#34;color_temp&#34;] = max(2000, min(6500, int(color_temp)))
+
+    logger.info(f&#34;Smart Light updated: {bulb}&#34;)
+    return {
+        &#34;power_id&#34;: &#34;PWR-256&#34;,
+        &#34;entity_id&#34;: entity_id,
+        &#34;state&#34;: bulb[&#34;state&#34;],
+        &#34;brightness&#34;: bulb.get(&#34;brightness&#34;, 100),
+        &#34;rgb_color&#34;: bulb.get(&#34;rgb_color&#34;),
+        &#34;feedback&#34;: f&#34;{bulb[&#39;name&#39;]} set to {bulb[&#39;state&#39;]} (Brightness: {bulb.get(&#39;brightness&#39;, 100)}%).&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-256: Controls Wi-Fi smart bulb color, brightness, and state.</p></div>
+</dd>
+<dt id="jarvis.powers.smart_home_powers.SmartHomePowers.control_media"><code class="name flex">
+<span>def <span class="ident">control_media</span></span>(<span>self,<br>action: str = 'toggle',<br>device_id: str = 'media.projector_tv',<br>input_source: Optional[str] = None,<br>volume: Optional[int] = None,<br>mute: Optional[bool] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def control_media(
+    self,
+    action: str = &#34;toggle&#34;,
+    device_id: str = &#34;media.projector_tv&#34;,
+    input_source: Optional[str] = None,
+    volume: Optional[int] = None,
+    mute: Optional[bool] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-259: Controls Projector / TV and media receivers via BroadLink IR.&#34;&#34;&#34;
+    media = self.device_states.get(device_id, self.device_states[&#34;media.projector_tv&#34;])
+
+    if action == &#34;on&#34;:
+        media[&#34;state&#34;] = &#34;on&#34;
+    elif action == &#34;off&#34;:
+        media[&#34;state&#34;] = &#34;off&#34;
+    elif action == &#34;toggle&#34;:
+        media[&#34;state&#34;] = &#34;off&#34; if media[&#34;state&#34;] == &#34;on&#34; else &#34;on&#34;
+
+    if input_source:
+        media[&#34;input_source&#34;] = input_source.upper()
+        media[&#34;state&#34;] = &#34;on&#34;
+
+    if volume is not None:
+        media[&#34;volume&#34;] = max(0, min(100, int(volume)))
+        media[&#34;muted&#34;] = False
+
+    if mute is not None:
+        media[&#34;muted&#34;] = bool(mute)
+
+    logger.info(f&#34;BroadLink IR Media updated: {media}&#34;)
+    return {
+        &#34;power_id&#34;: &#34;PWR-259&#34;,
+        &#34;device&#34;: device_id,
+        &#34;state&#34;: media[&#34;state&#34;],
+        &#34;input_source&#34;: media[&#34;input_source&#34;],
+        &#34;volume&#34;: media[&#34;volume&#34;],
+        &#34;muted&#34;: media[&#34;muted&#34;],
+        &#34;feedback&#34;: f&#34;{media[&#39;name&#39;]} is {media[&#39;state&#39;]}&#34;
+        + (f&#34; on {media[&#39;input_source&#39;]}.&#34; if media[&#34;state&#34;] == &#34;on&#34; else &#34;.&#34;),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-259: Controls Projector / TV and media receivers via BroadLink IR.</p></div>
+</dd>
+<dt id="jarvis.powers.smart_home_powers.SmartHomePowers.control_plug"><code class="name flex">
+<span>def <span class="ident">control_plug</span></span>(<span>self,<br>entity_id: str,<br>state: str = 'toggle',<br>auto_off_minutes: Optional[int] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def control_plug(
+    self,
+    entity_id: str,
+    state: str = &#34;toggle&#34;,
+    auto_off_minutes: Optional[int] = None,
+) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-258: Controls Wi-Fi smart plugs with safety timer support.&#34;&#34;&#34;
+    if entity_id not in self.device_states:
+        self.device_states[entity_id] = {&#34;name&#34;: entity_id, &#34;type&#34;: &#34;smart_plug&#34;, &#34;state&#34;: &#34;off&#34;}
+
+    dev = self.device_states[entity_id]
+
+    if state == &#34;toggle&#34;:
+        dev[&#34;state&#34;] = &#34;off&#34; if dev.get(&#34;state&#34;) == &#34;on&#34; else &#34;on&#34;
+    else:
+        dev[&#34;state&#34;] = state.lower()
+
+    if dev[&#34;state&#34;] == &#34;on&#34;:
+        timer = auto_off_minutes or dev.get(&#34;auto_off_minutes&#34;, 15)
+        dev[&#34;timer_active&#34;] = True
+        dev[&#34;auto_off_minutes&#34;] = timer
+        msg = f&#34;{dev[&#39;name&#39;]} turned ON with a {timer}-minute auto-off safety shutoff.&#34;
+    else:
+        dev[&#34;timer_active&#34;] = False
+        msg = f&#34;{dev[&#39;name&#39;]} turned OFF.&#34;
+
+    logger.info(f&#34;Smart Plug updated: {dev}&#34;)
+    return {
+        &#34;power_id&#34;: &#34;PWR-258&#34;,
+        &#34;entity_id&#34;: entity_id,
+        &#34;state&#34;: dev[&#34;state&#34;],
+        &#34;timer_active&#34;: dev.get(&#34;timer_active&#34;, False),
+        &#34;feedback&#34;: msg,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-258: Controls Wi-Fi smart plugs with safety timer support.</p></div>
+</dd>
+<dt id="jarvis.powers.smart_home_powers.SmartHomePowers.get_all_devices"><code class="name flex">
+<span>def <span class="ident">get_all_devices</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all_devices(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-267: Queries all registered room devices and current states.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-267&#34;,
+        &#34;device_count&#34;: len(self.device_states),
+        &#34;devices&#34;: self.device_states,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-267: Queries all registered room devices and current states.</p></div>
+</dd>
+<dt id="jarvis.powers.smart_home_powers.SmartHomePowers.get_device_status"><code class="name flex">
+<span>def <span class="ident">get_device_status</span></span>(<span>self, entity_id: Optional[str] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_device_status(self, entity_id: Optional[str] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-238: Queries a specific device state, or all devices when entity_id is omitted.&#34;&#34;&#34;
+    if entity_id is None:
+        return self.get_all_devices()
+    dev = self.device_states.get(entity_id)
+    if not dev:
+        return {&#34;power_id&#34;: &#34;PWR-238&#34;, &#34;entity_id&#34;: entity_id, &#34;state&#34;: &#34;unknown&#34;, &#34;error&#34;: &#34;Device not found&#34;}
+    return {&#34;power_id&#34;: &#34;PWR-238&#34;, &#34;entity_id&#34;: entity_id, &#34;data&#34;: dev}</code></pre>
+</details>
+<div class="desc"><p>PWR-238: Queries a specific device state, or all devices when entity_id is omitted.</p></div>
+</dd>
+<dt id="jarvis.powers.smart_home_powers.SmartHomePowers.process_voice_command"><code class="name flex">
+<span>def <span class="ident">process_voice_command</span></span>(<span>self, transcript: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_voice_command(self, transcript: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-269: Parses natural language smart-room voice utterances into device actions.&#34;&#34;&#34;
+    t = transcript.lower().strip()
+
+    # 1. AC commands
+    if &#34;ac&#34; in t or &#34;air condition&#34; in t:
+        temp_match = re.search(r&#34;(\d{2})&#34;, t)
+        target_temp = int(temp_match.group(1)) if temp_match else None
+
+        if &#34;off&#34; in t:
+            return self.control_climate(action=&#34;off&#34;)
+        elif &#34;on&#34; in t or target_temp:
+            return self.control_climate(action=&#34;on&#34;, temperature=target_temp)
+        return self.control_climate(action=&#34;toggle&#34;)
+
+    # 2. Projector / TV commands
+    if &#34;projector&#34; in t or &#34;tv&#34; in t or &#34;television&#34; in t:
+        if &#34;off&#34; in t:
+            return self.control_media(action=&#34;off&#34;)
+        elif &#34;on&#34; in t:
+            return self.control_media(action=&#34;on&#34;)
+        return self.control_media(action=&#34;toggle&#34;)
+
+    # 3. Geyser commands
+    if &#34;geyser&#34; in t or &#34;water heater&#34; in t:
+        if &#34;off&#34; in t:
+            return self.control_plug(&#34;switch.geyser&#34;, state=&#34;off&#34;)
+        return self.control_plug(&#34;switch.geyser&#34;, state=&#34;on&#34;, auto_off_minutes=15)
+
+    # 4. Light commands
+    if &#34;light&#34; in t or &#34;lamp&#34; in t:
+        if &#34;off&#34; in t:
+            self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;off&#34;)
+            self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;off&#34;)
+            return self.control_lights(&#34;light.living_room&#34;, state=&#34;off&#34;)
+        elif &#34;on&#34; in t:
+            return self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;on&#34;, brightness=100)
+        elif &#34;dim&#34; in t:
+            return self.control_lights(&#34;light.ambient_rgb&#34;, state=&#34;on&#34;, brightness=20)
+        return self.control_lights(&#34;light.desk_lamp&#34;, state=&#34;toggle&#34;)
+
+    # 5. Scene triggers
+    if &#34;movie&#34; in t:
+        return self.activate_scene(&#34;movie_night&#34;)
+    if &#34;work&#34; in t or &#34;focus&#34; in t:
+        return self.activate_scene(&#34;work_mode&#34;)
+    if &#34;sleep&#34; in t or &#34;goodnight&#34; in t:
+        return self.activate_scene(&#34;sleep_mode&#34;)
+    if &#34;morning&#34; in t or &#34;wake up&#34; in t:
+        return self.activate_scene(&#34;morning_wake&#34;)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-269&#34;,
+        &#34;status&#34;: &#34;unhandled&#34;,
+        &#34;feedback&#34;: f&#34;No smart room command mapped for: &#39;{transcript}&#39;&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-269: Parses natural language smart-room voice utterances into device actions.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.smart_home_powers.SmartHomePowers" href="#jarvis.powers.smart_home_powers.SmartHomePowers">SmartHomePowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.smart_home_powers.SmartHomePowers.activate_scene" href="#jarvis.powers.smart_home_powers.SmartHomePowers.activate_scene">activate_scene</a></code></li>
+<li><code><a title="jarvis.powers.smart_home_powers.SmartHomePowers.control_climate" href="#jarvis.powers.smart_home_powers.SmartHomePowers.control_climate">control_climate</a></code></li>
+<li><code><a title="jarvis.powers.smart_home_powers.SmartHomePowers.control_lights" href="#jarvis.powers.smart_home_powers.SmartHomePowers.control_lights">control_lights</a></code></li>
+<li><code><a title="jarvis.powers.smart_home_powers.SmartHomePowers.control_media" href="#jarvis.powers.smart_home_powers.SmartHomePowers.control_media">control_media</a></code></li>
+<li><code><a title="jarvis.powers.smart_home_powers.SmartHomePowers.control_plug" href="#jarvis.powers.smart_home_powers.SmartHomePowers.control_plug">control_plug</a></code></li>
+<li><code><a title="jarvis.powers.smart_home_powers.SmartHomePowers.get_all_devices" href="#jarvis.powers.smart_home_powers.SmartHomePowers.get_all_devices">get_all_devices</a></code></li>
+<li><code><a title="jarvis.powers.smart_home_powers.SmartHomePowers.get_device_status" href="#jarvis.powers.smart_home_powers.SmartHomePowers.get_device_status">get_device_status</a></code></li>
+<li><code><a title="jarvis.powers.smart_home_powers.SmartHomePowers.process_voice_command" href="#jarvis.powers.smart_home_powers.SmartHomePowers.process_voice_command">process_voice_command</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

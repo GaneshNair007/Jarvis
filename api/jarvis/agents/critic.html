@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.agents.critic API documentation</title>
+<meta name="description" content="JARVIS Critic Agent (PWR-294 / PWR-295)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.agents.critic</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Critic Agent (PWR-294 / PWR-295)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration</p>
+<p>Reviews execution outputs for:
+- Correctness &amp; factual accuracy
+- Safety &amp; policy compliance
+- Completeness against the original goal
+- Quality &amp; coherence</p>
+<p>Returns a CriticReport with a pass/fail verdict and a list of specific issues.
+If issues are found, the Critic can request a retry via the swarm coordinator.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.agents.critic.CriticAgent"><code class="flex name class">
+<span>class <span class="ident">CriticAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CriticAgent:
+    &#34;&#34;&#34;
+    Reviews task outputs against the original goal.
+
+    Evaluation dimensions:
+    1. Safety — detects PII, harmful content, policy violations
+    2. Completeness — checks if output addresses the goal
+    3. Accuracy — heuristic and optional LLM cross-check
+    4. Quality — response coherence, structure, length
+    &#34;&#34;&#34;
+
+    # ── Safety patterns ────────────────────────────────────────────────────────
+    SAFETY_RED_FLAGS = [
+        (&#34;pii_email&#34;, r&#34;[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}&#34;),
+        (&#34;pii_phone&#34;, r&#34;\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b&#34;),
+        (&#34;secret_key&#34;, r&#34;(?i)(api[_\s-]?key|secret|password|token)\s*[:=]\s*\S+&#34;),
+        (&#34;credit_card&#34;, r&#34;\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b&#34;),
+    ]
+
+    def review(
+        self,
+        goal: str,
+        output: str,
+        task_id: str = &#34;&#34;,
+        action_type: str = &#34;llm&#34;,
+        use_llm: bool = True,
+    ) -&gt; CriticReport:
+        &#34;&#34;&#34;
+        Review the output of an executor action.
+
+        Args:
+            goal: The original task goal / instruction.
+            output: The executor&#39;s response / output string.
+            task_id: Parent task ID for traceability.
+            action_type: Type of action that produced the output.
+            use_llm: If True, attempt an LLM-based deep review.
+
+        Returns:
+            CriticReport with verdict and issues.
+        &#34;&#34;&#34;
+        start = time.time()
+        report_id = f&#34;crit_{uuid.uuid4().hex[:8]}&#34;
+        task_id = task_id or report_id
+
+        logger.info(f&#34;CriticAgent: reviewing task={task_id} goal=&#39;{goal[:60]}&#39;&#34;)
+
+        issues: List[CriticIssue] = []
+
+        # ── 1. Safety scan ────────────────────────────────────────────────────
+        issues.extend(self._safety_scan(output))
+
+        # ── 2. Completeness check ─────────────────────────────────────────────
+        issues.extend(self._completeness_check(goal, output))
+
+        # ── 3. Quality check ──────────────────────────────────────────────────
+        issues.extend(self._quality_check(output))
+
+        # ── 4. LLM deep review (optional) ────────────────────────────────────
+        if use_llm and output and len(output) &gt; 50:
+            llm_issues = self._llm_review(goal, output)
+            issues.extend(llm_issues)
+
+        # ── Verdict scoring ───────────────────────────────────────────────────
+        verdict, score = self._score(issues)
+        retry_recommended = verdict == Verdict.RETRY or any(i.severity == &#34;error&#34; for i in issues)
+
+        summary = self._build_summary(verdict, issues, score)
+        duration_ms = round((time.time() - start) * 1000, 2)
+
+        logger.info(
+            f&#34;CriticAgent: report={report_id} verdict={verdict.value} &#34;
+            f&#34;score={score:.2f} issues={len(issues)} retry={retry_recommended}&#34;
+        )
+
+        return CriticReport(
+            report_id=report_id,
+            task_id=task_id,
+            goal=goal,
+            verdict=verdict,
+            score=score,
+            issues=issues,
+            summary=summary,
+            retry_recommended=retry_recommended,
+            duration_ms=duration_ms,
+        )
+
+    # ── Review dimensions ──────────────────────────────────────────────────────
+
+    def _safety_scan(self, output: str) -&gt; List[CriticIssue]:
+        import re
+
+        issues = []
+        for name, pattern in self.SAFETY_RED_FLAGS:
+            if re.search(pattern, output):
+                issues.append(
+                    CriticIssue(
+                        severity=&#34;critical&#34;,
+                        category=&#34;safety&#34;,
+                        description=f&#34;Output may contain sensitive data: {name}&#34;,
+                        suggestion=&#34;Redact or mask sensitive information before returning.&#34;,
+                    )
+                )
+        return issues
+
+    def _completeness_check(self, goal: str, output: str) -&gt; List[CriticIssue]:
+        issues = []
+        if not output or len(output.strip()) &lt; 20:
+            issues.append(
+                CriticIssue(
+                    severity=&#34;error&#34;,
+                    category=&#34;completeness&#34;,
+                    description=&#34;Output is empty or too short to address the goal.&#34;,
+                    suggestion=&#34;Retry the task with a more explicit prompt.&#34;,
+                )
+            )
+            return issues
+
+        # Check if key terms from the goal appear in the output
+        goal_words = set(w.lower() for w in goal.split() if len(w) &gt; 4)
+        output_lower = output.lower()
+        missing = [w for w in goal_words if w not in output_lower]
+
+        if len(missing) &gt; len(goal_words) * 0.6 and len(goal_words) &gt; 3:
+            issues.append(
+                CriticIssue(
+                    severity=&#34;warning&#34;,
+                    category=&#34;completeness&#34;,
+                    description=f&#34;Output may not address key goal terms: {&#39;, &#39;.join(list(missing)[:5])}&#34;,
+                    suggestion=&#34;Ensure the response directly addresses all aspects of the goal.&#34;,
+                )
+            )
+        return issues
+
+    def _quality_check(self, output: str) -&gt; List[CriticIssue]:
+        issues = []
+        if len(output) &gt; 10000:
+            issues.append(
+                CriticIssue(
+                    severity=&#34;info&#34;,
+                    category=&#34;quality&#34;,
+                    description=&#34;Output is very long and may need summarisation.&#34;,
+                    suggestion=&#34;Consider summarising the output to under 2000 characters.&#34;,
+                )
+            )
+        error_phrases = [&#34;traceback&#34;, &#34;error:&#34;, &#34;exception:&#34;, &#34;syntaxerror&#34;, &#34;nameerror&#34;]
+        if any(p in output.lower() for p in error_phrases):
+            issues.append(
+                CriticIssue(
+                    severity=&#34;error&#34;,
+                    category=&#34;quality&#34;,
+                    description=&#34;Output contains error traces or exceptions.&#34;,
+                    suggestion=&#34;Fix the underlying error and retry.&#34;,
+                )
+            )
+        return issues
+
+    def _llm_review(self, goal: str, output: str) -&gt; List[CriticIssue]:
+        &#34;&#34;&#34;Use the LLM to produce a structured critique.&#34;&#34;&#34;
+        try:
+            from jarvis.core.model_router import model_router, RoutingRequest
+
+            prompt = (
+                f&#34;You are a strict AI quality reviewer.\n&#34;
+                f&#34;Goal: {goal}\n\n&#34;
+                f&#34;Output to review:\n{output[:2000]}\n\n&#34;
+                &#34;List any issues as: [SEVERITY|CATEGORY] Description. &#34;
+                &#34;Severities: info, warning, error, critical. &#34;
+                &#34;Categories: safety, completeness, accuracy, quality. &#34;
+                &#34;If no issues, write: NO_ISSUES&#34;
+            )
+            req = RoutingRequest(
+                task_id=f&#34;crit_{uuid.uuid4().hex[:6]}&#34;,
+                user_intent=prompt,
+                sensitivity_level=&#34;low&#34;,
+            )
+            decision = model_router.route(req)
+            result = model_router.execute_inference(decision=decision, prompt=prompt)
+            content = (
+                result.get(&#34;choices&#34;, [{}])[0].get(&#34;message&#34;, {}).get(&#34;content&#34;, &#34;&#34;)
+                if isinstance(result, dict)
+                else str(result)
+            )
+
+            if &#34;NO_ISSUES&#34; in content:
+                return []
+
+            issues = []
+            for line in content.splitlines():
+                line = line.strip()
+                if line.startswith(&#34;[&#34;) and &#34;|&#34; in line and &#34;]&#34; in line:
+                    tag = line[1 : line.index(&#34;]&#34;)]
+                    parts = tag.split(&#34;|&#34;)
+                    severity = parts[0].strip().lower() if parts else &#34;info&#34;
+                    category = parts[1].strip().lower() if len(parts) &gt; 1 else &#34;quality&#34;
+                    description = line[line.index(&#34;]&#34;) + 1 :].strip()
+                    if description:
+                        issues.append(
+                            CriticIssue(
+                                severity=severity,
+                                category=category,
+                                description=description,
+                            )
+                        )
+            return issues
+        except Exception as exc:
+            logger.debug(f&#34;_llm_review failed: {exc}&#34;)
+            return []
+
+    # ── Scoring ───────────────────────────────────────────────────────────────
+
+    def _score(self, issues: List[CriticIssue]) -&gt; tuple[Verdict, float]:
+        severity_weights = {&#34;critical&#34;: 0.4, &#34;error&#34;: 0.25, &#34;warning&#34;: 0.1, &#34;info&#34;: 0.02}
+        total_deduction = sum(severity_weights.get(i.severity, 0) for i in issues)
+        score = max(0.0, 1.0 - total_deduction)
+
+        if score &gt;= 0.9:
+            return Verdict.PASS, score
+        elif score &gt;= 0.7:
+            return Verdict.PASS_WITH_WARNINGS, score
+        elif score &gt;= 0.4:
+            return Verdict.RETRY, score
+        else:
+            return Verdict.FAIL, score
+
+    def _build_summary(self, verdict: Verdict, issues: List[CriticIssue], score: float) -&gt; str:
+        if not issues:
+            return f&#34;✅ Output passed all checks (score: {score:.2f}).&#34;
+        critical = [i for i in issues if i.severity == &#34;critical&#34;]
+        errors = [i for i in issues if i.severity == &#34;error&#34;]
+        if critical:
+            return f&#34;🚨 CRITICAL issues detected (score: {score:.2f}): &#34; + &#34;; &#34;.join(
+                i.description for i in critical[:2]
+            )
+        if errors:
+            return f&#34;❌ Errors found (score: {score:.2f}): &#34; + &#34;; &#34;.join(i.description for i in errors[:2])
+        return f&#34;⚠️ Minor issues (score: {score:.2f}): &#34; + &#34;; &#34;.join(i.description for i in issues[:2])</code></pre>
+</details>
+<div class="desc"><p>Reviews task outputs against the original goal.</p>
+<p>Evaluation dimensions:
+1. Safety — detects PII, harmful content, policy violations
+2. Completeness — checks if output addresses the goal
+3. Accuracy — heuristic and optional LLM cross-check
+4. Quality — response coherence, structure, length</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.critic.CriticAgent.SAFETY_RED_FLAGS"><code class="name">var <span class="ident">SAFETY_RED_FLAGS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.critic.CriticAgent.review"><code class="name flex">
+<span>def <span class="ident">review</span></span>(<span>self,<br>goal: str,<br>output: str,<br>task_id: str = '',<br>action_type: str = 'llm',<br>use_llm: bool = True) ‑> <a title="jarvis.agents.critic.CriticReport" href="#jarvis.agents.critic.CriticReport">CriticReport</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def review(
+    self,
+    goal: str,
+    output: str,
+    task_id: str = &#34;&#34;,
+    action_type: str = &#34;llm&#34;,
+    use_llm: bool = True,
+) -&gt; CriticReport:
+    &#34;&#34;&#34;
+    Review the output of an executor action.
+
+    Args:
+        goal: The original task goal / instruction.
+        output: The executor&#39;s response / output string.
+        task_id: Parent task ID for traceability.
+        action_type: Type of action that produced the output.
+        use_llm: If True, attempt an LLM-based deep review.
+
+    Returns:
+        CriticReport with verdict and issues.
+    &#34;&#34;&#34;
+    start = time.time()
+    report_id = f&#34;crit_{uuid.uuid4().hex[:8]}&#34;
+    task_id = task_id or report_id
+
+    logger.info(f&#34;CriticAgent: reviewing task={task_id} goal=&#39;{goal[:60]}&#39;&#34;)
+
+    issues: List[CriticIssue] = []
+
+    # ── 1. Safety scan ────────────────────────────────────────────────────
+    issues.extend(self._safety_scan(output))
+
+    # ── 2. Completeness check ─────────────────────────────────────────────
+    issues.extend(self._completeness_check(goal, output))
+
+    # ── 3. Quality check ──────────────────────────────────────────────────
+    issues.extend(self._quality_check(output))
+
+    # ── 4. LLM deep review (optional) ────────────────────────────────────
+    if use_llm and output and len(output) &gt; 50:
+        llm_issues = self._llm_review(goal, output)
+        issues.extend(llm_issues)
+
+    # ── Verdict scoring ───────────────────────────────────────────────────
+    verdict, score = self._score(issues)
+    retry_recommended = verdict == Verdict.RETRY or any(i.severity == &#34;error&#34; for i in issues)
+
+    summary = self._build_summary(verdict, issues, score)
+    duration_ms = round((time.time() - start) * 1000, 2)
+
+    logger.info(
+        f&#34;CriticAgent: report={report_id} verdict={verdict.value} &#34;
+        f&#34;score={score:.2f} issues={len(issues)} retry={retry_recommended}&#34;
+    )
+
+    return CriticReport(
+        report_id=report_id,
+        task_id=task_id,
+        goal=goal,
+        verdict=verdict,
+        score=score,
+        issues=issues,
+        summary=summary,
+        retry_recommended=retry_recommended,
+        duration_ms=duration_ms,
+    )</code></pre>
+</details>
+<div class="desc"><p>Review the output of an executor action.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>goal</code></strong></dt>
+<dd>The original task goal / instruction.</dd>
+<dt><strong><code>output</code></strong></dt>
+<dd>The executor's response / output string.</dd>
+<dt><strong><code>task_id</code></strong></dt>
+<dd>Parent task ID for traceability.</dd>
+<dt><strong><code>action_type</code></strong></dt>
+<dd>Type of action that produced the output.</dd>
+<dt><strong><code>use_llm</code></strong></dt>
+<dd>If True, attempt an LLM-based deep review.</dd>
+</dl>
+<p>Returns
+-----=
+CriticReport with verdict and issues.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.critic.CriticIssue"><code class="flex name class">
+<span>class <span class="ident">CriticIssue</span></span>
+<span>(</span><span>severity: str, category: str, description: str, suggestion: str = '')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class CriticIssue:
+    severity: str  # info | warning | error | critical
+    category: str  # safety | completeness | accuracy | quality | policy
+    description: str
+    suggestion: str = &#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>CriticIssue(severity: 'str', category: 'str', description: 'str', suggestion: 'str' = '')</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.critic.CriticIssue.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticIssue.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticIssue.severity"><code class="name">var <span class="ident">severity</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticIssue.suggestion"><code class="name">var <span class="ident">suggestion</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.critic.CriticReport"><code class="flex name class">
+<span>class <span class="ident">CriticReport</span></span>
+<span>(</span><span>report_id: str = &lt;factory&gt;,<br>task_id: str = '',<br>goal: str = '',<br>verdict: <a title="jarvis.agents.critic.Verdict" href="#jarvis.agents.critic.Verdict">Verdict</a> = Verdict.PASS,<br>score: float = 1.0,<br>issues: List[<a title="jarvis.agents.critic.CriticIssue" href="#jarvis.agents.critic.CriticIssue">CriticIssue</a>] = &lt;factory&gt;,<br>summary: str = '',<br>retry_recommended: bool = False,<br>duration_ms: float = 0.0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class CriticReport:
+    &#34;&#34;&#34;Structured critique of an executor&#39;s output.&#34;&#34;&#34;
+
+    report_id: str = field(default_factory=lambda: f&#34;crit_{uuid.uuid4().hex[:8]}&#34;)
+    task_id: str = &#34;&#34;
+    goal: str = &#34;&#34;
+    verdict: Verdict = Verdict.PASS
+    score: float = 1.0  # 0.0 (terrible) → 1.0 (perfect)
+    issues: List[CriticIssue] = field(default_factory=list)
+    summary: str = &#34;&#34;
+    retry_recommended: bool = False
+    duration_ms: float = 0.0
+
+    def to_dict(self) -&gt; Dict[str, Any]:
+        return {
+            &#34;report_id&#34;: self.report_id,
+            &#34;task_id&#34;: self.task_id,
+            &#34;goal&#34;: self.goal,
+            &#34;verdict&#34;: self.verdict.value,
+            &#34;score&#34;: self.score,
+            &#34;retry_recommended&#34;: self.retry_recommended,
+            &#34;summary&#34;: self.summary,
+            &#34;issues&#34;: [
+                {
+                    &#34;severity&#34;: i.severity,
+                    &#34;category&#34;: i.category,
+                    &#34;description&#34;: i.description,
+                    &#34;suggestion&#34;: i.suggestion,
+                }
+                for i in self.issues
+            ],
+            &#34;duration_ms&#34;: self.duration_ms,
+        }</code></pre>
+</details>
+<div class="desc"><p>Structured critique of an executor's output.</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.critic.CriticReport.duration_ms"><code class="name">var <span class="ident">duration_ms</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticReport.goal"><code class="name">var <span class="ident">goal</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticReport.issues"><code class="name">var <span class="ident">issues</span> : List[<a title="jarvis.agents.critic.CriticIssue" href="#jarvis.agents.critic.CriticIssue">CriticIssue</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticReport.report_id"><code class="name">var <span class="ident">report_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticReport.retry_recommended"><code class="name">var <span class="ident">retry_recommended</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticReport.score"><code class="name">var <span class="ident">score</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticReport.summary"><code class="name">var <span class="ident">summary</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticReport.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.CriticReport.verdict"><code class="name">var <span class="ident">verdict</span> : <a title="jarvis.agents.critic.Verdict" href="#jarvis.agents.critic.Verdict">Verdict</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.critic.CriticReport.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; Dict[str, Any]:
+    return {
+        &#34;report_id&#34;: self.report_id,
+        &#34;task_id&#34;: self.task_id,
+        &#34;goal&#34;: self.goal,
+        &#34;verdict&#34;: self.verdict.value,
+        &#34;score&#34;: self.score,
+        &#34;retry_recommended&#34;: self.retry_recommended,
+        &#34;summary&#34;: self.summary,
+        &#34;issues&#34;: [
+            {
+                &#34;severity&#34;: i.severity,
+                &#34;category&#34;: i.category,
+                &#34;description&#34;: i.description,
+                &#34;suggestion&#34;: i.suggestion,
+            }
+            for i in self.issues
+        ],
+        &#34;duration_ms&#34;: self.duration_ms,
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.critic.Verdict"><code class="flex name class">
+<span>class <span class="ident">Verdict</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Verdict(str, Enum):
+    PASS = &#34;pass&#34;
+    PASS_WITH_WARNINGS = &#34;pass_with_warnings&#34;
+    FAIL = &#34;fail&#34;
+    RETRY = &#34;retry&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.critic.Verdict.FAIL"><code class="name">var <span class="ident">FAIL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.Verdict.PASS"><code class="name">var <span class="ident">PASS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.Verdict.PASS_WITH_WARNINGS"><code class="name">var <span class="ident">PASS_WITH_WARNINGS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.critic.Verdict.RETRY"><code class="name">var <span class="ident">RETRY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.agents" href="index.html">jarvis.agents</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.agents.critic.CriticAgent" href="#jarvis.agents.critic.CriticAgent">CriticAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.critic.CriticAgent.SAFETY_RED_FLAGS" href="#jarvis.agents.critic.CriticAgent.SAFETY_RED_FLAGS">SAFETY_RED_FLAGS</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticAgent.review" href="#jarvis.agents.critic.CriticAgent.review">review</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.critic.CriticIssue" href="#jarvis.agents.critic.CriticIssue">CriticIssue</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.critic.CriticIssue.category" href="#jarvis.agents.critic.CriticIssue.category">category</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticIssue.description" href="#jarvis.agents.critic.CriticIssue.description">description</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticIssue.severity" href="#jarvis.agents.critic.CriticIssue.severity">severity</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticIssue.suggestion" href="#jarvis.agents.critic.CriticIssue.suggestion">suggestion</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.critic.CriticReport" href="#jarvis.agents.critic.CriticReport">CriticReport</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.agents.critic.CriticReport.duration_ms" href="#jarvis.agents.critic.CriticReport.duration_ms">duration_ms</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticReport.goal" href="#jarvis.agents.critic.CriticReport.goal">goal</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticReport.issues" href="#jarvis.agents.critic.CriticReport.issues">issues</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticReport.report_id" href="#jarvis.agents.critic.CriticReport.report_id">report_id</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticReport.retry_recommended" href="#jarvis.agents.critic.CriticReport.retry_recommended">retry_recommended</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticReport.score" href="#jarvis.agents.critic.CriticReport.score">score</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticReport.summary" href="#jarvis.agents.critic.CriticReport.summary">summary</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticReport.task_id" href="#jarvis.agents.critic.CriticReport.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticReport.to_dict" href="#jarvis.agents.critic.CriticReport.to_dict">to_dict</a></code></li>
+<li><code><a title="jarvis.agents.critic.CriticReport.verdict" href="#jarvis.agents.critic.CriticReport.verdict">verdict</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.critic.Verdict" href="#jarvis.agents.critic.Verdict">Verdict</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.critic.Verdict.FAIL" href="#jarvis.agents.critic.Verdict.FAIL">FAIL</a></code></li>
+<li><code><a title="jarvis.agents.critic.Verdict.PASS" href="#jarvis.agents.critic.Verdict.PASS">PASS</a></code></li>
+<li><code><a title="jarvis.agents.critic.Verdict.PASS_WITH_WARNINGS" href="#jarvis.agents.critic.Verdict.PASS_WITH_WARNINGS">PASS_WITH_WARNINGS</a></code></li>
+<li><code><a title="jarvis.agents.critic.Verdict.RETRY" href="#jarvis.agents.critic.Verdict.RETRY">RETRY</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

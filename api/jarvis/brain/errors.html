@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.brain.errors API documentation</title>
+<meta name="description" content="JARVIS Brain Error Taxonomy and Recovery Classification
+Defines the 6-tier cognitive error hierarchy, structured exception classes,
+and deterministic …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.brain.errors</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Brain Error Taxonomy and Recovery Classification
+Defines the 6-tier cognitive error hierarchy, structured exception classes,
+and deterministic classify_error() routing for self-correcting cognitive loops.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.brain.errors.classify_error"><code class="name flex">
+<span>def <span class="ident">classify_error</span></span>(<span>exc: Union[Exception, str], context: Optional[Dict[str, Any]] = None) ‑> <a title="jarvis.brain.state.CognitiveError" href="state.html#jarvis.brain.state.CognitiveError">CognitiveError</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def classify_error(
+    exc: Union[Exception, str],
+    context: Optional[Dict[str, Any]] = None,
+) -&gt; CognitiveError:
+    &#34;&#34;&#34;
+    Deterministically maps an arbitrary runtime exception or failure description
+    into the 6-tier CognitiveError model with recovery strategy.
+
+    Args:
+        exc: Exception instance or error description string.
+        context: Optional diagnostic dictionary (retry_count, node_name, etc.)
+
+    Returns:
+        Structured CognitiveError object.
+    &#34;&#34;&#34;
+    ctx = context or {}
+    retry_count = ctx.get(&#34;retry_count&#34;, 0)
+
+    # 1. Direct structured match
+    if isinstance(exc, CognitiveBaseException):
+        return CognitiveError(
+            code=exc.code.value,
+            message=exc.message,
+            recoverable=exc.recoverable,
+            retry_count=retry_count,
+            timestamp=time.time(),
+            details={**exc.details, **ctx},
+        )
+
+    # 2. String pattern analysis
+    err_str = str(exc).lower()
+
+    if any(k in err_str for k in (&#34;kill switch&#34;, &#34;kill_switch&#34;, &#34;policy denied&#34;, &#34;halted&#34;, &#34;forbidden&#34;, &#34;tier 3&#34;)):
+        code = CognitiveErrorCode.POLICY_DENIED
+        recoverable = False
+    elif any(k in err_str for k in (&#34;token expired&#34;, &#34;session expired&#34;, &#34;stale token&#34;, &#34;expired approval&#34;)):
+        code = CognitiveErrorCode.SESSION_EXPIRED
+        recoverable = True
+    elif any(k in err_str for k in (&#34;budget&#34;, &#34;usage limit&#34;, &#34;circuit breaker&#34;, &#34;max cost&#34;, &#34;rate limit exceeded&#34;)):
+        code = CognitiveErrorCode.AI_USAGE_LIMIT
+        recoverable = False
+    elif any(
+        k in err_str
+        for k in (&#34;insufficient evidence&#34;, &#34;missing evidence&#34;, &#34;unverified&#34;, &#34;no memories found&#34;, &#34;empty search&#34;)
+    ):
+        code = CognitiveErrorCode.INSUFFICIENT_EVIDENCE
+        recoverable = True
+    elif any(
+        k in err_str
+        for k in (
+            &#34;timeout&#34;,
+            &#34;timed out&#34;,
+            &#34;connection refused&#34;,
+            &#34;connect error&#34;,
+            &#34;network unreachable&#34;,
+            &#34;502&#34;,
+            &#34;503&#34;,
+            &#34;504&#34;,
+            &#34;warming up&#34;,
+            &#34;econnrefused&#34;,
+        )
+    ):
+        code = CognitiveErrorCode.TRANSIENT_NETWORK
+        recoverable = True
+    else:
+        code = CognitiveErrorCode.PERMANENT_FAILURE
+        recoverable = False
+
+    return CognitiveError(
+        code=code.value,
+        message=str(exc),
+        recoverable=recoverable,
+        retry_count=retry_count,
+        timestamp=time.time(),
+        details=ctx,
+    )</code></pre>
+</details>
+<div class="desc"><p>Deterministically maps an arbitrary runtime exception or failure description
+into the 6-tier CognitiveError model with recovery strategy.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>exc</code></strong></dt>
+<dd>Exception instance or error description string.</dd>
+<dt><strong><code>context</code></strong></dt>
+<dd>Optional diagnostic dictionary (retry_count, node_name, etc.)</dd>
+</dl>
+<p>Returns
+-----=
+Structured CognitiveError object.</p></div>
+</dd>
+<dt id="jarvis.brain.errors.get_remediation_strategy"><code class="name flex">
+<span>def <span class="ident">get_remediation_strategy</span></span>(<span>error: CognitiveError) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_remediation_strategy(error: CognitiveError) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Returns the remediation routing and backoff configuration for a CognitiveError.
+    &#34;&#34;&#34;
+    code = error.code
+    if code == CognitiveErrorCode.TRANSIENT_NETWORK.value:
+        backoff_sec = min(2**error.retry_count, 8)
+        return {
+            &#34;action&#34;: &#34;retry_act&#34;,
+            &#34;target_node&#34;: &#34;act&#34;,
+            &#34;backoff_sec&#34;: backoff_sec,
+            &#34;max_retries&#34;: 3,
+            &#34;can_retry&#34;: error.retry_count &lt; 3,
+        }
+    if code == CognitiveErrorCode.SESSION_EXPIRED.value:
+        return {
+            &#34;action&#34;: &#34;reissue_approval&#34;,
+            &#34;target_node&#34;: &#34;policy&#34;,
+            &#34;backoff_sec&#34;: 0,
+            &#34;max_retries&#34;: 1,
+            &#34;can_retry&#34;: error.retry_count &lt; 1,
+        }
+    if code == CognitiveErrorCode.INSUFFICIENT_EVIDENCE.value:
+        return {
+            &#34;action&#34;: &#34;replan_query&#34;,
+            &#34;target_node&#34;: &#34;plan&#34;,
+            &#34;backoff_sec&#34;: 0,
+            &#34;max_retries&#34;: 2,
+            &#34;can_retry&#34;: error.retry_count &lt; 2,
+        }
+    if code == CognitiveErrorCode.AI_USAGE_LIMIT.value:
+        return {
+            &#34;action&#34;: &#34;downgrade_to_local&#34;,
+            &#34;target_node&#34;: &#34;plan&#34;,
+            &#34;backoff_sec&#34;: 0,
+            &#34;max_retries&#34;: 1,
+            &#34;can_retry&#34;: error.retry_count &lt; 1,
+        }
+    return {
+        &#34;action&#34;: &#34;halt_to_remember&#34;,
+        &#34;target_node&#34;: &#34;remember&#34;,
+        &#34;backoff_sec&#34;: 0,
+        &#34;max_retries&#34;: 0,
+        &#34;can_retry&#34;: False,
+    }</code></pre>
+</details>
+<div class="desc"><p>Returns the remediation routing and backoff configuration for a CognitiveError.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.brain.errors.AIUsageLimitError"><code class="flex name class">
+<span>class <span class="ident">AIUsageLimitError</span></span>
+<span>(</span><span>message: str, details: Optional[Dict[str, Any]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AIUsageLimitError(CognitiveBaseException):
+    &#34;&#34;&#34;Budget cap hit or cost governor circuit breaker tripped.&#34;&#34;&#34;
+
+    code = CognitiveErrorCode.AI_USAGE_LIMIT
+    recoverable = False</code></pre>
+</details>
+<div class="desc"><p>Budget cap hit or cost governor circuit breaker tripped.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="jarvis.brain.errors.CognitiveBaseException" href="#jarvis.brain.errors.CognitiveBaseException">CognitiveBaseException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.errors.AIUsageLimitError.code"><code class="name">var <span class="ident">code</span> : <a title="jarvis.brain.errors.CognitiveErrorCode" href="#jarvis.brain.errors.CognitiveErrorCode">CognitiveErrorCode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.AIUsageLimitError.recoverable"><code class="name">var <span class="ident">recoverable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.errors.CognitiveBaseException"><code class="flex name class">
+<span>class <span class="ident">CognitiveBaseException</span></span>
+<span>(</span><span>message: str, details: Optional[Dict[str, Any]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CognitiveBaseException(Exception):
+    &#34;&#34;&#34;Base exception for all cognitive loop failures.&#34;&#34;&#34;
+
+    code: CognitiveErrorCode = CognitiveErrorCode.PERMANENT_FAILURE
+    recoverable: bool = False
+
+    def __init__(self, message: str, details: Optional[Dict[str, Any]] = None):
+        super().__init__(message)
+        self.message = message
+        self.details = details or {}</code></pre>
+</details>
+<div class="desc"><p>Base exception for all cognitive loop failures.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="jarvis.brain.errors.AIUsageLimitError" href="#jarvis.brain.errors.AIUsageLimitError">AIUsageLimitError</a></li>
+<li><a title="jarvis.brain.errors.InsufficientEvidenceError" href="#jarvis.brain.errors.InsufficientEvidenceError">InsufficientEvidenceError</a></li>
+<li><a title="jarvis.brain.errors.PermanentFailureError" href="#jarvis.brain.errors.PermanentFailureError">PermanentFailureError</a></li>
+<li><a title="jarvis.brain.errors.PolicyDeniedError" href="#jarvis.brain.errors.PolicyDeniedError">PolicyDeniedError</a></li>
+<li><a title="jarvis.brain.errors.SessionExpiredError" href="#jarvis.brain.errors.SessionExpiredError">SessionExpiredError</a></li>
+<li><a title="jarvis.brain.errors.TransientNetworkError" href="#jarvis.brain.errors.TransientNetworkError">TransientNetworkError</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.errors.CognitiveBaseException.code"><code class="name">var <span class="ident">code</span> : <a title="jarvis.brain.errors.CognitiveErrorCode" href="#jarvis.brain.errors.CognitiveErrorCode">CognitiveErrorCode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.CognitiveBaseException.recoverable"><code class="name">var <span class="ident">recoverable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.errors.CognitiveErrorCode"><code class="flex name class">
+<span>class <span class="ident">CognitiveErrorCode</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CognitiveErrorCode(str, Enum):
+    &#34;&#34;&#34;Authoritative 6-tier cognitive error codes.&#34;&#34;&#34;
+
+    TRANSIENT_NETWORK = &#34;TRANSIENT_NETWORK&#34;
+    SESSION_EXPIRED = &#34;SESSION_EXPIRED&#34;
+    POLICY_DENIED = &#34;POLICY_DENIED&#34;
+    AI_USAGE_LIMIT = &#34;AI_USAGE_LIMIT&#34;
+    INSUFFICIENT_EVIDENCE = &#34;INSUFFICIENT_EVIDENCE&#34;
+    PERMANENT_FAILURE = &#34;PERMANENT_FAILURE&#34;</code></pre>
+</details>
+<div class="desc"><p>Authoritative 6-tier cognitive error codes.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.errors.CognitiveErrorCode.AI_USAGE_LIMIT"><code class="name">var <span class="ident">AI_USAGE_LIMIT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.CognitiveErrorCode.INSUFFICIENT_EVIDENCE"><code class="name">var <span class="ident">INSUFFICIENT_EVIDENCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.CognitiveErrorCode.PERMANENT_FAILURE"><code class="name">var <span class="ident">PERMANENT_FAILURE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.CognitiveErrorCode.POLICY_DENIED"><code class="name">var <span class="ident">POLICY_DENIED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.CognitiveErrorCode.SESSION_EXPIRED"><code class="name">var <span class="ident">SESSION_EXPIRED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.CognitiveErrorCode.TRANSIENT_NETWORK"><code class="name">var <span class="ident">TRANSIENT_NETWORK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.errors.InsufficientEvidenceError"><code class="flex name class">
+<span>class <span class="ident">InsufficientEvidenceError</span></span>
+<span>(</span><span>message: str, details: Optional[Dict[str, Any]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InsufficientEvidenceError(CognitiveBaseException):
+    &#34;&#34;&#34;Verifier detected missing evidence, empty recall, or unverified claims.&#34;&#34;&#34;
+
+    code = CognitiveErrorCode.INSUFFICIENT_EVIDENCE
+    recoverable = True</code></pre>
+</details>
+<div class="desc"><p>Verifier detected missing evidence, empty recall, or unverified claims.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="jarvis.brain.errors.CognitiveBaseException" href="#jarvis.brain.errors.CognitiveBaseException">CognitiveBaseException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.errors.InsufficientEvidenceError.code"><code class="name">var <span class="ident">code</span> : <a title="jarvis.brain.errors.CognitiveErrorCode" href="#jarvis.brain.errors.CognitiveErrorCode">CognitiveErrorCode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.InsufficientEvidenceError.recoverable"><code class="name">var <span class="ident">recoverable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.errors.PermanentFailureError"><code class="flex name class">
+<span>class <span class="ident">PermanentFailureError</span></span>
+<span>(</span><span>message: str, details: Optional[Dict[str, Any]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PermanentFailureError(CognitiveBaseException):
+    &#34;&#34;&#34;Irrecoverable syntax, malformed parameter, or system tool failure.&#34;&#34;&#34;
+
+    code = CognitiveErrorCode.PERMANENT_FAILURE
+    recoverable = False</code></pre>
+</details>
+<div class="desc"><p>Irrecoverable syntax, malformed parameter, or system tool failure.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="jarvis.brain.errors.CognitiveBaseException" href="#jarvis.brain.errors.CognitiveBaseException">CognitiveBaseException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.errors.PermanentFailureError.code"><code class="name">var <span class="ident">code</span> : <a title="jarvis.brain.errors.CognitiveErrorCode" href="#jarvis.brain.errors.CognitiveErrorCode">CognitiveErrorCode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.PermanentFailureError.recoverable"><code class="name">var <span class="ident">recoverable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.errors.PolicyDeniedError"><code class="flex name class">
+<span>class <span class="ident">PolicyDeniedError</span></span>
+<span>(</span><span>message: str, details: Optional[Dict[str, Any]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PolicyDeniedError(CognitiveBaseException):
+    &#34;&#34;&#34;Deterministic security gate halt, active kill switch, or forbidden action.&#34;&#34;&#34;
+
+    code = CognitiveErrorCode.POLICY_DENIED
+    recoverable = False</code></pre>
+</details>
+<div class="desc"><p>Deterministic security gate halt, active kill switch, or forbidden action.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="jarvis.brain.errors.CognitiveBaseException" href="#jarvis.brain.errors.CognitiveBaseException">CognitiveBaseException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.errors.PolicyDeniedError.code"><code class="name">var <span class="ident">code</span> : <a title="jarvis.brain.errors.CognitiveErrorCode" href="#jarvis.brain.errors.CognitiveErrorCode">CognitiveErrorCode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.PolicyDeniedError.recoverable"><code class="name">var <span class="ident">recoverable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.errors.SessionExpiredError"><code class="flex name class">
+<span>class <span class="ident">SessionExpiredError</span></span>
+<span>(</span><span>message: str, details: Optional[Dict[str, Any]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SessionExpiredError(CognitiveBaseException):
+    &#34;&#34;&#34;Expired HMAC approval token (&gt;15m) or invalid session context.&#34;&#34;&#34;
+
+    code = CognitiveErrorCode.SESSION_EXPIRED
+    recoverable = True</code></pre>
+</details>
+<div class="desc"><p>Expired HMAC approval token (&gt;15m) or invalid session context.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="jarvis.brain.errors.CognitiveBaseException" href="#jarvis.brain.errors.CognitiveBaseException">CognitiveBaseException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.errors.SessionExpiredError.code"><code class="name">var <span class="ident">code</span> : <a title="jarvis.brain.errors.CognitiveErrorCode" href="#jarvis.brain.errors.CognitiveErrorCode">CognitiveErrorCode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.SessionExpiredError.recoverable"><code class="name">var <span class="ident">recoverable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.errors.TransientNetworkError"><code class="flex name class">
+<span>class <span class="ident">TransientNetworkError</span></span>
+<span>(</span><span>message: str, details: Optional[Dict[str, Any]] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TransientNetworkError(CognitiveBaseException):
+    &#34;&#34;&#34;Temporary network timeouts, HTTP 502/503/504, or Ollama warmup latency.&#34;&#34;&#34;
+
+    code = CognitiveErrorCode.TRANSIENT_NETWORK
+    recoverable = True</code></pre>
+</details>
+<div class="desc"><p>Temporary network timeouts, HTTP 502/503/504, or Ollama warmup latency.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="jarvis.brain.errors.CognitiveBaseException" href="#jarvis.brain.errors.CognitiveBaseException">CognitiveBaseException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.errors.TransientNetworkError.code"><code class="name">var <span class="ident">code</span> : <a title="jarvis.brain.errors.CognitiveErrorCode" href="#jarvis.brain.errors.CognitiveErrorCode">CognitiveErrorCode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.errors.TransientNetworkError.recoverable"><code class="name">var <span class="ident">recoverable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.brain" href="index.html">jarvis.brain</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.brain.errors.classify_error" href="#jarvis.brain.errors.classify_error">classify_error</a></code></li>
+<li><code><a title="jarvis.brain.errors.get_remediation_strategy" href="#jarvis.brain.errors.get_remediation_strategy">get_remediation_strategy</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.brain.errors.AIUsageLimitError" href="#jarvis.brain.errors.AIUsageLimitError">AIUsageLimitError</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.errors.AIUsageLimitError.code" href="#jarvis.brain.errors.AIUsageLimitError.code">code</a></code></li>
+<li><code><a title="jarvis.brain.errors.AIUsageLimitError.recoverable" href="#jarvis.brain.errors.AIUsageLimitError.recoverable">recoverable</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.errors.CognitiveBaseException" href="#jarvis.brain.errors.CognitiveBaseException">CognitiveBaseException</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.errors.CognitiveBaseException.code" href="#jarvis.brain.errors.CognitiveBaseException.code">code</a></code></li>
+<li><code><a title="jarvis.brain.errors.CognitiveBaseException.recoverable" href="#jarvis.brain.errors.CognitiveBaseException.recoverable">recoverable</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.errors.CognitiveErrorCode" href="#jarvis.brain.errors.CognitiveErrorCode">CognitiveErrorCode</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.errors.CognitiveErrorCode.AI_USAGE_LIMIT" href="#jarvis.brain.errors.CognitiveErrorCode.AI_USAGE_LIMIT">AI_USAGE_LIMIT</a></code></li>
+<li><code><a title="jarvis.brain.errors.CognitiveErrorCode.INSUFFICIENT_EVIDENCE" href="#jarvis.brain.errors.CognitiveErrorCode.INSUFFICIENT_EVIDENCE">INSUFFICIENT_EVIDENCE</a></code></li>
+<li><code><a title="jarvis.brain.errors.CognitiveErrorCode.PERMANENT_FAILURE" href="#jarvis.brain.errors.CognitiveErrorCode.PERMANENT_FAILURE">PERMANENT_FAILURE</a></code></li>
+<li><code><a title="jarvis.brain.errors.CognitiveErrorCode.POLICY_DENIED" href="#jarvis.brain.errors.CognitiveErrorCode.POLICY_DENIED">POLICY_DENIED</a></code></li>
+<li><code><a title="jarvis.brain.errors.CognitiveErrorCode.SESSION_EXPIRED" href="#jarvis.brain.errors.CognitiveErrorCode.SESSION_EXPIRED">SESSION_EXPIRED</a></code></li>
+<li><code><a title="jarvis.brain.errors.CognitiveErrorCode.TRANSIENT_NETWORK" href="#jarvis.brain.errors.CognitiveErrorCode.TRANSIENT_NETWORK">TRANSIENT_NETWORK</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.errors.InsufficientEvidenceError" href="#jarvis.brain.errors.InsufficientEvidenceError">InsufficientEvidenceError</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.errors.InsufficientEvidenceError.code" href="#jarvis.brain.errors.InsufficientEvidenceError.code">code</a></code></li>
+<li><code><a title="jarvis.brain.errors.InsufficientEvidenceError.recoverable" href="#jarvis.brain.errors.InsufficientEvidenceError.recoverable">recoverable</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.errors.PermanentFailureError" href="#jarvis.brain.errors.PermanentFailureError">PermanentFailureError</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.errors.PermanentFailureError.code" href="#jarvis.brain.errors.PermanentFailureError.code">code</a></code></li>
+<li><code><a title="jarvis.brain.errors.PermanentFailureError.recoverable" href="#jarvis.brain.errors.PermanentFailureError.recoverable">recoverable</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.errors.PolicyDeniedError" href="#jarvis.brain.errors.PolicyDeniedError">PolicyDeniedError</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.errors.PolicyDeniedError.code" href="#jarvis.brain.errors.PolicyDeniedError.code">code</a></code></li>
+<li><code><a title="jarvis.brain.errors.PolicyDeniedError.recoverable" href="#jarvis.brain.errors.PolicyDeniedError.recoverable">recoverable</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.errors.SessionExpiredError" href="#jarvis.brain.errors.SessionExpiredError">SessionExpiredError</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.errors.SessionExpiredError.code" href="#jarvis.brain.errors.SessionExpiredError.code">code</a></code></li>
+<li><code><a title="jarvis.brain.errors.SessionExpiredError.recoverable" href="#jarvis.brain.errors.SessionExpiredError.recoverable">recoverable</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.errors.TransientNetworkError" href="#jarvis.brain.errors.TransientNetworkError">TransientNetworkError</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.errors.TransientNetworkError.code" href="#jarvis.brain.errors.TransientNetworkError.code">code</a></code></li>
+<li><code><a title="jarvis.brain.errors.TransientNetworkError.recoverable" href="#jarvis.brain.errors.TransientNetworkError.recoverable">recoverable</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

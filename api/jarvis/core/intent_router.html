@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.intent_router API documentation</title>
+<meta name="description" content="JARVIS Fast Intent Router (Jev-Style Decision Engine) …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.intent_router</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Fast Intent Router (Jev-Style Decision Engine).</p>
+<p>Provides ultra-low latency (&lt;10ms) intent classification and triage across:
+- INSTANT_MACRO: Deterministic local OS controls, direct tool shortcuts.
+- LOCAL_TOOL / MCP: Local Model Context Protocol operations (filesystem, git, memory).
+- GUI_ACTION: Visual grounding &amp; UI-TARS desktop manipulation.
+- CLOUD_REASONING: High-context planning, refactoring, deep research.
+- VOICE_COMMAND: Speech stream handling.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.intent_router.FastIntentRouter"><code class="flex name class">
+<span>class <span class="ident">FastIntentRouter</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FastIntentRouter:
+    &#34;&#34;&#34;
+    Sub-millisecond triage engine inspired by OpenMausBot&#39;s Jev engine.
+    Triages incoming queries to the optimal execution layer without cloud latency overhead.
+    &#34;&#34;&#34;
+
+    # 1. Instant deterministic macros (OS shortcuts, volume, app control, system inspection)
+    MACRO_PATTERNS: List[Tuple[str, str, bool]] = [
+        # (Regex, action_tag, requires_confirmation)
+        (r&#34;^(?:open|launch)\s+([a-zA-Z0-9_\-\.\s]+)$&#34;, &#34;app_launch&#34;, False),
+        (r&#34;^(?:close|quit|kill)\s+([a-zA-Z0-9_\-\.\s]+)$&#34;, &#34;app_close&#34;, True),
+        (r&#34;^(?:switch\s+to|focus)\s+([a-zA-Z0-9_\-\.\s]+)$&#34;, &#34;app_focus&#34;, False),
+        (r&#34;^volume\s+(up|down|mute|\d+)$&#34;, &#34;volume_control&#34;, False),
+        (r&#34;^brightness\s+(up|down|\d+)$&#34;, &#34;brightness_control&#34;, False),
+        (r&#34;^(?:lock\s+(?:screen|computer|workstation)|lock)$&#34;, &#34;lock_screen&#34;, False),
+        (r&#34;^(?:sleep|standby)$&#34;, &#34;system_sleep&#34;, True),
+        (r&#34;^(?:take\s+screenshot|screenshot|capture\s+screen)$&#34;, &#34;screenshot&#34;, False),
+        (r&#34;^(?:system\s+health|health\s+report|status)$&#34;, &#34;health_report&#34;, False),
+        (r&#34;^(?:disk\s+usage|disk\s+space)$&#34;, &#34;disk_usage&#34;, False),
+        (r&#34;^(?:docker\s+ps|docker\s+status|containers)$&#34;, &#34;docker_status&#34;, False),
+        (r&#34;^(?:hi|hello|hey|hey\s+jarvis|who\s+are\s+you)$&#34;, &#34;greeting&#34;, False),
+    ]
+
+    # 2. Local MCP Tool patterns (Filesystem, Git, Memory Graph, Sequential Thinking)
+    MCP_TOOL_PATTERNS: List[Tuple[str, str, str]] = [
+        # (Regex, mcp_server, tool_name)
+        (r&#34;^(?:read|cat|view|show\s+file)\s+([^\n\r]+)$&#34;, &#34;filesystem&#34;, &#34;read_file&#34;),
+        (r&#34;^(?:write|save\s+to|append\s+to)\s+([^\n\r]+)$&#34;, &#34;filesystem&#34;, &#34;write_file&#34;),
+        (r&#34;^(?:list\s+(?:directory|files|folder)|dir|ls)\s*([^\n\r]*)$&#34;, &#34;filesystem&#34;, &#34;list_directory&#34;),
+        (r&#34;^(?:git\s+status|git\s+log|git\s+diff|git\s+branch|git\s+commit).*&#34;, &#34;git&#34;, &#34;git_command&#34;),
+        (r&#34;^(?:remember|save\s+to\s+memory|recall|query\s+memory)\s+([^\n\r]+)$&#34;, &#34;memory&#34;, &#34;memory_store&#34;),
+        (
+            r&#34;^(?:think\s+step\s+by\s+step|sequential\s+thinking|decompose\s+problem).*&#34;,
+            &#34;sequential-thinking&#34;,
+            &#34;sequential_thinking&#34;,
+        ),
+    ]
+
+    # 3. GUI Visual Grounding / UI-TARS action patterns
+    GUI_ACTION_PATTERNS: List[Tuple[str, str]] = [
+        (r&#34;^(?:click|press|tap)\s+(?:on\s+)?(.+)$&#34;, &#34;click_element&#34;),
+        (r&#34;^(?:double\s+click|doubleclick)\s+(?:on\s+)?(.+)$&#34;, &#34;double_click_element&#34;),
+        (r&#34;^(?:right\s+click)\s+(?:on\s+)?(.+)$&#34;, &#34;right_click_element&#34;),
+        (r&#34;^(?:type|input|enter\s+text)\s+[&#39;\&#34;](.+)[&#39;\&#34;]\s+(?:in|into|at)\s+(.+)$&#34;, &#34;type_in_element&#34;),
+        (r&#34;^(?:drag|move)\s+(.+)\s+to\s+(.+)$&#34;, &#34;drag_element&#34;),
+        (r&#34;^(?:scroll\s+(?:up|down|left|right)).*&#34;, &#34;scroll_screen&#34;),
+        (r&#34;^gui:\s*(.+)$&#34;, &#34;raw_gui_command&#34;),
+    ]
+
+    # 4. Cloud Reasoning keywords (complex software engineering, deep architecture, multi-turn synthesis)
+    CLOUD_REASONING_KEYWORDS = {
+        &#34;architect&#34;,
+        &#34;refactor&#34;,
+        &#34;synthesize&#34;,
+        &#34;design system&#34;,
+        &#34;deep research&#34;,
+        &#34;benchmark analysis&#34;,
+        &#34;multi-file&#34;,
+        &#34;abstract base class&#34;,
+        &#34;trade-off analysis&#34;,
+        &#34;implement algorithm&#34;,
+        &#34;analyze codebase&#34;,
+        &#34;comprehensive report&#34;,
+        &#34;security audit&#34;,
+    }
+
+    def __init__(self):
+        # Precompile regexes for &lt;0.1ms evaluation
+        self._compiled_macros = [
+            (re.compile(pattern, re.IGNORECASE), tag, req_confirm) for pattern, tag, req_confirm in self.MACRO_PATTERNS
+        ]
+        self._compiled_mcp = [
+            (re.compile(pattern, re.IGNORECASE), srv, tool) for pattern, srv, tool in self.MCP_TOOL_PATTERNS
+        ]
+        self._compiled_gui = [
+            (re.compile(pattern, re.IGNORECASE), action) for pattern, action in self.GUI_ACTION_PATTERNS
+        ]
+
+    def triage(self, query: str, context: Optional[str] = None) -&gt; IntentTriageResult:
+        &#34;&#34;&#34;
+        Executes fast multi-branch intent triage in &lt;10ms.
+        &#34;&#34;&#34;
+        start = time.perf_counter()
+        q = (query or &#34;&#34;).strip()
+        q_lower = q.lower()
+
+        # 0. Voice input stream marker
+        if q.startswith(&#34;[voice]&#34;) or q.startswith(&#34;voice:&#34;):
+            duration_ms = round((time.perf_counter() - start) * 1000, 3)
+            return IntentTriageResult(
+                query=q,
+                intent_category=IntentCategory.VOICE_COMMAND,
+                target_subsystem=SubsystemDestination.VOICE_BUS,
+                confidence=0.98,
+                entities={&#34;raw_voice_transcript&#34;: q.split(&#34;:&#34;, 1)[-1].strip()},
+                latency_ms=duration_ms,
+                suggested_action=&#34;process_voice_stream&#34;,
+                requires_confirmation=False,
+            )
+
+        # 1. Deterministic Instant Macros
+        for regex, tag, req_confirm in self._compiled_macros:
+            match = regex.match(q)
+            if match:
+                entities = {&#34;action&#34;: tag}
+                if match.groups():
+                    entities[&#34;target&#34;] = match.group(1).strip()
+                duration_ms = round((time.perf_counter() - start) * 1000, 3)
+                return IntentTriageResult(
+                    query=q,
+                    intent_category=IntentCategory.INSTANT_MACRO,
+                    target_subsystem=SubsystemDestination.LOCAL_MACRO,
+                    confidence=0.99,
+                    entities=entities,
+                    latency_ms=duration_ms,
+                    suggested_action=tag,
+                    requires_confirmation=req_confirm,
+                )
+
+        # 2. Local MCP Tools (Filesystem, Git, Memory)
+        for regex, srv, tool in self._compiled_mcp:
+            match = regex.match(q)
+            if match:
+                entities = {&#34;mcp_server&#34;: srv, &#34;tool&#34;: tool}
+                if match.groups():
+                    entities[&#34;argument&#34;] = match.group(1).strip()
+                duration_ms = round((time.perf_counter() - start) * 1000, 3)
+                return IntentTriageResult(
+                    query=q,
+                    intent_category=IntentCategory.LOCAL_TOOL,
+                    target_subsystem=SubsystemDestination.LOCAL_MCP,
+                    confidence=0.95,
+                    entities=entities,
+                    latency_ms=duration_ms,
+                    suggested_action=f&#34;{srv}.{tool}&#34;,
+                    requires_confirmation=(&#34;write&#34; in tool or &#34;commit&#34; in tool),
+                )
+
+        # 3. GUI Visual Grounding / Screen Interaction
+        for regex, action in self._compiled_gui:
+            match = regex.match(q)
+            if match:
+                entities = {&#34;gui_action&#34;: action, &#34;parameters&#34;: match.groups()}
+                duration_ms = round((time.perf_counter() - start) * 1000, 3)
+                return IntentTriageResult(
+                    query=q,
+                    intent_category=IntentCategory.GUI_ACTION,
+                    target_subsystem=SubsystemDestination.GUI_GROUNDING,
+                    confidence=0.92,
+                    entities=entities,
+                    latency_ms=duration_ms,
+                    suggested_action=action,
+                    requires_confirmation=False,
+                )
+
+        # 4. Cloud Reasoning Check (lengthy prompt or architectural keywords)
+        is_cloud_reasoning = (
+            len(q.split()) &gt; 35
+            or any(kw in q_lower for kw in self.CLOUD_REASONING_KEYWORDS)
+            or (context and len(context) &gt; 500)
+        )
+
+        if is_cloud_reasoning:
+            duration_ms = round((time.perf_counter() - start) * 1000, 3)
+            return IntentTriageResult(
+                query=q,
+                intent_category=IntentCategory.CLOUD_REASONING,
+                target_subsystem=SubsystemDestination.CLOUD_ROTATOR,
+                confidence=0.88,
+                entities={&#34;reasoning_type&#34;: &#34;deep_synthesis&#34;},
+                latency_ms=duration_ms,
+                suggested_action=&#34;cloud_rotator_inference&#34;,
+                requires_confirmation=False,
+            )
+
+        # 5. Default Fallback -&gt; Local Tool / Macro execution
+        duration_ms = round((time.perf_counter() - start) * 1000, 3)
+        return IntentTriageResult(
+            query=q,
+            intent_category=IntentCategory.LOCAL_TOOL,
+            target_subsystem=SubsystemDestination.LOCAL_MCP,
+            confidence=0.75,
+            entities={&#34;query&#34;: q},
+            latency_ms=duration_ms,
+            suggested_action=&#34;local_general_triage&#34;,
+            requires_confirmation=False,
+        )</code></pre>
+</details>
+<div class="desc"><p>Sub-millisecond triage engine inspired by OpenMausBot's Jev engine.
+Triages incoming queries to the optimal execution layer without cloud latency overhead.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.intent_router.FastIntentRouter.CLOUD_REASONING_KEYWORDS"><code class="name">var <span class="ident">CLOUD_REASONING_KEYWORDS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.FastIntentRouter.GUI_ACTION_PATTERNS"><code class="name">var <span class="ident">GUI_ACTION_PATTERNS</span> : List[Tuple[str, str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.FastIntentRouter.MACRO_PATTERNS"><code class="name">var <span class="ident">MACRO_PATTERNS</span> : List[Tuple[str, str, bool]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.FastIntentRouter.MCP_TOOL_PATTERNS"><code class="name">var <span class="ident">MCP_TOOL_PATTERNS</span> : List[Tuple[str, str, str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.intent_router.FastIntentRouter.triage"><code class="name flex">
+<span>def <span class="ident">triage</span></span>(<span>self, query: str, context: Optional[str] = None) ‑> <a title="jarvis.core.intent_router.IntentTriageResult" href="#jarvis.core.intent_router.IntentTriageResult">IntentTriageResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def triage(self, query: str, context: Optional[str] = None) -&gt; IntentTriageResult:
+    &#34;&#34;&#34;
+    Executes fast multi-branch intent triage in &lt;10ms.
+    &#34;&#34;&#34;
+    start = time.perf_counter()
+    q = (query or &#34;&#34;).strip()
+    q_lower = q.lower()
+
+    # 0. Voice input stream marker
+    if q.startswith(&#34;[voice]&#34;) or q.startswith(&#34;voice:&#34;):
+        duration_ms = round((time.perf_counter() - start) * 1000, 3)
+        return IntentTriageResult(
+            query=q,
+            intent_category=IntentCategory.VOICE_COMMAND,
+            target_subsystem=SubsystemDestination.VOICE_BUS,
+            confidence=0.98,
+            entities={&#34;raw_voice_transcript&#34;: q.split(&#34;:&#34;, 1)[-1].strip()},
+            latency_ms=duration_ms,
+            suggested_action=&#34;process_voice_stream&#34;,
+            requires_confirmation=False,
+        )
+
+    # 1. Deterministic Instant Macros
+    for regex, tag, req_confirm in self._compiled_macros:
+        match = regex.match(q)
+        if match:
+            entities = {&#34;action&#34;: tag}
+            if match.groups():
+                entities[&#34;target&#34;] = match.group(1).strip()
+            duration_ms = round((time.perf_counter() - start) * 1000, 3)
+            return IntentTriageResult(
+                query=q,
+                intent_category=IntentCategory.INSTANT_MACRO,
+                target_subsystem=SubsystemDestination.LOCAL_MACRO,
+                confidence=0.99,
+                entities=entities,
+                latency_ms=duration_ms,
+                suggested_action=tag,
+                requires_confirmation=req_confirm,
+            )
+
+    # 2. Local MCP Tools (Filesystem, Git, Memory)
+    for regex, srv, tool in self._compiled_mcp:
+        match = regex.match(q)
+        if match:
+            entities = {&#34;mcp_server&#34;: srv, &#34;tool&#34;: tool}
+            if match.groups():
+                entities[&#34;argument&#34;] = match.group(1).strip()
+            duration_ms = round((time.perf_counter() - start) * 1000, 3)
+            return IntentTriageResult(
+                query=q,
+                intent_category=IntentCategory.LOCAL_TOOL,
+                target_subsystem=SubsystemDestination.LOCAL_MCP,
+                confidence=0.95,
+                entities=entities,
+                latency_ms=duration_ms,
+                suggested_action=f&#34;{srv}.{tool}&#34;,
+                requires_confirmation=(&#34;write&#34; in tool or &#34;commit&#34; in tool),
+            )
+
+    # 3. GUI Visual Grounding / Screen Interaction
+    for regex, action in self._compiled_gui:
+        match = regex.match(q)
+        if match:
+            entities = {&#34;gui_action&#34;: action, &#34;parameters&#34;: match.groups()}
+            duration_ms = round((time.perf_counter() - start) * 1000, 3)
+            return IntentTriageResult(
+                query=q,
+                intent_category=IntentCategory.GUI_ACTION,
+                target_subsystem=SubsystemDestination.GUI_GROUNDING,
+                confidence=0.92,
+                entities=entities,
+                latency_ms=duration_ms,
+                suggested_action=action,
+                requires_confirmation=False,
+            )
+
+    # 4. Cloud Reasoning Check (lengthy prompt or architectural keywords)
+    is_cloud_reasoning = (
+        len(q.split()) &gt; 35
+        or any(kw in q_lower for kw in self.CLOUD_REASONING_KEYWORDS)
+        or (context and len(context) &gt; 500)
+    )
+
+    if is_cloud_reasoning:
+        duration_ms = round((time.perf_counter() - start) * 1000, 3)
+        return IntentTriageResult(
+            query=q,
+            intent_category=IntentCategory.CLOUD_REASONING,
+            target_subsystem=SubsystemDestination.CLOUD_ROTATOR,
+            confidence=0.88,
+            entities={&#34;reasoning_type&#34;: &#34;deep_synthesis&#34;},
+            latency_ms=duration_ms,
+            suggested_action=&#34;cloud_rotator_inference&#34;,
+            requires_confirmation=False,
+        )
+
+    # 5. Default Fallback -&gt; Local Tool / Macro execution
+    duration_ms = round((time.perf_counter() - start) * 1000, 3)
+    return IntentTriageResult(
+        query=q,
+        intent_category=IntentCategory.LOCAL_TOOL,
+        target_subsystem=SubsystemDestination.LOCAL_MCP,
+        confidence=0.75,
+        entities={&#34;query&#34;: q},
+        latency_ms=duration_ms,
+        suggested_action=&#34;local_general_triage&#34;,
+        requires_confirmation=False,
+    )</code></pre>
+</details>
+<div class="desc"><p>Executes fast multi-branch intent triage in &lt;10ms.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.intent_router.IntentCategory"><code class="flex name class">
+<span>class <span class="ident">IntentCategory</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IntentCategory(str, Enum):
+    INSTANT_MACRO = &#34;instant_macro&#34;
+    LOCAL_TOOL = &#34;local_tool&#34;
+    GUI_ACTION = &#34;gui_action&#34;
+    CLOUD_REASONING = &#34;cloud_reasoning&#34;
+    VOICE_COMMAND = &#34;voice_command&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.intent_router.IntentCategory.CLOUD_REASONING"><code class="name">var <span class="ident">CLOUD_REASONING</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentCategory.GUI_ACTION"><code class="name">var <span class="ident">GUI_ACTION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentCategory.INSTANT_MACRO"><code class="name">var <span class="ident">INSTANT_MACRO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentCategory.LOCAL_TOOL"><code class="name">var <span class="ident">LOCAL_TOOL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentCategory.VOICE_COMMAND"><code class="name">var <span class="ident">VOICE_COMMAND</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.intent_router.IntentTriageResult"><code class="flex name class">
+<span>class <span class="ident">IntentTriageResult</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IntentTriageResult(BaseModel):
+    query: str
+    intent_category: IntentCategory
+    target_subsystem: SubsystemDestination
+    confidence: float = Field(ge=0.0, le=1.0)
+    entities: Dict[str, Any] = Field(default_factory=dict)
+    latency_ms: float
+    suggested_action: Optional[str] = None
+    requires_confirmation: bool = False</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.intent_router.IntentTriageResult.confidence"><code class="name">var <span class="ident">confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentTriageResult.entities"><code class="name">var <span class="ident">entities</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentTriageResult.intent_category"><code class="name">var <span class="ident">intent_category</span> : <a title="jarvis.core.intent_router.IntentCategory" href="#jarvis.core.intent_router.IntentCategory">IntentCategory</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentTriageResult.latency_ms"><code class="name">var <span class="ident">latency_ms</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentTriageResult.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentTriageResult.query"><code class="name">var <span class="ident">query</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentTriageResult.requires_confirmation"><code class="name">var <span class="ident">requires_confirmation</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentTriageResult.suggested_action"><code class="name">var <span class="ident">suggested_action</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.IntentTriageResult.target_subsystem"><code class="name">var <span class="ident">target_subsystem</span> : <a title="jarvis.core.intent_router.SubsystemDestination" href="#jarvis.core.intent_router.SubsystemDestination">SubsystemDestination</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.core.intent_router.SubsystemDestination"><code class="flex name class">
+<span>class <span class="ident">SubsystemDestination</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SubsystemDestination(str, Enum):
+    LOCAL_MACRO = &#34;local_macro&#34;
+    LOCAL_MCP = &#34;local_mcp&#34;
+    GUI_GROUNDING = &#34;gui_grounding&#34;
+    CLOUD_ROTATOR = &#34;cloud_rotator&#34;
+    VOICE_BUS = &#34;voice_bus&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.intent_router.SubsystemDestination.CLOUD_ROTATOR"><code class="name">var <span class="ident">CLOUD_ROTATOR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.SubsystemDestination.GUI_GROUNDING"><code class="name">var <span class="ident">GUI_GROUNDING</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.SubsystemDestination.LOCAL_MACRO"><code class="name">var <span class="ident">LOCAL_MACRO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.SubsystemDestination.LOCAL_MCP"><code class="name">var <span class="ident">LOCAL_MCP</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.intent_router.SubsystemDestination.VOICE_BUS"><code class="name">var <span class="ident">VOICE_BUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.intent_router.FastIntentRouter" href="#jarvis.core.intent_router.FastIntentRouter">FastIntentRouter</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.intent_router.FastIntentRouter.CLOUD_REASONING_KEYWORDS" href="#jarvis.core.intent_router.FastIntentRouter.CLOUD_REASONING_KEYWORDS">CLOUD_REASONING_KEYWORDS</a></code></li>
+<li><code><a title="jarvis.core.intent_router.FastIntentRouter.GUI_ACTION_PATTERNS" href="#jarvis.core.intent_router.FastIntentRouter.GUI_ACTION_PATTERNS">GUI_ACTION_PATTERNS</a></code></li>
+<li><code><a title="jarvis.core.intent_router.FastIntentRouter.MACRO_PATTERNS" href="#jarvis.core.intent_router.FastIntentRouter.MACRO_PATTERNS">MACRO_PATTERNS</a></code></li>
+<li><code><a title="jarvis.core.intent_router.FastIntentRouter.MCP_TOOL_PATTERNS" href="#jarvis.core.intent_router.FastIntentRouter.MCP_TOOL_PATTERNS">MCP_TOOL_PATTERNS</a></code></li>
+<li><code><a title="jarvis.core.intent_router.FastIntentRouter.triage" href="#jarvis.core.intent_router.FastIntentRouter.triage">triage</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.intent_router.IntentCategory" href="#jarvis.core.intent_router.IntentCategory">IntentCategory</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.intent_router.IntentCategory.CLOUD_REASONING" href="#jarvis.core.intent_router.IntentCategory.CLOUD_REASONING">CLOUD_REASONING</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentCategory.GUI_ACTION" href="#jarvis.core.intent_router.IntentCategory.GUI_ACTION">GUI_ACTION</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentCategory.INSTANT_MACRO" href="#jarvis.core.intent_router.IntentCategory.INSTANT_MACRO">INSTANT_MACRO</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentCategory.LOCAL_TOOL" href="#jarvis.core.intent_router.IntentCategory.LOCAL_TOOL">LOCAL_TOOL</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentCategory.VOICE_COMMAND" href="#jarvis.core.intent_router.IntentCategory.VOICE_COMMAND">VOICE_COMMAND</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.intent_router.IntentTriageResult" href="#jarvis.core.intent_router.IntentTriageResult">IntentTriageResult</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.intent_router.IntentTriageResult.confidence" href="#jarvis.core.intent_router.IntentTriageResult.confidence">confidence</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentTriageResult.entities" href="#jarvis.core.intent_router.IntentTriageResult.entities">entities</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentTriageResult.intent_category" href="#jarvis.core.intent_router.IntentTriageResult.intent_category">intent_category</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentTriageResult.latency_ms" href="#jarvis.core.intent_router.IntentTriageResult.latency_ms">latency_ms</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentTriageResult.model_config" href="#jarvis.core.intent_router.IntentTriageResult.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentTriageResult.query" href="#jarvis.core.intent_router.IntentTriageResult.query">query</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentTriageResult.requires_confirmation" href="#jarvis.core.intent_router.IntentTriageResult.requires_confirmation">requires_confirmation</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentTriageResult.suggested_action" href="#jarvis.core.intent_router.IntentTriageResult.suggested_action">suggested_action</a></code></li>
+<li><code><a title="jarvis.core.intent_router.IntentTriageResult.target_subsystem" href="#jarvis.core.intent_router.IntentTriageResult.target_subsystem">target_subsystem</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.core.intent_router.SubsystemDestination" href="#jarvis.core.intent_router.SubsystemDestination">SubsystemDestination</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.core.intent_router.SubsystemDestination.CLOUD_ROTATOR" href="#jarvis.core.intent_router.SubsystemDestination.CLOUD_ROTATOR">CLOUD_ROTATOR</a></code></li>
+<li><code><a title="jarvis.core.intent_router.SubsystemDestination.GUI_GROUNDING" href="#jarvis.core.intent_router.SubsystemDestination.GUI_GROUNDING">GUI_GROUNDING</a></code></li>
+<li><code><a title="jarvis.core.intent_router.SubsystemDestination.LOCAL_MACRO" href="#jarvis.core.intent_router.SubsystemDestination.LOCAL_MACRO">LOCAL_MACRO</a></code></li>
+<li><code><a title="jarvis.core.intent_router.SubsystemDestination.LOCAL_MCP" href="#jarvis.core.intent_router.SubsystemDestination.LOCAL_MCP">LOCAL_MCP</a></code></li>
+<li><code><a title="jarvis.core.intent_router.SubsystemDestination.VOICE_BUS" href="#jarvis.core.intent_router.SubsystemDestination.VOICE_BUS">VOICE_BUS</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

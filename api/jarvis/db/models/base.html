@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.db.models.base API documentation</title>
+<meta name="description" content="SQLAlchemy 2.x Base and Universal Column Types for JARVIS
+Provides cross-platform UUID (GUID) and JSON (UniversalJSON) handling for PostgreSQL and …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.db.models.base</code></h1>
+</header>
+<section id="section-intro">
+<p>SQLAlchemy 2.x Base and Universal Column Types for JARVIS
+Provides cross-platform UUID (GUID) and JSON (UniversalJSON) handling for PostgreSQL and SQLite.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.db.models.base.Base"><code class="flex name class">
+<span>class <span class="ident">Base</span></span>
+<span>(</span><span>**kwargs: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Base(DeclarativeBase):
+    pass</code></pre>
+</details>
+<div class="desc"><p>Base class used for declarative class definitions.</p>
+<p>The :class:<code>_orm.DeclarativeBase</code> allows for the creation of new
+declarative bases in such a way that is compatible with type checkers::</p>
+<pre><code>from sqlalchemy.orm import DeclarativeBase
+
+
+class Base(DeclarativeBase):
+    pass
+</code></pre>
+<p>The above <code><a title="jarvis.db.models.base.Base" href="#jarvis.db.models.base.Base">Base</a></code> class is now usable as the base for new declarative
+mappings.
+The superclass makes use of the <code>__init_subclass__()</code>
+method to set up new classes and metaclasses aren't used.</p>
+<p>When first used, the :class:<code>_orm.DeclarativeBase</code> class instantiates a new
+:class:<code>_orm.registry</code> to be used with the base, assuming one was not
+provided explicitly. The :class:<code>_orm.DeclarativeBase</code> class supports
+class-level attributes which act as parameters for the construction of this
+registry; such as to indicate a specific :class:<code>_schema.MetaData</code>
+collection as well as a specific value for
+:paramref:<code>_orm.registry.type_annotation_map</code>::</p>
+<pre><code>from typing import Annotated
+
+from sqlalchemy import BigInteger
+from sqlalchemy import MetaData
+from sqlalchemy import String
+from sqlalchemy.orm import DeclarativeBase
+
+bigint = Annotated[int, "bigint"]
+my_metadata = MetaData()
+
+
+class Base(DeclarativeBase):
+    metadata = my_metadata
+    type_annotation_map = {
+        str: String().with_variant(String(255), "mysql", "mariadb"),
+        bigint: BigInteger(),
+    }
+</code></pre>
+<p>Class-level attributes which may be specified include:</p>
+<p>:param metadata: optional :class:<code>_schema.MetaData</code> collection.
+If a :class:<code>_orm.registry</code> is constructed automatically, this
+:class:<code>_schema.MetaData</code> collection will be used to construct it.
+Otherwise, the local :class:<code>_schema.MetaData</code> collection will supersede
+that used by an existing :class:<code>_orm.registry</code> passed using the
+:paramref:<code>_orm.DeclarativeBase.registry</code> parameter.
+:param type_annotation_map: optional type annotation map that will be
+passed to the :class:<code>_orm.registry</code> as
+:paramref:<code>_orm.registry.type_annotation_map</code>.
+:param registry: supply a pre-existing :class:<code>_orm.registry</code> directly.</p>
+<div class="admonition versionadded">
+<p class="admonition-title">Added in version:&ensp;2.0
+Added :class:<code>.DeclarativeBase</code>, so that declarative</p>
+<p>base classes may be constructed in such a way that is also recognized
+by :pep:<code>484</code> type checkers.
+As a result, :class:<code>.DeclarativeBase</code>
+and other subclassing-oriented APIs should be seen as
+superseding previous "class returned by a function" APIs, namely
+:func:<code>_orm.declarative_base</code> and :meth:<code>_orm.registry.generate_base</code>,
+where the base class returned cannot be recognized by type checkers
+without using plugins.</p>
+</div>
+<p><strong><strong>init</strong> behavior</strong></p>
+<p>In a plain Python class, the base-most <code>__init__()</code> method in the class
+hierarchy is <code>object.__init__()</code>, which accepts no arguments. However,
+when the :class:<code>_orm.DeclarativeBase</code> subclass is first declared, the
+class is given an <code>__init__()</code> method that links to the
+:paramref:<code>_orm.registry.constructor</code> constructor function, if no
+<code>__init__()</code> method is already present; this is the usual declarative
+constructor that will assign keyword arguments as attributes on the
+instance, assuming those attributes are established at the class level
+(i.e. are mapped, or are linked to a descriptor). This constructor is
+<strong>never accessed by a mapped class without being called explicitly via
+super()</strong>, as mapped classes are themselves given an <code>__init__()</code> method
+directly which calls :paramref:<code>_orm.registry.constructor</code>, so in the
+default case works independently of what the base-most <code>__init__()</code>
+method does.</p>
+<div class="admonition versionchanged">
+<p class="admonition-title">Changed in version:&ensp;2.0.1
+:class:<code>_orm.DeclarativeBase</code> has a default</p>
+<p>constructor that links to :paramref:<code>_orm.registry.constructor</code> by
+default, so that calls to <code>super().__init__()</code> can access this
+constructor. Previously, due to an implementation mistake, this default
+constructor was missing, and calling <code>super().__init__()</code> would invoke
+<code>object.__init__()</code>.</p>
+</div>
+<p>The :class:<code>_orm.DeclarativeBase</code> subclass may also declare an explicit
+<code>__init__()</code> method which will replace the use of the
+:paramref:<code>_orm.registry.constructor</code> function at this level::</p>
+<pre><code>class Base(DeclarativeBase):
+    def __init__(self, id=None):
+        self.id = id
+</code></pre>
+<p>Mapped classes still will not invoke this constructor implicitly; it
+remains only accessible by calling <code>super().__init__()</code>::</p>
+<pre><code>class MyClass(Base):
+    def __init__(self, id=None, name=None):
+        self.name = name
+        super().__init__(id=id)
+</code></pre>
+<p>Note that this is a different behavior from what functions like the legacy
+:func:<code>_orm.declarative_base</code> would do; the base created by those functions
+would always install :paramref:<code>_orm.registry.constructor</code> for
+<code>__init__()</code>.</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.orm.decl_api.DeclarativeBase</li>
+<li>sqlalchemy.inspection.Inspectable</li>
+<li>typing.Generic</li>
+<li>sqlalchemy.orm.decl_api._DeclarativeTyping</li>
+<li>sqlalchemy.util.langhelpers.TypingOnly</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="jarvis.db.models.agent.AgentModel" href="agent.html#jarvis.db.models.agent.AgentModel">AgentModel</a></li>
+<li><a title="jarvis.db.models.artifact.ArtifactModel" href="artifact.html#jarvis.db.models.artifact.ArtifactModel">ArtifactModel</a></li>
+<li><a title="jarvis.db.models.assignment.AssignmentModel" href="assignment.html#jarvis.db.models.assignment.AssignmentModel">AssignmentModel</a></li>
+<li><a title="jarvis.db.models.audit.AuditModel" href="audit.html#jarvis.db.models.audit.AuditModel">AuditModel</a></li>
+<li><a title="jarvis.db.models.department.DepartmentModel" href="department.html#jarvis.db.models.department.DepartmentModel">DepartmentModel</a></li>
+<li><a title="jarvis.db.models.dependency.TaskDependencyModel" href="dependency.html#jarvis.db.models.dependency.TaskDependencyModel">TaskDependencyModel</a></li>
+<li><a title="jarvis.db.models.execution.ExecutionModel" href="execution.html#jarvis.db.models.execution.ExecutionModel">ExecutionModel</a></li>
+<li><a title="jarvis.db.models.goal.GoalModel" href="goal.html#jarvis.db.models.goal.GoalModel">GoalModel</a></li>
+<li><a title="jarvis.db.models.knowledge.KnowledgeEdgeModel" href="knowledge.html#jarvis.db.models.knowledge.KnowledgeEdgeModel">KnowledgeEdgeModel</a></li>
+<li><a title="jarvis.db.models.knowledge.KnowledgeNodeModel" href="knowledge.html#jarvis.db.models.knowledge.KnowledgeNodeModel">KnowledgeNodeModel</a></li>
+<li><a title="jarvis.db.models.lifecycle.AgentLifecycleModel" href="lifecycle.html#jarvis.db.models.lifecycle.AgentLifecycleModel">AgentLifecycleModel</a></li>
+<li><a title="jarvis.db.models.memory.MemoryModel" href="memory.html#jarvis.db.models.memory.MemoryModel">MemoryModel</a></li>
+<li><a title="jarvis.db.models.opportunity.OpportunityModel" href="opportunity.html#jarvis.db.models.opportunity.OpportunityModel">OpportunityModel</a></li>
+<li><a title="jarvis.db.models.reflection.ReflectionModel" href="reflection.html#jarvis.db.models.reflection.ReflectionModel">ReflectionModel</a></li>
+<li><a title="jarvis.db.models.schedule.ScheduleModel" href="schedule.html#jarvis.db.models.schedule.ScheduleModel">ScheduleModel</a></li>
+<li><a title="jarvis.db.models.task.TaskGraphModel" href="task.html#jarvis.db.models.task.TaskGraphModel">TaskGraphModel</a></li>
+<li><a title="jarvis.db.models.task.TaskModel" href="task.html#jarvis.db.models.task.TaskModel">TaskModel</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.db.models.base.Base.metadata"><code class="name">var <span class="ident">metadata</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.models.base.Base.registry"><code class="name">var <span class="ident">registry</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.db.models.base.GUID"><code class="flex name class">
+<span>class <span class="ident">GUID</span></span>
+<span>(</span><span>*args: Any, **kwargs: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GUID(TypeDecorator):
+    &#34;&#34;&#34;Platform-independent GUID/UUID type.
+    Uses PostgreSQL&#39;s native UUID type, falls back to CHAR(36) string on SQLite.
+    &#34;&#34;&#34;
+
+    impl = CHAR
+    cache_ok = True
+
+    def load_dialect_impl(self, dialect):
+        if dialect.name == &#34;postgresql&#34;:
+            return dialect.type_descriptor(postgresql.UUID(as_uuid=True))
+        else:
+            return dialect.type_descriptor(CHAR(36))
+
+    def process_bind_param(self, value, dialect):
+        if value is None:
+            return value
+        elif dialect.name == &#34;postgresql&#34;:
+            return str(value)
+        else:
+            if isinstance(value, uuid.UUID):
+                return str(value)
+            else:
+                return str(uuid.UUID(str(value)))
+
+    def process_result_value(self, value, dialect):
+        if value is None:
+            return value
+        else:
+            if not isinstance(value, uuid.UUID):
+                try:
+                    return uuid.UUID(str(value))
+                except Exception:
+                    return value
+            return value</code></pre>
+</details>
+<div class="desc"><p>Platform-independent GUID/UUID type.
+Uses PostgreSQL's native UUID type, falls back to CHAR(36) string on SQLite.</p>
+<p>Construct a :class:<code>.TypeDecorator</code>.</p>
+<p>Arguments sent here are passed to the constructor
+of the class assigned to the <code>impl</code> class level attribute,
+assuming the <code>impl</code> is a callable, and the resulting
+object is assigned to the <code>self.impl</code> instance attribute
+(thus overriding the class attribute of the same name).</p>
+<p>If the class level <code>impl</code> is not a callable (the unusual case),
+it will be assigned to the same instance attribute 'as-is',
+ignoring those arguments passed to the constructor.</p>
+<p>Subclasses can override this to customize the generation
+of <code>self.impl</code> entirely.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.sql.type_api.TypeDecorator</li>
+<li>sqlalchemy.sql.base.SchemaEventTarget</li>
+<li>sqlalchemy.event.registry.EventTarget</li>
+<li>sqlalchemy.sql.type_api.ExternalType</li>
+<li>sqlalchemy.sql.type_api.TypeEngineMixin</li>
+<li>sqlalchemy.sql.type_api.TypeEngine</li>
+<li>sqlalchemy.sql.visitors.Visitable</li>
+<li>typing.Generic</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.db.models.base.GUID.cache_ok"><code class="name">var <span class="ident">cache_ok</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.models.base.GUID.impl"><code class="name">var <span class="ident">impl</span></code></dt>
+<dd>
+<div class="desc"><p>The SQL CHAR type.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.db.models.base.GUID.load_dialect_impl"><code class="name flex">
+<span>def <span class="ident">load_dialect_impl</span></span>(<span>self, dialect)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_dialect_impl(self, dialect):
+    if dialect.name == &#34;postgresql&#34;:
+        return dialect.type_descriptor(postgresql.UUID(as_uuid=True))
+    else:
+        return dialect.type_descriptor(CHAR(36))</code></pre>
+</details>
+<div class="desc"><p>Return a :class:<code>.TypeEngine</code> object corresponding to a dialect.</p>
+<p>This is an end-user override hook that can be used to provide
+differing types depending on the given dialect.
+It is used
+by the :class:<code>.TypeDecorator</code> implementation of :meth:<code>type_engine</code>
+to help determine what type should ultimately be returned
+for a given :class:<code>.TypeDecorator</code>.</p>
+<p>By default returns <code>self.impl</code>.</p></div>
+</dd>
+<dt id="jarvis.db.models.base.GUID.process_bind_param"><code class="name flex">
+<span>def <span class="ident">process_bind_param</span></span>(<span>self, value, dialect)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_bind_param(self, value, dialect):
+    if value is None:
+        return value
+    elif dialect.name == &#34;postgresql&#34;:
+        return str(value)
+    else:
+        if isinstance(value, uuid.UUID):
+            return str(value)
+        else:
+            return str(uuid.UUID(str(value)))</code></pre>
+</details>
+<div class="desc"><p>Receive a bound parameter value to be converted.</p>
+<p>Custom subclasses of :class:<code>_types.TypeDecorator</code> should override
+this method to provide custom behaviors for incoming data values.
+This method is called at <strong>statement execution time</strong> and is passed
+the literal Python data value which is to be associated with a bound
+parameter in the statement.</p>
+<p>The operation could be anything desired to perform custom
+behavior, such as transforming or serializing data.
+This could also be used as a hook for validating logic.</p>
+<p>:param value: Data to operate upon, of any type expected by
+this method in the subclass.
+Can be <code>None</code>.
+:param dialect: the :class:<code>.Dialect</code> in use.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>:ref:<code>types_typedecorator</code></p>
+<p>:meth:<code>_types.TypeDecorator.process_result_value</code></p>
+</div></div>
+</dd>
+<dt id="jarvis.db.models.base.GUID.process_result_value"><code class="name flex">
+<span>def <span class="ident">process_result_value</span></span>(<span>self, value, dialect)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_result_value(self, value, dialect):
+    if value is None:
+        return value
+    else:
+        if not isinstance(value, uuid.UUID):
+            try:
+                return uuid.UUID(str(value))
+            except Exception:
+                return value
+        return value</code></pre>
+</details>
+<div class="desc"><p>Receive a result-row column value to be converted.</p>
+<p>Custom subclasses of :class:<code>_types.TypeDecorator</code> should override
+this method to provide custom behaviors for data values
+being received in result rows coming from the database.
+This method is called at <strong>result fetching time</strong> and is passed
+the literal Python data value that's extracted from a database result
+row.</p>
+<p>The operation could be anything desired to perform custom
+behavior, such as transforming or deserializing data.</p>
+<p>:param value: Data to operate upon, of any type expected by
+this method in the subclass.
+Can be <code>None</code>.
+:param dialect: the :class:<code>.Dialect</code> in use.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>:ref:<code>types_typedecorator</code></p>
+<p>:meth:<code>_types.TypeDecorator.process_bind_param</code></p>
+</div></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.db.models.base.TimestampMixin"><code class="flex name class">
+<span>class <span class="ident">TimestampMixin</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TimestampMixin:
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        sa.DateTime(timezone=True),
+        default=lambda: datetime.datetime.now(datetime.timezone.utc),
+        nullable=False,
+    )
+    updated_at: Mapped[datetime.datetime] = mapped_column(
+        sa.DateTime(timezone=True),
+        default=lambda: datetime.datetime.now(datetime.timezone.utc),
+        onupdate=lambda: datetime.datetime.now(datetime.timezone.utc),
+        nullable=False,
+    )</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="jarvis.db.models.agent.AgentModel" href="agent.html#jarvis.db.models.agent.AgentModel">AgentModel</a></li>
+<li><a title="jarvis.db.models.department.DepartmentModel" href="department.html#jarvis.db.models.department.DepartmentModel">DepartmentModel</a></li>
+<li><a title="jarvis.db.models.goal.GoalModel" href="goal.html#jarvis.db.models.goal.GoalModel">GoalModel</a></li>
+<li><a title="jarvis.db.models.memory.MemoryModel" href="memory.html#jarvis.db.models.memory.MemoryModel">MemoryModel</a></li>
+<li><a title="jarvis.db.models.task.TaskGraphModel" href="task.html#jarvis.db.models.task.TaskGraphModel">TaskGraphModel</a></li>
+<li><a title="jarvis.db.models.task.TaskModel" href="task.html#jarvis.db.models.task.TaskModel">TaskModel</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.db.models.base.TimestampMixin.created_at"><code class="name">var <span class="ident">created_at</span> : sqlalchemy.orm.base.Mapped[datetime.datetime]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.models.base.TimestampMixin.updated_at"><code class="name">var <span class="ident">updated_at</span> : sqlalchemy.orm.base.Mapped[datetime.datetime]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.db.models.base.UniversalJSON"><code class="flex name class">
+<span>class <span class="ident">UniversalJSON</span></span>
+<span>(</span><span>*args: Any, **kwargs: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UniversalJSON(TypeDecorator):
+    &#34;&#34;&#34;Platform-independent JSON type.
+    Uses PostgreSQL JSONB for indexing, falls back to standard JSON on SQLite.
+    &#34;&#34;&#34;
+
+    impl = sa.JSON
+    cache_ok = True
+
+    def load_dialect_impl(self, dialect):
+        if dialect.name == &#34;postgresql&#34;:
+            return dialect.type_descriptor(postgresql.JSONB(astext_type=sa.Text()))
+        else:
+            return dialect.type_descriptor(sa.JSON())</code></pre>
+</details>
+<div class="desc"><p>Platform-independent JSON type.
+Uses PostgreSQL JSONB for indexing, falls back to standard JSON on SQLite.</p>
+<p>Construct a :class:<code>.TypeDecorator</code>.</p>
+<p>Arguments sent here are passed to the constructor
+of the class assigned to the <code>impl</code> class level attribute,
+assuming the <code>impl</code> is a callable, and the resulting
+object is assigned to the <code>self.impl</code> instance attribute
+(thus overriding the class attribute of the same name).</p>
+<p>If the class level <code>impl</code> is not a callable (the unusual case),
+it will be assigned to the same instance attribute 'as-is',
+ignoring those arguments passed to the constructor.</p>
+<p>Subclasses can override this to customize the generation
+of <code>self.impl</code> entirely.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.sql.type_api.TypeDecorator</li>
+<li>sqlalchemy.sql.base.SchemaEventTarget</li>
+<li>sqlalchemy.event.registry.EventTarget</li>
+<li>sqlalchemy.sql.type_api.ExternalType</li>
+<li>sqlalchemy.sql.type_api.TypeEngineMixin</li>
+<li>sqlalchemy.sql.type_api.TypeEngine</li>
+<li>sqlalchemy.sql.visitors.Visitable</li>
+<li>typing.Generic</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.db.models.base.UniversalJSON.cache_ok"><code class="name">var <span class="ident">cache_ok</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.db.models.base.UniversalJSON.impl"><code class="name">var <span class="ident">impl</span></code></dt>
+<dd>
+<div class="desc"><p>Represent a SQL JSON type.</p>
+<div class="admonition note">
+<p class="admonition-title">Note:&ensp;:class:<code>_types.JSON</code></p>
+<p>is provided as a facade for vendor-specific
+JSON types.
+Since it supports JSON SQL operations, it only
+works on backends that have an actual JSON type, currently:</p>
+<ul>
+<li>
+<p>PostgreSQL - see :class:<code>sqlalchemy.dialects.postgresql.JSON</code> and
+:class:<code>sqlalchemy.dialects.postgresql.JSONB</code> for backend-specific
+notes</p>
+</li>
+<li>
+<p>MySQL - see
+:class:<code>sqlalchemy.dialects.mysql.JSON</code> for backend-specific notes</p>
+</li>
+<li>
+<p>SQLite as of version 3.9 - see
+:class:<code>sqlalchemy.dialects.sqlite.JSON</code> for backend-specific notes</p>
+</li>
+<li>
+<p>Microsoft SQL Server 2016 and later - see
+:class:<code>sqlalchemy.dialects.mssql.JSON</code> for backend-specific notes</p>
+</li>
+<li>
+<p>Oracle 21c and later - see :class:<code>sqlalchemy.dialects.oracle.JSON</code>
+for backend-specific notes</p>
+</li>
+</ul>
+</div>
+<p>:class:<code>_types.JSON</code> is part of the Core in support of the growing
+popularity of native JSON datatypes.</p>
+<p>The :class:<code>_types.JSON</code> type stores arbitrary JSON format data, e.g.::</p>
+<pre><code>data_table = Table(
+    "data_table",
+    metadata,
+    Column("id", Integer, primary_key=True),
+    Column("data", JSON),
+)
+
+with engine.connect() as conn:
+    conn.execute(
+        data_table.insert(), {"data": {"key1": "value1", "key2": "value2"}}
+    )
+</code></pre>
+<p><strong>JSON-Specific Expression Operators</strong></p>
+<p>The :class:<code>_types.JSON</code>
+datatype provides these additional SQL operations:</p>
+<ul>
+<li>
+<p>Keyed index operations::</p>
+<p>data_table.c.data["some key"]</p>
+</li>
+<li>
+<p>Integer index operations::</p>
+<p>data_table.c.data[3]</p>
+</li>
+<li>
+<p>Path index operations::</p>
+<p>data_table.c.data[("key_1", "key_2", 5, &hellip;, "key_n")]</p>
+</li>
+<li>
+<p>Data casters for specific JSON element types, subsequent to an index
+or path operation being invoked::</p>
+<p>data_table.c.data["some key"].as_integer()</p>
+</li>
+</ul>
+<p>Additional operations may be available from the dialect-specific versions
+of :class:<code>_types.JSON</code>, such as
+:class:<code>sqlalchemy.dialects.postgresql.JSON</code> and
+:class:<code>sqlalchemy.dialects.postgresql.JSONB</code> which both offer additional
+PostgreSQL-specific operations.</p>
+<p><strong>Casting JSON Elements to Other Types</strong></p>
+<p>Index operations, i.e. those invoked by calling upon the expression using
+the Python bracket operator as in <code>some_column['some key']</code>, return an
+expression object whose type defaults to :class:<code>_types.JSON</code> by default,
+so that
+further JSON-oriented instructions may be called upon the result type.
+However, it is likely more common that an index operation is expected
+to return a specific scalar element, such as a string or integer.
+In
+order to provide access to these elements in a backend-agnostic way,
+a series of data casters are provided:</p>
+<ul>
+<li>
+<p>:meth:<code>.JSON.Comparator.as_string</code> - return the element as a string</p>
+</li>
+<li>
+<p>:meth:<code>.JSON.Comparator.as_boolean</code> - return the element as a boolean</p>
+</li>
+<li>
+<p>:meth:<code>.JSON.Comparator.as_float</code> - return the element as a float</p>
+</li>
+<li>
+<p>:meth:<code>.JSON.Comparator.as_integer</code> - return the element as an integer</p>
+</li>
+</ul>
+<p>These data casters are implemented by supporting dialects in order to
+assure that comparisons to the above types will work as expected, such as::</p>
+<pre><code># integer comparison
+data_table.c.data["some_integer_key"].as_integer() == 5
+
+# boolean comparison
+data_table.c.data["some_boolean"].as_boolean() == True
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The data caster functions are new in version 1.3.11, and supersede
+the previous documented approaches of using CAST; for reference,
+this looked like::</p>
+<p>from sqlalchemy import cast, type_coerce
+from sqlalchemy import String, JSON</p>
+<p>cast(data_table.c.data["some_key"], String) == type_coerce(55, JSON)</p>
+<p>The above case now works directly as::</p>
+<pre><code>data_table.c.data["some_key"].as_integer() == 5
+</code></pre>
+<p>For details on the previous comparison approach within the 1.3.x
+series, see the documentation for SQLAlchemy 1.2 or the included HTML
+files in the doc/ directory of the version's distribution.</p>
+</div>
+<p><strong>Detecting Changes in JSON columns when using the ORM</strong></p>
+<p>The :class:<code>_types.JSON</code> type, when used with the SQLAlchemy ORM, does not
+detect in-place mutations to the structure.
+In order to detect these, the
+:mod:<code>sqlalchemy.ext.mutable</code> extension must be used, most typically
+using the :class:<code>.MutableDict</code> class.
+This extension will
+allow "in-place" changes to the datastructure to produce events which
+will be detected by the unit of work.
+See the example at :class:<code>.HSTORE</code>
+for a simple example involving a dictionary.</p>
+<p>Alternatively, assigning a JSON structure to an ORM element that
+replaces the old one will always trigger a change event.</p>
+<p><strong>Support for JSON null vs. SQL NULL</strong></p>
+<p>When working with NULL values, the :class:<code>_types.JSON</code> type recommends the
+use of two specific constants in order to differentiate between a column
+that evaluates to SQL NULL, e.g. no value, vs. the JSON-encoded string of
+<code>"null"</code>. To insert or select against a value that is SQL NULL, use the
+constant :func:<code>.null</code>. This symbol may be passed as a parameter value
+specifically when using the :class:<code>_types.JSON</code> datatype, which contains
+special logic that interprets this symbol to mean that the column value
+should be SQL NULL as opposed to JSON <code>"null"</code>::</p>
+<pre><code>from sqlalchemy import null
+
+conn.execute(table.insert(), {"json_value": null()})
+</code></pre>
+<p>To insert or select against a value that is JSON <code>"null"</code>, use the
+constant :attr:<code>_types.JSON.NULL</code>::</p>
+<pre><code>conn.execute(table.insert(), {"json_value": JSON.NULL})
+</code></pre>
+<p>The :class:<code>_types.JSON</code> type supports a flag
+:paramref:<code>_types.JSON.none_as_null</code> which when set to True will result
+in the Python constant <code>None</code> evaluating to the value of SQL
+NULL, and when set to False results in the Python constant
+<code>None</code> evaluating to the value of JSON <code>"null"</code>.
+The Python
+value <code>None</code> may be used in conjunction with either
+:attr:<code>_types.JSON.NULL</code> and :func:<code>.null</code> in order to indicate NULL
+values, but care must be taken as to the value of the
+:paramref:<code>_types.JSON.none_as_null</code> in these cases.</p>
+<p><strong>Customizing the JSON Serializer</strong></p>
+<p>The JSON serializer and deserializer used by :class:<code>_types.JSON</code>
+defaults to
+Python's <code>json.dumps</code> and <code>json.loads</code> functions; in the case of the
+psycopg2 dialect, psycopg2 may be using its own custom loader function.</p>
+<p>In order to affect the serializer / deserializer, they are currently
+configurable at the :func:<code>_sa.create_engine</code> level via the
+:paramref:<code>_sa.create_engine.json_serializer</code> and
+:paramref:<code>_sa.create_engine.json_deserializer</code> parameters.
+For example,
+to turn off <code>ensure_ascii</code>::</p>
+<pre><code>engine = create_engine(
+    "sqlite://",
+    json_serializer=lambda obj: json.dumps(obj, ensure_ascii=False),
+)
+</code></pre>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>:class:<code>sqlalchemy.dialects.postgresql.JSON</code></p>
+<p>:class:<code>sqlalchemy.dialects.postgresql.JSONB</code></p>
+<p>:class:<code>sqlalchemy.dialects.mysql.JSON</code></p>
+<p>:class:<code>sqlalchemy.dialects.sqlite.JSON</code></p>
+<p>:class:<code>sqlalchemy.dialects.oracle.JSON</code></p>
+</div></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.db.models.base.UniversalJSON.load_dialect_impl"><code class="name flex">
+<span>def <span class="ident">load_dialect_impl</span></span>(<span>self, dialect)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_dialect_impl(self, dialect):
+    if dialect.name == &#34;postgresql&#34;:
+        return dialect.type_descriptor(postgresql.JSONB(astext_type=sa.Text()))
+    else:
+        return dialect.type_descriptor(sa.JSON())</code></pre>
+</details>
+<div class="desc"><p>Return a :class:<code>.TypeEngine</code> object corresponding to a dialect.</p>
+<p>This is an end-user override hook that can be used to provide
+differing types depending on the given dialect.
+It is used
+by the :class:<code>.TypeDecorator</code> implementation of :meth:<code>type_engine</code>
+to help determine what type should ultimately be returned
+for a given :class:<code>.TypeDecorator</code>.</p>
+<p>By default returns <code>self.impl</code>.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.db.models" href="index.html">jarvis.db.models</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.db.models.base.Base" href="#jarvis.db.models.base.Base">Base</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.db.models.base.Base.metadata" href="#jarvis.db.models.base.Base.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.db.models.base.Base.registry" href="#jarvis.db.models.base.Base.registry">registry</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.db.models.base.GUID" href="#jarvis.db.models.base.GUID">GUID</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.db.models.base.GUID.cache_ok" href="#jarvis.db.models.base.GUID.cache_ok">cache_ok</a></code></li>
+<li><code><a title="jarvis.db.models.base.GUID.impl" href="#jarvis.db.models.base.GUID.impl">impl</a></code></li>
+<li><code><a title="jarvis.db.models.base.GUID.load_dialect_impl" href="#jarvis.db.models.base.GUID.load_dialect_impl">load_dialect_impl</a></code></li>
+<li><code><a title="jarvis.db.models.base.GUID.process_bind_param" href="#jarvis.db.models.base.GUID.process_bind_param">process_bind_param</a></code></li>
+<li><code><a title="jarvis.db.models.base.GUID.process_result_value" href="#jarvis.db.models.base.GUID.process_result_value">process_result_value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.db.models.base.TimestampMixin" href="#jarvis.db.models.base.TimestampMixin">TimestampMixin</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.db.models.base.TimestampMixin.created_at" href="#jarvis.db.models.base.TimestampMixin.created_at">created_at</a></code></li>
+<li><code><a title="jarvis.db.models.base.TimestampMixin.updated_at" href="#jarvis.db.models.base.TimestampMixin.updated_at">updated_at</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.db.models.base.UniversalJSON" href="#jarvis.db.models.base.UniversalJSON">UniversalJSON</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.db.models.base.UniversalJSON.cache_ok" href="#jarvis.db.models.base.UniversalJSON.cache_ok">cache_ok</a></code></li>
+<li><code><a title="jarvis.db.models.base.UniversalJSON.impl" href="#jarvis.db.models.base.UniversalJSON.impl">impl</a></code></li>
+<li><code><a title="jarvis.db.models.base.UniversalJSON.load_dialect_impl" href="#jarvis.db.models.base.UniversalJSON.load_dialect_impl">load_dialect_impl</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

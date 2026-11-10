@@ -1,0 +1,1521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.powers.youtube_powers API documentation</title>
+<meta name="description" content="JARVIS YouTube Creator Powers (PWR-237 to PWR-255)
+Template-driven content generation for YouTube creators:
+- Script, title, description, and tag …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.powers.youtube_powers</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS YouTube Creator Powers (PWR-237 to PWR-255)
+Template-driven content generation for YouTube creators:
+- Script, title, description, and tag generation
+- Thumbnail briefs and content calendars
+- Competitor analysis and trending topics
+- Shorts scripts, playlist organisation, analytics
+- Collaboration pitches, repurpose plans, monetisation checks</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers"><code class="flex name class">
+<span>class <span class="ident">YouTubePowers</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class YouTubePowers:
+    &#34;&#34;&#34;Deterministic template-based YouTube content generation.&#34;&#34;&#34;
+
+    # ------------------------------------------------------------------
+    # PWR-237  Generate Video Script
+    # ------------------------------------------------------------------
+    def generate_video_script(self, topic: str, style: str = &#34;educational&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-237: Generate a structured 3-act video script (hook → body → CTA).&#34;&#34;&#34;
+        style = style.lower().strip()
+        style_hooks = {
+            &#34;educational&#34;: f&#34;Did you know that {topic} is one of the most misunderstood subjects today?&#34;,
+            &#34;entertaining&#34;: f&#34;Okay, buckle up — because {topic} is wilder than you think.&#34;,
+            &#34;tutorial&#34;: f&#34;In the next few minutes you&#39;ll master {topic} step by step.&#34;,
+            &#34;storytelling&#34;: f&#34;Let me tell you a story about {topic} that changed everything.&#34;,
+        }
+        hook = style_hooks.get(style, style_hooks[&#34;educational&#34;])
+
+        body_sections = [
+            {&#34;section&#34;: &#34;Context&#34;, &#34;content&#34;: f&#34;Provide background on {topic}. Explain why it matters now.&#34;},
+            {&#34;section&#34;: &#34;Core Content&#34;, &#34;content&#34;: f&#34;Deep-dive into {topic}. Use data, examples, and visuals.&#34;},
+            {&#34;section&#34;: &#34;Key Takeaway&#34;, &#34;content&#34;: f&#34;Summarize the single most important insight about {topic}.&#34;},
+        ]
+        cta = (
+            f&#34;If this video helped you understand {topic}, smash that like button, &#34;
+            &#34;subscribe, and hit the bell so you never miss an upload. &#34;
+            &#34;Drop your thoughts in the comments!&#34;
+        )
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-237&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;topic&#34;: topic,
+            &#34;style&#34;: style,
+            &#34;script&#34;: {
+                &#34;act_1_hook&#34;: hook,
+                &#34;act_2_body&#34;: body_sections,
+                &#34;act_3_cta&#34;: cta,
+            },
+            &#34;estimated_duration_seconds&#34;: 480,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-238  Generate Titles
+    # ------------------------------------------------------------------
+    def generate_titles(self, topic: str, count: int = 10) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-238: Generate high-CTR YouTube title variants.&#34;&#34;&#34;
+        templates = [
+            &#34;{topic} — Everything You Need to Know in {year}&#34;,
+            &#34;I Tried {topic} for 30 Days — Here&#39;s What Happened&#34;,
+            &#34;The TRUTH About {topic} Nobody Tells You&#34;,
+            &#34;{topic}: Beginner to Pro in One Video&#34;,
+            &#34;Why {topic} Is Bigger Than You Think&#34;,
+            &#34;Stop Making These {topic} Mistakes!&#34;,
+            &#34;{topic} Explained in Under 10 Minutes&#34;,
+            &#34;How {topic} Will Change Your Life&#34;,
+            &#34;The Ultimate Guide to {topic} ({year} Edition)&#34;,
+            &#34;{topic} vs. the Competition — Clear Winner?&#34;,
+            &#34;What I Wish I Knew Before Starting {topic}&#34;,
+            &#34;Is {topic} Worth It? Honest Review&#34;,
+        ]
+        year = str(datetime.date.today().year)
+        titles = [t.format(topic=topic, year=year) for t in templates[:count]]
+        return {
+            &#34;power_id&#34;: &#34;PWR-238&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;topic&#34;: topic,
+            &#34;titles&#34;: titles,
+            &#34;count&#34;: len(titles),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-239  Generate Description
+    # ------------------------------------------------------------------
+    def generate_description(self, topic: str, keywords: Optional[List[str]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-239: Generate an SEO-optimized YouTube video description.&#34;&#34;&#34;
+        kw_list = keywords or [topic.lower()]
+        kw_line = &#34;, &#34;.join(kw_list)
+        description = (
+            f&#34;🎯 In this video we cover everything about {topic}.\n\n&#34;
+            f&#34;🔑 Keywords: {kw_line}\n\n&#34;
+            &#34;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n&#34;
+            &#34;📌 TIMESTAMPS\n&#34;
+            &#34;0:00 — Intro\n&#34;
+            &#34;0:30 — Why this matters\n&#34;
+            &#34;2:00 — Deep dive\n&#34;
+            &#34;6:00 — Key takeaways\n&#34;
+            &#34;7:30 — What&#39;s next?\n\n&#34;
+            &#34;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n&#34;
+            &#34;🔗 LINKS &amp; RESOURCES\n&#34;
+            &#34;• [Resource 1 — placeholder]\n&#34;
+            &#34;• [Resource 2 — placeholder]\n\n&#34;
+            &#34;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n&#34;
+            &#34;📱 FOLLOW ME\n&#34;
+            &#34;• Twitter: @handle\n&#34;
+            &#34;• Instagram: @handle\n\n&#34;
+            f&#34;#{&#39;  #&#39;.join(w.replace(&#39; &#39;, &#39;&#39;) for w in kw_list)}\n&#34;
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-239&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;topic&#34;: topic,
+            &#34;keywords&#34;: kw_list,
+            &#34;description&#34;: description,
+            &#34;character_count&#34;: len(description),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-240  Generate Tags
+    # ------------------------------------------------------------------
+    def generate_tags(self, topic: str, max_tags: int = 30) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-240: Generate a search-optimized tag list for a YouTube video.&#34;&#34;&#34;
+        base = topic.lower().strip()
+        words = base.split()
+        tags: List[str] = [base]
+        suffixes = [
+            &#34;tutorial&#34;,
+            &#34;explained&#34;,
+            &#34;guide&#34;,
+            &#34;for beginners&#34;,
+            &#34;tips&#34;,
+            &#34;tricks&#34;,
+            &#34;review&#34;,
+            &#34;how to&#34;,
+            &#34;best practices&#34;,
+            &#34;2024&#34;,
+            &#34;2025&#34;,
+            &#34;2026&#34;,
+            &#34;masterclass&#34;,
+            &#34;course&#34;,
+            &#34;step by step&#34;,
+            &#34;deep dive&#34;,
+            &#34;crash course&#34;,
+            &#34;pros and cons&#34;,
+            &#34;vs&#34;,
+            &#34;walkthrough&#34;,
+        ]
+        for suffix in suffixes:
+            tags.append(f&#34;{base} {suffix}&#34;)
+            if len(tags) &gt;= max_tags:
+                break
+        # Add individual words as bonus tags
+        for w in words:
+            if w not in tags and len(tags) &lt; max_tags:
+                tags.append(w)
+
+        tags = tags[:max_tags]
+        return {
+            &#34;power_id&#34;: &#34;PWR-240&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;topic&#34;: topic,
+            &#34;tags&#34;: tags,
+            &#34;count&#34;: len(tags),
+            &#34;total_characters&#34;: sum(len(t) for t in tags),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-241  Thumbnail Brief
+    # ------------------------------------------------------------------
+    def thumbnail_brief(self, topic: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-241: Generate a text brief for thumbnail design.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-241&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;topic&#34;: topic,
+            &#34;brief&#34;: {
+                &#34;headline_text&#34;: topic.upper()[:40],
+                &#34;sub_text&#34;: &#34;YOU NEED TO SEE THIS&#34;,
+                &#34;recommended_style&#34;: &#34;bold text overlay on dark gradient&#34;,
+                &#34;face_expression&#34;: &#34;surprised / excited&#34;,
+                &#34;color_palette&#34;: [&#34;#FF0000&#34;, &#34;#FFFFFF&#34;, &#34;#FFD700&#34;],
+                &#34;layout&#34;: &#34;face left 40%, text right 60%&#34;,
+                &#34;font_recommendation&#34;: &#34;Impact or Montserrat Black&#34;,
+                &#34;max_words_on_thumbnail&#34;: 5,
+                &#34;contrast_tip&#34;: &#34;Use a bright outline or drop shadow on text for readability.&#34;,
+            },
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-242  Content Calendar
+    # ------------------------------------------------------------------
+    def content_calendar(self, niche: str, weeks: int = 4) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-242: Generate a weekly content schedule.&#34;&#34;&#34;
+        day_slots = [&#34;Monday&#34;, &#34;Wednesday&#34;, &#34;Friday&#34;]
+        content_types = [
+            &#34;Deep-dive tutorial&#34;,
+            &#34;Quick tip / Short&#34;,
+            &#34;Listicle / Top N&#34;,
+            &#34;Behind the scenes&#34;,
+            &#34;Q&amp;A / Community response&#34;,
+            &#34;Case study&#34;,
+            &#34;Tool review&#34;,
+            &#34;Trending reaction&#34;,
+            &#34;Collaboration idea&#34;,
+            &#34;Challenge video&#34;,
+            &#34;Myth-busting&#34;,
+            &#34;Comparison / vs&#34;,
+        ]
+        calendar: List[Dict[str, Any]] = []
+        idx = 0
+        start = datetime.date.today()
+        for week in range(1, weeks + 1):
+            week_start = start + datetime.timedelta(weeks=week - 1)
+            week_entries: List[Dict[str, str]] = []
+            for day_name in day_slots:
+                ct = content_types[idx % len(content_types)]
+                week_entries.append(
+                    {
+                        &#34;day&#34;: day_name,
+                        &#34;content_type&#34;: ct,
+                        &#34;suggested_topic&#34;: f&#34;{niche}: {ct}&#34;,
+                    }
+                )
+                idx += 1
+            calendar.append({&#34;week&#34;: week, &#34;week_of&#34;: str(week_start), &#34;slots&#34;: week_entries})
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-242&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;niche&#34;: niche,
+            &#34;weeks&#34;: weeks,
+            &#34;calendar&#34;: calendar,
+            &#34;total_videos&#34;: weeks * len(day_slots),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-243  Competitor Analysis (placeholder)
+    # ------------------------------------------------------------------
+    def competitor_analysis(self, channel_name: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-243: Placeholder for YouTube competitor / channel analysis.&#34;&#34;&#34;
+        return {
+            &#34;power_id&#34;: &#34;PWR-243&#34;,
+            &#34;status&#34;: &#34;placeholder&#34;,
+            &#34;channel_name&#34;: channel_name,
+            &#34;message&#34;: (
+                f&#34;Competitor analysis for &#39;{channel_name}&#39; requires YouTube Data API v3 integration. &#34;
+                &#34;Provide an API key via YOUTUBE_API_KEY env var to enable live data.&#34;
+            ),
+            &#34;suggested_metrics&#34;: [
+                &#34;subscriber_count&#34;,
+                &#34;avg_views_per_video&#34;,
+                &#34;upload_frequency&#34;,
+                &#34;top_performing_topics&#34;,
+                &#34;engagement_rate&#34;,
+                &#34;average_video_length&#34;,
+            ],
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-244  Trending Topics
+    # ------------------------------------------------------------------
+    def trending_topics(self, niche: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-244: Return trending topic suggestions for a niche.&#34;&#34;&#34;
+        # Deterministic seed-based suggestions (no API call)
+        seed = int(hashlib.md5(niche.encode()).hexdigest()[:8], 16)
+        evergreen = [
+            f&#34;Beginner&#39;s complete guide to {niche}&#34;,
+            f&#34;Top 10 myths about {niche} debunked&#34;,
+            f&#34;How to start {niche} with zero budget&#34;,
+            f&#34;{niche} mistakes that cost you money&#34;,
+            f&#34;Day in the life of a {niche} professional&#34;,
+        ]
+        trending = [
+            f&#34;AI is changing {niche} — here&#39;s how&#34;,
+            f&#34;Why {niche} is exploding in {datetime.date.today().year}&#34;,
+            f&#34;The future of {niche}: predictions&#34;,
+            f&#34;{niche} tools everyone is talking about&#34;,
+            f&#34;How to stand out in the {niche} space&#34;,
+        ]
+        return {
+            &#34;power_id&#34;: &#34;PWR-244&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;niche&#34;: niche,
+            &#34;evergreen_topics&#34;: evergreen,
+            &#34;trending_topics&#34;: trending,
+            &#34;note&#34;: &#34;Trending topics are template-generated. Connect YouTube Data API for live trends.&#34;,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-245  Video Outline
+    # ------------------------------------------------------------------
+    def video_outline(self, topic: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-245: Generate a detailed section-by-section video outline.&#34;&#34;&#34;
+        outline = [
+            {
+                &#34;timestamp&#34;: &#34;0:00&#34;,
+                &#34;section&#34;: &#34;Cold Open / Hook&#34;,
+                &#34;notes&#34;: f&#34;Grab attention with a bold claim about {topic}.&#34;,
+            },
+            {
+                &#34;timestamp&#34;: &#34;0:15&#34;,
+                &#34;section&#34;: &#34;Intro &amp; Channel Branding&#34;,
+                &#34;notes&#34;: &#34;Quick intro, ask viewers to subscribe.&#34;,
+            },
+            {
+                &#34;timestamp&#34;: &#34;0:45&#34;,
+                &#34;section&#34;: &#34;Why This Matters&#34;,
+                &#34;notes&#34;: f&#34;Explain the relevance of {topic} right now.&#34;,
+            },
+            {
+                &#34;timestamp&#34;: &#34;2:00&#34;,
+                &#34;section&#34;: &#34;Background / Context&#34;,
+                &#34;notes&#34;: &#34;Set the stage with necessary background info.&#34;,
+            },
+            {
+                &#34;timestamp&#34;: &#34;3:30&#34;,
+                &#34;section&#34;: &#34;Main Point 1&#34;,
+                &#34;notes&#34;: f&#34;First major insight or step regarding {topic}.&#34;,
+            },
+            {&#34;timestamp&#34;: &#34;5:00&#34;, &#34;section&#34;: &#34;Main Point 2&#34;, &#34;notes&#34;: &#34;Second key point with examples or data.&#34;},
+            {&#34;timestamp&#34;: &#34;6:30&#34;, &#34;section&#34;: &#34;Main Point 3&#34;, &#34;notes&#34;: &#34;Third key point or counter-argument.&#34;},
+            {&#34;timestamp&#34;: &#34;8:00&#34;, &#34;section&#34;: &#34;Common Mistakes / Pitfalls&#34;, &#34;notes&#34;: &#34;What to avoid.&#34;},
+            {
+                &#34;timestamp&#34;: &#34;9:00&#34;,
+                &#34;section&#34;: &#34;Summary &amp; Key Takeaway&#34;,
+                &#34;notes&#34;: &#34;Recap the single most important lesson.&#34;,
+            },
+            {
+                &#34;timestamp&#34;: &#34;9:30&#34;,
+                &#34;section&#34;: &#34;Call to Action &amp; Outro&#34;,
+                &#34;notes&#34;: &#34;Like, subscribe, comment prompt. Tease next video.&#34;,
+            },
+        ]
+        return {
+            &#34;power_id&#34;: &#34;PWR-245&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;topic&#34;: topic,
+            &#34;outline&#34;: outline,
+            &#34;estimated_duration&#34;: &#34;10:00&#34;,
+            &#34;section_count&#34;: len(outline),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-246  Hook Generator
+    # ------------------------------------------------------------------
+    def hook_generator(self, topic: str, count: int = 5) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-246: Generate opening hook variants for a video.&#34;&#34;&#34;
+        templates = [
+            f&#34;What if I told you everything you know about {topic} is wrong?&#34;,
+            f&#34;In the next 60 seconds, I&#39;m going to change how you think about {topic}.&#34;,
+            f&#34;Most people fail at {topic} — here&#39;s the one thing that actually works.&#34;,
+            f&#34;I spent 100 hours researching {topic} so you don&#39;t have to.&#34;,
+            f&#34;Stop scrolling. If you care about {topic}, you need to hear this.&#34;,
+            f&#34;This one {topic} trick saved me thousands of dollars.&#34;,
+            f&#34;WARNING: what I&#39;m about to say about {topic} might surprise you.&#34;,
+            f&#34;The biggest lie about {topic}? Let me show you the data.&#34;,
+        ]
+        hooks = templates[:count]
+        return {
+            &#34;power_id&#34;: &#34;PWR-246&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;topic&#34;: topic,
+            &#34;hooks&#34;: hooks,
+            &#34;count&#34;: len(hooks),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-247  CTA Generator
+    # ------------------------------------------------------------------
+    def cta_generator(self, goal: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-247: Generate call-to-action variants for a specific goal.&#34;&#34;&#34;
+        goal_lower = goal.lower().strip()
+        ctas = [
+            f&#34;If you want to {goal_lower}, drop a comment below and I&#39;ll send you the link!&#34;,
+            f&#34;Ready to {goal_lower}? Hit subscribe and turn on notifications so you don&#39;t miss the next step.&#34;,
+            f&#34;Smash the like button if this helped you {goal_lower} — it really helps the channel!&#34;,
+            f&#34;Want to {goal_lower}? Check the first link in the description.&#34;,
+            f&#34;I built a free resource to help you {goal_lower} — grab it in the description.&#34;,
+        ]
+        return {
+            &#34;power_id&#34;: &#34;PWR-247&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;goal&#34;: goal,
+            &#34;ctas&#34;: ctas,
+            &#34;count&#34;: len(ctas),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-248  Comment Reply Drafts
+    # ------------------------------------------------------------------
+    def comment_reply_drafts(self, comments: List[str]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-248: Draft reply templates for viewer comments.&#34;&#34;&#34;
+        drafts: List[Dict[str, str]] = []
+        for comment in comments:
+            words = comment.strip().split()
+            if any(w in comment.lower() for w in [&#34;thank&#34;, &#34;thanks&#34;, &#34;love&#34;, &#34;great&#34;, &#34;awesome&#34;]):
+                reply = &#34;Thank you so much! Really glad you found this helpful. 🙌&#34;
+            elif &#34;?&#34; in comment:
+                reply = &#34;Great question! I&#39;ll cover this in more detail in an upcoming video — stay tuned!&#34;
+            elif any(w in comment.lower() for w in [&#34;wrong&#34;, &#34;disagree&#34;, &#34;bad&#34;, &#34;hate&#34;]):
+                reply = (
+                    &#34;I appreciate the feedback! Would love to hear your perspective — what would you suggest instead?&#34;
+                )
+            else:
+                reply = &#34;Thanks for watching and leaving a comment! 🎉&#34;
+            drafts.append({&#34;original_comment&#34;: comment, &#34;suggested_reply&#34;: reply})
+        return {
+            &#34;power_id&#34;: &#34;PWR-248&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;drafts&#34;: drafts,
+            &#34;count&#34;: len(drafts),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-249  Shorts Script
+    # ------------------------------------------------------------------
+    def shorts_script(self, topic: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-249: Generate a 60-second YouTube Shorts script.&#34;&#34;&#34;
+        script = {
+            &#34;duration_target&#34;: &#34;60 seconds&#34;,
+            &#34;format&#34;: &#34;vertical 9:16&#34;,
+            &#34;sections&#34;: [
+                {&#34;time&#34;: &#34;0-5s&#34;, &#34;label&#34;: &#34;HOOK&#34;, &#34;script&#34;: f&#34;One thing about {topic} that blew my mind…&#34;},
+                {
+                    &#34;time&#34;: &#34;5-15s&#34;,
+                    &#34;label&#34;: &#34;CONTEXT&#34;,
+                    &#34;script&#34;: f&#34;Most people think {topic} works like this… but it doesn&#39;t.&#34;,
+                },
+                {
+                    &#34;time&#34;: &#34;15-40s&#34;,
+                    &#34;label&#34;: &#34;VALUE&#34;,
+                    &#34;script&#34;: f&#34;Here&#39;s what actually matters about {topic}. [Show key point with on-screen text.]&#34;,
+                },
+                {
+                    &#34;time&#34;: &#34;40-50s&#34;,
+                    &#34;label&#34;: &#34;PROOF&#34;,
+                    &#34;script&#34;: &#34;And the results speak for themselves. [Show data / result.]&#34;,
+                },
+                {&#34;time&#34;: &#34;50-60s&#34;, &#34;label&#34;: &#34;CTA&#34;, &#34;script&#34;: &#34;Follow for more and comment &#39;YES&#39; if you want part 2!&#34;},
+            ],
+        }
+        return {
+            &#34;power_id&#34;: &#34;PWR-249&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;topic&#34;: topic,
+            &#34;script&#34;: script,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-250  Playlist Organizer
+    # ------------------------------------------------------------------
+    def playlist_organizer(self, videos: List[str]) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-250: Group video titles into logical playlist buckets.&#34;&#34;&#34;
+        # Simple keyword-clustering heuristic
+        buckets: Dict[str, List[str]] = {}
+        for title in videos:
+            # Use the first significant word (&gt;3 chars) as a bucket key
+            words = [w for w in re.split(r&#34;[\s\-—:]+&#34;, title) if len(w) &gt; 3]
+            key = words[0].capitalize() if words else &#34;General&#34;
+            buckets.setdefault(key, []).append(title)
+
+        playlists = [{&#34;playlist_name&#34;: f&#34;{key} Series&#34;, &#34;videos&#34;: vids} for key, vids in buckets.items()]
+        return {
+            &#34;power_id&#34;: &#34;PWR-250&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;playlists&#34;: playlists,
+            &#34;total_videos&#34;: len(videos),
+            &#34;playlist_count&#34;: len(playlists),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-251  Analytics Summary
+    # ------------------------------------------------------------------
+    def analytics_summary(self, data: Optional[Dict[str, Any]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-251: Summarise channel analytics data.&#34;&#34;&#34;
+        if data is None:
+            return {
+                &#34;power_id&#34;: &#34;PWR-251&#34;,
+                &#34;status&#34;: &#34;no_data&#34;,
+                &#34;message&#34;: (
+                    &#34;No analytics data provided. Pass a dict with keys like &#34;
+                    &#34;&#39;views&#39;, &#39;subscribers&#39;, &#39;watch_hours&#39;, &#39;top_videos&#39; for a summary.&#34;
+                ),
+                &#34;template_keys&#34;: [
+                    &#34;views&#34;,
+                    &#34;subscribers&#34;,
+                    &#34;watch_hours&#34;,
+                    &#34;top_videos&#34;,
+                    &#34;ctr&#34;,
+                    &#34;avg_view_duration&#34;,
+                ],
+            }
+
+        views = data.get(&#34;views&#34;, 0)
+        subs = data.get(&#34;subscribers&#34;, 0)
+        watch_hours = data.get(&#34;watch_hours&#34;, 0)
+        ctr = data.get(&#34;ctr&#34;, 0)
+        avg_duration = data.get(&#34;avg_view_duration&#34;, 0)
+        top_videos = data.get(&#34;top_videos&#34;, [])
+
+        insights: List[str] = []
+        if ctr and ctr &lt; 4.0:
+            insights.append(&#34;CTR is below 4% — consider testing new thumbnails and titles.&#34;)
+        if ctr and ctr &gt;= 8.0:
+            insights.append(&#34;CTR is excellent (≥8%). Keep this thumbnail/title style!&#34;)
+        if avg_duration and avg_duration &lt; 180:
+            insights.append(&#34;Average view duration is under 3 min — front-load value and tighten pacing.&#34;)
+        if watch_hours &gt;= 4000 and subs &gt;= 1000:
+            insights.append(&#34;Channel meets YouTube Partner Programme thresholds! 🎉&#34;)
+
+        return {
+            &#34;power_id&#34;: &#34;PWR-251&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;summary&#34;: {
+                &#34;total_views&#34;: views,
+                &#34;subscribers&#34;: subs,
+                &#34;watch_hours&#34;: watch_hours,
+                &#34;click_through_rate&#34;: ctr,
+                &#34;avg_view_duration_seconds&#34;: avg_duration,
+                &#34;top_videos&#34;: top_videos,
+            },
+            &#34;insights&#34;: insights,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-252  Collaboration Pitch
+    # ------------------------------------------------------------------
+    def collab_pitch(self, creator: str, topic: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-252: Draft a collaboration pitch to another creator.&#34;&#34;&#34;
+        pitch = (
+            f&#34;Hey {creator}! 👋\n\n&#34;
+            f&#34;I&#39;ve been a fan of your content and I think there&#39;s a killer collab opportunity around \&#34;{topic}\&#34;.\n\n&#34;
+            &#34;Here&#39;s what I&#39;m thinking:\n&#34;
+            f&#34;• We each film our unique take on {topic}\n&#34;
+            &#34;• Cross-promote on both channels\n&#34;
+            &#34;• Optionally do a joint livestream Q&amp;A afterwards\n\n&#34;
+            &#34;My audience is super engaged on this subject and I think yours would love it too. &#34;
+            &#34;Would you be down to chat about it?\n\n&#34;
+            &#34;Looking forward to hearing from you!\n&#34;
+        )
+        return {
+            &#34;power_id&#34;: &#34;PWR-252&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;creator&#34;: creator,
+            &#34;topic&#34;: topic,
+            &#34;pitch_draft&#34;: pitch,
+            &#34;word_count&#34;: len(pitch.split()),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-253  Repurpose Plan
+    # ------------------------------------------------------------------
+    def repurpose_plan(self, content: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-253: Create a plan to repurpose a piece of content across platforms.&#34;&#34;&#34;
+        plan = [
+            {&#34;platform&#34;: &#34;YouTube Shorts&#34;, &#34;format&#34;: &#34;60s vertical clip of the best moment&#34;, &#34;effort&#34;: &#34;low&#34;},
+            {&#34;platform&#34;: &#34;TikTok&#34;, &#34;format&#34;: &#34;Re-edit Shorts clip with trending audio&#34;, &#34;effort&#34;: &#34;low&#34;},
+            {&#34;platform&#34;: &#34;Instagram Reels&#34;, &#34;format&#34;: &#34;Same vertical clip with captions overlay&#34;, &#34;effort&#34;: &#34;low&#34;},
+            {
+                &#34;platform&#34;: &#34;Twitter / X&#34;,
+                &#34;format&#34;: &#34;Thread summarising key points with a link to the full video&#34;,
+                &#34;effort&#34;: &#34;medium&#34;,
+            },
+            {
+                &#34;platform&#34;: &#34;LinkedIn&#34;,
+                &#34;format&#34;: &#34;Professional angle write-up with embedded video link&#34;,
+                &#34;effort&#34;: &#34;medium&#34;,
+            },
+            {
+                &#34;platform&#34;: &#34;Blog / Newsletter&#34;,
+                &#34;format&#34;: &#34;Long-form article expanding on video content&#34;,
+                &#34;effort&#34;: &#34;high&#34;,
+            },
+            {&#34;platform&#34;: &#34;Podcast&#34;, &#34;format&#34;: &#34;Audio-only version with additional commentary&#34;, &#34;effort&#34;: &#34;medium&#34;},
+            {&#34;platform&#34;: &#34;Pinterest&#34;, &#34;format&#34;: &#34;Infographic pin summarising key data points&#34;, &#34;effort&#34;: &#34;medium&#34;},
+        ]
+        return {
+            &#34;power_id&#34;: &#34;PWR-253&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;source_content_preview&#34;: content[:200],
+            &#34;repurpose_plan&#34;: plan,
+            &#34;platform_count&#34;: len(plan),
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-254  Monetisation Check
+    # ------------------------------------------------------------------
+    def monetization_check(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-254: Return YouTube Partner Programme eligibility checklist.&#34;&#34;&#34;
+        checklist = [
+            {&#34;requirement&#34;: &#34;1,000 subscribers&#34;, &#34;threshold&#34;: 1000, &#34;metric&#34;: &#34;subscribers&#34;},
+            {&#34;requirement&#34;: &#34;4,000 public watch hours (last 12 months)&#34;, &#34;threshold&#34;: 4000, &#34;metric&#34;: &#34;watch_hours&#34;},
+            {
+                &#34;requirement&#34;: &#34;OR 10M Shorts views (last 90 days)&#34;,
+                &#34;threshold&#34;: 10_000_000,
+                &#34;metric&#34;: &#34;shorts_views_90d&#34;,
+            },
+            {&#34;requirement&#34;: &#34;Linked AdSense account&#34;, &#34;metric&#34;: &#34;adsense_linked&#34;, &#34;threshold&#34;: True},
+            {&#34;requirement&#34;: &#34;No active Community Guidelines strikes&#34;, &#34;metric&#34;: &#34;cg_strikes&#34;, &#34;threshold&#34;: 0},
+            {&#34;requirement&#34;: &#34;2-Step Verification enabled&#34;, &#34;metric&#34;: &#34;two_step_verification&#34;, &#34;threshold&#34;: True},
+            {&#34;requirement&#34;: &#34;Compliance with monetisation policies&#34;, &#34;metric&#34;: &#34;policy_compliant&#34;, &#34;threshold&#34;: True},
+        ]
+        return {
+            &#34;power_id&#34;: &#34;PWR-254&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;programme&#34;: &#34;YouTube Partner Programme (YPP)&#34;,
+            &#34;checklist&#34;: checklist,
+            &#34;note&#34;: &#34;Pass your channel analytics dict to analytics_summary() to auto-evaluate thresholds.&#34;,
+        }
+
+    # ------------------------------------------------------------------
+    # PWR-255  Community Post Draft
+    # ------------------------------------------------------------------
+    def community_post_draft(self, topic: str) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-255: Draft a Community tab post.&#34;&#34;&#34;
+        variants = [
+            {
+                &#34;type&#34;: &#34;poll&#34;,
+                &#34;text&#34;: f&#34;What aspect of {topic} should I cover next?&#34;,
+                &#34;options&#34;: [
+                    f&#34;{topic} basics&#34;,
+                    f&#34;Advanced {topic} tips&#34;,
+                    f&#34;{topic} myths debunked&#34;,
+                    &#34;Something else (comment below!)&#34;,
+                ],
+            },
+            {
+                &#34;type&#34;: &#34;text&#34;,
+                &#34;text&#34;: (
+                    f&#34;🚀 New video on {topic} is dropping this week!\n\n&#34;
+                    &#34;What questions do you have? Drop them below and I might answer them in the video. 👇&#34;
+                ),
+            },
+            {
+                &#34;type&#34;: &#34;image_prompt&#34;,
+                &#34;text&#34;: f&#34;Behind the scenes of researching {topic} — this took way longer than expected 😅&#34;,
+                &#34;image_suggestion&#34;: &#34;Photo of workspace / screen with research notes visible.&#34;,
+            },
+        ]
+        return {
+            &#34;power_id&#34;: &#34;PWR-255&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;topic&#34;: topic,
+            &#34;post_variants&#34;: variants,
+            &#34;count&#34;: len(variants),
+        }</code></pre>
+</details>
+<div class="desc"><p>Deterministic template-based YouTube content generation.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.analytics_summary"><code class="name flex">
+<span>def <span class="ident">analytics_summary</span></span>(<span>self, data: Optional[Dict[str, Any]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analytics_summary(self, data: Optional[Dict[str, Any]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-251: Summarise channel analytics data.&#34;&#34;&#34;
+    if data is None:
+        return {
+            &#34;power_id&#34;: &#34;PWR-251&#34;,
+            &#34;status&#34;: &#34;no_data&#34;,
+            &#34;message&#34;: (
+                &#34;No analytics data provided. Pass a dict with keys like &#34;
+                &#34;&#39;views&#39;, &#39;subscribers&#39;, &#39;watch_hours&#39;, &#39;top_videos&#39; for a summary.&#34;
+            ),
+            &#34;template_keys&#34;: [
+                &#34;views&#34;,
+                &#34;subscribers&#34;,
+                &#34;watch_hours&#34;,
+                &#34;top_videos&#34;,
+                &#34;ctr&#34;,
+                &#34;avg_view_duration&#34;,
+            ],
+        }
+
+    views = data.get(&#34;views&#34;, 0)
+    subs = data.get(&#34;subscribers&#34;, 0)
+    watch_hours = data.get(&#34;watch_hours&#34;, 0)
+    ctr = data.get(&#34;ctr&#34;, 0)
+    avg_duration = data.get(&#34;avg_view_duration&#34;, 0)
+    top_videos = data.get(&#34;top_videos&#34;, [])
+
+    insights: List[str] = []
+    if ctr and ctr &lt; 4.0:
+        insights.append(&#34;CTR is below 4% — consider testing new thumbnails and titles.&#34;)
+    if ctr and ctr &gt;= 8.0:
+        insights.append(&#34;CTR is excellent (≥8%). Keep this thumbnail/title style!&#34;)
+    if avg_duration and avg_duration &lt; 180:
+        insights.append(&#34;Average view duration is under 3 min — front-load value and tighten pacing.&#34;)
+    if watch_hours &gt;= 4000 and subs &gt;= 1000:
+        insights.append(&#34;Channel meets YouTube Partner Programme thresholds! 🎉&#34;)
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-251&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;summary&#34;: {
+            &#34;total_views&#34;: views,
+            &#34;subscribers&#34;: subs,
+            &#34;watch_hours&#34;: watch_hours,
+            &#34;click_through_rate&#34;: ctr,
+            &#34;avg_view_duration_seconds&#34;: avg_duration,
+            &#34;top_videos&#34;: top_videos,
+        },
+        &#34;insights&#34;: insights,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-251: Summarise channel analytics data.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.collab_pitch"><code class="name flex">
+<span>def <span class="ident">collab_pitch</span></span>(<span>self, creator: str, topic: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def collab_pitch(self, creator: str, topic: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-252: Draft a collaboration pitch to another creator.&#34;&#34;&#34;
+    pitch = (
+        f&#34;Hey {creator}! 👋\n\n&#34;
+        f&#34;I&#39;ve been a fan of your content and I think there&#39;s a killer collab opportunity around \&#34;{topic}\&#34;.\n\n&#34;
+        &#34;Here&#39;s what I&#39;m thinking:\n&#34;
+        f&#34;• We each film our unique take on {topic}\n&#34;
+        &#34;• Cross-promote on both channels\n&#34;
+        &#34;• Optionally do a joint livestream Q&amp;A afterwards\n\n&#34;
+        &#34;My audience is super engaged on this subject and I think yours would love it too. &#34;
+        &#34;Would you be down to chat about it?\n\n&#34;
+        &#34;Looking forward to hearing from you!\n&#34;
+    )
+    return {
+        &#34;power_id&#34;: &#34;PWR-252&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;creator&#34;: creator,
+        &#34;topic&#34;: topic,
+        &#34;pitch_draft&#34;: pitch,
+        &#34;word_count&#34;: len(pitch.split()),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-252: Draft a collaboration pitch to another creator.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.comment_reply_drafts"><code class="name flex">
+<span>def <span class="ident">comment_reply_drafts</span></span>(<span>self, comments: List[str]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def comment_reply_drafts(self, comments: List[str]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-248: Draft reply templates for viewer comments.&#34;&#34;&#34;
+    drafts: List[Dict[str, str]] = []
+    for comment in comments:
+        words = comment.strip().split()
+        if any(w in comment.lower() for w in [&#34;thank&#34;, &#34;thanks&#34;, &#34;love&#34;, &#34;great&#34;, &#34;awesome&#34;]):
+            reply = &#34;Thank you so much! Really glad you found this helpful. 🙌&#34;
+        elif &#34;?&#34; in comment:
+            reply = &#34;Great question! I&#39;ll cover this in more detail in an upcoming video — stay tuned!&#34;
+        elif any(w in comment.lower() for w in [&#34;wrong&#34;, &#34;disagree&#34;, &#34;bad&#34;, &#34;hate&#34;]):
+            reply = (
+                &#34;I appreciate the feedback! Would love to hear your perspective — what would you suggest instead?&#34;
+            )
+        else:
+            reply = &#34;Thanks for watching and leaving a comment! 🎉&#34;
+        drafts.append({&#34;original_comment&#34;: comment, &#34;suggested_reply&#34;: reply})
+    return {
+        &#34;power_id&#34;: &#34;PWR-248&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;drafts&#34;: drafts,
+        &#34;count&#34;: len(drafts),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-248: Draft reply templates for viewer comments.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.community_post_draft"><code class="name flex">
+<span>def <span class="ident">community_post_draft</span></span>(<span>self, topic: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def community_post_draft(self, topic: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-255: Draft a Community tab post.&#34;&#34;&#34;
+    variants = [
+        {
+            &#34;type&#34;: &#34;poll&#34;,
+            &#34;text&#34;: f&#34;What aspect of {topic} should I cover next?&#34;,
+            &#34;options&#34;: [
+                f&#34;{topic} basics&#34;,
+                f&#34;Advanced {topic} tips&#34;,
+                f&#34;{topic} myths debunked&#34;,
+                &#34;Something else (comment below!)&#34;,
+            ],
+        },
+        {
+            &#34;type&#34;: &#34;text&#34;,
+            &#34;text&#34;: (
+                f&#34;🚀 New video on {topic} is dropping this week!\n\n&#34;
+                &#34;What questions do you have? Drop them below and I might answer them in the video. 👇&#34;
+            ),
+        },
+        {
+            &#34;type&#34;: &#34;image_prompt&#34;,
+            &#34;text&#34;: f&#34;Behind the scenes of researching {topic} — this took way longer than expected 😅&#34;,
+            &#34;image_suggestion&#34;: &#34;Photo of workspace / screen with research notes visible.&#34;,
+        },
+    ]
+    return {
+        &#34;power_id&#34;: &#34;PWR-255&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;topic&#34;: topic,
+        &#34;post_variants&#34;: variants,
+        &#34;count&#34;: len(variants),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-255: Draft a Community tab post.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.competitor_analysis"><code class="name flex">
+<span>def <span class="ident">competitor_analysis</span></span>(<span>self, channel_name: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def competitor_analysis(self, channel_name: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-243: Placeholder for YouTube competitor / channel analysis.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-243&#34;,
+        &#34;status&#34;: &#34;placeholder&#34;,
+        &#34;channel_name&#34;: channel_name,
+        &#34;message&#34;: (
+            f&#34;Competitor analysis for &#39;{channel_name}&#39; requires YouTube Data API v3 integration. &#34;
+            &#34;Provide an API key via YOUTUBE_API_KEY env var to enable live data.&#34;
+        ),
+        &#34;suggested_metrics&#34;: [
+            &#34;subscriber_count&#34;,
+            &#34;avg_views_per_video&#34;,
+            &#34;upload_frequency&#34;,
+            &#34;top_performing_topics&#34;,
+            &#34;engagement_rate&#34;,
+            &#34;average_video_length&#34;,
+        ],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-243: Placeholder for YouTube competitor / channel analysis.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.content_calendar"><code class="name flex">
+<span>def <span class="ident">content_calendar</span></span>(<span>self, niche: str, weeks: int = 4) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def content_calendar(self, niche: str, weeks: int = 4) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-242: Generate a weekly content schedule.&#34;&#34;&#34;
+    day_slots = [&#34;Monday&#34;, &#34;Wednesday&#34;, &#34;Friday&#34;]
+    content_types = [
+        &#34;Deep-dive tutorial&#34;,
+        &#34;Quick tip / Short&#34;,
+        &#34;Listicle / Top N&#34;,
+        &#34;Behind the scenes&#34;,
+        &#34;Q&amp;A / Community response&#34;,
+        &#34;Case study&#34;,
+        &#34;Tool review&#34;,
+        &#34;Trending reaction&#34;,
+        &#34;Collaboration idea&#34;,
+        &#34;Challenge video&#34;,
+        &#34;Myth-busting&#34;,
+        &#34;Comparison / vs&#34;,
+    ]
+    calendar: List[Dict[str, Any]] = []
+    idx = 0
+    start = datetime.date.today()
+    for week in range(1, weeks + 1):
+        week_start = start + datetime.timedelta(weeks=week - 1)
+        week_entries: List[Dict[str, str]] = []
+        for day_name in day_slots:
+            ct = content_types[idx % len(content_types)]
+            week_entries.append(
+                {
+                    &#34;day&#34;: day_name,
+                    &#34;content_type&#34;: ct,
+                    &#34;suggested_topic&#34;: f&#34;{niche}: {ct}&#34;,
+                }
+            )
+            idx += 1
+        calendar.append({&#34;week&#34;: week, &#34;week_of&#34;: str(week_start), &#34;slots&#34;: week_entries})
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-242&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;niche&#34;: niche,
+        &#34;weeks&#34;: weeks,
+        &#34;calendar&#34;: calendar,
+        &#34;total_videos&#34;: weeks * len(day_slots),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-242: Generate a weekly content schedule.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.cta_generator"><code class="name flex">
+<span>def <span class="ident">cta_generator</span></span>(<span>self, goal: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cta_generator(self, goal: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-247: Generate call-to-action variants for a specific goal.&#34;&#34;&#34;
+    goal_lower = goal.lower().strip()
+    ctas = [
+        f&#34;If you want to {goal_lower}, drop a comment below and I&#39;ll send you the link!&#34;,
+        f&#34;Ready to {goal_lower}? Hit subscribe and turn on notifications so you don&#39;t miss the next step.&#34;,
+        f&#34;Smash the like button if this helped you {goal_lower} — it really helps the channel!&#34;,
+        f&#34;Want to {goal_lower}? Check the first link in the description.&#34;,
+        f&#34;I built a free resource to help you {goal_lower} — grab it in the description.&#34;,
+    ]
+    return {
+        &#34;power_id&#34;: &#34;PWR-247&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;goal&#34;: goal,
+        &#34;ctas&#34;: ctas,
+        &#34;count&#34;: len(ctas),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-247: Generate call-to-action variants for a specific goal.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.generate_description"><code class="name flex">
+<span>def <span class="ident">generate_description</span></span>(<span>self, topic: str, keywords: Optional[List[str]] = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_description(self, topic: str, keywords: Optional[List[str]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-239: Generate an SEO-optimized YouTube video description.&#34;&#34;&#34;
+    kw_list = keywords or [topic.lower()]
+    kw_line = &#34;, &#34;.join(kw_list)
+    description = (
+        f&#34;🎯 In this video we cover everything about {topic}.\n\n&#34;
+        f&#34;🔑 Keywords: {kw_line}\n\n&#34;
+        &#34;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n&#34;
+        &#34;📌 TIMESTAMPS\n&#34;
+        &#34;0:00 — Intro\n&#34;
+        &#34;0:30 — Why this matters\n&#34;
+        &#34;2:00 — Deep dive\n&#34;
+        &#34;6:00 — Key takeaways\n&#34;
+        &#34;7:30 — What&#39;s next?\n\n&#34;
+        &#34;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n&#34;
+        &#34;🔗 LINKS &amp; RESOURCES\n&#34;
+        &#34;• [Resource 1 — placeholder]\n&#34;
+        &#34;• [Resource 2 — placeholder]\n\n&#34;
+        &#34;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n&#34;
+        &#34;📱 FOLLOW ME\n&#34;
+        &#34;• Twitter: @handle\n&#34;
+        &#34;• Instagram: @handle\n\n&#34;
+        f&#34;#{&#39;  #&#39;.join(w.replace(&#39; &#39;, &#39;&#39;) for w in kw_list)}\n&#34;
+    )
+    return {
+        &#34;power_id&#34;: &#34;PWR-239&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;topic&#34;: topic,
+        &#34;keywords&#34;: kw_list,
+        &#34;description&#34;: description,
+        &#34;character_count&#34;: len(description),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-239: Generate an SEO-optimized YouTube video description.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.generate_tags"><code class="name flex">
+<span>def <span class="ident">generate_tags</span></span>(<span>self, topic: str, max_tags: int = 30) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_tags(self, topic: str, max_tags: int = 30) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-240: Generate a search-optimized tag list for a YouTube video.&#34;&#34;&#34;
+    base = topic.lower().strip()
+    words = base.split()
+    tags: List[str] = [base]
+    suffixes = [
+        &#34;tutorial&#34;,
+        &#34;explained&#34;,
+        &#34;guide&#34;,
+        &#34;for beginners&#34;,
+        &#34;tips&#34;,
+        &#34;tricks&#34;,
+        &#34;review&#34;,
+        &#34;how to&#34;,
+        &#34;best practices&#34;,
+        &#34;2024&#34;,
+        &#34;2025&#34;,
+        &#34;2026&#34;,
+        &#34;masterclass&#34;,
+        &#34;course&#34;,
+        &#34;step by step&#34;,
+        &#34;deep dive&#34;,
+        &#34;crash course&#34;,
+        &#34;pros and cons&#34;,
+        &#34;vs&#34;,
+        &#34;walkthrough&#34;,
+    ]
+    for suffix in suffixes:
+        tags.append(f&#34;{base} {suffix}&#34;)
+        if len(tags) &gt;= max_tags:
+            break
+    # Add individual words as bonus tags
+    for w in words:
+        if w not in tags and len(tags) &lt; max_tags:
+            tags.append(w)
+
+    tags = tags[:max_tags]
+    return {
+        &#34;power_id&#34;: &#34;PWR-240&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;topic&#34;: topic,
+        &#34;tags&#34;: tags,
+        &#34;count&#34;: len(tags),
+        &#34;total_characters&#34;: sum(len(t) for t in tags),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-240: Generate a search-optimized tag list for a YouTube video.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.generate_titles"><code class="name flex">
+<span>def <span class="ident">generate_titles</span></span>(<span>self, topic: str, count: int = 10) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_titles(self, topic: str, count: int = 10) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-238: Generate high-CTR YouTube title variants.&#34;&#34;&#34;
+    templates = [
+        &#34;{topic} — Everything You Need to Know in {year}&#34;,
+        &#34;I Tried {topic} for 30 Days — Here&#39;s What Happened&#34;,
+        &#34;The TRUTH About {topic} Nobody Tells You&#34;,
+        &#34;{topic}: Beginner to Pro in One Video&#34;,
+        &#34;Why {topic} Is Bigger Than You Think&#34;,
+        &#34;Stop Making These {topic} Mistakes!&#34;,
+        &#34;{topic} Explained in Under 10 Minutes&#34;,
+        &#34;How {topic} Will Change Your Life&#34;,
+        &#34;The Ultimate Guide to {topic} ({year} Edition)&#34;,
+        &#34;{topic} vs. the Competition — Clear Winner?&#34;,
+        &#34;What I Wish I Knew Before Starting {topic}&#34;,
+        &#34;Is {topic} Worth It? Honest Review&#34;,
+    ]
+    year = str(datetime.date.today().year)
+    titles = [t.format(topic=topic, year=year) for t in templates[:count]]
+    return {
+        &#34;power_id&#34;: &#34;PWR-238&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;topic&#34;: topic,
+        &#34;titles&#34;: titles,
+        &#34;count&#34;: len(titles),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-238: Generate high-CTR YouTube title variants.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.generate_video_script"><code class="name flex">
+<span>def <span class="ident">generate_video_script</span></span>(<span>self, topic: str, style: str = 'educational') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_video_script(self, topic: str, style: str = &#34;educational&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-237: Generate a structured 3-act video script (hook → body → CTA).&#34;&#34;&#34;
+    style = style.lower().strip()
+    style_hooks = {
+        &#34;educational&#34;: f&#34;Did you know that {topic} is one of the most misunderstood subjects today?&#34;,
+        &#34;entertaining&#34;: f&#34;Okay, buckle up — because {topic} is wilder than you think.&#34;,
+        &#34;tutorial&#34;: f&#34;In the next few minutes you&#39;ll master {topic} step by step.&#34;,
+        &#34;storytelling&#34;: f&#34;Let me tell you a story about {topic} that changed everything.&#34;,
+    }
+    hook = style_hooks.get(style, style_hooks[&#34;educational&#34;])
+
+    body_sections = [
+        {&#34;section&#34;: &#34;Context&#34;, &#34;content&#34;: f&#34;Provide background on {topic}. Explain why it matters now.&#34;},
+        {&#34;section&#34;: &#34;Core Content&#34;, &#34;content&#34;: f&#34;Deep-dive into {topic}. Use data, examples, and visuals.&#34;},
+        {&#34;section&#34;: &#34;Key Takeaway&#34;, &#34;content&#34;: f&#34;Summarize the single most important insight about {topic}.&#34;},
+    ]
+    cta = (
+        f&#34;If this video helped you understand {topic}, smash that like button, &#34;
+        &#34;subscribe, and hit the bell so you never miss an upload. &#34;
+        &#34;Drop your thoughts in the comments!&#34;
+    )
+
+    return {
+        &#34;power_id&#34;: &#34;PWR-237&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;topic&#34;: topic,
+        &#34;style&#34;: style,
+        &#34;script&#34;: {
+            &#34;act_1_hook&#34;: hook,
+            &#34;act_2_body&#34;: body_sections,
+            &#34;act_3_cta&#34;: cta,
+        },
+        &#34;estimated_duration_seconds&#34;: 480,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-237: Generate a structured 3-act video script (hook → body → CTA).</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.hook_generator"><code class="name flex">
+<span>def <span class="ident">hook_generator</span></span>(<span>self, topic: str, count: int = 5) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hook_generator(self, topic: str, count: int = 5) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-246: Generate opening hook variants for a video.&#34;&#34;&#34;
+    templates = [
+        f&#34;What if I told you everything you know about {topic} is wrong?&#34;,
+        f&#34;In the next 60 seconds, I&#39;m going to change how you think about {topic}.&#34;,
+        f&#34;Most people fail at {topic} — here&#39;s the one thing that actually works.&#34;,
+        f&#34;I spent 100 hours researching {topic} so you don&#39;t have to.&#34;,
+        f&#34;Stop scrolling. If you care about {topic}, you need to hear this.&#34;,
+        f&#34;This one {topic} trick saved me thousands of dollars.&#34;,
+        f&#34;WARNING: what I&#39;m about to say about {topic} might surprise you.&#34;,
+        f&#34;The biggest lie about {topic}? Let me show you the data.&#34;,
+    ]
+    hooks = templates[:count]
+    return {
+        &#34;power_id&#34;: &#34;PWR-246&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;topic&#34;: topic,
+        &#34;hooks&#34;: hooks,
+        &#34;count&#34;: len(hooks),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-246: Generate opening hook variants for a video.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.monetization_check"><code class="name flex">
+<span>def <span class="ident">monetization_check</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def monetization_check(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-254: Return YouTube Partner Programme eligibility checklist.&#34;&#34;&#34;
+    checklist = [
+        {&#34;requirement&#34;: &#34;1,000 subscribers&#34;, &#34;threshold&#34;: 1000, &#34;metric&#34;: &#34;subscribers&#34;},
+        {&#34;requirement&#34;: &#34;4,000 public watch hours (last 12 months)&#34;, &#34;threshold&#34;: 4000, &#34;metric&#34;: &#34;watch_hours&#34;},
+        {
+            &#34;requirement&#34;: &#34;OR 10M Shorts views (last 90 days)&#34;,
+            &#34;threshold&#34;: 10_000_000,
+            &#34;metric&#34;: &#34;shorts_views_90d&#34;,
+        },
+        {&#34;requirement&#34;: &#34;Linked AdSense account&#34;, &#34;metric&#34;: &#34;adsense_linked&#34;, &#34;threshold&#34;: True},
+        {&#34;requirement&#34;: &#34;No active Community Guidelines strikes&#34;, &#34;metric&#34;: &#34;cg_strikes&#34;, &#34;threshold&#34;: 0},
+        {&#34;requirement&#34;: &#34;2-Step Verification enabled&#34;, &#34;metric&#34;: &#34;two_step_verification&#34;, &#34;threshold&#34;: True},
+        {&#34;requirement&#34;: &#34;Compliance with monetisation policies&#34;, &#34;metric&#34;: &#34;policy_compliant&#34;, &#34;threshold&#34;: True},
+    ]
+    return {
+        &#34;power_id&#34;: &#34;PWR-254&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;programme&#34;: &#34;YouTube Partner Programme (YPP)&#34;,
+        &#34;checklist&#34;: checklist,
+        &#34;note&#34;: &#34;Pass your channel analytics dict to analytics_summary() to auto-evaluate thresholds.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-254: Return YouTube Partner Programme eligibility checklist.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.playlist_organizer"><code class="name flex">
+<span>def <span class="ident">playlist_organizer</span></span>(<span>self, videos: List[str]) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def playlist_organizer(self, videos: List[str]) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-250: Group video titles into logical playlist buckets.&#34;&#34;&#34;
+    # Simple keyword-clustering heuristic
+    buckets: Dict[str, List[str]] = {}
+    for title in videos:
+        # Use the first significant word (&gt;3 chars) as a bucket key
+        words = [w for w in re.split(r&#34;[\s\-—:]+&#34;, title) if len(w) &gt; 3]
+        key = words[0].capitalize() if words else &#34;General&#34;
+        buckets.setdefault(key, []).append(title)
+
+    playlists = [{&#34;playlist_name&#34;: f&#34;{key} Series&#34;, &#34;videos&#34;: vids} for key, vids in buckets.items()]
+    return {
+        &#34;power_id&#34;: &#34;PWR-250&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;playlists&#34;: playlists,
+        &#34;total_videos&#34;: len(videos),
+        &#34;playlist_count&#34;: len(playlists),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-250: Group video titles into logical playlist buckets.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.repurpose_plan"><code class="name flex">
+<span>def <span class="ident">repurpose_plan</span></span>(<span>self, content: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def repurpose_plan(self, content: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-253: Create a plan to repurpose a piece of content across platforms.&#34;&#34;&#34;
+    plan = [
+        {&#34;platform&#34;: &#34;YouTube Shorts&#34;, &#34;format&#34;: &#34;60s vertical clip of the best moment&#34;, &#34;effort&#34;: &#34;low&#34;},
+        {&#34;platform&#34;: &#34;TikTok&#34;, &#34;format&#34;: &#34;Re-edit Shorts clip with trending audio&#34;, &#34;effort&#34;: &#34;low&#34;},
+        {&#34;platform&#34;: &#34;Instagram Reels&#34;, &#34;format&#34;: &#34;Same vertical clip with captions overlay&#34;, &#34;effort&#34;: &#34;low&#34;},
+        {
+            &#34;platform&#34;: &#34;Twitter / X&#34;,
+            &#34;format&#34;: &#34;Thread summarising key points with a link to the full video&#34;,
+            &#34;effort&#34;: &#34;medium&#34;,
+        },
+        {
+            &#34;platform&#34;: &#34;LinkedIn&#34;,
+            &#34;format&#34;: &#34;Professional angle write-up with embedded video link&#34;,
+            &#34;effort&#34;: &#34;medium&#34;,
+        },
+        {
+            &#34;platform&#34;: &#34;Blog / Newsletter&#34;,
+            &#34;format&#34;: &#34;Long-form article expanding on video content&#34;,
+            &#34;effort&#34;: &#34;high&#34;,
+        },
+        {&#34;platform&#34;: &#34;Podcast&#34;, &#34;format&#34;: &#34;Audio-only version with additional commentary&#34;, &#34;effort&#34;: &#34;medium&#34;},
+        {&#34;platform&#34;: &#34;Pinterest&#34;, &#34;format&#34;: &#34;Infographic pin summarising key data points&#34;, &#34;effort&#34;: &#34;medium&#34;},
+    ]
+    return {
+        &#34;power_id&#34;: &#34;PWR-253&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;source_content_preview&#34;: content[:200],
+        &#34;repurpose_plan&#34;: plan,
+        &#34;platform_count&#34;: len(plan),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-253: Create a plan to repurpose a piece of content across platforms.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.shorts_script"><code class="name flex">
+<span>def <span class="ident">shorts_script</span></span>(<span>self, topic: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def shorts_script(self, topic: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-249: Generate a 60-second YouTube Shorts script.&#34;&#34;&#34;
+    script = {
+        &#34;duration_target&#34;: &#34;60 seconds&#34;,
+        &#34;format&#34;: &#34;vertical 9:16&#34;,
+        &#34;sections&#34;: [
+            {&#34;time&#34;: &#34;0-5s&#34;, &#34;label&#34;: &#34;HOOK&#34;, &#34;script&#34;: f&#34;One thing about {topic} that blew my mind…&#34;},
+            {
+                &#34;time&#34;: &#34;5-15s&#34;,
+                &#34;label&#34;: &#34;CONTEXT&#34;,
+                &#34;script&#34;: f&#34;Most people think {topic} works like this… but it doesn&#39;t.&#34;,
+            },
+            {
+                &#34;time&#34;: &#34;15-40s&#34;,
+                &#34;label&#34;: &#34;VALUE&#34;,
+                &#34;script&#34;: f&#34;Here&#39;s what actually matters about {topic}. [Show key point with on-screen text.]&#34;,
+            },
+            {
+                &#34;time&#34;: &#34;40-50s&#34;,
+                &#34;label&#34;: &#34;PROOF&#34;,
+                &#34;script&#34;: &#34;And the results speak for themselves. [Show data / result.]&#34;,
+            },
+            {&#34;time&#34;: &#34;50-60s&#34;, &#34;label&#34;: &#34;CTA&#34;, &#34;script&#34;: &#34;Follow for more and comment &#39;YES&#39; if you want part 2!&#34;},
+        ],
+    }
+    return {
+        &#34;power_id&#34;: &#34;PWR-249&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;topic&#34;: topic,
+        &#34;script&#34;: script,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-249: Generate a 60-second YouTube Shorts script.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.thumbnail_brief"><code class="name flex">
+<span>def <span class="ident">thumbnail_brief</span></span>(<span>self, topic: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def thumbnail_brief(self, topic: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-241: Generate a text brief for thumbnail design.&#34;&#34;&#34;
+    return {
+        &#34;power_id&#34;: &#34;PWR-241&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;topic&#34;: topic,
+        &#34;brief&#34;: {
+            &#34;headline_text&#34;: topic.upper()[:40],
+            &#34;sub_text&#34;: &#34;YOU NEED TO SEE THIS&#34;,
+            &#34;recommended_style&#34;: &#34;bold text overlay on dark gradient&#34;,
+            &#34;face_expression&#34;: &#34;surprised / excited&#34;,
+            &#34;color_palette&#34;: [&#34;#FF0000&#34;, &#34;#FFFFFF&#34;, &#34;#FFD700&#34;],
+            &#34;layout&#34;: &#34;face left 40%, text right 60%&#34;,
+            &#34;font_recommendation&#34;: &#34;Impact or Montserrat Black&#34;,
+            &#34;max_words_on_thumbnail&#34;: 5,
+            &#34;contrast_tip&#34;: &#34;Use a bright outline or drop shadow on text for readability.&#34;,
+        },
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-241: Generate a text brief for thumbnail design.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.trending_topics"><code class="name flex">
+<span>def <span class="ident">trending_topics</span></span>(<span>self, niche: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def trending_topics(self, niche: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-244: Return trending topic suggestions for a niche.&#34;&#34;&#34;
+    # Deterministic seed-based suggestions (no API call)
+    seed = int(hashlib.md5(niche.encode()).hexdigest()[:8], 16)
+    evergreen = [
+        f&#34;Beginner&#39;s complete guide to {niche}&#34;,
+        f&#34;Top 10 myths about {niche} debunked&#34;,
+        f&#34;How to start {niche} with zero budget&#34;,
+        f&#34;{niche} mistakes that cost you money&#34;,
+        f&#34;Day in the life of a {niche} professional&#34;,
+    ]
+    trending = [
+        f&#34;AI is changing {niche} — here&#39;s how&#34;,
+        f&#34;Why {niche} is exploding in {datetime.date.today().year}&#34;,
+        f&#34;The future of {niche}: predictions&#34;,
+        f&#34;{niche} tools everyone is talking about&#34;,
+        f&#34;How to stand out in the {niche} space&#34;,
+    ]
+    return {
+        &#34;power_id&#34;: &#34;PWR-244&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;niche&#34;: niche,
+        &#34;evergreen_topics&#34;: evergreen,
+        &#34;trending_topics&#34;: trending,
+        &#34;note&#34;: &#34;Trending topics are template-generated. Connect YouTube Data API for live trends.&#34;,
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-244: Return trending topic suggestions for a niche.</p></div>
+</dd>
+<dt id="jarvis.powers.youtube_powers.YouTubePowers.video_outline"><code class="name flex">
+<span>def <span class="ident">video_outline</span></span>(<span>self, topic: str) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def video_outline(self, topic: str) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-245: Generate a detailed section-by-section video outline.&#34;&#34;&#34;
+    outline = [
+        {
+            &#34;timestamp&#34;: &#34;0:00&#34;,
+            &#34;section&#34;: &#34;Cold Open / Hook&#34;,
+            &#34;notes&#34;: f&#34;Grab attention with a bold claim about {topic}.&#34;,
+        },
+        {
+            &#34;timestamp&#34;: &#34;0:15&#34;,
+            &#34;section&#34;: &#34;Intro &amp; Channel Branding&#34;,
+            &#34;notes&#34;: &#34;Quick intro, ask viewers to subscribe.&#34;,
+        },
+        {
+            &#34;timestamp&#34;: &#34;0:45&#34;,
+            &#34;section&#34;: &#34;Why This Matters&#34;,
+            &#34;notes&#34;: f&#34;Explain the relevance of {topic} right now.&#34;,
+        },
+        {
+            &#34;timestamp&#34;: &#34;2:00&#34;,
+            &#34;section&#34;: &#34;Background / Context&#34;,
+            &#34;notes&#34;: &#34;Set the stage with necessary background info.&#34;,
+        },
+        {
+            &#34;timestamp&#34;: &#34;3:30&#34;,
+            &#34;section&#34;: &#34;Main Point 1&#34;,
+            &#34;notes&#34;: f&#34;First major insight or step regarding {topic}.&#34;,
+        },
+        {&#34;timestamp&#34;: &#34;5:00&#34;, &#34;section&#34;: &#34;Main Point 2&#34;, &#34;notes&#34;: &#34;Second key point with examples or data.&#34;},
+        {&#34;timestamp&#34;: &#34;6:30&#34;, &#34;section&#34;: &#34;Main Point 3&#34;, &#34;notes&#34;: &#34;Third key point or counter-argument.&#34;},
+        {&#34;timestamp&#34;: &#34;8:00&#34;, &#34;section&#34;: &#34;Common Mistakes / Pitfalls&#34;, &#34;notes&#34;: &#34;What to avoid.&#34;},
+        {
+            &#34;timestamp&#34;: &#34;9:00&#34;,
+            &#34;section&#34;: &#34;Summary &amp; Key Takeaway&#34;,
+            &#34;notes&#34;: &#34;Recap the single most important lesson.&#34;,
+        },
+        {
+            &#34;timestamp&#34;: &#34;9:30&#34;,
+            &#34;section&#34;: &#34;Call to Action &amp; Outro&#34;,
+            &#34;notes&#34;: &#34;Like, subscribe, comment prompt. Tease next video.&#34;,
+        },
+    ]
+    return {
+        &#34;power_id&#34;: &#34;PWR-245&#34;,
+        &#34;status&#34;: &#34;success&#34;,
+        &#34;topic&#34;: topic,
+        &#34;outline&#34;: outline,
+        &#34;estimated_duration&#34;: &#34;10:00&#34;,
+        &#34;section_count&#34;: len(outline),
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-245: Generate a detailed section-by-section video outline.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.powers" href="index.html">jarvis.powers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.powers.youtube_powers.YouTubePowers" href="#jarvis.powers.youtube_powers.YouTubePowers">YouTubePowers</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.analytics_summary" href="#jarvis.powers.youtube_powers.YouTubePowers.analytics_summary">analytics_summary</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.collab_pitch" href="#jarvis.powers.youtube_powers.YouTubePowers.collab_pitch">collab_pitch</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.comment_reply_drafts" href="#jarvis.powers.youtube_powers.YouTubePowers.comment_reply_drafts">comment_reply_drafts</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.community_post_draft" href="#jarvis.powers.youtube_powers.YouTubePowers.community_post_draft">community_post_draft</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.competitor_analysis" href="#jarvis.powers.youtube_powers.YouTubePowers.competitor_analysis">competitor_analysis</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.content_calendar" href="#jarvis.powers.youtube_powers.YouTubePowers.content_calendar">content_calendar</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.cta_generator" href="#jarvis.powers.youtube_powers.YouTubePowers.cta_generator">cta_generator</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.generate_description" href="#jarvis.powers.youtube_powers.YouTubePowers.generate_description">generate_description</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.generate_tags" href="#jarvis.powers.youtube_powers.YouTubePowers.generate_tags">generate_tags</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.generate_titles" href="#jarvis.powers.youtube_powers.YouTubePowers.generate_titles">generate_titles</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.generate_video_script" href="#jarvis.powers.youtube_powers.YouTubePowers.generate_video_script">generate_video_script</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.hook_generator" href="#jarvis.powers.youtube_powers.YouTubePowers.hook_generator">hook_generator</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.monetization_check" href="#jarvis.powers.youtube_powers.YouTubePowers.monetization_check">monetization_check</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.playlist_organizer" href="#jarvis.powers.youtube_powers.YouTubePowers.playlist_organizer">playlist_organizer</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.repurpose_plan" href="#jarvis.powers.youtube_powers.YouTubePowers.repurpose_plan">repurpose_plan</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.shorts_script" href="#jarvis.powers.youtube_powers.YouTubePowers.shorts_script">shorts_script</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.thumbnail_brief" href="#jarvis.powers.youtube_powers.YouTubePowers.thumbnail_brief">thumbnail_brief</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.trending_topics" href="#jarvis.powers.youtube_powers.YouTubePowers.trending_topics">trending_topics</a></code></li>
+<li><code><a title="jarvis.powers.youtube_powers.YouTubePowers.video_outline" href="#jarvis.powers.youtube_powers.YouTubePowers.video_outline">video_outline</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

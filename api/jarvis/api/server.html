@@ -1,0 +1,1604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.api.server API documentation</title>
+<meta name="description" content="JARVIS Production FastAPI Server
+Exposes:
+1. Policy-Aware Model Router APIs (/model/route, /model/configure, /model/status, /model/usage, …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.api.server</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Production FastAPI Server</p>
+<p>Exposes
+-----=
+1. Policy-Aware Model Router APIs (/model/route, /model/configure, /model/status, /model/usage, /model/costs, /model/approve-expensive-call)
+2. Orchestration &amp; Chat APIs (/api/v1/chat, /api/v1/tasks, /api/v1/approvals)
+3. Power Registry &amp; Telemetry APIs (/api/v1/powers, /api/v1/system/health, /api/v1/audit)
+4. Full-Duplex WebSocket (/ws/stream) for Live HUD Visualizer</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jarvis.api.server.add_productivity_reminder"><code class="name flex">
+<span>async def <span class="ident">add_productivity_reminder</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/productivity/reminders&#34;)
+async def add_productivity_reminder(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-011: Reminder engine - creates reminder.&#34;&#34;&#34;
+    text = payload.get(&#34;text&#34;, &#34;&#34;)
+    due = payload.get(&#34;due&#34;)
+    return productivity_powers.reminder_engine(action=&#34;add&#34;, text=text, due=due)</code></pre>
+</details>
+<div class="desc"><p>PWR-011: Reminder engine - creates reminder.</p></div>
+</dd>
+<dt id="jarvis.api.server.add_productivity_task"><code class="name flex">
+<span>async def <span class="ident">add_productivity_task</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/productivity/tasks&#34;)
+async def add_productivity_task(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-010: Task manager - creates new priority task.&#34;&#34;&#34;
+    title = payload.get(&#34;title&#34;, &#34;&#34;)
+    priority = payload.get(&#34;priority&#34;, &#34;P1&#34;)
+    return productivity_powers.task_manager(action=&#34;add&#34;, title=title, priority=priority)</code></pre>
+</details>
+<div class="desc"><p>PWR-010: Task manager - creates new priority task.</p></div>
+</dd>
+<dt id="jarvis.api.server.approve_expensive_call"><code class="name flex">
+<span>async def <span class="ident">approve_expensive_call</span></span>(<span>approval: <a title="jarvis.api.server.ExpensiveCallApproval" href="#jarvis.api.server.ExpensiveCallApproval">ExpensiveCallApproval</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/model/approve-expensive-call&#34;)
+async def approve_expensive_call(approval: ExpensiveCallApproval):
+    &#34;&#34;&#34;Authorizes an inference call that exceeds default per-task limits.&#34;&#34;&#34;
+    if not approval.approved:
+        return {&#34;status&#34;: &#34;rejected&#34;, &#34;task_id&#34;: approval.task_id}
+    return {&#34;status&#34;: &#34;approved&#34;, &#34;task_id&#34;: approval.task_id, &#34;token&#34;: f&#34;exp_app_{int(time.time())}&#34;}</code></pre>
+</details>
+<div class="desc"><p>Authorizes an inference call that exceeds default per-task limits.</p></div>
+</dd>
+<dt id="jarvis.api.server.career_ops_analytics"><code class="name flex">
+<span>async def <span class="ident">career_ops_analytics</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/career-ops/analyze-applications&#34;)
+async def career_ops_analytics():
+    &#34;&#34;&#34;PWR-335: Career-Ops /analyze-applications.&#34;&#34;&#34;
+    return career_ops_integration.analyze_applications()</code></pre>
+</details>
+<div class="desc"><p>PWR-335: Career-Ops /analyze-applications.</p></div>
+</dd>
+<dt id="jarvis.api.server.career_ops_company"><code class="name flex">
+<span>async def <span class="ident">career_ops_company</span></span>(<span>company: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/career-ops/company-research&#34;)
+async def career_ops_company(company: str):
+    &#34;&#34;&#34;PWR-332: Career-Ops /company-research &lt;company&gt;.&#34;&#34;&#34;
+    return career_ops_integration.company_research(company=company)</code></pre>
+</details>
+<div class="desc"><p>PWR-332: Career-Ops /company-research <company>.</p></div>
+</dd>
+<dt id="jarvis.api.server.career_ops_contact"><code class="name flex">
+<span>async def <span class="ident">career_ops_contact</span></span>(<span>company: str, role: str = 'Recruiter')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/career-ops/find-contact&#34;)
+async def career_ops_contact(company: str, role: str = &#34;Recruiter&#34;):
+    &#34;&#34;&#34;PWR-333: Career-Ops /find-contact &lt;company&gt; [role].&#34;&#34;&#34;
+    return career_ops_integration.find_contact(company=company, role=role)</code></pre>
+</details>
+<div class="desc"><p>PWR-333: Career-Ops /find-contact <company> [role].</p></div>
+</dd>
+<dt id="jarvis.api.server.career_ops_cover"><code class="name flex">
+<span>async def <span class="ident">career_ops_cover</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/career-ops/generate-cover&#34;)
+async def career_ops_cover(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-331: Career-Ops /generate-cover &lt;job-url&gt;.&#34;&#34;&#34;
+    url = payload.get(&#34;job_url&#34;, &#34;&#34;)
+    return career_ops_integration.generate_cover_letter(job_url=url)</code></pre>
+</details>
+<div class="desc"><p>PWR-331: Career-Ops /generate-cover <job-url>.</p></div>
+</dd>
+<dt id="jarvis.api.server.career_ops_interview"><code class="name flex">
+<span>async def <span class="ident">career_ops_interview</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/career-ops/interview-prep&#34;)
+async def career_ops_interview(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-336: Career-Ops /interview-prep [question].&#34;&#34;&#34;
+    question = payload.get(&#34;question&#34;)
+    return career_ops_integration.interview_prep(question=question)</code></pre>
+</details>
+<div class="desc"><p>PWR-336: Career-Ops /interview-prep [question].</p></div>
+</dd>
+<dt id="jarvis.api.server.career_ops_offer"><code class="name flex">
+<span>async def <span class="ident">career_ops_offer</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/career-ops/analyze-offer&#34;)
+async def career_ops_offer(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-337: Career-Ops /analyze-offer.&#34;&#34;&#34;
+    offer_text = payload.get(&#34;offer_text&#34;, &#34;&#34;)
+    target = payload.get(&#34;target_salary&#34;)
+    return career_ops_integration.analyze_offer(offer_text=offer_text, target_salary=target)</code></pre>
+</details>
+<div class="desc"><p>PWR-337: Career-Ops /analyze-offer.</p></div>
+</dd>
+<dt id="jarvis.api.server.career_ops_resume"><code class="name flex">
+<span>async def <span class="ident">career_ops_resume</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/career-ops/generate-resume&#34;)
+async def career_ops_resume(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-330: Career-Ops /generate-resume &lt;job-url&gt; ATS-friendly PDF.&#34;&#34;&#34;
+    url = payload.get(&#34;job_url&#34;, &#34;&#34;)
+    return career_ops_integration.generate_resume(job_url=url)</code></pre>
+</details>
+<div class="desc"><p>PWR-330: Career-Ops /generate-resume <job-url> ATS-friendly PDF.</p></div>
+</dd>
+<dt id="jarvis.api.server.career_ops_scan"><code class="name flex">
+<span>async def <span class="ident">career_ops_scan</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/career-ops/scan&#34;)
+async def career_ops_scan(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-329: Career-Ops /job-scan &lt;URL&gt; with SSRF protection.&#34;&#34;&#34;
+    url = payload.get(&#34;job_url&#34;, &#34;&#34;)
+    return career_ops_integration.scan_job(job_url=url)</code></pre>
+</details>
+<div class="desc"><p>PWR-329: Career-Ops /job-scan <URL> with SSRF protection.</p></div>
+</dd>
+<dt id="jarvis.api.server.chat_endpoint"><code class="name flex">
+<span>async def <span class="ident">chat_endpoint</span></span>(<span>req: <a title="jarvis.api.server.ChatRequest" href="#jarvis.api.server.ChatRequest">ChatRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/chat&#34;)
+async def chat_endpoint(req: ChatRequest):
+    &#34;&#34;&#34;Central natural language entry point.&#34;&#34;&#34;
+    result = await orchestrator.process_user_query(
+        query=req.query, context=req.context, sensitivity_level=req.sensitivity_level, approval_token=req.approval_token
+    )
+    return result</code></pre>
+</details>
+<div class="desc"><p>Central natural language entry point.</p></div>
+</dd>
+<dt id="jarvis.api.server.chat_root"><code class="name flex">
+<span>async def <span class="ident">chat_root</span></span>(<span>req: <a title="jarvis.api.server.RootChatPayload" href="#jarvis.api.server.RootChatPayload">RootChatPayload</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/chat&#34;)
+async def chat_root(req: RootChatPayload):
+    &#34;&#34;&#34;
+    Primary LangGraph cognitive entrypoint:
+    START -&gt; memory_retrieval -&gt; policy_check -&gt; model_router -&gt; memory_update -&gt; END
+    &#34;&#34;&#34;
+    user_input = req.message or req.query or &#34;&#34;
+    if not user_input.strip():
+        raise HTTPException(status_code=400, detail=&#34;Either &#39;message&#39; or &#39;query&#39; must be provided.&#34;)
+
+    task_id = f&#34;tsk_{uuid.uuid4().hex[:10]}&#34;
+    initial_state = {
+        &#34;task_id&#34;: task_id,
+        &#34;user_id&#34;: req.user_id,
+        &#34;messages&#34;: [{&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: user_input}],
+        &#34;user_input&#34;: user_input,
+        &#34;retrieved_memories&#34;: [],
+        &#34;task_type&#34;: req.task_type or &#34;chat&#34;,
+        &#34;risk_level&#34;: &#34;low&#34;,
+        &#34;approval_required&#34;: False,
+        &#34;approval_id&#34;: req.approval_token,
+        &#34;selected_tools&#34;: [],
+        &#34;selected_agents&#34;: [],
+        &#34;model_route&#34;: &#34;&#34;,
+        &#34;tool_results&#34;: [],
+        &#34;final_response&#34;: &#34;&#34;,
+        &#34;evidence&#34;: [],
+    }
+
+    final_state = get_jarvis_graph().invoke(
+        initial_state,
+        config={&#34;configurable&#34;: {&#34;thread_id&#34;: task_id}},
+    )
+
+    audit_ledger.record(
+        actor=req.user_id,
+        action=&#34;CHAT_REQUEST&#34;,
+        target=final_state.get(&#34;model_route&#34;, &#34;local&#34;),
+        payload={&#34;task_id&#34;: task_id, &#34;user_input&#34;: user_input},
+        result=&#34;SUCCESS&#34;,
+        task_id=task_id,
+    )
+
+    return {
+        &#34;task_id&#34;: final_state[&#34;task_id&#34;],
+        &#34;user_id&#34;: final_state[&#34;user_id&#34;],
+        &#34;response&#34;: final_state[&#34;final_response&#34;],
+        &#34;reply&#34;: final_state[&#34;final_response&#34;],
+        &#34;retrieved_memories&#34;: final_state[&#34;retrieved_memories&#34;],
+        &#34;model_route&#34;: final_state[&#34;model_route&#34;],
+        &#34;risk_level&#34;: final_state[&#34;risk_level&#34;],
+        &#34;approval_required&#34;: final_state[&#34;approval_required&#34;],
+    }</code></pre>
+</details>
+<div class="desc"><p>Primary LangGraph cognitive entrypoint:
+START -&gt; memory_retrieval -&gt; policy_check -&gt; model_router -&gt; memory_update -&gt; END</p></div>
+</dd>
+<dt id="jarvis.api.server.configure_models"><code class="name flex">
+<span>async def <span class="ident">configure_models</span></span>(<span>config: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/model/configure&#34;)
+async def configure_models(config: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;Updates active model provider settings or default model names.&#34;&#34;&#34;
+    if &#34;ollama_default_model&#34; in config:
+        settings.ollama_default_model = config[&#34;ollama_default_model&#34;]
+    if &#34;vllm_default_model&#34; in config:
+        settings.vllm_default_model = config[&#34;vllm_default_model&#34;]
+    if &#34;daily_budget_limit&#34; in config:
+        settings.daily_budget_limit = float(config[&#34;daily_budget_limit&#34;])
+        cost_governor.daily_budget_limit = float(config[&#34;daily_budget_limit&#34;])
+    return {&#34;status&#34;: &#34;updated&#34;, &#34;config&#34;: config}</code></pre>
+</details>
+<div class="desc"><p>Updates active model provider settings or default model names.</p></div>
+</dd>
+<dt id="jarvis.api.server.diagnose_error"><code class="name flex">
+<span>async def <span class="ident">diagnose_error</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/developer/diagnose&#34;)
+async def diagnose_error(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-164: Parses stack trace and returns root cause triage.&#34;&#34;&#34;
+    trace = payload.get(&#34;stack_trace&#34;, &#34;&#34;)
+    return developer_powers.diagnose_bug(stack_trace=trace)</code></pre>
+</details>
+<div class="desc"><p>PWR-164: Parses stack trace and returns root cause triage.</p></div>
+</dd>
+<dt id="jarvis.api.server.disable_power_root"><code class="name flex">
+<span>async def <span class="ident">disable_power_root</span></span>(<span>power_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/powers/{power_id}/disable&#34;)
+async def disable_power_root(power_id: str):
+    success = power_registry.disable_power(power_id)
+    if not success:
+        raise HTTPException(status_code=404, detail=f&#34;Power &#39;{power_id}&#39; not found&#34;)
+    return {&#34;power_id&#34;: power_id, &#34;enabled&#34;: False}</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.draft_comm_message"><code class="name flex">
+<span>async def <span class="ident">draft_comm_message</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/communication/draft&#34;)
+async def draft_comm_message(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-209: Message drafting with frozen hash-bound approval.&#34;&#34;&#34;
+    channel = payload.get(&#34;channel&#34;, &#34;email&#34;)
+    recipient = payload.get(&#34;recipient&#34;, &#34;&#34;)
+    content = payload.get(&#34;content&#34;, &#34;&#34;)
+    subject = payload.get(&#34;subject&#34;)
+    return communication_powers.draft_message(channel=channel, recipient=recipient, content=content, subject=subject)</code></pre>
+</details>
+<div class="desc"><p>PWR-209: Message drafting with frozen hash-bound approval.</p></div>
+</dd>
+<dt id="jarvis.api.server.enable_power_root"><code class="name flex">
+<span>async def <span class="ident">enable_power_root</span></span>(<span>power_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/powers/{power_id}/enable&#34;)
+async def enable_power_root(power_id: str):
+    success = power_registry.enable_power(power_id)
+    if not success:
+        raise HTTPException(status_code=404, detail=f&#34;Power &#39;{power_id}&#39; not found&#34;)
+    return {&#34;power_id&#34;: power_id, &#34;enabled&#34;: True}</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.explain_codebase"><code class="name flex">
+<span>async def <span class="ident">explain_codebase</span></span>(<span>target_dir: str = '.')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/developer/explain&#34;)
+async def explain_codebase(target_dir: str = &#34;.&#34;):
+    &#34;&#34;&#34;PWR-162: Scans and explains repository code structure.&#34;&#34;&#34;
+    return developer_powers.explain_codebase(target_dir=target_dir)</code></pre>
+</details>
+<div class="desc"><p>PWR-162: Scans and explains repository code structure.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_cicd_status"><code class="name flex">
+<span>async def <span class="ident">get_cicd_status</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/developer/cicd&#34;)
+async def get_cicd_status():
+    &#34;&#34;&#34;PWR-177: Inspects CI/CD workflows and verification status.&#34;&#34;&#34;
+    return developer_powers.ci_cd_monitoring()</code></pre>
+</details>
+<div class="desc"><p>PWR-177: Inspects CI/CD workflows and verification status.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_daily_briefing"><code class="name flex">
+<span>async def <span class="ident">get_daily_briefing</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/productivity/briefing&#34;)
+async def get_daily_briefing():
+    &#34;&#34;&#34;PWR-009 / PWR-185: Morning and Daily briefing generation.&#34;&#34;&#34;
+    return productivity_powers.daily_briefing()</code></pre>
+</details>
+<div class="desc"><p>PWR-009 / PWR-185: Morning and Daily briefing generation.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_ecosystem"><code class="name flex">
+<span>async def <span class="ident">get_ecosystem</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/powers/ecosystem&#34;)
+async def get_ecosystem():
+    &#34;&#34;&#34;Returns the multi-repo composition formula: JARVIS = a + b + c ... n.&#34;&#34;&#34;
+    repos = power_registry.list_ecosystem_repos()
+    breakdown = {}
+    for r in repos:
+        pwrs = power_registry.get_powers_by_repo(r)
+        breakdown[r] = {
+            &#34;power_count&#34;: len(pwrs),
+            &#34;sample_powers&#34;: [p.get(&#34;power_id&#34;) for p in pwrs[:5]],
+            &#34;local_path&#34;: f&#34;repos/{r}&#34;,
+        }
+    return {
+        &#34;formula&#34;: power_registry.get_ecosystem_formula(),
+        &#34;total_powers&#34;: power_registry.total_count(),
+        &#34;total_repositories&#34;: len(repos),
+        &#34;repositories&#34;: breakdown,
+    }</code></pre>
+</details>
+<div class="desc"><p>Returns the multi-repo composition formula: JARVIS = a + b + c &hellip; n.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_model_costs"><code class="name flex">
+<span>async def <span class="ident">get_model_costs</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/model/costs&#34;)
+async def get_model_costs():
+    &#34;&#34;&#34;Returns daily and monthly cost expenditures versus budget caps.&#34;&#34;&#34;
+    return cost_governor.get_summary()</code></pre>
+</details>
+<div class="desc"><p>Returns daily and monthly cost expenditures versus budget caps.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_model_status"><code class="name flex">
+<span>async def <span class="ident">get_model_status</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/model/status&#34;)
+async def get_model_status():
+    &#34;&#34;&#34;Returns the operational status of all 3 tiers + circuit breakers.&#34;&#34;&#34;
+    return model_router.get_status()</code></pre>
+</details>
+<div class="desc"><p>Returns the operational status of all 3 tiers + circuit breakers.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_model_usage"><code class="name flex">
+<span>async def <span class="ident">get_model_usage</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/model/usage&#34;)
+async def get_model_usage():
+    &#34;&#34;&#34;Returns token and usage statistics per model.&#34;&#34;&#34;
+    return cost_governor.model_stats</code></pre>
+</details>
+<div class="desc"><p>Returns token and usage statistics per model.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_power_detail"><code class="name flex">
+<span>async def <span class="ident">get_power_detail</span></span>(<span>power_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/powers/{power_id}&#34;)
+async def get_power_detail(power_id: str):
+    &#34;&#34;&#34;Retrieves complete definition of a specific JARVIS power by ID or slug.&#34;&#34;&#34;
+    power = power_registry.get_power(power_id)
+    if not power:
+        raise HTTPException(status_code=404, detail=f&#34;Power &#39;{power_id}&#39; not found&#34;)
+    return power</code></pre>
+</details>
+<div class="desc"><p>Retrieves complete definition of a specific JARVIS power by ID or slug.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_productivity_calendar"><code class="name flex">
+<span>async def <span class="ident">get_productivity_calendar</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/productivity/calendar&#34;)
+async def get_productivity_calendar():
+    &#34;&#34;&#34;PWR-012: Calendar integration - lists upcoming schedule.&#34;&#34;&#34;
+    return productivity_powers.calendar_power(action=&#34;list&#34;)</code></pre>
+</details>
+<div class="desc"><p>PWR-012: Calendar integration - lists upcoming schedule.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_productivity_reminders"><code class="name flex">
+<span>async def <span class="ident">get_productivity_reminders</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/productivity/reminders&#34;)
+async def get_productivity_reminders():
+    &#34;&#34;&#34;PWR-011: Reminder engine - lists active reminders.&#34;&#34;&#34;
+    return productivity_powers.reminder_engine(action=&#34;list&#34;)</code></pre>
+</details>
+<div class="desc"><p>PWR-011: Reminder engine - lists active reminders.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_productivity_tasks"><code class="name flex">
+<span>async def <span class="ident">get_productivity_tasks</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/productivity/tasks&#34;)
+async def get_productivity_tasks():
+    &#34;&#34;&#34;PWR-010: Task manager - lists tracked tasks.&#34;&#34;&#34;
+    return productivity_powers.task_manager(action=&#34;list&#34;)</code></pre>
+</details>
+<div class="desc"><p>PWR-010: Task manager - lists tracked tasks.</p></div>
+</dd>
+<dt id="jarvis.api.server.get_scheduler_status"><code class="name flex">
+<span>def <span class="ident">get_scheduler_status</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/scheduler/status&#34;, tags=[&#34;Autonomous Scheduler&#34;])
+def get_scheduler_status():
+    from jarvis.core.scheduler import proactive_scheduler
+
+    return proactive_scheduler.get_status()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.health_root"><code class="name flex">
+<span>async def <span class="ident">health_root</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/health&#34;)
+async def health_root():
+    &#34;&#34;&#34;Health check endpoint confirming Jarvis core services.
+
+    ``processes`` reports the actual state of the API server, voice daemon and
+    HUD so callers can distinguish &#34;this HTTP endpoint answered&#34; from &#34;the
+    whole local system is running&#34;.
+    &#34;&#34;&#34;
+    return {
+        &#34;status&#34;: &#34;healthy&#34;,
+        &#34;service&#34;: &#34;jarvis-core&#34;,
+        &#34;version&#34;: &#34;1.0.0&#34;,
+        &#34;timestamp&#34;: time.time(),
+        &#34;processes&#34;: process_registry.summary(),
+    }</code></pre>
+</details>
+<div class="desc"><p>Health check endpoint confirming Jarvis core services.</p>
+<p><code>processes</code> reports the actual state of the API server, voice daemon and
+HUD so callers can distinguish "this HTTP endpoint answered" from "the
+whole local system is running".</p></div>
+</dd>
+<dt id="jarvis.api.server.hud_websocket_stream"><code class="name flex">
+<span>async def <span class="ident">hud_websocket_stream</span></span>(<span>websocket: starlette.websockets.WebSocket)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.websocket(&#34;/ws/stream&#34;)
+async def hud_websocket_stream(websocket: WebSocket):
+    &#34;&#34;&#34;Streams real-time CPU/RAM telemetry, active agents, and live logs to HUD.&#34;&#34;&#34;
+    await websocket.accept()
+    try:
+        while True:
+            # Send live metrics every 1.5 seconds
+            health = it_admin_powers.system_health_report()
+            payload = {
+                &#34;type&#34;: &#34;telemetry_pulse&#34;,
+                &#34;cpu_percent&#34;: health[&#34;cpu&#34;][&#34;percent&#34;],
+                &#34;ram_percent&#34;: health[&#34;memory&#34;][&#34;percent&#34;],
+                &#34;disk_percent&#34;: health[&#34;disk&#34;][&#34;percent&#34;],
+                &#34;kill_switch_active&#34;: policy_gate.kill_switch_active,
+                &#34;timestamp&#34;: time.time(),
+            }
+            await websocket.send_json(payload)
+            await asyncio.sleep(1.5)
+    except WebSocketDisconnect:
+        pass</code></pre>
+</details>
+<div class="desc"><p>Streams real-time CPU/RAM telemetry, active agents, and live logs to HUD.</p></div>
+</dd>
+<dt id="jarvis.api.server.inspect_audit"><code class="name flex">
+<span>async def <span class="ident">inspect_audit</span></span>(<span>limit: int = 50, verify_chain: bool = False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/audit&#34;)
+@app.get(&#34;/api/v1/audit&#34;)
+async def inspect_audit(limit: int = 50, verify_chain: bool = False):
+    &#34;&#34;&#34;Retrieves recent audit events and optionally verifies SHA-256 chain integrity.&#34;&#34;&#34;
+    entries = audit_ledger.get_recent_entries(limit=limit)
+    chain_status = {}
+    if verify_chain:
+        valid, count, msg = audit_ledger.verify_integrity()
+        chain_status = {&#34;valid&#34;: valid, &#34;verified_records&#34;: count, &#34;message&#34;: msg}
+    return {&#34;total&#34;: len(entries), &#34;entries&#34;: entries, &#34;chain_integrity&#34;: chain_status}</code></pre>
+</details>
+<div class="desc"><p>Retrieves recent audit events and optionally verifies SHA-256 chain integrity.</p></div>
+</dd>
+<dt id="jarvis.api.server.lifespan"><code class="name flex">
+<span>async def <span class="ident">lifespan</span></span>(<span>_app: fastapi.applications.FastAPI)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    &#34;&#34;&#34;Register this API process in the validated lifecycle registry.&#34;&#34;&#34;
+    process_registry.register_current(&#34;api_server&#34;)
+    try:
+        yield
+    finally:
+        process_registry.release(&#34;api_server&#34;)</code></pre>
+</details>
+<div class="desc"><p>Register this API process in the validated lifecycle registry.</p></div>
+</dd>
+<dt id="jarvis.api.server.list_powers"><code class="name flex">
+<span>async def <span class="ident">list_powers</span></span>(<span>category: str | None = None,<br>repo: str | None = None,<br>q: str | None = None,<br>search: str | None = None,<br>limit: int | None = None,<br>offset: int = 0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/powers&#34;)
+async def list_powers(
+    category: Optional[str] = None,
+    repo: Optional[str] = None,
+    q: Optional[str] = None,
+    search: Optional[str] = None,
+    limit: Optional[int] = None,
+    offset: int = 0,
+):
+    &#34;&#34;&#34;Lists JARVIS powers with optional filtering by category, contributing repo, or keyword search.&#34;&#34;&#34;
+    search_term = q or search
+    if search_term:
+        results = power_registry.search_powers(search_term, limit=limit or 50)
+        return {&#34;query&#34;: search_term, &#34;total_matches&#34;: len(results), &#34;powers&#34;: results}
+    if repo:
+        powers = power_registry.get_powers_by_repo(repo)
+        paginated = powers[offset : offset + limit] if limit and limit &gt; 0 else powers[offset:]
+        return {
+            &#34;repo&#34;: repo,
+            &#34;total_powers&#34;: len(powers),
+            &#34;offset&#34;: offset,
+            &#34;limit&#34;: limit or len(powers),
+            &#34;powers&#34;: paginated,
+        }
+    if category:
+        powers = power_registry.get_powers_by_category(category)
+        paginated = powers[offset : offset + limit] if limit and limit &gt; 0 else powers[offset:]
+        return {
+            &#34;category&#34;: category,
+            &#34;total_powers&#34;: len(powers),
+            &#34;offset&#34;: offset,
+            &#34;limit&#34;: limit or len(powers),
+            &#34;powers&#34;: paginated,
+        }
+
+    all_powers = power_registry.list_all_powers()
+    paginated = all_powers[offset : offset + limit] if limit and limit &gt; 0 else all_powers[offset:]
+    return {
+        &#34;total_powers&#34;: len(all_powers),
+        &#34;total_categories&#34;: len(power_registry.list_categories()),
+        &#34;ecosystem_formula&#34;: power_registry.get_ecosystem_formula(),
+        &#34;offset&#34;: offset,
+        &#34;limit&#34;: limit or len(all_powers),
+        &#34;powers&#34;: paginated,
+    }</code></pre>
+</details>
+<div class="desc"><p>Lists JARVIS powers with optional filtering by category, contributing repo, or keyword search.</p></div>
+</dd>
+<dt id="jarvis.api.server.list_powers_root"><code class="name flex">
+<span>async def <span class="ident">list_powers_root</span></span>(<span>category: str | None = None, search: str | None = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/powers&#34;)
+async def list_powers_root(category: Optional[str] = None, search: Optional[str] = None):
+    &#34;&#34;&#34;Lists operational capabilities from initial powers and catalog.&#34;&#34;&#34;
+    if search:
+        return power_registry.search_powers(search)
+    if category:
+        return power_registry.get_powers_by_category(category)
+    return {
+        &#34;total_powers&#34;: power_registry.total_count(),
+        &#34;powers&#34;: power_registry.list_powers(),
+        &#34;categories&#34;: power_registry.list_categories(),
+    }</code></pre>
+</details>
+<div class="desc"><p>Lists operational capabilities from initial powers and catalog.</p></div>
+</dd>
+<dt id="jarvis.api.server.list_tasks"><code class="name flex">
+<span>async def <span class="ident">list_tasks</span></span>(<span>limit: int = 50)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/tasks&#34;)
+async def list_tasks(limit: int = 50):
+    &#34;&#34;&#34;Inspects recent task state machine executions.&#34;&#34;&#34;
+    return db_store.list_tasks(limit=limit)</code></pre>
+</details>
+<div class="desc"><p>Inspects recent task state machine executions.</p></div>
+</dd>
+<dt id="jarvis.api.server.resolve_approval"><code class="name flex">
+<span>async def <span class="ident">resolve_approval</span></span>(<span>task_id: str,<br>resolution: <a title="jarvis.api.server.ApprovalResolution" href="#jarvis.api.server.ApprovalResolution">ApprovalResolution</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/approvals/{task_id}/resolve&#34;)
+async def resolve_approval(task_id: str, resolution: ApprovalResolution):
+    &#34;&#34;&#34;Submits human-in-the-loop decision for pending high-privilege actions.&#34;&#34;&#34;
+    pending = policy_gate.pending_approvals.get(task_id)
+    if not pending:
+        raise HTTPException(status_code=404, detail=&#34;No pending approval found for this task&#34;)
+
+    if not resolution.approved:
+        policy_gate.pending_approvals.pop(task_id, None)
+        return {&#34;task_id&#34;: task_id, &#34;status&#34;: &#34;REJECTED&#34;}
+
+    token = pending[&#34;token&#34;]
+    return {&#34;task_id&#34;: task_id, &#34;status&#34;: &#34;APPROVED&#34;, &#34;approval_token&#34;: token}</code></pre>
+</details>
+<div class="desc"><p>Submits human-in-the-loop decision for pending high-privilege actions.</p></div>
+</dd>
+<dt id="jarvis.api.server.route_model_request"><code class="name flex">
+<span>async def <span class="ident">route_model_request</span></span>(<span>req: <a title="jarvis.core.model_router.RoutingRequest" href="../core/model_router.html#jarvis.core.model_router.RoutingRequest">RoutingRequest</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/model/route&#34;, response_model=RoutingDecision)
+async def route_model_request(req: RoutingRequest):
+    &#34;&#34;&#34;
+    Evaluates sensitivity, complexity, latency, and budget to route
+    between Bypass, Tier 1 Local, Tier 2 Private GPU, or Tier 3 Cloud.
+    &#34;&#34;&#34;
+    return model_router.route(req)</code></pre>
+</details>
+<div class="desc"><p>Evaluates sensitivity, complexity, latency, and budget to route
+between Bypass, Tier 1 Local, Tier 2 Private GPU, or Tier 3 Cloud.</p></div>
+</dd>
+<dt id="jarvis.api.server.run_git_op"><code class="name flex">
+<span>async def <span class="ident">run_git_op</span></span>(<span>action: str = 'status')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/developer/git&#34;)
+async def run_git_op(action: str = &#34;status&#34;):
+    &#34;&#34;&#34;PWR-173: Executes safe Git status, log, branch, or diff queries.&#34;&#34;&#34;
+    return developer_powers.git_operations(action=action)</code></pre>
+</details>
+<div class="desc"><p>PWR-173: Executes safe Git status, log, branch, or diff queries.</p></div>
+</dd>
+<dt id="jarvis.api.server.send_discord_notify"><code class="name flex">
+<span>async def <span class="ident">send_discord_notify</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/communication/discord/notify&#34;)
+async def send_discord_notify(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-204: Discord webhook notifications.&#34;&#34;&#34;
+    title = payload.get(&#34;title&#34;, &#34;&#34;)
+    desc = payload.get(&#34;description&#34;, &#34;&#34;)
+    return communication_powers.discord_notification(title=title, description=desc)</code></pre>
+</details>
+<div class="desc"><p>PWR-204: Discord webhook notifications.</p></div>
+</dd>
+<dt id="jarvis.api.server.send_telegram_alert"><code class="name flex">
+<span>async def <span class="ident">send_telegram_alert</span></span>(<span>payload: Dict[str, Any] = Body(PydanticUndefined))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/api/v1/communication/telegram/alert&#34;)
+async def send_telegram_alert(payload: Dict[str, Any] = Body(...)):
+    &#34;&#34;&#34;PWR-203: Telegram notifications and alerts.&#34;&#34;&#34;
+    text = payload.get(&#34;text&#34;, &#34;&#34;)
+    priority = payload.get(&#34;priority&#34;, &#34;normal&#34;)
+    return communication_powers.telegram_alert(text=text, priority=priority)</code></pre>
+</details>
+<div class="desc"><p>PWR-203: Telegram notifications and alerts.</p></div>
+</dd>
+<dt id="jarvis.api.server.serve_dashboard"><code class="name flex">
+<span>async def <span class="ident">serve_dashboard</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/&#34;)
+@app.get(&#34;/dashboard&#34;)
+async def serve_dashboard():
+    &#34;&#34;&#34;Serves the interactive Iron Man glassmorphic HUD dashboard.&#34;&#34;&#34;
+    if not DASHBOARD_HTML.exists():
+        raise HTTPException(status_code=404, detail=&#34;Dashboard UI file not found&#34;)
+    return FileResponse(DASHBOARD_HTML)</code></pre>
+</details>
+<div class="desc"><p>Serves the interactive Iron Man glassmorphic HUD dashboard.</p></div>
+</dd>
+<dt id="jarvis.api.server.system_health"><code class="name flex">
+<span>async def <span class="ident">system_health</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/system/health&#34;)
+async def system_health():
+    &#34;&#34;&#34;Live host telemetry.&#34;&#34;&#34;
+    return it_admin_powers.system_health_report()</code></pre>
+</details>
+<div class="desc"><p>Live host telemetry.</p></div>
+</dd>
+<dt id="jarvis.api.server.system_processes"><code class="name flex">
+<span>async def <span class="ident">system_processes</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.get(&#34;/api/v1/system/processes&#34;)
+async def system_processes():
+    &#34;&#34;&#34;Validated lifecycle health for the API server, voice daemon and HUD.
+
+    Status is derived from live OS process identity (PID + creation time +
+    command line), not from configuration files or optimistic flags.
+    &#34;&#34;&#34;
+    return process_registry.health()</code></pre>
+</details>
+<div class="desc"><p>Validated lifecycle health for the API server, voice daemon and HUD.</p>
+<p>Status is derived from live OS process identity (PID + creation time +
+command line), not from configuration files or optimistic flags.</p></div>
+</dd>
+<dt id="jarvis.api.server.toggle_kill_switch"><code class="name flex">
+<span>async def <span class="ident">toggle_kill_switch</span></span>(<span>payload: <a title="jarvis.api.server.RootKillSwitchPayload" href="#jarvis.api.server.RootKillSwitchPayload">RootKillSwitchPayload</a> | None = None,<br>active: bool = True,<br>reason: str = 'API trigger')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/kill-switch&#34;)
+@app.post(&#34;/api/v1/kill-switch&#34;)
+async def toggle_kill_switch(
+    payload: Optional[RootKillSwitchPayload] = None, active: bool = True, reason: str = &#34;API trigger&#34;
+):
+    &#34;&#34;&#34;Emergency software kill switch.&#34;&#34;&#34;
+    is_active = payload.active if payload else active
+    switch_reason = payload.reason if payload else reason
+    if is_active:
+        policy_gate.trigger_kill_switch(reason=switch_reason)
+    else:
+        policy_gate.reset_kill_switch()
+    return {
+        &#34;kill_switch_active&#34;: policy_gate.kill_switch_active,
+        &#34;status&#34;: &#34;ACTIVATED&#34; if policy_gate.kill_switch_active else &#34;DEACTIVATED&#34;,
+        &#34;reason&#34;: switch_reason,
+    }</code></pre>
+</details>
+<div class="desc"><p>Emergency software kill switch.</p></div>
+</dd>
+<dt id="jarvis.api.server.trigger_scheduled_job"><code class="name flex">
+<span>async def <span class="ident">trigger_scheduled_job</span></span>(<span>job_id: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@app.post(&#34;/scheduler/trigger/{job_id}&#34;, tags=[&#34;Autonomous Scheduler&#34;])
+async def trigger_scheduled_job(job_id: str):
+    from jarvis.core.scheduler import proactive_scheduler
+
+    try:
+        res = await proactive_scheduler.trigger_job(job_id)
+        return res
+    except ValueError as ve:
+        raise HTTPException(status_code=404, detail=str(ve))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.api.server.ApprovalResolution"><code class="flex name class">
+<span>class <span class="ident">ApprovalResolution</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ApprovalResolution(BaseModel):
+    task_id: str
+    approved: bool
+    user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.server.ApprovalResolution.approved"><code class="name">var <span class="ident">approved</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ApprovalResolution.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ApprovalResolution.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ApprovalResolution.user_id"><code class="name">var <span class="ident">user_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.server.ChatRequest"><code class="flex name class">
+<span>class <span class="ident">ChatRequest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChatRequest(BaseModel):
+    query: str
+    context: str = &#34;&#34;
+    sensitivity_level: str = &#34;medium&#34;
+    approval_token: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.server.ChatRequest.approval_token"><code class="name">var <span class="ident">approval_token</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ChatRequest.context"><code class="name">var <span class="ident">context</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ChatRequest.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ChatRequest.query"><code class="name">var <span class="ident">query</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ChatRequest.sensitivity_level"><code class="name">var <span class="ident">sensitivity_level</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.server.ExpensiveCallApproval"><code class="flex name class">
+<span>class <span class="ident">ExpensiveCallApproval</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ExpensiveCallApproval(BaseModel):
+    task_id: str
+    target_model: str
+    approved: bool
+    user_signature: str = Field(default_factory=lambda: settings.jarvis_user_id)</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.server.ExpensiveCallApproval.approved"><code class="name">var <span class="ident">approved</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ExpensiveCallApproval.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ExpensiveCallApproval.target_model"><code class="name">var <span class="ident">target_model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ExpensiveCallApproval.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.ExpensiveCallApproval.user_signature"><code class="name">var <span class="ident">user_signature</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.server.RootChatPayload"><code class="flex name class">
+<span>class <span class="ident">RootChatPayload</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RootChatPayload(BaseModel):
+    user_id: str = Field(default_factory=lambda: settings.jarvis_user_id)
+    message: Optional[str] = None
+    query: Optional[str] = None
+    context: Optional[str] = &#34;&#34;
+    task_type: Optional[str] = &#34;chat&#34;
+    approval_token: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.server.RootChatPayload.approval_token"><code class="name">var <span class="ident">approval_token</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.RootChatPayload.context"><code class="name">var <span class="ident">context</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.RootChatPayload.message"><code class="name">var <span class="ident">message</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.RootChatPayload.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.RootChatPayload.query"><code class="name">var <span class="ident">query</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.RootChatPayload.task_type"><code class="name">var <span class="ident">task_type</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.RootChatPayload.user_id"><code class="name">var <span class="ident">user_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.api.server.RootKillSwitchPayload"><code class="flex name class">
+<span>class <span class="ident">RootKillSwitchPayload</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RootKillSwitchPayload(BaseModel):
+    active: bool = True
+    reason: str = &#34;API trigger&#34;</code></pre>
+</details>
+<div class="desc"><div class="admonition abstract">
+<p class="admonition-title">Usage Documentation</p>
+<p><a href="../concepts/models.md">Models</a></p>
+</div>
+<p>A base class for creating Pydantic models.</p>
+<dl>
+<dt>Attributes</dt>
+<dt>-----=</dt>
+<dt><strong><code>__class_vars__</code></strong></dt>
+<dd>The names of the class variables defined on the model.</dd>
+<dt><strong><code>__private_attributes__</code></strong></dt>
+<dd>Metadata about the private attributes of the model.</dd>
+<dt><strong><code>__signature__</code></strong></dt>
+<dd>The synthesized <code>__init__</code> [<code>Signature</code>][inspect.Signature] of the model.</dd>
+<dt><strong><code>__pydantic_complete__</code></strong></dt>
+<dd>Whether model building is completed, or if there are still undefined fields.</dd>
+<dt><strong><code>__pydantic_core_schema__</code></strong></dt>
+<dd>The core schema of the model.</dd>
+<dt><strong><code>__pydantic_custom_init__</code></strong></dt>
+<dd>Whether the model has a custom <code>__init__</code> function.</dd>
+<dt><strong><code>__pydantic_decorators__</code></strong></dt>
+<dd>Metadata containing the decorators defined on the model.
+This replaces <code>Model.__validators__</code> and <code>Model.__root_validators__</code> from Pydantic V1.</dd>
+<dt><strong><code>__pydantic_generic_metadata__</code></strong></dt>
+<dd>A dictionary containing metadata about generic Pydantic models.
+The <code>origin</code> and <code>args</code> items map to the [<code>__origin__</code>][genericalias.<strong>origin</strong>]
+and [<code>__args__</code>][genericalias.<strong>args</strong>] attributes of [generic aliases][types-genericalias],
+and the <code>parameter</code> item maps to the <code>__parameter__</code> attribute of generic classes.</dd>
+<dt><strong><code>__pydantic_parent_namespace__</code></strong></dt>
+<dd>Parent namespace of the model, used for automatic rebuilding of models.</dd>
+<dt><strong><code>__pydantic_post_init__</code></strong></dt>
+<dd>The name of the post-init method for the model, if defined.</dd>
+<dt><strong><code>__pydantic_root_model__</code></strong></dt>
+<dd>Whether the model is a [<code>RootModel</code>][pydantic.root_model.RootModel].</dd>
+<dt><strong><code>__pydantic_serializer__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaSerializer</code> used to dump instances of the model.</dd>
+<dt><strong><code>__pydantic_validator__</code></strong></dt>
+<dd>The <code>pydantic-core</code> <code>SchemaValidator</code> used to validate instances of the model.</dd>
+<dt><strong><code>__pydantic_fields__</code></strong></dt>
+<dd>A dictionary of field names and their corresponding [<code>FieldInfo</code>][pydantic.fields.FieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_computed_fields__</code></strong></dt>
+<dd>A dictionary of computed field names and their corresponding [<code>ComputedFieldInfo</code>][pydantic.fields.ComputedFieldInfo] objects.</dd>
+<dt><strong><code>__pydantic_extra__</code></strong></dt>
+<dd>A dictionary containing extra values, if [<code>extra</code>][pydantic.config.ConfigDict.extra]
+is set to <code>'allow'</code>.</dd>
+<dt><strong><code>__pydantic_fields_set__</code></strong></dt>
+<dd>The names of fields explicitly set during instantiation.</dd>
+<dt><strong><code>__pydantic_private__</code></strong></dt>
+<dd>Values of private attributes set on the model instance.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.api.server.RootKillSwitchPayload.active"><code class="name">var <span class="ident">active</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.RootKillSwitchPayload.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.api.server.RootKillSwitchPayload.reason"><code class="name">var <span class="ident">reason</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.api" href="index.html">jarvis.api</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jarvis.api.server.add_productivity_reminder" href="#jarvis.api.server.add_productivity_reminder">add_productivity_reminder</a></code></li>
+<li><code><a title="jarvis.api.server.add_productivity_task" href="#jarvis.api.server.add_productivity_task">add_productivity_task</a></code></li>
+<li><code><a title="jarvis.api.server.approve_expensive_call" href="#jarvis.api.server.approve_expensive_call">approve_expensive_call</a></code></li>
+<li><code><a title="jarvis.api.server.career_ops_analytics" href="#jarvis.api.server.career_ops_analytics">career_ops_analytics</a></code></li>
+<li><code><a title="jarvis.api.server.career_ops_company" href="#jarvis.api.server.career_ops_company">career_ops_company</a></code></li>
+<li><code><a title="jarvis.api.server.career_ops_contact" href="#jarvis.api.server.career_ops_contact">career_ops_contact</a></code></li>
+<li><code><a title="jarvis.api.server.career_ops_cover" href="#jarvis.api.server.career_ops_cover">career_ops_cover</a></code></li>
+<li><code><a title="jarvis.api.server.career_ops_interview" href="#jarvis.api.server.career_ops_interview">career_ops_interview</a></code></li>
+<li><code><a title="jarvis.api.server.career_ops_offer" href="#jarvis.api.server.career_ops_offer">career_ops_offer</a></code></li>
+<li><code><a title="jarvis.api.server.career_ops_resume" href="#jarvis.api.server.career_ops_resume">career_ops_resume</a></code></li>
+<li><code><a title="jarvis.api.server.career_ops_scan" href="#jarvis.api.server.career_ops_scan">career_ops_scan</a></code></li>
+<li><code><a title="jarvis.api.server.chat_endpoint" href="#jarvis.api.server.chat_endpoint">chat_endpoint</a></code></li>
+<li><code><a title="jarvis.api.server.chat_root" href="#jarvis.api.server.chat_root">chat_root</a></code></li>
+<li><code><a title="jarvis.api.server.configure_models" href="#jarvis.api.server.configure_models">configure_models</a></code></li>
+<li><code><a title="jarvis.api.server.diagnose_error" href="#jarvis.api.server.diagnose_error">diagnose_error</a></code></li>
+<li><code><a title="jarvis.api.server.disable_power_root" href="#jarvis.api.server.disable_power_root">disable_power_root</a></code></li>
+<li><code><a title="jarvis.api.server.draft_comm_message" href="#jarvis.api.server.draft_comm_message">draft_comm_message</a></code></li>
+<li><code><a title="jarvis.api.server.enable_power_root" href="#jarvis.api.server.enable_power_root">enable_power_root</a></code></li>
+<li><code><a title="jarvis.api.server.explain_codebase" href="#jarvis.api.server.explain_codebase">explain_codebase</a></code></li>
+<li><code><a title="jarvis.api.server.get_cicd_status" href="#jarvis.api.server.get_cicd_status">get_cicd_status</a></code></li>
+<li><code><a title="jarvis.api.server.get_daily_briefing" href="#jarvis.api.server.get_daily_briefing">get_daily_briefing</a></code></li>
+<li><code><a title="jarvis.api.server.get_ecosystem" href="#jarvis.api.server.get_ecosystem">get_ecosystem</a></code></li>
+<li><code><a title="jarvis.api.server.get_model_costs" href="#jarvis.api.server.get_model_costs">get_model_costs</a></code></li>
+<li><code><a title="jarvis.api.server.get_model_status" href="#jarvis.api.server.get_model_status">get_model_status</a></code></li>
+<li><code><a title="jarvis.api.server.get_model_usage" href="#jarvis.api.server.get_model_usage">get_model_usage</a></code></li>
+<li><code><a title="jarvis.api.server.get_power_detail" href="#jarvis.api.server.get_power_detail">get_power_detail</a></code></li>
+<li><code><a title="jarvis.api.server.get_productivity_calendar" href="#jarvis.api.server.get_productivity_calendar">get_productivity_calendar</a></code></li>
+<li><code><a title="jarvis.api.server.get_productivity_reminders" href="#jarvis.api.server.get_productivity_reminders">get_productivity_reminders</a></code></li>
+<li><code><a title="jarvis.api.server.get_productivity_tasks" href="#jarvis.api.server.get_productivity_tasks">get_productivity_tasks</a></code></li>
+<li><code><a title="jarvis.api.server.get_scheduler_status" href="#jarvis.api.server.get_scheduler_status">get_scheduler_status</a></code></li>
+<li><code><a title="jarvis.api.server.health_root" href="#jarvis.api.server.health_root">health_root</a></code></li>
+<li><code><a title="jarvis.api.server.hud_websocket_stream" href="#jarvis.api.server.hud_websocket_stream">hud_websocket_stream</a></code></li>
+<li><code><a title="jarvis.api.server.inspect_audit" href="#jarvis.api.server.inspect_audit">inspect_audit</a></code></li>
+<li><code><a title="jarvis.api.server.lifespan" href="#jarvis.api.server.lifespan">lifespan</a></code></li>
+<li><code><a title="jarvis.api.server.list_powers" href="#jarvis.api.server.list_powers">list_powers</a></code></li>
+<li><code><a title="jarvis.api.server.list_powers_root" href="#jarvis.api.server.list_powers_root">list_powers_root</a></code></li>
+<li><code><a title="jarvis.api.server.list_tasks" href="#jarvis.api.server.list_tasks">list_tasks</a></code></li>
+<li><code><a title="jarvis.api.server.resolve_approval" href="#jarvis.api.server.resolve_approval">resolve_approval</a></code></li>
+<li><code><a title="jarvis.api.server.route_model_request" href="#jarvis.api.server.route_model_request">route_model_request</a></code></li>
+<li><code><a title="jarvis.api.server.run_git_op" href="#jarvis.api.server.run_git_op">run_git_op</a></code></li>
+<li><code><a title="jarvis.api.server.send_discord_notify" href="#jarvis.api.server.send_discord_notify">send_discord_notify</a></code></li>
+<li><code><a title="jarvis.api.server.send_telegram_alert" href="#jarvis.api.server.send_telegram_alert">send_telegram_alert</a></code></li>
+<li><code><a title="jarvis.api.server.serve_dashboard" href="#jarvis.api.server.serve_dashboard">serve_dashboard</a></code></li>
+<li><code><a title="jarvis.api.server.system_health" href="#jarvis.api.server.system_health">system_health</a></code></li>
+<li><code><a title="jarvis.api.server.system_processes" href="#jarvis.api.server.system_processes">system_processes</a></code></li>
+<li><code><a title="jarvis.api.server.toggle_kill_switch" href="#jarvis.api.server.toggle_kill_switch">toggle_kill_switch</a></code></li>
+<li><code><a title="jarvis.api.server.trigger_scheduled_job" href="#jarvis.api.server.trigger_scheduled_job">trigger_scheduled_job</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.api.server.ApprovalResolution" href="#jarvis.api.server.ApprovalResolution">ApprovalResolution</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.server.ApprovalResolution.approved" href="#jarvis.api.server.ApprovalResolution.approved">approved</a></code></li>
+<li><code><a title="jarvis.api.server.ApprovalResolution.model_config" href="#jarvis.api.server.ApprovalResolution.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.server.ApprovalResolution.task_id" href="#jarvis.api.server.ApprovalResolution.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.api.server.ApprovalResolution.user_id" href="#jarvis.api.server.ApprovalResolution.user_id">user_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.server.ChatRequest" href="#jarvis.api.server.ChatRequest">ChatRequest</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.server.ChatRequest.approval_token" href="#jarvis.api.server.ChatRequest.approval_token">approval_token</a></code></li>
+<li><code><a title="jarvis.api.server.ChatRequest.context" href="#jarvis.api.server.ChatRequest.context">context</a></code></li>
+<li><code><a title="jarvis.api.server.ChatRequest.model_config" href="#jarvis.api.server.ChatRequest.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.server.ChatRequest.query" href="#jarvis.api.server.ChatRequest.query">query</a></code></li>
+<li><code><a title="jarvis.api.server.ChatRequest.sensitivity_level" href="#jarvis.api.server.ChatRequest.sensitivity_level">sensitivity_level</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.server.ExpensiveCallApproval" href="#jarvis.api.server.ExpensiveCallApproval">ExpensiveCallApproval</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.server.ExpensiveCallApproval.approved" href="#jarvis.api.server.ExpensiveCallApproval.approved">approved</a></code></li>
+<li><code><a title="jarvis.api.server.ExpensiveCallApproval.model_config" href="#jarvis.api.server.ExpensiveCallApproval.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.server.ExpensiveCallApproval.target_model" href="#jarvis.api.server.ExpensiveCallApproval.target_model">target_model</a></code></li>
+<li><code><a title="jarvis.api.server.ExpensiveCallApproval.task_id" href="#jarvis.api.server.ExpensiveCallApproval.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.api.server.ExpensiveCallApproval.user_signature" href="#jarvis.api.server.ExpensiveCallApproval.user_signature">user_signature</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.server.RootChatPayload" href="#jarvis.api.server.RootChatPayload">RootChatPayload</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.api.server.RootChatPayload.approval_token" href="#jarvis.api.server.RootChatPayload.approval_token">approval_token</a></code></li>
+<li><code><a title="jarvis.api.server.RootChatPayload.context" href="#jarvis.api.server.RootChatPayload.context">context</a></code></li>
+<li><code><a title="jarvis.api.server.RootChatPayload.message" href="#jarvis.api.server.RootChatPayload.message">message</a></code></li>
+<li><code><a title="jarvis.api.server.RootChatPayload.model_config" href="#jarvis.api.server.RootChatPayload.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.server.RootChatPayload.query" href="#jarvis.api.server.RootChatPayload.query">query</a></code></li>
+<li><code><a title="jarvis.api.server.RootChatPayload.task_type" href="#jarvis.api.server.RootChatPayload.task_type">task_type</a></code></li>
+<li><code><a title="jarvis.api.server.RootChatPayload.user_id" href="#jarvis.api.server.RootChatPayload.user_id">user_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.api.server.RootKillSwitchPayload" href="#jarvis.api.server.RootKillSwitchPayload">RootKillSwitchPayload</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.api.server.RootKillSwitchPayload.active" href="#jarvis.api.server.RootKillSwitchPayload.active">active</a></code></li>
+<li><code><a title="jarvis.api.server.RootKillSwitchPayload.model_config" href="#jarvis.api.server.RootKillSwitchPayload.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.api.server.RootKillSwitchPayload.reason" href="#jarvis.api.server.RootKillSwitchPayload.reason">reason</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

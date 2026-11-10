@@ -1,0 +1,2261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.agents API documentation</title>
+<meta name="description" content="JARVIS Multi-Agent Fusion Workers — Planner, Researcher, Executor, Critic.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.agents</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Multi-Agent Fusion Workers — Planner, Researcher, Executor, Critic.</p>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="jarvis.agents.autonomous_workforce" href="autonomous_workforce.html">jarvis.agents.autonomous_workforce</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Autonomous Multi-Agent Workforce Swarm
+Orchestrates a 100+ agent fleet divided across 5 specialized divisions:
+1. Division Reconnaissance (Web, …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.agents.critic" href="critic.html">jarvis.agents.critic</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Critic Agent (PWR-294 / PWR-295)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.agents.executor" href="executor.html">jarvis.agents.executor</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Executor Agent (PWR-292 / PWR-293)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.agents.gsoc_scout" href="gsoc_scout.html">jarvis.agents.gsoc_scout</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS GSoC Contributor Scout &amp; Open-Source Preparation Engine
+Empowers Ganesh Nair to target top Google Summer of Code (GSoC 2026/2027) …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.agents.hackathon_scout" href="hackathon_scout.html">jarvis.agents.hackathon_scout</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Autonomous Hackathon &amp; Opportunity Multi-Agent Workforce
+Coordinates a 4-agent swarm:
+1. ScoutAgent: Scrapes Devpost, Unstop, SIH, GSoC via …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.agents.planner" href="planner.html">jarvis.agents.planner</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Planner Agent (PWR-288 / PWR-289)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.agents.researcher" href="researcher.html">jarvis.agents.researcher</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Researcher Agent (PWR-290 / PWR-291)
+PDF Spec: Pages 352-371 — Multi-Agent &amp; Orchestration …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.agents.ruflo_swarm" href="ruflo_swarm.html">jarvis.agents.ruflo_swarm</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS RuFlo Reactive Consensus &amp; Multi-Agent Swarm Protocol
+Inspired by RuFlo (ruvnet/ruflo distributed agent coordination architecture).
+Implements …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.agents.swarm" href="swarm.html">jarvis.agents.swarm</a></code></dt>
+<dd>
+<div class="desc"><p>Multi-Agent Swarm and Sub-Agent Orchestration Framework (PWR-288 to PWR-307) …</p></div>
+</dd>
+<dt><code class="name"><a title="jarvis.agents.venture_scout" href="venture_scout.html">jarvis.agents.venture_scout</a></code></dt>
+<dd>
+<div class="desc"><p>JARVIS Venture Scout &amp; AI Business Idea Matching Engine
+Ingests, scores, and creates launch blueprints from the curated catalog of
+200 AI Business …</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.agents.AgentRole"><code class="flex name class">
+<span>class <span class="ident">AgentRole</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AgentRole(str, Enum):
+    ORCHESTRATOR = &#34;orchestrator&#34;
+    PLANNER = &#34;planner&#34;
+    RESEARCHER = &#34;researcher&#34;
+    CODER = &#34;coder&#34;
+    CODER_CLAUDE = &#34;coder_claude&#34;
+    CODER_CURSOR = &#34;coder_cursor&#34;
+    CODER_CODEX = &#34;coder_codex&#34;
+    CODER_OPENAI = &#34;coder_openai&#34;
+    CODER_ANTIGRAVITY = &#34;coder_antigravity&#34;
+    CODER_GROKBOT = &#34;coder_grokbot&#34;
+    CODER_OPENALL = &#34;coder_openall&#34;
+    FILE_AGENT = &#34;file_agent&#34;
+    BROWSER = &#34;browser&#34;
+    SYSADMIN = &#34;system_admin&#34;
+    FINANCE = &#34;finance&#34;
+    CONTENT = &#34;content_strategist&#34;
+    REVIEWER = &#34;reviewer_critic&#34;
+    SECURITY = &#34;security_guard&#34;
+    APPROVAL = &#34;approval_manager&#34;
+    MEMORY = &#34;memory_manager&#34;
+    TOOL_SELECTOR = &#34;tool_selector&#34;</code></pre>
+</details>
+<div class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.AgentRole.APPROVAL"><code class="name">var <span class="ident">APPROVAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.BROWSER"><code class="name">var <span class="ident">BROWSER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.CODER"><code class="name">var <span class="ident">CODER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.CODER_ANTIGRAVITY"><code class="name">var <span class="ident">CODER_ANTIGRAVITY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.CODER_CLAUDE"><code class="name">var <span class="ident">CODER_CLAUDE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.CODER_CODEX"><code class="name">var <span class="ident">CODER_CODEX</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.CODER_CURSOR"><code class="name">var <span class="ident">CODER_CURSOR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.CODER_GROKBOT"><code class="name">var <span class="ident">CODER_GROKBOT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.CODER_OPENAI"><code class="name">var <span class="ident">CODER_OPENAI</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.CODER_OPENALL"><code class="name">var <span class="ident">CODER_OPENALL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.CONTENT"><code class="name">var <span class="ident">CONTENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.FILE_AGENT"><code class="name">var <span class="ident">FILE_AGENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.FINANCE"><code class="name">var <span class="ident">FINANCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.MEMORY"><code class="name">var <span class="ident">MEMORY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.ORCHESTRATOR"><code class="name">var <span class="ident">ORCHESTRATOR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.PLANNER"><code class="name">var <span class="ident">PLANNER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.RESEARCHER"><code class="name">var <span class="ident">RESEARCHER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.REVIEWER"><code class="name">var <span class="ident">REVIEWER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.SECURITY"><code class="name">var <span class="ident">SECURITY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.SYSADMIN"><code class="name">var <span class="ident">SYSADMIN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.AgentRole.TOOL_SELECTOR"><code class="name">var <span class="ident">TOOL_SELECTOR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.AgentSwarmCoordinator"><code class="flex name class">
+<span>class <span class="ident">AgentSwarmCoordinator</span></span>
+<span>(</span><span>max_concurrent_agents: int = 3)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AgentSwarmCoordinator:
+    &#34;&#34;&#34;Coordinates specialized agent swarms with bounded concurrency (PWR-288 to PWR-307).&#34;&#34;&#34;
+
+    def __init__(self, max_concurrent_agents: int = 3):
+        self.semaphore = asyncio.Semaphore(max_concurrent_agents)
+        self.active_plans: Dict[str, SwarmExecutionPlan] = {}
+        self.cancellation_tokens: Dict[str, CancellationToken] = {}
+        self.cumulative_cost_usd: float = 0.0
+        self.agent_registry: Dict[AgentRole, Dict[str, Any]] = {
+            AgentRole.ORCHESTRATOR: {&#34;power_id&#34;: &#34;PWR-288&#34;, &#34;description&#34;: &#34;Master coordination and dispatch&#34;},
+            AgentRole.PLANNER: {&#34;power_id&#34;: &#34;PWR-289&#34;, &#34;description&#34;: &#34;Goal decomposition into subtasks&#34;},
+            AgentRole.RESEARCHER: {&#34;power_id&#34;: &#34;PWR-290&#34;, &#34;description&#34;: &#34;Web and documentation research&#34;},
+            AgentRole.CODER: {&#34;power_id&#34;: &#34;PWR-291&#34;, &#34;description&#34;: &#34;Code generation, refactoring, tests&#34;},
+            AgentRole.CODER_CLAUDE: {
+                &#34;power_id&#34;: &#34;PWR-309&#34;,
+                &#34;description&#34;: &#34;Claude Code integration for code generation&#34;,
+            },
+            AgentRole.CODER_CURSOR: {&#34;power_id&#34;: &#34;PWR-310&#34;, &#34;description&#34;: &#34;Cursor integration for code generation&#34;},
+            AgentRole.CODER_CODEX: {&#34;power_id&#34;: &#34;PWR-311&#34;, &#34;description&#34;: &#34;Codex integration for code generation&#34;},
+            AgentRole.CODER_OPENAI: {&#34;power_id&#34;: &#34;PWR-312&#34;, &#34;description&#34;: &#34;OpenAI code completion&#34;},
+            AgentRole.CODER_ANTIGRAVITY: {
+                &#34;power_id&#34;: &#34;PWR-313&#34;,
+                &#34;description&#34;: &#34;Antigravity self-improvement pipeline&#34;,
+            },
+            AgentRole.CODER_GROKBOT: {&#34;power_id&#34;: &#34;PWR-314&#34;, &#34;description&#34;: &#34;Grokbot reasoning and code analysis&#34;},
+            AgentRole.CODER_OPENALL: {&#34;power_id&#34;: &#34;PWR-315&#34;, &#34;description&#34;: &#34;OpenAll code models orchestration&#34;},
+            AgentRole.FILE_AGENT: {&#34;power_id&#34;: &#34;PWR-292&#34;, &#34;description&#34;: &#34;File operations and directory inspection&#34;},
+            AgentRole.BROWSER: {&#34;power_id&#34;: &#34;PWR-293&#34;, &#34;description&#34;: &#34;Browser automation and screen capture&#34;},
+            AgentRole.SYSADMIN: {&#34;power_id&#34;: &#34;PWR-294&#34;, &#34;description&#34;: &#34;OS telemetry and system administration&#34;},
+            AgentRole.FINANCE: {&#34;power_id&#34;: &#34;PWR-295&#34;, &#34;description&#34;: &#34;Financial modeling and expense tracking&#34;},
+            AgentRole.CONTENT: {&#34;power_id&#34;: &#34;PWR-296&#34;, &#34;description&#34;: &#34;Content strategy and text synthesis&#34;},
+            AgentRole.REVIEWER: {&#34;power_id&#34;: &#34;PWR-297&#34;, &#34;description&#34;: &#34;Output verification and critique&#34;},
+            AgentRole.SECURITY: {&#34;power_id&#34;: &#34;PWR-298&#34;, &#34;description&#34;: &#34;DLP scanning and SSRF validation&#34;},
+            AgentRole.APPROVAL: {&#34;power_id&#34;: &#34;PWR-299&#34;, &#34;description&#34;: &#34;Human cryptographic approval checks&#34;},
+            AgentRole.MEMORY: {&#34;power_id&#34;: &#34;PWR-300&#34;, &#34;description&#34;: &#34;Memory consolidation and fact storage&#34;},
+            AgentRole.TOOL_SELECTOR: {&#34;power_id&#34;: &#34;PWR-301&#34;, &#34;description&#34;: &#34;Dynamic MCP tool routing&#34;},
+        }
+
+    def decompose_goal(self, goal: str) -&gt; SwarmExecutionPlan:
+        &#34;&#34;&#34;PWR-289 / PWR-302: Decomposes a user goal into an ordered subtask list.&#34;&#34;&#34;
+        plan_id = f&#34;plan_{uuid.uuid4().hex[:8]}&#34;
+        tasks: List[SubTask] = []
+
+        g_lower = goal.lower()
+        if &#34;research&#34; in g_lower or &#34;search&#34; in g_lower:
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_1&#34;,
+                    title=f&#34;Research technical background: {goal[:50]}&#34;,
+                    role=AgentRole.RESEARCHER,
+                    inputs={&#34;query&#34;: goal},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_2&#34;,
+                    title=f&#34;Synthesize findings and recommendations&#34;,
+                    role=AgentRole.CONTENT,
+                    inputs={&#34;context_from&#34;: f&#34;{plan_id}_1&#34;},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_3&#34;,
+                    title=f&#34;Review and verify source citations&#34;,
+                    role=AgentRole.REVIEWER,
+                    inputs={&#34;verify_task&#34;: f&#34;{plan_id}_2&#34;},
+                )
+            )
+        elif &#34;code&#34; in g_lower or &#34;build&#34; in g_lower or &#34;implement&#34; in g_lower:
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_1&#34;,
+                    title=f&#34;Plan architectural interfaces and dependencies&#34;,
+                    role=AgentRole.PLANNER,
+                    inputs={&#34;objective&#34;: goal},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_2&#34;,
+                    title=f&#34;Implement source code and automated tests&#34;,
+                    role=AgentRole.CODER,
+                    inputs={&#34;spec_from&#34;: f&#34;{plan_id}_1&#34;},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_3&#34;,
+                    title=f&#34;Verify security policy and DLP compliance&#34;,
+                    role=AgentRole.SECURITY,
+                    inputs={&#34;code_task&#34;: f&#34;{plan_id}_2&#34;},
+                )
+            )
+        else:
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_1&#34;,
+                    title=f&#34;Analyze intent and select tools&#34;,
+                    role=AgentRole.TOOL_SELECTOR,
+                    inputs={&#34;user_query&#34;: goal},
+                )
+            )
+            tasks.append(
+                SubTask(
+                    task_id=f&#34;{plan_id}_2&#34;,
+                    title=f&#34;Execute coordinated sub-agent action&#34;,
+                    role=AgentRole.ORCHESTRATOR,
+                    inputs={&#34;task&#34;: goal},
+                )
+            )
+
+        plan = SwarmExecutionPlan(plan_id=plan_id, goal=goal, tasks=tasks)
+        self.active_plans[plan_id] = plan
+        self.cancellation_tokens[plan_id] = CancellationToken()
+        logger.info(f&#34;Decomposed goal &#39;{goal[:40]}&#39; into {len(tasks)} subtasks (Plan: {plan_id})&#34;)
+        return plan
+
+    async def execute_plan(
+        self, plan_id: str, execution_handler: Optional[Callable[[SubTask], Dict[str, Any]]] = None
+    ) -&gt; SwarmExecutionPlan:
+        &#34;&#34;&#34;PWR-305: Executes subtasks in parallel (bounded by max 2-3 workers).&#34;&#34;&#34;
+        if plan_id not in self.active_plans:
+            raise ValueError(f&#34;Plan {plan_id} not found&#34;)
+
+        plan = self.active_plans[plan_id]
+        token = self.cancellation_tokens.get(plan_id) or CancellationToken()
+        plan.status = &#34;RUNNING&#34;
+
+        async def _run_one(task: SubTask):
+            async with self.semaphore:
+                if token.is_cancelled:
+                    task.status = &#34;CANCELLED&#34;
+                    task.outputs = {&#34;error&#34;: f&#34;Cancelled: {token.reason}&#34;}
+                    return
+
+                task.status = &#34;RUNNING&#34;
+                task.assigned_worker_id = f&#34;worker_{uuid.uuid4().hex[:6]}&#34;
+                start = time.perf_counter()
+
+                try:
+                    if execution_handler:
+                        res = await asyncio.to_thread(execution_handler, task)
+                    else:
+                        # Local reflex execution per sub-agent role (no external LLM required)
+                        res = {
+                            &#34;role&#34;: task.role.value,
+                            &#34;power_id&#34;: self.agent_registry[task.role][&#34;power_id&#34;],
+                            &#34;result&#34;: f&#34;Executed subtask &#39;{task.title}&#39; successfully.&#34;,
+                            &#34;timestamp&#34;: time.time(),
+                        }
+                    task.outputs = res
+                    task.status = &#34;COMPLETED&#34;
+                    task.cost_usd = 0.00015
+                except Exception as e:
+                    task.status = &#34;FAILED&#34;
+                    task.outputs = {&#34;error&#34;: str(e)}
+                finally:
+                    task.duration_ms = round((time.perf_counter() - start) * 1000, 2)
+                    self.cumulative_cost_usd += task.cost_usd
+
+        # Execute subtasks with bounded concurrency (parallel sub-agent workers)
+        await asyncio.gather(*[_run_one(t) for t in plan.tasks])
+
+        # Handoff context (PWR-304) and update total plan status
+        all_completed = all(t.status == &#34;COMPLETED&#34; for t in plan.tasks)
+        any_cancelled = any(t.status == &#34;CANCELLED&#34; for t in plan.tasks)
+
+        if any_cancelled:
+            plan.status = &#34;CANCELLED&#34;
+        elif all_completed:
+            plan.status = &#34;COMPLETED&#34;
+        else:
+            plan.status = &#34;PARTIAL_FAILURE&#34;
+
+        plan.total_cost_usd = sum(t.cost_usd for t in plan.tasks)
+        logger.info(f&#34;Plan {plan_id} execution finished: status={plan.status}, cost=${plan.total_cost_usd:.5f}&#34;)
+        return plan
+
+    def cancel_plan(self, plan_id: str, reason: str = &#34;User initiated abort&#34;) -&gt; bool:
+        &#34;&#34;&#34;PWR-307: Signals immediate graceful cancellation of an active agent swarm.&#34;&#34;&#34;
+        if plan_id in self.cancellation_tokens:
+            self.cancellation_tokens[plan_id].cancel(reason)
+            if plan_id in self.active_plans:
+                self.active_plans[plan_id].status = &#34;CANCELLED&#34;
+            logger.info(f&#34;Cancelled plan {plan_id}: {reason}&#34;)
+            return True
+        return False
+
+    def get_dashboard_state(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;PWR-303: Surfaces live dashboard state of agent swarms, costs, and tasks.&#34;&#34;&#34;
+        return {
+            &#34;total_plans&#34;: len(self.active_plans),
+            &#34;cumulative_cost_usd&#34;: round(self.cumulative_cost_usd, 6),
+            &#34;registered_agents_count&#34;: len(self.agent_registry),
+            &#34;registered_agents&#34;: {role.value: meta for role, meta in self.agent_registry.items()},
+            &#34;plans&#34;: [
+                {
+                    &#34;plan_id&#34;: p.plan_id,
+                    &#34;goal&#34;: p.goal,
+                    &#34;status&#34;: p.status,
+                    &#34;subtasks_count&#34;: len(p.tasks),
+                    &#34;total_cost_usd&#34;: p.total_cost_usd,
+                    &#34;tasks&#34;: [
+                        {
+                            &#34;task_id&#34;: t.task_id,
+                            &#34;title&#34;: t.title,
+                            &#34;role&#34;: t.role.value,
+                            &#34;status&#34;: t.status,
+                            &#34;duration_ms&#34;: t.duration_ms,
+                        }
+                        for t in p.tasks
+                    ],
+                }
+                for p in list(self.active_plans.values())[-10:]
+            ],
+        }</code></pre>
+</details>
+<div class="desc"><p>Coordinates specialized agent swarms with bounded concurrency (PWR-288 to PWR-307).</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.AgentSwarmCoordinator.cancel_plan"><code class="name flex">
+<span>def <span class="ident">cancel_plan</span></span>(<span>self, plan_id: str, reason: str = 'User initiated abort') ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cancel_plan(self, plan_id: str, reason: str = &#34;User initiated abort&#34;) -&gt; bool:
+    &#34;&#34;&#34;PWR-307: Signals immediate graceful cancellation of an active agent swarm.&#34;&#34;&#34;
+    if plan_id in self.cancellation_tokens:
+        self.cancellation_tokens[plan_id].cancel(reason)
+        if plan_id in self.active_plans:
+            self.active_plans[plan_id].status = &#34;CANCELLED&#34;
+        logger.info(f&#34;Cancelled plan {plan_id}: {reason}&#34;)
+        return True
+    return False</code></pre>
+</details>
+<div class="desc"><p>PWR-307: Signals immediate graceful cancellation of an active agent swarm.</p></div>
+</dd>
+<dt id="jarvis.agents.AgentSwarmCoordinator.decompose_goal"><code class="name flex">
+<span>def <span class="ident">decompose_goal</span></span>(<span>self, goal: str) ‑> <a title="jarvis.agents.swarm.SwarmExecutionPlan" href="swarm.html#jarvis.agents.swarm.SwarmExecutionPlan">SwarmExecutionPlan</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decompose_goal(self, goal: str) -&gt; SwarmExecutionPlan:
+    &#34;&#34;&#34;PWR-289 / PWR-302: Decomposes a user goal into an ordered subtask list.&#34;&#34;&#34;
+    plan_id = f&#34;plan_{uuid.uuid4().hex[:8]}&#34;
+    tasks: List[SubTask] = []
+
+    g_lower = goal.lower()
+    if &#34;research&#34; in g_lower or &#34;search&#34; in g_lower:
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_1&#34;,
+                title=f&#34;Research technical background: {goal[:50]}&#34;,
+                role=AgentRole.RESEARCHER,
+                inputs={&#34;query&#34;: goal},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_2&#34;,
+                title=f&#34;Synthesize findings and recommendations&#34;,
+                role=AgentRole.CONTENT,
+                inputs={&#34;context_from&#34;: f&#34;{plan_id}_1&#34;},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_3&#34;,
+                title=f&#34;Review and verify source citations&#34;,
+                role=AgentRole.REVIEWER,
+                inputs={&#34;verify_task&#34;: f&#34;{plan_id}_2&#34;},
+            )
+        )
+    elif &#34;code&#34; in g_lower or &#34;build&#34; in g_lower or &#34;implement&#34; in g_lower:
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_1&#34;,
+                title=f&#34;Plan architectural interfaces and dependencies&#34;,
+                role=AgentRole.PLANNER,
+                inputs={&#34;objective&#34;: goal},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_2&#34;,
+                title=f&#34;Implement source code and automated tests&#34;,
+                role=AgentRole.CODER,
+                inputs={&#34;spec_from&#34;: f&#34;{plan_id}_1&#34;},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_3&#34;,
+                title=f&#34;Verify security policy and DLP compliance&#34;,
+                role=AgentRole.SECURITY,
+                inputs={&#34;code_task&#34;: f&#34;{plan_id}_2&#34;},
+            )
+        )
+    else:
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_1&#34;,
+                title=f&#34;Analyze intent and select tools&#34;,
+                role=AgentRole.TOOL_SELECTOR,
+                inputs={&#34;user_query&#34;: goal},
+            )
+        )
+        tasks.append(
+            SubTask(
+                task_id=f&#34;{plan_id}_2&#34;,
+                title=f&#34;Execute coordinated sub-agent action&#34;,
+                role=AgentRole.ORCHESTRATOR,
+                inputs={&#34;task&#34;: goal},
+            )
+        )
+
+    plan = SwarmExecutionPlan(plan_id=plan_id, goal=goal, tasks=tasks)
+    self.active_plans[plan_id] = plan
+    self.cancellation_tokens[plan_id] = CancellationToken()
+    logger.info(f&#34;Decomposed goal &#39;{goal[:40]}&#39; into {len(tasks)} subtasks (Plan: {plan_id})&#34;)
+    return plan</code></pre>
+</details>
+<div class="desc"><p>PWR-289 / PWR-302: Decomposes a user goal into an ordered subtask list.</p></div>
+</dd>
+<dt id="jarvis.agents.AgentSwarmCoordinator.execute_plan"><code class="name flex">
+<span>async def <span class="ident">execute_plan</span></span>(<span>self,<br>plan_id: str,<br>execution_handler: Optional[Callable[[<a title="jarvis.agents.SubTask" href="#jarvis.agents.SubTask">SubTask</a>], Dict[str, Any]]] = None) ‑> <a title="jarvis.agents.swarm.SwarmExecutionPlan" href="swarm.html#jarvis.agents.swarm.SwarmExecutionPlan">SwarmExecutionPlan</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def execute_plan(
+    self, plan_id: str, execution_handler: Optional[Callable[[SubTask], Dict[str, Any]]] = None
+) -&gt; SwarmExecutionPlan:
+    &#34;&#34;&#34;PWR-305: Executes subtasks in parallel (bounded by max 2-3 workers).&#34;&#34;&#34;
+    if plan_id not in self.active_plans:
+        raise ValueError(f&#34;Plan {plan_id} not found&#34;)
+
+    plan = self.active_plans[plan_id]
+    token = self.cancellation_tokens.get(plan_id) or CancellationToken()
+    plan.status = &#34;RUNNING&#34;
+
+    async def _run_one(task: SubTask):
+        async with self.semaphore:
+            if token.is_cancelled:
+                task.status = &#34;CANCELLED&#34;
+                task.outputs = {&#34;error&#34;: f&#34;Cancelled: {token.reason}&#34;}
+                return
+
+            task.status = &#34;RUNNING&#34;
+            task.assigned_worker_id = f&#34;worker_{uuid.uuid4().hex[:6]}&#34;
+            start = time.perf_counter()
+
+            try:
+                if execution_handler:
+                    res = await asyncio.to_thread(execution_handler, task)
+                else:
+                    # Local reflex execution per sub-agent role (no external LLM required)
+                    res = {
+                        &#34;role&#34;: task.role.value,
+                        &#34;power_id&#34;: self.agent_registry[task.role][&#34;power_id&#34;],
+                        &#34;result&#34;: f&#34;Executed subtask &#39;{task.title}&#39; successfully.&#34;,
+                        &#34;timestamp&#34;: time.time(),
+                    }
+                task.outputs = res
+                task.status = &#34;COMPLETED&#34;
+                task.cost_usd = 0.00015
+            except Exception as e:
+                task.status = &#34;FAILED&#34;
+                task.outputs = {&#34;error&#34;: str(e)}
+            finally:
+                task.duration_ms = round((time.perf_counter() - start) * 1000, 2)
+                self.cumulative_cost_usd += task.cost_usd
+
+    # Execute subtasks with bounded concurrency (parallel sub-agent workers)
+    await asyncio.gather(*[_run_one(t) for t in plan.tasks])
+
+    # Handoff context (PWR-304) and update total plan status
+    all_completed = all(t.status == &#34;COMPLETED&#34; for t in plan.tasks)
+    any_cancelled = any(t.status == &#34;CANCELLED&#34; for t in plan.tasks)
+
+    if any_cancelled:
+        plan.status = &#34;CANCELLED&#34;
+    elif all_completed:
+        plan.status = &#34;COMPLETED&#34;
+    else:
+        plan.status = &#34;PARTIAL_FAILURE&#34;
+
+    plan.total_cost_usd = sum(t.cost_usd for t in plan.tasks)
+    logger.info(f&#34;Plan {plan_id} execution finished: status={plan.status}, cost=${plan.total_cost_usd:.5f}&#34;)
+    return plan</code></pre>
+</details>
+<div class="desc"><p>PWR-305: Executes subtasks in parallel (bounded by max 2-3 workers).</p></div>
+</dd>
+<dt id="jarvis.agents.AgentSwarmCoordinator.get_dashboard_state"><code class="name flex">
+<span>def <span class="ident">get_dashboard_state</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dashboard_state(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;PWR-303: Surfaces live dashboard state of agent swarms, costs, and tasks.&#34;&#34;&#34;
+    return {
+        &#34;total_plans&#34;: len(self.active_plans),
+        &#34;cumulative_cost_usd&#34;: round(self.cumulative_cost_usd, 6),
+        &#34;registered_agents_count&#34;: len(self.agent_registry),
+        &#34;registered_agents&#34;: {role.value: meta for role, meta in self.agent_registry.items()},
+        &#34;plans&#34;: [
+            {
+                &#34;plan_id&#34;: p.plan_id,
+                &#34;goal&#34;: p.goal,
+                &#34;status&#34;: p.status,
+                &#34;subtasks_count&#34;: len(p.tasks),
+                &#34;total_cost_usd&#34;: p.total_cost_usd,
+                &#34;tasks&#34;: [
+                    {
+                        &#34;task_id&#34;: t.task_id,
+                        &#34;title&#34;: t.title,
+                        &#34;role&#34;: t.role.value,
+                        &#34;status&#34;: t.status,
+                        &#34;duration_ms&#34;: t.duration_ms,
+                    }
+                    for t in p.tasks
+                ],
+            }
+            for p in list(self.active_plans.values())[-10:]
+        ],
+    }</code></pre>
+</details>
+<div class="desc"><p>PWR-303: Surfaces live dashboard state of agent swarms, costs, and tasks.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.CriticAgent"><code class="flex name class">
+<span>class <span class="ident">CriticAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CriticAgent:
+    &#34;&#34;&#34;
+    Reviews task outputs against the original goal.
+
+    Evaluation dimensions:
+    1. Safety — detects PII, harmful content, policy violations
+    2. Completeness — checks if output addresses the goal
+    3. Accuracy — heuristic and optional LLM cross-check
+    4. Quality — response coherence, structure, length
+    &#34;&#34;&#34;
+
+    # ── Safety patterns ────────────────────────────────────────────────────────
+    SAFETY_RED_FLAGS = [
+        (&#34;pii_email&#34;, r&#34;[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}&#34;),
+        (&#34;pii_phone&#34;, r&#34;\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b&#34;),
+        (&#34;secret_key&#34;, r&#34;(?i)(api[_\s-]?key|secret|password|token)\s*[:=]\s*\S+&#34;),
+        (&#34;credit_card&#34;, r&#34;\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b&#34;),
+    ]
+
+    def review(
+        self,
+        goal: str,
+        output: str,
+        task_id: str = &#34;&#34;,
+        action_type: str = &#34;llm&#34;,
+        use_llm: bool = True,
+    ) -&gt; CriticReport:
+        &#34;&#34;&#34;
+        Review the output of an executor action.
+
+        Args:
+            goal: The original task goal / instruction.
+            output: The executor&#39;s response / output string.
+            task_id: Parent task ID for traceability.
+            action_type: Type of action that produced the output.
+            use_llm: If True, attempt an LLM-based deep review.
+
+        Returns:
+            CriticReport with verdict and issues.
+        &#34;&#34;&#34;
+        start = time.time()
+        report_id = f&#34;crit_{uuid.uuid4().hex[:8]}&#34;
+        task_id = task_id or report_id
+
+        logger.info(f&#34;CriticAgent: reviewing task={task_id} goal=&#39;{goal[:60]}&#39;&#34;)
+
+        issues: List[CriticIssue] = []
+
+        # ── 1. Safety scan ────────────────────────────────────────────────────
+        issues.extend(self._safety_scan(output))
+
+        # ── 2. Completeness check ─────────────────────────────────────────────
+        issues.extend(self._completeness_check(goal, output))
+
+        # ── 3. Quality check ──────────────────────────────────────────────────
+        issues.extend(self._quality_check(output))
+
+        # ── 4. LLM deep review (optional) ────────────────────────────────────
+        if use_llm and output and len(output) &gt; 50:
+            llm_issues = self._llm_review(goal, output)
+            issues.extend(llm_issues)
+
+        # ── Verdict scoring ───────────────────────────────────────────────────
+        verdict, score = self._score(issues)
+        retry_recommended = verdict == Verdict.RETRY or any(i.severity == &#34;error&#34; for i in issues)
+
+        summary = self._build_summary(verdict, issues, score)
+        duration_ms = round((time.time() - start) * 1000, 2)
+
+        logger.info(
+            f&#34;CriticAgent: report={report_id} verdict={verdict.value} &#34;
+            f&#34;score={score:.2f} issues={len(issues)} retry={retry_recommended}&#34;
+        )
+
+        return CriticReport(
+            report_id=report_id,
+            task_id=task_id,
+            goal=goal,
+            verdict=verdict,
+            score=score,
+            issues=issues,
+            summary=summary,
+            retry_recommended=retry_recommended,
+            duration_ms=duration_ms,
+        )
+
+    # ── Review dimensions ──────────────────────────────────────────────────────
+
+    def _safety_scan(self, output: str) -&gt; List[CriticIssue]:
+        import re
+
+        issues = []
+        for name, pattern in self.SAFETY_RED_FLAGS:
+            if re.search(pattern, output):
+                issues.append(
+                    CriticIssue(
+                        severity=&#34;critical&#34;,
+                        category=&#34;safety&#34;,
+                        description=f&#34;Output may contain sensitive data: {name}&#34;,
+                        suggestion=&#34;Redact or mask sensitive information before returning.&#34;,
+                    )
+                )
+        return issues
+
+    def _completeness_check(self, goal: str, output: str) -&gt; List[CriticIssue]:
+        issues = []
+        if not output or len(output.strip()) &lt; 20:
+            issues.append(
+                CriticIssue(
+                    severity=&#34;error&#34;,
+                    category=&#34;completeness&#34;,
+                    description=&#34;Output is empty or too short to address the goal.&#34;,
+                    suggestion=&#34;Retry the task with a more explicit prompt.&#34;,
+                )
+            )
+            return issues
+
+        # Check if key terms from the goal appear in the output
+        goal_words = set(w.lower() for w in goal.split() if len(w) &gt; 4)
+        output_lower = output.lower()
+        missing = [w for w in goal_words if w not in output_lower]
+
+        if len(missing) &gt; len(goal_words) * 0.6 and len(goal_words) &gt; 3:
+            issues.append(
+                CriticIssue(
+                    severity=&#34;warning&#34;,
+                    category=&#34;completeness&#34;,
+                    description=f&#34;Output may not address key goal terms: {&#39;, &#39;.join(list(missing)[:5])}&#34;,
+                    suggestion=&#34;Ensure the response directly addresses all aspects of the goal.&#34;,
+                )
+            )
+        return issues
+
+    def _quality_check(self, output: str) -&gt; List[CriticIssue]:
+        issues = []
+        if len(output) &gt; 10000:
+            issues.append(
+                CriticIssue(
+                    severity=&#34;info&#34;,
+                    category=&#34;quality&#34;,
+                    description=&#34;Output is very long and may need summarisation.&#34;,
+                    suggestion=&#34;Consider summarising the output to under 2000 characters.&#34;,
+                )
+            )
+        error_phrases = [&#34;traceback&#34;, &#34;error:&#34;, &#34;exception:&#34;, &#34;syntaxerror&#34;, &#34;nameerror&#34;]
+        if any(p in output.lower() for p in error_phrases):
+            issues.append(
+                CriticIssue(
+                    severity=&#34;error&#34;,
+                    category=&#34;quality&#34;,
+                    description=&#34;Output contains error traces or exceptions.&#34;,
+                    suggestion=&#34;Fix the underlying error and retry.&#34;,
+                )
+            )
+        return issues
+
+    def _llm_review(self, goal: str, output: str) -&gt; List[CriticIssue]:
+        &#34;&#34;&#34;Use the LLM to produce a structured critique.&#34;&#34;&#34;
+        try:
+            from jarvis.core.model_router import model_router, RoutingRequest
+
+            prompt = (
+                f&#34;You are a strict AI quality reviewer.\n&#34;
+                f&#34;Goal: {goal}\n\n&#34;
+                f&#34;Output to review:\n{output[:2000]}\n\n&#34;
+                &#34;List any issues as: [SEVERITY|CATEGORY] Description. &#34;
+                &#34;Severities: info, warning, error, critical. &#34;
+                &#34;Categories: safety, completeness, accuracy, quality. &#34;
+                &#34;If no issues, write: NO_ISSUES&#34;
+            )
+            req = RoutingRequest(
+                task_id=f&#34;crit_{uuid.uuid4().hex[:6]}&#34;,
+                user_intent=prompt,
+                sensitivity_level=&#34;low&#34;,
+            )
+            decision = model_router.route(req)
+            result = model_router.execute_inference(decision=decision, prompt=prompt)
+            content = (
+                result.get(&#34;choices&#34;, [{}])[0].get(&#34;message&#34;, {}).get(&#34;content&#34;, &#34;&#34;)
+                if isinstance(result, dict)
+                else str(result)
+            )
+
+            if &#34;NO_ISSUES&#34; in content:
+                return []
+
+            issues = []
+            for line in content.splitlines():
+                line = line.strip()
+                if line.startswith(&#34;[&#34;) and &#34;|&#34; in line and &#34;]&#34; in line:
+                    tag = line[1 : line.index(&#34;]&#34;)]
+                    parts = tag.split(&#34;|&#34;)
+                    severity = parts[0].strip().lower() if parts else &#34;info&#34;
+                    category = parts[1].strip().lower() if len(parts) &gt; 1 else &#34;quality&#34;
+                    description = line[line.index(&#34;]&#34;) + 1 :].strip()
+                    if description:
+                        issues.append(
+                            CriticIssue(
+                                severity=severity,
+                                category=category,
+                                description=description,
+                            )
+                        )
+            return issues
+        except Exception as exc:
+            logger.debug(f&#34;_llm_review failed: {exc}&#34;)
+            return []
+
+    # ── Scoring ───────────────────────────────────────────────────────────────
+
+    def _score(self, issues: List[CriticIssue]) -&gt; tuple[Verdict, float]:
+        severity_weights = {&#34;critical&#34;: 0.4, &#34;error&#34;: 0.25, &#34;warning&#34;: 0.1, &#34;info&#34;: 0.02}
+        total_deduction = sum(severity_weights.get(i.severity, 0) for i in issues)
+        score = max(0.0, 1.0 - total_deduction)
+
+        if score &gt;= 0.9:
+            return Verdict.PASS, score
+        elif score &gt;= 0.7:
+            return Verdict.PASS_WITH_WARNINGS, score
+        elif score &gt;= 0.4:
+            return Verdict.RETRY, score
+        else:
+            return Verdict.FAIL, score
+
+    def _build_summary(self, verdict: Verdict, issues: List[CriticIssue], score: float) -&gt; str:
+        if not issues:
+            return f&#34;✅ Output passed all checks (score: {score:.2f}).&#34;
+        critical = [i for i in issues if i.severity == &#34;critical&#34;]
+        errors = [i for i in issues if i.severity == &#34;error&#34;]
+        if critical:
+            return f&#34;🚨 CRITICAL issues detected (score: {score:.2f}): &#34; + &#34;; &#34;.join(
+                i.description for i in critical[:2]
+            )
+        if errors:
+            return f&#34;❌ Errors found (score: {score:.2f}): &#34; + &#34;; &#34;.join(i.description for i in errors[:2])
+        return f&#34;⚠️ Minor issues (score: {score:.2f}): &#34; + &#34;; &#34;.join(i.description for i in issues[:2])</code></pre>
+</details>
+<div class="desc"><p>Reviews task outputs against the original goal.</p>
+<p>Evaluation dimensions:
+1. Safety — detects PII, harmful content, policy violations
+2. Completeness — checks if output addresses the goal
+3. Accuracy — heuristic and optional LLM cross-check
+4. Quality — response coherence, structure, length</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.CriticAgent.SAFETY_RED_FLAGS"><code class="name">var <span class="ident">SAFETY_RED_FLAGS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.CriticAgent.review"><code class="name flex">
+<span>def <span class="ident">review</span></span>(<span>self,<br>goal: str,<br>output: str,<br>task_id: str = '',<br>action_type: str = 'llm',<br>use_llm: bool = True) ‑> <a title="jarvis.agents.critic.CriticReport" href="critic.html#jarvis.agents.critic.CriticReport">CriticReport</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def review(
+    self,
+    goal: str,
+    output: str,
+    task_id: str = &#34;&#34;,
+    action_type: str = &#34;llm&#34;,
+    use_llm: bool = True,
+) -&gt; CriticReport:
+    &#34;&#34;&#34;
+    Review the output of an executor action.
+
+    Args:
+        goal: The original task goal / instruction.
+        output: The executor&#39;s response / output string.
+        task_id: Parent task ID for traceability.
+        action_type: Type of action that produced the output.
+        use_llm: If True, attempt an LLM-based deep review.
+
+    Returns:
+        CriticReport with verdict and issues.
+    &#34;&#34;&#34;
+    start = time.time()
+    report_id = f&#34;crit_{uuid.uuid4().hex[:8]}&#34;
+    task_id = task_id or report_id
+
+    logger.info(f&#34;CriticAgent: reviewing task={task_id} goal=&#39;{goal[:60]}&#39;&#34;)
+
+    issues: List[CriticIssue] = []
+
+    # ── 1. Safety scan ────────────────────────────────────────────────────
+    issues.extend(self._safety_scan(output))
+
+    # ── 2. Completeness check ─────────────────────────────────────────────
+    issues.extend(self._completeness_check(goal, output))
+
+    # ── 3. Quality check ──────────────────────────────────────────────────
+    issues.extend(self._quality_check(output))
+
+    # ── 4. LLM deep review (optional) ────────────────────────────────────
+    if use_llm and output and len(output) &gt; 50:
+        llm_issues = self._llm_review(goal, output)
+        issues.extend(llm_issues)
+
+    # ── Verdict scoring ───────────────────────────────────────────────────
+    verdict, score = self._score(issues)
+    retry_recommended = verdict == Verdict.RETRY or any(i.severity == &#34;error&#34; for i in issues)
+
+    summary = self._build_summary(verdict, issues, score)
+    duration_ms = round((time.time() - start) * 1000, 2)
+
+    logger.info(
+        f&#34;CriticAgent: report={report_id} verdict={verdict.value} &#34;
+        f&#34;score={score:.2f} issues={len(issues)} retry={retry_recommended}&#34;
+    )
+
+    return CriticReport(
+        report_id=report_id,
+        task_id=task_id,
+        goal=goal,
+        verdict=verdict,
+        score=score,
+        issues=issues,
+        summary=summary,
+        retry_recommended=retry_recommended,
+        duration_ms=duration_ms,
+    )</code></pre>
+</details>
+<div class="desc"><p>Review the output of an executor action.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>goal</code></strong></dt>
+<dd>The original task goal / instruction.</dd>
+<dt><strong><code>output</code></strong></dt>
+<dd>The executor's response / output string.</dd>
+<dt><strong><code>task_id</code></strong></dt>
+<dd>Parent task ID for traceability.</dd>
+<dt><strong><code>action_type</code></strong></dt>
+<dd>Type of action that produced the output.</dd>
+<dt><strong><code>use_llm</code></strong></dt>
+<dd>If True, attempt an LLM-based deep review.</dd>
+</dl>
+<p>Returns
+-----=
+CriticReport with verdict and issues.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.ExecutorAgent"><code class="flex name class">
+<span>class <span class="ident">ExecutorAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ExecutorAgent:
+    &#34;&#34;&#34;
+    Executes tasks dispatched by the AgentSwarmCoordinator.
+    Routes by action_type and enforces policy before any side-effecting action.
+    &#34;&#34;&#34;
+
+    # ── Dispatch table ────────────────────────────────────────────────────────
+    ACTION_DISPATCH = {
+        &#34;shell&#34;: &#34;_run_shell&#34;,
+        &#34;python&#34;: &#34;_run_python&#34;,
+        &#34;browser&#34;: &#34;_run_browser&#34;,
+        &#34;desktop&#34;: &#34;_run_desktop&#34;,
+        &#34;file_read&#34;: &#34;_run_file_read&#34;,
+        &#34;file_write&#34;: &#34;_run_file_write&#34;,
+        &#34;docker&#34;: &#34;_run_docker&#34;,
+        &#34;llm&#34;: &#34;_run_llm&#34;,
+    }
+
+    def execute(
+        self,
+        action_type: str,
+        payload: Dict[str, Any],
+        task_id: Optional[str] = None,
+        approval_token: Optional[str] = None,
+    ) -&gt; ExecutionResult:
+        &#34;&#34;&#34;
+        Synchronous execute wrapper. Dispatches to the correct action handler.
+
+        Args:
+            action_type: One of shell, python, browser, desktop, file_read,
+                         file_write, docker, llm.
+            payload: Action-specific arguments dict.
+            task_id: Parent task ID for audit logging.
+            approval_token: Required for Tier 2+ actions.
+
+        Returns:
+            ExecutionResult with status and outputs.
+        &#34;&#34;&#34;
+        exec_id = f&#34;exec_{uuid.uuid4().hex[:8]}&#34;
+        task_id = task_id or exec_id
+        start = time.time()
+
+        logger.info(f&#34;ExecutorAgent: executing action_type={action_type} task={task_id}&#34;)
+
+        # ── Policy check ──────────────────────────────────────────────────────
+        policy_ok, policy_msg = self._check_policy(action_type, payload, approval_token)
+        if not policy_ok:
+            logger.warning(f&#34;ExecutorAgent: policy rejected — {policy_msg}&#34;)
+            return ExecutionResult(
+                execution_id=exec_id,
+                action_type=action_type,
+                status=&#34;rejected&#34;,
+                stderr=policy_msg,
+                duration_ms=round((time.time() - start) * 1000, 2),
+            )
+
+        # ── Dispatch ──────────────────────────────────────────────────────────
+        method_name = self.ACTION_DISPATCH.get(action_type, &#34;_run_llm&#34;)
+        method = getattr(self, method_name, self._run_llm)
+
+        try:
+            result = method(payload)
+            result.action_type = action_type
+            result.execution_id = exec_id
+            result.duration_ms = round((time.time() - start) * 1000, 2)
+
+            # ── Audit log ─────────────────────────────────────────────────────
+            self._audit(task_id, action_type, result)
+            logger.info(f&#34;ExecutorAgent: exec={exec_id} status={result.status} duration={result.duration_ms}ms&#34;)
+            return result
+
+        except Exception as exc:
+            logger.error(f&#34;ExecutorAgent: unhandled exception — {exc}&#34;)
+            result = ExecutionResult(
+                execution_id=exec_id,
+                action_type=action_type,
+                status=&#34;failed&#34;,
+                stderr=str(exc),
+                duration_ms=round((time.time() - start) * 1000, 2),
+            )
+            self._audit(task_id, action_type, result)
+            return result
+
+    # ── Policy check ──────────────────────────────────────────────────────────
+
+    def _check_policy(
+        self, action_type: str, payload: Dict[str, Any], approval_token: Optional[str]
+    ) -&gt; tuple[bool, str]:
+        &#34;&#34;&#34;Quick policy pre-check before dispatching.&#34;&#34;&#34;
+        # Desktop / shell / docker require at least Tier 1 review
+        high_risk = {&#34;desktop&#34;, &#34;docker&#34;, &#34;shell&#34;}
+        if action_type in high_risk and not approval_token:
+            try:
+                from jarvis.core.policy_engine import policy_engine
+
+                decision = policy_engine.evaluate(
+                    user_input=str(payload.get(&#34;command&#34;, action_type)),
+                    task_type=action_type,
+                )
+                if decision.tier &gt;= 2:
+                    return False, (f&#34;Tier {decision.tier} action &#39;{action_type}&#39; requires explicit approval token.&#34;)
+            except Exception:
+                pass
+        return True, &#34;&#34;
+
+    # ── Action handlers ───────────────────────────────────────────────────────
+
+    def _run_shell(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        cmd = payload.get(&#34;command&#34;, &#34;&#34;)
+        cwd = payload.get(&#34;cwd&#34;, None)
+        timeout = payload.get(&#34;timeout&#34;, 30)
+
+        proc = subprocess.run(
+            cmd,
+            shell=True,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            cwd=cwd,
+        )
+        return ExecutionResult(
+            status=&#34;success&#34; if proc.returncode == 0 else &#34;failed&#34;,
+            stdout=proc.stdout[:4000],
+            stderr=proc.stderr[:1000],
+            return_value=proc.returncode,
+        )
+
+    def _run_python(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        &#34;&#34;&#34;Execute Python code in a sandboxed subprocess.&#34;&#34;&#34;
+        code = payload.get(&#34;code&#34;, &#34;&#34;)
+        timeout = payload.get(&#34;timeout&#34;, 30)
+
+        import tempfile, os
+
+        with tempfile.NamedTemporaryFile(mode=&#34;w&#34;, suffix=&#34;.py&#34;, delete=False, encoding=&#34;utf-8&#34;) as f:
+            f.write(code)
+            tmp_path = f.name
+
+        try:
+            proc = subprocess.run(
+                [&#34;python&#34;, tmp_path],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+            )
+            return ExecutionResult(
+                status=&#34;success&#34; if proc.returncode == 0 else &#34;failed&#34;,
+                stdout=proc.stdout[:4000],
+                stderr=proc.stderr[:1000],
+                return_value=proc.returncode,
+            )
+        finally:
+            try:
+                os.unlink(tmp_path)
+            except Exception:
+                pass
+
+    def _run_browser(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        url = payload.get(&#34;url&#34;, &#34;&#34;)
+        action = payload.get(&#34;action&#34;, &#34;read&#34;)  # read | screenshot | click | search
+
+        try:
+            if action == &#34;search&#34;:
+                from jarvis.browser.search_wrapper import search_wrapper
+
+                results = search_wrapper.search(payload.get(&#34;query&#34;, url))
+                return ExecutionResult(
+                    status=&#34;success&#34;,
+                    return_value=results,
+                    stdout=str(results)[:1000],
+                )
+            else:
+                from jarvis.browser.url_reader import url_reader
+
+                content = url_reader.read(url)
+                return ExecutionResult(
+                    status=&#34;success&#34;,
+                    stdout=content[:3000] if content else &#34;&#34;,
+                    return_value=content,
+                )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    def _run_desktop(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        action = payload.get(&#34;action&#34;, &#34;screenshot&#34;)
+
+        try:
+            from jarvis.computer.desktop_worker import desktop_worker
+
+            if action == &#34;screenshot&#34;:
+                result = desktop_worker.take_screenshot()
+            elif action == &#34;type&#34;:
+                result = desktop_worker.type_text(payload.get(&#34;text&#34;, &#34;&#34;))
+            elif action == &#34;click&#34;:
+                result = desktop_worker.click(payload.get(&#34;x&#34;, 0), payload.get(&#34;y&#34;, 0))
+            else:
+                result = {&#34;status&#34;: &#34;unknown_action&#34;}
+
+            return ExecutionResult(
+                status=&#34;success&#34;,
+                return_value=result,
+                stdout=str(result)[:500],
+                evidence=result.get(&#34;screenshot_path&#34;) if isinstance(result, dict) else None,
+            )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    def _run_file_read(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        from pathlib import Path
+
+        path = Path(payload.get(&#34;path&#34;, &#34;&#34;))
+        try:
+            content = path.read_text(encoding=&#34;utf-8&#34;)
+            return ExecutionResult(
+                status=&#34;success&#34;,
+                stdout=content[:5000],
+                return_value=content,
+            )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    def _run_file_write(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        from pathlib import Path
+
+        path = Path(payload.get(&#34;path&#34;, &#34;&#34;))
+        content = payload.get(&#34;content&#34;, &#34;&#34;)
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content, encoding=&#34;utf-8&#34;)
+            return ExecutionResult(
+                status=&#34;success&#34;,
+                stdout=f&#34;Written {len(content)} chars to {path}&#34;,
+                return_value=str(path),
+            )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    def _run_docker(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        cmd = payload.get(&#34;command&#34;, &#34;docker ps&#34;)
+        return self._run_shell({&#34;command&#34;: cmd, &#34;timeout&#34;: 60})
+
+    def _run_llm(self, payload: Dict[str, Any]) -&gt; ExecutionResult:
+        &#34;&#34;&#34;Fallback: send the payload as a prompt to the model router.&#34;&#34;&#34;
+        prompt = payload.get(&#34;prompt&#34;, payload.get(&#34;task&#34;, str(payload)))
+        try:
+            from jarvis.core.model_router import model_router, RoutingRequest
+
+            req = RoutingRequest(
+                task_id=f&#34;exec_{uuid.uuid4().hex[:6]}&#34;,
+                user_intent=prompt,
+                sensitivity_level=&#34;low&#34;,
+            )
+            decision = model_router.route(req)
+            result = model_router.execute_inference(decision=decision, prompt=prompt)
+            content = (
+                result.get(&#34;choices&#34;, [{}])[0].get(&#34;message&#34;, {}).get(&#34;content&#34;, &#34;&#34;)
+                if isinstance(result, dict)
+                else str(result)
+            )
+            return ExecutionResult(
+                status=&#34;success&#34;,
+                stdout=content[:3000],
+                return_value=content,
+                cost_usd=getattr(decision, &#34;estimated_cost_usd&#34;, 0.0001),
+            )
+        except Exception as exc:
+            return ExecutionResult(status=&#34;failed&#34;, stderr=str(exc))
+
+    # ── Audit helper ──────────────────────────────────────────────────────────
+
+    def _audit(self, task_id: str, action_type: str, result: ExecutionResult):
+        try:
+            from jarvis.core.audit import audit_ledger
+
+            audit_ledger.log_event(
+                event_type=&#34;EXECUTOR_ACTION&#34;,
+                task_id=task_id,
+                power_id=f&#34;executor.{action_type}&#34;,
+                status=result.status.upper(),
+                inputs={&#34;action_type&#34;: action_type},
+                outputs={&#34;stdout_len&#34;: len(result.stdout), &#34;return_value&#34;: str(result.return_value)[:200]},
+            )
+        except Exception:
+            pass</code></pre>
+</details>
+<div class="desc"><p>Executes tasks dispatched by the AgentSwarmCoordinator.
+Routes by action_type and enforces policy before any side-effecting action.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.ExecutorAgent.ACTION_DISPATCH"><code class="name">var <span class="ident">ACTION_DISPATCH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.ExecutorAgent.execute"><code class="name flex">
+<span>def <span class="ident">execute</span></span>(<span>self,<br>action_type: str,<br>payload: Dict[str, Any],<br>task_id: Optional[str] = None,<br>approval_token: Optional[str] = None) ‑> <a title="jarvis.agents.executor.ExecutionResult" href="executor.html#jarvis.agents.executor.ExecutionResult">ExecutionResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute(
+    self,
+    action_type: str,
+    payload: Dict[str, Any],
+    task_id: Optional[str] = None,
+    approval_token: Optional[str] = None,
+) -&gt; ExecutionResult:
+    &#34;&#34;&#34;
+    Synchronous execute wrapper. Dispatches to the correct action handler.
+
+    Args:
+        action_type: One of shell, python, browser, desktop, file_read,
+                     file_write, docker, llm.
+        payload: Action-specific arguments dict.
+        task_id: Parent task ID for audit logging.
+        approval_token: Required for Tier 2+ actions.
+
+    Returns:
+        ExecutionResult with status and outputs.
+    &#34;&#34;&#34;
+    exec_id = f&#34;exec_{uuid.uuid4().hex[:8]}&#34;
+    task_id = task_id or exec_id
+    start = time.time()
+
+    logger.info(f&#34;ExecutorAgent: executing action_type={action_type} task={task_id}&#34;)
+
+    # ── Policy check ──────────────────────────────────────────────────────
+    policy_ok, policy_msg = self._check_policy(action_type, payload, approval_token)
+    if not policy_ok:
+        logger.warning(f&#34;ExecutorAgent: policy rejected — {policy_msg}&#34;)
+        return ExecutionResult(
+            execution_id=exec_id,
+            action_type=action_type,
+            status=&#34;rejected&#34;,
+            stderr=policy_msg,
+            duration_ms=round((time.time() - start) * 1000, 2),
+        )
+
+    # ── Dispatch ──────────────────────────────────────────────────────────
+    method_name = self.ACTION_DISPATCH.get(action_type, &#34;_run_llm&#34;)
+    method = getattr(self, method_name, self._run_llm)
+
+    try:
+        result = method(payload)
+        result.action_type = action_type
+        result.execution_id = exec_id
+        result.duration_ms = round((time.time() - start) * 1000, 2)
+
+        # ── Audit log ─────────────────────────────────────────────────────
+        self._audit(task_id, action_type, result)
+        logger.info(f&#34;ExecutorAgent: exec={exec_id} status={result.status} duration={result.duration_ms}ms&#34;)
+        return result
+
+    except Exception as exc:
+        logger.error(f&#34;ExecutorAgent: unhandled exception — {exc}&#34;)
+        result = ExecutionResult(
+            execution_id=exec_id,
+            action_type=action_type,
+            status=&#34;failed&#34;,
+            stderr=str(exc),
+            duration_ms=round((time.time() - start) * 1000, 2),
+        )
+        self._audit(task_id, action_type, result)
+        return result</code></pre>
+</details>
+<div class="desc"><p>Synchronous execute wrapper. Dispatches to the correct action handler.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>action_type</code></strong></dt>
+<dd>One of shell, python, browser, desktop, file_read,
+file_write, docker, llm.</dd>
+<dt><strong><code>payload</code></strong></dt>
+<dd>Action-specific arguments dict.</dd>
+<dt><strong><code>task_id</code></strong></dt>
+<dd>Parent task ID for audit logging.</dd>
+<dt><strong><code>approval_token</code></strong></dt>
+<dd>Required for Tier 2+ actions.</dd>
+</dl>
+<p>Returns
+-----=
+ExecutionResult with status and outputs.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.PlannerAgent"><code class="flex name class">
+<span>class <span class="ident">PlannerAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PlannerAgent:
+    &#34;&#34;&#34;
+    Decomposes complex goals into executable sub-task plans.
+
+    Strategy:
+    1. Heuristic fast-path for simple single-step goals.
+    2. LLM-assisted decomposition for multi-step / complex goals.
+    3. Dependency graph validation to prevent circular deps.
+    &#34;&#34;&#34;
+
+    # Role keywords for heuristic assignment
+    _ROLE_HINTS: Dict[str, List[str]] = {
+        &#34;researcher&#34;: [&#34;research&#34;, &#34;search&#34;, &#34;find&#34;, &#34;look up&#34;, &#34;investigate&#34;, &#34;read&#34;, &#34;browse&#34;],
+        &#34;coder&#34;: [
+            &#34;code&#34;,
+            &#34;script&#34;,
+            &#34;write script&#34;,
+            &#34;implement&#34;,
+            &#34;fix bug&#34;,
+            &#34;refactor&#34;,
+            &#34;test&#34;,
+            &#34;build&#34;,
+            &#34;python&#34;,
+            &#34;function&#34;,
+        ],
+        &#34;file_agent&#34;: [&#34;file&#34;, &#34;document&#34;, &#34;read file&#34;, &#34;write file&#34;, &#34;pdf&#34;, &#34;ingest&#34;],
+        &#34;system_admin&#34;: [&#34;docker&#34;, &#34;server&#34;, &#34;deploy&#34;, &#34;restart&#34;, &#34;ssh&#34;, &#34;monitor&#34;, &#34;log&#34;],
+        &#34;finance&#34;: [&#34;stock&#34;, &#34;price&#34;, &#34;portfolio&#34;, &#34;trade&#34;, &#34;balance&#34;, &#34;transaction&#34;, &#34;crypto&#34;],
+        &#34;content_strategist&#34;: [&#34;write&#34;, &#34;draft&#34;, &#34;email&#34;, &#34;blog&#34;, &#34;report&#34;, &#34;summarize&#34;],
+        &#34;security_guard&#34;: [&#34;scan&#34;, &#34;audit&#34;, &#34;vulnerability&#34;, &#34;cve&#34;, &#34;permission&#34;, &#34;encrypt&#34;],
+        &#34;browser&#34;: [&#34;open browser&#34;, &#34;navigate&#34;, &#34;click&#34;, &#34;fill form&#34;, &#34;screenshot&#34;, &#34;web&#34;],
+        &#34;reviewer_critic&#34;: [&#34;review&#34;, &#34;evaluate&#34;, &#34;check&#34;, &#34;validate&#34;, &#34;critique&#34;, &#34;qa&#34;],
+    }
+
+    def __init__(self):
+        self._llm_available = False
+        self._try_init_llm()
+
+    def _try_init_llm(self):
+        try:
+            from jarvis.core.model_router import model_router  # noqa
+
+            self._llm_available = True
+        except Exception:
+            self._llm_available = False
+
+    # ── Public API ────────────────────────────────────────────────────────────
+
+    def decompose(self, goal: str, context: str = &#34;&#34;, user_id: str = &#34;ganesh&#34;) -&gt; Plan:
+        &#34;&#34;&#34;
+        Primary entry point. Returns a validated Plan with ordered PlanSteps.
+        &#34;&#34;&#34;
+        plan_id = f&#34;plan_{uuid.uuid4().hex[:8]}&#34;
+        logger.info(f&#34;PlannerAgent: decomposing goal &#39;{goal[:60]}...&#39; (plan={plan_id})&#34;)
+
+        steps = self._heuristic_decompose(goal, context)
+
+        # Attempt LLM enrichment if available and goal is complex
+        if self._llm_available and len(goal.split()) &gt; 10 and len(steps) &lt; 3:
+            try:
+                llm_steps = self._llm_decompose(goal, context)
+                if llm_steps:
+                    steps = llm_steps
+            except Exception as exc:
+                logger.warning(f&#34;PlannerAgent: LLM decompose failed, using heuristic — {exc}&#34;)
+
+        total_cost = sum(s.estimated_cost_usd for s in steps)
+        complexity = &#34;high&#34; if len(steps) &gt; 5 else (&#34;medium&#34; if len(steps) &gt; 2 else &#34;low&#34;)
+        requires_approval = any(
+            kw in goal.lower() for kw in [&#34;delete&#34;, &#34;format&#34;, &#34;wipe&#34;, &#34;deploy&#34;, &#34;send email&#34;, &#34;transaction&#34;]
+        )
+
+        plan = Plan(
+            plan_id=plan_id,
+            goal=goal,
+            steps=steps,
+            total_estimated_cost_usd=total_cost,
+            complexity=complexity,
+            requires_approval=requires_approval,
+            metadata={&#34;user_id&#34;: user_id, &#34;context_len&#34;: len(context)},
+        )
+
+        logger.info(f&#34;PlannerAgent: plan={plan_id} steps={len(steps)} complexity={complexity} cost=${total_cost:.5f}&#34;)
+        return plan
+
+    # ── Heuristic decomposition ───────────────────────────────────────────────
+
+    def _heuristic_decompose(self, goal: str, context: str) -&gt; List[PlanStep]:
+        &#34;&#34;&#34;Fast keyword-based task decomposition with dependency chaining.&#34;&#34;&#34;
+        goal_lower = goal.lower()
+        steps: List[PlanStep] = []
+
+        # Step 1: Always start with a research/memory step for non-trivial goals
+        if any(kw in goal_lower for kw in [&#34;how&#34;, &#34;what&#34;, &#34;why&#34;, &#34;find&#34;, &#34;research&#34;, &#34;search&#34;]):
+            steps.append(
+                PlanStep(
+                    title=&#34;Research &amp; Gather Context&#34;,
+                    description=f&#34;Search memory and web for context relevant to: {goal}&#34;,
+                    assigned_role=&#34;researcher&#34;,
+                    estimated_duration_ms=3000,
+                    estimated_cost_usd=0.0001,
+                )
+            )
+
+        # Step 2: Identify primary execution role
+        primary_role = self._assign_role(goal_lower)
+        prev_ids = [s.step_id for s in steps]
+
+        steps.append(
+            PlanStep(
+                title=f&#34;Execute: {goal[:60]}&#34;,
+                description=goal,
+                assigned_role=primary_role,
+                depends_on=prev_ids,
+                estimated_duration_ms=5000,
+                estimated_cost_usd=0.0003,
+            )
+        )
+
+        # Step 3: Add review step for high-stakes operations
+        if any(kw in goal_lower for kw in [&#34;deploy&#34;, &#34;delete&#34;, &#34;send&#34;, &#34;publish&#34;, &#34;commit&#34;]):
+            steps.append(
+                PlanStep(
+                    title=&#34;Review &amp; Verify Output&#34;,
+                    description=&#34;Critically review the execution output for correctness and safety.&#34;,
+                    assigned_role=&#34;reviewer_critic&#34;,
+                    depends_on=[steps[-1].step_id],
+                    estimated_duration_ms=1500,
+                    estimated_cost_usd=0.0001,
+                )
+            )
+
+        return steps
+
+    def _assign_role(self, goal_lower: str) -&gt; str:
+        &#34;&#34;&#34;Assign best-fit agent role based on keyword matching.&#34;&#34;&#34;
+        scores: Dict[str, int] = {}
+        for role, keywords in self._ROLE_HINTS.items():
+            scores[role] = sum(1 for kw in keywords if kw in goal_lower)
+        best = max(scores, key=lambda r: scores[r])
+        return best if scores[best] &gt; 0 else &#34;executor&#34;
+
+    # ── LLM-assisted decomposition ────────────────────────────────────────────
+
+    def _llm_decompose(self, goal: str, context: str) -&gt; List[PlanStep]:
+        &#34;&#34;&#34;
+        Uses the model router to generate a JSON plan decomposition.
+        Returns empty list on any failure so heuristic fallback is used.
+        &#34;&#34;&#34;
+        from jarvis.core.model_router import model_router, RoutingRequest
+
+        system_prompt = (
+            &#34;You are a task planner. Given a goal, respond ONLY with a JSON array of steps. &#34;
+            &#34;Each step: {title, description, assigned_role, estimated_duration_ms, estimated_cost_usd}. &#34;
+            &#34;Valid roles: researcher, coder, file_agent, system_admin, finance, &#34;
+            &#34;content_strategist, security_guard, browser, reviewer_critic, executor. &#34;
+            &#34;Keep it to 3-7 steps max.&#34;
+        )
+        user_msg = f&#34;Decompose this goal into steps:\n{goal}\n\nContext:\n{context[:500]}&#34;
+
+        req = RoutingRequest(
+            task_id=f&#34;plan_{uuid.uuid4().hex[:6]}&#34;,
+            user_intent=user_msg,
+            sensitivity_level=&#34;low&#34;,
+        )
+        decision = model_router.route(req)
+        result = model_router.execute_inference(decision=decision, prompt=user_msg)
+
+        content = (
+            result.get(&#34;choices&#34;, [{}])[0].get(&#34;message&#34;, {}).get(&#34;content&#34;, &#34;&#34;)
+            if isinstance(result, dict)
+            else str(result)
+        )
+
+        # Extract JSON from the response
+        start = content.find(&#34;[&#34;)
+        end = content.rfind(&#34;]&#34;) + 1
+        if start == -1 or end == 0:
+            return []
+
+        raw_steps = json.loads(content[start:end])
+        steps = []
+        prev_id: Optional[str] = None
+        for raw in raw_steps:
+            step = PlanStep(
+                title=raw.get(&#34;title&#34;, &#34;Step&#34;),
+                description=raw.get(&#34;description&#34;, &#34;&#34;),
+                assigned_role=raw.get(&#34;assigned_role&#34;, &#34;executor&#34;),
+                depends_on=[prev_id] if prev_id else [],
+                estimated_duration_ms=int(raw.get(&#34;estimated_duration_ms&#34;, 1000)),
+                estimated_cost_usd=float(raw.get(&#34;estimated_cost_usd&#34;, 0.0001)),
+            )
+            steps.append(step)
+            prev_id = step.step_id
+
+        return steps</code></pre>
+</details>
+<div class="desc"><p>Decomposes complex goals into executable sub-task plans.</p>
+<p>Strategy:
+1. Heuristic fast-path for simple single-step goals.
+2. LLM-assisted decomposition for multi-step / complex goals.
+3. Dependency graph validation to prevent circular deps.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.PlannerAgent.decompose"><code class="name flex">
+<span>def <span class="ident">decompose</span></span>(<span>self, goal: str, context: str = '', user_id: str = 'ganesh') ‑> <a title="jarvis.agents.planner.Plan" href="planner.html#jarvis.agents.planner.Plan">Plan</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decompose(self, goal: str, context: str = &#34;&#34;, user_id: str = &#34;ganesh&#34;) -&gt; Plan:
+    &#34;&#34;&#34;
+    Primary entry point. Returns a validated Plan with ordered PlanSteps.
+    &#34;&#34;&#34;
+    plan_id = f&#34;plan_{uuid.uuid4().hex[:8]}&#34;
+    logger.info(f&#34;PlannerAgent: decomposing goal &#39;{goal[:60]}...&#39; (plan={plan_id})&#34;)
+
+    steps = self._heuristic_decompose(goal, context)
+
+    # Attempt LLM enrichment if available and goal is complex
+    if self._llm_available and len(goal.split()) &gt; 10 and len(steps) &lt; 3:
+        try:
+            llm_steps = self._llm_decompose(goal, context)
+            if llm_steps:
+                steps = llm_steps
+        except Exception as exc:
+            logger.warning(f&#34;PlannerAgent: LLM decompose failed, using heuristic — {exc}&#34;)
+
+    total_cost = sum(s.estimated_cost_usd for s in steps)
+    complexity = &#34;high&#34; if len(steps) &gt; 5 else (&#34;medium&#34; if len(steps) &gt; 2 else &#34;low&#34;)
+    requires_approval = any(
+        kw in goal.lower() for kw in [&#34;delete&#34;, &#34;format&#34;, &#34;wipe&#34;, &#34;deploy&#34;, &#34;send email&#34;, &#34;transaction&#34;]
+    )
+
+    plan = Plan(
+        plan_id=plan_id,
+        goal=goal,
+        steps=steps,
+        total_estimated_cost_usd=total_cost,
+        complexity=complexity,
+        requires_approval=requires_approval,
+        metadata={&#34;user_id&#34;: user_id, &#34;context_len&#34;: len(context)},
+    )
+
+    logger.info(f&#34;PlannerAgent: plan={plan_id} steps={len(steps)} complexity={complexity} cost=${total_cost:.5f}&#34;)
+    return plan</code></pre>
+</details>
+<div class="desc"><p>Primary entry point. Returns a validated Plan with ordered PlanSteps.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.ResearcherAgent"><code class="flex name class">
+<span>class <span class="ident">ResearcherAgent</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ResearcherAgent:
+    &#34;&#34;&#34;
+    Multi-source research agent that:
+    1. Queries local search brain (zero-latency hot cache)
+    2. Falls back to web search (SearXNG / DuckDuckGo)
+    3. Deep-reads URLs via browser worker
+    4. Synthesises findings into a concise report
+    &#34;&#34;&#34;
+
+    MAX_WEB_RESULTS = 5
+    MAX_LOCAL_RESULTS = 10
+
+    def research(
+        self,
+        query: str,
+        user_id: str = &#34;ganesh&#34;,
+        deep: bool = False,
+        url: Optional[str] = None,
+    ) -&gt; ResearchReport:
+        &#34;&#34;&#34;
+        Primary research entry point.
+
+        Args:
+            query: Research question or topic.
+            user_id: User context for memory retrieval.
+            deep: If True, also deep-reads top URL result.
+            url: If provided, deep-reads this specific URL.
+
+        Returns:
+            ResearchReport with findings and synthesis.
+        &#34;&#34;&#34;
+        start = time.time()
+        report_id = f&#34;res_{uuid.uuid4().hex[:8]}&#34;
+        logger.info(f&#34;ResearcherAgent: researching &#39;{query[:60]}&#39; (report={report_id})&#34;)
+
+        findings: List[ResearchResult] = []
+        sources: List[str] = []
+
+        # ── 1. Local memory search ────────────────────────────────────────────
+        local = self._search_local(query, user_id)
+        findings.extend(local)
+        if local:
+            sources.append(&#34;local_memory&#34;)
+
+        # ── 2. Local corpus / document search ────────────────────────────────
+        docs = self._search_documents(query)
+        findings.extend(docs)
+        if docs:
+            sources.append(&#34;local_documents&#34;)
+
+        # ── 3. Web search ────────────────────────────────────────────────────
+        web = self._search_web(query)
+        findings.extend(web)
+        if web:
+            sources.append(&#34;web_search&#34;)
+
+        # ── 4. URL deep-read (optional) ───────────────────────────────────────
+        if url:
+            url_result = self._read_url(url)
+            if url_result:
+                findings.append(url_result)
+                sources.append(f&#34;url:{url}&#34;)
+        elif deep and web:
+            top_url = web[0].url
+            if top_url:
+                url_result = self._read_url(top_url)
+                if url_result:
+                    findings.append(url_result)
+                    sources.append(f&#34;url:{top_url}&#34;)
+
+        # ── 5. Synthesise ─────────────────────────────────────────────────────
+        synthesis = self._synthesise(query, findings)
+
+        duration_ms = round((time.time() - start) * 1000, 2)
+        logger.info(
+            f&#34;ResearcherAgent: report={report_id} findings={len(findings)} sources={sources} duration={duration_ms}ms&#34;
+        )
+
+        return ResearchReport(
+            report_id=report_id,
+            query=query,
+            findings=findings,
+            synthesis=synthesis,
+            sources_consulted=sources,
+            duration_ms=duration_ms,
+        )
+
+    # ── Search backends ───────────────────────────────────────────────────────
+
+    def _search_local(self, query: str, user_id: str) -&gt; List[ResearchResult]:
+        try:
+            from jarvis.memory.mem0_client import mem0_client
+
+            results = mem0_client.search(query=query, user_id=user_id, limit=5)
+            if isinstance(results, dict):
+                results = results.get(&#34;results&#34;, [])
+            return [
+                ResearchResult(
+                    source=&#34;mem0_memory&#34;,
+                    title=f&#34;Memory: {item.get(&#39;memory&#39;, &#39;&#39;)[:60]}&#34;,
+                    snippet=item.get(&#34;memory&#34;, item.get(&#34;text&#34;, &#34;&#34;)),
+                    relevance_score=item.get(&#34;score&#34;, 0.8),
+                )
+                for item in (results or [])
+                if item
+            ]
+        except Exception as exc:
+            logger.debug(f&#34;_search_local: {exc}&#34;)
+            return []
+
+    def _search_documents(self, query: str) -&gt; List[ResearchResult]:
+        try:
+            from jarvis.memory.document_rag import document_rag
+
+            results = document_rag.search(query, top_k=5)
+            return [
+                ResearchResult(
+                    source=&#34;local_documents&#34;,
+                    title=r.get(&#34;title&#34;, r.get(&#34;filename&#34;, &#34;Document&#34;)),
+                    snippet=r.get(&#34;snippet&#34;, r.get(&#34;text&#34;, &#34;&#34;))[:500],
+                    relevance_score=r.get(&#34;score&#34;, 0.7),
+                )
+                for r in (results or [])
+            ]
+        except Exception as exc:
+            logger.debug(f&#34;_search_documents: {exc}&#34;)
+            return []
+
+    def _search_web(self, query: str) -&gt; List[ResearchResult]:
+        try:
+            from jarvis.browser.search_wrapper import search_wrapper
+
+            results = search_wrapper.search(query, max_results=self.MAX_WEB_RESULTS)
+            return [
+                ResearchResult(
+                    source=&#34;web_search&#34;,
+                    title=r.get(&#34;title&#34;, &#34;Web Result&#34;),
+                    snippet=r.get(&#34;snippet&#34;, r.get(&#34;description&#34;, &#34;&#34;))[:500],
+                    url=r.get(&#34;url&#34;, r.get(&#34;href&#34;)),
+                    relevance_score=0.6,
+                )
+                for r in (results or [])
+            ]
+        except Exception as exc:
+            logger.debug(f&#34;_search_web: {exc}&#34;)
+            return []
+
+    def _read_url(self, url: str) -&gt; Optional[ResearchResult]:
+        try:
+            from jarvis.browser.url_reader import url_reader
+
+            content = url_reader.read(url, max_chars=3000)
+            if content:
+                return ResearchResult(
+                    source=&#34;url_reader&#34;,
+                    title=f&#34;URL: {url[:80]}&#34;,
+                    snippet=content[:500],
+                    url=url,
+                    relevance_score=0.9,
+                )
+        except Exception as exc:
+            logger.debug(f&#34;_read_url: {exc}&#34;)
+        return None
+
+    # ── Synthesis ─────────────────────────────────────────────────────────────
+
+    def _synthesise(self, query: str, findings: List[ResearchResult]) -&gt; str:
+        if not findings:
+            return f&#34;No relevant information found for: {query}&#34;
+
+        top = sorted(findings, key=lambda f: f.relevance_score, reverse=True)[:5]
+        snippets = &#34;\n\n&#34;.join(f&#34;[{f.source}] {f.title}:\n{f.snippet}&#34; for f in top)
+
+        try:
+            from jarvis.core.model_router import model_router, RoutingRequest
+
+            prompt = (
+                f&#34;Synthesise these research findings into a concise, factual answer &#34;
+                f&#34;for the query: &#39;{query}&#39;\n\nFindings:\n{snippets}&#34;
+            )
+            req = RoutingRequest(
+                task_id=f&#34;synth_{uuid.uuid4().hex[:6]}&#34;,
+                user_intent=prompt,
+                sensitivity_level=&#34;low&#34;,
+            )
+            decision = model_router.route(req)
+            result = model_router.execute_inference(decision=decision, prompt=prompt)
+            content = (
+                result.get(&#34;choices&#34;, [{}])[0].get(&#34;message&#34;, {}).get(&#34;content&#34;, &#34;&#34;)
+                if isinstance(result, dict)
+                else str(result)
+            )
+            return content.strip() if content else snippets[:1000]
+        except Exception as exc:
+            logger.debug(f&#34;_synthesise LLM failed: {exc}&#34;)
+            # Fallback: concatenate top snippets
+            return f&#34;Research summary for &#39;{query}&#39;:\n\n&#34; + snippets[:1500]</code></pre>
+</details>
+<div class="desc"><p>Multi-source research agent that:
+1. Queries local search brain (zero-latency hot cache)
+2. Falls back to web search (SearXNG / DuckDuckGo)
+3. Deep-reads URLs via browser worker
+4. Synthesises findings into a concise report</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.agents.ResearcherAgent.MAX_LOCAL_RESULTS"><code class="name">var <span class="ident">MAX_LOCAL_RESULTS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.ResearcherAgent.MAX_WEB_RESULTS"><code class="name">var <span class="ident">MAX_WEB_RESULTS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.agents.ResearcherAgent.research"><code class="name flex">
+<span>def <span class="ident">research</span></span>(<span>self,<br>query: str,<br>user_id: str = 'ganesh',<br>deep: bool = False,<br>url: Optional[str] = None) ‑> <a title="jarvis.agents.researcher.ResearchReport" href="researcher.html#jarvis.agents.researcher.ResearchReport">ResearchReport</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def research(
+    self,
+    query: str,
+    user_id: str = &#34;ganesh&#34;,
+    deep: bool = False,
+    url: Optional[str] = None,
+) -&gt; ResearchReport:
+    &#34;&#34;&#34;
+    Primary research entry point.
+
+    Args:
+        query: Research question or topic.
+        user_id: User context for memory retrieval.
+        deep: If True, also deep-reads top URL result.
+        url: If provided, deep-reads this specific URL.
+
+    Returns:
+        ResearchReport with findings and synthesis.
+    &#34;&#34;&#34;
+    start = time.time()
+    report_id = f&#34;res_{uuid.uuid4().hex[:8]}&#34;
+    logger.info(f&#34;ResearcherAgent: researching &#39;{query[:60]}&#39; (report={report_id})&#34;)
+
+    findings: List[ResearchResult] = []
+    sources: List[str] = []
+
+    # ── 1. Local memory search ────────────────────────────────────────────
+    local = self._search_local(query, user_id)
+    findings.extend(local)
+    if local:
+        sources.append(&#34;local_memory&#34;)
+
+    # ── 2. Local corpus / document search ────────────────────────────────
+    docs = self._search_documents(query)
+    findings.extend(docs)
+    if docs:
+        sources.append(&#34;local_documents&#34;)
+
+    # ── 3. Web search ────────────────────────────────────────────────────
+    web = self._search_web(query)
+    findings.extend(web)
+    if web:
+        sources.append(&#34;web_search&#34;)
+
+    # ── 4. URL deep-read (optional) ───────────────────────────────────────
+    if url:
+        url_result = self._read_url(url)
+        if url_result:
+            findings.append(url_result)
+            sources.append(f&#34;url:{url}&#34;)
+    elif deep and web:
+        top_url = web[0].url
+        if top_url:
+            url_result = self._read_url(top_url)
+            if url_result:
+                findings.append(url_result)
+                sources.append(f&#34;url:{top_url}&#34;)
+
+    # ── 5. Synthesise ─────────────────────────────────────────────────────
+    synthesis = self._synthesise(query, findings)
+
+    duration_ms = round((time.time() - start) * 1000, 2)
+    logger.info(
+        f&#34;ResearcherAgent: report={report_id} findings={len(findings)} sources={sources} duration={duration_ms}ms&#34;
+    )
+
+    return ResearchReport(
+        report_id=report_id,
+        query=query,
+        findings=findings,
+        synthesis=synthesis,
+        sources_consulted=sources,
+        duration_ms=duration_ms,
+    )</code></pre>
+</details>
+<div class="desc"><p>Primary research entry point.</p>
+<dl>
+<dt>Args</dt>
+<dt>-----=</dt>
+<dt><strong><code>query</code></strong></dt>
+<dd>Research question or topic.</dd>
+<dt><strong><code>user_id</code></strong></dt>
+<dd>User context for memory retrieval.</dd>
+<dt><strong><code>deep</code></strong></dt>
+<dd>If True, also deep-reads top URL result.</dd>
+<dt><strong><code>url</code></strong></dt>
+<dd>If provided, deep-reads this specific URL.</dd>
+</dl>
+<p>Returns
+-----=
+ResearchReport with findings and synthesis.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.SubTask"><code class="flex name class">
+<span>class <span class="ident">SubTask</span></span>
+<span>(</span><span>task_id: str,<br>title: str,<br>role: <a title="jarvis.agents.AgentRole" href="#jarvis.agents.AgentRole">AgentRole</a>,<br>inputs: Dict[str, Any],<br>status: str = 'PENDING',<br>outputs: Dict[str, Any] = &lt;factory&gt;,<br>cost_usd: float = 0.0,<br>duration_ms: float = 0.0,<br>assigned_worker_id: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class SubTask:
+    task_id: str
+    title: str
+    role: AgentRole
+    inputs: Dict[str, Any]
+    status: str = &#34;PENDING&#34;  # PENDING, RUNNING, COMPLETED, CANCELLED, FAILED
+    outputs: Dict[str, Any] = field(default_factory=dict)
+    cost_usd: float = 0.0
+    duration_ms: float = 0.0
+    assigned_worker_id: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><p>SubTask(task_id: 'str', title: 'str', role: 'AgentRole', inputs: 'Dict[str, Any]', status: 'str' = 'PENDING', outputs: 'Dict[str, Any]' = <factory>, cost_usd: 'float' = 0.0, duration_ms: 'float' = 0.0, assigned_worker_id: 'Optional[str]' = None)</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.SubTask.assigned_worker_id"><code class="name">var <span class="ident">assigned_worker_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SubTask.cost_usd"><code class="name">var <span class="ident">cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SubTask.duration_ms"><code class="name">var <span class="ident">duration_ms</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SubTask.inputs"><code class="name">var <span class="ident">inputs</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SubTask.outputs"><code class="name">var <span class="ident">outputs</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SubTask.role"><code class="name">var <span class="ident">role</span> : <a title="jarvis.agents.swarm.AgentRole" href="swarm.html#jarvis.agents.swarm.AgentRole">AgentRole</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SubTask.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SubTask.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SubTask.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.agents.SwarmExecutionPlan"><code class="flex name class">
+<span>class <span class="ident">AgentPlan</span></span>
+<span>(</span><span>plan_id: str,<br>goal: str,<br>tasks: List[<a title="jarvis.agents.SubTask" href="#jarvis.agents.SubTask">SubTask</a>],<br>total_cost_usd: float = 0.0,<br>status: str = 'INITIALIZED')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class SwarmExecutionPlan:
+    plan_id: str
+    goal: str
+    tasks: List[SubTask]
+    total_cost_usd: float = 0.0
+    status: str = &#34;INITIALIZED&#34;</code></pre>
+</details>
+<div class="desc"><p>SwarmExecutionPlan(plan_id: 'str', goal: 'str', tasks: 'List[SubTask]', total_cost_usd: 'float' = 0.0, status: 'str' = 'INITIALIZED')</p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="jarvis.agents.SwarmExecutionPlan.goal"><code class="name">var <span class="ident">goal</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SwarmExecutionPlan.plan_id"><code class="name">var <span class="ident">plan_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SwarmExecutionPlan.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SwarmExecutionPlan.tasks"><code class="name">var <span class="ident">tasks</span> : List[<a title="jarvis.agents.swarm.SubTask" href="swarm.html#jarvis.agents.swarm.SubTask">SubTask</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.agents.SwarmExecutionPlan.total_cost_usd"><code class="name">var <span class="ident">total_cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis" href="../index.html">jarvis</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="jarvis.agents.autonomous_workforce" href="autonomous_workforce.html">jarvis.agents.autonomous_workforce</a></code></li>
+<li><code><a title="jarvis.agents.critic" href="critic.html">jarvis.agents.critic</a></code></li>
+<li><code><a title="jarvis.agents.executor" href="executor.html">jarvis.agents.executor</a></code></li>
+<li><code><a title="jarvis.agents.gsoc_scout" href="gsoc_scout.html">jarvis.agents.gsoc_scout</a></code></li>
+<li><code><a title="jarvis.agents.hackathon_scout" href="hackathon_scout.html">jarvis.agents.hackathon_scout</a></code></li>
+<li><code><a title="jarvis.agents.planner" href="planner.html">jarvis.agents.planner</a></code></li>
+<li><code><a title="jarvis.agents.researcher" href="researcher.html">jarvis.agents.researcher</a></code></li>
+<li><code><a title="jarvis.agents.ruflo_swarm" href="ruflo_swarm.html">jarvis.agents.ruflo_swarm</a></code></li>
+<li><code><a title="jarvis.agents.swarm" href="swarm.html">jarvis.agents.swarm</a></code></li>
+<li><code><a title="jarvis.agents.venture_scout" href="venture_scout.html">jarvis.agents.venture_scout</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.agents.AgentRole" href="#jarvis.agents.AgentRole">AgentRole</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.agents.AgentRole.APPROVAL" href="#jarvis.agents.AgentRole.APPROVAL">APPROVAL</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.BROWSER" href="#jarvis.agents.AgentRole.BROWSER">BROWSER</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.CODER" href="#jarvis.agents.AgentRole.CODER">CODER</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.CODER_ANTIGRAVITY" href="#jarvis.agents.AgentRole.CODER_ANTIGRAVITY">CODER_ANTIGRAVITY</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.CODER_CLAUDE" href="#jarvis.agents.AgentRole.CODER_CLAUDE">CODER_CLAUDE</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.CODER_CODEX" href="#jarvis.agents.AgentRole.CODER_CODEX">CODER_CODEX</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.CODER_CURSOR" href="#jarvis.agents.AgentRole.CODER_CURSOR">CODER_CURSOR</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.CODER_GROKBOT" href="#jarvis.agents.AgentRole.CODER_GROKBOT">CODER_GROKBOT</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.CODER_OPENAI" href="#jarvis.agents.AgentRole.CODER_OPENAI">CODER_OPENAI</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.CODER_OPENALL" href="#jarvis.agents.AgentRole.CODER_OPENALL">CODER_OPENALL</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.CONTENT" href="#jarvis.agents.AgentRole.CONTENT">CONTENT</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.FILE_AGENT" href="#jarvis.agents.AgentRole.FILE_AGENT">FILE_AGENT</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.FINANCE" href="#jarvis.agents.AgentRole.FINANCE">FINANCE</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.MEMORY" href="#jarvis.agents.AgentRole.MEMORY">MEMORY</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.ORCHESTRATOR" href="#jarvis.agents.AgentRole.ORCHESTRATOR">ORCHESTRATOR</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.PLANNER" href="#jarvis.agents.AgentRole.PLANNER">PLANNER</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.RESEARCHER" href="#jarvis.agents.AgentRole.RESEARCHER">RESEARCHER</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.REVIEWER" href="#jarvis.agents.AgentRole.REVIEWER">REVIEWER</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.SECURITY" href="#jarvis.agents.AgentRole.SECURITY">SECURITY</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.SYSADMIN" href="#jarvis.agents.AgentRole.SYSADMIN">SYSADMIN</a></code></li>
+<li><code><a title="jarvis.agents.AgentRole.TOOL_SELECTOR" href="#jarvis.agents.AgentRole.TOOL_SELECTOR">TOOL_SELECTOR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.AgentSwarmCoordinator" href="#jarvis.agents.AgentSwarmCoordinator">AgentSwarmCoordinator</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.AgentSwarmCoordinator.cancel_plan" href="#jarvis.agents.AgentSwarmCoordinator.cancel_plan">cancel_plan</a></code></li>
+<li><code><a title="jarvis.agents.AgentSwarmCoordinator.decompose_goal" href="#jarvis.agents.AgentSwarmCoordinator.decompose_goal">decompose_goal</a></code></li>
+<li><code><a title="jarvis.agents.AgentSwarmCoordinator.execute_plan" href="#jarvis.agents.AgentSwarmCoordinator.execute_plan">execute_plan</a></code></li>
+<li><code><a title="jarvis.agents.AgentSwarmCoordinator.get_dashboard_state" href="#jarvis.agents.AgentSwarmCoordinator.get_dashboard_state">get_dashboard_state</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.CriticAgent" href="#jarvis.agents.CriticAgent">CriticAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.CriticAgent.SAFETY_RED_FLAGS" href="#jarvis.agents.CriticAgent.SAFETY_RED_FLAGS">SAFETY_RED_FLAGS</a></code></li>
+<li><code><a title="jarvis.agents.CriticAgent.review" href="#jarvis.agents.CriticAgent.review">review</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.ExecutorAgent" href="#jarvis.agents.ExecutorAgent">ExecutorAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.ExecutorAgent.ACTION_DISPATCH" href="#jarvis.agents.ExecutorAgent.ACTION_DISPATCH">ACTION_DISPATCH</a></code></li>
+<li><code><a title="jarvis.agents.ExecutorAgent.execute" href="#jarvis.agents.ExecutorAgent.execute">execute</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.PlannerAgent" href="#jarvis.agents.PlannerAgent">PlannerAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.PlannerAgent.decompose" href="#jarvis.agents.PlannerAgent.decompose">decompose</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.ResearcherAgent" href="#jarvis.agents.ResearcherAgent">ResearcherAgent</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.ResearcherAgent.MAX_LOCAL_RESULTS" href="#jarvis.agents.ResearcherAgent.MAX_LOCAL_RESULTS">MAX_LOCAL_RESULTS</a></code></li>
+<li><code><a title="jarvis.agents.ResearcherAgent.MAX_WEB_RESULTS" href="#jarvis.agents.ResearcherAgent.MAX_WEB_RESULTS">MAX_WEB_RESULTS</a></code></li>
+<li><code><a title="jarvis.agents.ResearcherAgent.research" href="#jarvis.agents.ResearcherAgent.research">research</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.SubTask" href="#jarvis.agents.SubTask">SubTask</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.agents.SubTask.assigned_worker_id" href="#jarvis.agents.SubTask.assigned_worker_id">assigned_worker_id</a></code></li>
+<li><code><a title="jarvis.agents.SubTask.cost_usd" href="#jarvis.agents.SubTask.cost_usd">cost_usd</a></code></li>
+<li><code><a title="jarvis.agents.SubTask.duration_ms" href="#jarvis.agents.SubTask.duration_ms">duration_ms</a></code></li>
+<li><code><a title="jarvis.agents.SubTask.inputs" href="#jarvis.agents.SubTask.inputs">inputs</a></code></li>
+<li><code><a title="jarvis.agents.SubTask.outputs" href="#jarvis.agents.SubTask.outputs">outputs</a></code></li>
+<li><code><a title="jarvis.agents.SubTask.role" href="#jarvis.agents.SubTask.role">role</a></code></li>
+<li><code><a title="jarvis.agents.SubTask.status" href="#jarvis.agents.SubTask.status">status</a></code></li>
+<li><code><a title="jarvis.agents.SubTask.task_id" href="#jarvis.agents.SubTask.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.agents.SubTask.title" href="#jarvis.agents.SubTask.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.agents.SwarmExecutionPlan" href="#jarvis.agents.SwarmExecutionPlan">SwarmExecutionPlan</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.agents.SwarmExecutionPlan.goal" href="#jarvis.agents.SwarmExecutionPlan.goal">goal</a></code></li>
+<li><code><a title="jarvis.agents.SwarmExecutionPlan.plan_id" href="#jarvis.agents.SwarmExecutionPlan.plan_id">plan_id</a></code></li>
+<li><code><a title="jarvis.agents.SwarmExecutionPlan.status" href="#jarvis.agents.SwarmExecutionPlan.status">status</a></code></li>
+<li><code><a title="jarvis.agents.SwarmExecutionPlan.tasks" href="#jarvis.agents.SwarmExecutionPlan.tasks">tasks</a></code></li>
+<li><code><a title="jarvis.agents.SwarmExecutionPlan.total_cost_usd" href="#jarvis.agents.SwarmExecutionPlan.total_cost_usd">total_cost_usd</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.brain.checkpointer API documentation</title>
+<meta name="description" content="JARVIS SQLite State Checkpointer
+Implements SqliteCheckpointSaver subclassing LangGraph&#39;s BaseCheckpointSaver.
+Persists graph state snapshots and …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.brain.checkpointer</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS SQLite State Checkpointer
+Implements SqliteCheckpointSaver subclassing LangGraph's BaseCheckpointSaver.
+Persists graph state snapshots and pending writes to the SQLite database
+with WAL mode, 5000ms busy timeout, and thread-safe locking.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.brain.checkpointer.SqliteCheckpointSaver"><code class="flex name class">
+<span>class <span class="ident">SqliteCheckpointSaver</span></span>
+<span>(</span><span>conn: Optional[sqlite3.Connection] = None,<br>db_path: Optional[Union[str, Path]] = None,<br>*,<br>serde: Optional[SerializerProtocol] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SqliteCheckpointSaver(BaseCheckpointSaver[str]):
+    &#34;&#34;&#34;
+    Durable SQLite checkpoint saver for LangGraph StateGraph execution.
+    Complies with Alembic revision 0003_graph_voice database schema.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        conn: Optional[sqlite3.Connection] = None,
+        db_path: Optional[Union[str, Path]] = None,
+        *,
+        serde: Optional[SerializerProtocol] = None,
+    ) -&gt; None:
+        super().__init__(serde=serde)
+        self._lock = threading.RLock()
+        self._owns_conn = conn is None
+
+        if conn is not None:
+            self._conn = conn
+        else:
+            if db_path is None:
+                from jarvis.config import settings
+
+                db_path = settings.db_path
+
+            db_path_obj = Path(db_path) if isinstance(db_path, str) else db_path
+            if str(db_path_obj) != &#34;:memory:&#34;:
+                db_path_obj.parent.mkdir(parents=True, exist_ok=True)
+
+            self._conn = sqlite3.connect(
+                str(db_path_obj),
+                check_same_thread=False,
+                timeout=30.0,
+            )
+
+        # Enable WAL mode and 5000ms busy timeout for safe concurrent writes
+        try:
+            with self._lock:
+                self._conn.execute(&#34;PRAGMA journal_mode=WAL;&#34;)
+                self._conn.execute(&#34;PRAGMA busy_timeout=5000;&#34;)
+        except Exception as exc:
+            logger.warning(f&#34;Could not set WAL pragma on sqlite connection: {exc}&#34;)
+
+        self.setup()
+
+    def setup(self) -&gt; None:
+        &#34;&#34;&#34;Initializes checkpoint tables if missing.&#34;&#34;&#34;
+        with self._lock:
+            cursor = self._conn.cursor()
+            cursor.execute(
+                &#34;&#34;&#34;
+                CREATE TABLE IF NOT EXISTS graph_checkpoints (
+                    thread_id VARCHAR(128) NOT NULL,
+                    checkpoint_ns VARCHAR(128) NOT NULL DEFAULT &#39;&#39;,
+                    checkpoint_id VARCHAR(64) NOT NULL,
+                    parent_checkpoint_id VARCHAR(64),
+                    type VARCHAR(32),
+                    checkpoint_blob BLOB NOT NULL,
+                    metadata_blob BLOB,
+                    created_at FLOAT NOT NULL,
+                    PRIMARY KEY (thread_id, checkpoint_ns, checkpoint_id)
+                );
+                &#34;&#34;&#34;
+            )
+            cursor.execute(
+                &#34;&#34;&#34;
+                CREATE INDEX IF NOT EXISTS ix_graph_checkpoints_thread
+                ON graph_checkpoints (thread_id);
+                &#34;&#34;&#34;
+            )
+            cursor.execute(
+                &#34;&#34;&#34;
+                CREATE TABLE IF NOT EXISTS graph_checkpoint_writes (
+                    thread_id VARCHAR(128) NOT NULL,
+                    checkpoint_ns VARCHAR(128) NOT NULL DEFAULT &#39;&#39;,
+                    checkpoint_id VARCHAR(64) NOT NULL,
+                    task_id VARCHAR(64) NOT NULL,
+                    idx INTEGER NOT NULL,
+                    channel VARCHAR(128) NOT NULL,
+                    type VARCHAR(32),
+                    value_blob BLOB NOT NULL,
+                    task_path VARCHAR(256) DEFAULT &#39;&#39;,
+                    PRIMARY KEY (thread_id, checkpoint_ns, checkpoint_id, task_id, idx)
+                );
+                &#34;&#34;&#34;
+            )
+            self._conn.commit()
+
+    @classmethod
+    def from_conn_string(cls, conn_string: str) -&gt; SqliteCheckpointSaver:
+        &#34;&#34;&#34;Factory method to construct saver from connection string or file path.&#34;&#34;&#34;
+        # Clean prefix if sqlite:/// or sqlite://
+        clean_path = conn_string
+        for prefix in (&#34;sqlite:///&#34;, &#34;sqlite://&#34;):
+            if clean_path.startswith(prefix):
+                clean_path = clean_path[len(prefix) :]
+                break
+        return cls(db_path=clean_path)
+
+    def get_tuple(self, config: RunnableConfig) -&gt; Optional[CheckpointTuple]:
+        &#34;&#34;&#34;Retrieves a checkpoint tuple for a given config.&#34;&#34;&#34;
+        thread_id = config[&#34;configurable&#34;][&#34;thread_id&#34;]
+        checkpoint_ns = config[&#34;configurable&#34;].get(&#34;checkpoint_ns&#34;, &#34;&#34;)
+        checkpoint_id = get_checkpoint_id(config)
+
+        with self._lock:
+            cursor = self._conn.cursor()
+            if checkpoint_id:
+                cursor.execute(
+                    &#34;&#34;&#34;
+                    SELECT checkpoint_id, parent_checkpoint_id, type, checkpoint_blob, metadata_blob, created_at
+                    FROM graph_checkpoints
+                    WHERE thread_id = ? AND checkpoint_ns = ? AND checkpoint_id = ?
+                    &#34;&#34;&#34;,
+                    (thread_id, checkpoint_ns, checkpoint_id),
+                )
+            else:
+                cursor.execute(
+                    &#34;&#34;&#34;
+                    SELECT checkpoint_id, parent_checkpoint_id, type, checkpoint_blob, metadata_blob, created_at
+                    FROM graph_checkpoints
+                    WHERE thread_id = ? AND checkpoint_ns = ?
+                    ORDER BY checkpoint_id DESC
+                    LIMIT 1
+                    &#34;&#34;&#34;,
+                    (thread_id, checkpoint_ns),
+                )
+            row = cursor.fetchone()
+            if not row:
+                return None
+
+            cid, parent_cid, type_str, cp_blob, meta_blob, created_at = row
+
+            cursor.execute(
+                &#34;&#34;&#34;
+                SELECT task_id, channel, type, value_blob
+                FROM graph_checkpoint_writes
+                WHERE thread_id = ? AND checkpoint_ns = ? AND checkpoint_id = ?
+                ORDER BY task_id, idx
+                &#34;&#34;&#34;,
+                (thread_id, checkpoint_ns, cid),
+            )
+            write_rows = cursor.fetchall()
+
+        checkpoint_data: Checkpoint = self.serde.loads_typed((type_str or &#34;msgpack&#34;, cp_blob))
+        metadata_data = self.serde.loads_typed((type_str or &#34;msgpack&#34;, meta_blob)) if meta_blob else {}
+        pending_writes = [
+            (w_task_id, w_channel, self.serde.loads_typed((w_type or &#34;msgpack&#34;, w_blob)))
+            for w_task_id, w_channel, w_type, w_blob in write_rows
+        ]
+
+        final_config = {
+            &#34;configurable&#34;: {
+                &#34;thread_id&#34;: thread_id,
+                &#34;checkpoint_ns&#34;: checkpoint_ns,
+                &#34;checkpoint_id&#34;: cid,
+            }
+        }
+        parent_config = (
+            {
+                &#34;configurable&#34;: {
+                    &#34;thread_id&#34;: thread_id,
+                    &#34;checkpoint_ns&#34;: checkpoint_ns,
+                    &#34;checkpoint_id&#34;: parent_cid,
+                }
+            }
+            if parent_cid
+            else None
+        )
+
+        return CheckpointTuple(
+            config=final_config,
+            checkpoint=checkpoint_data,
+            metadata=metadata_data,
+            pending_writes=pending_writes,
+            parent_config=parent_config,
+        )
+
+    def list(
+        self,
+        config: Optional[RunnableConfig],
+        *,
+        filter: Optional[Dict[str, Any]] = None,
+        before: Optional[RunnableConfig] = None,
+        limit: Optional[int] = None,
+    ) -&gt; Iterator[CheckpointTuple]:
+        &#34;&#34;&#34;Lists historical checkpoints matching thread and ns.&#34;&#34;&#34;
+        if not config:
+            return
+
+        thread_id = config[&#34;configurable&#34;][&#34;thread_id&#34;]
+        checkpoint_ns = config[&#34;configurable&#34;].get(&#34;checkpoint_ns&#34;, &#34;&#34;)
+
+        query = &#34;&#34;&#34;
+            SELECT checkpoint_id, parent_checkpoint_id, type, checkpoint_blob, metadata_blob, created_at
+            FROM graph_checkpoints
+            WHERE thread_id = ? AND checkpoint_ns = ?
+        &#34;&#34;&#34;
+        params: List[Any] = [thread_id, checkpoint_ns]
+
+        if before and (before_id := get_checkpoint_id(before)):
+            query += &#34; AND checkpoint_id &lt; ?&#34;
+            params.append(before_id)
+
+        query += &#34; ORDER BY checkpoint_id DESC&#34;
+        if limit is not None:
+            query += &#34; LIMIT ?&#34;
+            params.append(limit)
+
+        with self._lock:
+            cursor = self._conn.cursor()
+            cursor.execute(query, tuple(params))
+            rows = cursor.fetchall()
+
+        for row in rows:
+            cid, parent_cid, type_str, cp_blob, meta_blob, created_at = row
+            with self._lock:
+                cursor = self._conn.cursor()
+                cursor.execute(
+                    &#34;&#34;&#34;
+                    SELECT task_id, channel, type, value_blob
+                    FROM graph_checkpoint_writes
+                    WHERE thread_id = ? AND checkpoint_ns = ? AND checkpoint_id = ?
+                    ORDER BY task_id, idx
+                    &#34;&#34;&#34;,
+                    (thread_id, checkpoint_ns, cid),
+                )
+                write_rows = cursor.fetchall()
+
+            checkpoint_data: Checkpoint = self.serde.loads_typed((type_str or &#34;msgpack&#34;, cp_blob))
+            metadata_data = self.serde.loads_typed((type_str or &#34;msgpack&#34;, meta_blob)) if meta_blob else {}
+            pending_writes = [
+                (w_task_id, w_channel, self.serde.loads_typed((w_type or &#34;msgpack&#34;, w_blob)))
+                for w_task_id, w_channel, w_type, w_blob in write_rows
+            ]
+
+            yield CheckpointTuple(
+                config={
+                    &#34;configurable&#34;: {
+                        &#34;thread_id&#34;: thread_id,
+                        &#34;checkpoint_ns&#34;: checkpoint_ns,
+                        &#34;checkpoint_id&#34;: cid,
+                    }
+                },
+                checkpoint=checkpoint_data,
+                metadata=metadata_data,
+                pending_writes=pending_writes,
+                parent_config=(
+                    {
+                        &#34;configurable&#34;: {
+                            &#34;thread_id&#34;: thread_id,
+                            &#34;checkpoint_ns&#34;: checkpoint_ns,
+                            &#34;checkpoint_id&#34;: parent_cid,
+                        }
+                    }
+                    if parent_cid
+                    else None
+                ),
+            )
+
+    def put(
+        self,
+        config: RunnableConfig,
+        checkpoint: Checkpoint,
+        metadata: CheckpointMetadata,
+        new_versions: ChannelVersions,
+    ) -&gt; RunnableConfig:
+        &#34;&#34;&#34;Persists a new checkpoint into graph_checkpoints.&#34;&#34;&#34;
+        thread_id = config[&#34;configurable&#34;][&#34;thread_id&#34;]
+        checkpoint_ns = config[&#34;configurable&#34;].get(&#34;checkpoint_ns&#34;, &#34;&#34;)
+        checkpoint_id = checkpoint[&#34;id&#34;]
+        parent_checkpoint_id = config[&#34;configurable&#34;].get(&#34;checkpoint_id&#34;)
+
+        c = checkpoint.copy()
+        type_str, cp_blob = self.serde.dumps_typed(c)
+        meta_dict = get_checkpoint_metadata(config, metadata)
+        _, meta_blob = self.serde.dumps_typed(meta_dict)
+        created_at = time.time()
+
+        with self._lock:
+            cursor = self._conn.cursor()
+            cursor.execute(
+                &#34;&#34;&#34;
+                INSERT OR REPLACE INTO graph_checkpoints
+                (thread_id, checkpoint_ns, checkpoint_id, parent_checkpoint_id, type, checkpoint_blob, metadata_blob, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                &#34;&#34;&#34;,
+                (
+                    thread_id,
+                    checkpoint_ns,
+                    checkpoint_id,
+                    parent_checkpoint_id,
+                    type_str,
+                    cp_blob,
+                    meta_blob,
+                    created_at,
+                ),
+            )
+            self._conn.commit()
+
+        return {
+            &#34;configurable&#34;: {
+                &#34;thread_id&#34;: thread_id,
+                &#34;checkpoint_ns&#34;: checkpoint_ns,
+                &#34;checkpoint_id&#34;: checkpoint_id,
+            }
+        }
+
+    def put_writes(
+        self,
+        config: RunnableConfig,
+        writes: Sequence[tuple[str, Any]],
+        task_id: str,
+        task_path: str = &#34;&#34;,
+    ) -&gt; None:
+        &#34;&#34;&#34;Stores pending intermediate node writes.&#34;&#34;&#34;
+        thread_id = config[&#34;configurable&#34;][&#34;thread_id&#34;]
+        checkpoint_ns = config[&#34;configurable&#34;].get(&#34;checkpoint_ns&#34;, &#34;&#34;)
+        checkpoint_id = config[&#34;configurable&#34;][&#34;checkpoint_id&#34;]
+
+        with self._lock:
+            cursor = self._conn.cursor()
+            for idx, (channel, val) in enumerate(writes):
+                type_str, val_blob = self.serde.dumps_typed(val)
+                cursor.execute(
+                    &#34;&#34;&#34;
+                    INSERT OR REPLACE INTO graph_checkpoint_writes
+                    (thread_id, checkpoint_ns, checkpoint_id, task_id, idx, channel, type, value_blob, task_path)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    &#34;&#34;&#34;,
+                    (
+                        thread_id,
+                        checkpoint_ns,
+                        checkpoint_id,
+                        task_id,
+                        idx,
+                        channel,
+                        type_str,
+                        val_blob,
+                        task_path,
+                    ),
+                )
+            self._conn.commit()
+
+    def delete_thread(self, thread_id: str) -&gt; None:
+        &#34;&#34;&#34;Deletes all checkpoints and pending writes for a thread.&#34;&#34;&#34;
+        with self._lock:
+            cursor = self._conn.cursor()
+            cursor.execute(&#34;DELETE FROM graph_checkpoints WHERE thread_id = ?&#34;, (thread_id,))
+            cursor.execute(&#34;DELETE FROM graph_checkpoint_writes WHERE thread_id = ?&#34;, (thread_id,))
+            self._conn.commit()
+
+    def __enter__(self) -&gt; SqliteCheckpointSaver:
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -&gt; None:
+        if self._owns_conn and hasattr(self, &#34;_conn&#34;) and self._conn:
+            try:
+                self._conn.close()
+            except Exception:
+                pass</code></pre>
+</details>
+<div class="desc"><p>Durable SQLite checkpoint saver for LangGraph StateGraph execution.
+Complies with Alembic revision 0003_graph_voice database schema.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>langgraph.checkpoint.base.BaseCheckpointSaver</li>
+<li>typing.Generic</li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="jarvis.brain.checkpointer.SqliteCheckpointSaver.from_conn_string"><code class="name flex">
+<span>def <span class="ident">from_conn_string</span></span>(<span>conn_string: str) ‑> <a title="jarvis.brain.checkpointer.SqliteCheckpointSaver" href="#jarvis.brain.checkpointer.SqliteCheckpointSaver">SqliteCheckpointSaver</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Factory method to construct saver from connection string or file path.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.brain.checkpointer.SqliteCheckpointSaver.delete_thread"><code class="name flex">
+<span>def <span class="ident">delete_thread</span></span>(<span>self, thread_id: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_thread(self, thread_id: str) -&gt; None:
+    &#34;&#34;&#34;Deletes all checkpoints and pending writes for a thread.&#34;&#34;&#34;
+    with self._lock:
+        cursor = self._conn.cursor()
+        cursor.execute(&#34;DELETE FROM graph_checkpoints WHERE thread_id = ?&#34;, (thread_id,))
+        cursor.execute(&#34;DELETE FROM graph_checkpoint_writes WHERE thread_id = ?&#34;, (thread_id,))
+        self._conn.commit()</code></pre>
+</details>
+<div class="desc"><p>Deletes all checkpoints and pending writes for a thread.</p></div>
+</dd>
+<dt id="jarvis.brain.checkpointer.SqliteCheckpointSaver.get_tuple"><code class="name flex">
+<span>def <span class="ident">get_tuple</span></span>(<span>self, config: RunnableConfig) ‑> langgraph.checkpoint.base.CheckpointTuple | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_tuple(self, config: RunnableConfig) -&gt; Optional[CheckpointTuple]:
+    &#34;&#34;&#34;Retrieves a checkpoint tuple for a given config.&#34;&#34;&#34;
+    thread_id = config[&#34;configurable&#34;][&#34;thread_id&#34;]
+    checkpoint_ns = config[&#34;configurable&#34;].get(&#34;checkpoint_ns&#34;, &#34;&#34;)
+    checkpoint_id = get_checkpoint_id(config)
+
+    with self._lock:
+        cursor = self._conn.cursor()
+        if checkpoint_id:
+            cursor.execute(
+                &#34;&#34;&#34;
+                SELECT checkpoint_id, parent_checkpoint_id, type, checkpoint_blob, metadata_blob, created_at
+                FROM graph_checkpoints
+                WHERE thread_id = ? AND checkpoint_ns = ? AND checkpoint_id = ?
+                &#34;&#34;&#34;,
+                (thread_id, checkpoint_ns, checkpoint_id),
+            )
+        else:
+            cursor.execute(
+                &#34;&#34;&#34;
+                SELECT checkpoint_id, parent_checkpoint_id, type, checkpoint_blob, metadata_blob, created_at
+                FROM graph_checkpoints
+                WHERE thread_id = ? AND checkpoint_ns = ?
+                ORDER BY checkpoint_id DESC
+                LIMIT 1
+                &#34;&#34;&#34;,
+                (thread_id, checkpoint_ns),
+            )
+        row = cursor.fetchone()
+        if not row:
+            return None
+
+        cid, parent_cid, type_str, cp_blob, meta_blob, created_at = row
+
+        cursor.execute(
+            &#34;&#34;&#34;
+            SELECT task_id, channel, type, value_blob
+            FROM graph_checkpoint_writes
+            WHERE thread_id = ? AND checkpoint_ns = ? AND checkpoint_id = ?
+            ORDER BY task_id, idx
+            &#34;&#34;&#34;,
+            (thread_id, checkpoint_ns, cid),
+        )
+        write_rows = cursor.fetchall()
+
+    checkpoint_data: Checkpoint = self.serde.loads_typed((type_str or &#34;msgpack&#34;, cp_blob))
+    metadata_data = self.serde.loads_typed((type_str or &#34;msgpack&#34;, meta_blob)) if meta_blob else {}
+    pending_writes = [
+        (w_task_id, w_channel, self.serde.loads_typed((w_type or &#34;msgpack&#34;, w_blob)))
+        for w_task_id, w_channel, w_type, w_blob in write_rows
+    ]
+
+    final_config = {
+        &#34;configurable&#34;: {
+            &#34;thread_id&#34;: thread_id,
+            &#34;checkpoint_ns&#34;: checkpoint_ns,
+            &#34;checkpoint_id&#34;: cid,
+        }
+    }
+    parent_config = (
+        {
+            &#34;configurable&#34;: {
+                &#34;thread_id&#34;: thread_id,
+                &#34;checkpoint_ns&#34;: checkpoint_ns,
+                &#34;checkpoint_id&#34;: parent_cid,
+            }
+        }
+        if parent_cid
+        else None
+    )
+
+    return CheckpointTuple(
+        config=final_config,
+        checkpoint=checkpoint_data,
+        metadata=metadata_data,
+        pending_writes=pending_writes,
+        parent_config=parent_config,
+    )</code></pre>
+</details>
+<div class="desc"><p>Retrieves a checkpoint tuple for a given config.</p></div>
+</dd>
+<dt id="jarvis.brain.checkpointer.SqliteCheckpointSaver.list"><code class="name flex">
+<span>def <span class="ident">list</span></span>(<span>self,<br>config: Optional[RunnableConfig],<br>*,<br>filter: Optional[Dict[str, Any]] = None,<br>before: Optional[RunnableConfig] = None,<br>limit: Optional[int] = None) ‑> Iterator[langgraph.checkpoint.base.CheckpointTuple]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list(
+    self,
+    config: Optional[RunnableConfig],
+    *,
+    filter: Optional[Dict[str, Any]] = None,
+    before: Optional[RunnableConfig] = None,
+    limit: Optional[int] = None,
+) -&gt; Iterator[CheckpointTuple]:
+    &#34;&#34;&#34;Lists historical checkpoints matching thread and ns.&#34;&#34;&#34;
+    if not config:
+        return
+
+    thread_id = config[&#34;configurable&#34;][&#34;thread_id&#34;]
+    checkpoint_ns = config[&#34;configurable&#34;].get(&#34;checkpoint_ns&#34;, &#34;&#34;)
+
+    query = &#34;&#34;&#34;
+        SELECT checkpoint_id, parent_checkpoint_id, type, checkpoint_blob, metadata_blob, created_at
+        FROM graph_checkpoints
+        WHERE thread_id = ? AND checkpoint_ns = ?
+    &#34;&#34;&#34;
+    params: List[Any] = [thread_id, checkpoint_ns]
+
+    if before and (before_id := get_checkpoint_id(before)):
+        query += &#34; AND checkpoint_id &lt; ?&#34;
+        params.append(before_id)
+
+    query += &#34; ORDER BY checkpoint_id DESC&#34;
+    if limit is not None:
+        query += &#34; LIMIT ?&#34;
+        params.append(limit)
+
+    with self._lock:
+        cursor = self._conn.cursor()
+        cursor.execute(query, tuple(params))
+        rows = cursor.fetchall()
+
+    for row in rows:
+        cid, parent_cid, type_str, cp_blob, meta_blob, created_at = row
+        with self._lock:
+            cursor = self._conn.cursor()
+            cursor.execute(
+                &#34;&#34;&#34;
+                SELECT task_id, channel, type, value_blob
+                FROM graph_checkpoint_writes
+                WHERE thread_id = ? AND checkpoint_ns = ? AND checkpoint_id = ?
+                ORDER BY task_id, idx
+                &#34;&#34;&#34;,
+                (thread_id, checkpoint_ns, cid),
+            )
+            write_rows = cursor.fetchall()
+
+        checkpoint_data: Checkpoint = self.serde.loads_typed((type_str or &#34;msgpack&#34;, cp_blob))
+        metadata_data = self.serde.loads_typed((type_str or &#34;msgpack&#34;, meta_blob)) if meta_blob else {}
+        pending_writes = [
+            (w_task_id, w_channel, self.serde.loads_typed((w_type or &#34;msgpack&#34;, w_blob)))
+            for w_task_id, w_channel, w_type, w_blob in write_rows
+        ]
+
+        yield CheckpointTuple(
+            config={
+                &#34;configurable&#34;: {
+                    &#34;thread_id&#34;: thread_id,
+                    &#34;checkpoint_ns&#34;: checkpoint_ns,
+                    &#34;checkpoint_id&#34;: cid,
+                }
+            },
+            checkpoint=checkpoint_data,
+            metadata=metadata_data,
+            pending_writes=pending_writes,
+            parent_config=(
+                {
+                    &#34;configurable&#34;: {
+                        &#34;thread_id&#34;: thread_id,
+                        &#34;checkpoint_ns&#34;: checkpoint_ns,
+                        &#34;checkpoint_id&#34;: parent_cid,
+                    }
+                }
+                if parent_cid
+                else None
+            ),
+        )</code></pre>
+</details>
+<div class="desc"><p>Lists historical checkpoints matching thread and ns.</p></div>
+</dd>
+<dt id="jarvis.brain.checkpointer.SqliteCheckpointSaver.put"><code class="name flex">
+<span>def <span class="ident">put</span></span>(<span>self,<br>config: RunnableConfig,<br>checkpoint: Checkpoint,<br>metadata: CheckpointMetadata,<br>new_versions: ChannelVersions) ‑> langchain_core.runnables.config.RunnableConfig</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put(
+    self,
+    config: RunnableConfig,
+    checkpoint: Checkpoint,
+    metadata: CheckpointMetadata,
+    new_versions: ChannelVersions,
+) -&gt; RunnableConfig:
+    &#34;&#34;&#34;Persists a new checkpoint into graph_checkpoints.&#34;&#34;&#34;
+    thread_id = config[&#34;configurable&#34;][&#34;thread_id&#34;]
+    checkpoint_ns = config[&#34;configurable&#34;].get(&#34;checkpoint_ns&#34;, &#34;&#34;)
+    checkpoint_id = checkpoint[&#34;id&#34;]
+    parent_checkpoint_id = config[&#34;configurable&#34;].get(&#34;checkpoint_id&#34;)
+
+    c = checkpoint.copy()
+    type_str, cp_blob = self.serde.dumps_typed(c)
+    meta_dict = get_checkpoint_metadata(config, metadata)
+    _, meta_blob = self.serde.dumps_typed(meta_dict)
+    created_at = time.time()
+
+    with self._lock:
+        cursor = self._conn.cursor()
+        cursor.execute(
+            &#34;&#34;&#34;
+            INSERT OR REPLACE INTO graph_checkpoints
+            (thread_id, checkpoint_ns, checkpoint_id, parent_checkpoint_id, type, checkpoint_blob, metadata_blob, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            &#34;&#34;&#34;,
+            (
+                thread_id,
+                checkpoint_ns,
+                checkpoint_id,
+                parent_checkpoint_id,
+                type_str,
+                cp_blob,
+                meta_blob,
+                created_at,
+            ),
+        )
+        self._conn.commit()
+
+    return {
+        &#34;configurable&#34;: {
+            &#34;thread_id&#34;: thread_id,
+            &#34;checkpoint_ns&#34;: checkpoint_ns,
+            &#34;checkpoint_id&#34;: checkpoint_id,
+        }
+    }</code></pre>
+</details>
+<div class="desc"><p>Persists a new checkpoint into graph_checkpoints.</p></div>
+</dd>
+<dt id="jarvis.brain.checkpointer.SqliteCheckpointSaver.put_writes"><code class="name flex">
+<span>def <span class="ident">put_writes</span></span>(<span>self,<br>config: RunnableConfig,<br>writes: Sequence[tuple[str, Any]],<br>task_id: str,<br>task_path: str = '') ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_writes(
+    self,
+    config: RunnableConfig,
+    writes: Sequence[tuple[str, Any]],
+    task_id: str,
+    task_path: str = &#34;&#34;,
+) -&gt; None:
+    &#34;&#34;&#34;Stores pending intermediate node writes.&#34;&#34;&#34;
+    thread_id = config[&#34;configurable&#34;][&#34;thread_id&#34;]
+    checkpoint_ns = config[&#34;configurable&#34;].get(&#34;checkpoint_ns&#34;, &#34;&#34;)
+    checkpoint_id = config[&#34;configurable&#34;][&#34;checkpoint_id&#34;]
+
+    with self._lock:
+        cursor = self._conn.cursor()
+        for idx, (channel, val) in enumerate(writes):
+            type_str, val_blob = self.serde.dumps_typed(val)
+            cursor.execute(
+                &#34;&#34;&#34;
+                INSERT OR REPLACE INTO graph_checkpoint_writes
+                (thread_id, checkpoint_ns, checkpoint_id, task_id, idx, channel, type, value_blob, task_path)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                &#34;&#34;&#34;,
+                (
+                    thread_id,
+                    checkpoint_ns,
+                    checkpoint_id,
+                    task_id,
+                    idx,
+                    channel,
+                    type_str,
+                    val_blob,
+                    task_path,
+                ),
+            )
+        self._conn.commit()</code></pre>
+</details>
+<div class="desc"><p>Stores pending intermediate node writes.</p></div>
+</dd>
+<dt id="jarvis.brain.checkpointer.SqliteCheckpointSaver.setup"><code class="name flex">
+<span>def <span class="ident">setup</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setup(self) -&gt; None:
+    &#34;&#34;&#34;Initializes checkpoint tables if missing.&#34;&#34;&#34;
+    with self._lock:
+        cursor = self._conn.cursor()
+        cursor.execute(
+            &#34;&#34;&#34;
+            CREATE TABLE IF NOT EXISTS graph_checkpoints (
+                thread_id VARCHAR(128) NOT NULL,
+                checkpoint_ns VARCHAR(128) NOT NULL DEFAULT &#39;&#39;,
+                checkpoint_id VARCHAR(64) NOT NULL,
+                parent_checkpoint_id VARCHAR(64),
+                type VARCHAR(32),
+                checkpoint_blob BLOB NOT NULL,
+                metadata_blob BLOB,
+                created_at FLOAT NOT NULL,
+                PRIMARY KEY (thread_id, checkpoint_ns, checkpoint_id)
+            );
+            &#34;&#34;&#34;
+        )
+        cursor.execute(
+            &#34;&#34;&#34;
+            CREATE INDEX IF NOT EXISTS ix_graph_checkpoints_thread
+            ON graph_checkpoints (thread_id);
+            &#34;&#34;&#34;
+        )
+        cursor.execute(
+            &#34;&#34;&#34;
+            CREATE TABLE IF NOT EXISTS graph_checkpoint_writes (
+                thread_id VARCHAR(128) NOT NULL,
+                checkpoint_ns VARCHAR(128) NOT NULL DEFAULT &#39;&#39;,
+                checkpoint_id VARCHAR(64) NOT NULL,
+                task_id VARCHAR(64) NOT NULL,
+                idx INTEGER NOT NULL,
+                channel VARCHAR(128) NOT NULL,
+                type VARCHAR(32),
+                value_blob BLOB NOT NULL,
+                task_path VARCHAR(256) DEFAULT &#39;&#39;,
+                PRIMARY KEY (thread_id, checkpoint_ns, checkpoint_id, task_id, idx)
+            );
+            &#34;&#34;&#34;
+        )
+        self._conn.commit()</code></pre>
+</details>
+<div class="desc"><p>Initializes checkpoint tables if missing.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.brain" href="index.html">jarvis.brain</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.brain.checkpointer.SqliteCheckpointSaver" href="#jarvis.brain.checkpointer.SqliteCheckpointSaver">SqliteCheckpointSaver</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.checkpointer.SqliteCheckpointSaver.delete_thread" href="#jarvis.brain.checkpointer.SqliteCheckpointSaver.delete_thread">delete_thread</a></code></li>
+<li><code><a title="jarvis.brain.checkpointer.SqliteCheckpointSaver.from_conn_string" href="#jarvis.brain.checkpointer.SqliteCheckpointSaver.from_conn_string">from_conn_string</a></code></li>
+<li><code><a title="jarvis.brain.checkpointer.SqliteCheckpointSaver.get_tuple" href="#jarvis.brain.checkpointer.SqliteCheckpointSaver.get_tuple">get_tuple</a></code></li>
+<li><code><a title="jarvis.brain.checkpointer.SqliteCheckpointSaver.list" href="#jarvis.brain.checkpointer.SqliteCheckpointSaver.list">list</a></code></li>
+<li><code><a title="jarvis.brain.checkpointer.SqliteCheckpointSaver.put" href="#jarvis.brain.checkpointer.SqliteCheckpointSaver.put">put</a></code></li>
+<li><code><a title="jarvis.brain.checkpointer.SqliteCheckpointSaver.put_writes" href="#jarvis.brain.checkpointer.SqliteCheckpointSaver.put_writes">put_writes</a></code></li>
+<li><code><a title="jarvis.brain.checkpointer.SqliteCheckpointSaver.setup" href="#jarvis.brain.checkpointer.SqliteCheckpointSaver.setup">setup</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

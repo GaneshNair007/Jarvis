@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.memory.store API documentation</title>
+<meta name="description" content="JARVIS SQLite WAL Database Store
+Initializes and manages the local-first persistent SQLite database
+with Write-Ahead Logging (WAL) for high …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.memory.store</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS SQLite WAL Database Store
+Initializes and manages the local-first persistent SQLite database
+with Write-Ahead Logging (WAL) for high concurrency and zero external dependency.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.memory.store.DatabaseStore"><code class="flex name class">
+<span>class <span class="ident">DatabaseStore</span></span>
+<span>(</span><span>db_path: pathlib.Path | None = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DatabaseStore:
+    def __init__(self, db_path: Optional[Path] = None):
+        self.db_path = db_path or settings.db_path
+        self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        self._init_database()
+
+    def _get_connection(self) -&gt; sqlite3.Connection:
+        conn = sqlite3.connect(str(self.db_path), check_same_thread=False, timeout=60.0)
+        conn.row_factory = sqlite3.Row
+        conn.execute(&#34;PRAGMA journal_mode = WAL&#34;)
+        conn.execute(&#34;PRAGMA busy_timeout = 30000&#34;)
+        conn.execute(&#34;PRAGMA synchronous = NORMAL&#34;)
+        conn.execute(&#34;PRAGMA foreign_keys = ON&#34;)
+        return conn
+
+    def _init_database(self) -&gt; None:
+        &#34;&#34;&#34;Runs initial schema migrations.&#34;&#34;&#34;
+        with self._get_connection() as conn:
+            c = conn.cursor()
+
+            # Tasks table
+            c.execute(&#34;&#34;&#34;
+            CREATE TABLE IF NOT EXISTS tasks (
+                id TEXT PRIMARY KEY,
+                title TEXT NOT NULL,
+                status TEXT NOT NULL,
+                priority TEXT NOT NULL DEFAULT &#39;P1&#39;,
+                power_id TEXT,
+                inputs TEXT,
+                outputs TEXT,
+                error TEXT,
+                created_at REAL NOT NULL,
+                updated_at REAL NOT NULL
+            );
+            &#34;&#34;&#34;)
+
+            # Approvals table
+            c.execute(&#34;&#34;&#34;
+            CREATE TABLE IF NOT EXISTS approvals (
+                id TEXT PRIMARY KEY,
+                task_id TEXT NOT NULL,
+                power_id TEXT NOT NULL,
+                action_summary TEXT NOT NULL,
+                payload_hash TEXT NOT NULL,
+                token TEXT NOT NULL,
+                status TEXT NOT NULL CHECK(status IN (&#39;PENDING&#39;, &#39;APPROVED&#39;, &#39;REJECTED&#39;, &#39;EXPIRED&#39;)),
+                created_at REAL NOT NULL,
+                expires_at REAL NOT NULL
+            );
+            &#34;&#34;&#34;)
+
+            # Check and migrate memory_nodes schema if needed
+            c.execute(&#34;SELECT sql FROM sqlite_master WHERE type=&#39;table&#39; AND name=&#39;memory_nodes&#39;&#34;)
+            row = c.fetchone()
+            if row and &#34;PROCEDURAL&#34; not in row[0]:
+                c.execute(&#34;ALTER TABLE memory_nodes RENAME TO memory_nodes_old&#34;)
+                c.execute(&#34;&#34;&#34;
+                CREATE TABLE memory_nodes (
+                    id TEXT PRIMARY KEY,
+                    layer TEXT NOT NULL CHECK(layer IN (&#39;CAPTURE&#39;, &#39;RAW&#39;, &#39;EPISODIC&#39;, &#39;SEMANTIC&#39;, &#39;PROCEDURAL&#39;, &#39;WORKING&#39;, &#39;DIRECTIVE&#39;)),
+                    content TEXT NOT NULL,
+                    metadata TEXT,
+                    embedding BLOB,
+                    is_hypothesis INTEGER DEFAULT 0,
+                    confidence REAL DEFAULT 1.0,
+                    evidence_count INTEGER DEFAULT 1,
+                    created_at REAL NOT NULL,
+                    updated_at REAL NOT NULL
+                );
+                &#34;&#34;&#34;)
+                c.execute(&#34;&#34;&#34;
+                INSERT INTO memory_nodes (id, layer, content, metadata, embedding, is_hypothesis, confidence, evidence_count, created_at, updated_at)
+                SELECT id, layer, content, metadata, embedding, 0, 1.0, 1, created_at, updated_at FROM memory_nodes_old
+                &#34;&#34;&#34;)
+                c.execute(&#34;DROP TABLE memory_nodes_old&#34;)
+            else:
+                # Memory nodes (extended 7 layers)
+                c.execute(&#34;&#34;&#34;
+                CREATE TABLE IF NOT EXISTS memory_nodes (
+                    id TEXT PRIMARY KEY,
+                    layer TEXT NOT NULL CHECK(layer IN (&#39;CAPTURE&#39;, &#39;RAW&#39;, &#39;EPISODIC&#39;, &#39;SEMANTIC&#39;, &#39;PROCEDURAL&#39;, &#39;WORKING&#39;, &#39;DIRECTIVE&#39;)),
+                    content TEXT NOT NULL,
+                    metadata TEXT,
+                    embedding BLOB,
+                    is_hypothesis INTEGER DEFAULT 0,
+                    confidence REAL DEFAULT 1.0,
+                    evidence_count INTEGER DEFAULT 1,
+                    created_at REAL NOT NULL,
+                    updated_at REAL NOT NULL
+                );
+                &#34;&#34;&#34;)
+
+            # Ensure columns exist if table was previously created
+            c.execute(&#34;PRAGMA table_info(memory_nodes)&#34;)
+            cols = [col[1] for col in c.fetchall()]
+            if &#34;is_hypothesis&#34; not in cols:
+                c.execute(&#34;ALTER TABLE memory_nodes ADD COLUMN is_hypothesis INTEGER DEFAULT 0&#34;)
+            if &#34;confidence&#34; not in cols:
+                c.execute(&#34;ALTER TABLE memory_nodes ADD COLUMN confidence REAL DEFAULT 1.0&#34;)
+            if &#34;evidence_count&#34; not in cols:
+                c.execute(&#34;ALTER TABLE memory_nodes ADD COLUMN evidence_count INTEGER DEFAULT 1&#34;)
+
+            # Documents table (for RAG)
+            c.execute(&#34;&#34;&#34;
+            CREATE TABLE IF NOT EXISTS documents (
+                id TEXT PRIMARY KEY,
+                file_path TEXT NOT NULL,
+                file_name TEXT NOT NULL,
+                file_type TEXT NOT NULL,
+                sha256 TEXT NOT NULL,
+                total_pages INTEGER NOT NULL DEFAULT 1,
+                total_chunks INTEGER NOT NULL DEFAULT 0,
+                file_size INTEGER NOT NULL DEFAULT 0,
+                metadata TEXT,
+                created_at REAL NOT NULL
+            );
+            &#34;&#34;&#34;)
+
+            # Document Chunks table
+            c.execute(&#34;&#34;&#34;
+            CREATE TABLE IF NOT EXISTS document_chunks (
+                id TEXT PRIMARY KEY,
+                doc_id TEXT NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+                page_number INTEGER NOT NULL DEFAULT 1,
+                chunk_index INTEGER NOT NULL DEFAULT 0,
+                content TEXT NOT NULL,
+                metadata TEXT,
+                embedding BLOB,
+                created_at REAL NOT NULL
+            );
+            &#34;&#34;&#34;)
+
+            # User Corrections table
+            c.execute(&#34;&#34;&#34;
+            CREATE TABLE IF NOT EXISTS corrections (
+                id TEXT PRIMARY KEY,
+                failure_id TEXT,
+                user_quote TEXT NOT NULL,
+                old_behavior TEXT,
+                new_instruction TEXT NOT NULL,
+                scope TEXT NOT NULL CHECK(scope IN (&#39;this_task&#39;, &#39;this_project&#39;, &#39;always&#39;)),
+                status TEXT NOT NULL DEFAULT &#39;ACTIVE&#39;,
+                created_at REAL NOT NULL
+            );
+            &#34;&#34;&#34;)
+
+            # Indexes
+            c.execute(&#34;CREATE INDEX IF NOT EXISTS idx_chunks_doc_id ON document_chunks(doc_id)&#34;)
+            c.execute(&#34;CREATE INDEX IF NOT EXISTS idx_memory_layer ON memory_nodes(layer)&#34;)
+
+            # System telemetry snapshots
+            c.execute(&#34;&#34;&#34;
+            CREATE TABLE IF NOT EXISTS system_telemetry (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                cpu_percent REAL,
+                ram_percent REAL,
+                disk_percent REAL,
+                active_workers INTEGER,
+                timestamp REAL NOT NULL
+            );
+            &#34;&#34;&#34;)
+
+            conn.commit()
+
+    def save_task(
+        self, task_id: str, title: str, status: str, power_id: str = &#34;&#34;, inputs: Any = None, outputs: Any = None
+    ) -&gt; None:
+        now = time.time()
+        with self._get_connection() as conn:
+            conn.execute(
+                &#34;&#34;&#34;
+            INSERT INTO tasks (id, title, status, power_id, inputs, outputs, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                status = excluded.status,
+                outputs = excluded.outputs,
+                updated_at = excluded.updated_at
+            &#34;&#34;&#34;,
+                (
+                    task_id,
+                    title,
+                    status,
+                    power_id,
+                    json.dumps(inputs) if inputs else None,
+                    json.dumps(outputs) if outputs else None,
+                    now,
+                    now,
+                ),
+            )
+            conn.commit()
+
+    def get_task(self, task_id: str) -&gt; Optional[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            row = conn.execute(&#34;SELECT * FROM tasks WHERE id = ?&#34;, (task_id,)).fetchone()
+            if row:
+                return dict(row)
+        return None
+
+    def list_tasks(self, limit: int = 50) -&gt; List[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            rows = conn.execute(&#34;SELECT * FROM tasks ORDER BY updated_at DESC LIMIT ?&#34;, (limit,)).fetchall()
+            return [dict(r) for r in rows]
+
+    # Document operations
+    def save_document(
+        self,
+        doc_id: str,
+        file_path: str,
+        file_name: str,
+        file_type: str,
+        sha256: str,
+        total_pages: int,
+        total_chunks: int,
+        file_size: int,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -&gt; None:
+        now = time.time()
+        meta_str = json.dumps(metadata or {})
+        with self._get_connection() as conn:
+            conn.execute(
+                &#34;&#34;&#34;
+            INSERT INTO documents (id, file_path, file_name, file_type, sha256, total_pages, total_chunks, file_size, metadata, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                total_chunks = excluded.total_chunks,
+                metadata = excluded.metadata
+            &#34;&#34;&#34;,
+                (doc_id, file_path, file_name, file_type, sha256, total_pages, total_chunks, file_size, meta_str, now),
+            )
+            conn.commit()
+
+    def get_document(self, doc_id: str) -&gt; Optional[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            row = conn.execute(&#34;SELECT * FROM documents WHERE id = ?&#34;, (doc_id,)).fetchone()
+            if row:
+                res = dict(row)
+                if res.get(&#34;metadata&#34;):
+                    try:
+                        res[&#34;metadata&#34;] = json.loads(res[&#34;metadata&#34;])
+                    except Exception:
+                        pass
+                return res
+        return None
+
+    def get_document_by_hash(self, sha256: str) -&gt; Optional[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            row = conn.execute(&#34;SELECT * FROM documents WHERE sha256 = ?&#34;, (sha256,)).fetchone()
+            if row:
+                res = dict(row)
+                if res.get(&#34;metadata&#34;):
+                    try:
+                        res[&#34;metadata&#34;] = json.loads(res[&#34;metadata&#34;])
+                    except Exception:
+                        pass
+                return res
+        return None
+
+    def list_documents(self, limit: int = 50) -&gt; List[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            rows = conn.execute(&#34;SELECT * FROM documents ORDER BY created_at DESC LIMIT ?&#34;, (limit,)).fetchall()
+            results = []
+            for r in rows:
+                item = dict(r)
+                if item.get(&#34;metadata&#34;):
+                    try:
+                        item[&#34;metadata&#34;] = json.loads(item[&#34;metadata&#34;])
+                    except Exception:
+                        pass
+                results.append(item)
+            return results
+
+    def delete_document(self, doc_id: str) -&gt; bool:
+        with self._get_connection() as conn:
+            cur = conn.execute(&#34;DELETE FROM documents WHERE id = ?&#34;, (doc_id,))
+            conn.execute(&#34;DELETE FROM document_chunks WHERE doc_id = ?&#34;, (doc_id,))
+            conn.commit()
+            return cur.rowcount &gt; 0
+
+    # Document Chunks operations
+    def save_chunks(self, chunks: List[Dict[str, Any]]) -&gt; None:
+        now = time.time()
+        with self._get_connection() as conn:
+            for ch in chunks:
+                conn.execute(
+                    &#34;&#34;&#34;
+                INSERT OR REPLACE INTO document_chunks (id, doc_id, page_number, chunk_index, content, metadata, embedding, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                &#34;&#34;&#34;,
+                    (
+                        ch[&#34;id&#34;],
+                        ch[&#34;doc_id&#34;],
+                        ch.get(&#34;page_number&#34;, 1),
+                        ch.get(&#34;chunk_index&#34;, 0),
+                        ch[&#34;content&#34;],
+                        json.dumps(ch.get(&#34;metadata&#34;, {})),
+                        ch.get(&#34;embedding&#34;),
+                        now,
+                    ),
+                )
+            conn.commit()
+
+    def get_chunks_for_doc(self, doc_id: str) -&gt; List[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            rows = conn.execute(
+                &#34;SELECT * FROM document_chunks WHERE doc_id = ? ORDER BY page_number, chunk_index&#34;, (doc_id,)
+            ).fetchall()
+            return [dict(r) for r in rows]
+
+    def get_all_chunks(self, limit: int = 2000) -&gt; List[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            rows = conn.execute(
+                &#34;&#34;&#34;
+            SELECT c.*, d.file_path, d.file_name, d.sha256 
+            FROM document_chunks c
+            JOIN documents d ON c.doc_id = d.id
+            ORDER BY c.created_at DESC LIMIT ?
+            &#34;&#34;&#34;,
+                (limit,),
+            ).fetchall()
+            return [dict(r) for r in rows]
+
+    # User Corrections
+    def save_correction(
+        self,
+        correction_id: str,
+        user_quote: str,
+        new_instruction: str,
+        scope: str = &#34;always&#34;,
+        failure_id: Optional[str] = None,
+        old_behavior: Optional[str] = None,
+    ) -&gt; None:
+        now = time.time()
+        with self._get_connection() as conn:
+            conn.execute(
+                &#34;&#34;&#34;
+            INSERT OR REPLACE INTO corrections (id, failure_id, user_quote, old_behavior, new_instruction, scope, status, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, &#39;ACTIVE&#39;, ?)
+            &#34;&#34;&#34;,
+                (correction_id, failure_id, user_quote, old_behavior, new_instruction, scope, now),
+            )
+            conn.commit()
+
+    def list_corrections(self, limit: int = 50) -&gt; List[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            rows = conn.execute(&#34;SELECT * FROM corrections ORDER BY created_at DESC LIMIT ?&#34;, (limit,)).fetchall()
+            return [dict(r) for r in rows]
+
+    # Storage Statistics
+    def get_storage_stats(self) -&gt; Dict[str, Any]:
+        with self._get_connection() as conn:
+            layer_counts = {}
+            for row in conn.execute(&#34;SELECT layer, COUNT(*) as cnt FROM memory_nodes GROUP BY layer&#34;):
+                layer_counts[row[&#34;layer&#34;]] = row[&#34;cnt&#34;]
+
+            total_nodes = sum(layer_counts.values())
+            doc_count = conn.execute(&#34;SELECT COUNT(*) as cnt FROM documents&#34;).fetchone()[&#34;cnt&#34;]
+            chunk_count = conn.execute(&#34;SELECT COUNT(*) as cnt FROM document_chunks&#34;).fetchone()[&#34;cnt&#34;]
+            correction_count = conn.execute(&#34;SELECT COUNT(*) as cnt FROM corrections&#34;).fetchone()[&#34;cnt&#34;]
+            task_count = conn.execute(&#34;SELECT COUNT(*) as cnt FROM tasks&#34;).fetchone()[&#34;cnt&#34;]
+
+            db_size = self.db_path.stat().st_size if self.db_path.exists() else 0
+
+            audit_log_size = 0
+            if settings.audit_log_path.exists():
+                audit_log_size = settings.audit_log_path.stat().st_size
+
+            return {
+                &#34;db_path&#34;: str(self.db_path),
+                &#34;db_size_bytes&#34;: db_size,
+                &#34;db_size_kb&#34;: round(db_size / 1024, 2),
+                &#34;audit_log_size_bytes&#34;: audit_log_size,
+                &#34;total_memory_nodes&#34;: total_nodes,
+                &#34;layers&#34;: layer_counts,
+                &#34;total_documents&#34;: doc_count,
+                &#34;total_chunks&#34;: chunk_count,
+                &#34;total_corrections&#34;: correction_count,
+                &#34;total_tasks&#34;: task_count,
+            }</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.memory.store.DatabaseStore.delete_document"><code class="name flex">
+<span>def <span class="ident">delete_document</span></span>(<span>self, doc_id: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_document(self, doc_id: str) -&gt; bool:
+    with self._get_connection() as conn:
+        cur = conn.execute(&#34;DELETE FROM documents WHERE id = ?&#34;, (doc_id,))
+        conn.execute(&#34;DELETE FROM document_chunks WHERE doc_id = ?&#34;, (doc_id,))
+        conn.commit()
+        return cur.rowcount &gt; 0</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.get_all_chunks"><code class="name flex">
+<span>def <span class="ident">get_all_chunks</span></span>(<span>self, limit: int = 2000) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all_chunks(self, limit: int = 2000) -&gt; List[Dict[str, Any]]:
+    with self._get_connection() as conn:
+        rows = conn.execute(
+            &#34;&#34;&#34;
+        SELECT c.*, d.file_path, d.file_name, d.sha256 
+        FROM document_chunks c
+        JOIN documents d ON c.doc_id = d.id
+        ORDER BY c.created_at DESC LIMIT ?
+        &#34;&#34;&#34;,
+            (limit,),
+        ).fetchall()
+        return [dict(r) for r in rows]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.get_chunks_for_doc"><code class="name flex">
+<span>def <span class="ident">get_chunks_for_doc</span></span>(<span>self, doc_id: str) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_chunks_for_doc(self, doc_id: str) -&gt; List[Dict[str, Any]]:
+    with self._get_connection() as conn:
+        rows = conn.execute(
+            &#34;SELECT * FROM document_chunks WHERE doc_id = ? ORDER BY page_number, chunk_index&#34;, (doc_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.get_document"><code class="name flex">
+<span>def <span class="ident">get_document</span></span>(<span>self, doc_id: str) ‑> Dict[str, Any] | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_document(self, doc_id: str) -&gt; Optional[Dict[str, Any]]:
+    with self._get_connection() as conn:
+        row = conn.execute(&#34;SELECT * FROM documents WHERE id = ?&#34;, (doc_id,)).fetchone()
+        if row:
+            res = dict(row)
+            if res.get(&#34;metadata&#34;):
+                try:
+                    res[&#34;metadata&#34;] = json.loads(res[&#34;metadata&#34;])
+                except Exception:
+                    pass
+            return res
+    return None</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.get_document_by_hash"><code class="name flex">
+<span>def <span class="ident">get_document_by_hash</span></span>(<span>self, sha256: str) ‑> Dict[str, Any] | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_document_by_hash(self, sha256: str) -&gt; Optional[Dict[str, Any]]:
+    with self._get_connection() as conn:
+        row = conn.execute(&#34;SELECT * FROM documents WHERE sha256 = ?&#34;, (sha256,)).fetchone()
+        if row:
+            res = dict(row)
+            if res.get(&#34;metadata&#34;):
+                try:
+                    res[&#34;metadata&#34;] = json.loads(res[&#34;metadata&#34;])
+                except Exception:
+                    pass
+            return res
+    return None</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.get_storage_stats"><code class="name flex">
+<span>def <span class="ident">get_storage_stats</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_storage_stats(self) -&gt; Dict[str, Any]:
+    with self._get_connection() as conn:
+        layer_counts = {}
+        for row in conn.execute(&#34;SELECT layer, COUNT(*) as cnt FROM memory_nodes GROUP BY layer&#34;):
+            layer_counts[row[&#34;layer&#34;]] = row[&#34;cnt&#34;]
+
+        total_nodes = sum(layer_counts.values())
+        doc_count = conn.execute(&#34;SELECT COUNT(*) as cnt FROM documents&#34;).fetchone()[&#34;cnt&#34;]
+        chunk_count = conn.execute(&#34;SELECT COUNT(*) as cnt FROM document_chunks&#34;).fetchone()[&#34;cnt&#34;]
+        correction_count = conn.execute(&#34;SELECT COUNT(*) as cnt FROM corrections&#34;).fetchone()[&#34;cnt&#34;]
+        task_count = conn.execute(&#34;SELECT COUNT(*) as cnt FROM tasks&#34;).fetchone()[&#34;cnt&#34;]
+
+        db_size = self.db_path.stat().st_size if self.db_path.exists() else 0
+
+        audit_log_size = 0
+        if settings.audit_log_path.exists():
+            audit_log_size = settings.audit_log_path.stat().st_size
+
+        return {
+            &#34;db_path&#34;: str(self.db_path),
+            &#34;db_size_bytes&#34;: db_size,
+            &#34;db_size_kb&#34;: round(db_size / 1024, 2),
+            &#34;audit_log_size_bytes&#34;: audit_log_size,
+            &#34;total_memory_nodes&#34;: total_nodes,
+            &#34;layers&#34;: layer_counts,
+            &#34;total_documents&#34;: doc_count,
+            &#34;total_chunks&#34;: chunk_count,
+            &#34;total_corrections&#34;: correction_count,
+            &#34;total_tasks&#34;: task_count,
+        }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.get_task"><code class="name flex">
+<span>def <span class="ident">get_task</span></span>(<span>self, task_id: str) ‑> Dict[str, Any] | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_task(self, task_id: str) -&gt; Optional[Dict[str, Any]]:
+    with self._get_connection() as conn:
+        row = conn.execute(&#34;SELECT * FROM tasks WHERE id = ?&#34;, (task_id,)).fetchone()
+        if row:
+            return dict(row)
+    return None</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.list_corrections"><code class="name flex">
+<span>def <span class="ident">list_corrections</span></span>(<span>self, limit: int = 50) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_corrections(self, limit: int = 50) -&gt; List[Dict[str, Any]]:
+    with self._get_connection() as conn:
+        rows = conn.execute(&#34;SELECT * FROM corrections ORDER BY created_at DESC LIMIT ?&#34;, (limit,)).fetchall()
+        return [dict(r) for r in rows]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.list_documents"><code class="name flex">
+<span>def <span class="ident">list_documents</span></span>(<span>self, limit: int = 50) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_documents(self, limit: int = 50) -&gt; List[Dict[str, Any]]:
+    with self._get_connection() as conn:
+        rows = conn.execute(&#34;SELECT * FROM documents ORDER BY created_at DESC LIMIT ?&#34;, (limit,)).fetchall()
+        results = []
+        for r in rows:
+            item = dict(r)
+            if item.get(&#34;metadata&#34;):
+                try:
+                    item[&#34;metadata&#34;] = json.loads(item[&#34;metadata&#34;])
+                except Exception:
+                    pass
+            results.append(item)
+        return results</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.list_tasks"><code class="name flex">
+<span>def <span class="ident">list_tasks</span></span>(<span>self, limit: int = 50) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_tasks(self, limit: int = 50) -&gt; List[Dict[str, Any]]:
+    with self._get_connection() as conn:
+        rows = conn.execute(&#34;SELECT * FROM tasks ORDER BY updated_at DESC LIMIT ?&#34;, (limit,)).fetchall()
+        return [dict(r) for r in rows]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.save_chunks"><code class="name flex">
+<span>def <span class="ident">save_chunks</span></span>(<span>self, chunks: List[Dict[str, Any]]) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_chunks(self, chunks: List[Dict[str, Any]]) -&gt; None:
+    now = time.time()
+    with self._get_connection() as conn:
+        for ch in chunks:
+            conn.execute(
+                &#34;&#34;&#34;
+            INSERT OR REPLACE INTO document_chunks (id, doc_id, page_number, chunk_index, content, metadata, embedding, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            &#34;&#34;&#34;,
+                (
+                    ch[&#34;id&#34;],
+                    ch[&#34;doc_id&#34;],
+                    ch.get(&#34;page_number&#34;, 1),
+                    ch.get(&#34;chunk_index&#34;, 0),
+                    ch[&#34;content&#34;],
+                    json.dumps(ch.get(&#34;metadata&#34;, {})),
+                    ch.get(&#34;embedding&#34;),
+                    now,
+                ),
+            )
+        conn.commit()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.save_correction"><code class="name flex">
+<span>def <span class="ident">save_correction</span></span>(<span>self,<br>correction_id: str,<br>user_quote: str,<br>new_instruction: str,<br>scope: str = 'always',<br>failure_id: str | None = None,<br>old_behavior: str | None = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_correction(
+    self,
+    correction_id: str,
+    user_quote: str,
+    new_instruction: str,
+    scope: str = &#34;always&#34;,
+    failure_id: Optional[str] = None,
+    old_behavior: Optional[str] = None,
+) -&gt; None:
+    now = time.time()
+    with self._get_connection() as conn:
+        conn.execute(
+            &#34;&#34;&#34;
+        INSERT OR REPLACE INTO corrections (id, failure_id, user_quote, old_behavior, new_instruction, scope, status, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, &#39;ACTIVE&#39;, ?)
+        &#34;&#34;&#34;,
+            (correction_id, failure_id, user_quote, old_behavior, new_instruction, scope, now),
+        )
+        conn.commit()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.save_document"><code class="name flex">
+<span>def <span class="ident">save_document</span></span>(<span>self,<br>doc_id: str,<br>file_path: str,<br>file_name: str,<br>file_type: str,<br>sha256: str,<br>total_pages: int,<br>total_chunks: int,<br>file_size: int,<br>metadata: Dict[str, Any] | None = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_document(
+    self,
+    doc_id: str,
+    file_path: str,
+    file_name: str,
+    file_type: str,
+    sha256: str,
+    total_pages: int,
+    total_chunks: int,
+    file_size: int,
+    metadata: Optional[Dict[str, Any]] = None,
+) -&gt; None:
+    now = time.time()
+    meta_str = json.dumps(metadata or {})
+    with self._get_connection() as conn:
+        conn.execute(
+            &#34;&#34;&#34;
+        INSERT INTO documents (id, file_path, file_name, file_type, sha256, total_pages, total_chunks, file_size, metadata, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+            total_chunks = excluded.total_chunks,
+            metadata = excluded.metadata
+        &#34;&#34;&#34;,
+            (doc_id, file_path, file_name, file_type, sha256, total_pages, total_chunks, file_size, meta_str, now),
+        )
+        conn.commit()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.memory.store.DatabaseStore.save_task"><code class="name flex">
+<span>def <span class="ident">save_task</span></span>(<span>self,<br>task_id: str,<br>title: str,<br>status: str,<br>power_id: str = '',<br>inputs: Any = None,<br>outputs: Any = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_task(
+    self, task_id: str, title: str, status: str, power_id: str = &#34;&#34;, inputs: Any = None, outputs: Any = None
+) -&gt; None:
+    now = time.time()
+    with self._get_connection() as conn:
+        conn.execute(
+            &#34;&#34;&#34;
+        INSERT INTO tasks (id, title, status, power_id, inputs, outputs, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+            status = excluded.status,
+            outputs = excluded.outputs,
+            updated_at = excluded.updated_at
+        &#34;&#34;&#34;,
+            (
+                task_id,
+                title,
+                status,
+                power_id,
+                json.dumps(inputs) if inputs else None,
+                json.dumps(outputs) if outputs else None,
+                now,
+                now,
+            ),
+        )
+        conn.commit()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.memory" href="index.html">jarvis.memory</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.memory.store.DatabaseStore" href="#jarvis.memory.store.DatabaseStore">DatabaseStore</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.memory.store.DatabaseStore.delete_document" href="#jarvis.memory.store.DatabaseStore.delete_document">delete_document</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.get_all_chunks" href="#jarvis.memory.store.DatabaseStore.get_all_chunks">get_all_chunks</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.get_chunks_for_doc" href="#jarvis.memory.store.DatabaseStore.get_chunks_for_doc">get_chunks_for_doc</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.get_document" href="#jarvis.memory.store.DatabaseStore.get_document">get_document</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.get_document_by_hash" href="#jarvis.memory.store.DatabaseStore.get_document_by_hash">get_document_by_hash</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.get_storage_stats" href="#jarvis.memory.store.DatabaseStore.get_storage_stats">get_storage_stats</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.get_task" href="#jarvis.memory.store.DatabaseStore.get_task">get_task</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.list_corrections" href="#jarvis.memory.store.DatabaseStore.list_corrections">list_corrections</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.list_documents" href="#jarvis.memory.store.DatabaseStore.list_documents">list_documents</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.list_tasks" href="#jarvis.memory.store.DatabaseStore.list_tasks">list_tasks</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.save_chunks" href="#jarvis.memory.store.DatabaseStore.save_chunks">save_chunks</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.save_correction" href="#jarvis.memory.store.DatabaseStore.save_correction">save_correction</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.save_document" href="#jarvis.memory.store.DatabaseStore.save_document">save_document</a></code></li>
+<li><code><a title="jarvis.memory.store.DatabaseStore.save_task" href="#jarvis.memory.store.DatabaseStore.save_task">save_task</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

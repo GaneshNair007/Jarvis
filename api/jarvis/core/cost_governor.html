@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.core.cost_governor API documentation</title>
+<meta name="description" content="JARVIS Cost Governor &amp; Budget Controller
+Estimates and enforces cost caps on LLM calls per task, day, and month.
+Includes circuit breaker …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.core.cost_governor</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Cost Governor &amp; Budget Controller
+Estimates and enforces cost caps on LLM calls per task, day, and month.
+Includes circuit breaker functionality to block runaway cloud expenditures.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.core.cost_governor.CostGovernor"><code class="flex name class">
+<span>class <span class="ident">CostGovernor</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CostGovernor:
+    # Model pricing per 1K tokens (estimated USD)
+    PRICING_TABLE = DEFAULT_PRICING_TABLE
+
+    def __init__(self):
+        self.daily_budget_limit = settings.daily_budget_limit
+        self.monthly_budget_limit = settings.monthly_budget_limit
+        self.max_per_task_budget = settings.max_per_task_budget
+
+        # Ledger of usage: { &#34;YYYY-MM-DD&#34;: float_cost }
+        self.daily_usage: Dict[str, float] = {}
+        self.task_usage: Dict[str, float] = {}
+        self.model_stats: Dict[str, Dict[str, Any]] = {}
+
+        # Circuit breaker state: { provider: { &#34;failures&#34;: int, &#34;tripped_until&#34;: float } }
+        self.circuit_breakers: Dict[str, Dict[str, Any]] = {}
+
+    def _today_key(self) -&gt; str:
+        return datetime.datetime.now().strftime(&#34;%Y-%m-%d&#34;)
+
+    def _month_key(self) -&gt; str:
+        return datetime.datetime.now().strftime(&#34;%Y-%m&#34;)
+
+    def estimate_call_cost(
+        self, model_name: str, estimated_input_tokens: int, estimated_output_tokens: int = 500
+    ) -&gt; float:
+        &#34;&#34;&#34;Calculates expected cost for an inference call in USD.&#34;&#34;&#34;
+        pricing = self.PRICING_TABLE.get(model_name.lower())
+        if not pricing:
+            for k, v in self.PRICING_TABLE.items():
+                if k in model_name.lower():
+                    pricing = v
+                    break
+        if not pricing:
+            pricing = (
+                self.PRICING_TABLE[&#34;default_cloud&#34;]
+                if (&#34;gpt&#34; in model_name or &#34;claude&#34; in model_name or &#34;gemini&#34; in model_name)
+                else self.PRICING_TABLE[&#34;ollama&#34;]
+            )
+
+        cost = (estimated_input_tokens / 1000.0 * pricing[&#34;input&#34;]) + (
+            estimated_output_tokens / 1000.0 * pricing[&#34;output&#34;]
+        )
+        return round(cost, 6)
+
+    def can_execute_call(self, task_id: str, model_name: str, estimated_input_tokens: int) -&gt; Tuple[bool, str, float]:
+        &#34;&#34;&#34;
+        Validates if an execution is within budget limits.
+        Returns (allowed: bool, reason: str, estimated_cost: float).
+        &#34;&#34;&#34;
+        est_cost = self.estimate_call_cost(model_name, estimated_input_tokens)
+
+        # 1. Local models are free
+        if est_cost == 0.0:
+            return True, &#34;Local execution within budget&#34;, 0.0
+
+        # 2. Check Circuit Breaker
+        provider = self._get_provider(model_name)
+        if self.is_circuit_open(provider):
+            return False, f&#34;Circuit breaker open for provider &#39;{provider}&#39; due to consecutive failures&#34;, est_cost
+
+        # 3. Check Per-Task Budget
+        current_task_cost = self.task_usage.get(task_id, 0.0)
+        if current_task_cost + est_cost &gt; self.max_per_task_budget:
+            return (
+                False,
+                f&#34;Per-task budget limit exceeded (${current_task_cost + est_cost:.3f} &gt; ${self.max_per_task_budget:.2f})&#34;,
+                est_cost,
+            )
+
+        # 4. Check Daily Budget
+        today = self._today_key()
+        current_daily_cost = self.daily_usage.get(today, 0.0)
+        if current_daily_cost + est_cost &gt; self.daily_budget_limit:
+            return (
+                False,
+                f&#34;Daily cloud budget limit reached (${current_daily_cost + est_cost:.3f} &gt; ${self.daily_budget_limit:.2f})&#34;,
+                est_cost,
+            )
+
+        return True, &#34;Call approved by Cost Governor&#34;, est_cost
+
+    def record_usage(
+        self, task_id: str, model_name: str, input_tokens: int, output_tokens: int, actual_cost: Optional[float] = None
+    ) -&gt; float:
+        &#34;&#34;&#34;Records token and dollar expenditure in real time.&#34;&#34;&#34;
+        if actual_cost is None:
+            actual_cost = self.estimate_call_cost(model_name, input_tokens, output_tokens)
+
+        today = self._today_key()
+        self.daily_usage[today] = self.daily_usage.get(today, 0.0) + actual_cost
+        self.task_usage[task_id] = self.task_usage.get(task_id, 0.0) + actual_cost
+
+        # Update model stats
+        if model_name not in self.model_stats:
+            self.model_stats[model_name] = {&#34;calls&#34;: 0, &#34;input_tokens&#34;: 0, &#34;output_tokens&#34;: 0, &#34;total_cost&#34;: 0.0}
+
+        st = self.model_stats[model_name]
+        st[&#34;calls&#34;] += 1
+        st[&#34;input_tokens&#34;] += input_tokens
+        st[&#34;output_tokens&#34;] += output_tokens
+        st[&#34;total_cost&#34;] = round(st[&#34;total_cost&#34;] + actual_cost, 6)
+
+        return actual_cost
+
+    def record_failure(self, provider: str) -&gt; None:
+        &#34;&#34;&#34;Increments consecutive failures and trips circuit breaker if threshold is met.&#34;&#34;&#34;
+        if provider not in self.circuit_breakers:
+            self.circuit_breakers[provider] = {&#34;failures&#34;: 0, &#34;tripped_until&#34;: 0.0}
+
+        self.circuit_breakers[provider][&#34;failures&#34;] += 1
+        if self.circuit_breakers[provider][&#34;failures&#34;] &gt;= 3:
+            # Trip for 60 seconds
+            self.circuit_breakers[provider][&#34;tripped_until&#34;] = time.time() + 60.0
+
+    def record_success(self, provider: str) -&gt; None:
+        &#34;&#34;&#34;Resets circuit breaker failure count on successful call.&#34;&#34;&#34;
+        if provider in self.circuit_breakers:
+            self.circuit_breakers[provider][&#34;failures&#34;] = 0
+            self.circuit_breakers[provider][&#34;tripped_until&#34;] = 0.0
+
+    def is_circuit_open(self, provider: str) -&gt; bool:
+        cb = self.circuit_breakers.get(provider)
+        if not cb:
+            return False
+        if time.time() &lt; cb.get(&#34;tripped_until&#34;, 0.0):
+            return True
+        return False
+
+    def _get_provider(self, model_name: str) -&gt; str:
+        name = model_name.lower()
+        if &#34;claude&#34; in name or &#34;anthropic&#34; in name:
+            return &#34;anthropic&#34;
+        if &#34;gpt&#34; in name or &#34;openai&#34; in name:
+            return &#34;openai&#34;
+        if &#34;gemini&#34; in name or &#34;google&#34; in name:
+            return &#34;google&#34;
+        if &#34;vllm&#34; in name:
+            return &#34;vllm&#34;
+        return &#34;ollama&#34;
+
+    def get_summary(self) -&gt; Dict[str, Any]:
+        today = self._today_key()
+        return {
+            &#34;daily_spent_usd&#34;: round(self.daily_usage.get(today, 0.0), 4),
+            &#34;daily_limit_usd&#34;: self.daily_budget_limit,
+            &#34;monthly_limit_usd&#34;: self.monthly_budget_limit,
+            &#34;max_per_task_limit_usd&#34;: self.max_per_task_budget,
+            &#34;models&#34;: self.model_stats,
+            &#34;active_circuit_breakers&#34;: {
+                p: cb[&#34;tripped_until&#34;] &gt; time.time() for p, cb in self.circuit_breakers.items()
+            },
+        }</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.core.cost_governor.CostGovernor.PRICING_TABLE"><code class="name">var <span class="ident">PRICING_TABLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.core.cost_governor.CostGovernor.can_execute_call"><code class="name flex">
+<span>def <span class="ident">can_execute_call</span></span>(<span>self, task_id: str, model_name: str, estimated_input_tokens: int) ‑> Tuple[bool, str, float]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def can_execute_call(self, task_id: str, model_name: str, estimated_input_tokens: int) -&gt; Tuple[bool, str, float]:
+    &#34;&#34;&#34;
+    Validates if an execution is within budget limits.
+    Returns (allowed: bool, reason: str, estimated_cost: float).
+    &#34;&#34;&#34;
+    est_cost = self.estimate_call_cost(model_name, estimated_input_tokens)
+
+    # 1. Local models are free
+    if est_cost == 0.0:
+        return True, &#34;Local execution within budget&#34;, 0.0
+
+    # 2. Check Circuit Breaker
+    provider = self._get_provider(model_name)
+    if self.is_circuit_open(provider):
+        return False, f&#34;Circuit breaker open for provider &#39;{provider}&#39; due to consecutive failures&#34;, est_cost
+
+    # 3. Check Per-Task Budget
+    current_task_cost = self.task_usage.get(task_id, 0.0)
+    if current_task_cost + est_cost &gt; self.max_per_task_budget:
+        return (
+            False,
+            f&#34;Per-task budget limit exceeded (${current_task_cost + est_cost:.3f} &gt; ${self.max_per_task_budget:.2f})&#34;,
+            est_cost,
+        )
+
+    # 4. Check Daily Budget
+    today = self._today_key()
+    current_daily_cost = self.daily_usage.get(today, 0.0)
+    if current_daily_cost + est_cost &gt; self.daily_budget_limit:
+        return (
+            False,
+            f&#34;Daily cloud budget limit reached (${current_daily_cost + est_cost:.3f} &gt; ${self.daily_budget_limit:.2f})&#34;,
+            est_cost,
+        )
+
+    return True, &#34;Call approved by Cost Governor&#34;, est_cost</code></pre>
+</details>
+<div class="desc"><p>Validates if an execution is within budget limits.
+Returns (allowed: bool, reason: str, estimated_cost: float).</p></div>
+</dd>
+<dt id="jarvis.core.cost_governor.CostGovernor.estimate_call_cost"><code class="name flex">
+<span>def <span class="ident">estimate_call_cost</span></span>(<span>self,<br>model_name: str,<br>estimated_input_tokens: int,<br>estimated_output_tokens: int = 500) ‑> float</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def estimate_call_cost(
+    self, model_name: str, estimated_input_tokens: int, estimated_output_tokens: int = 500
+) -&gt; float:
+    &#34;&#34;&#34;Calculates expected cost for an inference call in USD.&#34;&#34;&#34;
+    pricing = self.PRICING_TABLE.get(model_name.lower())
+    if not pricing:
+        for k, v in self.PRICING_TABLE.items():
+            if k in model_name.lower():
+                pricing = v
+                break
+    if not pricing:
+        pricing = (
+            self.PRICING_TABLE[&#34;default_cloud&#34;]
+            if (&#34;gpt&#34; in model_name or &#34;claude&#34; in model_name or &#34;gemini&#34; in model_name)
+            else self.PRICING_TABLE[&#34;ollama&#34;]
+        )
+
+    cost = (estimated_input_tokens / 1000.0 * pricing[&#34;input&#34;]) + (
+        estimated_output_tokens / 1000.0 * pricing[&#34;output&#34;]
+    )
+    return round(cost, 6)</code></pre>
+</details>
+<div class="desc"><p>Calculates expected cost for an inference call in USD.</p></div>
+</dd>
+<dt id="jarvis.core.cost_governor.CostGovernor.get_summary"><code class="name flex">
+<span>def <span class="ident">get_summary</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_summary(self) -&gt; Dict[str, Any]:
+    today = self._today_key()
+    return {
+        &#34;daily_spent_usd&#34;: round(self.daily_usage.get(today, 0.0), 4),
+        &#34;daily_limit_usd&#34;: self.daily_budget_limit,
+        &#34;monthly_limit_usd&#34;: self.monthly_budget_limit,
+        &#34;max_per_task_limit_usd&#34;: self.max_per_task_budget,
+        &#34;models&#34;: self.model_stats,
+        &#34;active_circuit_breakers&#34;: {
+            p: cb[&#34;tripped_until&#34;] &gt; time.time() for p, cb in self.circuit_breakers.items()
+        },
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.cost_governor.CostGovernor.is_circuit_open"><code class="name flex">
+<span>def <span class="ident">is_circuit_open</span></span>(<span>self, provider: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_circuit_open(self, provider: str) -&gt; bool:
+    cb = self.circuit_breakers.get(provider)
+    if not cb:
+        return False
+    if time.time() &lt; cb.get(&#34;tripped_until&#34;, 0.0):
+        return True
+    return False</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.core.cost_governor.CostGovernor.record_failure"><code class="name flex">
+<span>def <span class="ident">record_failure</span></span>(<span>self, provider: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def record_failure(self, provider: str) -&gt; None:
+    &#34;&#34;&#34;Increments consecutive failures and trips circuit breaker if threshold is met.&#34;&#34;&#34;
+    if provider not in self.circuit_breakers:
+        self.circuit_breakers[provider] = {&#34;failures&#34;: 0, &#34;tripped_until&#34;: 0.0}
+
+    self.circuit_breakers[provider][&#34;failures&#34;] += 1
+    if self.circuit_breakers[provider][&#34;failures&#34;] &gt;= 3:
+        # Trip for 60 seconds
+        self.circuit_breakers[provider][&#34;tripped_until&#34;] = time.time() + 60.0</code></pre>
+</details>
+<div class="desc"><p>Increments consecutive failures and trips circuit breaker if threshold is met.</p></div>
+</dd>
+<dt id="jarvis.core.cost_governor.CostGovernor.record_success"><code class="name flex">
+<span>def <span class="ident">record_success</span></span>(<span>self, provider: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def record_success(self, provider: str) -&gt; None:
+    &#34;&#34;&#34;Resets circuit breaker failure count on successful call.&#34;&#34;&#34;
+    if provider in self.circuit_breakers:
+        self.circuit_breakers[provider][&#34;failures&#34;] = 0
+        self.circuit_breakers[provider][&#34;tripped_until&#34;] = 0.0</code></pre>
+</details>
+<div class="desc"><p>Resets circuit breaker failure count on successful call.</p></div>
+</dd>
+<dt id="jarvis.core.cost_governor.CostGovernor.record_usage"><code class="name flex">
+<span>def <span class="ident">record_usage</span></span>(<span>self,<br>task_id: str,<br>model_name: str,<br>input_tokens: int,<br>output_tokens: int,<br>actual_cost: float | None = None) ‑> float</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def record_usage(
+    self, task_id: str, model_name: str, input_tokens: int, output_tokens: int, actual_cost: Optional[float] = None
+) -&gt; float:
+    &#34;&#34;&#34;Records token and dollar expenditure in real time.&#34;&#34;&#34;
+    if actual_cost is None:
+        actual_cost = self.estimate_call_cost(model_name, input_tokens, output_tokens)
+
+    today = self._today_key()
+    self.daily_usage[today] = self.daily_usage.get(today, 0.0) + actual_cost
+    self.task_usage[task_id] = self.task_usage.get(task_id, 0.0) + actual_cost
+
+    # Update model stats
+    if model_name not in self.model_stats:
+        self.model_stats[model_name] = {&#34;calls&#34;: 0, &#34;input_tokens&#34;: 0, &#34;output_tokens&#34;: 0, &#34;total_cost&#34;: 0.0}
+
+    st = self.model_stats[model_name]
+    st[&#34;calls&#34;] += 1
+    st[&#34;input_tokens&#34;] += input_tokens
+    st[&#34;output_tokens&#34;] += output_tokens
+    st[&#34;total_cost&#34;] = round(st[&#34;total_cost&#34;] + actual_cost, 6)
+
+    return actual_cost</code></pre>
+</details>
+<div class="desc"><p>Records token and dollar expenditure in real time.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.core" href="index.html">jarvis.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.core.cost_governor.CostGovernor" href="#jarvis.core.cost_governor.CostGovernor">CostGovernor</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.core.cost_governor.CostGovernor.PRICING_TABLE" href="#jarvis.core.cost_governor.CostGovernor.PRICING_TABLE">PRICING_TABLE</a></code></li>
+<li><code><a title="jarvis.core.cost_governor.CostGovernor.can_execute_call" href="#jarvis.core.cost_governor.CostGovernor.can_execute_call">can_execute_call</a></code></li>
+<li><code><a title="jarvis.core.cost_governor.CostGovernor.estimate_call_cost" href="#jarvis.core.cost_governor.CostGovernor.estimate_call_cost">estimate_call_cost</a></code></li>
+<li><code><a title="jarvis.core.cost_governor.CostGovernor.get_summary" href="#jarvis.core.cost_governor.CostGovernor.get_summary">get_summary</a></code></li>
+<li><code><a title="jarvis.core.cost_governor.CostGovernor.is_circuit_open" href="#jarvis.core.cost_governor.CostGovernor.is_circuit_open">is_circuit_open</a></code></li>
+<li><code><a title="jarvis.core.cost_governor.CostGovernor.record_failure" href="#jarvis.core.cost_governor.CostGovernor.record_failure">record_failure</a></code></li>
+<li><code><a title="jarvis.core.cost_governor.CostGovernor.record_success" href="#jarvis.core.cost_governor.CostGovernor.record_success">record_success</a></code></li>
+<li><code><a title="jarvis.core.cost_governor.CostGovernor.record_usage" href="#jarvis.core.cost_governor.CostGovernor.record_usage">record_usage</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.computer.desktop_worker API documentation</title>
+<meta name="description" content="JARVIS Desktop Worker (See–Act–Verify Loop)
+Implements:
+1. OS Accessibility / UI Automation primitives (win32gui foreground detection &amp;
+…">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.computer.desktop_worker</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Desktop Worker (See–Act–Verify Loop)</p>
+<p>Implements
+-----=
+1. OS Accessibility / UI Automation primitives (win32gui foreground detection &amp; enumeration)
+2. Coordinate-safe input control (PyAutoGUI fallback with FAILSAFE)
+3. Continuous See-Act-Verify loop with SHA-256 screenshot evidence artifacts
+4. App allow-listing and policy enforcement
+5. Global kill-switch preemption</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker"><code class="flex name class">
+<span>class <span class="ident">DesktopWorker</span></span>
+<span>(</span><span>screenshot_dir: pathlib.Path | None = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DesktopWorker:
+    &#34;&#34;&#34;Autonomous desktop operator implementing the See-Act-Verify cycle.&#34;&#34;&#34;
+
+    DEFAULT_ALLOWED_APPS = list(settings.desktop_allowed_apps)
+
+    def __init__(self, screenshot_dir: Optional[Path] = None):
+        self.screenshot_dir = screenshot_dir or settings.screenshot_dir
+        self.screenshot_dir.mkdir(parents=True, exist_ok=True)
+        self.is_controlling_screen = False
+        self.allowed_apps = list(settings.desktop_allowed_apps)
+        self.task_history: List[Dict[str, Any]] = []
+
+    def get_screen_size(self) -&gt; Tuple[int, int]:
+        &#34;&#34;&#34;Returns the primary screen width and height in pixels.&#34;&#34;&#34;
+        if HAS_PYAUTOGUI and pyautogui:
+            try:
+                size = pyautogui.size()
+                return (size.width, size.height)
+            except Exception:
+                pass
+        return (1920, 1080)
+
+    def get_active_window(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Retrieves details of the current foreground window via Win32 API.&#34;&#34;&#34;
+        if not HAS_WIN32:
+            return {&#34;title&#34;: &#34;Unknown (Win32 unavailable)&#34;, &#34;hwnd&#34;: 0, &#34;rect&#34;: [0, 0, 0, 0]}
+
+        try:
+            hwnd = win32gui.GetForegroundWindow()
+            title = win32gui.GetWindowText(hwnd) or &#34;Desktop / Background&#34;
+            rect = win32gui.GetWindowRect(hwnd) if hwnd else (0, 0, 0, 0)
+            return {
+                &#34;hwnd&#34;: hwnd,
+                &#34;title&#34;: title,
+                &#34;rect&#34;: list(rect),
+                &#34;width&#34;: max(0, rect[2] - rect[0]),
+                &#34;height&#34;: max(0, rect[3] - rect[1]),
+            }
+        except Exception as e:
+            logger.warning(&#34;Error getting active window: %s&#34;, e)
+            return {&#34;hwnd&#34;: 0, &#34;title&#34;: &#34;Error&#34;, &#34;rect&#34;: [0, 0, 0, 0], &#34;error&#34;: str(e)}
+
+    def list_windows(self) -&gt; List[Dict[str, Any]]:
+        &#34;&#34;&#34;Enumerates visible top-level windows.&#34;&#34;&#34;
+        if not HAS_WIN32:
+            return []
+
+        windows: List[Dict[str, Any]] = []
+
+        def enum_handler(hwnd, _):
+            if win32gui.IsWindowVisible(hwnd):
+                title = win32gui.GetWindowText(hwnd)
+                if title.strip():
+                    rect = win32gui.GetWindowRect(hwnd)
+                    windows.append({&#34;hwnd&#34;: hwnd, &#34;title&#34;: title, &#34;rect&#34;: list(rect)})
+
+        try:
+            win32gui.EnumWindows(enum_handler, None)
+        except Exception as e:
+            logger.warning(&#34;Error enumerating windows: %s&#34;, e)
+        return windows
+
+    def focus_window(self, title_pattern: str) -&gt; bool:
+        &#34;&#34;&#34;Brings the first window matching the pattern to the foreground.&#34;&#34;&#34;
+        if not HAS_WIN32:
+            return False
+
+        windows = self.list_windows()
+        target = None
+        for w in windows:
+            if title_pattern.lower() in w[&#34;title&#34;].lower():
+                target = w
+                break
+
+        if not target:
+            logger.warning(&#34;Window matching &#39;%s&#39; not found.&#34;, title_pattern)
+            return False
+
+        try:
+            hwnd = target[&#34;hwnd&#34;]
+            win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
+            win32gui.SetForegroundWindow(hwnd)
+            time.sleep(0.2)
+            return True
+        except Exception as e:
+            logger.error(&#34;Failed to focus window %s: %s&#34;, target[&#34;title&#34;], e)
+            return False
+
+    def capture_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Takes a screenshot of the whole screen or region, computes SHA-256,
+        saves artifact to disk, and logs to the audit ledger.
+        Falls back to virtual desktop buffer if session is headless/non-interactive.
+        &#34;&#34;&#34;
+        now = time.time()
+        img = None
+        if HAS_PYAUTOGUI and pyautogui:
+            try:
+                img = pyautogui.screenshot(region=region) if region else pyautogui.screenshot()
+            except Exception:
+                img = None
+        if img is None:
+            # Running in non-interactive/headless Windows/Linux session or virtual subshell
+            w, h = self.get_screen_size()
+            if region:
+                w, h = region[2], region[3]
+            img = Image.new(&#34;RGB&#34;, (max(w, 100), max(h, 100)), color=(18, 24, 38))
+            from PIL import ImageDraw
+
+            draw = ImageDraw.Draw(img)
+            active_win = self.get_active_window()
+            draw.text((30, 30), f&#34;JARVIS Screen Buffer [{time.strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)}]&#34;, fill=(0, 210, 255))
+            draw.text((30, 60), f&#34;Active Window: {active_win.get(&#39;title&#39;, &#39;None&#39;)}&#34;, fill=(200, 200, 200))
+            draw.text((30, 90), f&#34;Resolution: {w}x{h} | Virtual Buffer Mode&#34;, fill=(150, 150, 150))
+            # Unique micro-marker so timestamps produce unique hashes
+            draw.rectangle([10, 10, 25, 25], fill=(int(now * 1000) % 255, 120, 200))
+
+        # Save to buffer and compute hash
+        import io
+
+        buf = io.BytesIO()
+        img.save(buf, format=&#34;PNG&#34;)
+        img_bytes = buf.getvalue()
+        sha256 = hashlib.sha256(img_bytes).hexdigest()
+
+        filename = f&#34;desktop_{int(now * 1000)}_{sha256[:8]}.png&#34;
+        file_path = self.screenshot_dir / filename
+        file_path.write_bytes(img_bytes)
+
+        evidence = {
+            &#34;file_name&#34;: filename,
+            &#34;file_path&#34;: str(file_path),
+            &#34;sha256&#34;: sha256,
+            &#34;timestamp&#34;: now,
+            &#34;width&#34;: img.width,
+            &#34;height&#34;: img.height,
+            &#34;region&#34;: list(region) if region else None,
+        }
+
+        audit_ledger.record(
+            actor=&#34;DesktopWorker&#34;,
+            action=&#34;SCREEN_CAPTURE&#34;,
+            target=str(file_path),
+            payload={&#34;sha256&#34;: sha256, &#34;width&#34;: img.width, &#34;height&#34;: img.height},
+            result=&#34;CAPTURED&#34;,
+        )
+
+        return evidence
+
+    def is_app_allowed(self, app_title: str) -&gt; bool:
+        &#34;&#34;&#34;Checks if the window title or application is permitted by safety policy.&#34;&#34;&#34;
+        title_lower = app_title.lower()
+        if not self.allowed_apps:
+            return True
+        return any(allowed in title_lower for allowed in self.allowed_apps)
+
+    def see_act_verify(self, action: str, params: Dict[str, Any], task_id: str = &#34;desktop_action&#34;) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Executes a desktop action following the See–Act–Verify lifecycle:
+          1. SEE: Capture pre-action screenshot and inspect active window
+          2. POLICY CHECK: Verify app allow-list and global kill switch
+          3. ACT: Execute mouse, keyboard, or window command
+          4. VERIFY: Capture post-action screenshot and verify observable delta
+        &#34;&#34;&#34;
+        # Emergency check
+        if policy_gate.is_kill_switch_active():
+            raise RuntimeError(&#34;CRITICAL: Global kill switch is ACTIVE. Desktop actions are halted.&#34;)
+
+        # 1. SEE (Pre-action)
+        pre_window = self.get_active_window()
+        pre_screen = self.capture_screen()
+
+        # 2. POLICY CHECK
+        action_clean = action.lower().strip()
+        target_app = params.get(&#34;target_app&#34;, pre_window.get(&#34;title&#34;, &#34;&#34;))
+
+        if params.get(&#34;enforce_allowlist&#34;, False) and not self.is_app_allowed(target_app):
+            audit_ledger.record(
+                actor=&#34;DesktopWorker&#34;,
+                action=&#34;DESKTOP_POLICY_REJECT&#34;,
+                target=target_app,
+                payload={&#34;action&#34;: action, &#34;params&#34;: params},
+                result=&#34;DENIED&#34;,
+            )
+            return {
+                &#34;status&#34;: &#34;POLICY_BLOCKED&#34;,
+                &#34;reason&#34;: f&#34;Application &#39;{target_app}&#39; is not in the allowed application roster.&#34;,
+                &#34;pre_evidence&#34;: pre_screen,
+                &#34;observable_change&#34;: False,
+            }
+
+        # 3. ACT
+        self.is_controlling_screen = True
+        act_result = &#34;SUCCESS&#34;
+        error_msg = None
+
+        try:
+            if action_clean == &#34;click&#34;:
+                x = params.get(&#34;x&#34;, 100)
+                y = params.get(&#34;y&#34;, 100)
+                clicks = params.get(&#34;clicks&#34;, 1)
+                button = params.get(&#34;button&#34;, &#34;left&#34;)
+                pyautogui.click(x=x, y=y, clicks=clicks, button=button)
+
+            elif action_clean == &#34;move&#34;:
+                x = params.get(&#34;x&#34;, 100)
+                y = params.get(&#34;y&#34;, 100)
+                pyautogui.moveTo(x=x, y=y, duration=0.1)
+
+            elif action_clean == &#34;type&#34;:
+                text = params.get(&#34;text&#34;, &#34;&#34;)
+                interval = params.get(&#34;interval&#34;, 0.02)
+                # Password protection check
+                if any(w in text.lower() for w in [&#34;password&#34;, &#34;secret&#34;, &#34;private_key&#34;]):
+                    logger.warning(&#34;Potential secret typing prevented by DesktopWorker guard.&#34;)
+                    return {
+                        &#34;status&#34;: &#34;POLICY_BLOCKED&#34;,
+                        &#34;reason&#34;: &#34;Direct typing of credential keywords blocked by policy.&#34;,
+                        &#34;pre_evidence&#34;: pre_screen,
+                    }
+                pyautogui.write(text, interval=interval)
+
+            elif action_clean == &#34;press&#34;:
+                key = params.get(&#34;key&#34;, &#34;enter&#34;)
+                pyautogui.press(key)
+
+            elif action_clean == &#34;hotkey&#34;:
+                keys = params.get(&#34;keys&#34;, [&#34;ctrl&#34;, &#34;c&#34;])
+                pyautogui.hotkey(*keys)
+
+            elif action_clean == &#34;focus&#34;:
+                title_pattern = params.get(&#34;title&#34;, &#34;&#34;)
+                focused = self.focus_window(title_pattern)
+                if not focused:
+                    act_result = &#34;RETRYABLE_FAILURE&#34;
+                    error_msg = f&#34;Failed to focus window matching &#39;{title_pattern}&#39;&#34;
+
+            elif action_clean == &#34;wait&#34;:
+                duration = min(params.get(&#34;seconds&#34;, 1.0), 10.0)
+                time.sleep(duration)
+
+            else:
+                act_result = &#34;INVALID_ACTION&#34;
+                error_msg = f&#34;Unknown desktop action &#39;{action}&#39;&#34;
+
+        except pyautogui.FailSafeException:
+            logger.critical(&#34;PHYSICAL FAILSAFE: Mouse moved to corner (0,0). Halting desktop operator.&#34;)
+            act_result = &#34;USER_BLOCKED&#34;
+            error_msg = &#34;Physical mouse-corner failsafe triggered by user.&#34;
+        except Exception as e:
+            logger.error(&#34;Desktop action execution error: %s&#34;, e)
+            act_result = &#34;FAILED&#34;
+            error_msg = str(e)
+        finally:
+            self.is_controlling_screen = False
+
+        # 4. VERIFY (Post-action)
+        time.sleep(0.2)
+        post_window = self.get_active_window()
+        post_screen = self.capture_screen()
+
+        # Check observable change
+        observable_change = (pre_screen[&#34;sha256&#34;] != post_screen[&#34;sha256&#34;]) or (
+            pre_window.get(&#34;title&#34;) != post_window.get(&#34;title&#34;)
+        )
+
+        result_payload = {
+            &#34;task_id&#34;: task_id,
+            &#34;action&#34;: action_clean,
+            &#34;params&#34;: params,
+            &#34;status&#34;: act_result,
+            &#34;error&#34;: error_msg,
+            &#34;pre_evidence&#34;: pre_screen,
+            &#34;post_evidence&#34;: post_screen,
+            &#34;pre_window&#34;: pre_window,
+            &#34;post_window&#34;: post_window,
+            &#34;observable_change&#34;: observable_change,
+        }
+
+        # Save to local history
+        self.task_history.append(result_payload)
+
+        audit_ledger.record(
+            actor=&#34;DesktopWorker&#34;,
+            action=f&#34;DESKTOP_{action_clean.upper()}&#34;,
+            target=target_app,
+            payload={
+                &#34;pre_sha256&#34;: pre_screen[&#34;sha256&#34;],
+                &#34;post_sha256&#34;: post_screen[&#34;sha256&#34;],
+                &#34;observable_change&#34;: observable_change,
+                &#34;status&#34;: act_result,
+            },
+            result=act_result,
+        )
+
+        return result_payload
+
+    def get_status(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Returns live status of the desktop worker and screen telemetry.&#34;&#34;&#34;
+        w, h = self.get_screen_size()
+        active = self.get_active_window()
+        return {
+            &#34;is_controlling_screen&#34;: self.is_controlling_screen,
+            &#34;screen_resolution&#34;: f&#34;{w}x{h}&#34;,
+            &#34;active_window&#34;: active,
+            &#34;allowed_apps&#34;: self.allowed_apps,
+            &#34;kill_switch_active&#34;: policy_gate.is_kill_switch_active(),
+            &#34;recent_tasks_count&#34;: len(self.task_history),
+        }</code></pre>
+</details>
+<div class="desc"><p>Autonomous desktop operator implementing the See-Act-Verify cycle.</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker.DEFAULT_ALLOWED_APPS"><code class="name">var <span class="ident">DEFAULT_ALLOWED_APPS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker.capture_screen"><code class="name flex">
+<span>def <span class="ident">capture_screen</span></span>(<span>self, region: Tuple[int, int, int, int] | None = None) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def capture_screen(self, region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Takes a screenshot of the whole screen or region, computes SHA-256,
+    saves artifact to disk, and logs to the audit ledger.
+    Falls back to virtual desktop buffer if session is headless/non-interactive.
+    &#34;&#34;&#34;
+    now = time.time()
+    img = None
+    if HAS_PYAUTOGUI and pyautogui:
+        try:
+            img = pyautogui.screenshot(region=region) if region else pyautogui.screenshot()
+        except Exception:
+            img = None
+    if img is None:
+        # Running in non-interactive/headless Windows/Linux session or virtual subshell
+        w, h = self.get_screen_size()
+        if region:
+            w, h = region[2], region[3]
+        img = Image.new(&#34;RGB&#34;, (max(w, 100), max(h, 100)), color=(18, 24, 38))
+        from PIL import ImageDraw
+
+        draw = ImageDraw.Draw(img)
+        active_win = self.get_active_window()
+        draw.text((30, 30), f&#34;JARVIS Screen Buffer [{time.strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)}]&#34;, fill=(0, 210, 255))
+        draw.text((30, 60), f&#34;Active Window: {active_win.get(&#39;title&#39;, &#39;None&#39;)}&#34;, fill=(200, 200, 200))
+        draw.text((30, 90), f&#34;Resolution: {w}x{h} | Virtual Buffer Mode&#34;, fill=(150, 150, 150))
+        # Unique micro-marker so timestamps produce unique hashes
+        draw.rectangle([10, 10, 25, 25], fill=(int(now * 1000) % 255, 120, 200))
+
+    # Save to buffer and compute hash
+    import io
+
+    buf = io.BytesIO()
+    img.save(buf, format=&#34;PNG&#34;)
+    img_bytes = buf.getvalue()
+    sha256 = hashlib.sha256(img_bytes).hexdigest()
+
+    filename = f&#34;desktop_{int(now * 1000)}_{sha256[:8]}.png&#34;
+    file_path = self.screenshot_dir / filename
+    file_path.write_bytes(img_bytes)
+
+    evidence = {
+        &#34;file_name&#34;: filename,
+        &#34;file_path&#34;: str(file_path),
+        &#34;sha256&#34;: sha256,
+        &#34;timestamp&#34;: now,
+        &#34;width&#34;: img.width,
+        &#34;height&#34;: img.height,
+        &#34;region&#34;: list(region) if region else None,
+    }
+
+    audit_ledger.record(
+        actor=&#34;DesktopWorker&#34;,
+        action=&#34;SCREEN_CAPTURE&#34;,
+        target=str(file_path),
+        payload={&#34;sha256&#34;: sha256, &#34;width&#34;: img.width, &#34;height&#34;: img.height},
+        result=&#34;CAPTURED&#34;,
+    )
+
+    return evidence</code></pre>
+</details>
+<div class="desc"><p>Takes a screenshot of the whole screen or region, computes SHA-256,
+saves artifact to disk, and logs to the audit ledger.
+Falls back to virtual desktop buffer if session is headless/non-interactive.</p></div>
+</dd>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker.focus_window"><code class="name flex">
+<span>def <span class="ident">focus_window</span></span>(<span>self, title_pattern: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def focus_window(self, title_pattern: str) -&gt; bool:
+    &#34;&#34;&#34;Brings the first window matching the pattern to the foreground.&#34;&#34;&#34;
+    if not HAS_WIN32:
+        return False
+
+    windows = self.list_windows()
+    target = None
+    for w in windows:
+        if title_pattern.lower() in w[&#34;title&#34;].lower():
+            target = w
+            break
+
+    if not target:
+        logger.warning(&#34;Window matching &#39;%s&#39; not found.&#34;, title_pattern)
+        return False
+
+    try:
+        hwnd = target[&#34;hwnd&#34;]
+        win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
+        win32gui.SetForegroundWindow(hwnd)
+        time.sleep(0.2)
+        return True
+    except Exception as e:
+        logger.error(&#34;Failed to focus window %s: %s&#34;, target[&#34;title&#34;], e)
+        return False</code></pre>
+</details>
+<div class="desc"><p>Brings the first window matching the pattern to the foreground.</p></div>
+</dd>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker.get_active_window"><code class="name flex">
+<span>def <span class="ident">get_active_window</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_active_window(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Retrieves details of the current foreground window via Win32 API.&#34;&#34;&#34;
+    if not HAS_WIN32:
+        return {&#34;title&#34;: &#34;Unknown (Win32 unavailable)&#34;, &#34;hwnd&#34;: 0, &#34;rect&#34;: [0, 0, 0, 0]}
+
+    try:
+        hwnd = win32gui.GetForegroundWindow()
+        title = win32gui.GetWindowText(hwnd) or &#34;Desktop / Background&#34;
+        rect = win32gui.GetWindowRect(hwnd) if hwnd else (0, 0, 0, 0)
+        return {
+            &#34;hwnd&#34;: hwnd,
+            &#34;title&#34;: title,
+            &#34;rect&#34;: list(rect),
+            &#34;width&#34;: max(0, rect[2] - rect[0]),
+            &#34;height&#34;: max(0, rect[3] - rect[1]),
+        }
+    except Exception as e:
+        logger.warning(&#34;Error getting active window: %s&#34;, e)
+        return {&#34;hwnd&#34;: 0, &#34;title&#34;: &#34;Error&#34;, &#34;rect&#34;: [0, 0, 0, 0], &#34;error&#34;: str(e)}</code></pre>
+</details>
+<div class="desc"><p>Retrieves details of the current foreground window via Win32 API.</p></div>
+</dd>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker.get_screen_size"><code class="name flex">
+<span>def <span class="ident">get_screen_size</span></span>(<span>self) ‑> Tuple[int, int]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_screen_size(self) -&gt; Tuple[int, int]:
+    &#34;&#34;&#34;Returns the primary screen width and height in pixels.&#34;&#34;&#34;
+    if HAS_PYAUTOGUI and pyautogui:
+        try:
+            size = pyautogui.size()
+            return (size.width, size.height)
+        except Exception:
+            pass
+    return (1920, 1080)</code></pre>
+</details>
+<div class="desc"><p>Returns the primary screen width and height in pixels.</p></div>
+</dd>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker.get_status"><code class="name flex">
+<span>def <span class="ident">get_status</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_status(self) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Returns live status of the desktop worker and screen telemetry.&#34;&#34;&#34;
+    w, h = self.get_screen_size()
+    active = self.get_active_window()
+    return {
+        &#34;is_controlling_screen&#34;: self.is_controlling_screen,
+        &#34;screen_resolution&#34;: f&#34;{w}x{h}&#34;,
+        &#34;active_window&#34;: active,
+        &#34;allowed_apps&#34;: self.allowed_apps,
+        &#34;kill_switch_active&#34;: policy_gate.is_kill_switch_active(),
+        &#34;recent_tasks_count&#34;: len(self.task_history),
+    }</code></pre>
+</details>
+<div class="desc"><p>Returns live status of the desktop worker and screen telemetry.</p></div>
+</dd>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker.is_app_allowed"><code class="name flex">
+<span>def <span class="ident">is_app_allowed</span></span>(<span>self, app_title: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_app_allowed(self, app_title: str) -&gt; bool:
+    &#34;&#34;&#34;Checks if the window title or application is permitted by safety policy.&#34;&#34;&#34;
+    title_lower = app_title.lower()
+    if not self.allowed_apps:
+        return True
+    return any(allowed in title_lower for allowed in self.allowed_apps)</code></pre>
+</details>
+<div class="desc"><p>Checks if the window title or application is permitted by safety policy.</p></div>
+</dd>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker.list_windows"><code class="name flex">
+<span>def <span class="ident">list_windows</span></span>(<span>self) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_windows(self) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Enumerates visible top-level windows.&#34;&#34;&#34;
+    if not HAS_WIN32:
+        return []
+
+    windows: List[Dict[str, Any]] = []
+
+    def enum_handler(hwnd, _):
+        if win32gui.IsWindowVisible(hwnd):
+            title = win32gui.GetWindowText(hwnd)
+            if title.strip():
+                rect = win32gui.GetWindowRect(hwnd)
+                windows.append({&#34;hwnd&#34;: hwnd, &#34;title&#34;: title, &#34;rect&#34;: list(rect)})
+
+    try:
+        win32gui.EnumWindows(enum_handler, None)
+    except Exception as e:
+        logger.warning(&#34;Error enumerating windows: %s&#34;, e)
+    return windows</code></pre>
+</details>
+<div class="desc"><p>Enumerates visible top-level windows.</p></div>
+</dd>
+<dt id="jarvis.computer.desktop_worker.DesktopWorker.see_act_verify"><code class="name flex">
+<span>def <span class="ident">see_act_verify</span></span>(<span>self, action: str, params: Dict[str, Any], task_id: str = 'desktop_action') ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def see_act_verify(self, action: str, params: Dict[str, Any], task_id: str = &#34;desktop_action&#34;) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;
+    Executes a desktop action following the See–Act–Verify lifecycle:
+      1. SEE: Capture pre-action screenshot and inspect active window
+      2. POLICY CHECK: Verify app allow-list and global kill switch
+      3. ACT: Execute mouse, keyboard, or window command
+      4. VERIFY: Capture post-action screenshot and verify observable delta
+    &#34;&#34;&#34;
+    # Emergency check
+    if policy_gate.is_kill_switch_active():
+        raise RuntimeError(&#34;CRITICAL: Global kill switch is ACTIVE. Desktop actions are halted.&#34;)
+
+    # 1. SEE (Pre-action)
+    pre_window = self.get_active_window()
+    pre_screen = self.capture_screen()
+
+    # 2. POLICY CHECK
+    action_clean = action.lower().strip()
+    target_app = params.get(&#34;target_app&#34;, pre_window.get(&#34;title&#34;, &#34;&#34;))
+
+    if params.get(&#34;enforce_allowlist&#34;, False) and not self.is_app_allowed(target_app):
+        audit_ledger.record(
+            actor=&#34;DesktopWorker&#34;,
+            action=&#34;DESKTOP_POLICY_REJECT&#34;,
+            target=target_app,
+            payload={&#34;action&#34;: action, &#34;params&#34;: params},
+            result=&#34;DENIED&#34;,
+        )
+        return {
+            &#34;status&#34;: &#34;POLICY_BLOCKED&#34;,
+            &#34;reason&#34;: f&#34;Application &#39;{target_app}&#39; is not in the allowed application roster.&#34;,
+            &#34;pre_evidence&#34;: pre_screen,
+            &#34;observable_change&#34;: False,
+        }
+
+    # 3. ACT
+    self.is_controlling_screen = True
+    act_result = &#34;SUCCESS&#34;
+    error_msg = None
+
+    try:
+        if action_clean == &#34;click&#34;:
+            x = params.get(&#34;x&#34;, 100)
+            y = params.get(&#34;y&#34;, 100)
+            clicks = params.get(&#34;clicks&#34;, 1)
+            button = params.get(&#34;button&#34;, &#34;left&#34;)
+            pyautogui.click(x=x, y=y, clicks=clicks, button=button)
+
+        elif action_clean == &#34;move&#34;:
+            x = params.get(&#34;x&#34;, 100)
+            y = params.get(&#34;y&#34;, 100)
+            pyautogui.moveTo(x=x, y=y, duration=0.1)
+
+        elif action_clean == &#34;type&#34;:
+            text = params.get(&#34;text&#34;, &#34;&#34;)
+            interval = params.get(&#34;interval&#34;, 0.02)
+            # Password protection check
+            if any(w in text.lower() for w in [&#34;password&#34;, &#34;secret&#34;, &#34;private_key&#34;]):
+                logger.warning(&#34;Potential secret typing prevented by DesktopWorker guard.&#34;)
+                return {
+                    &#34;status&#34;: &#34;POLICY_BLOCKED&#34;,
+                    &#34;reason&#34;: &#34;Direct typing of credential keywords blocked by policy.&#34;,
+                    &#34;pre_evidence&#34;: pre_screen,
+                }
+            pyautogui.write(text, interval=interval)
+
+        elif action_clean == &#34;press&#34;:
+            key = params.get(&#34;key&#34;, &#34;enter&#34;)
+            pyautogui.press(key)
+
+        elif action_clean == &#34;hotkey&#34;:
+            keys = params.get(&#34;keys&#34;, [&#34;ctrl&#34;, &#34;c&#34;])
+            pyautogui.hotkey(*keys)
+
+        elif action_clean == &#34;focus&#34;:
+            title_pattern = params.get(&#34;title&#34;, &#34;&#34;)
+            focused = self.focus_window(title_pattern)
+            if not focused:
+                act_result = &#34;RETRYABLE_FAILURE&#34;
+                error_msg = f&#34;Failed to focus window matching &#39;{title_pattern}&#39;&#34;
+
+        elif action_clean == &#34;wait&#34;:
+            duration = min(params.get(&#34;seconds&#34;, 1.0), 10.0)
+            time.sleep(duration)
+
+        else:
+            act_result = &#34;INVALID_ACTION&#34;
+            error_msg = f&#34;Unknown desktop action &#39;{action}&#39;&#34;
+
+    except pyautogui.FailSafeException:
+        logger.critical(&#34;PHYSICAL FAILSAFE: Mouse moved to corner (0,0). Halting desktop operator.&#34;)
+        act_result = &#34;USER_BLOCKED&#34;
+        error_msg = &#34;Physical mouse-corner failsafe triggered by user.&#34;
+    except Exception as e:
+        logger.error(&#34;Desktop action execution error: %s&#34;, e)
+        act_result = &#34;FAILED&#34;
+        error_msg = str(e)
+    finally:
+        self.is_controlling_screen = False
+
+    # 4. VERIFY (Post-action)
+    time.sleep(0.2)
+    post_window = self.get_active_window()
+    post_screen = self.capture_screen()
+
+    # Check observable change
+    observable_change = (pre_screen[&#34;sha256&#34;] != post_screen[&#34;sha256&#34;]) or (
+        pre_window.get(&#34;title&#34;) != post_window.get(&#34;title&#34;)
+    )
+
+    result_payload = {
+        &#34;task_id&#34;: task_id,
+        &#34;action&#34;: action_clean,
+        &#34;params&#34;: params,
+        &#34;status&#34;: act_result,
+        &#34;error&#34;: error_msg,
+        &#34;pre_evidence&#34;: pre_screen,
+        &#34;post_evidence&#34;: post_screen,
+        &#34;pre_window&#34;: pre_window,
+        &#34;post_window&#34;: post_window,
+        &#34;observable_change&#34;: observable_change,
+    }
+
+    # Save to local history
+    self.task_history.append(result_payload)
+
+    audit_ledger.record(
+        actor=&#34;DesktopWorker&#34;,
+        action=f&#34;DESKTOP_{action_clean.upper()}&#34;,
+        target=target_app,
+        payload={
+            &#34;pre_sha256&#34;: pre_screen[&#34;sha256&#34;],
+            &#34;post_sha256&#34;: post_screen[&#34;sha256&#34;],
+            &#34;observable_change&#34;: observable_change,
+            &#34;status&#34;: act_result,
+        },
+        result=act_result,
+    )
+
+    return result_payload</code></pre>
+</details>
+<div class="desc"><p>Executes a desktop action following the See–Act–Verify lifecycle:
+1. SEE: Capture pre-action screenshot and inspect active window
+2. POLICY CHECK: Verify app allow-list and global kill switch
+3. ACT: Execute mouse, keyboard, or window command
+4. VERIFY: Capture post-action screenshot and verify observable delta</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.computer" href="index.html">jarvis.computer</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.computer.desktop_worker.DesktopWorker" href="#jarvis.computer.desktop_worker.DesktopWorker">DesktopWorker</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.computer.desktop_worker.DesktopWorker.DEFAULT_ALLOWED_APPS" href="#jarvis.computer.desktop_worker.DesktopWorker.DEFAULT_ALLOWED_APPS">DEFAULT_ALLOWED_APPS</a></code></li>
+<li><code><a title="jarvis.computer.desktop_worker.DesktopWorker.capture_screen" href="#jarvis.computer.desktop_worker.DesktopWorker.capture_screen">capture_screen</a></code></li>
+<li><code><a title="jarvis.computer.desktop_worker.DesktopWorker.focus_window" href="#jarvis.computer.desktop_worker.DesktopWorker.focus_window">focus_window</a></code></li>
+<li><code><a title="jarvis.computer.desktop_worker.DesktopWorker.get_active_window" href="#jarvis.computer.desktop_worker.DesktopWorker.get_active_window">get_active_window</a></code></li>
+<li><code><a title="jarvis.computer.desktop_worker.DesktopWorker.get_screen_size" href="#jarvis.computer.desktop_worker.DesktopWorker.get_screen_size">get_screen_size</a></code></li>
+<li><code><a title="jarvis.computer.desktop_worker.DesktopWorker.get_status" href="#jarvis.computer.desktop_worker.DesktopWorker.get_status">get_status</a></code></li>
+<li><code><a title="jarvis.computer.desktop_worker.DesktopWorker.is_app_allowed" href="#jarvis.computer.desktop_worker.DesktopWorker.is_app_allowed">is_app_allowed</a></code></li>
+<li><code><a title="jarvis.computer.desktop_worker.DesktopWorker.list_windows" href="#jarvis.computer.desktop_worker.DesktopWorker.list_windows">list_windows</a></code></li>
+<li><code><a title="jarvis.computer.desktop_worker.DesktopWorker.see_act_verify" href="#jarvis.computer.desktop_worker.DesktopWorker.see_act_verify">see_act_verify</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

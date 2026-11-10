@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>jarvis.brain.state API documentation</title>
+<meta name="description" content="JARVIS Unified Cognitive State Schema
+Defines strongly-typed Pydantic validation models and the 15-field JarvisState / BrainState
+TypedDict for the …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jarvis.brain.state</code></h1>
+</header>
+<section id="section-intro">
+<p>JARVIS Unified Cognitive State Schema
+Defines strongly-typed Pydantic validation models and the 15-field JarvisState / BrainState
+TypedDict for the 8-node cyclic state machine, with 100% backward compatibility.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jarvis.brain.state.ApprovalState"><code class="flex name class">
+<span>class <span class="ident">ApprovalState</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ApprovalState(BaseModel):
+    &#34;&#34;&#34;Human-in-the-loop cryptographic approval status.&#34;&#34;&#34;
+
+    status: Literal[&#34;NONE&#34;, &#34;PENDING&#34;, &#34;APPROVED&#34;, &#34;DENIED&#34;, &#34;EXPIRED&#34;] = &#34;NONE&#34;
+    approval_id: Optional[str] = None
+    power_id: Optional[str] = None
+    action_summary: Optional[str] = None
+    payload_hash: Optional[str] = None
+    token: Optional[str] = None
+    expires_at: Optional[float] = None</code></pre>
+</details>
+<div class="desc"><p>Human-in-the-loop cryptographic approval status.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.ApprovalState.action_summary"><code class="name">var <span class="ident">action_summary</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ApprovalState.approval_id"><code class="name">var <span class="ident">approval_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ApprovalState.expires_at"><code class="name">var <span class="ident">expires_at</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ApprovalState.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ApprovalState.payload_hash"><code class="name">var <span class="ident">payload_hash</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ApprovalState.power_id"><code class="name">var <span class="ident">power_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ApprovalState.status"><code class="name">var <span class="ident">status</span> : Literal['NONE', 'PENDING', 'APPROVED', 'DENIED', 'EXPIRED']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ApprovalState.token"><code class="name">var <span class="ident">token</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.CognitiveError"><code class="flex name class">
+<span>class <span class="ident">CognitiveError</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CognitiveError(BaseModel):
+    &#34;&#34;&#34;Structured error classification item.&#34;&#34;&#34;
+
+    code: Literal[
+        &#34;TRANSIENT_NETWORK&#34;,
+        &#34;SESSION_EXPIRED&#34;,
+        &#34;POLICY_DENIED&#34;,
+        &#34;AI_USAGE_LIMIT&#34;,
+        &#34;INSUFFICIENT_EVIDENCE&#34;,
+        &#34;PERMANENT_FAILURE&#34;,
+    ]
+    message: str
+    recoverable: bool
+    retry_count: int = 0
+    timestamp: float = Field(default_factory=time.time)
+    details: Dict[str, Any] = Field(default_factory=dict)</code></pre>
+</details>
+<div class="desc"><p>Structured error classification item.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.CognitiveError.code"><code class="name">var <span class="ident">code</span> : Literal['TRANSIENT_NETWORK', 'SESSION_EXPIRED', 'POLICY_DENIED', 'AI_USAGE_LIMIT', 'INSUFFICIENT_EVIDENCE', 'PERMANENT_FAILURE']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CognitiveError.details"><code class="name">var <span class="ident">details</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CognitiveError.message"><code class="name">var <span class="ident">message</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CognitiveError.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CognitiveError.recoverable"><code class="name">var <span class="ident">recoverable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CognitiveError.retry_count"><code class="name">var <span class="ident">retry_count</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CognitiveError.timestamp"><code class="name">var <span class="ident">timestamp</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.CostLedger"><code class="flex name class">
+<span>class <span class="ident">CostLedger</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CostLedger(BaseModel):
+    &#34;&#34;&#34;Granular token expenditure and cost tracking.&#34;&#34;&#34;
+
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    total_tokens: int = 0
+    estimated_usd: float = 0.0
+    model_breakdown: Dict[str, float] = Field(default_factory=dict)</code></pre>
+</details>
+<div class="desc"><p>Granular token expenditure and cost tracking.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.CostLedger.completion_tokens"><code class="name">var <span class="ident">completion_tokens</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CostLedger.estimated_usd"><code class="name">var <span class="ident">estimated_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CostLedger.model_breakdown"><code class="name">var <span class="ident">model_breakdown</span> : Dict[str, float]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CostLedger.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CostLedger.prompt_tokens"><code class="name">var <span class="ident">prompt_tokens</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.CostLedger.total_tokens"><code class="name">var <span class="ident">total_tokens</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.EvidenceItem"><code class="flex name class">
+<span>class <span class="ident">EvidenceItem</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EvidenceItem(BaseModel):
+    &#34;&#34;&#34;Observable ground-truth receipt verifying an action or output.&#34;&#34;&#34;
+
+    evidence_id: str = Field(default_factory=lambda: f&#34;ev_{uuid.uuid4().hex[:8]}&#34;)
+    source: str = &#34;observation&#34;
+    claim: str = &#34;&#34;
+    quote: Optional[str] = None
+    confidence: float = 1.0
+    timestamp: float = Field(default_factory=time.time)
+    artifact_hash: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><p>Observable ground-truth receipt verifying an action or output.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.EvidenceItem.artifact_hash"><code class="name">var <span class="ident">artifact_hash</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.EvidenceItem.claim"><code class="name">var <span class="ident">claim</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.EvidenceItem.confidence"><code class="name">var <span class="ident">confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.EvidenceItem.evidence_id"><code class="name">var <span class="ident">evidence_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.EvidenceItem.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.EvidenceItem.quote"><code class="name">var <span class="ident">quote</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.EvidenceItem.source"><code class="name">var <span class="ident">source</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.EvidenceItem.timestamp"><code class="name">var <span class="ident">timestamp</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.InputEvent"><code class="flex name class">
+<span>class <span class="ident">InputEvent</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InputEvent(BaseModel):
+    &#34;&#34;&#34;Normalized multimodal input stimulus.&#34;&#34;&#34;
+
+    event_id: str = Field(default_factory=lambda: f&#34;evt_{uuid.uuid4().hex[:10]}&#34;)
+    timestamp: float = Field(default_factory=time.time)
+    text: str = &#34;&#34;
+    modality: Literal[&#34;text&#34;, &#34;voice&#34;, &#34;system&#34;, &#34;gui&#34;] = &#34;text&#34;
+    source: str = &#34;user_input&#34;
+    project_id: Optional[str] = None
+    metadata: Dict[str, Any] = Field(default_factory=dict)</code></pre>
+</details>
+<div class="desc"><p>Normalized multimodal input stimulus.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.InputEvent.event_id"><code class="name">var <span class="ident">event_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.InputEvent.metadata"><code class="name">var <span class="ident">metadata</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.InputEvent.modality"><code class="name">var <span class="ident">modality</span> : Literal['text', 'voice', 'system', 'gui']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.InputEvent.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.InputEvent.project_id"><code class="name">var <span class="ident">project_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.InputEvent.source"><code class="name">var <span class="ident">source</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.InputEvent.text"><code class="name">var <span class="ident">text</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.InputEvent.timestamp"><code class="name">var <span class="ident">timestamp</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.JarvisState"><code class="flex name class">
+<span>class <span class="ident">JarvisState</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class JarvisState(TypedDict, total=False):
+    &#34;&#34;&#34;
+    Unified cognitive state dictionary passed across all 8 nodes:
+    perceive -&gt; recall -&gt; plan -&gt; policy -&gt; act -&gt; verify -&gt; reflect -&gt; remember
+
+    Includes all 15 required cognitive fields and preserves backward-compatible keys.
+    &#34;&#34;&#34;
+
+    # 1. Identity &amp; Tracking (Mandatory Core Fields)
+    user_id: str
+    session_id: str
+    trace_id: str
+    task_id: str
+
+    # 2. Perception &amp; Intent (Mandatory Core Fields)
+    input_event: Dict[str, Any]
+    user_input: str
+    goal: str
+    messages: Annotated[list, add_messages]
+
+    # 3. Context &amp; Working Memory (Mandatory Core Fields)
+    retrieved_memories: List[Any]
+    retrieved_memory_records: List[Dict[str, Any]]
+    scratchpad: str
+
+    # 4. Planning &amp; Routing (Mandatory Core Fields)
+    plan: List[Dict[str, Any]]
+    current_step_index: int
+    is_fast_path: bool
+    task_type: str
+    model_route: str
+    selected_model: str
+    provider: str
+    routing_reason: str
+    selected_tools: List[str]
+    selected_agents: List[str]
+
+    # 5. Security &amp; Approvals (Mandatory Core Fields)
+    policy_tier: int
+    risk_level: str
+    policy_decision: Dict[str, Any]
+    approval_required: bool
+    approval_id: Optional[str]
+    policy_reason: str
+    approvals: Dict[str, Any]
+
+    # 6. Execution &amp; Telemetry (Mandatory Core Fields)
+    tool_calls: List[Dict[str, Any]]
+    tool_results: List[Dict[str, Any]]
+    final_response: str
+    duration_ms: float
+
+    # 7. Verification &amp; Evidence (Mandatory Core Fields)
+    evidence: List[Dict[str, Any]]
+    confidence: float
+
+    # 8. Learning, Reflection &amp; Governance (Mandatory Core Fields)
+    errors: List[Dict[str, Any]]
+    reflection_count: int
+    cost: Dict[str, Any]
+    estimated_cost_usd: float
+    memory_written: bool</code></pre>
+</details>
+<div class="desc"><p>Unified cognitive state dictionary passed across all 8 nodes:
+perceive -&gt; recall -&gt; plan -&gt; policy -&gt; act -&gt; verify -&gt; reflect -&gt; remember</p>
+<p>Includes all 15 required cognitive fields and preserves backward-compatible keys.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.dict</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.JarvisState.approval_id"><code class="name">var <span class="ident">approval_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.approval_required"><code class="name">var <span class="ident">approval_required</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.approvals"><code class="name">var <span class="ident">approvals</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.confidence"><code class="name">var <span class="ident">confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.cost"><code class="name">var <span class="ident">cost</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.current_step_index"><code class="name">var <span class="ident">current_step_index</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.duration_ms"><code class="name">var <span class="ident">duration_ms</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.errors"><code class="name">var <span class="ident">errors</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.estimated_cost_usd"><code class="name">var <span class="ident">estimated_cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.evidence"><code class="name">var <span class="ident">evidence</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.final_response"><code class="name">var <span class="ident">final_response</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.goal"><code class="name">var <span class="ident">goal</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.input_event"><code class="name">var <span class="ident">input_event</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.is_fast_path"><code class="name">var <span class="ident">is_fast_path</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.memory_written"><code class="name">var <span class="ident">memory_written</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.messages"><code class="name">var <span class="ident">messages</span> : list</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.model_route"><code class="name">var <span class="ident">model_route</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.plan"><code class="name">var <span class="ident">plan</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.policy_decision"><code class="name">var <span class="ident">policy_decision</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.policy_reason"><code class="name">var <span class="ident">policy_reason</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.policy_tier"><code class="name">var <span class="ident">policy_tier</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.provider"><code class="name">var <span class="ident">provider</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.reflection_count"><code class="name">var <span class="ident">reflection_count</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.retrieved_memories"><code class="name">var <span class="ident">retrieved_memories</span> : List[Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.retrieved_memory_records"><code class="name">var <span class="ident">retrieved_memory_records</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.risk_level"><code class="name">var <span class="ident">risk_level</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.routing_reason"><code class="name">var <span class="ident">routing_reason</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.scratchpad"><code class="name">var <span class="ident">scratchpad</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.selected_agents"><code class="name">var <span class="ident">selected_agents</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.selected_model"><code class="name">var <span class="ident">selected_model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.selected_tools"><code class="name">var <span class="ident">selected_tools</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.session_id"><code class="name">var <span class="ident">session_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.task_type"><code class="name">var <span class="ident">task_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.tool_calls"><code class="name">var <span class="ident">tool_calls</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.tool_results"><code class="name">var <span class="ident">tool_results</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.trace_id"><code class="name">var <span class="ident">trace_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.user_id"><code class="name">var <span class="ident">user_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.user_input"><code class="name">var <span class="ident">user_input</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.JarvisState"><code class="flex name class">
+<span>class <span class="ident">BrainState</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class JarvisState(TypedDict, total=False):
+    &#34;&#34;&#34;
+    Unified cognitive state dictionary passed across all 8 nodes:
+    perceive -&gt; recall -&gt; plan -&gt; policy -&gt; act -&gt; verify -&gt; reflect -&gt; remember
+
+    Includes all 15 required cognitive fields and preserves backward-compatible keys.
+    &#34;&#34;&#34;
+
+    # 1. Identity &amp; Tracking (Mandatory Core Fields)
+    user_id: str
+    session_id: str
+    trace_id: str
+    task_id: str
+
+    # 2. Perception &amp; Intent (Mandatory Core Fields)
+    input_event: Dict[str, Any]
+    user_input: str
+    goal: str
+    messages: Annotated[list, add_messages]
+
+    # 3. Context &amp; Working Memory (Mandatory Core Fields)
+    retrieved_memories: List[Any]
+    retrieved_memory_records: List[Dict[str, Any]]
+    scratchpad: str
+
+    # 4. Planning &amp; Routing (Mandatory Core Fields)
+    plan: List[Dict[str, Any]]
+    current_step_index: int
+    is_fast_path: bool
+    task_type: str
+    model_route: str
+    selected_model: str
+    provider: str
+    routing_reason: str
+    selected_tools: List[str]
+    selected_agents: List[str]
+
+    # 5. Security &amp; Approvals (Mandatory Core Fields)
+    policy_tier: int
+    risk_level: str
+    policy_decision: Dict[str, Any]
+    approval_required: bool
+    approval_id: Optional[str]
+    policy_reason: str
+    approvals: Dict[str, Any]
+
+    # 6. Execution &amp; Telemetry (Mandatory Core Fields)
+    tool_calls: List[Dict[str, Any]]
+    tool_results: List[Dict[str, Any]]
+    final_response: str
+    duration_ms: float
+
+    # 7. Verification &amp; Evidence (Mandatory Core Fields)
+    evidence: List[Dict[str, Any]]
+    confidence: float
+
+    # 8. Learning, Reflection &amp; Governance (Mandatory Core Fields)
+    errors: List[Dict[str, Any]]
+    reflection_count: int
+    cost: Dict[str, Any]
+    estimated_cost_usd: float
+    memory_written: bool</code></pre>
+</details>
+<div class="desc"><p>Unified cognitive state dictionary passed across all 8 nodes:
+perceive -&gt; recall -&gt; plan -&gt; policy -&gt; act -&gt; verify -&gt; reflect -&gt; remember</p>
+<p>Includes all 15 required cognitive fields and preserves backward-compatible keys.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.dict</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.JarvisState.approval_id"><code class="name">var <span class="ident">approval_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.approval_required"><code class="name">var <span class="ident">approval_required</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.approvals"><code class="name">var <span class="ident">approvals</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.confidence"><code class="name">var <span class="ident">confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.cost"><code class="name">var <span class="ident">cost</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.current_step_index"><code class="name">var <span class="ident">current_step_index</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.duration_ms"><code class="name">var <span class="ident">duration_ms</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.errors"><code class="name">var <span class="ident">errors</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.estimated_cost_usd"><code class="name">var <span class="ident">estimated_cost_usd</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.evidence"><code class="name">var <span class="ident">evidence</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.final_response"><code class="name">var <span class="ident">final_response</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.goal"><code class="name">var <span class="ident">goal</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.input_event"><code class="name">var <span class="ident">input_event</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.is_fast_path"><code class="name">var <span class="ident">is_fast_path</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.memory_written"><code class="name">var <span class="ident">memory_written</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.messages"><code class="name">var <span class="ident">messages</span> : list</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.model_route"><code class="name">var <span class="ident">model_route</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.plan"><code class="name">var <span class="ident">plan</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.policy_decision"><code class="name">var <span class="ident">policy_decision</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.policy_reason"><code class="name">var <span class="ident">policy_reason</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.policy_tier"><code class="name">var <span class="ident">policy_tier</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.provider"><code class="name">var <span class="ident">provider</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.reflection_count"><code class="name">var <span class="ident">reflection_count</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.retrieved_memories"><code class="name">var <span class="ident">retrieved_memories</span> : List[Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.retrieved_memory_records"><code class="name">var <span class="ident">retrieved_memory_records</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.risk_level"><code class="name">var <span class="ident">risk_level</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.routing_reason"><code class="name">var <span class="ident">routing_reason</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.scratchpad"><code class="name">var <span class="ident">scratchpad</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.selected_agents"><code class="name">var <span class="ident">selected_agents</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.selected_model"><code class="name">var <span class="ident">selected_model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.selected_tools"><code class="name">var <span class="ident">selected_tools</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.session_id"><code class="name">var <span class="ident">session_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.task_id"><code class="name">var <span class="ident">task_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.task_type"><code class="name">var <span class="ident">task_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.tool_calls"><code class="name">var <span class="ident">tool_calls</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.tool_results"><code class="name">var <span class="ident">tool_results</span> : List[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.trace_id"><code class="name">var <span class="ident">trace_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.user_id"><code class="name">var <span class="ident">user_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.JarvisState.user_input"><code class="name">var <span class="ident">user_input</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.PlanStep"><code class="flex name class">
+<span>class <span class="ident">PlanStep</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PlanStep(BaseModel):
+    &#34;&#34;&#34;Atomic step in a decomposed cognitive execution plan.&#34;&#34;&#34;
+
+    step_id: str = Field(default_factory=lambda: f&#34;stp_{uuid.uuid4().hex[:8]}&#34;)
+    description: str
+    tool: Optional[str] = None
+    arguments: Dict[str, Any] = Field(default_factory=dict)
+    status: Literal[&#34;pending&#34;, &#34;running&#34;, &#34;completed&#34;, &#34;failed&#34;, &#34;skipped&#34;] = &#34;pending&#34;
+    depends_on: List[str] = Field(default_factory=list)
+    result: Optional[Any] = None
+    error: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><p>Atomic step in a decomposed cognitive execution plan.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.PlanStep.arguments"><code class="name">var <span class="ident">arguments</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PlanStep.depends_on"><code class="name">var <span class="ident">depends_on</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PlanStep.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PlanStep.error"><code class="name">var <span class="ident">error</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PlanStep.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PlanStep.result"><code class="name">var <span class="ident">result</span> : Any | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PlanStep.status"><code class="name">var <span class="ident">status</span> : Literal['pending', 'running', 'completed', 'failed', 'skipped']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PlanStep.step_id"><code class="name">var <span class="ident">step_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PlanStep.tool"><code class="name">var <span class="ident">tool</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.PolicyDecisionState"><code class="flex name class">
+<span>class <span class="ident">PolicyDecisionState</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PolicyDecisionState(BaseModel):
+    &#34;&#34;&#34;Security gate evaluation decision.&#34;&#34;&#34;
+
+    tier: int = Field(0, ge=0, le=3)
+    risk_level: Literal[&#34;low&#34;, &#34;medium&#34;, &#34;high&#34;, &#34;critical&#34;] = &#34;low&#34;
+    approval_required: bool = False
+    reason: str = &#34;Tier 0 permitted&#34;
+    allowed_tools: List[str] = Field(default_factory=list)
+    approval_id: Optional[str] = None</code></pre>
+</details>
+<div class="desc"><p>Security gate evaluation decision.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.PolicyDecisionState.allowed_tools"><code class="name">var <span class="ident">allowed_tools</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PolicyDecisionState.approval_id"><code class="name">var <span class="ident">approval_id</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PolicyDecisionState.approval_required"><code class="name">var <span class="ident">approval_required</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PolicyDecisionState.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PolicyDecisionState.reason"><code class="name">var <span class="ident">reason</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PolicyDecisionState.risk_level"><code class="name">var <span class="ident">risk_level</span> : Literal['low', 'medium', 'high', 'critical']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.PolicyDecisionState.tier"><code class="name">var <span class="ident">tier</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.RetrievedMemory"><code class="flex name class">
+<span>class <span class="ident">RetrievedMemory</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RetrievedMemory(BaseModel):
+    &#34;&#34;&#34;Scoped recalled memory with authority and provenance metadata.&#34;&#34;&#34;
+
+    id: str = Field(default_factory=lambda: f&#34;mem_{uuid.uuid4().hex[:10]}&#34;)
+    content: str
+    provenance: str = &#34;memory_store&#34;
+    is_explicit: bool = True
+    category: str = &#34;fact&#34;
+    score: float = 0.0
+    status: str = &#34;active&#34;</code></pre>
+</details>
+<div class="desc"><p>Scoped recalled memory with authority and provenance metadata.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.RetrievedMemory.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.RetrievedMemory.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.RetrievedMemory.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.RetrievedMemory.is_explicit"><code class="name">var <span class="ident">is_explicit</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.RetrievedMemory.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.RetrievedMemory.provenance"><code class="name">var <span class="ident">provenance</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.RetrievedMemory.score"><code class="name">var <span class="ident">score</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.RetrievedMemory.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="jarvis.brain.state.ToolExecutionRecord"><code class="flex name class">
+<span>class <span class="ident">ToolExecutionRecord</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ToolExecutionRecord(BaseModel):
+    &#34;&#34;&#34;Audit record of an invoked tool or power execution.&#34;&#34;&#34;
+
+    call_id: str = Field(default_factory=lambda: f&#34;call_{uuid.uuid4().hex[:8]}&#34;)
+    tool_name: str
+    arguments: Dict[str, Any] = Field(default_factory=dict)
+    status: Literal[&#34;invoked&#34;, &#34;success&#34;, &#34;error&#34;, &#34;blocked&#34;] = &#34;invoked&#34;
+    output: Optional[Any] = None
+    error: Optional[str] = None
+    start_time: float = Field(default_factory=time.time)
+    duration_ms: float = 0.0</code></pre>
+</details>
+<div class="desc"><p>Audit record of an invoked tool or power execution.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="jarvis.brain.state.ToolExecutionRecord.arguments"><code class="name">var <span class="ident">arguments</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ToolExecutionRecord.call_id"><code class="name">var <span class="ident">call_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ToolExecutionRecord.duration_ms"><code class="name">var <span class="ident">duration_ms</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ToolExecutionRecord.error"><code class="name">var <span class="ident">error</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ToolExecutionRecord.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ToolExecutionRecord.output"><code class="name">var <span class="ident">output</span> : Any | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ToolExecutionRecord.start_time"><code class="name">var <span class="ident">start_time</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ToolExecutionRecord.status"><code class="name">var <span class="ident">status</span> : Literal['invoked', 'success', 'error', 'blocked']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="jarvis.brain.state.ToolExecutionRecord.tool_name"><code class="name">var <span class="ident">tool_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jarvis.brain" href="index.html">jarvis.brain</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jarvis.brain.state.ApprovalState" href="#jarvis.brain.state.ApprovalState">ApprovalState</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.state.ApprovalState.action_summary" href="#jarvis.brain.state.ApprovalState.action_summary">action_summary</a></code></li>
+<li><code><a title="jarvis.brain.state.ApprovalState.approval_id" href="#jarvis.brain.state.ApprovalState.approval_id">approval_id</a></code></li>
+<li><code><a title="jarvis.brain.state.ApprovalState.expires_at" href="#jarvis.brain.state.ApprovalState.expires_at">expires_at</a></code></li>
+<li><code><a title="jarvis.brain.state.ApprovalState.model_config" href="#jarvis.brain.state.ApprovalState.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.state.ApprovalState.payload_hash" href="#jarvis.brain.state.ApprovalState.payload_hash">payload_hash</a></code></li>
+<li><code><a title="jarvis.brain.state.ApprovalState.power_id" href="#jarvis.brain.state.ApprovalState.power_id">power_id</a></code></li>
+<li><code><a title="jarvis.brain.state.ApprovalState.status" href="#jarvis.brain.state.ApprovalState.status">status</a></code></li>
+<li><code><a title="jarvis.brain.state.ApprovalState.token" href="#jarvis.brain.state.ApprovalState.token">token</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.CognitiveError" href="#jarvis.brain.state.CognitiveError">CognitiveError</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.state.CognitiveError.code" href="#jarvis.brain.state.CognitiveError.code">code</a></code></li>
+<li><code><a title="jarvis.brain.state.CognitiveError.details" href="#jarvis.brain.state.CognitiveError.details">details</a></code></li>
+<li><code><a title="jarvis.brain.state.CognitiveError.message" href="#jarvis.brain.state.CognitiveError.message">message</a></code></li>
+<li><code><a title="jarvis.brain.state.CognitiveError.model_config" href="#jarvis.brain.state.CognitiveError.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.state.CognitiveError.recoverable" href="#jarvis.brain.state.CognitiveError.recoverable">recoverable</a></code></li>
+<li><code><a title="jarvis.brain.state.CognitiveError.retry_count" href="#jarvis.brain.state.CognitiveError.retry_count">retry_count</a></code></li>
+<li><code><a title="jarvis.brain.state.CognitiveError.timestamp" href="#jarvis.brain.state.CognitiveError.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.CostLedger" href="#jarvis.brain.state.CostLedger">CostLedger</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.state.CostLedger.completion_tokens" href="#jarvis.brain.state.CostLedger.completion_tokens">completion_tokens</a></code></li>
+<li><code><a title="jarvis.brain.state.CostLedger.estimated_usd" href="#jarvis.brain.state.CostLedger.estimated_usd">estimated_usd</a></code></li>
+<li><code><a title="jarvis.brain.state.CostLedger.model_breakdown" href="#jarvis.brain.state.CostLedger.model_breakdown">model_breakdown</a></code></li>
+<li><code><a title="jarvis.brain.state.CostLedger.model_config" href="#jarvis.brain.state.CostLedger.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.state.CostLedger.prompt_tokens" href="#jarvis.brain.state.CostLedger.prompt_tokens">prompt_tokens</a></code></li>
+<li><code><a title="jarvis.brain.state.CostLedger.total_tokens" href="#jarvis.brain.state.CostLedger.total_tokens">total_tokens</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.EvidenceItem" href="#jarvis.brain.state.EvidenceItem">EvidenceItem</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.state.EvidenceItem.artifact_hash" href="#jarvis.brain.state.EvidenceItem.artifact_hash">artifact_hash</a></code></li>
+<li><code><a title="jarvis.brain.state.EvidenceItem.claim" href="#jarvis.brain.state.EvidenceItem.claim">claim</a></code></li>
+<li><code><a title="jarvis.brain.state.EvidenceItem.confidence" href="#jarvis.brain.state.EvidenceItem.confidence">confidence</a></code></li>
+<li><code><a title="jarvis.brain.state.EvidenceItem.evidence_id" href="#jarvis.brain.state.EvidenceItem.evidence_id">evidence_id</a></code></li>
+<li><code><a title="jarvis.brain.state.EvidenceItem.model_config" href="#jarvis.brain.state.EvidenceItem.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.state.EvidenceItem.quote" href="#jarvis.brain.state.EvidenceItem.quote">quote</a></code></li>
+<li><code><a title="jarvis.brain.state.EvidenceItem.source" href="#jarvis.brain.state.EvidenceItem.source">source</a></code></li>
+<li><code><a title="jarvis.brain.state.EvidenceItem.timestamp" href="#jarvis.brain.state.EvidenceItem.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.InputEvent" href="#jarvis.brain.state.InputEvent">InputEvent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.state.InputEvent.event_id" href="#jarvis.brain.state.InputEvent.event_id">event_id</a></code></li>
+<li><code><a title="jarvis.brain.state.InputEvent.metadata" href="#jarvis.brain.state.InputEvent.metadata">metadata</a></code></li>
+<li><code><a title="jarvis.brain.state.InputEvent.modality" href="#jarvis.brain.state.InputEvent.modality">modality</a></code></li>
+<li><code><a title="jarvis.brain.state.InputEvent.model_config" href="#jarvis.brain.state.InputEvent.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.state.InputEvent.project_id" href="#jarvis.brain.state.InputEvent.project_id">project_id</a></code></li>
+<li><code><a title="jarvis.brain.state.InputEvent.source" href="#jarvis.brain.state.InputEvent.source">source</a></code></li>
+<li><code><a title="jarvis.brain.state.InputEvent.text" href="#jarvis.brain.state.InputEvent.text">text</a></code></li>
+<li><code><a title="jarvis.brain.state.InputEvent.timestamp" href="#jarvis.brain.state.InputEvent.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.JarvisState" href="#jarvis.brain.state.JarvisState">JarvisState</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.state.JarvisState.approval_id" href="#jarvis.brain.state.JarvisState.approval_id">approval_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.approval_required" href="#jarvis.brain.state.JarvisState.approval_required">approval_required</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.approvals" href="#jarvis.brain.state.JarvisState.approvals">approvals</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.confidence" href="#jarvis.brain.state.JarvisState.confidence">confidence</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.cost" href="#jarvis.brain.state.JarvisState.cost">cost</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.current_step_index" href="#jarvis.brain.state.JarvisState.current_step_index">current_step_index</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.duration_ms" href="#jarvis.brain.state.JarvisState.duration_ms">duration_ms</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.errors" href="#jarvis.brain.state.JarvisState.errors">errors</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.estimated_cost_usd" href="#jarvis.brain.state.JarvisState.estimated_cost_usd">estimated_cost_usd</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.evidence" href="#jarvis.brain.state.JarvisState.evidence">evidence</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.final_response" href="#jarvis.brain.state.JarvisState.final_response">final_response</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.goal" href="#jarvis.brain.state.JarvisState.goal">goal</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.input_event" href="#jarvis.brain.state.JarvisState.input_event">input_event</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.is_fast_path" href="#jarvis.brain.state.JarvisState.is_fast_path">is_fast_path</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.memory_written" href="#jarvis.brain.state.JarvisState.memory_written">memory_written</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.messages" href="#jarvis.brain.state.JarvisState.messages">messages</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.model_route" href="#jarvis.brain.state.JarvisState.model_route">model_route</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.plan" href="#jarvis.brain.state.JarvisState.plan">plan</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.policy_decision" href="#jarvis.brain.state.JarvisState.policy_decision">policy_decision</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.policy_reason" href="#jarvis.brain.state.JarvisState.policy_reason">policy_reason</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.policy_tier" href="#jarvis.brain.state.JarvisState.policy_tier">policy_tier</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.provider" href="#jarvis.brain.state.JarvisState.provider">provider</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.reflection_count" href="#jarvis.brain.state.JarvisState.reflection_count">reflection_count</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.retrieved_memories" href="#jarvis.brain.state.JarvisState.retrieved_memories">retrieved_memories</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.retrieved_memory_records" href="#jarvis.brain.state.JarvisState.retrieved_memory_records">retrieved_memory_records</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.risk_level" href="#jarvis.brain.state.JarvisState.risk_level">risk_level</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.routing_reason" href="#jarvis.brain.state.JarvisState.routing_reason">routing_reason</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.scratchpad" href="#jarvis.brain.state.JarvisState.scratchpad">scratchpad</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.selected_agents" href="#jarvis.brain.state.JarvisState.selected_agents">selected_agents</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.selected_model" href="#jarvis.brain.state.JarvisState.selected_model">selected_model</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.selected_tools" href="#jarvis.brain.state.JarvisState.selected_tools">selected_tools</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.session_id" href="#jarvis.brain.state.JarvisState.session_id">session_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.task_id" href="#jarvis.brain.state.JarvisState.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.task_type" href="#jarvis.brain.state.JarvisState.task_type">task_type</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.tool_calls" href="#jarvis.brain.state.JarvisState.tool_calls">tool_calls</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.tool_results" href="#jarvis.brain.state.JarvisState.tool_results">tool_results</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.trace_id" href="#jarvis.brain.state.JarvisState.trace_id">trace_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.user_id" href="#jarvis.brain.state.JarvisState.user_id">user_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.user_input" href="#jarvis.brain.state.JarvisState.user_input">user_input</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.JarvisState" href="#jarvis.brain.state.JarvisState">JarvisState</a></code></h4>
+<ul class="">
+<li><code><a title="jarvis.brain.state.JarvisState.approval_id" href="#jarvis.brain.state.JarvisState.approval_id">approval_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.approval_required" href="#jarvis.brain.state.JarvisState.approval_required">approval_required</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.approvals" href="#jarvis.brain.state.JarvisState.approvals">approvals</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.confidence" href="#jarvis.brain.state.JarvisState.confidence">confidence</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.cost" href="#jarvis.brain.state.JarvisState.cost">cost</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.current_step_index" href="#jarvis.brain.state.JarvisState.current_step_index">current_step_index</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.duration_ms" href="#jarvis.brain.state.JarvisState.duration_ms">duration_ms</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.errors" href="#jarvis.brain.state.JarvisState.errors">errors</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.estimated_cost_usd" href="#jarvis.brain.state.JarvisState.estimated_cost_usd">estimated_cost_usd</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.evidence" href="#jarvis.brain.state.JarvisState.evidence">evidence</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.final_response" href="#jarvis.brain.state.JarvisState.final_response">final_response</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.goal" href="#jarvis.brain.state.JarvisState.goal">goal</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.input_event" href="#jarvis.brain.state.JarvisState.input_event">input_event</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.is_fast_path" href="#jarvis.brain.state.JarvisState.is_fast_path">is_fast_path</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.memory_written" href="#jarvis.brain.state.JarvisState.memory_written">memory_written</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.messages" href="#jarvis.brain.state.JarvisState.messages">messages</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.model_route" href="#jarvis.brain.state.JarvisState.model_route">model_route</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.plan" href="#jarvis.brain.state.JarvisState.plan">plan</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.policy_decision" href="#jarvis.brain.state.JarvisState.policy_decision">policy_decision</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.policy_reason" href="#jarvis.brain.state.JarvisState.policy_reason">policy_reason</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.policy_tier" href="#jarvis.brain.state.JarvisState.policy_tier">policy_tier</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.provider" href="#jarvis.brain.state.JarvisState.provider">provider</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.reflection_count" href="#jarvis.brain.state.JarvisState.reflection_count">reflection_count</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.retrieved_memories" href="#jarvis.brain.state.JarvisState.retrieved_memories">retrieved_memories</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.retrieved_memory_records" href="#jarvis.brain.state.JarvisState.retrieved_memory_records">retrieved_memory_records</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.risk_level" href="#jarvis.brain.state.JarvisState.risk_level">risk_level</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.routing_reason" href="#jarvis.brain.state.JarvisState.routing_reason">routing_reason</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.scratchpad" href="#jarvis.brain.state.JarvisState.scratchpad">scratchpad</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.selected_agents" href="#jarvis.brain.state.JarvisState.selected_agents">selected_agents</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.selected_model" href="#jarvis.brain.state.JarvisState.selected_model">selected_model</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.selected_tools" href="#jarvis.brain.state.JarvisState.selected_tools">selected_tools</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.session_id" href="#jarvis.brain.state.JarvisState.session_id">session_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.task_id" href="#jarvis.brain.state.JarvisState.task_id">task_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.task_type" href="#jarvis.brain.state.JarvisState.task_type">task_type</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.tool_calls" href="#jarvis.brain.state.JarvisState.tool_calls">tool_calls</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.tool_results" href="#jarvis.brain.state.JarvisState.tool_results">tool_results</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.trace_id" href="#jarvis.brain.state.JarvisState.trace_id">trace_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.user_id" href="#jarvis.brain.state.JarvisState.user_id">user_id</a></code></li>
+<li><code><a title="jarvis.brain.state.JarvisState.user_input" href="#jarvis.brain.state.JarvisState.user_input">user_input</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.PlanStep" href="#jarvis.brain.state.PlanStep">PlanStep</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.state.PlanStep.arguments" href="#jarvis.brain.state.PlanStep.arguments">arguments</a></code></li>
+<li><code><a title="jarvis.brain.state.PlanStep.depends_on" href="#jarvis.brain.state.PlanStep.depends_on">depends_on</a></code></li>
+<li><code><a title="jarvis.brain.state.PlanStep.description" href="#jarvis.brain.state.PlanStep.description">description</a></code></li>
+<li><code><a title="jarvis.brain.state.PlanStep.error" href="#jarvis.brain.state.PlanStep.error">error</a></code></li>
+<li><code><a title="jarvis.brain.state.PlanStep.model_config" href="#jarvis.brain.state.PlanStep.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.state.PlanStep.result" href="#jarvis.brain.state.PlanStep.result">result</a></code></li>
+<li><code><a title="jarvis.brain.state.PlanStep.status" href="#jarvis.brain.state.PlanStep.status">status</a></code></li>
+<li><code><a title="jarvis.brain.state.PlanStep.step_id" href="#jarvis.brain.state.PlanStep.step_id">step_id</a></code></li>
+<li><code><a title="jarvis.brain.state.PlanStep.tool" href="#jarvis.brain.state.PlanStep.tool">tool</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.PolicyDecisionState" href="#jarvis.brain.state.PolicyDecisionState">PolicyDecisionState</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.state.PolicyDecisionState.allowed_tools" href="#jarvis.brain.state.PolicyDecisionState.allowed_tools">allowed_tools</a></code></li>
+<li><code><a title="jarvis.brain.state.PolicyDecisionState.approval_id" href="#jarvis.brain.state.PolicyDecisionState.approval_id">approval_id</a></code></li>
+<li><code><a title="jarvis.brain.state.PolicyDecisionState.approval_required" href="#jarvis.brain.state.PolicyDecisionState.approval_required">approval_required</a></code></li>
+<li><code><a title="jarvis.brain.state.PolicyDecisionState.model_config" href="#jarvis.brain.state.PolicyDecisionState.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.state.PolicyDecisionState.reason" href="#jarvis.brain.state.PolicyDecisionState.reason">reason</a></code></li>
+<li><code><a title="jarvis.brain.state.PolicyDecisionState.risk_level" href="#jarvis.brain.state.PolicyDecisionState.risk_level">risk_level</a></code></li>
+<li><code><a title="jarvis.brain.state.PolicyDecisionState.tier" href="#jarvis.brain.state.PolicyDecisionState.tier">tier</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.RetrievedMemory" href="#jarvis.brain.state.RetrievedMemory">RetrievedMemory</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.state.RetrievedMemory.category" href="#jarvis.brain.state.RetrievedMemory.category">category</a></code></li>
+<li><code><a title="jarvis.brain.state.RetrievedMemory.content" href="#jarvis.brain.state.RetrievedMemory.content">content</a></code></li>
+<li><code><a title="jarvis.brain.state.RetrievedMemory.id" href="#jarvis.brain.state.RetrievedMemory.id">id</a></code></li>
+<li><code><a title="jarvis.brain.state.RetrievedMemory.is_explicit" href="#jarvis.brain.state.RetrievedMemory.is_explicit">is_explicit</a></code></li>
+<li><code><a title="jarvis.brain.state.RetrievedMemory.model_config" href="#jarvis.brain.state.RetrievedMemory.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.state.RetrievedMemory.provenance" href="#jarvis.brain.state.RetrievedMemory.provenance">provenance</a></code></li>
+<li><code><a title="jarvis.brain.state.RetrievedMemory.score" href="#jarvis.brain.state.RetrievedMemory.score">score</a></code></li>
+<li><code><a title="jarvis.brain.state.RetrievedMemory.status" href="#jarvis.brain.state.RetrievedMemory.status">status</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="jarvis.brain.state.ToolExecutionRecord" href="#jarvis.brain.state.ToolExecutionRecord">ToolExecutionRecord</a></code></h4>
+<ul class="two-column">
+<li><code><a title="jarvis.brain.state.ToolExecutionRecord.arguments" href="#jarvis.brain.state.ToolExecutionRecord.arguments">arguments</a></code></li>
+<li><code><a title="jarvis.brain.state.ToolExecutionRecord.call_id" href="#jarvis.brain.state.ToolExecutionRecord.call_id">call_id</a></code></li>
+<li><code><a title="jarvis.brain.state.ToolExecutionRecord.duration_ms" href="#jarvis.brain.state.ToolExecutionRecord.duration_ms">duration_ms</a></code></li>
+<li><code><a title="jarvis.brain.state.ToolExecutionRecord.error" href="#jarvis.brain.state.ToolExecutionRecord.error">error</a></code></li>
+<li><code><a title="jarvis.brain.state.ToolExecutionRecord.model_config" href="#jarvis.brain.state.ToolExecutionRecord.model_config">model_config</a></code></li>
+<li><code><a title="jarvis.brain.state.ToolExecutionRecord.output" href="#jarvis.brain.state.ToolExecutionRecord.output">output</a></code></li>
+<li><code><a title="jarvis.brain.state.ToolExecutionRecord.start_time" href="#jarvis.brain.state.ToolExecutionRecord.start_time">start_time</a></code></li>
+<li><code><a title="jarvis.brain.state.ToolExecutionRecord.status" href="#jarvis.brain.state.ToolExecutionRecord.status">status</a></code></li>
+<li><code><a title="jarvis.brain.state.ToolExecutionRecord.tool_name" href="#jarvis.brain.state.ToolExecutionRecord.tool_name">tool_name</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
