@@ -128,8 +128,11 @@ class JarvisOrchestrator:
             execution_result = {"note": "No matching execution path, returning empty result"}
 
         # Step 4: Verification & Completion (Honest State)
-        is_failed = execution_result.get("status") in ("unavailable", "error", "failed") or bool(
-            execution_result.get("error")
+        is_failed = (
+            execution_result.get("status") in ("unavailable", "error", "failed", "needs_configuration",
+                                               "ambiguous_device", "verification_failed", "rejected")
+            or execution_result.get("success") is False
+            or bool(execution_result.get("error"))
         )
         final_state = "FAILED" if is_failed else "COMPLETED"
 
@@ -317,6 +320,12 @@ class JarvisOrchestrator:
 
             topic = cleaned.replace("youtube script", "").replace("video script", "").strip() or "AI OS"
             return youtube_powers.generate_video_script(topic)
+        elif cleaned in {"hi", "hello", "hey", "hey jarvis", "hi jarvis", "hello jarvis"}:
+            return {
+                "type": "greeting",
+                "status": "completed",
+                "message": "Hey Ganesh. I'm here. What would you like me to help with?",
+            }
         elif any(w in cleaned for w in ["who are you", "what can you do", "help"]):
             from jarvis.core.model_router import model_router
 
