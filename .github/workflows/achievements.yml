@@ -1,8 +1,6 @@
 name: 🏆 Achievement Hunter
 
 on:
-  schedule:
-    - cron: '0 8 * * *'  # Daily at 8 AM
   workflow_dispatch:
 
 permissions:
@@ -76,7 +74,7 @@ jobs:
           git add .github/ACHIEVEMENTS.md
           git commit -m "🏆 Update achievement tracker: $(date +%Y-%m-%d)" || exit 0
           git pull --rebase origin main || true
-          git push
+          git push || true
 
   create-sample-issue:
     name: 🎯 Create Sample Issue (for Quickdraw practice)
