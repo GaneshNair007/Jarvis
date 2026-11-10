@@ -128,8 +128,11 @@ class JarvisOrchestrator:
             execution_result = {"note": "No matching execution path, returning empty result"}
 
         # Step 4: Verification & Completion (Honest State)
-        is_failed = execution_result.get("status") in ("unavailable", "error", "failed") or bool(
-            execution_result.get("error")
+        is_failed = (
+            execution_result.get("status") in ("unavailable", "error", "failed", "needs_configuration",
+                                               "ambiguous_device", "verification_failed", "rejected")
+            or execution_result.get("success") is False
+            or bool(execution_result.get("error"))
         )
         final_state = "FAILED" if is_failed else "COMPLETED"
 
@@ -221,11 +224,14 @@ class JarvisOrchestrator:
 
             res = smart_home_powers.process_voice_command(query)
             if res.get("status") != "unhandled":
+                succeeded = res.get("success") is True and res.get("verified") is True
                 return {
                     "type": "smart_home",
                     "power_id": res.get("power_id"),
-                    "status": "executed",
-                    "message": res.get("feedback", "Smart home action completed."),
+                    "status": "executed" if succeeded else res.get("status", "unavailable"),
+                    "success": succeeded,
+                    "verified": succeeded,
+                    "message": res.get("feedback", "Smart-home action could not be verified."),
                     "details": res,
                 }
         elif "opportunity radar" in cleaned or "career radar" in cleaned or "leads" in cleaned:
@@ -314,6 +320,12 @@ class JarvisOrchestrator:
 
             topic = cleaned.replace("youtube script", "").replace("video script", "").strip() or "AI OS"
             return youtube_powers.generate_video_script(topic)
+        elif cleaned in {"hi", "hello", "hey", "hey jarvis", "hi jarvis", "hello jarvis"}:
+            return {
+                "type": "greeting",
+                "status": "completed",
+                "message": "Hey Ganesh. I'm here. What would you like me to help with?",
+            }
         elif any(w in cleaned for w in ["who are you", "what can you do", "help"]):
             from jarvis.core.model_router import model_router
 

@@ -10,6 +10,7 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, List, Optional
 from jarvis.core.logger import get_logger
+from jarvis.powers.homeassistant_powers import homeassistant_powers
 
 logger = get_logger("powers.smart_home")
 
@@ -105,8 +106,31 @@ class SmartHomePowers:
         mode: Optional[str] = None,
         fan_speed: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """PWR-257: Controls AC and climate devices via BroadLink IR."""
-        ac = self.device_states["climate.ac"]
+        """PWR-257: Control a real climate entity through authenticated Home Assistant.
+
+        The legacy in-memory device catalogue is display/configuration metadata only;
+        it must never be used to claim that a physical appliance changed state.
+        """
+        normalized = "off" if action == "off" else "on" if action in {"on", "toggle"} else action
+        result = homeassistant_powers.control_climate(normalized)
+        if not result.get("success"):
+            return {
+                "power_id": "PWR-257",
+                "status": result.get("status", "unavailable"),
+                "success": False,
+                "feedback": result.get("error", "AC control unavailable."),
+                "details": result,
+            }
+        return {
+            "power_id": "PWR-257",
+            "status": "executed",
+            "success": True,
+            "verified": True,
+            "entity_id": result.get("entity_id"),
+            "state": result.get("state"),
+            "feedback": result.get("message"),
+            "details": result,
+        }
 
         if action == "on":
             ac["state"] = "on"
