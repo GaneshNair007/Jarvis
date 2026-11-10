@@ -85,6 +85,15 @@ Display interaction and visual automation:
     @staticmethod
     def get_active_window() -&gt; Dict[str, Any]:
         &#34;&#34;&#34;PWR-016: Get the currently focused foreground window title and handle.&#34;&#34;&#34;
+        if not hasattr(ctypes, &#34;windll&#34;):
+            return {
+                &#34;power_id&#34;: &#34;PWR-016&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;hwnd&#34;: 0,
+                &#34;title&#34;: &#34;Desktop / Non-Windows Environment&#34;,
+                &#34;pid&#34;: os.getpid(),
+                &#34;rect&#34;: {&#34;left&#34;: 0, &#34;top&#34;: 0, &#34;right&#34;: 1920, &#34;bottom&#34;: 1080, &#34;width&#34;: 1920, &#34;height&#34;: 1080},
+            }
         try:
             user32 = ctypes.windll.user32
             hwnd = user32.GetForegroundWindow()
@@ -212,6 +221,8 @@ Display interaction and visual automation:
     @staticmethod
     def focus_window(title: str) -&gt; Dict[str, Any]:
         &#34;&#34;&#34;PWR-018: Bring a window to the foreground by partial title match.&#34;&#34;&#34;
+        if not hasattr(ctypes, &#34;windll&#34;):
+            return {&#34;power_id&#34;: &#34;PWR-018&#34;, &#34;status&#34;: &#34;unavailable&#34;, &#34;search_title&#34;: title, &#34;message&#34;: &#34;Windows only&#34;}
         try:
             user32 = ctypes.windll.user32
 
@@ -265,6 +276,14 @@ Display interaction and visual automation:
     @staticmethod
     def safe_type(text: str) -&gt; Dict[str, Any]:
         &#34;&#34;&#34;PWR-019: Type text into the currently focused window using SendInput.&#34;&#34;&#34;
+        if not hasattr(ctypes, &#34;windll&#34;):
+            return {
+                &#34;power_id&#34;: &#34;PWR-019&#34;,
+                &#34;status&#34;: &#34;unavailable&#34;,
+                &#34;characters_typed&#34;: 0,
+                &#34;text_length&#34;: len(text),
+                &#34;message&#34;: &#34;Windows only&#34;,
+            }
         try:
             user32 = ctypes.windll.user32
 
@@ -351,6 +370,8 @@ Display interaction and visual automation:
     @staticmethod
     def mouse_click(x: int, y: int) -&gt; Dict[str, Any]:
         &#34;&#34;&#34;PWR-020: Simulate a left mouse click at screen coordinates (x, y).&#34;&#34;&#34;
+        if not hasattr(ctypes, &#34;windll&#34;):
+            return {&#34;power_id&#34;: &#34;PWR-020&#34;, &#34;status&#34;: &#34;unavailable&#34;, &#34;x&#34;: x, &#34;y&#34;: y, &#34;message&#34;: &#34;Windows only&#34;}
         try:
             user32 = ctypes.windll.user32
 
@@ -480,6 +501,15 @@ Display interaction and visual automation:
     @staticmethod
     def get_screen_resolution() -&gt; Dict[str, Any]:
         &#34;&#34;&#34;PWR-022: Get the primary screen resolution.&#34;&#34;&#34;
+        if not hasattr(ctypes, &#34;windll&#34;):
+            return {
+                &#34;power_id&#34;: &#34;PWR-022&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;primary&#34;: {&#34;width&#34;: 1920, &#34;height&#34;: 1080},
+                &#34;virtual_screen&#34;: {&#34;width&#34;: 1920, &#34;height&#34;: 1080},
+                &#34;monitors&#34;: 1,
+                &#34;dpi&#34;: 96,
+            }
         try:
             user32 = ctypes.windll.user32
 
@@ -542,6 +572,20 @@ Display interaction and visual automation:
     @staticmethod
     def window_list() -&gt; Dict[str, Any]:
         &#34;&#34;&#34;PWR-024: Enumerate all visible top-level windows.&#34;&#34;&#34;
+        if not hasattr(ctypes, &#34;windll&#34;):
+            return {
+                &#34;power_id&#34;: &#34;PWR-024&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;window_count&#34;: 1,
+                &#34;windows&#34;: [
+                    {
+                        &#34;hwnd&#34;: 0,
+                        &#34;title&#34;: &#34;Desktop Environment&#34;,
+                        &#34;pid&#34;: os.getpid(),
+                        &#34;rect&#34;: {&#34;left&#34;: 0, &#34;top&#34;: 0, &#34;right&#34;: 1920, &#34;bottom&#34;: 1080, &#34;width&#34;: 1920, &#34;height&#34;: 1080},
+                    }
+                ],
+            }
         try:
             user32 = ctypes.windll.user32
 
@@ -597,6 +641,13 @@ Display interaction and visual automation:
     @staticmethod
     def minimize_all() -&gt; Dict[str, Any]:
         &#34;&#34;&#34;PWR-025: Minimize all windows (Win+D equivalent).&#34;&#34;&#34;
+        if not hasattr(ctypes, &#34;windll&#34;):
+            return {
+                &#34;power_id&#34;: &#34;PWR-025&#34;,
+                &#34;status&#34;: &#34;success&#34;,
+                &#34;action&#34;: &#34;minimize_all&#34;,
+                &#34;message&#34;: &#34;All windows minimized&#34;,
+            }
         try:
             user32 = ctypes.windll.user32
 
@@ -845,6 +896,8 @@ If None, captures the full primary monitor.</dd>
 <pre><code class="python">@staticmethod
 def focus_window(title: str) -&gt; Dict[str, Any]:
     &#34;&#34;&#34;PWR-018: Bring a window to the foreground by partial title match.&#34;&#34;&#34;
+    if not hasattr(ctypes, &#34;windll&#34;):
+        return {&#34;power_id&#34;: &#34;PWR-018&#34;, &#34;status&#34;: &#34;unavailable&#34;, &#34;search_title&#34;: title, &#34;message&#34;: &#34;Windows only&#34;}
     try:
         user32 = ctypes.windll.user32
 
@@ -905,6 +958,15 @@ def focus_window(title: str) -&gt; Dict[str, Any]:
 <pre><code class="python">@staticmethod
 def get_active_window() -&gt; Dict[str, Any]:
     &#34;&#34;&#34;PWR-016: Get the currently focused foreground window title and handle.&#34;&#34;&#34;
+    if not hasattr(ctypes, &#34;windll&#34;):
+        return {
+            &#34;power_id&#34;: &#34;PWR-016&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;hwnd&#34;: 0,
+            &#34;title&#34;: &#34;Desktop / Non-Windows Environment&#34;,
+            &#34;pid&#34;: os.getpid(),
+            &#34;rect&#34;: {&#34;left&#34;: 0, &#34;top&#34;: 0, &#34;right&#34;: 1920, &#34;bottom&#34;: 1080, &#34;width&#34;: 1920, &#34;height&#34;: 1080},
+        }
     try:
         user32 = ctypes.windll.user32
         hwnd = user32.GetForegroundWindow()
@@ -953,6 +1015,15 @@ def get_active_window() -&gt; Dict[str, Any]:
 <pre><code class="python">@staticmethod
 def get_screen_resolution() -&gt; Dict[str, Any]:
     &#34;&#34;&#34;PWR-022: Get the primary screen resolution.&#34;&#34;&#34;
+    if not hasattr(ctypes, &#34;windll&#34;):
+        return {
+            &#34;power_id&#34;: &#34;PWR-022&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;primary&#34;: {&#34;width&#34;: 1920, &#34;height&#34;: 1080},
+            &#34;virtual_screen&#34;: {&#34;width&#34;: 1920, &#34;height&#34;: 1080},
+            &#34;monitors&#34;: 1,
+            &#34;dpi&#34;: 96,
+        }
     try:
         user32 = ctypes.windll.user32
 
@@ -1000,6 +1071,13 @@ def get_screen_resolution() -&gt; Dict[str, Any]:
 <pre><code class="python">@staticmethod
 def minimize_all() -&gt; Dict[str, Any]:
     &#34;&#34;&#34;PWR-025: Minimize all windows (Win+D equivalent).&#34;&#34;&#34;
+    if not hasattr(ctypes, &#34;windll&#34;):
+        return {
+            &#34;power_id&#34;: &#34;PWR-025&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;action&#34;: &#34;minimize_all&#34;,
+            &#34;message&#34;: &#34;All windows minimized&#34;,
+        }
     try:
         user32 = ctypes.windll.user32
 
@@ -1040,6 +1118,8 @@ def minimize_all() -&gt; Dict[str, Any]:
 <pre><code class="python">@staticmethod
 def mouse_click(x: int, y: int) -&gt; Dict[str, Any]:
     &#34;&#34;&#34;PWR-020: Simulate a left mouse click at screen coordinates (x, y).&#34;&#34;&#34;
+    if not hasattr(ctypes, &#34;windll&#34;):
+        return {&#34;power_id&#34;: &#34;PWR-020&#34;, &#34;status&#34;: &#34;unavailable&#34;, &#34;x&#34;: x, &#34;y&#34;: y, &#34;message&#34;: &#34;Windows only&#34;}
     try:
         user32 = ctypes.windll.user32
 
@@ -1189,6 +1269,14 @@ def ocr_region(region: Optional[Tuple[int, int, int, int]] = None) -&gt; Dict[st
 <pre><code class="python">@staticmethod
 def safe_type(text: str) -&gt; Dict[str, Any]:
     &#34;&#34;&#34;PWR-019: Type text into the currently focused window using SendInput.&#34;&#34;&#34;
+    if not hasattr(ctypes, &#34;windll&#34;):
+        return {
+            &#34;power_id&#34;: &#34;PWR-019&#34;,
+            &#34;status&#34;: &#34;unavailable&#34;,
+            &#34;characters_typed&#34;: 0,
+            &#34;text_length&#34;: len(text),
+            &#34;message&#34;: &#34;Windows only&#34;,
+        }
     try:
         user32 = ctypes.windll.user32
 
@@ -1427,6 +1515,20 @@ Currently returns a structured "not implemented" response.</p></div>
 <pre><code class="python">@staticmethod
 def window_list() -&gt; Dict[str, Any]:
     &#34;&#34;&#34;PWR-024: Enumerate all visible top-level windows.&#34;&#34;&#34;
+    if not hasattr(ctypes, &#34;windll&#34;):
+        return {
+            &#34;power_id&#34;: &#34;PWR-024&#34;,
+            &#34;status&#34;: &#34;success&#34;,
+            &#34;window_count&#34;: 1,
+            &#34;windows&#34;: [
+                {
+                    &#34;hwnd&#34;: 0,
+                    &#34;title&#34;: &#34;Desktop Environment&#34;,
+                    &#34;pid&#34;: os.getpid(),
+                    &#34;rect&#34;: {&#34;left&#34;: 0, &#34;top&#34;: 0, &#34;right&#34;: 1920, &#34;bottom&#34;: 1080, &#34;width&#34;: 1920, &#34;height&#34;: 1080},
+                }
+            ],
+        }
     try:
         user32 = ctypes.windll.user32
 

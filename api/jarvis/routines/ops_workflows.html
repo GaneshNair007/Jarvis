@@ -70,7 +70,8 @@ Consequential external actions are strictly approval-gated via HMAC SHA-256.</p>
         # 1. Hardware &amp; System Telemetry
         cpu_percent = psutil.cpu_percent(interval=0.1)
         mem = psutil.virtual_memory()
-        disk = psutil.disk_usage(&#34;C:\\&#34;)
+        root_path = &#34;C:\\&#34; if (sys.platform == &#34;win32&#34; and os.path.exists(&#34;C:\\&#34;)) else &#34;/&#34;
+        disk = psutil.disk_usage(root_path)
 
         # 2. GPU Telemetry
         gpu_info = {&#34;cuda_available&#34;: False, &#34;gpu_name&#34;: &#34;N/A&#34;, &#34;vram_free_gb&#34;: 0.0}
@@ -145,7 +146,8 @@ Consequential external actions are strictly approval-gated via HMAC SHA-256.</p>
     # 1. Hardware &amp; System Telemetry
     cpu_percent = psutil.cpu_percent(interval=0.1)
     mem = psutil.virtual_memory()
-    disk = psutil.disk_usage(&#34;C:\\&#34;)
+    root_path = &#34;C:\\&#34; if (sys.platform == &#34;win32&#34; and os.path.exists(&#34;C:\\&#34;)) else &#34;/&#34;
+    disk = psutil.disk_usage(root_path)
 
     # 2. GPU Telemetry
     gpu_info = {&#34;cuda_available&#34;: False, &#34;gpu_name&#34;: &#34;N/A&#34;, &#34;vram_free_gb&#34;: 0.0}
