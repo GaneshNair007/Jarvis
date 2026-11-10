@@ -2757,7 +2757,7 @@ for example, any mapped columns or relationships.</p></div>
 <pre><code class="python">class TaskEvent(Base):
     __tablename__ = &#34;task_events&#34;
     id = Column(String(64), primary_key=True)
-    task_id = Column(String(64), ForeignKey(&#34;tasks.id&#34;), nullable=False)
+    task_id = Column(String(64), nullable=False)
     event_type = Column(String(64), nullable=False)
     payload = Column(Text, nullable=True)
     timestamp = Column(Float, default=time.time)</code></pre>
@@ -2922,7 +2922,7 @@ for example, any mapped columns or relationships.</p></div>
 <pre><code class="python">class TaskStep(Base):
     __tablename__ = &#34;task_steps&#34;
     id = Column(String(64), primary_key=True)
-    task_id = Column(String(64), ForeignKey(&#34;tasks.id&#34;), nullable=False)
+    task_id = Column(String(64), nullable=False)
     step_number = Column(Integer, nullable=False)
     agent = Column(String(64), default=&#34;coordinator&#34;)
     action = Column(String(128), nullable=False)

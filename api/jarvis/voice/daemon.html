@@ -131,15 +131,25 @@ Stage 6: SAPI spoken reply with barge-in interruption support</p>
         logger.warning(f&#34;probe_input_devices: sounddevice unavailable: {exc}&#34;)
         return results
 
-    devices = sd.query_devices()
+    try:
+        devices = sd.query_devices()
+    except Exception as exc:
+        logger.warning(f&#34;probe_input_devices: query_devices failed: {exc}&#34;)
+        return results
+
     window = max(1, int(duration_sec * 4))  # 0.25 s windows
     for idx, info in enumerate(devices):
         if info.get(&#34;max_input_channels&#34;, 0) &lt; 1:
             continue
+        hostapi_name = &#34;&#34;
+        try:
+            hostapi_name = sd.query_hostapis(info.get(&#34;hostapi&#34;, 0)).get(&#34;name&#34;, &#34;&#34;)
+        except Exception:
+            hostapi_name = &#34;&#34;
         entry: Dict[str, Any] = {
             &#34;index&#34;: idx,
             &#34;name&#34;: info.get(&#34;name&#34;, &#34;&#34;),
-            &#34;hostapi&#34;: sd.query_hostapis(info.get(&#34;hostapi&#34;, 0)).get(&#34;name&#34;, &#34;&#34;),
+            &#34;hostapi&#34;: hostapi_name,
             &#34;default_rate&#34;: int(info.get(&#34;default_samplerate&#34;, 16000)),
         }
         # Probe at the rate the daemon would actually use (native), because
@@ -246,16 +256,23 @@ error
 
     Returns {&#34;device&#34;: Optional[int], &#34;name&#34;: str, &#34;live&#34;: bool, &#34;source&#34;: str, ...}
     &#34;&#34;&#34;
+    sd = None
     try:
-        import sounddevice as sd
+        import sounddevice as _sd
+
+        sd = _sd
     except Exception:  # pragma: no cover
+        sd = None
+
+    if sd is None and probe is None and explicit is None:
         return {&#34;device&#34;: None, &#34;name&#34;: &#34;&#34;, &#34;live&#34;: False, &#34;source&#34;: &#34;no_sounddevice&#34;}
 
     default_idx = None
-    try:
-        default_idx = sd.default.device[0]
-    except Exception:
-        default_idx = None
+    if sd is not None:
+        try:
+            default_idx = sd.default.device[0]
+        except Exception:
+            default_idx = None
 
     env_raw = os.environ.get(&#34;JARVIS_MIC_DEVICE&#34;, &#34;&#34;).strip()
     if explicit is None and env_raw:
@@ -264,19 +281,21 @@ error
         except ValueError:
             explicit = None
     if explicit is not None:
-        try:
-            info = sd.query_devices(explicit)
-            return {
-                &#34;device&#34;: explicit,
-                &#34;name&#34;: info.get(&#34;name&#34;, &#34;&#34;),
-                &#34;live&#34;: False,  # not measured when forced
-                &#34;source&#34;: &#34;explicit&#34;,
-            }
-        except Exception:
-            pass
+        name = &#34;&#34;
+        if sd is not None:
+            try:
+                name = sd.query_devices(explicit).get(&#34;name&#34;, &#34;&#34;)
+            except Exception:
+                pass
+        return {
+            &#34;device&#34;: explicit,
+            &#34;name&#34;: name,
+            &#34;live&#34;: False,  # not measured when forced
+            &#34;source&#34;: &#34;explicit&#34;,
+        }
 
     if probe is None:
-        probe = probe_input_devices()
+        probe = probe_input_devices() if sd is not None else []
 
     usable = [
         e
