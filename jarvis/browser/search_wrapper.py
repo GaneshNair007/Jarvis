@@ -159,3 +159,7 @@ class WebSearchWrapper:
                     snippet="Security considerations and warnings for Python developers.",
                 ),
             ]
+
+
+search_wrapper = WebSearchWrapper()
+web_search_wrapper = search_wrapper

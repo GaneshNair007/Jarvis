@@ -281,16 +281,19 @@ class ResearcherAgent(BaseSpecialistAgent):
             from jarvis.browser.search_wrapper import search_wrapper
 
             results = search_wrapper.search(query, max_results=self.MAX_WEB_RESULTS)
-            return [
-                ResearchResult(
+            findings = []
+            for r in (results or []):
+                title = getattr(r, "title", None) or (r.get("title") if isinstance(r, dict) else "Web Result")
+                snippet = getattr(r, "snippet", None) or (r.get("snippet") if isinstance(r, dict) else "")
+                url = getattr(r, "url", None) or (r.get("url") if isinstance(r, dict) else None)
+                findings.append(ResearchResult(
                     source="web_search",
-                    title=r.get("title", "Web Result"),
-                    snippet=r.get("snippet", r.get("description", ""))[:500],
-                    url=r.get("url", r.get("href")),
-                    relevance_score=0.6,
-                )
-                for r in (results or [])
-            ]
+                    title=title,
+                    snippet=str(snippet)[:500],
+                    url=str(url) if url else None,
+                    relevance_score=0.85,
+                ))
+            return findings
         except Exception as exc:
             logger.debug(f"_search_web: {exc}")
             return []

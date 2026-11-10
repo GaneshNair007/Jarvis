@@ -632,11 +632,15 @@ class JarvisOrchestrator:
         if not all_active_specialists:
             all_active_specialists = selected_specialists
 
+        tier_out = execution_result.get("tier", decision.tier)
+        if tier_out in ("FALLBACK_CLOUD", "tier_3_cloud"):
+            tier_out = "TIER_3_CLOUD"
+
         return {
             "task_id": task_id,
             "conversation_id": conversation_id,
             "status": final_state,
-            "tier": execution_result.get("tier", decision.tier),
+            "tier": tier_out,
             "provider": execution_result.get("provider", decision.provider),
             "model": execution_result.get("model", decision.selected_model),
             "stages_executed": [
