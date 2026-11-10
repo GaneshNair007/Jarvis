@@ -221,11 +221,14 @@ class JarvisOrchestrator:
 
             res = smart_home_powers.process_voice_command(query)
             if res.get("status") != "unhandled":
+                succeeded = res.get("success") is True and res.get("verified") is True
                 return {
                     "type": "smart_home",
                     "power_id": res.get("power_id"),
-                    "status": "executed",
-                    "message": res.get("feedback", "Smart home action completed."),
+                    "status": "executed" if succeeded else res.get("status", "unavailable"),
+                    "success": succeeded,
+                    "verified": succeeded,
+                    "message": res.get("feedback", "Smart-home action could not be verified."),
                     "details": res,
                 }
         elif "opportunity radar" in cleaned or "career radar" in cleaned or "leads" in cleaned:
