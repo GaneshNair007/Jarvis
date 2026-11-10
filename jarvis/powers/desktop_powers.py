@@ -25,7 +25,12 @@ except ImportError:
     HAS_WINREG = False
 
 # Destructive binaries forbidden from resolution by safety policy
-BLOCKED_SYSTEM_BINARIES = {"format.com", "vssadmin.exe", "delpart.exe", "diskpart.exe"}
+BLOCKED_SYSTEM_BINARIES = {
+    "format.com", "format.exe", "format",
+    "vssadmin.exe", "vssadmin",
+    "delpart.exe", "delpart",
+    "diskpart.exe", "diskpart",
+}
 
 
 def resolve_app_path(app_name: str) -> Optional[Path]:
@@ -43,14 +48,22 @@ def resolve_app_path(app_name: str) -> Optional[Path]:
         return None
 
     cleaned = app_name.strip().strip('"').strip("'")
-    if not cleaned:
+    if not cleaned or "\x00" in cleaned or "\r" in cleaned or "\n" in cleaned:
         return None
 
     lower_name = cleaned.lower()
     base_name = lower_name[:-4] if lower_name.endswith(".exe") else lower_name
 
-    # Policy Check: Block destructive binaries
-    if lower_name in BLOCKED_SYSTEM_BINARIES or f"{base_name}.exe" in BLOCKED_SYSTEM_BINARIES:
+    target_path = Path(cleaned)
+    target_name = target_path.name.lower()
+    target_stem = target_path.stem.lower()
+
+    if (
+        target_name in BLOCKED_SYSTEM_BINARIES
+        or target_stem in BLOCKED_SYSTEM_BINARIES
+        or f"{target_stem}.exe" in BLOCKED_SYSTEM_BINARIES
+        or f"{target_stem}.com" in BLOCKED_SYSTEM_BINARIES
+    ):
         return None
 
     # 1. Built-in known shortcuts
@@ -113,7 +126,13 @@ def resolve_app_path(app_name: str) -> Optional[Path]:
     # 4. System PATH
     which_path = shutil.which(cleaned) or shutil.which(f"{base_name}.exe")
     if which_path:
-        return Path(which_path)
+        resolved_p = Path(which_path)
+        if (
+            resolved_p.name.lower() in BLOCKED_SYSTEM_BINARIES
+            or resolved_p.stem.lower() in BLOCKED_SYSTEM_BINARIES
+        ):
+            return None
+        return resolved_p
 
     return None
 

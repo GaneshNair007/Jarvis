@@ -281,17 +281,18 @@ async def trigger_scheduled_job(job_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
-JARVIS_DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "jarvis" / "dashboard" / "index.html"
+ROOT_DASHBOARD_HTML = Path(__file__).resolve().parent.parent.parent / "dashboard" / "index.html"
+JARVIS_DASHBOARD_HTML = ROOT_DASHBOARD_HTML
 
 
 @app.get("/")
 @app.get("/dashboard")
 async def serve_dashboard():
-    """Serves the interactive Iron Man glassmorphic HUD dashboard."""
+    """Serves the unified personal AI workspace dashboard."""
     if DASHBOARD_HTML.exists():
         return FileResponse(DASHBOARD_HTML)
-    if JARVIS_DASHBOARD_HTML.exists():
-        return FileResponse(JARVIS_DASHBOARD_HTML)
+    if ROOT_DASHBOARD_HTML.exists():
+        return FileResponse(ROOT_DASHBOARD_HTML)
     raise HTTPException(status_code=404, detail="Dashboard UI file not found")
 
 
@@ -514,6 +515,27 @@ async def system_health():
 async def list_tasks(limit: int = 50):
     """Inspects recent task state machine executions."""
     return db_store.list_tasks(limit=limit)
+
+@app.get("/api/v1/agents")
+async def list_registered_agents():
+    """Lists the 8 specialized agents and their real capabilities from AgentRegistry."""
+    from jarvis.agents.registry import agent_registry
+    agents_list = []
+    for role in agent_registry.list_agents():
+        agent = agent_registry.get_agent(role)
+        if agent:
+            agents_list.append({
+                "role": role,
+                "name": getattr(agent, "name", role.title()),
+                "description": getattr(agent, "description", ""),
+                "status": "available",
+                "permitted_tools": getattr(agent, "permitted_tools", []),
+            })
+    return {
+        "total": len(agents_list),
+        "agents": agents_list,
+    }
+
 
 
 class ApprovalResolution(BaseModel):
