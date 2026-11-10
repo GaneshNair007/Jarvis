@@ -24,10 +24,18 @@ class FreeLLMAPIClient:
 
     def __init__(self):
         self.base_url = os.getenv("FREELLMAPI_BASE_URL", "http://localhost:3001/v1")
-        self.api_key = os.getenv("FREELLMAPI_KEY", "")
+        self._explicit_key = os.getenv("FREELLMAPI_KEY", "")
         self.default_model = os.getenv("FREELLMAPI_DEFAULT_MODEL", "auto")
         self._is_online_cache: Optional[bool] = None
         self._last_health_check: float = 0.0
+
+    @property
+    def api_key(self) -> str:
+        if self._explicit_key:
+            return self._explicit_key
+        from jarvis.config import settings
+
+        return os.getenv("FREELLMAPI_KEY") or getattr(settings, "freellmapi_key", "")
 
     @property
     def is_available(self) -> bool:
@@ -37,13 +45,18 @@ class FreeLLMAPIClient:
             return self._is_online_cache
 
         try:
+            headers = {"User-Agent": "Jarvis-Agent/1.0"}
+            if self.api_key:
+                headers["Authorization"] = f"Bearer {self.api_key}"
             req = urllib.request.Request(
                 f"{self.base_url.rstrip('/')}/models",
-                headers={"User-Agent": "Jarvis-Agent/1.0"},
+                headers=headers,
                 method="GET",
             )
-            with urllib.request.urlopen(req, timeout=1.0) as resp:
-                self._is_online_cache = resp.status in (200, 401)
+            with urllib.request.urlopen(req, timeout=1.5) as resp:
+                self._is_online_cache = resp.status in (200, 401, 403)
+        except urllib.error.HTTPError as he:
+            self._is_online_cache = he.code in (200, 401, 403)
         except Exception:
             self._is_online_cache = False
 
