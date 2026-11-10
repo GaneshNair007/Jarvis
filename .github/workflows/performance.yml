@@ -9,6 +9,9 @@ on:
     - cron: '0 2 * * *'  # Daily at 2 AM UTC
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   benchmark:
     name: 🏃 Run Benchmarks
@@ -24,10 +27,14 @@ jobs:
         run: |
           pip install pytest pytest-benchmark memory-profiler
           pip install -r requirements.txt
+          pip install -r requirements-ci.txt
 
       - name: ⚡ Run benchmarks
         run: |
-          python -m pytest tests/ --benchmark-only --benchmark-json=benchmark.json || echo "No benchmarks yet"
+          python -m pytest tests/test_benchmarks.py --benchmark-only --benchmark-json=benchmark.json || echo "No benchmarks yet"
+          if [ ! -f benchmark.json ]; then
+            echo '{"benchmarks": []}' > benchmark.json
+          fi
 
       - name: 📊 Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1

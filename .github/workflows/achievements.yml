@@ -75,6 +75,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .github/ACHIEVEMENTS.md
           git commit -m "🏆 Update achievement tracker: $(date +%Y-%m-%d)" || exit 0
+          git pull --rebase origin main || true
           git push
 
   create-sample-issue:

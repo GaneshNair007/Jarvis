@@ -43,6 +43,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .github/stats/ || true
           git commit -m "📊 Update activity stats: $(date +%Y-%m-%d)" || exit 0
+          git pull --rebase origin main || true
           git push
 
   generate-contributor-graph:
@@ -50,11 +51,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: 📊 Contributor stats
-        uses: githubocto/contributor-graph-action@main
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p .github/stats
+          echo "# 🎨 Contributors Summary" > .github/stats/CONTRIBUTORS.md
+          echo "" >> .github/stats/CONTRIBUTORS.md
+          echo "Generated on: $(date)" >> .github/stats/CONTRIBUTORS.md
+          echo "" >> .github/stats/CONTRIBUTORS.md
+          git shortlog -sn --all >> .github/stats/CONTRIBUTORS.md
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .github/stats/CONTRIBUTORS.md || true
+          git commit -m "🎨 Update contributors: $(date +%Y-%m-%d)" || exit 0
+          git pull --rebase origin main || true
+          git push
 
   daily-quote:
     name: 💬 Daily Developer Quote
@@ -84,4 +97,5 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .github/DAILY_QUOTE.md || true
           git commit -m "💬 Daily inspiration: $(date +%Y-%m-%d)" || exit 0
+          git pull --rebase origin main || true
           git push

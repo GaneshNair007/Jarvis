@@ -28,6 +28,7 @@ jobs:
         run: |
           pip install pdoc3 sphinx sphinx-rtd-theme
           pip install -r requirements.txt
+          pip install -r requirements-ci.txt
 
       - name: 🏗️ Build docs
         run: |
@@ -71,4 +72,5 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .github/last-update || true
           git commit -m "📊 Auto-update: $(date)" || exit 0
+          git pull --rebase origin main || true
           git push
