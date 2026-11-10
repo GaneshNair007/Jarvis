@@ -724,21 +724,45 @@ async def inspect_audit(limit: int = 50, verify_chain: bool = False):
 
 @app.websocket("/ws/stream")
 async def hud_websocket_stream(websocket: WebSocket):
-    """Streams real-time CPU/RAM telemetry, active agents, and live logs to HUD."""
+    """Streams real-time CPU/RAM telemetry, active agents, and live execution events to HUD."""
+    from jarvis.core.events import event_broadcaster
     await websocket.accept()
+
+    # Send recent execution events upon initial connection for instant HUD sync
+    for prior_evt in event_broadcaster.get_recent_events(limit=15):
+        try:
+            await websocket.send_json(prior_evt)
+        except Exception:
+            return
+
+    event_queue: asyncio.Queue = asyncio.Queue()
+
+    async def _event_listener(event_dict: dict):
+        await event_queue.put(event_dict)
+
+    event_broadcaster.register_listener(_event_listener)
+
     try:
         while True:
-            # Send live metrics every 1.5 seconds
-            health = it_admin_powers.system_health_report()
-            payload = {
-                "type": "telemetry_pulse",
-                "cpu_percent": health["cpu"]["percent"],
-                "ram_percent": health["memory"]["percent"],
-                "disk_percent": health["disk"]["percent"],
-                "kill_switch_active": policy_gate.kill_switch_active,
-                "timestamp": time.time(),
-            }
-            await websocket.send_json(payload)
-            await asyncio.sleep(1.5)
+            try:
+                # Deliver execution events with low-latency timeout
+                event_data = await asyncio.wait_for(event_queue.get(), timeout=1.5)
+                await websocket.send_json(event_data)
+            except asyncio.TimeoutError:
+                # Periodic telemetry heartbeat
+                health = it_admin_powers.system_health_report()
+                payload = {
+                    "type": "telemetry_pulse",
+                    "cpu_percent": health["cpu"]["percent"],
+                    "ram_percent": health["memory"]["percent"],
+                    "disk_percent": health["disk"]["percent"],
+                    "kill_switch_active": policy_gate.kill_switch_active,
+                    "timestamp": time.time(),
+                }
+                await websocket.send_json(payload)
     except WebSocketDisconnect:
         pass
+    except Exception as e:
+        logger.debug(f"HUD WebSocket disconnected: {e}")
+    finally:
+        event_broadcaster.unregister_listener(_event_listener)

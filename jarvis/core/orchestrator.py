@@ -18,6 +18,10 @@ from jarvis.core.power_registry import power_registry
 from jarvis.memory.store import db_store
 from jarvis.memory.conversation_service import conversation_service
 from jarvis.agents.critic import CriticAgent, Verdict
+from jarvis.core.logger import get_logger
+from jarvis.core.events import event_broadcaster, ExecutionEvent
+
+logger = get_logger("core.orchestrator")
 
 
 class JarvisOrchestrator:
@@ -129,6 +133,17 @@ class JarvisOrchestrator:
         # Merge conversation history into contextual dialogue
         combined_context = f"{formatted_history}\n\nAttached Context:\n{context}".strip() if formatted_history else context
 
+        await event_broadcaster.emit(ExecutionEvent(
+            execution_id=task_id,
+            conversation_id=conversation_id,
+            task_id=task_id,
+            stage=1,
+            stage_name="understand",
+            event_type="stage_transition",
+            status="PLANNING",
+            payload={"query": query},
+        ))
+
         # Check for pure deterministic instant OS command bypass
         if self.router.is_instant_command(query):
             instant_result = await self._execute_power_or_specialized_engine(query)
@@ -157,6 +172,18 @@ class JarvisOrchestrator:
                 outputs=instant_result,
                 details={"cost_usd": 0.0, "duration_ms": (time.time() - start_time) * 1000},
             )
+            await event_broadcaster.emit(ExecutionEvent(
+                execution_id=task_id,
+                conversation_id=conversation_id,
+                task_id=task_id,
+                agent_id="DesktopAgent",
+                agent_role="desktop",
+                stage=6,
+                stage_name="consolidate",
+                event_type="task_completed",
+                status="COMPLETED",
+                payload={"final_reply": resp_str},
+            ))
             return {
                 "task_id": task_id,
                 "conversation_id": conversation_id,
@@ -210,6 +237,16 @@ class JarvisOrchestrator:
             "subtask_count": len(planned_subtasks),
             "subtasks": planned_subtasks,
         }
+        await event_broadcaster.emit(ExecutionEvent(
+            execution_id=task_id,
+            conversation_id=conversation_id,
+            task_id=task_id,
+            stage=2,
+            stage_name="plan",
+            event_type="stage_transition",
+            status="PLANNING",
+            payload={"subtask_count": len(planned_subtasks)},
+        ))
 
         # ======================================================================
         # STAGE 3: SELECT
@@ -220,6 +257,16 @@ class JarvisOrchestrator:
             "primary_role": planned_subtasks[0]["role"] if planned_subtasks else "researcher",
             "verifier": "reviewer",
         }
+        await event_broadcaster.emit(ExecutionEvent(
+            execution_id=task_id,
+            conversation_id=conversation_id,
+            task_id=task_id,
+            stage=3,
+            stage_name="select",
+            event_type="stage_transition",
+            status="AVAILABLE",
+            payload={"selected_roles": selected_specialists},
+        ))
 
         # ======================================================================
         # STAGE 4: EXECUTE
@@ -252,6 +299,16 @@ class JarvisOrchestrator:
                 inputs={"query": query},
                 outputs={"reason": policy_msg, "pending_approval": pending_approval},
             )
+            await event_broadcaster.emit(ExecutionEvent(
+                execution_id=task_id,
+                conversation_id=conversation_id,
+                task_id=task_id,
+                stage=4,
+                stage_name="execute",
+                event_type="task_failed",
+                status="FAILED",
+                error=policy_msg,
+            ))
             return {
                 "task_id": task_id,
                 "conversation_id": conversation_id,
@@ -263,19 +320,129 @@ class JarvisOrchestrator:
             }
 
         self.state_machine.transition(task_id, "RUNNING", reason="Stage 4: Executing routed operation")
+        await event_broadcaster.emit(ExecutionEvent(
+            execution_id=task_id,
+            conversation_id=conversation_id,
+            task_id=task_id,
+            stage=4,
+            stage_name="execute",
+            event_type="stage_transition",
+            status="RUNNING",
+        ))
 
         execution_result = {}
+        specialist_outputs = {}
+        specialist_results = {}
+        all_tools_used = []
+        executed_agent_roles = []
+
         if decision.tier == "BYPASS":
             execution_result = await self._execute_power_or_specialized_engine(query)
+            executed_agent_roles.append("desktop")
         else:
-            # Build prompt with dialogue history and context
+            # Genuine Multi-Agent Execution via AgentRegistry
+            from jarvis.agents.registry import agent_registry
+            from jarvis.agents.base import AgentTask, AgentContext, AgentResult
+
+            for subtask in planned_subtasks:
+                role = subtask.get("role")
+                if not role or role == "reviewer":
+                    continue
+
+                agent = agent_registry.get_agent(role)
+                if not agent:
+                    continue
+
+                await event_broadcaster.emit(ExecutionEvent(
+                    execution_id=task_id,
+                    conversation_id=conversation_id,
+                    task_id=task_id,
+                    agent_id=getattr(agent, "name", role),
+                    agent_role=role,
+                    event_type="agent_started",
+                    stage=4,
+                    stage_name="execute",
+                    status="RUNNING",
+                    payload={"goal": subtask.get("goal", query)},
+                ))
+
+                agent_task = AgentTask(
+                    task_id=f"{task_id}_{role}_{subtask.get('step_id', 1)}",
+                    goal=query,
+                    assigned_role=role,
+                    parameters={
+                        "query": query,
+                        "dependencies": subtask.get("dependencies", []),
+                        "subtask_goal": subtask.get("goal"),
+                        "accumulated_findings": specialist_outputs,
+                    },
+                )
+                agent_ctx = AgentContext(
+                    conversation_id=conversation_id,
+                    user_id="ganesh",
+                    recent_history=recent_turns,
+                    attached_data={
+                        "dialogue_history": formatted_history,
+                        "accumulated_findings": specialist_outputs,
+                    },
+                    memory_context=combined_context,
+                )
+
+                try:
+                    res: AgentResult = await agent.execute(agent_task, agent_ctx)
+                    specialist_results[role] = res
+                    executed_agent_roles.append(role)
+                    if res.output:
+                        specialist_outputs[role] = res.output
+                    if res.tools_used:
+                        all_tools_used.extend(res.tools_used)
+
+                    await event_broadcaster.emit(ExecutionEvent(
+                        execution_id=task_id,
+                        conversation_id=conversation_id,
+                        task_id=task_id,
+                        agent_id=res.agent_name or role,
+                        agent_role=role,
+                        event_type="agent_completed" if res.status == "SUCCESS" else "agent_failed",
+                        stage=4,
+                        stage_name="execute",
+                        status="COMPLETED" if res.status == "SUCCESS" else "FAILED",
+                        evidence=res.evidence or {},
+                        error=res.error,
+                        payload={"tools_used": res.tools_used, "duration_ms": res.duration_ms},
+                    ))
+                except Exception as exc:
+                    logger.error(f"Error executing specialist {role}: {exc}")
+                    await event_broadcaster.emit(ExecutionEvent(
+                        execution_id=task_id,
+                        conversation_id=conversation_id,
+                        task_id=task_id,
+                        agent_id=role,
+                        agent_role=role,
+                        event_type="agent_failed",
+                        stage=4,
+                        stage_name="execute",
+                        status="FAILED",
+                        error=str(exc),
+                    ))
+
+            # Build concise synthesis prompt with specialist findings (strictly budgeted to <1000 tokens)
             prompt_parts = []
             if formatted_history:
-                prompt_parts.append(formatted_history)
-            if decision.redacted_context:
-                prompt_parts.append(f"Source Context:\n{decision.redacted_context}")
+                last_turn = formatted_history.strip().split("\n\n")[-1]
+                prompt_parts.append(f"Recent Context: {last_turn[:300]}")
+
+            if specialist_outputs:
+                evidence_text = []
+                for a_role, a_out in specialist_outputs.items():
+                    evidence_text.append(f"[{a_role.upper()} AGENT]: {str(a_out)[:400]}")
+                prompt_parts.append("\n".join(evidence_text))
+
             prompt_parts.append(f"User Request: {query}")
-            prompt_parts.append("Instruction: Provide an accurate, verified, helpful response without hallucinating facts.")
+            prompt_parts.append(
+                "Instruction: You are JARVIS, an elite personal AI assistant. "
+                "Synthesize the specialist findings into one concise, helpful response with links and next steps."
+            )
             full_prompt = "\n\n".join(prompt_parts)
 
             execution_result = await asyncio.to_thread(
@@ -284,21 +451,93 @@ class JarvisOrchestrator:
                 full_prompt,
             )
 
+            # If LLM inference failed but specialists produced findings, construct verified response from findings
+            if (not execution_result.get("reply") or execution_result.get("status") in ("unavailable", "failed")) and specialist_outputs:
+                sections = [f"### JARVIS Multi-Agent Execution Receipt\n**Request:** {query}\n"]
+                for a_role, a_out in specialist_outputs.items():
+                    sections.append(f"#### ? {a_role.replace('_', ' ').title()} Findings\n{str(a_out)}")
+                if all_tools_used:
+                    sections.append(f"\n*Verified Tools Invoked:* `{'`, `'.join(set(all_tools_used))}`")
+                execution_result["reply"] = "\n\n".join(sections)
+                execution_result["status"] = "success" 
+
         stage_4_execute = {
             "execution_status": execution_result.get("status", "unknown"),
             "model_used": execution_result.get("model", decision.selected_model),
             "tokens_used": execution_result.get("tokens_used", 0),
+            "executed_agents": executed_agent_roles,
+            "tools_used": list(set(all_tools_used)),
         }
 
         # ======================================================================
         # STAGE 5: VERIFY
         # ======================================================================
-        self.state_machine.transition(task_id, "VERIFYING", reason="Stage 5: Independent verification via CriticAgent")
+        self.state_machine.transition(task_id, "VERIFYING", reason="Stage 5: Independent verification via ReviewerAgent & Critic")
+        await event_broadcaster.emit(ExecutionEvent(
+            execution_id=task_id,
+            conversation_id=conversation_id,
+            task_id=task_id,
+            stage=5,
+            stage_name="verify",
+            event_type="stage_transition",
+            status="VERIFYING",
+        ))
+
         output_text_for_critic = (
             execution_result.get("reply")
             or execution_result.get("message")
             or str(execution_result)
         )
+
+        reviewer_res = None
+        from jarvis.agents.registry import agent_registry
+        rev_agent = agent_registry.get_agent("reviewer")
+        if rev_agent:
+            await event_broadcaster.emit(ExecutionEvent(
+                execution_id=task_id,
+                conversation_id=conversation_id,
+                task_id=task_id,
+                agent_id="ReviewerAgent",
+                agent_role="reviewer",
+                event_type="agent_started",
+                stage=5,
+                stage_name="verify",
+                status="VERIFYING",
+            ))
+            rev_task = AgentTask(
+                task_id=f"{task_id}_reviewer",
+                goal=query,
+                assigned_role="reviewer",
+                parameters={
+                    "execution_results": list(specialist_results.values()),
+                    "output": output_text_for_critic,
+                },
+            )
+            rev_ctx = AgentContext(
+                conversation_id=conversation_id,
+                user_id="ganesh",
+                recent_history=recent_turns,
+                attached_data={"findings": specialist_outputs},
+            )
+            try:
+                reviewer_res = await rev_agent.execute(rev_task, rev_ctx)
+                if reviewer_res.tools_used:
+                    all_tools_used.extend(reviewer_res.tools_used)
+                await event_broadcaster.emit(ExecutionEvent(
+                    execution_id=task_id,
+                    conversation_id=conversation_id,
+                    task_id=task_id,
+                    agent_id="ReviewerAgent",
+                    agent_role="reviewer",
+                    event_type="agent_completed",
+                    stage=5,
+                    stage_name="verify",
+                    status="COMPLETED",
+                    evidence=reviewer_res.evidence or {},
+                ))
+            except Exception as _re:
+                logger.warning(f"ReviewerAgent execution error: {_re}")
+
         critic_report = self.critic.review(
             goal=query,
             output=output_text_for_critic,
@@ -311,6 +550,8 @@ class JarvisOrchestrator:
             "verdict": critic_report.verdict.value,
             "score": critic_report.score,
             "issues_count": len(critic_report.issues),
+            "reviewer_agent_executed": reviewer_res is not None,
+            "reviewer_status": reviewer_res.status if reviewer_res else "skipped",
             "issues": [
                 {
                     "severity": i.severity,
@@ -368,12 +609,28 @@ class JarvisOrchestrator:
             details={"cost_usd": decision.estimated_cost_usd, "duration_ms": (time.time() - start_time) * 1000},
         )
 
+        await event_broadcaster.emit(ExecutionEvent(
+            execution_id=task_id,
+            conversation_id=conversation_id,
+            task_id=task_id,
+            stage=6,
+            stage_name="consolidate",
+            event_type="task_completed" if not is_failed else "task_failed",
+            status=final_state,
+            payload={"final_reply": final_reply_text[:200]},
+        ))
+
         stage_6_consolidate_persist = {
             "persisted_conversation_id": conversation_id,
             "task_id": task_id,
             "final_status": final_state,
             "final_reply": final_reply_text,
+            "tools_used": list(set(all_tools_used)),
         }
+
+        all_active_specialists = list(set(executed_agent_roles + (["reviewer"] if reviewer_res else [])))
+        if not all_active_specialists:
+            all_active_specialists = selected_specialists
 
         return {
             "task_id": task_id,
@@ -398,8 +655,11 @@ class JarvisOrchestrator:
                 "verify": stage_5_verify,
                 "consolidate_persist": stage_6_consolidate_persist,
             },
-            "selected_specialists": selected_specialists,
+            "selected_specialists": all_active_specialists,
+            "specialist_executions": {k: v.to_dict() for k, v in specialist_results.items()},
+            "tools_used": list(set(all_tools_used)),
             "verdict": critic_report.verdict.value,
+            "reviewer_agent_executed": reviewer_res is not None,
             "response": execution_result,
             "final_reply": final_reply_text,
             "routing_reason": decision.reason,

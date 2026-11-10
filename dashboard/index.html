@@ -1755,14 +1755,10 @@
       // Append User Message (Safe DOM Construction)
       appendMessage('user', 'Ganesh', query);
 
-      // Set Pipeline to Stage 1: Understand
-      setPipelineStage(1, 'active');
-
       const btnSend = document.getElementById('btn-send');
       btnSend.disabled = true;
 
       try {
-        setPipelineStage(2, 'active');
         const resp = await fetch(`${API_BASE}/api/v1/chat`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1772,11 +1768,7 @@
           })
         });
 
-        setPipelineStage(4, 'active');
         const data = await resp.json();
-
-        setPipelineStage(5, 'completed');
-        setPipelineStage(6, 'completed');
 
         // Extract Assistant Reply
         let reply = "Task processed.";
@@ -1853,6 +1845,72 @@
 
       const stream = document.getElementById('chat-stream');
       stream.scrollTop = stream.scrollHeight;
+    }
+
+    // ─── REAL BACKEND EXECUTION EVENTS & WEBSOCKET ───
+    let ws = null;
+    function initWebSocket() {
+      const loc = window.location;
+      const proto = loc.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = `${proto}//${loc.host || '127.0.0.1:8000'}/ws/stream`;
+      try {
+        ws = new WebSocket(wsUrl);
+        ws.onopen = () => {
+          const dot = document.getElementById('backend-status-dot');
+          const txt = document.getElementById('backend-status-text');
+          if (dot) dot.className = 'status-dot online';
+          if (txt) txt.textContent = 'Backend Active (WS)';
+        };
+        ws.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            if (data.type === 'telemetry_pulse') {
+              const cpu = data.cpu_percent !== undefined ? data.cpu_percent : '--';
+              const ram = data.ram_percent !== undefined ? data.ram_percent : '--';
+              const disk = data.disk_percent !== undefined ? data.disk_percent : '--';
+              const el = document.getElementById('telemetry-summary-text');
+              if (el) el.textContent = `System Telemetry: CPU ${cpu}% | RAM ${ram}% | Disk ${disk}%`;
+            } else if (data.type === 'execution_event') {
+              handleExecutionEvent(data);
+            }
+          } catch (e) {}
+        };
+        ws.onclose = () => {
+          setTimeout(initWebSocket, 3000);
+        };
+      } catch (err) {
+        console.warn('WS error:', err);
+      }
+    }
+
+    function handleExecutionEvent(evt) {
+      if (!evt) return;
+      if (evt.stage) {
+        const state = evt.status === 'FAILED' ? 'failed' : (evt.event_type === 'task_completed' ? 'completed' : 'active');
+        setPipelineStage(evt.stage, state);
+      }
+      if (evt.agent_role) {
+        const cardId = `agent-${evt.agent_role.replace(/_/g, '-')}`;
+        const card = document.getElementById(cardId);
+        if (card) {
+          if (evt.event_type === 'agent_started') {
+            card.style.borderColor = 'var(--cyan)';
+            card.style.boxShadow = '0 0 12px var(--cyan-glow)';
+            const b = card.querySelector('.agent-status-badge');
+            if (b) { b.textContent = 'RUNNING'; b.style.color = 'var(--cyan)'; }
+          } else if (evt.event_type === 'agent_completed') {
+            card.style.borderColor = 'var(--emerald)';
+            card.style.boxShadow = '0 0 12px var(--emerald-dim)';
+            const b = card.querySelector('.agent-status-badge');
+            if (b) { b.textContent = 'COMPLETED'; b.style.color = 'var(--emerald)'; }
+          } else if (evt.event_type === 'agent_failed') {
+            card.style.borderColor = 'var(--crimson)';
+            card.style.boxShadow = '0 0 12px var(--crimson-dim)';
+            const b = card.querySelector('.agent-status-badge');
+            if (b) { b.textContent = 'FAILED'; b.style.color = 'var(--crimson)'; }
+          }
+        }
+      }
     }
 
     // ─── PIPELINE CONTROLLER ───
@@ -2066,7 +2124,9 @@
       document.getElementById('welcome-greeting').textContent = `${greeting}, Ganesh. What are we working on?`;
 
       initVisualizer();
+      initWebSocket();
       updateSystemTelemetry();
+      loadAgents();
       setInterval(updateSystemTelemetry, 10000);
     });
   </script>

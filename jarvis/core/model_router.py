@@ -399,6 +399,25 @@ class ModelRouter:
                 except Exception as _ge:
                     logger.warning(f"Gemini rotator fallback error: {_ge}")
 
+                # 3. Try local FreeLLMAPI router (299 free models)
+                try:
+                    from jarvis.core.freellmapi_client import freellmapi_client
+                    if freellmapi_client.is_available:
+                        free_res = freellmapi_client.generate_completion(prompt, system_instruction=system_prompt)
+                        if free_res and free_res.get("reply"):
+                            return {
+                                "task_id": decision.task_id,
+                                "status": "success",
+                                "tier": "TIER_1_LOCAL",
+                                "model": free_res.get("model", "freellmapi/auto"),
+                                "reply": free_res["reply"],
+                                "tokens_used": free_res.get("tokens_used", len(prompt) // 4),
+                                "cost_usd": 0.0,
+                                "duration_ms": free_res.get("duration_ms", duration_ms),
+                            }
+                except Exception as _fe:
+                    logger.warning(f"FreeLLMAPI fallback error: {_fe}")
+
                 # Honest Unavailable State: Ollama is offline and cloud gateways could not be reached
                 return {
                     "task_id": decision.task_id,
@@ -470,6 +489,25 @@ class ModelRouter:
                 except Exception as _gre:
                     logger.warning(f"Gemini rotator execution error: {_gre}")
 
+            # 3. Attempt FreeLLMAPI router if cloud gateways are exhausted or local inference preferred
+            try:
+                from jarvis.core.freellmapi_client import freellmapi_client
+                if freellmapi_client.is_available:
+                    free_res = freellmapi_client.generate_completion(prompt, system_instruction=system_prompt)
+                    if free_res and free_res.get("reply"):
+                        return {
+                            "task_id": decision.task_id,
+                            "status": "success",
+                            "tier": "TIER_3_CLOUD",
+                            "model": free_res.get("model", "freellmapi/auto"),
+                            "reply": free_res["reply"],
+                            "tokens_used": free_res.get("tokens_used", len(prompt) // 4),
+                            "cost_usd": 0.0,
+                            "duration_ms": free_res.get("duration_ms", round((time.time() - start_time) * 1000, 2)),
+                        }
+            except Exception as _fe:
+                logger.warning(f"FreeLLMAPI fallback error: {_fe}")
+
             if "claude" in decision.selected_model:
                 model_string = f"anthropic/{decision.selected_model}"
                 api_key = settings.claude_api_key
@@ -488,6 +526,7 @@ class ModelRouter:
             kwargs: Dict[str, Any] = {
                 "model": model_string,
                 "messages": messages,
+                "max_tokens": 512,
                 "timeout": timeout_sec
                 or (
                     settings.ollama_timeout_sec
@@ -535,6 +574,25 @@ class ModelRouter:
             }
 
         except Exception as e:
+            logger.warning(f"Inference error on {model_string}: {e}. Attempting resilient FreeLLMAPI fallback.")
+            try:
+                from jarvis.core.freellmapi_client import freellmapi_client
+                if freellmapi_client.is_available:
+                    free_res = freellmapi_client.generate_completion(prompt, system_instruction=system_prompt)
+                    if free_res and free_res.get("reply"):
+                        return {
+                            "task_id": decision.task_id,
+                            "status": "success",
+                            "tier": decision.tier if decision.tier != "FALLBACK_CLOUD" else "TIER_3_CLOUD",
+                            "model": free_res.get("model", "freellmapi/auto"),
+                            "reply": free_res["reply"],
+                            "tokens_used": free_res.get("tokens_used", len(prompt) // 4),
+                            "cost_usd": 0.0,
+                            "duration_ms": round((time.time() - start_time) * 1000, 2),
+                        }
+            except Exception as _fe:
+                logger.warning(f"FreeLLMAPI fallback in exception handler failed: {_fe}")
+
             # Trip circuit breaker on failure if cloud
             if decision.tier == "TIER_3_CLOUD":
                 self.cost_governor.record_failure(decision.provider)
@@ -557,19 +615,20 @@ class ModelRouter:
         p = prompt.lower().strip()
         if any(w in p for w in ["hi", "hello", "hey", "who are you"]):
             return (
-                "Hello Ganesh! I am JARVIS, your personal autonomous AI assistant. "
-                "I am fully operational with local reflex execution, smart room controls (AC, Projector, Geyser, Lights), "
-                "opportunity radar, and system monitoring. How can I assist you right now?"
+                "Hello Ganesh. I am JARVIS, your personal AI assistant coordinating 8 specialized agents across "
+                "engineering, research, academic viva prep, career opportunities, and Windows desktop actions. "
+                "What are we working on?"
             )
         elif "help" in p:
             return (
                 "Here are some actions you can command me to execute:\n"
-                "- Smart Room: 'Turn on the AC at 21', 'Turn on the geyser', 'Movie night', 'Turn off lights'\n"
-                "- Ops Workflows: 'Daily pulse', 'Opportunity radar', 'Weekly sweep'\n"
-                "- System: 'System health', 'Take screenshot', 'Search [topic]'"
+                "- Engineering & Code: 'Review my codebase', 'Fix bug in repository'\n"
+                "- Research & Analysis: 'Research upcoming AI internships', 'Search recent papers'\n"
+                "- Career & Academics: 'GSoC radar', 'Viva preparation for exam'\n"
+                "- Productivity & Desktop: 'System health', 'Check calendar', 'Open [application]'"
             )
         elif "status" in p:
-            return "JARVIS Operating System is online. All 355 powers and smart room endpoints are active on localhost:8000."
+            return "JARVIS Personal AI Operating System is online. All 8 specialized agents and real-time execution telemetry are active."
         else:
             return (
                 f"I received your command: '{prompt}'. "

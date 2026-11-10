@@ -46,7 +46,8 @@ def test_email_send_without_approval_is_refused(temp_email):
     assert "pending_approval" in send_res
 
 
-def test_email_send_with_valid_cryptographic_approval(temp_email):
+def test_email_send_unconfigured_credentials_truthful_rejection(temp_email):
+    """Verifies that an approved draft is NOT marked SENT or moved to sent/ when SMTP is unconfigured."""
     email_p, _ = temp_email
     draft = email_p.draft_email(
         to="partner@local.internal",
@@ -67,15 +68,52 @@ def test_email_send_with_valid_cryptographic_approval(temp_email):
         payload_hash=payload_hash,
     )
 
+    # Sending without SMTP credentials configured must report NOT_CONFIGURED and NOT fake a successful transmission
     send_res = email_p.send_email(
         draft_path=draft["file_path"],
         task_id=task_id,
         approval_token=token,
     )
 
-    assert send_res["success"] is True
-    assert send_res["status"] == "SENT"
+    assert send_res["success"] is False
+    assert send_res["status"] == "NOT_CONFIGURED"
+    assert "No SMTP credentials" in send_res["error"]
+    assert Path(draft["file_path"]).exists()  # Kept in outbox, never moved to sent/
+
+
+def test_email_send_explicit_archive_only_mode(temp_email):
+    """Verifies that explicit local archival returns ARCHIVED_NOT_SENT and does not fake a SENT status."""
+    email_p, _ = temp_email
+    draft = email_p.draft_email(
+        to="partner@local.internal",
+        subject="Archive Test Draft",
+        body="Draft to be archived locally.",
+    )
+
+    task_id = "task_archive_001"
+    raw_bytes = Path(draft["file_path"]).read_bytes()
+    content_hash = hashlib.sha256(raw_bytes).hexdigest()
+    exec_payload = {"draft_path": str(Path(draft["file_path"])), "sha256": content_hash}
+    payload_hash = policy_gate.hash_payload(exec_payload)
+
+    token, _ = policy_gate.generate_approval_token(
+        task_id=task_id,
+        power_id="send_email",
+        payload_hash=payload_hash,
+    )
+
+    send_res = email_p.send_email(
+        draft_path=draft["file_path"],
+        task_id=task_id,
+        approval_token=token,
+        archive_only=True,
+    )
+
+    assert send_res["success"] is False
+    assert send_res["status"] == "ARCHIVED_NOT_SENT"
+    assert "archive_path" in send_res
     assert Path(send_res["archive_path"]).exists()
+    assert "archived" in send_res["archive_path"]
 
 
 def test_scan_inbox_disconnected_truthful_status(temp_email, monkeypatch):

@@ -98,6 +98,7 @@ class EmailPowers:
         draft_path: str,
         task_id: str = "send_email_task",
         approval_token: Optional[str] = None,
+        archive_only: bool = False,
     ) -> Dict[str, Any]:
         """PWR-052: Sends an email draft strictly gated behind Tier-2 cryptographic approval."""
         p = Path(draft_path)
@@ -143,7 +144,27 @@ class EmailPowers:
         smtp_pass = os.getenv("SMTP_PASSWORD") or getattr(settings, "smtp_password", None) or os.getenv("GMAIL_APP_PASSWORD")
         smtp_use_tls = getattr(settings, "smtp_use_tls", True)
 
-        delivery_channel = "LOCAL_ARCHIVE_ONLY"
+        # Delivery Provider Evaluation: SMTP or Explicit Local Archival
+        if archive_only:
+            archive_dir = p.parent / "archived"
+            archive_dir.mkdir(parents=True, exist_ok=True)
+            dest = archive_dir / p.name
+            p.rename(dest)
+            audit_ledger.record(
+                actor="EmailPowers",
+                action="ARCHIVE_DRAFT",
+                target=str(dest),
+                payload={"sha256": content_hash, "task_id": task_id},
+                result="ARCHIVED",
+            )
+            return {
+                "power_id": "PWR-052",
+                "success": False,
+                "status": "ARCHIVED_NOT_SENT",
+                "archive_path": str(dest),
+                "draft_sha256": content_hash,
+            }
+
         if smtp_host and smtp_user and smtp_pass:
             try:
                 if smtp_port == 465:
@@ -156,10 +177,39 @@ class EmailPowers:
                             server.starttls()
                         server.login(smtp_user, smtp_pass)
                         server.send_message(parsed_msg)
-                delivery_channel = "DELIVERED_VIA_SMTP"
                 logger.info(f"Delivered draft {p.name} via SMTP server {smtp_host}:{smtp_port}")
+
+                audit_ledger.record(
+                    actor="EmailPowers",
+                    action="SEND_EMAIL",
+                    target=str(p),
+                    payload={"sha256": content_hash, "task_id": task_id, "delivery_channel": "DELIVERED_VIA_SMTP"},
+                    result="SUCCESS",
+                )
+
+                # Move to sent/ archive only upon genuine provider delivery
+                sent_dir = p.parent / "sent"
+                sent_dir.mkdir(parents=True, exist_ok=True)
+                dest = sent_dir / p.name
+                p.rename(dest)
+
+                return {
+                    "power_id": "PWR-052",
+                    "success": True,
+                    "status": "SENT",
+                    "delivery_channel": "DELIVERED_VIA_SMTP",
+                    "archive_path": str(dest),
+                    "sha256": content_hash,
+                }
             except Exception as e:
                 logger.error(f"Failed to deliver email via SMTP: {e}")
+                audit_ledger.record(
+                    actor="EmailPowers",
+                    action="SEND_EMAIL_FAILED",
+                    target=str(p),
+                    payload={"sha256": content_hash, "task_id": task_id, "error": str(e)},
+                    result="FAILURE",
+                )
                 return {
                     "power_id": "PWR-052",
                     "success": False,
@@ -168,27 +218,23 @@ class EmailPowers:
                     "draft_sha256": content_hash,
                 }
 
+        # Neither SMTP credentials nor active OAuth provider configured.
+        # Strict truthfulness: NEVER report SENT, NEVER move to sent/, NEVER log audit SUCCESS.
+        logger.warning(f"No delivery provider configured for draft {p.name}. Retaining draft in outbox.")
         audit_ledger.record(
             actor="EmailPowers",
-            action="SEND_EMAIL",
+            action="SEND_EMAIL_REJECTED",
             target=str(p),
-            payload={"sha256": content_hash, "task_id": task_id, "delivery_channel": delivery_channel},
-            result="SUCCESS",
+            payload={"sha256": content_hash, "task_id": task_id, "reason": "UNCONFIGURED_DELIVERY_PROVIDER"},
+            result="REJECTED_UNCONFIGURED",
         )
-
-        # Move to sent/ archive
-        sent_dir = p.parent / "sent"
-        sent_dir.mkdir(parents=True, exist_ok=True)
-        dest = sent_dir / p.name
-        p.rename(dest)
-
         return {
             "power_id": "PWR-052",
-            "success": True,
-            "status": "SENT",
-            "delivery_channel": delivery_channel,
-            "archive_path": str(dest),
-            "sha256": content_hash,
+            "success": False,
+            "status": "NOT_CONFIGURED",
+            "error": "No SMTP credentials or OAuth delivery provider configured. Draft retained in outbox.",
+            "draft_path": str(p),
+            "draft_sha256": content_hash,
         }
 
     def list_outbox(self, outbox_dir: Optional[str | Path] = None) -> Dict[str, Any]:
