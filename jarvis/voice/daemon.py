@@ -358,6 +358,7 @@ class VoiceDaemon:
         self._speech_blocks = 0
         self._silence_blocks = 0
         self._utterance_active = False
+        self._capture_deadline: float = 0.0
 
         self.wake_count = 0
         self.acoustic_wake_count = 0
@@ -737,6 +738,11 @@ class VoiceDaemon:
             return events
 
         if not self._utterance_active:
+            if self.state == "CAPTURING_COMMAND" and self._capture_deadline and time.monotonic() > self._capture_deadline:
+                self.state = "LISTENING_FOR_WAKE"
+                self._capture_deadline = 0.0
+                self._write_hud_state("wake")
+                self._reset_buffer()
             return events
 
         self._silence_blocks += 1
@@ -817,6 +823,7 @@ class VoiceDaemon:
                 events.extend(self._execute_command(command, trigger="wake_with_command", wake_transcript=text))
             else:
                 self.state = "CAPTURING_COMMAND"
+                self._capture_deadline = time.monotonic() + 10.0
                 self._write_hud_state("capture")
                 if self._speak_replies:
                     try:
@@ -841,6 +848,7 @@ class VoiceDaemon:
 
     def _execute_command(self, command: str, trigger: str, wake_transcript: str) -> List[Dict[str, Any]]:
         events: List[Dict[str, Any]] = []
+        self._capture_deadline = 0.0
         self.state = "PROCESSING"
         with self._stats_lock:
             self.last_command = command
