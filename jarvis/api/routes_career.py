@@ -10,6 +10,7 @@ from typing import List, Optional
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
+from jarvis.core.career_radar import career_radar, DEFAULT_TARGET_EMAIL, DEFAULT_SENDER_EMAIL
 from jarvis.powers.career_powers import career_powers
 
 router = APIRouter(prefix="/api/v1/career", tags=["career-ops"])
@@ -189,6 +190,40 @@ def analyze_offer(request: OfferAnalysisRequest):
             base_salary=request.base_salary,
             bonus=request.bonus,
             equity_annual_val=request.equity_annual_val,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class EmailDigestRequest(BaseModel):
+    to_email: str = Field(default=DEFAULT_TARGET_EMAIL, description="Recipient email address")
+    from_email: str = Field(default=DEFAULT_SENDER_EMAIL, description="Sender email address")
+    query: Optional[str] = Field(default="", description="Search query filter")
+    force_refresh: bool = Field(default=False, description="Force re-scrape of live sources")
+
+
+@router.get("/radar")
+def get_career_radar(q: str = "", force_refresh: bool = False):
+    """Fetches real, verified live opportunities: AI internships, GSoC orgs, Devpost hackathons."""
+    try:
+        return career_radar.fetch_live_radar(query=q, force_refresh=force_refresh)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/email-digest")
+def dispatch_career_digest(request: Optional[EmailDigestRequest] = None):
+    """
+    Authors an RFC 822 email draft and delivers via SMTP to Ganesh Nair (nairganesh134@gmail.com)
+    from JARVIS (jarvis33246146@gmail.com).
+    """
+    req = request or EmailDigestRequest()
+    try:
+        return career_radar.dispatch_digest_email(
+            to_email=req.to_email,
+            from_email=req.from_email,
+            query=req.query or "",
+            force_refresh=req.force_refresh,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

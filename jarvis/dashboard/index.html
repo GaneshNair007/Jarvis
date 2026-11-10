@@ -1434,44 +1434,58 @@
       </section>
 
       <!-- ─── VIEW 7: CAREER & GSOC ─── -->
+            <!-- ─── VIEW 7: CAREER & GSOC ─── -->
       <section id="view-career" class="view-panel">
         <div class="workspace-view">
-          <div class="view-heading">
-            <h2>Career & GSoC Opportunities</h2>
-            <p>Real open-source organizations, GSoC project ideas, and live hackathons.</p>
+          <div class="view-heading" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h2>Career & GSoC Live Radar</h2>
+              <p>Autonomous opportunity radar: AI internships, GSoC mentoring orgs, and Devpost hackathons.</p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-send" style="background: #0284c7;" onclick="dispatchCareerEmailDigest()">📧 Email Digest to Ganesh</button>
+              <button class="btn-send" style="background: #374151;" onclick="loadCareerRadar('', true)">🔄 Refresh Live Radar</button>
+            </div>
           </div>
 
+          <!-- Dispatch Status & Identity Callout -->
+          <div id="career-dispatch-banner" class="callout-box" style="margin-bottom: 16px; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.05);">
+            <span style="font-size: 1.2rem;">📬</span>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; color: #38bdf8; margin-bottom: 2px;">Automated Career Digest Pipeline</div>
+              <div style="font-size: 0.82rem; opacity: 0.9;">
+                Recipient: <b style="color: #f1f5f9;">nairganesh134@gmail.com</b> &bull; Sender: <b style="color: #f1f5f9;">jarvis33246146@gmail.com</b><br>
+                <span id="career-last-scout-info">Scouting live opportunities via Obscure Browser & LLM synthesis...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search & Filter Bar -->
           <div class="info-card" style="margin-bottom: 20px;">
             <div class="form-group">
-              <label class="form-label">Search Opportunities</label>
+              <label class="form-label">Search & Filter Radar</label>
               <div style="display: flex; gap: 10px;">
-                <input id="career-search-input" class="form-input" style="flex: 1;" placeholder="Filter by language, technology (e.g. Python, AI, Distributed Systems)...">
-                <button class="btn-send" onclick="searchOpportunities()">Find Opportunities</button>
+                <input id="career-search-input" class="form-input" style="flex: 1;" placeholder="Filter by technology, lab, or focus (e.g. PyTorch, CUDA, Computer Vision, Agents)..." onkeydown="if(event.key==='Enter') filterCareerRadar()">
+                <button class="btn-send" onclick="filterCareerRadar()">Filter Radar</button>
+                <button class="btn-send" style="background: #1f2937;" onclick="document.getElementById('career-search-input').value=''; filterCareerRadar();">Clear</button>
               </div>
             </div>
           </div>
 
-          <div id="career-opportunities-list" class="cards-grid">
-            <div class="info-card">
-              <div class="card-top">
-                <span class="card-title">Google Summer of Code (GSoC)</span>
-                <span class="status-pill"><span class="status-dot active"></span> Curated</span>
-              </div>
-              <div class="card-desc">Curated open-source mentoring organizations including NumFOCUS, Python Software Foundation, CNCF, and Apache Software Foundation.</div>
-              <div style="margin-top: 10px;">
-                <button class="quick-prompt-btn" onclick="sendQuickPrompt('Jarvis, scout top GSoC Python organizations and contribution guidelines for my skill profile')">Scout GSoC Projects ➔</button>
-              </div>
-            </div>
+          <!-- Category Navigation Pills -->
+          <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+            <button class="quick-prompt-btn active" id="tab-all" onclick="filterCategory('all')">All Opportunities (<span id="count-all">0</span>)</button>
+            <button class="quick-prompt-btn" id="tab-internships" onclick="filterCategory('internships')">💼 AI Internships (<span id="count-internships">0</span>)</button>
+            <button class="quick-prompt-btn" id="tab-gsoc" onclick="filterCategory('gsoc')">🏛️ GSoC Organizations (<span id="count-gsoc">0</span>)</button>
+            <button class="quick-prompt-btn" id="tab-hackathons" onclick="filterCategory('hackathons')">⚡ Devpost Hackathons (<span id="count-hackathons">0</span>)</button>
+          </div>
 
-            <div class="info-card">
-              <div class="card-top">
-                <span class="card-title">Hackathons & Competitions</span>
-                <span class="status-pill"><span class="status-dot active"></span> Live Radar</span>
-              </div>
-              <div class="card-desc">Tracks upcoming collegiate and global AI/systems hackathons with verified registration deadlines.</div>
-              <div style="margin-top: 10px;">
-                <button class="quick-prompt-btn" onclick="sendQuickPrompt('Jarvis, list active AI and engineering hackathons happening this month')">Check Hackathon Radar ➔</button>
-              </div>
+          <!-- Live Opportunities Container -->
+          <div id="career-opportunities-list" class="cards-grid">
+            <div class="info-card" style="text-align: center; padding: 40px; grid-column: 1 / -1;">
+              <div style="font-size: 1.5rem; margin-bottom: 10px;">🛰️</div>
+              <div style="font-weight: 600;">Activating Career Radar...</div>
+              <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Connecting to live web scrapers, DuckDuckGo, and LLM synthesis.</div>
             </div>
           </div>
         </div>
@@ -1708,6 +1722,7 @@
       if (viewId === 'tasks') loadTasks();
       if (viewId === 'agents') loadAgents();
       if (viewId === 'activity') loadActivity();
+      if (viewId === 'career') loadCareerRadar();
     }
 
     function toggleSidebar() {
@@ -2065,11 +2080,235 @@
       sendQuickPrompt(`Research and compare sources regarding: ${q}`);
     }
 
-    function searchOpportunities() {
-      const q = document.getElementById('career-search-input').value;
-      switchView('home', document.querySelector('.nav-item'));
-      sendQuickPrompt(`Find open-source GSoC opportunities and hackathons matching: ${q || 'Python and AI'}`);
+    
+    // ─── CAREER RADAR & OPPORTUNITY PIPELINE ───
+    let currentRadarData = null;
+    let activeCareerCategory = 'all';
+
+    async function loadCareerRadar(query = '', forceRefresh = false) {
+      const container = document.getElementById('career-opportunities-list');
+      const infoText = document.getElementById('career-last-scout-info');
+      if (!container) return;
+
+      container.innerHTML = `
+        <div class="info-card" style="grid-column: 1 / -1; text-align: center; padding: 30px;">
+          <div style="font-size: 1.5rem; margin-bottom: 8px;">🛰️</div>
+          <div style="font-weight: 600;">Scanning Live Opportunities...</div>
+          <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Querying real AI engineering labs, GSoC foundations, and Devpost hackathons.</div>
+        </div>
+      `;
+
+      try {
+        const url = `/api/v1/career/radar?q=${encodeURIComponent(query)}&force_refresh=${forceRefresh}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        currentRadarData = data;
+
+        const countAll = data.total_opportunities || 0;
+        const countIntern = (data.ai_internships || []).length;
+        const countGsoc = (data.gsoc_organizations || []).length;
+        const countHacks = (data.devpost_ai_hackathons || []).length;
+
+        const countAllEl = document.getElementById('count-all');
+        const countInternEl = document.getElementById('count-internships');
+        const countGsocEl = document.getElementById('count-gsoc');
+        const countHacksEl = document.getElementById('count-hackathons');
+
+        if (countAllEl) countAllEl.textContent = countAll;
+        if (countInternEl) countInternEl.textContent = countIntern;
+        if (countGsocEl) countGsocEl.textContent = countGsoc;
+        if (countHacksEl) countHacksEl.textContent = countHacks;
+
+        if (infoText) {
+          infoText.innerHTML = `Last live scout: <b>${new Date(data.scouted_at).toLocaleString()}</b> &bull; Found <b>${countAll}</b> active opportunities.`;
+        }
+
+        renderCareerCards();
+      } catch (err) {
+        console.error('Failed to load career radar:', err);
+        container.innerHTML = `
+          <div class="info-card" style="grid-column: 1 / -1; border-color: rgba(239, 68, 68, 0.4);">
+            <div style="font-weight: 600; color: #ef4444;">⚠️ Radar Ingestion Error</div>
+            <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Could not connect to /api/v1/career/radar: ${err.message}. Ensure backend is running.</div>
+          </div>
+        `;
+      }
     }
+
+    function filterCareerRadar() {
+      const q = (document.getElementById('career-search-input')?.value || '').trim();
+      loadCareerRadar(q);
+    }
+
+    function filterCategory(cat) {
+      activeCareerCategory = cat;
+      ['all', 'internships', 'gsoc', 'hackathons'].forEach(c => {
+        const btn = document.getElementById(`tab-${c}`);
+        if (btn) btn.classList.toggle('active', c === cat);
+      });
+      renderCareerCards();
+    }
+
+    function renderCareerCards() {
+      const container = document.getElementById('career-opportunities-list');
+      if (!container || !currentRadarData) return;
+
+      const internships = currentRadarData.ai_internships || [];
+      const gsoc = currentRadarData.gsoc_organizations || [];
+      const hackathons = currentRadarData.devpost_ai_hackathons || [];
+
+      let cardsHtml = '';
+
+      if (activeCareerCategory === 'all' || activeCareerCategory === 'internships') {
+        internships.forEach(item => {
+          const locs = (item.locations || ['Remote']).join(', ');
+          const tags = (item.tags || []).map(t => `<span class="status-pill" style="margin-right: 4px; font-size: 0.72rem;">${escapeHtml(t)}</span>`).join('');
+          cardsHtml += `
+            <div class="info-card">
+              <div class="card-top">
+                <span class="card-title" style="color: #38bdf8;">${escapeHtml(item.title)}</span>
+                <span class="status-pill"><span class="status-dot online"></span> ${escapeHtml(item.terms || 'Internship')}</span>
+              </div>
+              <div style="font-size: 0.85rem; font-weight: 600; color: #f1f5f9; margin-top: 4px;">
+                🏢 ${escapeHtml(item.organization)} &bull; 📍 ${escapeHtml(locs)}
+              </div>
+              <div class="card-desc" style="margin: 8px 0; font-size: 0.82rem; color: #94a3b8;">
+                Category: <b>${escapeHtml(item.category || 'AI/ML')}</b> &bull; Deadline: <b style="color: #f59e0b;">${escapeHtml(item.deadline || 'Rolling')}</b>
+              </div>
+              <div style="margin-bottom: 10px;">${tags}</div>
+              <div style="display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap;">
+                <a href="${escapeHtml(item.application_url)}" target="_blank" rel="noopener noreferrer" class="btn-send" style="padding: 6px 12px; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; background: #0284c7;">Apply Now ➔</a>
+                <button class="quick-prompt-btn" onclick="sendQuickPrompt('Jarvis, prepare an ATS tailored resume and application pitch for: ' + ${JSON.stringify(item.title)} + ' at ' + ${JSON.stringify(item.organization)})">Tailor Resume</button>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      if (activeCareerCategory === 'all' || activeCareerCategory === 'gsoc') {
+        gsoc.forEach(org => {
+          const stack = (org.tech_stack || []).map(s => `<span class="status-pill" style="margin-right: 4px; font-size: 0.72rem;">${escapeHtml(s)}</span>`).join('');
+          cardsHtml += `
+            <div class="info-card">
+              <div class="card-top">
+                <span class="card-title" style="color: #4ade80;">🏛️ ${escapeHtml(org.name)}</span>
+                <span class="status-pill"><span class="status-dot active"></span> GSoC Org</span>
+              </div>
+              <div class="card-desc" style="margin: 8px 0; font-size: 0.84rem;">${escapeHtml(org.description || '')}</div>
+              <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 8px;">
+                Window: <b>${escapeHtml(org.expected_proposal_window || 'Spring')}</b>
+              </div>
+              <div style="margin-bottom: 10px;">${stack}</div>
+              <div style="display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap;">
+                <a href="${escapeHtml(org.url)}" target="_blank" rel="noopener noreferrer" class="btn-send" style="padding: 6px 12px; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; background: #15803d;">Explore Org ➔</a>
+                <button class="quick-prompt-btn" onclick="sendQuickPrompt('Jarvis, author a GSoC contribution pitch and starter issue plan for ' + ${JSON.stringify(org.name)})">Author Pitch</button>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      if (activeCareerCategory === 'all' || activeCareerCategory === 'hackathons') {
+        hackathons.forEach(h => {
+          cardsHtml += `
+            <div class="info-card">
+              <div class="card-top">
+                <span class="card-title" style="color: #f43f5e;">⚡ ${escapeHtml(h.title)}</span>
+                <span class="status-pill" style="color: #f59e0b; font-weight: 700; border-color: rgba(245, 158, 11, 0.4);">${escapeHtml(h.prizes || '$')}</span>
+              </div>
+              <div style="font-size: 0.85rem; color: #f1f5f9; margin-top: 4px;">
+                Organized by <b>${escapeHtml(h.organizer || 'Devpost')}</b> &bull; Participants: ${escapeHtml(h.participants || 'Active')}
+              </div>
+              <div class="card-desc" style="margin: 8px 0; font-size: 0.82rem; color: #94a3b8;">
+                Deadline: <b style="color: #ef4444;">${escapeHtml(h.deadline || 'Closing Soon')}</b> &bull; Duration: ${escapeHtml(h.duration || '')}
+              </div>
+              <div style="display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap;">
+                <a href="${escapeHtml(h.url)}" target="_blank" rel="noopener noreferrer" class="btn-send" style="padding: 6px 12px; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; background: #e11d48;">Register on Devpost ➔</a>
+                <button class="quick-prompt-btn" onclick="sendQuickPrompt('Jarvis, analyze problem statements and design a winning architecture for hackathon: ' + ${JSON.stringify(h.title)})">Design Solution</button>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      if (!cardsHtml) {
+        cardsHtml = `
+          <div class="info-card" style="grid-column: 1 / -1; text-align: center; padding: 30px;">
+            <div style="font-weight: 600;">No matching opportunities found.</div>
+            <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Try clearing filters or clicking 'Refresh Live Radar'.</div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = cardsHtml;
+    }
+
+    async function dispatchCareerEmailDigest() {
+      const banner = document.getElementById('career-dispatch-banner');
+      if (banner) {
+        banner.innerHTML = `
+          <span style="font-size: 1.2rem;">⏳</span>
+          <div>
+            <div style="font-weight: 600; color: #38bdf8;">Dispatching Verified Opportunities Digest...</div>
+            <div style="font-size: 0.82rem; opacity: 0.9;">Authoring RFC 822 MIME message for <b>nairganesh134@gmail.com</b> from <b>jarvis33246146@gmail.com</b>...</div>
+          </div>
+        `;
+      }
+
+      try {
+        const res = await fetch('/api/v1/career/email-digest', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to_email: 'nairganesh134@gmail.com',
+            from_email: 'jarvis33246146@gmail.com'
+          })
+        });
+        const data = await res.json();
+        if (banner) {
+          if (data.status === 'SENT') {
+            banner.style.borderColor = 'rgba(74, 222, 128, 0.5)';
+            banner.style.background = 'rgba(74, 222, 128, 0.1)';
+            banner.innerHTML = `
+              <span style="font-size: 1.2rem;">✅</span>
+              <div>
+                <div style="font-weight: 600; color: #4ade80;">Digest Delivered via SMTP!</div>
+                <div style="font-size: 0.82rem; opacity: 0.9;">
+                  Sent <b>${data.total_opportunities || 'all'}</b> verified opportunities to <b>${data.to}</b>.<br>
+                  Draft SHA-256: <code>${data.sha256 ? data.sha256.substring(0, 16) + '...' : 'Verified'}</code>
+                </div>
+              </div>
+            `;
+          } else {
+            banner.style.borderColor = 'rgba(245, 158, 11, 0.5)';
+            banner.style.background = 'rgba(245, 158, 11, 0.1)';
+            banner.innerHTML = `
+              <span style="font-size: 1.2rem;">📝</span>
+              <div>
+                <div style="font-weight: 600; color: #f59e0b;">RFC 822 Email Draft Saved to Outbox</div>
+                <div style="font-size: 0.82rem; opacity: 0.9;">
+                  Composed genuine draft for <b>${data.to}</b> from <b>${data.from}</b>.<br>
+                  File: <code>${data.draft_path || 'data/outbox/draft.eml'}</code> &bull; SHA-256: <code>${data.sha256 ? data.sha256.substring(0, 16) + '...' : ''}</code><br>
+                  <i>To transmit automatically via SMTP, provide GMAIL_APP_PASSWORD in .env</i>
+                </div>
+              </div>
+            `;
+          }
+        }
+      } catch (err) {
+        if (banner) {
+          banner.innerHTML = `
+            <span style="font-size: 1.2rem;">⚠️</span>
+            <div>
+              <div style="font-weight: 600; color: #ef4444;">Email Dispatch Error</div>
+              <div style="font-size: 0.82rem; opacity: 0.9;">Failed to trigger email digest: ${err.message}</div>
+            </div>
+          `;
+        }
+      }
+    }
+
 
     function loadActivity() {
       const container = document.getElementById('activity-log-list');

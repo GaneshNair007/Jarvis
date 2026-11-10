@@ -16,6 +16,7 @@ from typing import Any, Dict, List, Optional
 
 from jarvis.agents.base import AgentContext, AgentResult, AgentTask, BaseSpecialistAgent
 from jarvis.agents.gsoc_scout import GSoCContributorScout, gsoc_scout
+from jarvis.core.career_radar import career_radar, DEFAULT_TARGET_EMAIL, DEFAULT_SENDER_EMAIL
 from jarvis.core.logger import get_logger
 
 logger = get_logger("agents.career")
@@ -59,9 +60,9 @@ class CareerAgent(BaseSpecialistAgent):
         ]
 
     def scout_hackathons(self) -> List[Dict[str, Any]]:
-        """Scouts active hackathons and competitive engineering events."""
-        # Returns truthful list from configured feeds or empty list if offline
-        return []
+        """Scouts active hackathons and competitive engineering events from live radar."""
+        radar = career_radar.fetch_live_radar()
+        return radar.get("devpost_ai_hackathons", [])
 
     def scout_opportunities(
         self,
@@ -69,48 +70,53 @@ class CareerAgent(BaseSpecialistAgent):
         filters: Optional[Dict[str, Any]] = None,
     ) -> List[Dict[str, Any]]:
         """
-        Searches career and open-source opportunities honestly.
-        Returns empty list when no matches exist — zero synthetic mock items.
+        Searches career and open-source opportunities dynamically across live radar and curated foundations.
+        Zero synthetic mock items.
         """
         cleaned = (query or "").lower().strip()
-        if not cleaned:
-            return []
+        radar = career_radar.fetch_live_radar(query=cleaned)
+        matched: List[Dict[str, Any]] = []
 
-        matched = []
-        # Check against known starter issues
+        # Add live internships and hackathons
+        for item in radar.get("ai_internships", []):
+            matched.append({"type": "internship", **item})
+        for item in radar.get("devpost_ai_hackathons", []):
+            matched.append({"type": "hackathon", **item})
+        for item in radar.get("gsoc_organizations", []):
+            matched.append({"type": "gsoc_org", **item})
+
+        # Also check against known starter issues
         for issue in self._scout.STARTER_ISSUES:
             tech_str = " ".join(issue.tech_tags).lower()
             title_str = issue.title.lower()
             repo_str = issue.repo_name.lower()
             org_str = issue.org_name.lower()
             issue_id = issue.issue_id.lower()
-            if (
+            if not cleaned or (
                 cleaned in tech_str
                 or cleaned in title_str
                 or cleaned in repo_str
                 or cleaned in org_str
                 or cleaned in issue_id
             ):
-                matched.append(issue.model_dump() if hasattr(issue, "model_dump") else issue.__dict__)
-
-        # Check against curated orgs
-        for org in self._scout.CURATED_ORGANIZATIONS:
-            langs = " ".join(org.primary_languages).lower()
-            repos = " ".join(org.starter_repos).lower()
-            desc = org.description.lower()
-            org_id = org.org_id.lower()
-            org_name = org.name.lower()
-            if (
-                cleaned in org_name
-                or cleaned in langs
-                or cleaned in org.category.lower()
-                or cleaned in repos
-                or cleaned in desc
-                or cleaned in org_id
-            ):
-                matched.append(org.model_dump() if hasattr(org, "model_dump") else org.__dict__)
+                matched.append({"type": "starter_issue", **(issue.model_dump() if hasattr(issue, "model_dump") else issue.__dict__)})
 
         return matched
+
+    def dispatch_digest(
+        self,
+        to_email: str = DEFAULT_TARGET_EMAIL,
+        from_email: str = DEFAULT_SENDER_EMAIL,
+        query: str = "",
+        force_refresh: bool = False,
+    ) -> Dict[str, Any]:
+        """Dispatches verified career opportunities digest to Ganesh Nair."""
+        return career_radar.dispatch_digest_email(
+            to_email=to_email,
+            from_email=from_email,
+            query=query,
+            force_refresh=force_refresh,
+        )
 
     def generate_pitch(
         self,
@@ -156,7 +162,13 @@ class CareerAgent(BaseSpecialistAgent):
         error: Optional[str] = None
 
         try:
-            if "audit" in goal or "readiness" in goal or "audit" in params:
+            if "email" in goal or "mail" in goal or "digest" in goal or "dispatch" in params:
+                tools_used.extend(["internship_finder", "browser", "search"])
+                target_email = params.get("to_email", DEFAULT_TARGET_EMAIL)
+                from_email = params.get("from_email", DEFAULT_SENDER_EMAIL)
+                q = params.get("query", "")
+                output = self.dispatch_digest(to_email=target_email, from_email=from_email, query=q)
+            elif "audit" in goal or "readiness" in goal or "audit" in params:
                 tools_used.append("interview_prep")
                 user = params.get("username", context.user_id or "GaneshNair007")
                 output = self.audit_readiness(username=user)
