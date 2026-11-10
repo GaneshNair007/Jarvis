@@ -1049,6 +1049,10 @@ class VoiceDaemon:
                     self.error_count += 1
                 self._mic_info = {**self._mic_info, "error": str(exc)}
 
+        if use_microphone and not mic_opened:
+            self.state = "DEGRADED_NO_MIC"
+            logger.warning("VoiceDaemon state degraded: DEGRADED_NO_MIC (microphone stream failed to open).")
+
         self.running = True
         self._record_evidence(
             source="voice_daemon.started",

@@ -33,8 +33,13 @@ def test_production_audit_log_status():
 
     import os
 
-    default_min = "1" if (prod_path.exists() and prod_path.stat().st_size > 0) else "0"
-    min_entries = int(os.environ.get("JARVIS_AUDIT_MIN_ENTRIES", default_min))
+    if not prod_path.exists() or prod_path.stat().st_size == 0:
+        pytest.skip(
+            f"Production audit log '{prod_path}' not provisioned on this environment. "
+            "Rule 6 enforcement: Missing audit data must not silently pass with count 0."
+        )
+
+    min_entries = int(os.environ.get("JARVIS_AUDIT_MIN_ENTRIES", "1"))
     assert verified_count >= min_entries, (
         f"Production audit ledger below configured floor: {verified_count} < {min_entries}"
     )

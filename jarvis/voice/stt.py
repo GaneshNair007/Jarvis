@@ -59,16 +59,17 @@ class SpeechToText:
             duration_sec = len(audio_bytes) / (sample_rate * 2)
 
         latency = (time.time() - start_time) * 1000
-        # If text header is embedded or simulated
-        decoded_text = "Jarvis, report system health" if duration_sec > 0.5 else "Jarvis"
-
+        # No fake transcriptions: fail honestly with clear error telemetry
+        logger.warning("STT transcription requested but faster-whisper model is unavailable.")
         return {
-            "text": decoded_text,
-            "language": "en",
-            "confidence": 0.90,
+            "text": "",
+            "language": "",
+            "confidence": 0.0,
+            "status": "unavailable",
+            "error": "faster-whisper is not installed or model failed to load. Real speech transcription requires the voice profile (pip install -e '.[voice]').",
             "duration_sec": round(duration_sec, 2),
             "latency_ms": round(latency, 2),
-            "engine": "local_speech_decoder",
+            "engine": "none",
         }
 
 

@@ -27,7 +27,10 @@ class AcousticWakeGate:
     FRAME_SAMPLES = 1280  # openWakeWord native 80 ms frame at 16 kHz
     DEFAULT_THRESHOLD = 0.5
 
-    def __init__(self, threshold: Optional[float] = None):
+    PINNED_MODEL_NAME = "hey_jarvis_v0.1.onnx"
+    PINNED_MODEL_SHA256 = "94a13cfe60075b132f6a472e7e462e8123ee70861bc3fb58434a73712ee0d2cb"
+
+    def __init__(self, threshold: Optional[float] = None, auto_load: bool = False):
         self.threshold = threshold if threshold is not None else self.DEFAULT_THRESHOLD
         self.available = False
         self.unavailable_reason = "not_initialized"
@@ -35,20 +38,18 @@ class AcousticWakeGate:
         self.model_names: List[str] = []
         self._pending = bytearray()  # accumulate feed blocks into 1280-sample frames
         self.last_score = 0.0
-        self.try_load()
+        if auto_load:
+            self.try_load(allow_network=False)
 
-    def try_load(self) -> bool:
-        """Attempts to initialize openWakeWord models. Honest failure only."""
+    def try_load(self, allow_network: bool = False) -> bool:
+        """Attempts to initialize openWakeWord models. Honest failure only. No silent network downloads on import."""
         try:
             import openwakeword
             from pathlib import Path
+            import hashlib
 
             from openwakeword.model import Model
 
-            # This openWakeWord build rejects wakeword_models=None
-            # ('NoneType' has no len()); load the packaged ONNX models
-            # explicitly, preferring the "jarvis" wake-phrase family.
-            # Layouts differ across versions: <pkg>/models or <pkg>/resources/models.
             pkg_root = Path(openwakeword.__file__).parent
             onnx_paths = []
             for candidate in (pkg_root / "models", pkg_root / "resources" / "models"):
@@ -58,11 +59,10 @@ class AcousticWakeGate:
                         onnx_paths = found
                         break
             jarvis_paths = [p for p in onnx_paths if "jarvis" in Path(p).name.lower()]
-            if not jarvis_paths:
+            if not jarvis_paths and allow_network:
                 try:
                     from openwakeword.utils import download_models
-
-                    logger.info("AcousticWakeGate: 'hey jarvis' model missing; downloading...")
+                    logger.info("AcousticWakeGate: Explicit model download requested...")
                     download_models(["hey_jarvis"])
                     for candidate in (pkg_root / "models", pkg_root / "resources" / "models"):
                         if candidate.is_dir():
@@ -73,7 +73,10 @@ class AcousticWakeGate:
                 except Exception as dl_exc:
                     logger.warning(f"AcousticWakeGate model download failed: {dl_exc}")
             if not (jarvis_paths or onnx_paths):
-                raise FileNotFoundError(f"no onnx wake models packaged under {pkg_root}")
+                self.available = False
+                self.unavailable_reason = f"no_wake_models: no ONNX models found under {pkg_root}. Run explicit install command."
+                logger.info(f"AcousticWakeGate: {self.unavailable_reason}")
+                return False
             load_paths = jarvis_paths or onnx_paths
             self._model = Model(wakeword_models=load_paths, inference_framework="onnx")
             self.model_names = (
@@ -234,4 +237,4 @@ class WakeWordDetector:
 wake_detector = WakeWordDetector()
 
 # Singleton acoustic gate (openWakeWord-backed, fail-closed)
-acoustic_gate = AcousticWakeGate()
+acoustic_gate = AcousticWakeGate(auto_load=False)
