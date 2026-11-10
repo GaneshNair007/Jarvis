@@ -18,7 +18,6 @@ from typing import Any, Dict, List, Optional
 from jarvis.browser.search_wrapper import search_wrapper
 from jarvis.config import settings
 from jarvis.core.logger import get_logger
-from jarvis.powers.email_powers import EmailPowers
 
 logger = get_logger("core.career_radar")
 
@@ -35,8 +34,18 @@ class CareerRadar:
     - Deterministic RFC 822 digest authoring and SMTP dispatching
     """
 
-    def __init__(self, email_powers: Optional[EmailPowers] = None):
-        self._email = email_powers or EmailPowers()
+    def __init__(self, email_powers: Optional[Any] = None):
+        self._email = email_powers
+        self._cache: Optional[Dict[str, Any]] = None
+        self._cache_timestamp: float = 0.0
+        self._cache_ttl_sec: float = 900.0  # 15 minutes
+
+    @property
+    def email_powers(self):
+        if self._email is None:
+            from jarvis.powers.email_powers import EmailPowers
+            self._email = EmailPowers()
+        return self._email
         self._cache: Optional[Dict[str, Any]] = None
         self._cache_timestamp: float = 0.0
         self._cache_ttl_sec: float = 900.0  # 15 minutes
@@ -587,7 +596,7 @@ class CareerRadar:
         body_text = self.generate_digest_markdown(radar_data)
 
         # Author RFC 822 draft
-        draft_res = self._email.draft_email(
+        draft_res = self.email_powers.draft_email(
             to=to_email,
             from_addr=from_email,
             subject=subject,
@@ -615,7 +624,7 @@ class CareerRadar:
 
         if smtp_user and smtp_pass and draft_file_path:
             logger.info(f"Attempting live SMTP transmission for career radar to {to_email}")
-            send_res = self._email.send_email(
+            send_res = self.email_powers.send_email(
                 draft_path=draft_file_path,
                 task_id="career_radar_digest_dispatch",
                 approval_token="auto_approved_user_requested_digest",
