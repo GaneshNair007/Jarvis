@@ -1773,6 +1773,29 @@
       const btnSend = document.getElementById('btn-send');
       btnSend.disabled = true;
 
+      // Show Active Thinking & Orchestration Indicator
+      const list = document.getElementById('messages-list');
+      const stream = document.getElementById('chat-stream');
+      const thinkingId = 'jarvis-thinking-bubble';
+      const existingThinking = document.getElementById(thinkingId);
+      if (existingThinking) existingThinking.remove();
+
+      const thinkingBubble = document.createElement('div');
+      thinkingBubble.id = thinkingId;
+      thinkingBubble.className = 'chat-bubble bubble-jarvis';
+      thinkingBubble.innerHTML = `
+        <div class="bubble-avatar" style="border-color: var(--cyan); color: var(--cyan);">J</div>
+        <div class="bubble-content">
+          <div class="bubble-header"><span class="bubble-sender">JARVIS Orchestrator</span><span class="bubble-time">Processing</span></div>
+          <div class="bubble-body" style="display:flex; align-items:center; gap:10px; color: var(--cyan); font-size:0.85rem;">
+            <span style="display:inline-block; animation: spin 1.2s linear infinite;">⚡</span>
+            <span id="jarvis-thinking-msg">Orchestrating specialist agents & analyzing query...</span>
+          </div>
+        </div>
+      `;
+      list.appendChild(thinkingBubble);
+      stream.scrollTop = stream.scrollHeight;
+
       try {
         const resp = await fetch(`${API_BASE}/api/v1/chat`, {
           method: 'POST',
@@ -1808,8 +1831,13 @@
           agentUsed = data.assigned_agent;
         }
 
+        const tb = document.getElementById(thinkingId);
+        if (tb) tb.remove();
+
         appendMessage('jarvis', agentUsed, reply);
       } catch (err) {
+        const tb = document.getElementById(thinkingId);
+        if (tb) tb.remove();
         appendMessage('jarvis', 'System', `Error communicating with assistant: ${err.message}`);
       } finally {
         btnSend.disabled = false;
@@ -1858,6 +1886,16 @@
         setTimeout(() => copyBtn.textContent = '📋 Copy', 2000);
       };
       actions.appendChild(copyBtn);
+
+      if (senderType === 'jarvis') {
+        const speakBtn = document.createElement('button');
+        speakBtn.className = 'bubble-action-btn';
+        speakBtn.textContent = '🔊 Listen';
+        speakBtn.onclick = () => {
+          speakJarvisReply(text);
+        };
+        actions.appendChild(speakBtn);
+      }
 
       content.appendChild(header);
       content.appendChild(body);
@@ -1910,6 +1948,14 @@
 
     function handleExecutionEvent(evt) {
       if (!evt) return;
+      const thinkingMsg = document.getElementById('jarvis-thinking-msg');
+      if (thinkingMsg) {
+        if (evt.agent_role) {
+          thinkingMsg.textContent = `${evt.agent_role.toUpperCase()} Agent: ${evt.status || 'Active'}...`;
+        } else if (evt.stage_name) {
+          thinkingMsg.textContent = `Stage ${evt.stage}: ${evt.stage_name.toUpperCase()}...`;
+        }
+      }
       if (evt.stage) {
         const state = evt.status === 'FAILED' ? 'failed' : (evt.event_type === 'task_completed' ? 'completed' : 'active');
         setPipelineStage(evt.stage, state);
@@ -2060,21 +2106,92 @@
       }
     }
 
+    // ─── LIVE VOICE SPEECH RECOGNITION & SYNTHESIS ───
+    let speechRecognizer = null;
+    function initSpeechRecognition() {
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        speechRecognizer = new SpeechRec();
+        speechRecognizer.continuous = false;
+        speechRecognizer.interimResults = true;
+        speechRecognizer.lang = 'en-US';
+
+        speechRecognizer.onstart = () => {
+          const micText = document.getElementById('mic-status-text');
+          const audioText = document.getElementById('audio-state-text');
+          if (micText) micText.textContent = 'Listening...';
+          if (audioText) audioText.textContent = 'Hearing speech...';
+        };
+
+        speechRecognizer.onresult = (evt) => {
+          let interim = '';
+          for (let i = evt.resultIndex; i < evt.results.length; ++i) {
+            interim += evt.results[i][0].transcript;
+          }
+          const inp = document.getElementById('chat-input');
+          if (inp && interim) inp.value = interim;
+          const audioText = document.getElementById('audio-state-text');
+          if (audioText && interim) audioText.textContent = `"${interim.slice(0, 30)}..."`;
+        };
+
+        speechRecognizer.onend = () => {
+          isRecording = false;
+          const btn = document.getElementById('btn-mic');
+          if (btn) btn.classList.remove('active');
+          const micText = document.getElementById('mic-status-text');
+          if (micText) micText.textContent = 'Mic Ready';
+          const inp = document.getElementById('chat-input');
+          if (inp && inp.value.trim().length > 0) {
+            submitChat();
+          }
+        };
+
+        speechRecognizer.onerror = (e) => {
+          console.warn('SpeechRecognition note:', e);
+          isRecording = false;
+          const btn = document.getElementById('btn-mic');
+          if (btn) btn.classList.remove('active');
+        };
+      }
+    }
+
     function toggleVoiceInput() {
       isRecording = !isRecording;
       const btn = document.getElementById('btn-mic');
       const micText = document.getElementById('mic-status-text');
       const audioText = document.getElementById('audio-state-text');
+
+      if (!speechRecognizer) {
+        initSpeechRecognition();
+      }
+
       if (isRecording) {
         btn.classList.add('active');
-        micText.textContent = 'Listening...';
-        audioText.textContent = 'Recording Speech';
+        if (micText) micText.textContent = 'Listening...';
+        if (audioText) audioText.textContent = 'Recording Speech';
+        if (speechRecognizer) {
+          try { speechRecognizer.start(); } catch(e) {}
+        }
         fetch(`${API_BASE}/api/v1/voice/push-to-talk`, { method: 'POST' }).catch(() => {});
       } else {
         btn.classList.remove('active');
-        micText.textContent = 'Mic Ready';
-        audioText.textContent = 'Idle';
+        if (micText) micText.textContent = 'Mic Ready';
+        if (audioText) audioText.textContent = 'Idle';
+        if (speechRecognizer) {
+          try { speechRecognizer.stop(); } catch(e) {}
+        }
       }
+    }
+
+    function speakJarvisReply(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      // Strip markdown syntax for natural voice
+      const cleanText = text.replace(/[*_#`~\[\]\(\)]/g, ' ').replace(/\s+/g, ' ').trim();
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.rate = 1.05;
+      utterance.pitch = 0.95;
+      window.speechSynthesis.speak(utterance);
     }
 
     function searchMemory() {

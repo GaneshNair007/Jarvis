@@ -457,8 +457,13 @@ class JarvisOrchestrator:
                 full_prompt,
             )
 
-            # If LLM inference failed but specialists produced findings, construct verified response from findings
-            if (not execution_result.get("reply") or execution_result.get("status") in ("unavailable", "failed")) and specialist_outputs:
+            # If LLM inference failed or returned unavailable error but specialists produced findings, construct verified response from findings
+            has_error = (
+                not execution_result.get("reply")
+                or execution_result.get("status") in ("unavailable", "failed", "error")
+                or "AI Backend Unavailable" in str(execution_result.get("reply", ""))
+            )
+            if has_error and specialist_outputs:
                 sections = [f"### JARVIS Multi-Agent Execution Receipt\n**Request:** {query}\n"]
                 for a_role, a_out in specialist_outputs.items():
                     sections.append(f"#### ? {a_role.replace('_', ' ').title()} Findings\n{str(a_out)}")
@@ -588,6 +593,17 @@ class JarvisOrchestrator:
             model=execution_result.get("model", decision.selected_model),
             tokens=execution_result.get("tokens_used", 0),
         )
+
+        # OpenJarvis Note-Taking & Fact Extraction Integration
+        try:
+            from jarvis.integrations.openjarvis_bridge import openjarvis_bridge
+            openjarvis_bridge.note_conversation(
+                conversation_id=conversation_id,
+                user_message=query,
+                assistant_reply=final_reply_text,
+            )
+        except Exception as _oj_err:
+            logger.debug(f"OpenJarvis memory logging pass: {_oj_err}")
 
         is_failed = execution_result.get("status") in ("failed", "error")
         final_state = "FAILED" if is_failed else "COMPLETED"
@@ -949,6 +965,31 @@ class JarvisOrchestrator:
                     "message": resp_msg,
                     "reply": resp_msg,
                 }
+
+        # Hackathon Workflow & Project Execution via OpenJarvis
+        if any(k in q_lower for k in ["start working on", "work on hackathon", "research hackathon", "scaffold hackathon", "build hackathon", "develop hackathon"]):
+            import re
+            m = re.search(r"(?:start working on|work on|research|scaffold|build|develop)\s+(?:the\s+)?([a-zA-Z0-9_\-\s]+?)(?:hackathon|$)", query, re.IGNORECASE)
+            h_title = m.group(1).strip() if m else "Next-Gen AI Hackathon"
+            if "hackathon" not in h_title.lower():
+                h_title += " Hackathon"
+            from jarvis.integrations.openjarvis_bridge import openjarvis_bridge
+            res = openjarvis_bridge.execute_hackathon_pipeline(hackathon_title=h_title)
+            msg = (
+                f"Autonomous Hackathon Pipeline completed for **{h_title}**.\n\n"
+                f"- **Project Directory:** `{res['project_dir']}` (Git initialized: {res['git_initialized']})\n"
+                f"- **Models Consulted:** {', '.join(res['models_consulted'])}\n"
+                f"- **Registration & Submission Form:** Generated at `{res['project_dir']}\\submission_form.json`\n"
+                f"- **Email Digest:** Dispatched/drafted to `{res['email_target']}`\n\n"
+                f"### Multi-LLM Architecture Blueprint:\n{res['research_summary'][:500]}..."
+            )
+            return {
+                "type": "hackathon_pipeline",
+                "status": "completed",
+                "message": msg,
+                "reply": msg,
+                "details": res,
+            }
 
         # 3. Autonomous Workforce Swarm & Hackathons
         if (

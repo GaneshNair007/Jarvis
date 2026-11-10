@@ -138,9 +138,9 @@ class EmailPowers:
 
         import email
         parsed_msg = email.message_from_bytes(raw_bytes)
-        smtp_host = os.getenv("SMTP_HOST") or getattr(settings, "smtp_host", None)
+        smtp_host = os.getenv("SMTP_HOST") or getattr(settings, "smtp_host", None) or "smtp.gmail.com"
         smtp_port = int(os.getenv("SMTP_PORT") or getattr(settings, "smtp_port", 587))
-        smtp_user = os.getenv("SMTP_USER") or getattr(settings, "smtp_user", None) or os.getenv("GMAIL_USER")
+        smtp_user = os.getenv("SMTP_USER") or getattr(settings, "smtp_user", None) or os.getenv("GMAIL_USER") or "jarvis33246146@gmail.com"
         smtp_pass = os.getenv("SMTP_PASSWORD") or getattr(settings, "smtp_password", None) or os.getenv("GMAIL_APP_PASSWORD")
         smtp_use_tls = getattr(settings, "smtp_use_tls", True)
 

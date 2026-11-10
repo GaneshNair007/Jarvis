@@ -598,7 +598,7 @@ class CareerRadar:
         draft_sha256 = draft_res.get("sha256")
 
         # Evaluate if SMTP is available to send directly
-        smtp_user = os.getenv("SMTP_USER") or os.getenv("GMAIL_USER")
+        smtp_user = os.getenv("SMTP_USER") or os.getenv("GMAIL_USER") or DEFAULT_SENDER_EMAIL
         smtp_pass = os.getenv("SMTP_PASSWORD") or os.getenv("GMAIL_APP_PASSWORD")
 
         delivery_result = {
