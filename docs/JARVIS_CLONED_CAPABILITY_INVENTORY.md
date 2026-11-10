@@ -407,7 +407,8 @@ class FreeLLMAPIAdapter:
     """Production client for FreeLLMAPI with DLP protection and circuit breaking."""
 
     DEFAULT_BASE_URL = "http://localhost:3001/v1"
-    DEFAULT_API_KEY = "freellmapi-bbe4d824646ec4bca5903eeb1060d788eec976b612e2b48a"
+    # API key must be provided via constructor or FREELLMAPI_KEY environment variable
+    # No hardcoded default credentials permitted.
 
     # Strict regex patterns for DLP blocking
     SENSITIVE_PATTERNS = [
@@ -425,7 +426,7 @@ class FreeLLMAPIAdapter:
         timeout: float = 30.0,
     ):
         self.base_url = (base_url or os.getenv("FREELLMAPI_URL", self.DEFAULT_BASE_URL)).rstrip("/")
-        self.api_key = api_key or os.getenv("FREELLMAPI_KEY", self.DEFAULT_API_KEY)
+        self.api_key = api_key or os.getenv("FREELLMAPI_KEY", "")
         self.enforce_dlp = enforce_dlp
         self.timeout = timeout
 
