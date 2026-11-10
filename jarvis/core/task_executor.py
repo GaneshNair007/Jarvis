@@ -121,7 +121,9 @@ class TaskExecutor:
 
     async def _default_agent_execution(self, task: TaskNode, context: Dict[str, Any]) -> Dict[str, Any]:
         """Honest failure when no real execution handler or registered tool is configured."""
-        logger.warning(f"No execution handler or registered tool configured for task '{task.task_id}' (assigned: '{task.assigned_agent}').")
+        logger.warning(
+            f"No execution handler or registered tool configured for task '{task.task_id}' (assigned: '{task.assigned_agent}')."
+        )
         return {
             "task_id": task.task_id,
             "status": "unavailable",

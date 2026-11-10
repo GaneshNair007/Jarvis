@@ -62,6 +62,7 @@ class AcousticWakeGate:
             if not jarvis_paths and allow_network:
                 try:
                     from openwakeword.utils import download_models
+
                     logger.info("AcousticWakeGate: Explicit model download requested...")
                     download_models(["hey_jarvis"])
                     for candidate in (pkg_root / "models", pkg_root / "resources" / "models"):
@@ -74,7 +75,9 @@ class AcousticWakeGate:
                     logger.warning(f"AcousticWakeGate model download failed: {dl_exc}")
             if not (jarvis_paths or onnx_paths):
                 self.available = False
-                self.unavailable_reason = f"no_wake_models: no ONNX models found under {pkg_root}. Run explicit install command."
+                self.unavailable_reason = (
+                    f"no_wake_models: no ONNX models found under {pkg_root}. Run explicit install command."
+                )
                 logger.info(f"AcousticWakeGate: {self.unavailable_reason}")
                 return False
             load_paths = jarvis_paths or onnx_paths
