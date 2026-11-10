@@ -64,3 +64,6 @@ data/notifications/
 workspace/
 data/reflections.json
 data/task_memory_events.json
+
+apps/
+data/openjarvis_memory/
