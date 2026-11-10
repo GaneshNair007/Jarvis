@@ -63,7 +63,7 @@ class Task(Base):
 class TaskStep(Base):
     __tablename__ = "task_steps"
     id = Column(String(64), primary_key=True)
-    task_id = Column(String(64), ForeignKey("tasks.id"), nullable=False)
+    task_id = Column(String(64), nullable=False)
     step_number = Column(Integer, nullable=False)
     agent = Column(String(64), default="coordinator")
     action = Column(String(128), nullable=False)
@@ -75,7 +75,7 @@ class TaskStep(Base):
 class TaskEvent(Base):
     __tablename__ = "task_events"
     id = Column(String(64), primary_key=True)
-    task_id = Column(String(64), ForeignKey("tasks.id"), nullable=False)
+    task_id = Column(String(64), nullable=False)
     event_type = Column(String(64), nullable=False)
     payload = Column(Text, nullable=True)
     timestamp = Column(Float, default=time.time)

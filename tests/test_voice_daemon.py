@@ -316,10 +316,12 @@ def test_probe_input_devices_returns_measured_classification():
     """Probe records real audio from every input device and classifies it."""
     try:
         import sounddevice as sd
-    except (ImportError, OSError):
-        pytest.skip("sounddevice / PortAudio library not available on this host")
 
-    if not [d for d in sd.query_devices() if d.get("max_input_channels", 0) >= 1]:
+        devices = [d for d in sd.query_devices() if d.get("max_input_channels", 0) >= 1]
+    except Exception as exc:
+        pytest.skip(f"sounddevice / PortAudio device query failed on this host: {exc}")
+
+    if not devices:
         pytest.skip("No audio input devices available on this host")
     from jarvis.voice.daemon import probe_input_devices
 
@@ -344,10 +346,6 @@ def test_probe_input_devices_returns_measured_classification():
 
 def test_select_input_device_prefers_live_shared_mode_device():
     """Selection logic: injected live probe result wins over default fallback."""
-    try:
-        import sounddevice as sd
-    except (ImportError, OSError):
-        pytest.skip("sounddevice / PortAudio library not available on this host")
     from jarvis.voice.daemon import select_input_device
 
     probe = [
@@ -374,24 +372,33 @@ def test_select_input_device_prefers_live_shared_mode_device():
     assert fallback["probe_summary"]["glitch"] == 1
 
     # Explicit device (or JARVIS_MIC_DEVICE env) bypasses probing.
-    import sounddevice as sd
+    try:
+        import sounddevice as sd
 
-    input_idxs = [i for i, d in enumerate(sd.query_devices()) if d.get("max_input_channels", 0) >= 1]
-    if not input_idxs:
-        pytest.skip("No audio input devices available on this host")
-    forced = select_input_device(explicit=input_idxs[0], probe=[])
-    assert forced["device"] == input_idxs[0]
-    assert forced["source"] == "explicit"
+        input_idxs = [i for i, d in enumerate(sd.query_devices()) if d.get("max_input_channels", 0) >= 1]
+    except Exception:
+        input_idxs = []
+
+    if input_idxs:
+        forced = select_input_device(explicit=input_idxs[0], probe=[])
+        assert forced["device"] == input_idxs[0]
+        assert forced["source"] == "explicit"
+    else:
+        forced = select_input_device(explicit=99, probe=[])
+        assert forced["device"] == 99
+        assert forced["source"] == "explicit"
 
 
 def test_start_with_microphone_opens_probed_device_and_reports_telemetry():
     """Real mic start: device is probed/selected and health exposes mic facts."""
     try:
         import sounddevice as sd
-    except (ImportError, OSError):
-        pytest.skip("sounddevice / PortAudio library not available on this host")
 
-    if not [d for d in sd.query_devices() if d.get("max_input_channels", 0) >= 1]:
+        devices = [d for d in sd.query_devices() if d.get("max_input_channels", 0) >= 1]
+    except Exception as exc:
+        pytest.skip(f"sounddevice / PortAudio device query failed on this host: {exc}")
+
+    if not devices:
         pytest.skip("No audio input devices available on this host")
     daemon = VoiceDaemon(speak_replies=False, probe_devices=True, mic_device=None)
     health = daemon.start(use_microphone=True)

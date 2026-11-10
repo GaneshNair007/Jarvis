@@ -32,17 +32,23 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: 🐧 Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb python3-tk scrot libpq-dev libportaudio2 portaudio19-dev
+
       - name: 📦 Install dependencies
         run: |
           pip install pytest pytest-cov coverage[toml]
           pip install -r requirements.txt
           pip install -r requirements-ci.txt
+          python -m playwright install --with-deps chromium
 
       - name: 🧪 Run tests with coverage
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/jarvis_test
         run: |
-          pytest tests/ \
+          xvfb-run -a pytest tests/ \
             --cov=jarvis \
             --cov-report=xml \
             --cov-report=html \

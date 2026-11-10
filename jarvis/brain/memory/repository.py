@@ -8,14 +8,14 @@ from typing import List, Optional
 from sqlalchemy import or_
 from sqlalchemy.orm import Session, sessionmaker
 
-from jarvis.memory.models import get_db_engine, Base
+from jarvis.memory.models import get_db_engine
 from jarvis.brain.schemas import (
     CanonicalMemoryRecord,
     MemoryQueryFilter,
     MemoryStatus,
 )
 from jarvis.brain.memory.interfaces import MemoryRepositoryInterface
-from jarvis.brain.memory.models import CanonicalMemoryModel
+from jarvis.brain.memory.models import Base, CanonicalMemoryModel
 
 
 def get_default_session():

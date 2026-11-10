@@ -3,7 +3,9 @@
 import json
 import time
 from sqlalchemy import Column, String, Float, Text, Index
-from jarvis.memory.models import Base
+from sqlalchemy.orm import declarative_base
+
+Base = declarative_base()
 
 
 class CanonicalMemoryModel(Base):

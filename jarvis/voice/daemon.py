@@ -87,15 +87,25 @@ def probe_input_devices(
         logger.warning(f"probe_input_devices: sounddevice unavailable: {exc}")
         return results
 
-    devices = sd.query_devices()
+    try:
+        devices = sd.query_devices()
+    except Exception as exc:
+        logger.warning(f"probe_input_devices: query_devices failed: {exc}")
+        return results
+
     window = max(1, int(duration_sec * 4))  # 0.25 s windows
     for idx, info in enumerate(devices):
         if info.get("max_input_channels", 0) < 1:
             continue
+        hostapi_name = ""
+        try:
+            hostapi_name = sd.query_hostapis(info.get("hostapi", 0)).get("name", "")
+        except Exception:
+            hostapi_name = ""
         entry: Dict[str, Any] = {
             "index": idx,
             "name": info.get("name", ""),
-            "hostapi": sd.query_hostapis(info.get("hostapi", 0)).get("name", ""),
+            "hostapi": hostapi_name,
             "default_rate": int(info.get("default_samplerate", 16000)),
         }
         # Probe at the rate the daemon would actually use (native), because
@@ -182,16 +192,23 @@ def select_input_device(
 
     Returns {"device": Optional[int], "name": str, "live": bool, "source": str, ...}
     """
+    sd = None
     try:
-        import sounddevice as sd
+        import sounddevice as _sd
+
+        sd = _sd
     except Exception:  # pragma: no cover
+        sd = None
+
+    if sd is None and probe is None and explicit is None:
         return {"device": None, "name": "", "live": False, "source": "no_sounddevice"}
 
     default_idx = None
-    try:
-        default_idx = sd.default.device[0]
-    except Exception:
-        default_idx = None
+    if sd is not None:
+        try:
+            default_idx = sd.default.device[0]
+        except Exception:
+            default_idx = None
 
     env_raw = os.environ.get("JARVIS_MIC_DEVICE", "").strip()
     if explicit is None and env_raw:
@@ -200,19 +217,21 @@ def select_input_device(
         except ValueError:
             explicit = None
     if explicit is not None:
-        try:
-            info = sd.query_devices(explicit)
-            return {
-                "device": explicit,
-                "name": info.get("name", ""),
-                "live": False,  # not measured when forced
-                "source": "explicit",
-            }
-        except Exception:
-            pass
+        name = ""
+        if sd is not None:
+            try:
+                name = sd.query_devices(explicit).get("name", "")
+            except Exception:
+                pass
+        return {
+            "device": explicit,
+            "name": name,
+            "live": False,  # not measured when forced
+            "source": "explicit",
+        }
 
     if probe is None:
-        probe = probe_input_devices()
+        probe = probe_input_devices() if sd is not None else []
 
     usable = [
         e
