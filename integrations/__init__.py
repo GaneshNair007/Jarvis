@@ -19,6 +19,7 @@ from integrations.openrouter.openrouter_integration import OpenRouterIntegration
 from integrations.home_assistant.home_assistant import HomeAssistantIntegration, home_assistant_integration
 from integrations.calendar.calendar_integration import CalendarIntegration, calendar_integration
 from integrations.finance.finance_integration import FinanceIntegration, finance_integration
+from integrations.switch.switch_integration import SwitchIntegration, switch_integration
 
 # Auto-register all integrations
 integration_registry.register(SystemDiagnosticsIntegration())
@@ -27,6 +28,7 @@ integration_registry.register(OpenRouterIntegration())
 integration_registry.register(HomeAssistantIntegration())
 integration_registry.register(CalendarIntegration())
 integration_registry.register(FinanceIntegration())
+integration_registry.register(switch_integration)
 
 __all__ = [
     "BaseIntegration",
@@ -51,4 +53,6 @@ __all__ = [
     "calendar_integration",
     "FinanceIntegration",
     "finance_integration",
+    "SwitchIntegration",
+    "switch_integration",
 ]

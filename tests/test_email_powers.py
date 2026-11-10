@@ -76,3 +76,81 @@ def test_email_send_with_valid_cryptographic_approval(temp_email):
     assert send_res["success"] is True
     assert send_res["status"] == "SENT"
     assert Path(send_res["archive_path"]).exists()
+
+
+def test_scan_inbox_disconnected_truthful_status(temp_email, monkeypatch):
+    """Verifies that when credentials are not configured, scan_inbox returns DISCONNECTED without fake data."""
+    email_p, _ = temp_email
+    monkeypatch.delenv("GMAIL_USER", raising=False)
+    monkeypatch.delenv("GMAIL_ADDRESS", raising=False)
+    monkeypatch.delenv("GMAIL_APP_PASSWORD", raising=False)
+    monkeypatch.delenv("GMAIL_PASSWORD", raising=False)
+    monkeypatch.delenv("GMAIL_OAUTH_TOKEN", raising=False)
+
+    res = email_p.scan_inbox_for_opportunities()
+    assert res["status"] == "DISCONNECTED"
+    assert res["connected"] is False
+    assert res["fabricated"] is False
+    assert res["opportunities_found"] == 0
+    assert res["opportunities"] == []
+    assert "not configured" in res["message"]
+
+
+def test_send_email_real_smtplib_delivery(temp_email, monkeypatch):
+    """Verifies that send_email genuinely uses smtplib when SMTP credentials are configured."""
+    from unittest.mock import MagicMock, patch
+
+    email_p, _ = temp_email
+    draft = email_p.draft_email(
+        to="recipient@example.com",
+        subject="SMTP Delivery Test",
+        body="Testing real SMTP transmission.",
+    )
+
+    task_id = "task_smtp_test"
+    raw_bytes = Path(draft["file_path"]).read_bytes()
+    content_hash = hashlib.sha256(raw_bytes).hexdigest()
+    exec_payload = {"draft_path": str(Path(draft["file_path"])), "sha256": content_hash}
+    payload_hash = policy_gate.hash_payload(exec_payload)
+
+    token, _ = policy_gate.generate_approval_token(
+        task_id=task_id,
+        power_id="send_email",
+        payload_hash=payload_hash,
+    )
+
+    monkeypatch.setenv("SMTP_HOST", "smtp.testserver.com")
+    monkeypatch.setenv("SMTP_PORT", "587")
+    monkeypatch.setenv("SMTP_USER", "testuser@testserver.com")
+    monkeypatch.setenv("SMTP_PASSWORD", "secret_pass")
+
+    mock_smtp_instance = MagicMock()
+    mock_smtp_instance.__enter__.return_value = mock_smtp_instance
+
+    with patch("smtplib.SMTP", return_value=mock_smtp_instance) as mock_smtp_class:
+        send_res = email_p.send_email(
+            draft_path=draft["file_path"],
+            task_id=task_id,
+            approval_token=token,
+        )
+
+        assert send_res["success"] is True
+        assert send_res["status"] == "SENT"
+        assert send_res["delivery_channel"] == "DELIVERED_VIA_SMTP"
+        mock_smtp_class.assert_called_once_with("smtp.testserver.com", 587, timeout=15)
+        mock_smtp_instance.starttls.assert_called_once()
+        mock_smtp_instance.login.assert_called_once_with("testuser@testserver.com", "secret_pass")
+        mock_smtp_instance.send_message.assert_called_once()
+
+
+def test_derive_action_from_content_with_dates(temp_email):
+    """Verifies regex date extraction works cleanly without NameError."""
+    email_p, _ = temp_email
+    action = email_p._derive_action_from_content(
+        subject="Interview Invitation for Senior AI Engineer",
+        sender="recruiter@tech.corp",
+        body="We would like to invite you for an interview on Tuesday, Nov 15th at 2:00 PM IST.",
+    )
+    assert "interview invitation" in action.lower()
+    assert "tuesday" in action.lower()
+

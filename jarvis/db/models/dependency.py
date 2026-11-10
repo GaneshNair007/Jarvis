@@ -6,10 +6,14 @@ Forms Directed Acyclic Graph edges between tasks.
 from __future__ import annotations
 
 import uuid
+from typing import TYPE_CHECKING
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from jarvis.db.models.base import Base, GUID
+
+if TYPE_CHECKING:
+    from jarvis.db.models.task import TaskModel
 
 
 class TaskDependencyModel(Base):

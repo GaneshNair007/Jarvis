@@ -28,3 +28,4 @@ All agents and contributors must uphold these four non-negotiable architectural 
 - Never call synchronous, blocking network I/O or heavy model inference inside `async def` FastAPI routes or event-loop callbacks.
 - All synchronous inference calls (LiteLLM, urllib, subprocesses) must be offloaded to worker threads via `await asyncio.to_thread(...)` or handled by native asynchronous clients (`httpx.AsyncClient`).
 - The event loop must remain free to process WebSockets, voice barge-in, and HUD streaming at all times.
+

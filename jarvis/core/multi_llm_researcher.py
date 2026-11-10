@@ -19,7 +19,7 @@ import os
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from jarvis.config import settings
 from jarvis.core.api_key_rotator import gemini_rotator, openrouter_rotator

@@ -51,26 +51,28 @@ class SwitchIntegration(BaseIntegration):
         self.room_id = "general"
         self.agent_name = "JARVIS Sovereign Conductor"
 
-    def connect(self) -> Tuple[bool, str]:
+    def connect(self, credentials: Optional[Dict[str, str]] = None) -> bool:
         """Validates connection to the Switch daemon or cloud relay."""
         if not self.enabled:
-            return False, "Switch integration is disabled. Enable it in integration settings."
+            logger.warning("Switch integration is disabled. Enable it in integration settings.")
+            return False
 
         # Check internet capability
         internet_status = capability_guard.check_internet()
         if internet_status == CapabilityStatus.DISCONNECTED:
             self.connected = False
-            return False, "Cannot connect to Switch: No internet connection detected."
+            logger.warning("Cannot connect to Switch: No internet connection detected.")
+            return False
 
         self.connected = True
         logger.info(f"Connected to Switch Protocol room '{self.room_id}' as '{self.agent_name}'.")
-        return True, "Successfully connected to Switch Protocol bridge."
+        return True
 
-    def disconnect(self) -> Tuple[bool, str]:
+    def disconnect(self) -> bool:
         """Safely disconnects from the Switch relay."""
         self.connected = False
         logger.info("Disconnected from Switch Protocol bridge.")
-        return True, "Disconnected from Switch Protocol."
+        return True
 
     def health_check(self) -> HealthReport:
         """Inspects status of the Switch integration."""

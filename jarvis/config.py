@@ -173,7 +173,21 @@ class Settings(BaseSettings):
     voice_sensitivity: float = Field(default=0.5)
     voice_energy_threshold: float = Field(default=85.0)
     tts_speed: int = Field(default=1)
-    tts_volume: int = Field(default=100)
+    tts_volume: int = Field(default=100, ge=0, le=100, description="TTS output volume (0-100)")
+    # ─── Email & Communication Settings ─────────────────────────────────────
+    smtp_host: Optional[str] = Field(default=None, description="Outbound SMTP host")
+    smtp_port: int = Field(default=587, description="Outbound SMTP port")
+    smtp_user: Optional[str] = Field(default=None, description="SMTP username / auth email")
+    smtp_password: Optional[str] = Field(default=None, description="SMTP password or app password")
+    smtp_use_tls: bool = Field(default=True, description="Enable STARTTLS for SMTP")
+    imap_host: Optional[str] = Field(default="imap.gmail.com", description="IMAP server host")
+    imap_port: int = Field(default=993, description="IMAP server port")
+
+    # ─── Smart-Home / IoT Settings ──────────────────────────────────────────
+    enable_smart_home: bool = Field(
+        default=False,
+        description="Freeze smart home capabilities per personal AI assistant direction",
+    )
 
     # ─── Pydantic Configuration ─────────────────────────────────────────────
     model_config = SettingsConfigDict(

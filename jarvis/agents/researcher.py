@@ -4,7 +4,7 @@ PDF Spec: Pages 352-371 — Multi-Agent & Orchestration
 
 Executes multi-source research tasks:
 - Local search brain (SQLite FTS5 + Qdrant vectors)
-- Web search via SearXNG / browser worker
+- Web search via SearXNG / DuckDuckGo / browser worker
 - URL deep-reading via Playwright
 - Synthesises results into a cited evidence package
 """
@@ -16,6 +16,7 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
+from jarvis.agents.base import AgentContext, AgentResult, AgentTask, BaseSpecialistAgent
 from jarvis.core.logger import get_logger
 
 logger = get_logger("agents.researcher")
@@ -66,7 +67,7 @@ class ResearchReport:
         }
 
 
-class ResearcherAgent:
+class ResearcherAgent(BaseSpecialistAgent):
     """
     Multi-source research agent that:
     1. Queries local search brain (zero-latency hot cache)
@@ -74,6 +75,19 @@ class ResearcherAgent:
     3. Deep-reads URLs via browser worker
     4. Synthesises findings into a concise report
     """
+
+    name: str = "ResearcherAgent"
+    role: str = "researcher"
+    permitted_tools: List[str] = [
+        "web_search",
+        "url_reader",
+        "local_search",
+        "document_rag",
+        "mem0_memory",
+        "evidence_synthesizer",
+        "browser",
+        "search",
+    ]
 
     MAX_WEB_RESULTS = 5
     MAX_LOCAL_RESULTS = 10
@@ -152,6 +166,74 @@ class ResearcherAgent:
             sources_consulted=sources,
             duration_ms=duration_ms,
         )
+
+    def synthesize_findings(self, query: str, findings: Optional[List[Any]] = None) -> str:
+        """Synthesizes given findings without fabricating unsupported facts."""
+        if not findings:
+            return f"No relevant information found for: {query}"
+
+        adapted: List[ResearchResult] = []
+        for f in findings:
+            if isinstance(f, ResearchResult):
+                adapted.append(f)
+            elif isinstance(f, dict):
+                adapted.append(
+                    ResearchResult(
+                        source=f.get("source", "unknown"),
+                        title=f.get("title", "Result"),
+                        snippet=f.get("snippet", str(f)),
+                        url=f.get("url"),
+                        relevance_score=float(f.get("relevance_score", 0.6)),
+                    )
+                )
+            else:
+                adapted.append(
+                    ResearchResult(
+                        source="raw",
+                        title=str(f)[:30],
+                        snippet=str(f),
+                        relevance_score=0.5,
+                    )
+                )
+        return self._synthesise(query, adapted)
+
+    async def execute(self, task: AgentTask, context: AgentContext) -> AgentResult:
+        """Executes assigned research task using permitted tools only."""
+        start = time.time()
+        query = task.goal or task.parameters.get("query", "")
+        deep = bool(task.parameters.get("deep", False))
+        url = task.parameters.get("url")
+        user_id = context.user_id or "ganesh"
+
+        try:
+            report = self.research(query=query, user_id=user_id, deep=deep, url=url)
+            duration_ms = round((time.time() - start) * 1000, 2)
+            return AgentResult(
+                task_id=task.task_id,
+                agent_name=self.name,
+                role=self.role,
+                status="SUCCESS",
+                output=report.synthesis,
+                evidence={
+                    "report": report.to_dict(),
+                    "findings_count": len(report.findings),
+                    "sources": report.sources_consulted,
+                },
+                tools_used=report.sources_consulted or ["local_search"],
+                duration_ms=duration_ms,
+            )
+        except Exception as exc:
+            duration_ms = round((time.time() - start) * 1000, 2)
+            logger.error(f"ResearcherAgent.execute failed: {exc}")
+            return AgentResult(
+                task_id=task.task_id,
+                agent_name=self.name,
+                role=self.role,
+                status="FAILED",
+                output=None,
+                error=str(exc),
+                duration_ms=duration_ms,
+            )
 
     # ── Search backends ───────────────────────────────────────────────────────
 
@@ -265,7 +347,14 @@ class ResearcherAgent:
             return f"Research summary for '{query}':\n\n" + snippets[:1500]
 
 
-# ── Singleton ─────────────────────────────────────────────────────────────────
+# ── Singletons & Aliases ─────────────────────────────────────────────────────
 researcher_agent = ResearcherAgent()
+agent = researcher_agent
 
-__all__ = ["ResearcherAgent", "ResearchReport", "ResearchResult", "researcher_agent"]
+__all__ = [
+    "ResearcherAgent",
+    "ResearchReport",
+    "ResearchResult",
+    "researcher_agent",
+    "agent",
+]

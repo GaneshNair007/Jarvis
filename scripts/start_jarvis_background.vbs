@@ -1,3 +1,5 @@
 Set WshShell = CreateObject("WScript.Shell")
-WshShell.Run "cmd /c ""C:\Users\Ganesh Nair\.gemini\antigravity\scratch\Jarvis\scripts\start_jarvis.bat""", 0, False
-
+Set FSO = CreateObject("Scripting.FileSystemObject")
+ScriptDir = FSO.GetParentFolderName(WScript.ScriptFullName)
+BatPath = ScriptDir & "\start_jarvis.bat"
+WshShell.Run "cmd /c """ & BatPath & """", 0, False

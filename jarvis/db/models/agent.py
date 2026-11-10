@@ -6,11 +6,17 @@ Stores every specialized AI worker in the workforce.
 from __future__ import annotations
 
 import uuid
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from jarvis.db.models.base import Base, GUID, UniversalJSON, TimestampMixin
+
+if TYPE_CHECKING:
+    from jarvis.db.models.assignment import AssignmentModel
+    from jarvis.db.models.department import DepartmentModel
+    from jarvis.db.models.execution import ExecutionModel
+    from jarvis.db.models.lifecycle import AgentLifecycleModel
 
 
 class AgentModel(Base, TimestampMixin):

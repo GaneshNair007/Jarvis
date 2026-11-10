@@ -6,6 +6,8 @@ cryptographic SHA-256 draft integrity, and policy-gated sending.
 
 from __future__ import annotations
 import os
+import re
+import smtplib
 
 from email.message import EmailMessage
 from email.utils import formatdate, make_msgid
@@ -130,14 +132,47 @@ class EmailPowers:
                 "draft_path": str(p),
             }
 
-        # Approved: Simulate or deliver through configured local SMTP
+        # Approved: Deliver through configured SMTP or archive locally
         logger.info(f"Verified approval token for sending draft {p.name}. Dispatching email.")
+
+        import email
+        parsed_msg = email.message_from_bytes(raw_bytes)
+        smtp_host = os.getenv("SMTP_HOST") or getattr(settings, "smtp_host", None)
+        smtp_port = int(os.getenv("SMTP_PORT") or getattr(settings, "smtp_port", 587))
+        smtp_user = os.getenv("SMTP_USER") or getattr(settings, "smtp_user", None) or os.getenv("GMAIL_USER")
+        smtp_pass = os.getenv("SMTP_PASSWORD") or getattr(settings, "smtp_password", None) or os.getenv("GMAIL_APP_PASSWORD")
+        smtp_use_tls = getattr(settings, "smtp_use_tls", True)
+
+        delivery_channel = "LOCAL_ARCHIVE_ONLY"
+        if smtp_host and smtp_user and smtp_pass:
+            try:
+                if smtp_port == 465:
+                    with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=15) as server:
+                        server.login(smtp_user, smtp_pass)
+                        server.send_message(parsed_msg)
+                else:
+                    with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as server:
+                        if smtp_use_tls:
+                            server.starttls()
+                        server.login(smtp_user, smtp_pass)
+                        server.send_message(parsed_msg)
+                delivery_channel = "DELIVERED_VIA_SMTP"
+                logger.info(f"Delivered draft {p.name} via SMTP server {smtp_host}:{smtp_port}")
+            except Exception as e:
+                logger.error(f"Failed to deliver email via SMTP: {e}")
+                return {
+                    "power_id": "PWR-052",
+                    "success": False,
+                    "status": "DELIVERY_FAILED",
+                    "error": f"SMTP transmission failed: {str(e)}",
+                    "draft_sha256": content_hash,
+                }
 
         audit_ledger.record(
             actor="EmailPowers",
             action="SEND_EMAIL",
             target=str(p),
-            payload={"sha256": content_hash, "task_id": task_id},
+            payload={"sha256": content_hash, "task_id": task_id, "delivery_channel": delivery_channel},
             result="SUCCESS",
         )
 
@@ -151,6 +186,7 @@ class EmailPowers:
             "power_id": "PWR-052",
             "success": True,
             "status": "SENT",
+            "delivery_channel": delivery_channel,
             "archive_path": str(dest),
             "sha256": content_hash,
         }
@@ -263,19 +299,23 @@ class EmailPowers:
         """
         # Step 1: Pre-flight capability check
         status = capability_guard.check_gmail()
-        if status == CapabilityStatus.DISCONNECTED:
-            trust_res = TrustResult.disconnected(
-                "gmail",
-                "Gmail is not connected. Set GMAIL_USER and GMAIL_APP_PASSWORD in .env to connect."
-            )
-            d = trust_res.to_dict()
-            d.update({
+        has_creds = bool(
+            os.getenv("GMAIL_USER")
+            or os.getenv("GMAIL_ADDRESS")
+            or os.getenv("GMAIL_APP_PASSWORD")
+            or os.getenv("GMAIL_PASSWORD")
+            or os.getenv("GMAIL_OAUTH_TOKEN")
+        )
+        if (status == CapabilityStatus.DISCONNECTED or not has_creds) and not inbox_dir:
+            return {
                 "power_id": "PWR-191",
                 "status": "DISCONNECTED",
+                "connected": False,
                 "opportunities_found": 0,
                 "opportunities": [],
-            })
-            return d
+                "fabricated": False,
+                "message": "Email is not configured. Set GMAIL_USER and GMAIL_APP_PASSWORD (or SMTP/IMAP credentials) in your .env file.",
+            }
 
         gmail_user = os.getenv("GMAIL_USER") or os.getenv("GMAIL_ADDRESS") or ""
         gmail_pass = os.getenv("GMAIL_APP_PASSWORD") or os.getenv("GMAIL_PASSWORD")
@@ -289,7 +329,9 @@ class EmailPowers:
                 import imaplib
                 import email
 
-                mail = imaplib.IMAP4_SSL("imap.gmail.com", 993, timeout=10)
+                imap_server = getattr(settings, "imap_host", "imap.gmail.com") or "imap.gmail.com"
+                imap_port = int(getattr(settings, "imap_port", 993) or 993)
+                mail = imaplib.IMAP4_SSL(imap_server, imap_port, timeout=10)
                 mail.login(gmail_user, gmail_pass)
                 mail.select("INBOX")
                 status_imap, data = mail.search(None, 'ALL')
@@ -305,11 +347,21 @@ class EmailPowers:
                 mail.close()
                 mail.logout()
             except Exception as e:
-                logger.warning(f"Live Gmail IMAP error: {e}; falling back to local inbox store.")
+                logger.warning(f"Live Gmail IMAP error: {e}")
+                if not inbox_dir:
+                    return {
+                        "power_id": "PWR-191",
+                        "status": "NETWORK_ERROR",
+                        "connected": False,
+                        "opportunities_found": 0,
+                        "opportunities": [],
+                        "fabricated": False,
+                        "message": f"Failed to connect to email server: {e}",
+                    }
 
-        # Step 3: Local incoming store fallback (data/inbox/*.eml)
-        if not parsed_emails:
-            target_inbox = Path(inbox_dir) if inbox_dir else (settings.data_dir / "inbox")
+        # Step 3: Explicit directory scan only if caller provided a custom directory fixture
+        if not parsed_emails and inbox_dir:
+            target_inbox = Path(inbox_dir)
             if target_inbox.exists():
                 import email
                 for eml in sorted(target_inbox.glob("*.eml"), reverse=True)[:limit]:
@@ -318,7 +370,7 @@ class EmailPowers:
                         msg = email.message_from_bytes(raw)
                         parsed_emails.append(self._parse_email_obj(msg, eml.name))
                     except Exception as e:
-                        logger.warning(f"Error parsing local eml {eml}: {e}")
+                        logger.warning(f"Error parsing eml {eml}: {e}")
 
         # Step 4: If no real emails found after all attempts, return honest empty result
         if not parsed_emails:

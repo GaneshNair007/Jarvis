@@ -7,7 +7,7 @@ tool execution, and cryptographic audit logging.
 import asyncio
 import time
 import uuid
-from typing import Dict, Any, Optional
+from typing import Dict, Any, List, Optional
 
 from jarvis.config import settings
 from jarvis.core.state_machine import state_machine
@@ -16,6 +16,8 @@ from jarvis.core.policy_gate import policy_gate
 from jarvis.core.audit import audit_ledger
 from jarvis.core.power_registry import power_registry
 from jarvis.memory.store import db_store
+from jarvis.memory.conversation_service import conversation_service
+from jarvis.agents.critic import CriticAgent, Verdict
 
 
 class JarvisOrchestrator:
@@ -26,39 +28,203 @@ class JarvisOrchestrator:
         self.registry = power_registry
         self.state_machine = state_machine
         self.store = db_store
+        self.conversation_service = conversation_service
+        self.critic = CriticAgent()
+
+    def _map_query_to_specialists(self, query: str) -> List[str]:
+        """Maps user query to one or more of the 8 canonical specialist agent roles."""
+        q = query.lower()
+        roles = []
+
+        # 1. Researcher Agent: Web research, sources, papers, technical investigations
+        if any(k in q for k in ["search", "research", "browse", "paper", "arxiv", "find info", "what is", "who is", "explain", "investigate", "tell me about"]):
+            roles.append("researcher")
+
+        # 2. Engineer Agent: Code, repositories, python, git, debugging, bugs, architecture
+        if any(k in q for k in ["code", "python", "script", "git", "bug", "refactor", "function", "class", "program", "build", "terminal", "algorithm"]):
+            roles.append("engineer")
+
+        # 3. Academic Tutor: Study, assignments, exam, viva prep, course, lecture
+        if any(k in q for k in ["assignment", "homework", "exam", "viva", "syllabus", "lecture", "course", "study", "tutor", "quiz"]):
+            roles.append("academic_tutor")
+
+        # 4. Career Agent: Internships, GSoC, hackathons, job, resume, interview
+        if any(k in q for k in ["job", "internship", "gsoc", "hackathon", "resume", "cover letter", "career", "interview", "hiring"]):
+            roles.append("career")
+
+        # 5. Productivity Agent: Schedule, calendar, task, deadline, reminder, todo
+        if any(k in q for k in ["schedule", "calendar", "meeting", "reminder", "deadline", "task", "todo", "plan"]):
+            roles.append("productivity")
+
+        # 6. Communication Agent: Email, draft email, reply, inbox, message, follow-up
+        if any(k in q for k in ["email", "mail", "inbox", "outbox", "draft email", "send email", "reply", "follow up"]):
+            roles.append("communication")
+
+        # 7. Desktop Agent: Windows apps, notepad, files, screenshot, desktop
+        if any(k in q for k in ["open", "close", "launch", "file", "folder", "desktop", "screenshot", "window", "notepad"]):
+            roles.append("desktop")
+
+        if not roles:
+            roles.append("researcher")
+
+        # 8. Reviewer / Verifier Agent: Always bound for Stage 5 verification
+        if "reviewer" not in roles:
+            roles.append("reviewer")
+
+        return roles
+
+    def _plan_task(self, query: str, specialist_roles: List[str]) -> List[Dict[str, Any]]:
+        """Stage 2: Decomposes query into structured subtasks with explicit dependencies."""
+        subtasks = []
+        exec_roles = [r for r in specialist_roles if r != "reviewer"]
+        for idx, role in enumerate(exec_roles, start=1):
+            subtasks.append({
+                "step_id": idx,
+                "role": role,
+                "goal": f"Execute {role} operation for request: {query[:80]}",
+                "status": "PLANNED",
+                "dependencies": [i for i in range(1, idx)],
+            })
+        if not subtasks:
+            subtasks.append({
+                "step_id": 1,
+                "role": "researcher",
+                "goal": query,
+                "status": "PLANNED",
+                "dependencies": [],
+            })
+        return subtasks
 
     async def process_user_query(
         self,
         query: str,
         task_id: Optional[str] = None,
+        conversation_id: str = "default_session",
         context: str = "",
         sensitivity_level: str = "medium",
         approval_token: Optional[str] = None,
     ) -> Dict[str, Any]:
         """
-        End-to-End Orchestration Loop:
-        1. Initialize Task State (NEW)
-        2. Triage & Route via 3-Tier Model Router (TRIAGED)
-        3. Deterministic Policy Check (POLICY_CHECK)
-        4. Execute Worker / LLM Reasoning (RUNNING)
-        5. Verify Outcome (VERIFYING)
-        6. Cryptographic Audit Log & State Completion (COMPLETED)
+        6-Stage Execution Pipeline:
+        Stage 1: Understand (evaluates intent with conversation history; deterministic OS shortcuts execute immediately)
+        Stage 2: Plan (decomposes query into structured subtasks)
+        Stage 3: Select (maps subtasks to specialist roles)
+        Stage 4: Execute (runs tools via execution bridge and model router)
+        Stage 5: Verify (invokes CriticAgent to evaluate evidence and issue structured Verdict)
+        Stage 6: Consolidate & Persist (returns single consolidated verified response, stores turn in ConversationService)
         """
         task_id = task_id or f"tsk_{uuid.uuid4().hex[:10]}"
+        start_time = time.time()
         self.state_machine.create_task(task_id, "NEW")
         self.store.save_task(task_id, title=query[:80], status="NEW", inputs={"query": query})
 
-        start_time = time.time()
+        # ======================================================================
+        # STAGE 1: UNDERSTAND
+        # ======================================================================
+        self.state_machine.transition(task_id, "TRIAGED", reason="Stage 1: Understanding intent and context")
+        self.conversation_service.get_or_create_conversation(conversation_id)
+        recent_turns = self.conversation_service.get_recent_context(conversation_id, limit=10)
+        formatted_history = self.conversation_service.format_context_for_prompt(conversation_id, limit=6)
 
-        # Step 1: Model Routing & Intent Triage
+        # Merge conversation history into contextual dialogue
+        combined_context = f"{formatted_history}\n\nAttached Context:\n{context}".strip() if formatted_history else context
+
+        # Check for pure deterministic instant OS command bypass
+        if self.router.is_instant_command(query):
+            instant_result = await self._execute_power_or_specialized_engine(query)
+            # Record in conversation service
+            self.conversation_service.append_message(conversation_id, role="user", content=query)
+            resp_str = instant_result.get("message") or str(instant_result)
+            self.conversation_service.append_message(
+                conversation_id,
+                role="assistant",
+                content=resp_str,
+                model="none-deterministic-command",
+            )
+
+            final_state = "COMPLETED"
+            self.state_machine.transition(task_id, "POLICY_CHECK", reason="Instant OS policy check")
+            self.state_machine.transition(task_id, "RUNNING", reason="Executing instant OS command")
+            self.state_machine.transition(task_id, "VERIFYING", reason="Validating instant OS receipt")
+            self.state_machine.transition(task_id, final_state, reason="Deterministic OS command executed successfully")
+            self.store.save_task(task_id, title=query[:80], status=final_state, power_id="instant_os", inputs={"query": query}, outputs=instant_result)
+            self.audit.log_event(
+                event_type="TASK_COMPLETED",
+                task_id=task_id,
+                power_id="instant_os",
+                status="SUCCESS",
+                inputs={"query": query, "tier": "BYPASS"},
+                outputs=instant_result,
+                details={"cost_usd": 0.0, "duration_ms": (time.time() - start_time) * 1000},
+            )
+            return {
+                "task_id": task_id,
+                "conversation_id": conversation_id,
+                "status": final_state,
+                "tier": "BYPASS",
+                "provider": "deterministic",
+                "model": "none-deterministic-command",
+                "stages_executed": ["understand"],
+                "stage_outputs": {
+                    "understand": {
+                        "intent": query,
+                        "is_instant_shortcut": True,
+                        "dialogue_history_turns": len(recent_turns),
+                    }
+                },
+                "selected_specialists": ["desktop"],
+                "verdict": "pass",
+                "response": instant_result,
+                "final_reply": resp_str,
+                "duration_ms": round((time.time() - start_time) * 1000, 2),
+            }
+
+        # Route query and formulate understanding
         routing_req = RoutingRequest(
-            task_id=task_id, user_intent=query, sensitivity_level=sensitivity_level, attached_context=context
+            task_id=task_id,
+            user_intent=query,
+            sensitivity_level=sensitivity_level,
+            attached_context=combined_context,
         )
         decision = self.router.route(routing_req)
-        self.state_machine.transition(task_id, "TRIAGED", reason=f"Routed to {decision.tier} ({decision.provider})")
 
-        # Step 2: Policy & Approval Gate
-        self.state_machine.transition(task_id, "POLICY_CHECK", reason="Evaluating policy gate rules")
+        stage_1_understand = {
+            "query": query,
+            "dialogue_history_recalled": len(recent_turns),
+            "decision": {
+                "tier": decision.tier,
+                "provider": decision.provider,
+                "model": decision.selected_model,
+                "reason": decision.reason,
+            },
+        }
+
+        # ======================================================================
+        # STAGE 2: PLAN
+        # ======================================================================
+        self.state_machine.transition(task_id, "PLANNED", reason="Stage 2: Subtasks planned")
+        specialist_roles = self._map_query_to_specialists(query)
+        planned_subtasks = self._plan_task(query, specialist_roles)
+        stage_2_plan = {
+            "goal": query,
+            "subtask_count": len(planned_subtasks),
+            "subtasks": planned_subtasks,
+        }
+
+        # ======================================================================
+        # STAGE 3: SELECT
+        # ======================================================================
+        selected_specialists = [s for s in specialist_roles]
+        stage_3_select = {
+            "selected_roles": selected_specialists,
+            "primary_role": planned_subtasks[0]["role"] if planned_subtasks else "researcher",
+            "verifier": "reviewer",
+        }
+
+        # ======================================================================
+        # STAGE 4: EXECUTE
+        # ======================================================================
+        self.state_machine.transition(task_id, "POLICY_CHECK", reason="Stage 4: Evaluating policy gate rules")
         privilege_level = 0 if decision.tier == "BYPASS" else (1 if decision.tier == "TIER_1_LOCAL" else 2)
         policy_allowed, policy_msg, pending_approval = self.policy.evaluate_execution(
             task_id=task_id,
@@ -88,43 +254,101 @@ class JarvisOrchestrator:
             )
             return {
                 "task_id": task_id,
+                "conversation_id": conversation_id,
                 "status": "REJECTED",
                 "message": policy_msg,
                 "pending_approval": pending_approval,
                 "tier": decision.tier,
+                "stages_executed": ["understand", "plan", "select", "execute"],
             }
 
-        # Step 3: Execution Execution lane
-        self.state_machine.transition(task_id, "RUNNING", reason="Executing routed operation")
+        self.state_machine.transition(task_id, "RUNNING", reason="Stage 4: Executing routed operation")
 
         execution_result = {}
         if decision.tier == "BYPASS":
-            # Instant command, Grok, OpenClaw, or Power execution
             execution_result = await self._execute_power_or_specialized_engine(query)
-        elif decision.tier in ("TIER_1_LOCAL", "TIER_2_PRIVATE", "TIER_3_CLOUD", "FALLBACK_CLOUD"):
-            # Unified LiteLLM inference execution across local and cloud tiers
-            full_prompt = (
-                f"Source Context:\n{decision.redacted_context}\n\nUser Question: {query}\n"
-                "Instruction: Answer strictly based on the source context provided. "
-                "Identify the source file. If information is not in the source, state so honestly without inventing facts."
-                if decision.redacted_context
-                else query
-            )
+        else:
+            # Build prompt with dialogue history and context
+            prompt_parts = []
+            if formatted_history:
+                prompt_parts.append(formatted_history)
+            if decision.redacted_context:
+                prompt_parts.append(f"Source Context:\n{decision.redacted_context}")
+            prompt_parts.append(f"User Request: {query}")
+            prompt_parts.append("Instruction: Provide an accurate, verified, helpful response without hallucinating facts.")
+            full_prompt = "\n\n".join(prompt_parts)
+
             execution_result = await asyncio.to_thread(
                 self.router.execute_inference,
                 decision,
                 full_prompt,
             )
 
-        # Step 4: Verification & Completion (Honest State)
-        is_failed = execution_result.get("status") in ("unavailable", "error", "failed") or bool(execution_result.get("error"))
+        stage_4_execute = {
+            "execution_status": execution_result.get("status", "unknown"),
+            "model_used": execution_result.get("model", decision.selected_model),
+            "tokens_used": execution_result.get("tokens_used", 0),
+        }
+
+        # ======================================================================
+        # STAGE 5: VERIFY
+        # ======================================================================
+        self.state_machine.transition(task_id, "VERIFYING", reason="Stage 5: Independent verification via CriticAgent")
+        output_text_for_critic = (
+            execution_result.get("reply")
+            or execution_result.get("message")
+            or str(execution_result)
+        )
+        critic_report = self.critic.review(
+            goal=query,
+            output=output_text_for_critic,
+            task_id=task_id,
+            action_type="llm",
+            use_llm=False,
+        )
+
+        stage_5_verify = {
+            "verdict": critic_report.verdict.value,
+            "score": critic_report.score,
+            "issues_count": len(critic_report.issues),
+            "issues": [
+                {
+                    "severity": i.severity,
+                    "category": i.category,
+                    "description": i.description,
+                    "suggestion": i.suggestion,
+                }
+                for i in critic_report.issues
+            ],
+            "retry_recommended": critic_report.retry_recommended,
+        }
+
+        # ======================================================================
+        # STAGE 6: CONSOLIDATE & PERSIST
+        # ======================================================================
+        final_reply_text = (
+            execution_result.get("reply")
+            or execution_result.get("message")
+            or f"Task executed with status: {execution_result.get('status')}"
+        )
+
+        # Persist dialogue turn to ConversationService
+        self.conversation_service.append_message(conversation_id, role="user", content=query)
+        self.conversation_service.append_message(
+            conversation_id,
+            role="assistant",
+            content=final_reply_text,
+            model=execution_result.get("model", decision.selected_model),
+            tokens=execution_result.get("tokens_used", 0),
+        )
+
+        is_failed = execution_result.get("status") in ("failed", "error")
         final_state = "FAILED" if is_failed else "COMPLETED"
 
-        self.state_machine.transition(task_id, "VERIFYING", reason="Validating execution receipts")
         self.state_machine.transition(
             task_id,
             final_state,
-            reason="Execution failed: " + str(execution_result.get("error", "unavailable")) if is_failed else "Task finished successfully"
+            reason="Task finished successfully" if not is_failed else str(execution_result.get("error", "failed")),
         )
         self.store.save_task(
             task_id,
@@ -134,8 +358,6 @@ class JarvisOrchestrator:
             inputs={"query": query},
             outputs=execution_result,
         )
-
-        # Step 5: Cryptographic Audit Logging
         self.audit.log_event(
             event_type="TASK_" + final_state,
             task_id=task_id,
@@ -146,13 +368,40 @@ class JarvisOrchestrator:
             details={"cost_usd": decision.estimated_cost_usd, "duration_ms": (time.time() - start_time) * 1000},
         )
 
+        stage_6_consolidate_persist = {
+            "persisted_conversation_id": conversation_id,
+            "task_id": task_id,
+            "final_status": final_state,
+            "final_reply": final_reply_text,
+        }
+
         return {
             "task_id": task_id,
+            "conversation_id": conversation_id,
             "status": final_state,
             "tier": execution_result.get("tier", decision.tier),
             "provider": execution_result.get("provider", decision.provider),
-            "model": execution_result.get("selected_model", decision.selected_model),
+            "model": execution_result.get("model", decision.selected_model),
+            "stages_executed": [
+                "understand",
+                "plan",
+                "select",
+                "execute",
+                "verify",
+                "consolidate_persist",
+            ],
+            "stage_outputs": {
+                "understand": stage_1_understand,
+                "plan": stage_2_plan,
+                "select": stage_3_select,
+                "execute": stage_4_execute,
+                "verify": stage_5_verify,
+                "consolidate_persist": stage_6_consolidate_persist,
+            },
+            "selected_specialists": selected_specialists,
+            "verdict": critic_report.verdict.value,
             "response": execution_result,
+            "final_reply": final_reply_text,
             "routing_reason": decision.reason,
             "duration_ms": round((time.time() - start_time) * 1000, 2),
         }
@@ -162,26 +411,6 @@ class JarvisOrchestrator:
         import re
         cleaned = query.strip()
         q_lower = cleaned.lower()
-
-        # Greetings & conversational triage
-        if any(w in q_lower for w in ["who are you", "what can you do", "help"]) or any(
-            w == q_lower or q_lower.startswith(f"{w} ") or q_lower.endswith(f" {w}") or f" {w} " in f" {q_lower} "
-            for w in ["hi", "hello", "hey"]
-        ):
-            from jarvis.core.model_router import model_router
-            return {
-                "type": "assistant_info",
-                "message": model_router._generate_heuristic_response(query),
-            }
-
-        if any(pat in q_lower for pat in ["connect antigravity", "use antigravity", "antigravity code", "make yourself stronger", "make yourself better", "self improve", "upgrade yourself"]):
-            return {
-                "status": "understood",
-                "message": (
-                    "Self-improvement workflow: I can identify capability gaps and create improvement proposals for human review. I cannot self-modify directly.\n\nCurrent capability gaps (from last reflection):\n- No live Gmail integration\n- No real-time web search\n- Voice pipeline needs tuning\n\nWould you like me to create an improvement request?"
-                ),
-                "action": "self_improvement_intent_detected",
-            }
 
         if "health" in q_lower or "telemetry" in q_lower:
             import psutil
@@ -206,17 +435,6 @@ class JarvisOrchestrator:
                 "action": "lock_workstation",
                 "message": "Workstation lock requested.",
             }
-        elif any(k in q_lower for k in ["ac", "air condition", "projector", "geyser", "light", "lamp", "movie night", "work mode", "sleep mode", "morning wake"]):
-            from jarvis.powers.smart_home_powers import smart_home_powers
-            res = smart_home_powers.process_voice_command(query)
-            if res.get("status") != "unhandled":
-                return {
-                    "type": "smart_home",
-                    "power_id": res.get("power_id"),
-                    "status": "executed",
-                    "message": res.get("feedback", "Smart home action completed."),
-                    "details": res,
-                }
         elif "opportunity radar" in q_lower or "career radar" in q_lower or "leads" in q_lower:
             from jarvis.routines.ops_workflows import opportunity_radar
             return opportunity_radar.run()

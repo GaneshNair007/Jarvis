@@ -46,6 +46,92 @@ def test_api_system_health():
     assert "cpu" in data
     assert "memory" in data
     assert "disk" in data
+    assert data["boot_time"] is not None
+    assert isinstance(data["boot_time"], str)
+    assert data["disk"]["percent"] >= 0.0
+    assert data["host_status"] in ["healthy", "warning", "critical"]
+    assert data["status"] in ["healthy", "degraded", "critical"]
+
+
+def test_system_health_disk_threshold_critical(monkeypatch):
+    """Verify disk >= 95% or free < 2GB triggers critical status in it_admin_powers and /api/v1/system/health."""
+    from unittest.mock import MagicMock
+    import psutil
+    from jarvis.powers.it_admin_powers import it_admin_powers
+
+    mock_disk = MagicMock(total=100 * (1024**3), used=96 * (1024**3), free=1.5 * (1024**3), percent=96.0)
+    mock_ram = MagicMock(total=16 * (1024**3), used=4 * (1024**3), available=12 * (1024**3), percent=25.0)
+    monkeypatch.setattr(psutil, "disk_usage", lambda path: mock_disk)
+    monkeypatch.setattr(psutil, "virtual_memory", lambda: mock_ram)
+    monkeypatch.setattr(psutil, "cpu_percent", lambda interval=None: 10.0)
+
+    report = it_admin_powers.system_health_report()
+    assert report["status"] == "critical"
+    assert report["boot_time"] is not None
+    assert isinstance(report["boot_time"], str)
+
+    response = client.get("/api/v1/system/health")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["host_status"] == "critical"
+    assert data["status"] == "critical"
+
+
+def test_system_health_disk_threshold_warning(monkeypatch):
+    """Verify disk >= 90% and < 95% triggers warning status in it_admin_powers and degraded in /api/v1/system/health."""
+    from unittest.mock import MagicMock
+    import psutil
+    from jarvis.powers.it_admin_powers import it_admin_powers
+
+    mock_disk = MagicMock(total=100 * (1024**3), used=92 * (1024**3), free=8.0 * (1024**3), percent=92.0)
+    mock_ram = MagicMock(total=16 * (1024**3), used=4 * (1024**3), available=12 * (1024**3), percent=25.0)
+    monkeypatch.setattr(psutil, "disk_usage", lambda path: mock_disk)
+    monkeypatch.setattr(psutil, "virtual_memory", lambda: mock_ram)
+    monkeypatch.setattr(psutil, "cpu_percent", lambda interval=None: 10.0)
+
+    report = it_admin_powers.system_health_report()
+    assert report["status"] == "warning"
+
+    response = client.get("/api/v1/system/health")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["host_status"] == "warning"
+    assert data["status"] in ["degraded", "critical"]
+
+
+def test_system_health_healthy(monkeypatch):
+    """Verify normal resource levels yield healthy host_status."""
+    from unittest.mock import MagicMock
+    import psutil
+    from jarvis.powers.it_admin_powers import it_admin_powers
+
+    mock_disk = MagicMock(total=100 * (1024**3), used=40 * (1024**3), free=60.0 * (1024**3), percent=40.0)
+    mock_ram = MagicMock(total=16 * (1024**3), used=4 * (1024**3), available=12 * (1024**3), percent=25.0)
+    monkeypatch.setattr(psutil, "disk_usage", lambda path: mock_disk)
+    monkeypatch.setattr(psutil, "virtual_memory", lambda: mock_ram)
+    monkeypatch.setattr(psutil, "cpu_percent", lambda interval=None: 10.0)
+
+    report = it_admin_powers.system_health_report()
+    assert report["status"] == "healthy"
+
+    response = client.get("/api/v1/system/health")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["host_status"] == "healthy"
+
+
+def test_system_health_logger_exception_resilience(monkeypatch):
+    """Verify that exceptions in telemetry gathering log a warning and return evidence_health without crashing."""
+    from jarvis.powers.it_admin_powers import it_admin_powers
+
+    def faulty_report():
+        raise RuntimeError("Telemetry failure simulation")
+
+    monkeypatch.setattr(it_admin_powers, "system_health_report", faulty_report)
+    response = client.get("/api/v1/system/health")
+    assert response.status_code == 200
+    data = response.json()
+    assert "status" in data
 
 
 def test_api_chat():

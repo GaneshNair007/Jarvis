@@ -92,7 +92,6 @@ class AutomationPowers:
             "secret_token": wh_token,
             "target_workflow": target_workflow,
         }
-        return {"power_id": "PWR-254", "schedule_id": clean_name, "cron": cron, "status": "registered"}
 
     def pwr_275_multistep_execution(self, workflow_id: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """PWR-275: Executes a compiled multi-step workflow sequentially."""

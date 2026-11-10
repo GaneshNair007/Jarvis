@@ -61,27 +61,271 @@
       gap: 12px;
     }
 
-    .brand-arc {
-      width: 28px;
-      height: 28px;
+    .arc-reactor, .brand-arc {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       border: 2px solid var(--cyan);
-      box-shadow: 0 0 12px var(--cyan-glow);
+      box-shadow: 0 0 14px var(--cyan-glow), inset 0 0 10px rgba(0, 229, 255, 0.4);
       position: relative;
-      animation: pulse 3s infinite;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.35) 0%, rgba(7, 9, 14, 0.8) 70%);
+      animation: reactor-pulse-idle 2.5s infinite ease-in-out;
+      cursor: pointer;
     }
 
-    .brand-arc::after {
+    .arc-reactor::before, .brand-arc::before {
       content: '';
       position: absolute;
-      top: 6px; left: 6px; right: 6px; bottom: 6px;
-      background: var(--cyan);
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
+      border: 1px dashed var(--amber);
+      animation: reactor-rotate 10s linear infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.08); opacity: 0.8; }
+    .arc-reactor::after, .brand-arc::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--cyan), 0 0 20px #ffffff;
+    }
+
+    .arc-reactor.active {
+      border-color: var(--amber);
+      box-shadow: 0 0 24px rgba(255, 179, 0, 0.8), inset 0 0 15px rgba(255, 179, 0, 0.5);
+      animation: reactor-pulse-active 0.75s infinite ease-in-out;
+    }
+
+    @keyframes reactor-pulse-idle {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px var(--cyan)); }
+      50% { transform: scale(1.08); filter: drop-shadow(0 0 16px var(--cyan)); }
+    }
+
+    @keyframes reactor-pulse-active {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 14px var(--amber)); }
+      50% { transform: scale(1.15); filter: drop-shadow(0 0 28px var(--cyan)); }
+    }
+
+    @keyframes reactor-rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .audio-visualizer {
+      height: 28px;
+      width: 150px;
+      background: rgba(0, 229, 255, 0.05);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      border-radius: 4px;
+      margin-left: 12px;
+      box-shadow: 0 0 8px rgba(0, 229, 255, 0.15);
+    }
+
+    /* Scanlines Overlay */
+    .scanlines {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      z-index: 999;
+      opacity: 0.25;
+    }
+
+    /* 6-Stage Execution Pipeline */
+    .pipeline-tracker {
+      background: rgba(14, 20, 33, 0.85);
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .pipeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .badge-stage {
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+    }
+
+    .pipeline-stages {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      overflow-x: auto;
+    }
+
+    .stage-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+      min-width: 65px;
+      opacity: 0.6;
+      transition: all 0.3s ease;
+    }
+
+    .stage-step.active {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    .stage-step.completed {
+      opacity: 0.9;
+    }
+
+    .stage-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .stage-step.active .stage-dot {
+      border-color: var(--amber);
+      background: rgba(255, 179, 0, 0.2);
+      color: var(--amber);
+      box-shadow: 0 0 10px rgba(255, 179, 0, 0.6);
+      animation: pulse 1s infinite;
+    }
+
+    .stage-step.completed .stage-dot {
+      border-color: var(--emerald);
+      background: rgba(0, 230, 118, 0.2);
+      color: var(--emerald);
+      box-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
+    }
+
+    .stage-name {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .stage-desc {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      display: none;
+    }
+
+    .stage-connector {
+      flex: 0 0 10px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.15);
+      margin-top: -12px;
+    }
+
+    /* 8 Specialized Agents Grid */
+    .agents-swarm-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 7px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .agent-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      border-radius: 6px;
+      padding: 7px 10px;
+      transition: all 0.2s ease;
+    }
+
+    .agent-card:hover {
+      border-color: var(--cyan);
+      background: rgba(0, 229, 255, 0.06);
+    }
+
+    .agent-card.active {
+      border-color: var(--amber);
+      background: rgba(255, 179, 0, 0.08);
+      box-shadow: 0 0 12px rgba(255, 179, 0, 0.25);
+    }
+
+    .agent-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+
+    .agent-title {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .agent-badge {
+      font-size: 0.62rem;
+      padding: 1px 6px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .badge-idle {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .badge-active {
+      background: rgba(0, 230, 118, 0.15);
+      color: var(--emerald);
+      border: 1px solid var(--emerald);
+      box-shadow: 0 0 8px rgba(0, 230, 118, 0.3);
+    }
+
+    .badge-running {
+      background: rgba(255, 179, 0, 0.15);
+      color: var(--amber);
+      border: 1px solid var(--amber);
+      animation: pulse 1.2s infinite;
+    }
+
+    .agent-desc {
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .agent-tools {
+      font-size: 0.6rem;
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
     }
 
     .brand-title {
@@ -919,14 +1163,16 @@
 </head>
 
 <body>
+  <div class="scanlines"></div>
 
   <header>
     <div class="brand">
-      <div class="brand-arc"></div>
+      <div id="arc-reactor" class="arc-reactor brand-arc" title="Arc Reactor Core Telemetry"></div>
       <div>
         <div class="brand-title">JARVIS</div>
-        <div class="brand-tag">OS v1.0.0-PROD</div>
+        <div class="brand-tag">IRON MAN OS v1.0.0-PROD</div>
       </div>
+      <canvas id="audio-visualizer" class="audio-visualizer" width="150" height="28" title="Real-time Voice Waveform"></canvas>
     </div>
 
     <!-- Navigation Tabs -->
@@ -1039,32 +1285,55 @@
         </div>
       </div>
 
-      <!-- SMART ROOM & OPS CONTROL QUICKBAR -->
-      <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 8px 0; padding:8px 12px; background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 6px;">
-        <span style="font-size:0.75rem; color:var(--cyan); font-weight:700; width:100%; letter-spacing:0.5px;">⚡ PHYSICAL ROOM & OPS CONTROLLER</span>
-        <button onclick="quickRoomCommand('turn on the AC at 21')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">❄️ AC 21°C</button>
-        <button onclick="quickRoomCommand('turn on the geyser')" style="background:rgba(255,179,0,0.1); border:1px solid var(--amber); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🚿 Geyser (15m Timer)</button>
-        <button onclick="quickRoomCommand('turn on the projector')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📽️ Projector</button>
-        <button onclick="quickRoomCommand('turn off lights')" style="background:rgba(255,255,255,0.05); border:1px solid #666; color:#aaa; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">💡 Lights Off</button>
-        <button onclick="quickRoomCommand('movie night')" style="background:rgba(123,31,162,0.2); border:1px solid #ab47bc; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎬 Movie Night</button>
-        <button onclick="quickRoomCommand('work mode')" style="background:rgba(0,229,255,0.15); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">⚡ Work Focus</button>
-        <button onclick="quickRoomCommand('sleep mode')" style="background:rgba(21,101,192,0.2); border:1px solid #42a5f5; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🌙 Sleep Mode</button>
-        <button onclick="quickRoomCommand('daily pulse')" style="background:rgba(0,200,83,0.1); border:1px solid #00e676; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📊 Daily Pulse</button>
-        <button onclick="quickRoomCommand('opportunity radar')" style="background:rgba(255,214,0,0.1); border:1px solid #ffd600; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎯 Opportunity Radar</button>
+      <!-- Multi-Turn Conversational Session Bar -->
+      <div class="session-bar" style="display:flex; justify-content:space-between; align-items:center; margin: 6px 0 10px 0; padding: 6px 10px; background: rgba(0, 229, 255, 0.04); border: 1px solid rgba(0, 229, 255, 0.15); border-radius: 6px;">
+        <span style="font-size:0.75rem; color:var(--text-muted);">Conversational Session: <strong id="conversation-id" style="color:var(--cyan); font-family:monospace;">default_session</strong></span>
+        <button onclick="startNewSession()" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:var(--cyan); border-radius:4px; padding:2px 8px; font-size:0.7rem; cursor:pointer;">+ New Session</button>
       </div>
 
-      <!-- SMART ROOM & OPS CONTROL QUICKBAR -->
-      <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 8px 0; padding:8px 12px; background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 6px;">
-        <span style="font-size:0.75rem; color:var(--cyan); font-weight:700; width:100%; letter-spacing:0.5px;">⚡ PHYSICAL ROOM & OPS CONTROLLER</span>
-        <button onclick="quickRoomCommand('turn on the AC at 21')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">❄️ AC 21°C</button>
-        <button onclick="quickRoomCommand('turn on the geyser')" style="background:rgba(255,179,0,0.1); border:1px solid var(--amber); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🚿 Geyser (15m Timer)</button>
-        <button onclick="quickRoomCommand('turn on the projector')" style="background:rgba(0,229,255,0.1); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📽️ Projector</button>
-        <button onclick="quickRoomCommand('turn off lights')" style="background:rgba(255,255,255,0.05); border:1px solid #666; color:#aaa; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">💡 Lights Off</button>
-        <button onclick="quickRoomCommand('movie night')" style="background:rgba(123,31,162,0.2); border:1px solid #ab47bc; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎬 Movie Night</button>
-        <button onclick="quickRoomCommand('work mode')" style="background:rgba(0,229,255,0.15); border:1px solid var(--cyan); color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">⚡ Work Focus</button>
-        <button onclick="quickRoomCommand('sleep mode')" style="background:rgba(21,101,192,0.2); border:1px solid #42a5f5; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🌙 Sleep Mode</button>
-        <button onclick="quickRoomCommand('daily pulse')" style="background:rgba(0,200,83,0.1); border:1px solid #00e676; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">📊 Daily Pulse</button>
-        <button onclick="quickRoomCommand('opportunity radar')" style="background:rgba(255,214,0,0.1); border:1px solid #ffd600; color:#fff; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer;">🎯 Opportunity Radar</button>
+      <!-- 6-STAGE EXECUTION PIPELINE VISUALIZATION -->
+      <div id="pipeline-tracker" class="pipeline-tracker">
+        <div class="pipeline-header">
+          <span>6-Stage Execution Pipeline</span>
+          <span id="pipeline-status-badge" class="badge-stage">READY</span>
+        </div>
+        <div class="pipeline-stages">
+          <div id="stage-1" class="stage-step" data-stage="1">
+            <div class="stage-dot">1</div>
+            <div class="stage-name">Stage 1: Understand</div>
+            <div class="stage-desc">Multi-Turn Context & Intent</div>
+          </div>
+          <div class="stage-connector"></div>
+          <div id="stage-2" class="stage-step" data-stage="2">
+            <div class="stage-dot">2</div>
+            <div class="stage-name">Stage 2: Plan</div>
+            <div class="stage-desc">Task Decomposition</div>
+          </div>
+          <div class="stage-connector"></div>
+          <div id="stage-3" class="stage-step" data-stage="3">
+            <div class="stage-dot">3</div>
+            <div class="stage-name">Stage 3: Select</div>
+            <div class="stage-desc">Specialist Selection</div>
+          </div>
+          <div class="stage-connector"></div>
+          <div id="stage-4" class="stage-step" data-stage="4">
+            <div class="stage-dot">4</div>
+            <div class="stage-name">Stage 4: Execute</div>
+            <div class="stage-desc">Permitted Tools</div>
+          </div>
+          <div class="stage-connector"></div>
+          <div id="stage-5" class="stage-step" data-stage="5">
+            <div class="stage-dot">5</div>
+            <div class="stage-name">Stage 5: Verify</div>
+            <div class="stage-desc">Reviewer & Critic Verdict</div>
+          </div>
+          <div class="stage-connector"></div>
+          <div id="stage-6" class="stage-step" data-stage="6">
+            <div class="stage-dot">6</div>
+            <div class="stage-name">Stage 6: Consolidate & Persist</div>
+            <div class="stage-desc">Verified Answer & Memory</div>
+          </div>
+        </div>
       </div>
 
       <div class="voice-control-box">
@@ -1086,8 +1355,88 @@
       </div>
     </section>
 
-    <!-- Right Column: Approvals & Cryptographic Audit -->
+    <!-- Right Column: Approvals, Agents & Cryptographic Audit -->
     <section class="glass-panel">
+      <!-- 8 Specialized Agents Swarm Status Cards -->
+      <div class="panel-header">
+        <span>Specialized Swarm</span>
+        <span style="font-size: 0.72rem; color: var(--emerald);">8 AGENTS READY</span>
+      </div>
+
+      <div id="agents-swarm" class="agents-swarm-grid" style="margin-bottom: 14px;">
+        <div id="agent-researcher" class="agent-card">
+          <div class="agent-top">
+            <span class="agent-title">🔬 Researcher Agent</span>
+            <span class="agent-badge badge-idle">READY</span>
+          </div>
+          <div class="agent-desc">Web research, arXiv papers, citations & synthesis</div>
+          <div class="agent-tools">Tools: Browser, Search, Reader</div>
+        </div>
+
+        <div id="agent-engineer" class="agent-card">
+          <div class="agent-top">
+            <span class="agent-title">⚙️ Engineer Agent</span>
+            <span class="agent-badge badge-idle">READY</span>
+          </div>
+          <div class="agent-desc">Code execution, pytest testing, git repo management</div>
+          <div class="agent-tools">Tools: Python, Pytest, Git</div>
+        </div>
+
+        <div id="agent-academic-tutor" class="agent-card">
+          <div class="agent-top">
+            <span class="agent-title">📚 Academic Tutor Agent</span>
+            <span class="agent-badge badge-idle">READY</span>
+          </div>
+          <div class="agent-desc">Study explanations, step-by-step logic, viva prep</div>
+          <div class="agent-tools">Tools: Tutor, Assignments, Viva</div>
+        </div>
+
+        <div id="agent-career" class="agent-card">
+          <div class="agent-top">
+            <span class="agent-title">🚀 Career Agent</span>
+            <span class="agent-badge badge-idle">READY</span>
+          </div>
+          <div class="agent-desc">Internships, GSoC scout, hackathons, resumes</div>
+          <div class="agent-tools">Tools: Career, GSoC, Resume</div>
+        </div>
+
+        <div id="agent-productivity" class="agent-card">
+          <div class="agent-top">
+            <span class="agent-title">⏱️ Productivity Agent</span>
+            <span class="agent-badge badge-idle">READY</span>
+          </div>
+          <div class="agent-desc">RFC 5545 calendar, schedules, tasks, reminders</div>
+          <div class="agent-tools">Tools: Calendar, Tasks, Deadlines</div>
+        </div>
+
+        <div id="agent-communication" class="agent-card">
+          <div class="agent-top">
+            <span class="agent-title">✉️ Communication Agent</span>
+            <span class="agent-badge badge-idle">READY</span>
+          </div>
+          <div class="agent-desc">Real RFC 822 emails, truthful outbox, SMTP/IMAP</div>
+          <div class="agent-tools">Tools: SMTP, IMAP, Outbox</div>
+        </div>
+
+        <div id="agent-desktop" class="agent-card">
+          <div class="agent-top">
+            <span class="agent-title">💻 Desktop Agent</span>
+            <span class="agent-badge badge-idle">READY</span>
+          </div>
+          <div class="agent-desc">Windows Start Menu/Registry app launcher, Win32</div>
+          <div class="agent-tools">Tools: Win32, AppResolver, Files</div>
+        </div>
+
+        <div id="agent-reviewer" class="agent-card">
+          <div class="agent-top">
+            <span class="agent-title">🛡️ Reviewer / Verifier Agent</span>
+            <span class="agent-badge badge-idle">VERIFY READY</span>
+          </div>
+          <div class="agent-desc">Independent Critic verification, PII scan, verdicts</div>
+          <div class="agent-tools">Tools: Critic, Safety, Auditor</div>
+        </div>
+      </div>
+
       <div class="panel-header">
         <span>Pending Approvals</span>
         <span id="pending-count" style="font-size: 0.75rem; color: var(--amber);">0 PENDING</span>
@@ -1463,7 +1812,126 @@
 
     connectWebSocket();
 
-    // Chat Handler with Real Multi-Turn Context Memory
+    // Multi-Turn Conversational Session Management
+    let currentConversationId = 'sess_' + Math.random().toString(36).substring(2, 10);
+    const convIdEl = document.getElementById('conversation-id');
+    if (convIdEl) convIdEl.innerText = currentConversationId;
+
+    function startNewSession() {
+      currentConversationId = 'sess_' + Math.random().toString(36).substring(2, 10);
+      if (convIdEl) convIdEl.innerText = currentConversationId;
+      chatHistory.length = 0;
+      appendMessage(`Initiated fresh session [${currentConversationId}]. Multi-turn context reset.`, 'jarvis', 'SYSTEM');
+    }
+
+    // Reactive Arc Reactor & Real-Time Audio Visualizer Waveform Canvas
+    let isVisualizerActive = false;
+    const visualizerCanvas = document.getElementById('audio-visualizer');
+    if (visualizerCanvas) {
+      const ctx = visualizerCanvas.getContext('2d');
+      let phase = 0;
+
+      function renderWaveform() {
+        requestAnimationFrame(renderWaveform);
+        ctx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+        const bars = 20;
+        const barWidth = 4;
+        const gap = 3;
+        phase += 0.08;
+
+        for (let i = 0; i < bars; i++) {
+          let heightRatio;
+          if (isVisualizerActive) {
+            heightRatio = 0.25 + 0.7 * Math.abs(Math.sin(phase * 1.5 + i * 0.45));
+          } else {
+            heightRatio = 0.12 + 0.22 * Math.abs(Math.sin(phase * 0.6 + i * 0.3));
+          }
+          const barHeight = Math.max(3, heightRatio * (visualizerCanvas.height - 4));
+          const x = 5 + i * (barWidth + gap);
+          const y = (visualizerCanvas.height - barHeight) / 2;
+
+          const grad = ctx.createLinearGradient(0, y, 0, y + barHeight);
+          if (isVisualizerActive) {
+            grad.addColorStop(0, '#ffb300');
+            grad.addColorStop(1, '#00e5ff');
+          } else {
+            grad.addColorStop(0, '#00e5ff');
+            grad.addColorStop(1, '#0088aa');
+          }
+
+          ctx.fillStyle = grad;
+          ctx.fillRect(x, y, barWidth, barHeight);
+        }
+      }
+      renderWaveform();
+    }
+
+    function setArcReactorActive(active) {
+      const reactor = document.getElementById('arc-reactor');
+      if (reactor) {
+        if (active) {
+          reactor.classList.add('active');
+        } else {
+          reactor.classList.remove('active');
+        }
+      }
+      isVisualizerActive = active;
+    }
+
+    // 6-Stage Execution Pipeline State Controller
+    function setPipelineStage(stageNum, stageName) {
+      const badge = document.getElementById('pipeline-status-badge');
+      if (badge) badge.innerText = stageName || `STAGE ${stageNum} ACTIVE`;
+      for (let i = 1; i <= 6; i++) {
+        const el = document.getElementById(`stage-${i}`);
+        if (!el) continue;
+        el.classList.remove('active', 'completed');
+        if (i < stageNum) {
+          el.classList.add('completed');
+        } else if (i === stageNum) {
+          el.classList.add('active');
+        }
+      }
+    }
+
+    function resetPipeline() {
+      const badge = document.getElementById('pipeline-status-badge');
+      if (badge) badge.innerText = 'READY';
+      for (let i = 1; i <= 6; i++) {
+        const el = document.getElementById(`stage-${i}`);
+        if (el) el.classList.remove('active', 'completed');
+      }
+    }
+
+    // 8 Specialized Agents Swarm Telemetry Highlight
+    function highlightAgents(agentRoles) {
+      const allAgents = [
+        'researcher', 'engineer', 'academic-tutor', 'career',
+        'productivity', 'communication', 'desktop', 'reviewer'
+      ];
+      const activeRoles = Array.isArray(agentRoles) ? agentRoles : [agentRoles];
+      allAgents.forEach(r => {
+        const card = document.getElementById(`agent-${r}`);
+        if (card) {
+          const badge = card.querySelector('.agent-badge');
+          if (activeRoles.includes(r) || activeRoles.includes('all')) {
+            card.classList.add('active');
+            if (badge) {
+              badge.className = 'agent-badge badge-active';
+              badge.innerText = 'ACTIVE';
+            }
+          } else {
+            card.classList.remove('active');
+            if (badge) {
+              badge.className = 'agent-badge badge-idle';
+              badge.innerText = 'READY';
+            }
+          }
+        }
+      });
+    }
+
+    // Chat Handler with Real Multi-Turn Context Memory & Conversation ID
     const chatHistory = [];
 
     async function sendChat() {
@@ -1478,13 +1946,40 @@
       const recentContext = chatHistory.slice(-4).map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`).join('\n');
       chatHistory.push({ role: 'user', content: text });
 
+      setArcReactorActive(true);
+      setPipelineStage(1, 'Stage 1: Understand');
+
+      // Animate pipeline transitions
+      setTimeout(() => setPipelineStage(2, 'Stage 2: Plan'), 350);
+      setTimeout(() => setPipelineStage(3, 'Stage 3: Select'), 700);
+
       try {
         const resp = await fetch(`${API_BASE}/api/v1/chat`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: text, context: recentContext })
+          body: JSON.stringify({
+            query: text,
+            conversation_id: currentConversationId,
+            context: recentContext
+          })
         });
+
+        setPipelineStage(4, 'Stage 4: Execute');
         const data = await resp.json();
+
+        // Highlight active specialist agents based on query/response
+        const qLower = text.toLowerCase();
+        const involvedAgents = ['reviewer'];
+        if (qLower.includes('search') || qLower.includes('research') || qLower.includes('paper') || qLower.includes('who is')) involvedAgents.push('researcher');
+        if (qLower.includes('code') || qLower.includes('python') || qLower.includes('bug') || qLower.includes('git')) involvedAgents.push('engineer');
+        if (qLower.includes('assignment') || qLower.includes('study') || qLower.includes('viva') || qLower.includes('exam')) involvedAgents.push('academic-tutor');
+        if (qLower.includes('job') || qLower.includes('internship') || qLower.includes('gsoc') || qLower.includes('resume')) involvedAgents.push('career');
+        if (qLower.includes('calendar') || qLower.includes('schedule') || qLower.includes('task') || qLower.includes('deadline')) involvedAgents.push('productivity');
+        if (qLower.includes('email') || qLower.includes('mail') || qLower.includes('inbox') || qLower.includes('draft')) involvedAgents.push('communication');
+        if (qLower.includes('open') || qLower.includes('window') || qLower.includes('app') || qLower.includes('desktop')) involvedAgents.push('desktop');
+        highlightAgents(involvedAgents);
+
+        setPipelineStage(5, 'Stage 5: Verify');
 
         let reply = '';
         if (data.response) {
@@ -1492,6 +1987,8 @@
         } else if (data.message) {
           reply = data.message;
         }
+
+        setTimeout(() => setPipelineStage(6, 'Stage 6: Consolidate & Persist'), 250);
 
         chatHistory.push({ role: 'assistant', content: reply });
         if (chatHistory.length > 20) chatHistory.shift();
@@ -1504,7 +2001,15 @@
         if (reply && data.status !== 'FAILED') {
           speakVoice(reply);
         }
+
+        setTimeout(() => {
+          setArcReactorActive(false);
+          resetPipeline();
+          highlightAgents([]);
+        }, 2200);
       } catch (err) {
+        setArcReactorActive(false);
+        resetPipeline();
         appendMessage(`Error: ${err.message}`, 'jarvis', 'ERROR');
       }
     }

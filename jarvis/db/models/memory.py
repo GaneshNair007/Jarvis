@@ -6,11 +6,14 @@ Episodic and semantic memory store anchoring long-term intelligence.
 from __future__ import annotations
 
 import uuid
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Dict, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from jarvis.db.models.base import Base, GUID, UniversalJSON, TimestampMixin
+
+if TYPE_CHECKING:
+    from jarvis.db.models.goal import GoalModel
 
 
 class MemoryModel(Base, TimestampMixin):

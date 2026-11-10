@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 from typing import Any, Dict, List, Optional
+from jarvis.config import settings
 from jarvis.core.logger import get_logger
 
 logger = get_logger("powers.smart_home")
@@ -16,6 +17,15 @@ logger = get_logger("powers.smart_home")
 
 class SmartHomePowers:
     """Implementations for Room Control and Smart Home capabilities."""
+
+    def _frozen_response(self, power_id: str = "PWR-256") -> Dict[str, Any]:
+        return {
+            "power_id": power_id,
+            "status": "FROZEN",
+            "message": "Smart-home powers are frozen per product directive. JARVIS is operating exclusively as a personal AI assistant.",
+            "feedback": "Smart-home powers are frozen per product directive. JARVIS is operating exclusively as a personal AI assistant.",
+            "fabricated": False,
+        }
 
     def __init__(self):
         self.device_states: Dict[str, Dict[str, Any]] = {
@@ -83,14 +93,23 @@ class SmartHomePowers:
 
     def get_all_devices(self) -> Dict[str, Any]:
         """PWR-267: Queries all registered room devices and current states."""
+        if not getattr(settings, "enable_smart_home", False):
+            res = self._frozen_response("PWR-267")
+            res["device_count"] = 0
+            res["devices"] = {}
+            return res
         return {
             "power_id": "PWR-267",
             "device_count": len(self.device_states),
             "devices": self.device_states,
         }
 
-    def get_device_status(self, entity_id: str) -> Dict[str, Any]:
+    def get_device_status(self, entity_id: str = "climate.ac") -> Dict[str, Any]:
         """PWR-238: Queries a specific device state."""
+        if not getattr(settings, "enable_smart_home", False):
+            res = self._frozen_response("PWR-238")
+            res["entity_id"] = entity_id
+            return res
         dev = self.device_states.get(entity_id)
         if not dev:
             return {"power_id": "PWR-238", "entity_id": entity_id, "state": "unknown", "error": "Device not found"}
@@ -104,6 +123,8 @@ class SmartHomePowers:
         fan_speed: Optional[str] = None,
     ) -> Dict[str, Any]:
         """PWR-257: Controls AC and climate devices via BroadLink IR."""
+        if not getattr(settings, "enable_smart_home", False):
+            return self._frozen_response("PWR-257")
         ac = self.device_states["climate.ac"]
 
         if action == "on":
@@ -143,6 +164,8 @@ class SmartHomePowers:
         mute: Optional[bool] = None,
     ) -> Dict[str, Any]:
         """PWR-259: Controls Projector / TV and media receivers via BroadLink IR."""
+        if not getattr(settings, "enable_smart_home", False):
+            return self._frozen_response("PWR-259")
         media = self.device_states.get(device_id, self.device_states["media.projector_tv"])
 
         if action == "on":
@@ -181,6 +204,8 @@ class SmartHomePowers:
         auto_off_minutes: Optional[int] = None,
     ) -> Dict[str, Any]:
         """PWR-258: Controls Wi-Fi smart plugs with safety timer support."""
+        if not getattr(settings, "enable_smart_home", False):
+            return self._frozen_response("PWR-258")
         if entity_id not in self.device_states:
             self.device_states[entity_id] = {"name": entity_id, "type": "smart_plug", "state": "off"}
 
@@ -218,6 +243,8 @@ class SmartHomePowers:
         color_temp: Optional[int] = None,
     ) -> Dict[str, Any]:
         """PWR-256: Controls Wi-Fi smart bulb color, brightness, and state."""
+        if not getattr(settings, "enable_smart_home", False):
+            return self._frozen_response("PWR-256")
         if entity_id not in self.device_states:
             self.device_states[entity_id] = {"name": entity_id, "type": "smart_bulb", "state": "off"}
 
@@ -254,6 +281,8 @@ class SmartHomePowers:
 
     def activate_scene(self, scene_name: str) -> Dict[str, Any]:
         """PWR-260: Executes synchronized multi-device room scene."""
+        if not getattr(settings, "enable_smart_home", False):
+            return self._frozen_response("PWR-260")
         scene = scene_name.lower().strip()
 
         if "work" in scene or "focus" in scene:
@@ -303,6 +332,8 @@ class SmartHomePowers:
 
     def process_voice_command(self, transcript: str) -> Dict[str, Any]:
         """PWR-269: Parses natural language smart-room voice utterances into device actions."""
+        if not getattr(settings, "enable_smart_home", False):
+            return self._frozen_response("PWR-269")
         t = transcript.lower().strip()
 
         # 1. AC commands

@@ -67,15 +67,28 @@ class WakeWordDetector:
             except Exception as e:
                 logger.error(f"Error in wake-word callback: {e}")
 
-    def start_listening(self) -> None:
+    def start_listening(self, spawn_daemon: bool = False) -> None:
         """Starts background listener."""
         self.is_listening = True
         logger.info("Wake-word listener started (listening for 'Hey Jarvis').")
+        if spawn_daemon:
+            try:
+                from jarvis.voice.listener import audio_daemon
+                if not audio_daemon.is_running:
+                    audio_daemon.start(mode="mic")
+            except Exception as e:
+                logger.error(f"Failed to auto-spawn audio daemon: {e}")
 
     def stop_listening(self) -> None:
         """Stops background listener."""
         self.is_listening = False
         logger.info("Wake-word listener stopped.")
+        try:
+            from jarvis.voice.listener import audio_daemon
+            if audio_daemon.is_running:
+                audio_daemon.stop()
+        except Exception:
+            pass
 
 
 # Singleton Wake Word Detector

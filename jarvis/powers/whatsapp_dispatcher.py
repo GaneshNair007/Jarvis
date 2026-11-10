@@ -19,7 +19,20 @@ from jarvis.core.logger import get_logger
 
 logger = get_logger("powers.whatsapp")
 
-_DEFAULT_PHONE = "+919324094474"
+def _load_canonical_phone() -> str:
+    profile_path = Path("data/profile.yml")
+    if profile_path.exists():
+        try:
+            import yaml
+            with open(profile_path, "r", encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+                if data and "phone" in data:
+                    return str(data["phone"])
+        except Exception:
+            pass
+    return "+919324094474"
+
+_DEFAULT_PHONE = _load_canonical_phone()
 _LOG_DIR = Path("data/notifications")
 _LOG_FILE = _LOG_DIR / "whatsapp_digest.jsonl"
 
@@ -30,12 +43,14 @@ class WhatsAppDispatcher:
     Dispatches alerts, hackathon opportunities, and mission briefings to Ganesh.
     """
 
-    def __init__(self, default_phone: str = _DEFAULT_PHONE):
-        self.default_phone = default_phone.replace(" ", "").replace("-", "")
+    def __init__(self, default_phone: Optional[str] = None):
+        target_phone = default_phone or _load_canonical_phone()
+        self.default_phone = target_phone.replace(" ", "").replace("-", "")
         if not self.default_phone.startswith("+"):
             self.default_phone = "+" + self.default_phone
         self.log_file = _LOG_FILE
         self.log_file.parent.mkdir(parents=True, exist_ok=True)
+        self.transport_hook: Optional[Any] = None
 
     def _clean_phone(self, phone: Optional[str]) -> str:
         raw = (phone or self.default_phone).replace(" ", "").replace("-", "")
@@ -100,6 +115,24 @@ class WhatsAppDispatcher:
         status = "queued"
         delivery_channel = "direct_link"
         api_response = {}
+
+        # 0. Check for custom transport hook (testing & failover simulation)
+        if self.transport_hook is not None:
+            import inspect
+            if inspect.iscoroutinefunction(self.transport_hook):
+                hook_res = await self.transport_hook(clean_num, message)
+            else:
+                hook_res = self.transport_hook(clean_num, message)
+            if isinstance(hook_res, dict):
+                try:
+                    with open(self.log_file, "a", encoding="utf-8") as f:
+                        f.write(json.dumps(hook_res) + "\n")
+                except Exception:
+                    pass
+                return hook_res
+            status = "delivered"
+            delivery_channel = "mock_transport_hook"
+            api_response = {"hook": True}
 
         # 1. Attempt CallMeBot API if key available
         if callmebot_key:

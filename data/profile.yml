@@ -3,6 +3,7 @@
 name: "Ganesh Nair"
 title: "Principal AI Systems Architect & Software Engineer"
 email: "nairganesh134@gmail.com"
+phone: "+91 9324094474"
 location: "San Francisco, CA (or Remote)"
 github: "https://github.com/GaneshNair007"
 linkedin: "https://linkedin.com/in/ganeshnair"
@@ -35,3 +36,18 @@ domain_expertise:
   - "Zero-Trust Security & DLP Data Redaction"
 experience_summary: "Over 8 years designing and deploying mission-critical distributed AI systems, private search infrastructure, and autonomous operator agents handling real-time tool orchestration with millisecond latencies."
 
+devices:
+  laptop:
+    id: "laptop"
+    name: "RTX 4050 Primary Compute Laptop"
+    platform: "windows"
+    heartbeat_ttl_sec: 60
+    preferred_transport: "windows_toast"
+    is_compute_node: true
+  phone:
+    id: "phone"
+    name: "Primary Mobile Device"
+    phone_number: "+91 9324094474"
+    heartbeat_ttl_sec: 180
+    preferred_transport: "whatsapp"
+    fallback_transport: "switch"

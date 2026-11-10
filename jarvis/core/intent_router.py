@@ -66,10 +66,9 @@ class FastIntentRouter:
         (r"^(?:lock\s+(?:screen|computer|workstation)|lock)$", "lock_screen", False),
         (r"^(?:sleep|standby)$", "system_sleep", True),
         (r"^(?:take\s+screenshot|screenshot|capture\s+screen)$", "screenshot", False),
-        (r"^(?:system\s+health|health\s+report|status)$", "health_report", False),
+        (r"^(?:system\s+health|health\s+report)$", "health_report", False),
         (r"^(?:disk\s+usage|disk\s+space)$", "disk_usage", False),
         (r"^(?:docker\s+ps|docker\s+status|containers)$", "docker_status", False),
-        (r"^(?:hi|hello|hey|hey\s+jarvis|who\s+are\s+you)$", "greeting", False),
     ]
 
     # 2. Local MCP Tool patterns (Filesystem, Git, Memory Graph, Sequential Thinking)

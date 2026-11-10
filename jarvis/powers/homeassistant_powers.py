@@ -13,6 +13,7 @@ import urllib.error
 import urllib.request
 import json
 
+from jarvis.config import settings
 from jarvis.core.logger import get_logger
 from jarvis.core.audit import audit_ledger
 
@@ -21,6 +22,16 @@ logger = get_logger("powers.homeassistant")
 
 class HomeAssistantPowers:
     """Implementations for local Home Assistant REST API interactions."""
+
+    def _frozen_response(self, power_id: str = "PWR-238") -> Dict[str, Any]:
+        return {
+            "power_id": power_id,
+            "status": "FROZEN",
+            "connected": False,
+            "success": False,
+            "message": "Home Assistant integration is frozen per product directive. JARVIS operates exclusively as a personal AI assistant.",
+            "fabricated": False,
+        }
 
     def __init__(
         self,
@@ -38,6 +49,8 @@ class HomeAssistantPowers:
 
     def check_connection(self) -> Dict[str, Any]:
         """PWR-238A: Checks connectivity and API availability for local Home Assistant."""
+        if not getattr(settings, "enable_smart_home", False):
+            return self._frozen_response("PWR-238")
         url = f"{self.base_url}/api/"
         req = urllib.request.Request(url, headers=self._headers(), method="GET")
         try:
@@ -61,6 +74,10 @@ class HomeAssistantPowers:
 
     def get_entity_state(self, entity_id: str) -> Dict[str, Any]:
         """PWR-238: Queries current state and attributes of a specific Home Assistant entity."""
+        if not getattr(settings, "enable_smart_home", False):
+            res = self._frozen_response("PWR-238")
+            res["entity_id"] = entity_id
+            return res
         url = f"{self.base_url}/api/states/{entity_id}"
         req = urllib.request.Request(url, headers=self._headers(), method="GET")
         try:
@@ -96,6 +113,8 @@ class HomeAssistantPowers:
 
     def list_entities(self, domain_filter: Optional[str] = None) -> Dict[str, Any]:
         """PWR-239: Queries all available entity states from Home Assistant."""
+        if not getattr(settings, "enable_smart_home", False):
+            return self._frozen_response("PWR-239")
         url = f"{self.base_url}/api/states"
         req = urllib.request.Request(url, headers=self._headers(), method="GET")
         try:
@@ -133,6 +152,8 @@ class HomeAssistantPowers:
         verify_entity_id: Optional[str] = None,
     ) -> Dict[str, Any]:
         """PWR-240: Calls a Home Assistant service and verifies state readback."""
+        if not getattr(settings, "enable_smart_home", False):
+            return self._frozen_response("PWR-240")
         payload_data = service_data or {}
         target_entity = verify_entity_id or payload_data.get("entity_id")
 

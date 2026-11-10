@@ -32,8 +32,9 @@ ENV/
 htmlcov/
 
 # Local data & logs (preserve structure, ignore large local data)
-data/logs/*.jsonl
-data/logs/*.log
+data/logs/
+data/outbox/
+data/research/research_hack_scout_*.md
 data/screenshots/*.png
 data/artifacts/screenshots/*.png
 data/*.db
@@ -54,9 +55,6 @@ scratch/
 .ruff_cache/
 test-results/
 data/calendar/
-data/logs/*.bak*
-data/logs/*.lock
-
 data/*.jsonl
 data/*.key
 data/.*key

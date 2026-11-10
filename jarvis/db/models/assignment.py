@@ -7,11 +7,15 @@ from __future__ import annotations
 
 import datetime
 import uuid
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from jarvis.db.models.base import Base, GUID
+
+if TYPE_CHECKING:
+    from jarvis.db.models.agent import AgentModel
+    from jarvis.db.models.task import TaskModel
 
 
 class AssignmentModel(Base):

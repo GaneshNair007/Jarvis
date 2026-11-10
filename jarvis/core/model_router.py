@@ -57,7 +57,7 @@ class RoutingDecision(BaseModel):
 
 
 class ModelRouter:
-    # Instant deterministic triggers that must never invoke an LLM
+    # Deterministic OS shortcuts strictly restricted to zero-LLM OS controls
     INSTANT_COMMAND_PATTERNS = [
         r"^open\s+[\w\s\.-]+$",
         r"^launch\s+[\w\s\.-]+$",
@@ -68,36 +68,11 @@ class ModelRouter:
         r"^lock\s+(screen|computer|workstation)$",
         r"^sleep$",
         r"^take\s+screenshot$",
+        r"^screenshot$",
         r"^system\s+health(\s+report)?$",
         r"^disk\s+usage$",
         r"^docker\s+(ps|status|containers)$",
-        r"^/(job-scan|generate-resume|generate-cover|company-research|find-contact|draft-email|analyze-applications|interview-prep|red-flags|analyze-offer|pipeline|career).*",
-        r"^/(browser|generative_ui|automation|plugin|migrate-workflows).*",
-        r"^.*(turn (on|off)|set|switch)\s+(the\s+)?(ac|air condition|projector|tv|geyser|lights?|lamp).*",
-        r"^.*(movie night|work mode|sleep mode|morning wake).*",
-        r"^.*(opportunity radar|career radar|daily pulse|system pulse|weekly sweep).*",
-        r"^.*(gmail|check (my )?(email|mail|inbox)|missed (email|mail)|opportunities).*",
-        r"^connect (my )?gmail.*",
-        r".*(antigravity|self improve|upgrade yourself|make yourself stronger).*",
-        r"^(status|help|who are you|hi|hello|hey|hi jarvis|hey jarvis|hello jarvis)$",
-        r"^pwr-[a-zA-Z0-9\-_]+.*",
-        r"^.*(grok|openmaus|ask grok|grok bot|grok mode).*",
-        r"^.*(openclaw|claw |obscura|crawl |scrape |browse |search web).*",
-        r"^.*(hackathon pipeline|autonomous workforce|mobilize workforce).*", 
-        r"^ping\s+.*",
-        r"^traceroute\s+.*",
-        r"^dns\s+.*",
-        r"^port\s+scan.*",
-        r"^check\s+internet.*",
-        r"^speedtest.*",
-        r"^stock(\s+quote)?\s+.*",
-        r"^crypto\s+.*",
-        r"^market\s+briefing.*",
-        r"^portfolio\s+(journal|value)?.*",
-        r"^youtube\s+(script|title|tags?|brief).*|^video\s+(script|title).*",
-        r"^hud(\s+telemetry)?.*|^mission\s+control.*|^threat\s+assessment.*",
-        r"^security\s+(scan|posture|report).*|^secret\s+scan.*",
-        r"^.*(connect antigravity|use antigravity|antigravity|make yourself (stronger|better)|self improve|upgrade yourself).*",
+        r"^hud(\s+telemetry)?$",
     ]
 
     def __init__(self):

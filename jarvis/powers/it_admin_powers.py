@@ -28,14 +28,29 @@ class ITAdminPowers:
         ram = psutil.virtual_memory()
         disk = psutil.disk_usage(settings.disk_mount_path)
 
-        boot_time = datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")
+        try:
+            boot_time = datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")
+        except Exception:
+            boot_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        disk_pct = disk.percent
+        ram_pct = ram.percent
+        free_gb = disk.free / (1024**3)
+
+        if disk_pct >= 95.0 or ram_pct >= 95.0 or cpu_pct >= 95.0 or free_gb < 2.0:
+            host_status = "critical"
+        elif disk_pct >= 90.0 or ram_pct >= 90.0 or cpu_pct >= 90.0 or free_gb < 10.0:
+            host_status = "warning"
+        else:
+            host_status = "healthy"
 
         # Fast non-blocking top processes (sampled only when requested)
         top_processes = []
 
         return {
             "power_id": "PWR-100",
-            "status": "healthy" if (cpu_pct < 90 and ram.percent < 90) else "warning",
+            "status": host_status,
+            "boot_time": boot_time,
             "cpu": {
                 "percent": cpu_pct,
                 "cores_logical": psutil.cpu_count(logical=True),

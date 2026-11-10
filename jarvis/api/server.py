@@ -8,6 +8,7 @@ Exposes:
 """
 
 import asyncio
+from contextlib import asynccontextmanager
 import datetime
 import time
 import hmac
@@ -142,8 +143,6 @@ from jarvis.api.routes_autonomous import router as autonomous_router
 import uuid
 from graph.jarvis_graph import get_jarvis_graph
 
-app = FastAPI(title=APP_TITLE, version=APP_VERSION, description=APP_DESCRIPTION)
-
 def print_honest_startup_banner() -> str:
     """Sprint 1 Trust Fix: Honest Capability Status Banner."""
     from jarvis.core.capability_guard import capability_guard, CapabilityStatus
@@ -164,8 +163,13 @@ def print_honest_startup_banner() -> str:
     return banner
 
 
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Modern lifespan context manager replacing deprecated @app.on_event handlers.
+    Manages startup sequence, capability inspection, scheduler initiation,
+    and graceful shutdown.
+    """
     print_honest_startup_banner()
     try:
         from jarvis.core.scheduler import proactive_scheduler
@@ -177,14 +181,49 @@ async def startup_event():
         await full_autonomy.start()
     except Exception as e:
         logger.warning(f"Could not auto-start full autonomy service on boot: {e}")
-
-@app.on_event("shutdown")
-async def shutdown_event():
     try:
-        from jarvis.core.scheduler import proactive_scheduler
-        proactive_scheduler.stop()
-    except Exception as e:
-        logger.warning(f"Scheduler shutdown warning: {e}")
+        yield
+    finally:
+        try:
+            from jarvis.core.scheduler import proactive_scheduler
+            proactive_scheduler.stop()
+        except Exception as e:
+            logger.warning(f"Scheduler shutdown warning: {e}")
+
+
+app = FastAPI(
+    title=APP_TITLE,
+    version=APP_VERSION,
+    description=APP_DESCRIPTION,
+    lifespan=lifespan,
+)
+
+
+@app.middleware("http")
+async def smart_home_route_gating_middleware(request, call_next):
+    """
+    Enforces smart-home route gating per Milestone 3 product directive.
+    Any endpoints querying or commanding smart home devices return status: 'FROZEN', connected: False.
+    """
+    path = request.url.path.lower()
+    if (
+        path.startswith("/api/v1/smarthome")
+        or path.startswith("/smarthome")
+        or "smart-home" in path
+        or path.startswith("/api/v1/smart_home")
+    ):
+        from fastapi.responses import JSONResponse
+        return JSONResponse(
+            status_code=200,
+            content={
+                "status": "FROZEN",
+                "connected": False,
+                "message": "Smart-home powers are frozen per product directive. JARVIS is operating exclusively as a personal AI assistant.",
+                "devices": {},
+                "device_count": 0,
+            },
+        )
+    return await call_next(request)
 
 app.add_middleware(
     CORSMiddleware,
@@ -242,15 +281,18 @@ async def trigger_scheduled_job(job_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "dashboard" / "index.html"
+JARVIS_DASHBOARD_HTML = Path(__file__).resolve().parent.parent / "jarvis" / "dashboard" / "index.html"
 
 
 @app.get("/")
 @app.get("/dashboard")
 async def serve_dashboard():
     """Serves the interactive Iron Man glassmorphic HUD dashboard."""
-    if not DASHBOARD_HTML.exists():
-        raise HTTPException(status_code=404, detail="Dashboard UI file not found")
-    return FileResponse(DASHBOARD_HTML)
+    if DASHBOARD_HTML.exists():
+        return FileResponse(DASHBOARD_HTML)
+    if JARVIS_DASHBOARD_HTML.exists():
+        return FileResponse(JARVIS_DASHBOARD_HTML)
+    raise HTTPException(status_code=404, detail="Dashboard UI file not found")
 
 
 # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -335,6 +377,7 @@ async def approve_expensive_call(
 
 class ChatRequest(BaseModel):
     query: str
+    conversation_id: str = "default_session"
     context: str = ""
     sensitivity_level: str = "medium"
     approval_token: Optional[str] = None
@@ -344,7 +387,11 @@ class ChatRequest(BaseModel):
 async def chat_endpoint(req: ChatRequest):
     """Central natural language entry point."""
     result = await orchestrator.process_user_query(
-        query=req.query, context=req.context, sensitivity_level=req.sensitivity_level, approval_token=req.approval_token
+        query=req.query,
+        conversation_id=req.conversation_id,
+        context=req.context,
+        sensitivity_level=req.sensitivity_level,
+        approval_token=req.approval_token,
     )
     return result
 

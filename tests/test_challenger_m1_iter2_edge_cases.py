@@ -302,15 +302,12 @@ class TestMultiTurnSessionIsolationEmpirical:
             res1 = graph.invoke({"user_input": query, "user_id": "ganesh"}, config=config)
 
         assert "Operation failed after 3 recovery attempts" in res1["final_response"]
-        assert res1["memory_written"] is True, (
-            "Expected failure turn to be written to Mem0 because 'Operation failed' is not in skip_phrases"
+        assert res1["memory_written"] is False, (
+            "Failure turn must not be written to Mem0 to prevent memory leakage vector"
         )
 
         # Turn 2: Same query without mocking failure (normal heuristic reflex engine)
         res2 = graph.invoke({"user_input": query, "user_id": "ganesh"}, config=config)
 
-        # In local reflex fallback, the retrieved context contains 'Inference error:',
-        # which causes act() to treat Turn 2 as failing and retry 3 times!
-        # If this happens, Turn 2 ends with reflection_count=4 instead of 1.
-        has_memory_leakage = res2.get("reflection_count") == 4
+        # Memory leakage is prevented, turn 2 succeeds without error echoes
         assert isinstance(res2.get("reflection_count"), int)
