@@ -1,8 +1,6 @@
 name: 📈 Activity & Stats
 
 on:
-  schedule:
-    - cron: '0 */12 * * *'  # Every 12 hours (more green squares!)
   workflow_dispatch:
 
 permissions:
