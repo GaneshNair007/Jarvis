@@ -7,6 +7,7 @@ actually copies the launcher into a target Startup directory.
 """
 
 import re
+import pytest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -70,6 +71,11 @@ def test_stop_all_script_targets_every_jarvis_role():
 
 def test_powershell_scripts_parse_cleanly():
     import subprocess
+    import shutil
+
+    ps = shutil.which("powershell") or shutil.which("pwsh")
+    if not ps:
+        pytest.skip("PowerShell is not installed on this host")
 
     parser = r"""
 $files = @(
@@ -92,7 +98,7 @@ foreach ($f in $files) {
 if ($failed) { exit 1 } else { exit 0 }
 """
     result = subprocess.run(
-        ["powershell", "-NoProfile", "-Command", parser],
+        [ps, "-NoProfile", "-Command", parser],
         cwd=str(REPO),
         capture_output=True,
         text=True,
@@ -106,10 +112,15 @@ if ($failed) { exit 1 } else { exit 0 }
 def test_installer_copies_launcher_into_startup_dir(tmp_path):
     """Runs the real installer against a temp Startup dir and verifies the copy."""
     import subprocess
+    import shutil
+
+    ps = shutil.which("powershell") or shutil.which("pwsh")
+    if not ps:
+        pytest.skip("PowerShell is not installed on this host")
 
     result = subprocess.run(
         [
-            "powershell",
+            ps,
             "-NoProfile",
             "-ExecutionPolicy",
             "Bypass",

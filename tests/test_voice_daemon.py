@@ -314,6 +314,10 @@ def test_resample_linear_preserves_duration_and_shape():
 
 def test_probe_input_devices_returns_measured_classification():
     """Probe records real audio from every input device and classifies it."""
+    import sounddevice as sd
+
+    if not [d for d in sd.query_devices() if d.get("max_input_channels", 0) >= 1]:
+        pytest.skip("No audio input devices available on this host")
     from jarvis.voice.daemon import probe_input_devices
 
     results = probe_input_devices(duration_sec=0.4)
@@ -366,7 +370,8 @@ def test_select_input_device_prefers_live_shared_mode_device():
     import sounddevice as sd
 
     input_idxs = [i for i, d in enumerate(sd.query_devices()) if d.get("max_input_channels", 0) >= 1]
-    assert input_idxs, "no input devices on this machine"
+    if not input_idxs:
+        pytest.skip("No audio input devices available on this host")
     forced = select_input_device(explicit=input_idxs[0], probe=[])
     assert forced["device"] == input_idxs[0]
     assert forced["source"] == "explicit"
@@ -374,6 +379,10 @@ def test_select_input_device_prefers_live_shared_mode_device():
 
 def test_start_with_microphone_opens_probed_device_and_reports_telemetry():
     """Real mic start: device is probed/selected and health exposes mic facts."""
+    import sounddevice as sd
+
+    if not [d for d in sd.query_devices() if d.get("max_input_channels", 0) >= 1]:
+        pytest.skip("No audio input devices available on this host")
     daemon = VoiceDaemon(speak_replies=False, probe_devices=True, mic_device=None)
     health = daemon.start(use_microphone=True)
     try:

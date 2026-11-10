@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import psutil
 import datetime
 from typing import Any, Dict, List, Optional
@@ -116,7 +117,8 @@ class DailySystemPulseWorkflow:
         # 1. Hardware & System Telemetry
         cpu_percent = psutil.cpu_percent(interval=0.1)
         mem = psutil.virtual_memory()
-        disk = psutil.disk_usage("C:\\")
+        root_path = "C:\\" if (sys.platform == "win32" and os.path.exists("C:\\")) else "/"
+        disk = psutil.disk_usage(root_path)
 
         # 2. GPU Telemetry
         gpu_info = {"cuda_available": False, "gpu_name": "N/A", "vram_free_gb": 0.0}

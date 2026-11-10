@@ -216,6 +216,11 @@ def test_stop_all_script_stops_and_verifies_all_roles():
 
 
 def test_lifecycle_powershell_scripts_parse_cleanly():
+    import shutil
+
+    ps = shutil.which("powershell") or shutil.which("pwsh")
+    if not ps:
+        pytest.skip("PowerShell is not installed on this host")
     parser = r"""
 $files = @('scripts\stop_jarvis.ps1', 'scripts\stop_all_jarvis.ps1')
 $failed = $false
@@ -233,7 +238,7 @@ foreach ($f in $files) {
 if ($failed) { exit 1 } else { exit 0 }
 """
     result = subprocess.run(
-        ["powershell", "-NoProfile", "-Command", parser],
+        [ps, "-NoProfile", "-Command", parser],
         cwd=str(REPO),
         capture_output=True,
         text=True,

@@ -15,6 +15,7 @@ import wave
 import asyncio
 
 import pytest
+from pathlib import Path
 
 from jarvis.core.evidence import TrustResult
 from jarvis.core.model_router import model_router, RoutingRequest, RoutingDecision
@@ -87,7 +88,8 @@ def test_coding_subagent_returns_evidence_backed_result():
 
 def test_antigravity_self_upgrade_pipeline():
     """CODER_ANTIGRAVITY routes to the real self_upgrade_pipeline (PWR-310)."""
-    res = multiagent_powers.invoke_subagent("coder_antigravity", {"codebase_path": "D:\\jarvis"})
+    codebase = "D:\\jarvis" if Path("D:\\jarvis").exists() else str(Path(__file__).resolve().parent.parent)
+    res = multiagent_powers.invoke_subagent("coder_antigravity", {"codebase_path": codebase})
     assert res["power_id"] == "PWR-310"
     assert res["status"] in ("COMPLETED", "PARTIAL")
     assert "trust_result" in res

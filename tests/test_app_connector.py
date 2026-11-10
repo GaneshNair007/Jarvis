@@ -155,6 +155,26 @@ def test_antigravity_task_extraction():
 # --------------------------------------------------------------------- #
 
 
+@pytest.fixture(autouse=True)
+def mock_app_executables(monkeypatch):
+    """Ensure spawner unit tests resolve simulated app paths even on headless non-Windows hosts."""
+    orig_resolve = app_connector._resolve_executable
+
+    def fake_resolve(alias_id: str):
+        found = orig_resolve(alias_id)
+        if found:
+            return found
+        if alias_id == "antigravity":
+            return r"C:\Users\Test\AppData\Local\Programs\Antigravity\Antigravity.exe"
+        if alias_id == "antigravity_ide":
+            return r"C:\Users\Test\AppData\Local\Programs\Antigravity IDE\Antigravity IDE.exe"
+        if alias_id == "opencode":
+            return r"C:\Users\Test\AppData\Roaming\npm\opencode.cmd"
+        return None
+
+    monkeypatch.setattr(app_connector, "_resolve_executable", fake_resolve)
+
+
 class SpawnRecorder:
     def __init__(self):
         self.calls = []
