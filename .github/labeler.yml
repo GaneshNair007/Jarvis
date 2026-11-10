@@ -1,41 +1,59 @@
-# Auto-labeling configuration
+# Auto-labeling configuration for actions/labeler v5
 '🐛 bug':
-  - '**/*test*.py'
-  - 'tests/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*test*.py'
+          - 'tests/**/*'
 
 '📚 documentation':
-  - 'docs/**/*'
-  - '**/*.md'
-  - 'README*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**/*'
+          - '**/*.md'
+          - 'README*'
 
 '🚀 feature':
-  - 'jarvis/agents/**/*'
-  - 'jarvis/plugins/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'jarvis/agents/**/*'
+          - 'jarvis/plugins/**/*'
 
 '🔧 configuration':
-  - '*.yml'
-  - '*.yaml'
-  - '*.toml'
-  - '*.json'
-  - '.github/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '*.yml'
+          - '*.yaml'
+          - '*.toml'
+          - '*.json'
+          - '.github/**/*'
 
 '🐳 docker':
-  - 'Dockerfile*'
-  - 'docker-compose*.yml'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'Dockerfile*'
+          - 'docker-compose*.yml'
 
 '🔒 security':
-  - '**/security*.py'
-  - '.github/workflows/security.yml'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/security*.py'
+          - '.github/workflows/security.yml'
 
 '⚡ performance':
-  - '**/performance*.py'
-  - '.github/workflows/performance.yml'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/performance*.py'
+          - '.github/workflows/performance.yml'
 
 '🧪 testing':
-  - 'tests/**/*'
-  - '**/test_*.py'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tests/**/*'
+          - '**/test_*.py'
 
 'dependencies':
-  - 'requirements*.txt'
-  - 'pyproject.toml'
-  - 'setup.py'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'requirements*.txt'
+          - 'pyproject.toml'
+          - 'setup.py'
