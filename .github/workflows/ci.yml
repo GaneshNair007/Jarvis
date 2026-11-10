@@ -68,7 +68,7 @@ jobs:
       - name: Install system dependencies (GUI, Headless X11, DB libraries)
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb python3-tk scrot libpq-dev
+          sudo apt-get install -y xvfb python3-tk scrot libpq-dev libportaudio2 portaudio19-dev
 
       - name: Set up Python
         uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0

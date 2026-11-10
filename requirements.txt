@@ -28,3 +28,4 @@ playwright>=1.42.0
 scikit-learn>=1.4.0
 reportlab>=4.0.0
 pypdf>=4.0.0
+sounddevice>=0.4.6

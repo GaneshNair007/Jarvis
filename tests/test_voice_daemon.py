@@ -314,7 +314,10 @@ def test_resample_linear_preserves_duration_and_shape():
 
 def test_probe_input_devices_returns_measured_classification():
     """Probe records real audio from every input device and classifies it."""
-    import sounddevice as sd
+    try:
+        import sounddevice as sd
+    except (ImportError, OSError):
+        pytest.skip("sounddevice / PortAudio library not available on this host")
 
     if not [d for d in sd.query_devices() if d.get("max_input_channels", 0) >= 1]:
         pytest.skip("No audio input devices available on this host")
@@ -341,6 +344,10 @@ def test_probe_input_devices_returns_measured_classification():
 
 def test_select_input_device_prefers_live_shared_mode_device():
     """Selection logic: injected live probe result wins over default fallback."""
+    try:
+        import sounddevice as sd
+    except (ImportError, OSError):
+        pytest.skip("sounddevice / PortAudio library not available on this host")
     from jarvis.voice.daemon import select_input_device
 
     probe = [
@@ -379,7 +386,10 @@ def test_select_input_device_prefers_live_shared_mode_device():
 
 def test_start_with_microphone_opens_probed_device_and_reports_telemetry():
     """Real mic start: device is probed/selected and health exposes mic facts."""
-    import sounddevice as sd
+    try:
+        import sounddevice as sd
+    except (ImportError, OSError):
+        pytest.skip("sounddevice / PortAudio library not available on this host")
 
     if not [d for d in sd.query_devices() if d.get("max_input_channels", 0) >= 1]:
         pytest.skip("No audio input devices available on this host")
