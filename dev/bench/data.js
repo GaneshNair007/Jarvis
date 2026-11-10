@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794292968829,
+  "lastUpdate": 1794293991635,
   "repoUrl": "https://github.com/GaneshNair007/Jarvis",
   "entries": {
     "Benchmark": [
@@ -52,6 +52,58 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.000006230720146338378",
             "extra": "mean: 80.38361532559857 usec\nrounds: 5220"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nairganesh134@gmail.com",
+            "name": "GaneshNair007",
+            "username": "GaneshNair007"
+          },
+          "committer": {
+            "email": "nairganesh134@gmail.com",
+            "name": "GaneshNair007",
+            "username": "GaneshNair007"
+          },
+          "distinct": true,
+          "id": "3fd4979dc6c337ed214723f391c36b49d1a6e5a9",
+          "message": "fix(ci): handle PortAudio headless host errors, install Playwright in multiplatform/coverage, update memory models and docs",
+          "timestamp": "2026-11-10T12:28:36+05:30",
+          "tree_id": "152a4ed37a75c3ceed58d64218de108276e2a677",
+          "url": "https://github.com/GaneshNair007/Jarvis/commit/3fd4979dc6c337ed214723f391c36b49d1a6e5a9"
+        },
+        "date": 1794293990773,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_benchmarks.py::test_benchmark_policy_gate_read",
+            "value": 931584.7242760736,
+            "unit": "iter/sec",
+            "range": "stddev: 4.925183627392656e-7",
+            "extra": "mean: 1.0734396710692002 usec\nrounds: 47788"
+          },
+          {
+            "name": "tests/test_benchmarks.py::test_benchmark_policy_gate_destructive_action",
+            "value": 240234.3298988262,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0000010412454447846422",
+            "extra": "mean: 4.162602407495824 usec\nrounds: 23343"
+          },
+          {
+            "name": "tests/test_benchmarks.py::test_benchmark_desktop_screen_size",
+            "value": 16148601.984037884,
+            "unit": "iter/sec",
+            "range": "stddev: 1.1568140641247414e-8",
+            "extra": "mean: 61.92486513620717 nsec\nrounds: 160643"
+          },
+          {
+            "name": "tests/test_benchmarks.py::test_benchmark_audit_hash",
+            "value": 23873.92403745505,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000006690168459843727",
+            "extra": "mean: 41.886704440842294 usec\nrounds: 4571"
           }
         ]
       }
