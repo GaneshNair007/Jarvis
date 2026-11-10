@@ -48,8 +48,8 @@ This audit exposes these gaps without euphemism, presents exact file paths and l
 | **Second Law: No Simulation / Pretending** | `JARVIS_MASTER_DIRECTIVE.md` § 2: Banned `sleep()`, fake applications, fake searches, mock PDFs, and canned test strings. | `core/model_router.py:35–48` returns hardcoded memory strings; `career_ops.py:81` writes `"%PDF-1.4 Mock ATS Resume"` and claims `truthfulness_verified: True`. | **VIOLATION** (Pervasive mocks) |
 | **Third Law: Capability Prerequisite** | `JARVIS_MASTER_DIRECTIVE.md` § 2: Check exists, authenticated, connected, healthy, authorized. Fail honestly if unready. | When SearXNG is down, `jarvis/core/web_recon.py:134–142` injects static hackathons; when STT fails, `stt.py:63` returns `"Jarvis, report system health"`. | **VIOLATION** (Dishonest fallbacks) |
 | **Fourth Law: Reflection Before Completion** | `JARVIS_MASTER_DIRECTIVE.md` § 2 & § 10.5: No goal or task may transition to `COMPLETED` without persisting a reflection record. | `jarvis/core/orchestrator.py:120–174` transitions tasks to `COMPLETED` without invoking or verifying persistent reflection records. | **VIOLATION** (Reflection bypassed) |
-| **Local-First / Zero Cloud Subscriptions** | `JARVIS_MASTER_DIRECTIVE.md` § 9.5 & `constraints.yaml`: Local execution via Ollama or FreeLLMAPI (`localhost:3001`). | Code contains zero references to FreeLLMAPI router (`localhost:3001`); defaults to cloud LiteLLM rotators (`api_key_rotator.py`, 37 KB). | **NON-CONFORMANT** (Cloud egress bias) |
-| **Hardware Envelope (24GB RAM / 6GB VRAM)** | Windows 11, RTX 4050 (6 GB VRAM max budget). VRAM usage <= 5.8 GB. | `jarvis/config.py:69` configures `Qwen2.5-32B-Instruct` (requires ~20 GB VRAM); `docker-compose.yml` demands 9 concurrent server containers. | **NON-CONFORMANT** (VRAM OOM crash) |
+| **Local-First / Zero Cloud Subscriptions** | `JARVIS_MASTER_DIRECTIVE.md` § 9.5 & `constraints.yaml`: Zero-egress local execution via Ollama (Tier 1/2), with FreeLLMAPI (`localhost:3001`) as Tier 3 cloud proxy fallback. | Code contains zero references to FreeLLMAPI router (`localhost:3001`); defaults to cloud LiteLLM rotators (`api_key_rotator.py`, 37 KB). Live inspection proves FreeLLMAPI proxies to Groq cloud. | **NON-CONFORMANT** (Cloud egress bias & unintegrated router) |
+| **Hardware Envelope (24GB RAM / 6GB VRAM)** | Windows 11, RTX 4050 (6 GB VRAM max budget). Active GPU VRAM allocation <= 3.8 GB (leaving >= 2.2 GB dedicated headroom). | `jarvis/config.py:69` configures `Qwen2.5-32B-Instruct` (requires ~20 GB VRAM); `docker-compose.yml` demands 9 concurrent server containers. | **NON-CONFORMANT** (VRAM OOM crash) |
 | **Autonomous Workforce** | `AGENT_ORGANIZATION_CHART.md`: 105 swarm agents across 5 specialized divisions. | Agents are inert `SwarmAgentSpec` dataclasses in `autonomous_workforce.py:62–101`; department workers in `task_router.py` are string literals. | **ILLUSION** (Dataclass counters) |
 | **Unified Memory Vault** | `MEMORY_MODEL.md` & `DATABASE_HIPPOCAMPUS.md`: 8 cognitive layers in single transactional schema. | 4 disjoint database silos; RAG capped at in-memory TF-IDF over 2,000 chunks (`document_rag.py:252`); vector fallback hashes MD5 to 768 bins. | **FRAGMENTED** (Siloed databases) |
 
@@ -198,10 +198,10 @@ TaskRouter     AgentSwarmCoordinator    AutonomousWorkforceSwarm    4-Node or 8-
   - Zero camera capture drivers or video perception pipelines exist.
 
 ### 5.5 Hardware Baseline & Model Router Subsystem
-- **Stated**: Local-first operation on Windows 11, 24 GB RAM, NVIDIA RTX 4050 (6 GB VRAM max), Ollama or FreeLLMAPI (`localhost:3001`).
+- **Stated**: Local-first operation on Windows 11, 24 GB RAM, NVIDIA RTX 4050 (6 GB VRAM max), Ollama (zero-egress Tier 1/2) or FreeLLMAPI (`localhost:3001`, Tier 3 cloud proxy fallback).
 - **Implemented**:
   - `jarvis/config.py:69` configures `Qwen/Qwen2.5-32B-Instruct` for Tier 2 private GPU reasoning. A 32B model requires ~20 GB VRAM and crashes instantly on an RTX 4050.
-  - The FreeLLMAPI router at `http://localhost:3001` is **completely absent** across all repository files.
+  - The FreeLLMAPI router at `http://localhost:3001` is **completely absent** across all repository files; live SQLite network inspection confirms FreeLLMAPI proxies requests across the WAN to Groq's cloud API.
   - Model routing relies on cloud LiteLLM rotators with 3 Google Gemini accounts (`api_key_rotator.py`).
   - `docker-compose.yml` specifies 9 concurrent server containers (Postgres, Redis, Ollama, LiteLLM, API, Meilisearch, Qdrant, SearXNG, Dashboard), consuming >28 GB RAM.
 
@@ -438,8 +438,9 @@ Below are the ten most severe architectural defects in the repository, organized
   1. Re-calibrate model configuration tiers in `jarvis/config.py`:
      - **Tier 0 (Instant OS Bypass)**: Regex, rule tables, local Win32 execution (0 VRAM, 1–5ms).
      - **Tier 1 (Local Reflex SLM)**: `qwen2.5:3b-instruct` or `llama3.2:3b` in Ollama (Q4_K_M, <=2.2 GB VRAM).
-     - **Tier 2 (Complex Local Reasoning)**: `qwen2.5:7b-instruct` (Q4_K_M in Ollama, <=4.8 GB VRAM) **OR** FreeLLMAPI local router at `http://localhost:3001`.
-  2. Implement a dedicated client `FreeLLMAPIRouterClient` in `jarvis/core/freellm_client.py` bound to `http://localhost:3001`, with latency probes and automatic fallback to Ollama when offline.
+     - **Tier 2 (Complex Local Reasoning)**: `qwen2.5:7b-instruct` (Q4_K_M in Ollama, <=4.4 GB VRAM, zero egress).
+     - **Tier 3 (External Free-Tier Cloud Fallback)**: FreeLLMAPI local router at `http://localhost:3001` (proxies to Groq cloud API over WAN; mandatory Presidio DLP sanitization; zero private memory transmission).
+  2. Implement a dedicated client `FreeLLMAPIRouterClient` in `jarvis/core/freellm_client.py` bound to `http://localhost:3001`, with latency probes, Presidio DLP sanitization, and automatic fallback to Ollama when offline.
   3. Strip down `docker-compose.yml` to optional development services; configure JARVIS to run as a single native Python process on Windows 11 with embedded SQLite and FTS5.
 
 ---

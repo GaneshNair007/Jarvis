@@ -43,7 +43,7 @@ Following the comprehensive repository audit and corrective priority directive, 
 │ STAGE 3: Seven Cloned Capabilities Integration                              │
 │  - Rigorous Adapters for Cloned Repositories in `repos/` and Config Skills   │
 │  - `firecrawl` & `obscure-browser` -> Safe Local Extraction Tools           │
-│  - `freellmapi` -> Local Port 3001 Inference Router Adapter                 │
+│  - `freellmapi` -> Port 3001 Cloud Proxy Router Adapter (with Presidio DLP)  │
 │  - `claude-code-style` -> Engineering Discipline & Linter Rule Engine       │
 │  - `generative_ui` & `plugin` -> Dynamic Interface & Capability Registry    │
 │  - `migrate-workflows` -> Workflow Transformation Substrate                 │
@@ -57,7 +57,7 @@ Following the comprehensive repository audit and corrective priority directive, 
 │  - Dynamic Lifecycle Management: Spawn on Demand, Pause/Yield, Retire       │
 │  - Central CEO Router & 6 Real Departmental Workflows                       │
 │  - LangGraph Deterministic DAG Engine with Cycle Detection (Kahn's Algo)    │
-│  - Strict Bounded Concurrency (Max 2-3 Active Workers <= 5.8 GB VRAM)       │
+│  - Strict Bounded Concurrency (Max 2-3 Active Workers <= 3.8 GB VRAM)       │
 │  - Tamper-Evident Chained SHA-256 Audit Ledger + Ten-Layer Security Shield  │
 │  - 8-Layer Memory Hierarchy & Fourth Law Mandatory Reflection Gate          │
 └──────────────────────────────────────┬──────────────────────────────────────┘
@@ -76,7 +76,7 @@ Following the comprehensive repository audit and corrective priority directive, 
 ### 1.2 Core Execution Rules & Integrity Mandates
 1. **Rule 1 — Zero Mock Fallbacks (The Second Law)**: Hardcoded string matching to pass tests (e.g. `core/model_router.py` returning canned text for "remember", or `career_ops.py` writing `"%PDF-1.4 Mock ATS Resume"`) is strictly forbidden. Disconnected components must fail honestly with clear error telemetry (`trust_level="unverified"` or explicit exception).
 2. **Rule 2 — Independent Execution Outside Antigravity**: Every milestone must be independently runnable and verifiable via native Python (`python -m ...`) or PowerShell (`pwsh`) from a terminal where Antigravity is closed.
-3. **Rule 3 — Strict Local Hardware Envelope**: Total concurrent VRAM utilization must never exceed **5.8 GB** on the NVIDIA RTX 4050 GPU. Cloud models are optional Tier 3 fallbacks; primary reasoning and reflex operations must run locally via Ollama or the local FreeLLMAPI router at `http://localhost:3001`.
+3. **Rule 3 — Strict Local Hardware Envelope & Egress Truthfulness**: Total concurrent VRAM utilization must never exceed **3.8 GB active allocation** (leaving >=2.2 GB headroom below the 6.0 GB ceiling of the NVIDIA RTX 4050 GPU). Primary reasoning and reflex operations must run locally via Ollama without WAN egress. FreeLLMAPI at `http://localhost:3001` is classified as a Tier 3 external cloud proxy fallback to Groq, strictly subject to Presidio DLP redaction and prohibited from receiving private memory vault facts.
 4. **Rule 4 — Objective Evidence Receipts**: Every operation must generate an `EvidenceReceipt` containing OS process IDs (PIDs), cryptographic SHA-256 hashes of generated buffers or files, tool invocation timestamps, and verifiable exit codes.
 
 ---
@@ -296,42 +296,48 @@ Following the comprehensive repository audit and corrective priority directive, 
   ```
   *Pass Criteria:* State transitions advance deterministically with timestamped state logs and zero deadlocks.
 
-### Milestone 2.5: Real Desktop Tool Execution & Notepad Buffer Verification
+### Milestone 2.5: Windows 11 Modern Notepad UIAutomation & Buffer Readback Verification
 - **Target Subsystem:** `jarvis/tools/desktop/notepad.py` & `jarvis/tools/desktop/win32_window.py`
-- **Defects Resolved:** Replaces mock GUI actions and unverified execution claims with physical Win32 application execution, keyboard automation, and buffer read-back verification.
+- **Defects Resolved:** Solves Windows 11 AppX trampoline launcher PID mismatch, WinUI 3 XAML island control discovery failure, and Windows OS focus-stealing locks. Replaces mocks with physical UI Automation and readback verification.
 - **Files to Modify / Create:**
-  - `pyproject.toml` (Add `pywin32>=306`, `pygetwindow>=0.0.9`, `pywinauto>=0.6.8`)
+  - `pyproject.toml` (Add `pywin32>=306`, `pywinauto>=0.6.8`, `uiautomation>=2.0.18`, `Pillow>=10.0.0`)
   - `jarvis/tools/desktop/notepad.py` (Real Notepad launcher, typist, and buffer reader)
-  - `jarvis/tools/desktop/win32_window.py` (Win32 window handle controller using `user32.dll`)
-  - `jarvis/tools/registry.py` (Register `desktop_open_notepad_and_type` in central tool registry)
-- **Prerequisites:** Windows 11 host environment with `notepad.exe`.
+  - `jarvis/tools/desktop/job_object.py` (Win32 Job Object process containment)
+  - `jarvis/tools/desktop/win32_window.py` (Win32 focus and window controller)
+  - `jarvis/tools/registry.py` (Register `desktop_open_notepad_and_type` in tool registry)
+- **Prerequisites:** Windows 11 host environment with Modern Notepad.
 - **Implementation Steps:**
-  1. Implement `NotepadDesktopTool`:
-     - Launch `notepad.exe` using `subprocess.Popen(["notepad.exe"])`.
-     - Capture OS Process ID (PID).
-     - Locate and focus the Notepad top-level window via Win32 `FindWindowW` / `EnumWindows` and `SetForegroundWindow`.
-     - Wait for window handle readiness (`timeout=5.0s`).
-  2. Automate text input:
-     - Locate the child `Edit` or `RichEditD2DPT` control window handle within Notepad.
-     - Send the target text `"Jarvis is awake"` via Win32 `SendMessageW(hwnd, WM_SETTEXT, ...)` or synthesized keystrokes via `SendInput`.
-  3. **Mandatory Content Verification (First Law Receipt):**
-     - Query the actual window control text buffer using Win32 API `SendMessageW(hwnd, WM_GETTEXT, ...)` or `pywinauto` text extraction.
-     - Assert that the extracted string exactly contains `"Jarvis is awake"`.
-     - Capture screenshot of active Notepad window and compute SHA-256 hash.
-     - Generate an `EvidenceReceipt` containing:
+  1. Launch Notepad under Win32 Job Object:
+     - Spawn Notepad using `subprocess.Popen(["notepad.exe"])` and assign the process to a Win32 Job Object configured with `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`.
+  2. Resolve True Window PID and HWND (Trampoline Resolution):
+     - On Windows 11, `notepad.exe` in `System32` is a trampoline stub that starts the packaged app and terminates.
+     - Poll `EnumWindows` matching window title regex `r".*Notepad.*"` or class `"Notepad"`.
+     - Extract the true active process ID using `win32process.GetWindowThreadProcessId(hwnd)`.
+     - Record this resolved window PID (not the trampoline PID) in the execution receipt.
+  3. Reliable Window Focus:
+     - Overcome Windows `SPI_SETFOREGROUNDLOCKTIMEOUT` by binding thread input via `user32.AttachThreadInput` to the foreground window thread, or invoking `uiautomation.WindowControl(searchDepth=1, ClassName='Notepad').SetFocus()`.
+  4. WinUI 3 Text Typing & Verification via UI Automation:
+     - Modern Windows 11 Notepad uses XAML island text controls with class `"RichEditD2DPT"` or control type `EditControl` / `DocumentControl` (zero classic Win32 `"Edit"` controls exist).
+     - Use `pywinauto.Application(backend="uia").connect(handle=hwnd)`:
+       - Locate the document element: `edit_ctrl = window.child_window(control_type="Document")` or class `"RichEditD2DPT"`.
+       - Set focus and type `"Jarvis is awake"` via UI Automation `ValuePattern` or keyboard type keys.
+  5. Buffer Readback Verification (First Law Receipt):
+     - Read back the text buffer using `edit_ctrl.get_value()` or `DocumentControl.GetTextPattern().DocumentRange.GetText(-1)`.
+     - Assert that the extracted buffer exactly contains `"Jarvis is awake"`.
+     - Capture active window screenshot via `Pillow.ImageGrab.grab(bbox)` and compute SHA-256 hash.
+     - Generate an `EvidenceReceipt`:
        - `target_app`: `"notepad.exe"`
-       - `pid`: Real OS process ID integer
+       - `pid`: True resolved window PID (confirmed in `EnumProcesses`)
        - `hwnd`: Integer window handle
        - `verified_text`: `"Jarvis is awake"`
-       - `content_sha256`: SHA-256 hash of extracted text buffer
-       - `screenshot_sha256`: SHA-256 hash of window screenshot
+       - `content_sha256`: SHA-256 of extracted text buffer
+       - `screenshot_sha256`: SHA-256 of window screenshot
        - `verification_status`: `"VERIFIED_MATCH"`
 - **Verification Commands & Criteria:**
   ```powershell
-  # Execute standalone Notepad launch, typing, and verification script outside Antigravity
   python -m jarvis.tools.desktop.notepad --text "Jarvis is awake" --verify
   ```
-  *Pass Criteria:* Notepad opens on screen; "Jarvis is awake" is physically typed; script reads back text from window handle; prints JSON evidence receipt with valid PID and SHA-256 hash; exits with return code 0.
+  *Pass Criteria:* Notepad opens on screen; true window PID resolved; text physically typed; buffer read back matches "Jarvis is awake"; screenshot SHA-256 computed; valid receipt printed; exits with code 0.
 
 ### Milestone 2.6: Local Neural TTS Spoken Response Synthesis
 - **Target Subsystem:** `jarvis/voice/tts.py`
@@ -416,21 +422,22 @@ Following the comprehensive repository audit and corrective priority directive, 
   ```
   *Pass Criteria:* Returns clean extracted content; generates SHA-256 checksum of extracted text; exit code 0.
 
-### Milestone 3.3: FreeLLMAPI Local Router Integration (`localhost:3001`)
+### Milestone 3.3: FreeLLMAPI External Cloud Proxy Router Integration (`localhost:3001`)
 - **Target Clone:** `C:\Users\Ganesh Nair\.gemini\config\skills\freellmapi`
-- **Defects Resolved:** Resolves complete absence of FreeLLMAPI router (`localhost:3001`) across `jarvis/core/model_router.py`.
+- **Defects Resolved:** Resolves complete absence of FreeLLMAPI router (`localhost:3001`) across `jarvis/core/model_router.py`. Discloses empirical WAN egress to Groq cloud API.
 - **Files to Modify / Create:**
-  - `jarvis/core/model_router.py` (Add `FreeLLMAPIProvider` client pointing to `http://localhost:3001`)
-  - `jarvis/tools/adapters/freellmapi_adapter.py` (Standalone verification and inference tool)
+  - `jarvis/core/model_router.py` (Add `FreeLLMAPIProvider` client pointing to `http://localhost:3001` as Tier 3 External Cloud Fallback)
+  - `jarvis/tools/adapters/freellmapi_adapter.py` (Standalone verification, Presidio DLP sanitization, and inference tool)
 - **Implementation Steps:**
   1. Add configuration parameters to `jarvis/config.py`:
      - `freellmapi_base_url: str = "http://localhost:3001/v1"`
      - `freellmapi_enabled: bool = True`
+     - `freellmapi_enforce_dlp: bool = True`
   2. In `jarvis/core/model_router.py`:
-     - Prioritize FreeLLMAPI router at `http://localhost:3001` alongside Ollama in Tier 2 / Tier 3.
-     - Implement proactive 2-second socket probe on startup.
-     - If reachable, route inference requests across available models (`deepseek-v3`, `qwen-2.5-72b`, etc.) without transmitting secrets.
-     - If unreachable, fail over immediately to local Ollama (`qwen2.5:3b` / `llama3.2:3b`); NEVER emit fake heuristic strings.
+     - Classify FreeLLMAPI at `http://localhost:3001` as Tier 3 External Cloud Fallback (proxies over WAN to Groq API).
+     - Mandate Presidio DLP sanitization before dispatching prompt tokens to port 3001.
+     - Strictly prohibit prompts containing private memory vault data, PII, or credentials from routing to FreeLLMAPI.
+     - If unreachable or offline, fail over immediately to local Ollama (`qwen2.5:3b` / `llama3.2:3b`); NEVER emit fake heuristic strings.
 - **Verification Commands & Criteria:**
   ```powershell
   python -m jarvis.tools.adapters.freellmapi_adapter --test-inference --prompt "Explain Kahn's algorithm in one sentence"
@@ -438,13 +445,13 @@ Following the comprehensive repository audit and corrective priority directive, 
   *Pass Criteria:* Returns real LLM response from `http://localhost:3001`; logs model name, latency ms, token count, and 0 external credential leaks.
 
 ### Milestone 3.4: Code Discipline & Workflow Migration Adapters (`claude-code-style` & `migrate-workflows`)
-- **Target Clones:** `C:\Users\Ganesh Nair\.gemini\config\skills\claude-code-style` & `migrate-workflows`
+- **Target Clones:** `C:\Users\Ganesh Nair\.gemini\config\skills\claude-code-style` & `scripts/migrate_workflows.py`
 - **Files to Modify / Create:**
   - `jarvis/tools/adapters/code_style_adapter.py`
   - `jarvis/tools/adapters/workflow_migrator_adapter.py`
 - **Implementation Steps:**
   1. Implement `ClaudeCodeStyleTool`: parses and enforces agentic engineering disciplines (minimal-change edits, root cause debugging, test-driven validation) via static AST linters and pre-commit checks.
-  2. Implement `WorkflowMigratorTool`: converts legacy CI/CD workflows and bash scripts into standardized GitHub Actions and local PowerShell runner recipes.
+  2. Implement `WorkflowMigratorTool`: wraps `scripts/migrate_workflows.py` to discover legacy markdown workflow runbooks in `.agents/workflows/*.md` and transform them into structured skill packages (`.agents/skills/<slug>/SKILL.md`) with valid YAML frontmatter and backup rotation.
 - **Verification Commands:**
   ```powershell
   python -m jarvis.tools.adapters.code_style_adapter --check-file jarvis/core/orchestrator.py
