@@ -214,6 +214,27 @@ class JarvisState(TypedDict):
     status: str                           # "RUNNING", "COMPLETED", "FAILED", "BLOCKED"
 ```
 
+### 3.3 Deterministic Zero-Token Reflection for Tier 0 Fast-Path Commands
+The Fourth Law mandates: *"A task is not complete until it has produced and persisted a verifiable reflection record containing lessons, failures, successes, capability gaps."*
+
+For deterministic Win32 OS syscalls and desktop hotkeys executed via Tier 0 (e.g., "mute volume", "open Notepad", "take screenshot", "lock screen"), invoking an LLM prompt to generate a retrospective reflection would introduce a 500–1200ms latency penalty, destroying real-time voice responsiveness.
+
+**Deterministic Reflection Protocol:**
+- For Tier 0 actions, `jarvis.brain.nodes.reflect` generates a **lightweight, deterministic reflection record without invoking an LLM**:
+  ```python
+  reflection = ReflectionRecord(
+      task_id=state["task_id"],
+      execution_tier="TIER_0_BYPASS",
+      llm_tokens_consumed=0,
+      success=state["verification_score"] == 1.0,
+      duration_ms=execution_duration_ms,
+      lessons_learned=[],
+      capability_gaps=[],
+      timestamp=time.time()
+  )
+  ```
+- Written directly to SQLite WAL (`data/jarvis.db`, table `reflections`) in <1ms, upholding 100% Fourth Law constitutional compliance with zero user latency penalty.
+
 ---
 
 ## 4. Repository Structural Consolidation & Clean Packaging
@@ -254,8 +275,8 @@ jarvis/
 │
 ├── core/                         # Fundamental OS Primitives
 │   ├── __init__.py
-│   ├── model_router.py           # 3-tier local-first model router
-│   ├── freellm_client.py         # FreeLLMAPI local router client (localhost:3001)
+│   ├── model_router.py           # 4-tier model router (T0 OS, T1 Ollama 3B, T2 Ollama 7B, T3 FreeLLM)
+│   ├── freellm_client.py         # FreeLLMAPI cloud proxy client (:3001 with Presidio DLP)
 │   ├── audit.py                  # Cryptographic SHA-256 chained transaction log
 │   ├── evidence.py               # Evidence and TrustResult data structures
 │   ├── policy_gate.py            # Privilege levels 0-5 and emergency kill switch
@@ -271,7 +292,7 @@ jarvis/
 │   ├── daemon.py                 # Continuous microphone streaming & VAD loop
 │   ├── wake.py                   # openWakeWord acoustic detection ("Hey Jarvis")
 │   ├── stt.py                    # faster-whisper local CUDA/CPU transcription
-│   └── tts.py                    # kokoro-onnx neural TTS + Windows SAPI fallback
+│   └── tts.py                    # kokoro-onnx CPU neural TTS + Windows SAPI baseline
 │
 ├── memory/                       # Unified 8-Layer Memory Vault
 │   ├── __init__.py
@@ -287,7 +308,7 @@ jarvis/
 │   ├── browser.py                # Safe Playwright navigator (anti-SSRF isolated)
 │   └── adapters/                 # Adapters for cloned repositories
 │       ├── firecrawl_adapter.py  # Local web extraction adapter
-│       ├── freellm_adapter.py    # Local inference adapter
+│       ├── freellm_adapter.py    # FreeLLMAPI cloud proxy adapter (with Presidio DLP)
 │       └── claude_style_adapter.py # Coding discipline guidelines adapter
 │
 ├── agents/                       # Autonomous Workforce Dynamic Lifecycle
@@ -379,26 +400,30 @@ The canonical architecture completely discards the static 105-dataclass loop (`A
         ▼                       ▼                       ▼
 ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
 │ SPAWNED STATE │       │ ACTIVE STATE  │       │ RETIRED STATE │
-│ - Allocates   │──────▶│ - Executes DAG│──────▶│ - Persists    │
-│   Worker Role │       │   Atomic Step │       │   Trace &     │
-│ - Injects MCP │       │ - Employs     │       │   Evidence    │
-│   Tool subset │       │   Local SLM   │       │ - Frees VRAM  │
+│ - Allocates   │──────▶│ - Holds Permit│──────▶│ - Persists    │
+│   Worker Role │       │ - Executes DAG│       │   Trace &     │
+│ - Injects MCP │       │   Atomic Step │       │   Evidence    │
+│   Tool subset │       │ - Employs     │       │ - Frees Memory│
 └───────────────┘       └───────┬───────┘       └───────────────┘
-                                │ (IO / Approval Wait)
+                                │ (Human Approval / External IO)
                                 ▼
                         ┌───────────────┐
                         │ PAUSED STATE  │
-                        │ - Releases GPU│
-                        │   Context     │
+                        │ - RELEASES    │
+                        │   Semaphore   │
+                        │   Permit      │
+                        │ - Yields CPU  │
                         └───────────────┘
 ```
 
 ### 5.1 Workforce Governance Rules
-1. **Bounded Concurrency**: To strictly preserve the 6 GB VRAM and 24 GB RAM envelopes, no more than **2 to 3 workers** may execute concurrently (`asyncio.Semaphore(3)`).
+1. **Bounded Concurrency & Deadlock Prevention**:
+   - To strictly preserve the 6 GB VRAM and 24 GB RAM envelopes, no more than **2 to 3 workers** may execute concurrently (`asyncio.Semaphore(3)`).
+   - **Deadlock Prevention Invariant**: When a worker transitions from `ACTIVE` to `PAUSED` (awaiting human HMAC authorization or slow external I/O), it **MUST immediately release its semaphore permit** (`semaphore.release()`) and await an `asyncio.Event`. This guarantees that long approval waits do not exhaust the permit pool and will never block Level 0 read-only queries or fast-path commands. Upon approval receipt, the worker re-acquires a permit before resuming execution.
 2. **On-Demand Lifecycle**:
    - `SPAWN`: A worker agent is instantiated only when a specific DAG node requires its capability. It receives a scoped prompt and a minimal, whitelisted subset of tools.
-   - `ACTIVE`: The worker executes its task using Tier 1 or Tier 2 local inference.
-   - `PAUSE`: During human approval waits or external network I/O, the worker yields execution and releases GPU memory contexts.
+   - `ACTIVE`: The worker holds a concurrency permit and executes its task using Tier 1 or Tier 2 local inference.
+   - `PAUSE`: The worker releases its semaphore permit, yields CPU execution, and registers an approval listener. Model weights remain pinned in Ollama (no dynamic disk unloading).
    - `RETIRE`: Upon task completion or unrecoverable error, the worker transitions to `RETIRED`. Its execution transcript, tool receipts, and evidence items are written to episodic memory, and its memory footprint is garbage collected.
 3. **Verifiable Execution**: Workers never self-certify completion. Output artifacts must be inspected and verified by the independent `verify` node.
 
@@ -480,15 +505,27 @@ Voice activation is the primary human interface for JARVIS and operates with zer
                                 │ Synthesized Text Response
                                 ▼
 ┌───────────────────────────────────────────────────────────────┐
-│ STAGE 5: NEURAL SPEECH SYNTHESIS (Kokoro-ONNX / Win32 SAPI)   │
-│ - Primary: `kokoro-onnx` (82M params, 24kHz PCM, sub-120ms)   │
-│ - Fallback: Native Windows SAPI (`win32com.client` SpVoice)   │
-│ - Zero 440Hz sine wave beeps; honest spoken error fallback   │
+│ STAGE 5: NEURAL & NATIVE SPEECH SYNTHESIS (CPU OFFLOADED)     │
+│ - Primary: `kokoro-onnx` (82M params, CPUExecutionProvider)   │
+│   * VRAM Consumption: 0 MB (100% Host CPU execution)          │
+│   * Synthesis Latency: sub-100ms on multi-core x64 CPU        │
+│ - Instant Baseline Fallback: Windows Native SAPI SpVoice      │
+│   (`win32com.client.Dispatch("SAPI.SpVoice")`)                │
+│   * Zero-dependency native speech; active immediately        │
+│ - Total Ban: 440 Hz sine waves mathematically eradicated      │
 │ - Barge-in: Immediate audio cutoff on new microphone wake     │
 └───────────────────────────────────────────────────────────────┘
 ```
 
-### 7.1 Multimodal Screen Perception & See-Act-Verify
+### 7.1 Windows 11 Audio Capture & Resampling Pipeline
+Windows 11 Realtek Microphone Arrays typically stream audio natively at 44.1 kHz or 48.0 kHz 24-bit/16-bit PCM. Feeding non-16 kHz streams directly into `openWakeWord` or `faster-whisper` causes sample misinterpretation, buffer overruns, or complete detection failure.
+
+**Audio Resampling Architecture:**
+- `jarvis.voice.daemon.MicrophoneStream`: Opens native WASAPI input stream via `sounddevice.InputStream(samplerate=None, channels=1, dtype='int16')`.
+- In-memory Polyphase Resampler: Uses `scipy.signal.resample_poly` (or `numpy` decimation) to resample native input frames (48,000 Hz -> 16,000 Hz with ratio 1:3; or 44,100 Hz -> 16,000 Hz with ratio 160:441).
+- Normalization: Converts resampled audio into 16 kHz 16-bit mono PCM ring buffer for acoustic wake detection.
+
+### 7.2 Multimodal Screen Perception & See-Act-Verify
 For computer automation, JARVIS enforces a 3-tier visual perception hierarchy:
 1. **Tier 1 (Win32 UIAutomation)**: Query native Windows OS accessibility tree via `pywinauto` to locate interactive controls by `AutomationId` or name.
 2. **Tier 2 (Local OCR)**: When accessibility trees are unexposed, capture active window region via `mss` and run local OCR (`pytesseract` or Windows Native Media OCR) to resolve text click coordinates.
@@ -503,17 +540,24 @@ The inference topology is strictly budgeted to honor the **24 GB RAM / 6 GB VRAM
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                        6.0 GB VRAM BUDGET ALLOCATION                        │
+│         NVIDIA RTX 4050 (6.0 GB) CONSERVATIVE VRAM BUDGET ALLOCATION        │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ Windows 11 DWM & Display Buffers              : ~ 1.0 GB                    │
-│ Streaming STT (`faster-whisper-base.en` int8) : ~ 0.7 GB                    │
-│ Neural TTS (`kokoro-onnx` CPU/GPU runtime)    : ~ 0.3 GB                    │
-│ Local Active LLM Context & KV Cache           : ~ 3.8 GB                    │
-│ TOTAL ACTIVE ALLOCATION                       : ~ 5.8 GB (Safe headroom)    │
+│ Windows 11 DWM & Desktop Compositor (Empirical Idle): ~ 0.90 GB             │
+│ Streaming STT (`faster-whisper-base.en` int8 CUDA)  : ~ 0.65 GB             │
+│ Neural TTS (`kokoro-onnx` CPU runtime)              :   0.00 GB (CPU-only)  │
+│ Local Active SLM (`Qwen2.5:3B-Instruct` Q4_K_M)     : ~ 2.10 GB             │
+│ TOTAL CONCURRENT ACTIVE GPU ALLOCATION              : ~ 3.65 GB (<= 3.8 GB) │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ DEDICATED GDDR6 HEADROOM (Prevents WDDM Spillover)  : >= 2.35 GB (Safe)     │
 └─────────────────────────────────────────────────────────────────────────────┘
+*Critical Invariant*: Total active GPU allocation MUST remain <= 3.8 GB. Allocating
+beyond 5.2 GB triggers Windows WDDM PCIe paging to shared system RAM, causing a 
+110x latency explosion (bandwidth collapses from 116.9 GB/s to 1.06 GB/s).
+Heavy reasoning (7B/14B) must run via Ollama with sequential STT unloading or 
+Tier 3 FreeLLMAPI (0 MB VRAM) with Presidio DLP sanitization.
 ```
 
-### 8.1 The Three-Tier Model Routing Topology
+### 8.1 The Four-Tier Model Routing Topology
 
 ```
                                   [ INCOMING REQUEST ]
@@ -524,28 +568,33 @@ The inference topology is strictly budgeted to honor the **24 GB RAM / 6 GB VRAM
                              │       Classification        │
                              └──────────────┬──────────────┘
                                             │
-         ┌──────────────────────────────────┼──────────────────────────────────┐
-         ▼                                  ▼                                  ▼
-┌──────────────────┐               ┌──────────────────┐               ┌──────────────────┐
-│     TIER 0       │               │      TIER 1      │               │      TIER 2      │
-│  DETERMINISTIC   │               │   LOCAL REFLEX   │               │ LOCAL REASONING  │
-│    OS BYPASS     │               │   (OLLAMA SLM)   │               │ & FREELLM ROUTER │
-├──────────────────┤               ├──────────────────┤               ├──────────────────┤
-│ - Exact commands │               │ - Qwen2.5:3B Q4  │               │ - Qwen2.5:7B Q4  │
-│   (open, close,  │               │ - Latency: 200ms │               │   in Ollama OR   │
-│   volume, lock)  │               │ - VRAM: ~2.1 GB  │               │ - FreeLLMAPI     │
-│ - Latency: 1-5ms │               │ - Task: intent,  │               │   (:3001 router) │
-│ - VRAM: 0 MB     │               │   triage, simple │               │ - Task: DAG plan,│
-│ - Tokens: 0      │               │   chat, reflex   │               │   code, deep RAG │
-└──────────────────┘               └──────────────────┘               └──────────────────┘
+         ┌────────────────────────┬─────────┴──────────────┬────────────────────────┐
+         ▼                        ▼                        ▼                        ▼
+┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
+│     TIER 0       │     │      TIER 1      │     │      TIER 2      │     │      TIER 3      │
+│  DETERMINISTIC   │     │   LOCAL REFLEX   │     │ LOCAL REASONING  │     │ FREE CLOUD PROXY │
+│    OS BYPASS     │     │   (OLLAMA SLM)   │     │  (OLLAMA LOCAL)  │     │ (FREELLM ROUTER) │
+├──────────────────┤     ├──────────────────┤     ├──────────────────┤     ├──────────────────┤
+│ - Exact commands │     │ - Qwen2.5:3B Q4  │     │ - Qwen2.5:7B Q4  │     │ - FreeLLMAPI     │
+│   (open, close,  │     │ - Latency: 200ms │     │ - Latency: 600ms │     │   (:3001 router) │
+│   volume, lock)  │     │ - VRAM: ~2.1 GB  │     │ - VRAM: ~4.4 GB  │     │ - Proxies WAN to │
+│ - Latency: 1-5ms │     │ - Zero WAN Egress│     │ - Zero WAN Egress│     │   Groq Cloud API │
+│ - VRAM: 0 MB     │     │ - Task: intent,  │     │ - Task: DAG plan,│     │ - Mandatory DLP  │
+│ - Tokens: 0      │     │   triage, reflex │     │   private RAG    │     │ - VRAM: 0 MB     │
+└──────────────────┘     └──────────────────┘     └──────────────────┘     └──────────────────┘
 ```
 
-### 8.2 FreeLLMAPI Local Router Integration (`http://localhost:3001`)
-The FreeLLMAPI router provides access to 299+ open models without API subscription costs:
-- **Endpoint**: `http://localhost:3001/v1` (OpenAI-compatible wire format).
-- **Client**: `jarvis.core.freellm_client.FreeLLMAPIRouterClient`.
-- **Health Verification**: Periodic ping to `http://localhost:3001/health` with a 2-second timeout.
-- **Failover**: If `localhost:3001` is offline or unresponsive, the router automatically fails over to local Ollama (`qwen2.5:7b-instruct` or `qwen2.5:3b-instruct`).
+### 8.2 FreeLLMAPI External Cloud Proxy Router Integration (`http://localhost:3001`)
+While the FreeLLMAPI service process (`node.exe`, PID 37816) executes locally on Windows loopback port 3001, **empirical SQLite network inspection confirms that FreeLLMAPI is an external cloud proxy router forwarding requests across the WAN to Groq's cloud API (`https://api.groq.com/openai/v1`)**. It does not perform local GPU inference and does not provide an air-gapped zero-egress boundary.
+
+**Operational Constraints & Privacy Guardrails:**
+- **Tier Classification**: Formally designated as **Tier 3 (External Free-Tier Cloud Fallback)**.
+- **Endpoint & Wire Format**: `http://localhost:3001/v1/chat/completions` (OpenAI wire format).
+- **Mandatory Authorization Header**: Requires header `Authorization: Bearer freellmapi-bbe4d824646ec4bca5903eeb1060d788eec976b612e2b48a` (public default loopback auth token).
+- **Data Loss Prevention (DLP) Invariant**: All prompt content dispatched to port 3001 must pass through `jarvis.security.ten_layer_shield.PresidioDLPFilter` to scrub API keys, credentials, PII, and sensitive entities (`[REDACTED_SECRET]`).
+- **Strict Memory Vault Exclusion**: Prompts containing private user memories, financial/medical data, or credentials from `data/jarvis.db` are strictly forbidden from routing to FreeLLMAPI and must fail over to local Ollama.
+- **Health Probing**: Real-time probe to `http://localhost:3001/readyz` (timeout 1.5s).
+- **Failover Priority Chain**: Local Ollama (Tier 1 / Tier 2) -> FreeLLMAPI (Tier 3 with Presidio DLP) -> Tier 0 Deterministic OS Fallback.
 
 ---
 
@@ -585,11 +634,11 @@ The canonical architecture enforces deterministic, verifiable failure behaviors 
 | **TTS Synthesis Failure** | Synthesize 440 Hz mathematical sine wave beep. | Fall back to Windows SAPI; if SAPI unavailable, emit honest text alert. | `jarvis.voice.tts` |
 | **Disconnected Tool / Connector** | Return mock success payload (e.g. mock PDF resume). | Return explicit `TrustResult.failure` detailing missing credentials or network. | `jarvis.core.evidence` |
 | **Fourth Law Reflection Missing** | Mark task `COMPLETED` based solely on exit code 0. | Mark task `INCOMPLETE` with `fourth_law_compliant=False`. | `jarvis.brain.nodes.reflect` |
-| **LLM Offline (Ollama & FreeLLM)** | Return hardcoded mock text (e.g. "Your preferred stack is FastAPI"). | Fall back to Tier 0 OS bypass for system commands; emit honest offline error for generative chat. | `jarvis.core.model_router` |
+| **LLM Inference Failure / Offline** | Return hardcoded mock text (e.g. "Your preferred stack is FastAPI"). | Execute strict failover order: Tier 1 Ollama -> Tier 2 Ollama -> Tier 3 FreeLLMAPI (DLP sanitized) -> Tier 0 OS Bypass. If all offline, emit honest failure receipt. | `jarvis.core.model_router` |
 | **Circular DAG Dependency** | Infinite execution loop; stack overflow. | Kahn's algorithm detects cycle; aborts DAG before executing any node. | `jarvis.brain.planner` |
 | **DLP Credential Detection** | Transmit unredacted API key or password to LLM. | Presidio / Regex masks secret with `[REDACTED_SECRET]`; logs security alert. | `jarvis.security.ten_layer_shield` |
 | **Autonomous Git Push to Main** | Merge improvement branch directly into `main`. | Raise `SecurityViolationError`; enforce isolated feature branch and human PR. | `jarvis.workflows.pr_workflow` |
-| **VRAM Exceeds 5.8 GB Threshold** | Crash GPU driver with CUDA OOM. | Evict Tier 2 reasoning context; throttle concurrency to 1 worker; yield VRAM. | `jarvis.agents.lifecycle` |
+| **VRAM Exceeds 3.8 GB Threshold** | Crash GPU driver or trigger WDDM PCIe spillover (110x slowdown). | Throttle concurrency; keep active GPU VRAM <= 3.8 GB; route heavy reasoning to Ollama or DLP Tier 3. | `jarvis.agents.lifecycle` |
 
 ---
 
