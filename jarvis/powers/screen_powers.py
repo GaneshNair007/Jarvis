@@ -14,6 +14,7 @@ import ctypes.wintypes
 import hashlib
 import os
 import struct
+import sys
 import subprocess
 import time
 from typing import Any, Dict, List, Optional, Tuple

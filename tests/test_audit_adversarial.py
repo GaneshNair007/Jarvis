@@ -9,6 +9,7 @@ Tests:
 """
 
 import json
+import pytest
 import hashlib
 import time
 import tempfile
