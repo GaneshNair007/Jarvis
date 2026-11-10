@@ -370,6 +370,26 @@ class ModelRouter:
                 duration_ms = round((time.time() - start_time) * 1000, 2)
                 # Cloud fallback only when not in test environment and not explicitly local-only
                 if settings.jarvis_env != "test":
+                    # 1. Try FreeLLMAPI multi-model router first (299 free models, zero paid keys, local router)
+                    try:
+                        from jarvis.core.freellmapi_client import freellmapi_client
+
+                        if freellmapi_client.is_available:
+                            fl_res = freellmapi_client.generate_completion(prompt, system_instruction=system_prompt)
+                            if fl_res and fl_res.get("reply"):
+                                return {
+                                    "task_id": decision.task_id,
+                                    "status": "success",
+                                    "tier": "TIER_3_CLOUD",
+                                    "provider": "freellmapi",
+                                    "model": fl_res.get("model", "auto"),
+                                    "reply": fl_res["reply"],
+                                    "tokens_used": fl_res.get("tokens_used", len(prompt) // 4),
+                                    "cost_usd": 0.0,
+                                    "duration_ms": fl_res.get("duration_ms", duration_ms),
+                                }
+                    except Exception as _fle:
+                        logger.warning(f"FreeLLMAPI inference fallback error: {_fle}")
                     # 1. Try OpenRouter Frontier Gateway (Active configured key)
                     try:
                         from jarvis.core.openrouter_client import openrouter_client
@@ -410,27 +430,6 @@ class ModelRouter:
                                 }
                     except Exception as _nime:
                         logger.warning(f"NVIDIA NIM inference fallback error: {_nime}")
-
-                    # 1c. Try FreeLLMAPI multi-model router (299 free models, zero paid keys)
-                    try:
-                        from jarvis.core.freellmapi_client import freellmapi_client
-
-                        if freellmapi_client.is_available:
-                            fl_res = freellmapi_client.generate_completion(prompt, system_instruction=system_prompt)
-                            if fl_res and fl_res.get("reply"):
-                                return {
-                                    "task_id": decision.task_id,
-                                    "status": "success",
-                                    "tier": "TIER_3_CLOUD",
-                                    "provider": "freellmapi",
-                                    "model": fl_res.get("model", "auto"),
-                                    "reply": fl_res["reply"],
-                                    "tokens_used": fl_res.get("tokens_used", len(prompt) // 4),
-                                    "cost_usd": 0.0,
-                                    "duration_ms": fl_res.get("duration_ms", duration_ms),
-                                }
-                    except Exception as _fle:
-                        logger.warning(f"FreeLLMAPI inference fallback error: {_fle}")
 
                     # 2. Try multi-account Gemini key rotator
                     try:

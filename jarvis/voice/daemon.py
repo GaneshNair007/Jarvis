@@ -346,6 +346,7 @@ class VoiceDaemon:
         self._gate_cooldown_until: float = 0.0
         self._capture_rate = self.SAMPLE_RATE
         self._mic_info: Dict[str, Any] = {"device": None, "name": "", "live": False, "source": "not_started"}
+        self._speaking_started_at: float = 0.0
 
         self._queue: "queue.Queue[bytes]" = queue.Queue(maxsize=self.MAX_QUEUE_BLOCKS)
         self._worker: Optional[threading.Thread] = None
@@ -678,7 +679,9 @@ class VoiceDaemon:
             return events
 
         if self.state == "SPEAKING":
-            if is_speech and energy >= self.MEAN_ABS_THRESHOLD * 2:
+            if (now - getattr(self, "_speaking_started_at", 0.0)) < 1.5:
+                return events
+            if is_speech and energy >= max(self.MEAN_ABS_THRESHOLD * 4, 6000.0):
                 try:
                     self.tts.cancel_speech()
                 except Exception:
@@ -713,6 +716,13 @@ class VoiceDaemon:
                         source="voice_daemon.acoustic_wake_frame",
                         data={"score": score, "threshold": gate_event.get("threshold")},
                     )
+
+        # Ignore audio while TTS is speaking the acknowledgment so the microphone doesn't capture "Yes?"
+        if self.state == "CAPTURING_COMMAND" and getattr(self.tts, "is_speaking", False):
+            self._buffer.clear()
+            self._speech_blocks = 0
+            self._utterance_active = False
+            return events
 
         if is_speech:
             if not self._utterance_active:
@@ -891,6 +901,7 @@ class VoiceDaemon:
         )
 
         self.state = "SPEAKING"
+        self._speaking_started_at = time.time()
         self._sleep_gate()  # speaking window: gate idle, clear activation remnants
         self._write_hud_state("speaking")
         if self._speak_replies and reply_text:

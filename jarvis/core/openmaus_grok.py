@@ -380,6 +380,19 @@ class OpenMausGrokHarness:
         model_name = None
         provider = "local"
 
+        # Try FreeLLMAPI Local Router (299 free models, zero latency)
+        if not reply_text:
+            try:
+                from jarvis.core.freellmapi_client import freellmapi_client
+                if freellmapi_client.is_available:
+                    fl_res = freellmapi_client.generate_completion(sanitized_prompt, system_instruction=sys_prompt)
+                    if fl_res and fl_res.get("reply"):
+                        reply_text = fl_res["reply"]
+                        model_name = fl_res.get("model", "qwen/qwen3.8-27b")
+                        provider = "freellmapi"
+            except Exception as fe:
+                logger.warning(f"FreeLLMAPI attempt: {fe}")
+
         # Try Groq Cloud (500+ tok/s) if available
         if groq_rotator.is_available:
             try:
