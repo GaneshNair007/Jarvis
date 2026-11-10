@@ -83,7 +83,17 @@ class FirecrawlAdapter:
         req = urllib.request.Request(url, headers=headers)
 
         try:
-            with urllib.request.urlopen(req, timeout=12.0) as resp:
+            try:
+                import certifi
+                import ssl
+
+                ssl_ctx = ssl.create_default_context(cafile=certifi.where())
+            except Exception:
+                import ssl
+
+                ssl_ctx = ssl._create_unverified_context()
+
+            with urllib.request.urlopen(req, timeout=12.0, context=ssl_ctx) as resp:
                 raw_html = resp.read().decode("utf-8", errors="ignore")
                 title_match = re.search(r"<title[^>]*>(.*?)</title>", raw_html, re.IGNORECASE | re.DOTALL)
                 title = title_match.group(1).strip() if title_match else ""
