@@ -73,7 +73,7 @@ class OpenRouterClient:
                     {"role": "user", "content": prompt},
                 ],
                 "temperature": 0.7,
-                "max_tokens": 1024,
+                "max_tokens": int(os.getenv("OPENROUTER_MAX_TOKENS", "300")),
             }
         ).encode("utf-8")
 
