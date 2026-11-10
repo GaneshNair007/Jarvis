@@ -23,6 +23,7 @@ import pytest
 # Challenge 1: Windows 11 Notepad Automation & Evidence Receipt Attestation
 # ==============================================================================
 
+
 @pytest.mark.skipif(sys.platform != "win32", reason="Windows 11 desktop only")
 def test_notepad_subprocess_pid_mismatch_on_windows_11():
     """Empirically proves that on Windows 11, subprocess.Popen('notepad.exe').pid
@@ -42,12 +43,14 @@ def test_notepad_subprocess_pid_mismatch_on_windows_11():
         start = time.time()
         while time.time() - start < 5.0:
             window_pids = []
+
             def enum_cb(hwnd, extra):
                 if win32gui.IsWindowVisible(hwnd):
                     cls = win32gui.GetClassName(hwnd)
                     if cls == "Notepad":
                         _, wpid = win32process.GetWindowThreadProcessId(hwnd)
                         window_pids.append((hwnd, wpid))
+
             win32gui.EnumWindows(enum_cb, None)
             if window_pids:
                 break
@@ -82,10 +85,12 @@ def test_notepad_control_hierarchy_lacks_win32_edit_class():
         start = time.time()
         while time.time() - start < 5.0:
             target_hwnd = None
+
             def enum_cb(hwnd, extra):
                 nonlocal target_hwnd
                 if win32gui.IsWindowVisible(hwnd) and win32gui.GetClassName(hwnd) == "Notepad":
                     target_hwnd = hwnd
+
             win32gui.EnumWindows(enum_cb, None)
             if target_hwnd is not None:
                 break
@@ -100,15 +105,22 @@ def test_notepad_control_hierarchy_lacks_win32_edit_class():
 
         # Enumerate child classes
         child_classes = []
+
         def child_cb(chwnd, extra):
             child_classes.append(win32gui.GetClassName(chwnd))
+
         win32gui.EnumChildWindows(target_hwnd, child_cb, None)
 
         # In Win11, text control is rendered via WinUI 3 / XAML islands ('DesktopChildSiteBridge', 'InputSiteWindowClass', 'RichEditD2DPT', or 'NotepadTextBox')
         assert any(
             c in child_classes
-            for c in ("RichEditD2DPT", "NotepadTextBox", "Microsoft.UI.Content.DesktopChildSiteBridge", "InputSiteWindowClass")
-        ), f"Expected WinUI 3 or XAML island classes, found: {child_classes}""
+            for c in (
+                "RichEditD2DPT",
+                "NotepadTextBox",
+                "Microsoft.UI.Content.DesktopChildSiteBridge",
+                "InputSiteWindowClass",
+            )
+        ), f"Expected WinUI 3 or XAML island classes, found: {child_classes}"
     finally:
         subprocess.run(["taskkill", "/F", "/IM", "notepad.exe"], capture_output=True)
 
@@ -130,10 +142,12 @@ def test_set_foreground_window_lock_failure():
         start = time.time()
         while time.time() - start < 5.0:
             target_hwnd = None
+
             def enum_cb(hwnd, extra):
                 nonlocal target_hwnd
                 if win32gui.IsWindowVisible(hwnd) and win32gui.GetClassName(hwnd) == "Notepad":
                     target_hwnd = hwnd
+
             win32gui.EnumWindows(enum_cb, None)
             if target_hwnd is not None:
                 break
@@ -152,10 +166,12 @@ def test_set_foreground_window_lock_failure():
 # Challenge 2: Cloned Capabilities Standalone Execution & SSRF Vulnerabilities
 # ==============================================================================
 
+
 def test_ssrf_bypass_in_proposed_adapters():
     """Empirically proves that the proposed SSRF filter in ObscureBrowserAdapter
     and FirecrawlAdapter is vulnerable to DNS rebinding (localtest.me) and decimal IP formats.
     """
+
     def proposed_check_ssrf(url: str, allow_internal_networks: bool = False) -> None:
         """Exact implementation from JARVIS_CLONED_CAPABILITY_INVENTORY.md lines 844-859."""
         parsed = urllib.parse.urlparse(url)
@@ -199,7 +215,7 @@ def test_firecrawl_adapter_fallback_violates_acceptance_matrix():
     """
     # From JARVIS_CLONED_CAPABILITY_INVENTORY.md line 304-307:
     raw_html_mock = "<html><body><h1>Test Header</h1><p>Test paragraph content</p></body></html>"
-    
+
     # FirecrawlAdapter fallback implementation:
     fallback_result = {
         "status": "success",
@@ -214,9 +230,7 @@ def test_firecrawl_adapter_fallback_violates_acceptance_matrix():
     )
     # Check if html2text or markdown parser was missing
     assert "<h1>" in fallback_result["markdown"]
-    assert "# Test Header" not in fallback_result["markdown"], (
-        "HTML was not parsed into GitHub-flavored markdown!"
-    )
+    assert "# Test Header" not in fallback_result["markdown"], "HTML was not parsed into GitHub-flavored markdown!"
 
 
 def test_workflow_migrator_adapter_mismatch_with_acceptance_matrix():
@@ -238,6 +252,7 @@ def test_workflow_migrator_adapter_mismatch_with_acceptance_matrix():
     # The actual script does NOT parse shell syntax or generate YAML workflows.
     import inspect
     import scripts.migrate_workflows as smw
+
     source = inspect.getsource(smw)
     assert "github" not in source.lower()
     assert "yaml" not in source.lower() or "actions" not in source.lower()
@@ -247,6 +262,7 @@ def test_workflow_migrator_adapter_mismatch_with_acceptance_matrix():
 # Challenge 3: FreeLLMAPI Groq Proxy & DLP Scrubbing Deficiencies
 # ==============================================================================
 
+
 def test_freellmapi_dlp_defects_and_sensitive_leakage():
     """Empirically tests the 4 regexes in FreeLLMAPIAdapter.sanitize_and_validate_prompt
     and demonstrates that unquoted API keys, GitHub tokens, AWS keys, credit cards,
@@ -254,9 +270,9 @@ def test_freellmapi_dlp_defects_and_sensitive_leakage():
     """
     SENSITIVE_PATTERNS = [
         re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"),  # Email
-        re.compile(r"\b(?:\d{3}-\d{2}-\d{4}|\d{9})\b"),                      # SSN
+        re.compile(r"\b(?:\d{3}-\d{2}-\d{4}|\d{9})\b"),  # SSN
         re.compile(r"(?:api[_-]?key|password|secret|bearer)\s*[:=]\s*['\"][^'\"]+['\"]", re.I),
-        re.compile(r"\[MEMORY_VAULT_PRIVATE\]", re.I),                       # Private Memory Tag
+        re.compile(r"\[MEMORY_VAULT_PRIVATE\]", re.I),  # Private Memory Tag
     ]
 
     def is_blocked_by_dlp(text: str) -> bool:
@@ -271,7 +287,10 @@ def test_freellmapi_dlp_defects_and_sensitive_leakage():
         ("AWS Secret Access Key", "aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"),
         ("Credit Card Number", "Payment card: 4532-0150-1234-5678"),
         ("Phone Number", "Call owner at +1-555-867-5309"),
-        ("Private Personal Memory without Tag", "User Ganesh has medical prescription for Adderall and lives at 742 Evergreen Terrace"),
+        (
+            "Private Personal Memory without Tag",
+            "User Ganesh has medical prescription for Adderall and lives at 742 Evergreen Terrace",
+        ),
         ("Private RSA Key Header", "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA0..."),
     ]
 
@@ -292,6 +311,7 @@ def test_freellmapi_dlp_does_not_sanitize_only_crashes():
     it simply raises FreeLLMAPIDLPSecurityError, creating a denial of service on any
     conversation or task containing an email address or credential.
     """
+
     # The adapter method is called sanitize_and_validate_prompt, but its implementation
     # has zero redaction logic (re.sub) — it only executes:
     # raise FreeLLMAPIDLPSecurityError(...)
@@ -305,6 +325,6 @@ def test_freellmapi_dlp_does_not_sanitize_only_crashes():
 
     with pytest.raises(PermissionError):
         mock_sanitize_and_validate("Please send email to contact@example.com regarding project.")
-    
+
     # Contrast with true DLP scrubbing:
     # True DLP redacts 'contact@example.com' -> '[REDACTED_EMAIL]' and allows inference to proceed.
