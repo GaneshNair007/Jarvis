@@ -101,7 +101,9 @@ class JarvisOrchestrator:
         # Code and self-improvement tasks dispatch through the multi-agent swarm
         # (checked before LLM tiers so /code and /upgrade always reach subagents).
         lowered_query = query.strip().lower()
-        if lowered_query.startswith("/code") or lowered_query.startswith(("write code", "generate code", "implement code", "create code")):
+        if lowered_query.startswith("/code") or lowered_query.startswith(
+            ("write code", "generate code", "implement code", "create code")
+        ):
             from jarvis.powers.multiagent_powers import multiagent_powers
 
             execution_result = multiagent_powers.orchestrator_dispatch(f"Code: {query}")
@@ -197,9 +199,7 @@ class JarvisOrchestrator:
         if cleaned in {"/brief", "/due", "/quest"}:
             from jarvis.workspace.service import workspace_service
 
-            briefing = workspace_service.daily_briefing(
-                horizon_days=365 if cleaned == "/due" else 7
-            )
+            briefing = workspace_service.daily_briefing(horizon_days=365 if cleaned == "/due" else 7)
             if cleaned == "/brief":
                 summary = briefing["summary"]
                 message = (
@@ -215,9 +215,7 @@ class JarvisOrchestrator:
                     "details": briefing,
                 }
             if cleaned == "/due":
-                due_items = [
-                    item for item in briefing["next_actions"] if item.get("due_at")
-                ]
+                due_items = [item for item in briefing["next_actions"] if item.get("due_at")]
                 return {
                     "type": "workspace_deadlines",
                     "status": "completed",
@@ -334,10 +332,7 @@ class JarvisOrchestrator:
                     "morning wake",
                 ]
             )
-            or bool(
-                {"projector", "tv", "television", "geyser", "light", "lights", "lamp"}
-                & set(cleaned.split())
-            )
+            or bool({"projector", "tv", "television", "geyser", "light", "lights", "lamp"} & set(cleaned.split()))
         ):
             # SmartHomePowers currently maintains an in-memory demo state, not a
             # verified physical BroadLink/Home Assistant adapter.
@@ -362,10 +357,7 @@ class JarvisOrchestrator:
             from jarvis.routines.ops_workflows import weekly_ops_sweep
 
             return weekly_ops_sweep.run()
-        elif any(
-            k in cleaned
-            for k in ["gmail", "email", "inbox", "check mail", "check emails", "missed mail"]
-        ):
+        elif any(k in cleaned for k in ["gmail", "email", "inbox", "check mail", "check emails", "missed mail"]):
             from jarvis.powers.email_powers import email_powers
 
             res = email_powers.scan_inbox_for_opportunities()

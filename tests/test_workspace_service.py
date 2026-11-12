@@ -104,9 +104,7 @@ def test_daily_briefing_ranks_overdue_task_ahead_of_future_deadline():
     now = dt.datetime(2026, 11, 13, 12, tzinfo=UTC)
     try:
         course = service.create_course("Discrete Mathematics")
-        service.create_assignment(
-            course["id"], "High-weight exam", due_at=now + dt.timedelta(days=1), weight_pct=60
-        )
+        service.create_assignment(course["id"], "High-weight exam", due_at=now + dt.timedelta(days=1), weight_pct=60)
         service.create_task("Overdue report", due_at=now - dt.timedelta(days=1), priority="high")
         briefing = service.daily_briefing(now=now, horizon_days=7)
         assert briefing["summary"]["overdue_items"] == 1

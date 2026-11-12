@@ -108,7 +108,6 @@ def test_audit_trail_recorded():
     assert latest["model"] == decision.selected_model
 
 
-
 def test_greeting_is_conversational_not_a_deterministic_bypass():
     decision = model_router.route(RoutingRequest(user_intent="Hey Jarvis"))
     assert decision.tier != "BYPASS"

@@ -45,6 +45,7 @@ def test_five_layer_memory():
     assert len(recalled) > 0
     assert "PostgreSQL" in recalled[0]["content"]
 
+
 def test_unhandled_instant_command_never_claims_success():
     result = orchestrator._execute_instant_command("open an unsupported application")
     assert result["status"] == "unavailable"

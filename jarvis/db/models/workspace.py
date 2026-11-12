@@ -4,6 +4,7 @@ Adapted from Nūs Desktop's semester/workspace concepts to JARVIS's existing
 SQLAlchemy database. This module intentionally uses the existing database
 engine, UUID type, JSON type, and migration conventions.
 """
+
 from __future__ import annotations
 
 import datetime
