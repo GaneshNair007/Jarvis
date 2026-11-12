@@ -590,7 +590,7 @@ While the FreeLLMAPI service process (`node.exe`, PID 37816) executes locally on
 **Operational Constraints & Privacy Guardrails:**
 - **Tier Classification**: Formally designated as **Tier 3 (External Free-Tier Cloud Fallback)**.
 - **Endpoint & Wire Format**: `http://localhost:3001/v1/chat/completions` (OpenAI wire format).
-- **Mandatory Authorization Header**: Requires header `Authorization: Bearer freellmapi-bbe4d824646ec4bca5903eeb1060d788eec976b612e2b48a` (public default loopback auth token).
+- **Mandatory Authorization Header**: Requires header `Authorization: Bearer <FREELLMAPI_API_KEY>` (provisioned via `FREELLMAPI_KEY` environment variable or Windows DPAPI vault; no plaintext credentials stored in repo).
 - **Data Loss Prevention (DLP) Invariant**: All prompt content dispatched to port 3001 must pass through `jarvis.security.ten_layer_shield.PresidioDLPFilter` to scrub API keys, credentials, PII, and sensitive entities (`[REDACTED_SECRET]`).
 - **Strict Memory Vault Exclusion**: Prompts containing private user memories, financial/medical data, or credentials from `data/jarvis.db` are strictly forbidden from routing to FreeLLMAPI and must fail over to local Ollama.
 - **Health Probing**: Real-time probe to `http://localhost:3001/readyz` (timeout 1.5s).

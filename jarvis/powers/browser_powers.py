@@ -101,5 +101,15 @@ class BrowserPowers:
             "links": [l.model_dump() for l in content.links],
         }
 
+    def scrape_markdown(self, url: str, allow_private: bool = False) -> dict[str, Any]:
+        """PWR-068: Scrapes clean, structured Markdown using Firecrawl with local stealth fallback."""
+        from jarvis.browser.firecrawl_adapter import firecrawl_adapter
+
+        res = firecrawl_adapter.scrape_url(url, allow_private=allow_private)
+        return {
+            "power_id": "PWR-068",
+            **res,
+        }
+
 
 browser_powers = BrowserPowers()

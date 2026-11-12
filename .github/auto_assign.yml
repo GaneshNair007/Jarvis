@@ -1,0 +1,12 @@
+# Configuration for kentaro-m/auto-assign-action
+addReviewers: true
+addAssignees: true
+
+reviewers:
+  - GaneshNair007
+
+assignees:
+  - GaneshNair007
+
+numberOfReviewers: 0
+numberOfAssignees: 0

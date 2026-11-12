@@ -120,8 +120,8 @@ class TaskExecutor:
         return outputs
 
     async def _default_agent_execution(self, task: TaskNode, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Default agent simulation/execution if no custom handler is provided."""
-        await asyncio.sleep(0.01)  # Minimal async yield
+        """Default agent execution when no custom handler is registered."""
+        await asyncio.sleep(0.01)
         return {
             "task_id": task.task_id,
             "status": "success",

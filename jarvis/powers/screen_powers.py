@@ -14,6 +14,7 @@ import ctypes.wintypes
 import hashlib
 import os
 import struct
+import sys
 import subprocess
 import time
 from typing import Any, Dict, List, Optional, Tuple
@@ -44,11 +45,11 @@ class ScreenPowers:
         if not hasattr(ctypes, "windll"):
             return {
                 "power_id": "PWR-016",
-                "status": "success",
+                "status": "unavailable",
                 "hwnd": 0,
-                "title": "Desktop / Non-Windows Environment",
-                "pid": os.getpid(),
-                "rect": {"left": 0, "top": 0, "right": 1920, "bottom": 1080, "width": 1920, "height": 1080},
+                "title": "",
+                "message": "Desktop window inspection requires Windows Win32 API (ctypes.windll.user32). Unsupported platform.",
+                "platform": sys.platform,
             }
         try:
             user32 = ctypes.windll.user32
@@ -460,11 +461,9 @@ class ScreenPowers:
         if not hasattr(ctypes, "windll"):
             return {
                 "power_id": "PWR-022",
-                "status": "success",
-                "primary": {"width": 1920, "height": 1080},
-                "virtual_screen": {"width": 1920, "height": 1080},
-                "monitors": 1,
-                "dpi": 96,
+                "status": "unavailable",
+                "message": "Screen resolution query requires Windows Win32 API (ctypes.windll.user32). Unsupported platform.",
+                "platform": sys.platform,
             }
         try:
             user32 = ctypes.windll.user32
@@ -531,16 +530,11 @@ class ScreenPowers:
         if not hasattr(ctypes, "windll"):
             return {
                 "power_id": "PWR-024",
-                "status": "success",
-                "window_count": 1,
-                "windows": [
-                    {
-                        "hwnd": 0,
-                        "title": "Desktop Environment",
-                        "pid": os.getpid(),
-                        "rect": {"left": 0, "top": 0, "right": 1920, "bottom": 1080, "width": 1920, "height": 1080},
-                    }
-                ],
+                "status": "unavailable",
+                "window_count": 0,
+                "windows": [],
+                "message": "Window enumeration requires Windows Win32 API (ctypes.windll.user32). Unsupported platform.",
+                "platform": sys.platform,
             }
         try:
             user32 = ctypes.windll.user32
@@ -600,9 +594,10 @@ class ScreenPowers:
         if not hasattr(ctypes, "windll"):
             return {
                 "power_id": "PWR-025",
-                "status": "success",
+                "status": "unavailable",
                 "action": "minimize_all",
-                "message": "All windows minimized",
+                "message": "Minimizing windows requires Windows Win32 API (ctypes.windll.user32). Unsupported platform.",
+                "platform": sys.platform,
             }
         try:
             user32 = ctypes.windll.user32

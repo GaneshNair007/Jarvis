@@ -84,6 +84,8 @@ class Settings(BaseSettings):
     gemini_api_keys: Optional[str] = Field(default=None)
     openrouter_api_key: Optional[str] = Field(default=None)
     openrouter_api_keys: Optional[str] = Field(default=None)
+    freellmapi_key: Optional[str] = Field(default=None)
+    freellmapi_base_url: str = Field(default="http://localhost:3001/v1")
     mcp_config_path: Path = Field(default=PROJECT_ROOT / "config" / "mcp_servers.json")
     openrouter_base_url: str = Field(default="https://openrouter.ai/api/v1")
     openrouter_default_model: str = Field(default="openrouter/free")
@@ -96,6 +98,11 @@ class Settings(BaseSettings):
     # ─── GitHub Developer Integration ───────────────────────────────────────
     github_default_repo: str = Field(default="GaneshNair007/Jarvis")
     github_api_base_url: str = Field(default="https://api.github.com")
+
+    # ─── FreeLLMAPI Local Gateway (299 Free Models) ─────────────────────────
+    freellmapi_base_url: str = Field(default="http://localhost:3001/v1")
+    freellmapi_key: Optional[str] = Field(default=None)
+    freellmapi_default_model: str = Field(default="auto")
 
     # ─── Mem0 Long-Term Memory ──────────────────────────────────────────────
     mem0_api_key: Optional[str] = Field(default=None)

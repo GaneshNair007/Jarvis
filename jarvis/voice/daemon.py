@@ -346,6 +346,7 @@ class VoiceDaemon:
         self._gate_cooldown_until: float = 0.0
         self._capture_rate = self.SAMPLE_RATE
         self._mic_info: Dict[str, Any] = {"device": None, "name": "", "live": False, "source": "not_started"}
+        self._speaking_started_at: float = 0.0
 
         self._queue: "queue.Queue[bytes]" = queue.Queue(maxsize=self.MAX_QUEUE_BLOCKS)
         self._worker: Optional[threading.Thread] = None
@@ -357,6 +358,7 @@ class VoiceDaemon:
         self._speech_blocks = 0
         self._silence_blocks = 0
         self._utterance_active = False
+        self._capture_deadline: float = 0.0
 
         self.wake_count = 0
         self.acoustic_wake_count = 0
@@ -678,7 +680,9 @@ class VoiceDaemon:
             return events
 
         if self.state == "SPEAKING":
-            if is_speech and energy >= self.MEAN_ABS_THRESHOLD * 2:
+            if (now - getattr(self, "_speaking_started_at", 0.0)) < 1.5:
+                return events
+            if is_speech and energy >= max(self.MEAN_ABS_THRESHOLD * 4, 6000.0):
                 try:
                     self.tts.cancel_speech()
                 except Exception:
@@ -714,6 +718,13 @@ class VoiceDaemon:
                         data={"score": score, "threshold": gate_event.get("threshold")},
                     )
 
+        # Ignore audio while TTS is speaking the acknowledgment so the microphone doesn't capture "Yes?"
+        if self.state == "CAPTURING_COMMAND" and getattr(self.tts, "is_speaking", False):
+            self._buffer.clear()
+            self._speech_blocks = 0
+            self._utterance_active = False
+            return events
+
         if is_speech:
             if not self._utterance_active:
                 self._utterance_active = True
@@ -727,6 +738,11 @@ class VoiceDaemon:
             return events
 
         if not self._utterance_active:
+            if self.state == "CAPTURING_COMMAND" and self._capture_deadline and time.monotonic() > self._capture_deadline:
+                self.state = "LISTENING_FOR_WAKE"
+                self._capture_deadline = 0.0
+                self._write_hud_state("wake")
+                self._reset_buffer()
             return events
 
         self._silence_blocks += 1
@@ -807,6 +823,7 @@ class VoiceDaemon:
                 events.extend(self._execute_command(command, trigger="wake_with_command", wake_transcript=text))
             else:
                 self.state = "CAPTURING_COMMAND"
+                self._capture_deadline = time.monotonic() + 10.0
                 self._write_hud_state("capture")
                 if self._speak_replies:
                     try:
@@ -831,6 +848,7 @@ class VoiceDaemon:
 
     def _execute_command(self, command: str, trigger: str, wake_transcript: str) -> List[Dict[str, Any]]:
         events: List[Dict[str, Any]] = []
+        self._capture_deadline = 0.0
         self.state = "PROCESSING"
         with self._stats_lock:
             self.last_command = command
@@ -891,6 +909,7 @@ class VoiceDaemon:
         )
 
         self.state = "SPEAKING"
+        self._speaking_started_at = time.time()
         self._sleep_gate()  # speaking window: gate idle, clear activation remnants
         self._write_hud_state("speaking")
         if self._speak_replies and reply_text:
@@ -1048,6 +1067,10 @@ class VoiceDaemon:
                 with self._stats_lock:
                     self.error_count += 1
                 self._mic_info = {**self._mic_info, "error": str(exc)}
+
+        if use_microphone and not mic_opened:
+            self.state = "DEGRADED_NO_MIC"
+            logger.warning("VoiceDaemon state degraded: DEGRADED_NO_MIC (microphone stream failed to open).")
 
         self.running = True
         self._record_evidence(

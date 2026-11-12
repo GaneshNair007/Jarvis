@@ -14,7 +14,10 @@ from jarvis.core.model_router import model_router, RoutingRequest
 from jarvis.core.policy_gate import policy_gate
 from jarvis.core.audit import audit_ledger
 from jarvis.core.power_registry import power_registry
+from jarvis.core.logger import get_logger
 from jarvis.memory.store import db_store
+
+logger = get_logger("core.orchestrator")
 
 
 class JarvisOrchestrator:
@@ -112,18 +115,42 @@ class JarvisOrchestrator:
             # Instant command execution
             execution_result = self._execute_instant_command(query)
         elif decision.tier in ("TIER_1_LOCAL", "TIER_2_PRIVATE", "TIER_3_CLOUD"):
-            # Unified LiteLLM inference execution across local and cloud tiers
-            full_prompt = (
-                f"Source Context:\n{decision.redacted_context}\n\nUser Question: {query}\n"
-                "Instruction: Answer strictly based on the source context provided. "
-                "Identify the source file. If information is not in the source, state so honestly without inventing facts."
-                if decision.redacted_context
-                else query
+            # Multi-turn episodic memory recall for conversational continuity
+            from jarvis.memory.layers import memory_manager
+
+            recent_turns = memory_manager.recall(layer="EPISODIC", limit=4)
+            context_blocks = []
+            if recent_turns:
+                history_lines = [f"- {t.get('content', '')}" for t in reversed(recent_turns)]
+                context_blocks.append("Recent Conversation History:\n" + "\n".join(history_lines))
+            if decision.redacted_context:
+                context_blocks.append(f"Attached Source Context:\n{decision.redacted_context}")
+            prompt_body = ("\n\n".join(context_blocks) + f"\n\nUser Question: {query}") if context_blocks else query
+
+            system_prompt = (
+                "You are JARVIS, an autonomous, highly capable, loyal, and articulate personal AI operating system created for Ganesh Nair. "
+                "You converse with the intelligence, nuance, clarity, and warmth of modern ChatGPT and Tony Stark's J.A.R.V.I.S. "
+                "You speak concisely, insightfully, and naturally. You maintain conversational context seamlessly across turns. "
+                "When asked about capabilities, coding, research, or daily tasks, provide thoughtful, accurate, and actionable answers without unnecessary robotic disclaimers."
             )
+
             execution_result = self.router.execute_inference(
                 decision=decision,
-                prompt=full_prompt,
+                prompt=prompt_body,
+                system_prompt=system_prompt,
             )
+
+            # Persist successful turns into episodic memory
+            reply_text = execution_result.get("reply", "")
+            if reply_text and execution_result.get("status") == "success":
+                try:
+                    memory_manager.store_memory(
+                        layer="EPISODIC",
+                        content=f"User: {query} | JARVIS: {reply_text}",
+                        metadata={"user_query": query, "jarvis_reply": reply_text, "timestamp": time.time()},
+                    )
+                except Exception as mem_err:
+                    logger.warning(f"Failed to persist episodic memory: {mem_err}")
         else:
             execution_result = {"note": "No matching execution path, returning empty result"}
 

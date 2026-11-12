@@ -340,9 +340,9 @@ class EmailPowers:
                 type(exc).__name__,
             )
 
-        # 2. Local incoming store fallback (data/inbox/*.eml)
-        if not parsed_emails and not live_sync:
-            target_inbox = Path(inbox_dir) if inbox_dir else (settings.data_dir / "inbox")
+        # 2. Local incoming store fallback (only when explicit inbox_dir test fixture is provided)
+        if not parsed_emails and not live_sync and inbox_dir:
+            target_inbox = Path(inbox_dir)
             if target_inbox.exists():
                 import email
 

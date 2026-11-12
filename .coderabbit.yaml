@@ -1,0 +1,11 @@
+# CodeRabbit configuration
+version: "2"
+reviews:
+  auto_review:
+    enabled: true
+    ignore_authors:
+      - "dependabot[bot]"
+      - "github-actions[bot]"
+  request_changes_workflow: false
+chat:
+  auto_reply: false

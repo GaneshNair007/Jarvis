@@ -30,6 +30,16 @@ dependencies = [
     "sounddevice>=0.4.6"
 ]
 
+[project.optional-dependencies]
+voice = [
+    "sounddevice>=0.4.6",
+    "openwakeword>=0.6.0",
+    "onnxruntime>=1.17.0",
+    "faster-whisper>=1.0.0",
+    "kokoro-onnx>=0.3.0",
+    "pywin32>=306; sys_platform == 'win32'"
+]
+
 [project.scripts]
 jarvis = "jarvis.main:cli_entrypoint"
 
