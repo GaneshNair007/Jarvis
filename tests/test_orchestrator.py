@@ -70,4 +70,3 @@ def test_screenshot_requires_a_real_capture_receipt(monkeypatch):
     assert result["status"] == "success"
     assert result["file"] == "capture.png"
     assert result["sha256"] == "abc123"
-
