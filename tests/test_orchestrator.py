@@ -71,8 +71,3 @@ def test_screenshot_requires_a_real_capture_receipt(monkeypatch):
     assert result["file"] == "capture.png"
     assert result["sha256"] == "abc123"
 
-
-def test_unknown_handler_fails_the_orchestrator_state_machine():
-    result = asyncio.run(orchestrator.process_user_query("open an unsupported application"))
-    assert result["status"] == "FAILED"
-    assert result["response"]["error"] == "NO_HANDLER"

@@ -361,8 +361,19 @@ class JarvisOrchestrator:
             from jarvis.powers.email_powers import email_powers
 
             res = email_powers.scan_inbox_for_opportunities()
+            live_sync = bool(res.get("live_sync_active"))
+            if live_sync:
+                source_note = "Connected Gmail inbox scanned through OAuth 2.0."
+                execution_scope = "gmail_oauth"
+            else:
+                source_note = (
+                    "Gmail is not connected. Only the local data/inbox/*.eml folder was checked; "
+                    "no Gmail messages were fetched. " + str(res.get("setup_note", ""))
+                )
+                execution_scope = "local_inbox_only"
             summary_lines = [
-                f"Scanned inbox for {res['account']}: Found {res['opportunities_found']} opportunities ({res['urgent_count']} urgent):"
+                source_note,
+                f"Found {res['opportunities_found']} locally available opportunities ({res['urgent_count']} urgent):",
             ]
             for idx, item in enumerate(res["opportunities"], 1):
                 summary_lines.append(f"{idx}. [{item['category']}] {item['subject']} ({item['from']})")
@@ -371,7 +382,10 @@ class JarvisOrchestrator:
             return {
                 "type": "email_triage",
                 "power_id": "PWR-191",
-                "status": "completed",
+                "status": "completed" if live_sync else "completed_local_only",
+                "execution_scope": execution_scope,
+                "live_sync_active": live_sync,
+                "source": res.get("source"),
                 "message": "\n".join(summary_lines),
                 "details": res,
             }
