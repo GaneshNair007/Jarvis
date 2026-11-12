@@ -106,3 +106,21 @@ def test_audit_trail_recorded():
     latest = model_router.execution_history[-1]
     assert latest["task_id"] == decision.task_id
     assert latest["model"] == decision.selected_model
+
+
+
+def test_greeting_is_conversational_not_a_deterministic_bypass():
+    decision = model_router.route(RoutingRequest(user_intent="Hey Jarvis"))
+    assert decision.tier != "BYPASS"
+
+
+def test_workspace_shortcuts_are_deterministic_commands():
+    for command in ["/brief", "/due", "/quest", "/capture fact User prefers local-first AI"]:
+        assert model_router.is_instant_command(command)
+
+
+def test_model_status_reports_ollama_reachability(monkeypatch):
+    monkeypatch.setattr(model_router, "check_ollama_readiness", lambda use_cache=False: False)
+    status = model_router.get_status()
+    assert status["tier_1_local"]["reachable"] is False
+    assert status["tier_1_local"]["status"] == "unavailable"

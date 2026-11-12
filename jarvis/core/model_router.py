@@ -75,9 +75,9 @@ class ModelRouter:
         r"^.*(turn (on|off)|set|switch)\s+(the\s+)?(ac|air condition|projector|tv|geyser|lights?|lamp).*",
         r"^.*(movie night|work mode|sleep mode|morning wake).*",
         r"^.*(opportunity radar|career radar|daily pulse|system pulse|weekly sweep).*",
-        r"^.*(gmail|check (my )?(email|mail|inbox)|missed (email|mail)|opportunities).*",
+        r"^.*(gmail|check (my )?(email|mail|inbox)|missed (email|mail)).*",
         r"^connect (my )?gmail.*",
-        r"^(status|help|who are you|hi|hello|hey|hi jarvis|hey jarvis|hello jarvis)$",
+        r"^(status|help)$",
         r"^pwr-\d{3}.*",
         r"^ping\s+.*",
         r"^traceroute\s+.*",
@@ -92,6 +92,8 @@ class ModelRouter:
         r"^youtube\s+(script|title|tags?|brief).*|^video\s+(script|title).*",
         r"^hud(\s+telemetry)?.*|^mission\s+control.*|^threat\s+assessment.*",
         r"^security\s+(scan|posture|report).*|^secret\s+scan.*",
+        r"^/(brief|due|quest)$",
+        r"^/capture\s+(note|fact|idea|task)\s+.+$",
     ]
 
     def __init__(self):
@@ -297,12 +299,14 @@ class ModelRouter:
 
     def get_status(self) -> Dict[str, Any]:
         """Returns live status of all inference tiers."""
+        ollama_ready = self.check_ollama_readiness(use_cache=False)
         return {
             "tier_1_local": {
                 "provider": "ollama",
                 "base_url": settings.ollama_base_url,
                 "default_model": settings.ollama_default_model,
-                "status": "ready",
+                "reachable": ollama_ready,
+                "status": "ready" if ollama_ready else "unavailable",
             },
             "tier_2_private": {
                 "provider": "vllm",
@@ -611,29 +615,26 @@ class ModelRouter:
             }
 
     def _generate_heuristic_response(self, prompt: str) -> str:
+        """Return capability guidance without claiming unverified features are online."""
         p = prompt.lower().strip()
-        if any(w in p for w in ["hi", "hello", "hey", "who are you"]):
+        if "help" in p:
             return (
-                "Hello Ganesh! I am JARVIS, your personal autonomous AI assistant. "
-                "I am fully operational with local reflex execution, smart room controls (AC, Projector, Geyser, Lights), "
-                "opportunity radar, and system monitoring. How can I assist you right now?"
+                "I can answer through the configured local model, report system health, manage workspace "
+                "courses, tasks and reviewable captures, and invoke integrations only when they are actually "
+                "connected. Use /brief, /due, /quest, or /capture note <text> for workspace actions. "
+                "Smart-home control, email sync, browser automation and agent execution depend on live "
+                "configuration and may report unavailable when not configured."
             )
-        elif "help" in p:
+        if "status" in p:
             return (
-                "Here are some actions you can command me to execute:\n"
-                "- Smart Room: 'Turn on the AC at 21', 'Turn on the geyser', 'Movie night', 'Turn off lights'\n"
-                "- Ops Workflows: 'Daily pulse', 'Opportunity radar', 'Weekly sweep'\n"
-                "- System: 'System health', 'Take screenshot', 'Search [topic]'"
+                "JARVIS is responding. Check /model/status and /api/v1/system/processes for live component "
+                "readiness; a configured provider is not necessarily reachable."
             )
-        elif "status" in p:
-            return "JARVIS Operating System is online. All 355 powers and smart room endpoints are active on localhost:8000."
-        else:
-            return (
-                f"I received your command: '{prompt}'. "
-                "I have processed this through the local execution engine. "
-                "To enable unlimited open-ended LLM conversation, you can launch Ollama on your RTX 4050 ('ollama serve') "
-                "or set your free Gemini API keys."
-            )
+        return (
+            "I received your request, but I cannot claim an action was completed without a real execution "
+            "handler and a verifiable result. Start the local Ollama server for local conversation, or "
+            "configure a supported provider."
+        )
 
 
 # Singleton Model Router

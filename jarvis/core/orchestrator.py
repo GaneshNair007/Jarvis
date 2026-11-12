@@ -100,11 +100,12 @@ class JarvisOrchestrator:
 
         # Code and self-improvement tasks dispatch through the multi-agent swarm
         # (checked before LLM tiers so /code and /upgrade always reach subagents).
-        if query.strip().lower().startswith("/code") or "write code" in query.lower() or "generate" in query.lower():
+        lowered_query = query.strip().lower()
+        if lowered_query.startswith("/code") or lowered_query.startswith(("write code", "generate code", "implement code", "create code")):
             from jarvis.powers.multiagent_powers import multiagent_powers
 
             execution_result = multiagent_powers.orchestrator_dispatch(f"Code: {query}")
-        elif query.strip().lower().startswith("/upgrade") or "self improve" in query.lower():
+        elif lowered_query.startswith("/upgrade") or lowered_query.startswith("self improve"):
             from jarvis.powers.multiagent_powers import multiagent_powers
 
             execution_result = multiagent_powers.self_upgrade_pipeline()
@@ -128,9 +129,26 @@ class JarvisOrchestrator:
             execution_result = {"note": "No matching execution path, returning empty result"}
 
         # Step 4: Verification & Completion (Honest State)
-        is_failed = execution_result.get("status") in ("unavailable", "error", "failed") or bool(
-            execution_result.get("error")
-        )
+        if not isinstance(execution_result, dict):
+            execution_result = {
+                "status": "error",
+                "error": "INVALID_EXECUTION_RECEIPT",
+                "message": "The execution handler returned a non-object result.",
+            }
+        execution_status = str(execution_result.get("status", "")).strip().lower()
+        failure_states = {
+            "unavailable",
+            "error",
+            "failed",
+            "unhandled",
+            "unrecognized",
+            "rejected",
+            "dispatched",
+            "not_sent",
+            "not_configured",
+            "failed_verification",
+        }
+        is_failed = execution_status in failure_states or bool(execution_result.get("error"))
         final_state = "FAILED" if is_failed else "COMPLETED"
 
         self.state_machine.transition(task_id, "VERIFYING", reason="Validating execution receipts")
@@ -176,7 +194,68 @@ class JarvisOrchestrator:
         """Executes instant OS commands with zero LLM overhead."""
         cleaned = query.strip().lower()
 
-        if "health" in cleaned or "telemetry" in cleaned:
+        if cleaned in {"/brief", "/due", "/quest"}:
+            from jarvis.workspace.service import workspace_service
+
+            briefing = workspace_service.daily_briefing(
+                horizon_days=365 if cleaned == "/due" else 7
+            )
+            if cleaned == "/brief":
+                summary = briefing["summary"]
+                message = (
+                    f"You have {summary['open_tasks']} open tasks, "
+                    f"{summary['open_assignments']} open assignments, "
+                    f"{summary['overdue_items']} overdue items, and "
+                    f"{summary['due_today']} items due today."
+                )
+                return {
+                    "type": "workspace_briefing",
+                    "status": "completed",
+                    "message": message,
+                    "details": briefing,
+                }
+            if cleaned == "/due":
+                due_items = [
+                    item for item in briefing["next_actions"] if item.get("due_at")
+                ]
+                return {
+                    "type": "workspace_deadlines",
+                    "status": "completed",
+                    "message": f"Found {len(due_items)} stored items with deadlines in the selected horizon.",
+                    "items": due_items,
+                    "horizon_days": 365,
+                }
+            return {
+                "type": "workspace_quest",
+                "status": "completed",
+                "message": "Today's focus is ranked from your saved deadlines and priorities.",
+                "quests": briefing["next_actions"][:3],
+                "active_goals": briefing["active_goals"],
+            }
+        elif cleaned.startswith("/capture"):
+            from jarvis.workspace.service import workspace_service
+
+            parts = query.strip().split(None, 2)
+            if len(parts) != 3:
+                return {
+                    "type": "workspace_capture",
+                    "status": "error",
+                    "error": "CAPTURE_USAGE",
+                    "message": "Usage: /capture note|fact|idea|task <content>",
+                }
+            capture = workspace_service.create_capture(
+                kind=parts[1].lower(),
+                content=parts[2],
+                source="chat",
+            )
+            return {
+                "type": "workspace_capture",
+                "status": "completed",
+                "capture_status": "pending_review",
+                "message": "Capture saved to your review inbox. It has not been added to memory yet.",
+                "capture": capture,
+            }
+        elif "health" in cleaned or "telemetry" in cleaned:
             import psutil
 
             return {
@@ -189,45 +268,88 @@ class JarvisOrchestrator:
                 "message": "System health metrics retrieved immediately.",
             }
         elif "screenshot" in cleaned:
+            from jarvis.powers.screen_powers import screen_powers
+
+            capture = screen_powers.capture_region()
+            if capture.get("status") != "success":
+                return {
+                    "type": "screenshot",
+                    "status": capture.get("status", "unavailable"),
+                    "error": capture.get("message", "Screen capture did not return a success receipt."),
+                    "details": capture,
+                }
             return {
                 "type": "screenshot",
-                "status": "captured",
-                "file": str(settings.screenshot_dir / "latest_screen.png"),
-                "message": "Screen capture executed immediately.",
+                "status": "success",
+                "file": capture.get("path"),
+                "sha256": capture.get("sha256"),
+                "message": "Screenshot captured and verified on disk.",
+                "details": capture,
             }
         elif "lock" in cleaned:
+            import ctypes
+            import os
+
+            if os.name != "nt":
+                return {
+                    "type": "system_control",
+                    "status": "unavailable",
+                    "error": "UNSUPPORTED_PLATFORM",
+                    "message": "Workstation locking is only implemented on Windows.",
+                }
+            try:
+                locked = bool(ctypes.windll.user32.LockWorkStation())
+            except (AttributeError, OSError) as exc:
+                return {
+                    "type": "system_control",
+                    "status": "error",
+                    "error": str(exc),
+                    "message": "Windows did not accept the workstation lock request.",
+                }
+            if not locked:
+                return {
+                    "type": "system_control",
+                    "status": "error",
+                    "error": "LOCK_REQUEST_REJECTED",
+                    "message": "Windows rejected the workstation lock request.",
+                }
             return {
                 "type": "system_control",
-                "status": "dispatched",
+                "status": "success",
                 "action": "lock_workstation",
-                "message": "Workstation lock requested.",
+                "message": "Windows accepted the workstation lock request.",
             }
-        elif any(
-            k in cleaned
-            for k in [
-                "ac",
-                "air condition",
-                "projector",
-                "geyser",
-                "light",
-                "lamp",
-                "movie night",
-                "work mode",
-                "sleep mode",
-                "morning wake",
-            ]
+        elif (
+            "ac" in cleaned.split()
+            or any(
+                phrase in cleaned
+                for phrase in [
+                    "air condition",
+                    "air conditioning",
+                    "air conditioner",
+                    "aircon",
+                    "movie night",
+                    "work mode",
+                    "sleep mode",
+                    "morning wake",
+                ]
+            )
+            or bool(
+                {"projector", "tv", "television", "geyser", "light", "lights", "lamp"}
+                & set(cleaned.split())
+            )
         ):
-            from jarvis.powers.smart_home_powers import smart_home_powers
-
-            res = smart_home_powers.process_voice_command(query)
-            if res.get("status") != "unhandled":
-                return {
-                    "type": "smart_home",
-                    "power_id": res.get("power_id"),
-                    "status": "executed",
-                    "message": res.get("feedback", "Smart home action completed."),
-                    "details": res,
-                }
+            # SmartHomePowers currently maintains an in-memory demo state, not a
+            # verified physical BroadLink/Home Assistant adapter.
+            return {
+                "type": "smart_home",
+                "status": "unavailable",
+                "error": "NO_VERIFIED_DEVICE_CONTROLLER",
+                "message": (
+                    "No verified physical smart-home controller is connected. "
+                    "The local demo device-state store was not used; no device was changed."
+                ),
+            }
         elif "opportunity radar" in cleaned or "career radar" in cleaned or "leads" in cleaned:
             from jarvis.routines.ops_workflows import opportunity_radar
 
@@ -242,7 +364,7 @@ class JarvisOrchestrator:
             return weekly_ops_sweep.run()
         elif any(
             k in cleaned
-            for k in ["gmail", "email", "inbox", "check mail", "check emails", "missed mail", "opportunities"]
+            for k in ["gmail", "email", "inbox", "check mail", "check emails", "missed mail"]
         ):
             from jarvis.powers.email_powers import email_powers
 
@@ -424,9 +546,13 @@ class JarvisOrchestrator:
         else:
             return {
                 "type": "instant_command",
-                "status": "executed",
+                "status": "unavailable",
+                "error": "NO_HANDLER",
                 "command": cleaned,
-                "message": f"Instant command '{cleaned}' dispatched.",
+                "message": (
+                    f"No execution handler is registered for '{cleaned}'. "
+                    "No action was run; JARVIS will not report a dispatch as success."
+                ),
             }
 
 
