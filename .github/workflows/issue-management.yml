@@ -68,8 +68,9 @@ jobs:
   auto-assign:
     name: 👤 Auto Assign
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.action == 'opened'
+    # The action assigns the PR author; Dependabot bot accounts are not assignable reviewers/assignees.
+    if: github.event_name == 'pull_request' && github.event.action == 'opened' && github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
-      - uses: kentaro-m/auto-assign-action@v1.2.6
+      - uses: kentaro-m/auto-assign-action@v2.0.2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
