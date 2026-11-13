@@ -138,6 +138,12 @@ class JarvisOrchestrator:
                 "message": "The execution handler returned a non-object result.",
             }
         execution_status = str(execution_result.get("status", "")).strip().lower()
+        if not execution_status:
+            execution_result["error"] = "MISSING_EXECUTION_STATUS"
+            execution_result["message"] = (
+                "The handler returned data without an execution status. "
+                "JARVIS cannot verify whether the requested action completed."
+            )
         failure_states = {
             "unavailable",
             "error",
@@ -258,6 +264,7 @@ class JarvisOrchestrator:
 
             return {
                 "type": "telemetry",
+                "status": "success",
                 "cpu_percent": psutil.cpu_percent(interval=None),
                 "ram_percent": psutil.virtual_memory().percent,
                 "disk_percent": psutil.disk_usage(settings.disk_mount_path).percent

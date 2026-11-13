@@ -57,6 +57,7 @@ class BrowserPowers:
         content = self.url_reader.read_url(url, allow_private=allow_private)
         return {
             "power_id": "PWR-014",
+            "status": "completed",
             "url": content.url,
             "title": content.title,
             "headings": content.headings,
