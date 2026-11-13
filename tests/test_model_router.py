@@ -134,8 +134,6 @@ def test_natural_language_opportunity_requests_are_routed_for_live_search():
     ]:
         assert model_router.is_instant_command(prompt)
 
-
-
 def test_model_router_executes_selected_tool_and_returns_final_answer(monkeypatch):
     import json
     import sys
@@ -239,8 +237,6 @@ def test_model_router_executes_selected_tool_and_returns_final_answer(monkeypatc
     assert "tools" not in calls[1]
     assert calls[1]["messages"][-1]["role"] == "tool"
 
-
-
 def test_offline_model_is_not_reported_as_success(monkeypatch):
     from jarvis.core.model_router import ModelRouter, RoutingDecision
 
@@ -280,14 +276,20 @@ def test_failed_tool_result_marks_inference_partial_failure(monkeypatch):
     )
     from jarvis.core import power_binder as power_binder_module
 
-    offered_tools = [{
-        "type": "function",
-        "function": {
-            "name": "browser_search",
-            "description": "Search",
-            "parameters": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]},
-        },
-    }]
+    offered_tools = [
+        {
+            "type": "function",
+            "function": {
+                "name": "browser_search",
+                "description": "Search",
+                "parameters": {
+                    "type": "object",
+                    "properties": {"query": {"type": "string"}},
+                    "required": ["query"],
+                },
+            },
+        }
+    ]
     monkeypatch.setattr(
         power_binder_module.power_binder,
         "select_tools_for_query",
@@ -312,10 +314,14 @@ def test_failed_tool_result_marks_inference_partial_failure(monkeypatch):
         SimpleNamespace(choices=[SimpleNamespace(message=messages[0])], usage=None),
         SimpleNamespace(choices=[SimpleNamespace(message=messages[1])], usage=None),
     ]
-    monkeypatch.setitem(sys.modules, "litellm", SimpleNamespace(
-        completion=lambda **_kwargs: responses.pop(0),
-        completion_cost=lambda completion_response: 0.0,
-    ))
+    monkeypatch.setitem(
+        sys.modules,
+        "litellm",
+        SimpleNamespace(
+            completion=lambda **_kwargs: responses.pop(0),
+            completion_cost=lambda completion_response: 0.0,
+        ),
+    )
     decision = RoutingDecision(
         task_id="partial_tool_task",
         tier="TIER_1_LOCAL",

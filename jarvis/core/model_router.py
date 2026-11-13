@@ -516,7 +516,8 @@ class ModelRouter:
         elif decision.tier == "TIER_3_CLOUD":
             # 1. Attempt OpenRouter multi-key rotator
             if not tool_schemas and (
-                "openrouter" in decision.selected_model or not (
+                "openrouter" in decision.selected_model
+                or not (
                     "claude" in decision.selected_model
                     or "gpt" in decision.selected_model
                     or "gemini" in decision.selected_model
@@ -623,9 +624,7 @@ class ModelRouter:
                 if power_binder is None:
                     raise RuntimeError("Tool schemas were sent but the power binder is unavailable.")
 
-                allowed_tool_names = {
-                    schema["function"]["name"] for schema in tool_schemas
-                }
+                allowed_tool_names = {schema["function"]["name"] for schema in tool_schemas}
                 assistant_tool_calls = []
                 tool_call_limit = 4
 
@@ -728,12 +727,10 @@ class ModelRouter:
 
             reply_text = getattr(assistant_message, "content", None) or ""
             input_tokens = sum(
-                getattr(getattr(item, "usage", None), "prompt_tokens", 0) or 0
-                for item in usage_responses
+                getattr(getattr(item, "usage", None), "prompt_tokens", 0) or 0 for item in usage_responses
             )
             output_tokens = sum(
-                getattr(getattr(item, "usage", None), "completion_tokens", 0) or 0
-                for item in usage_responses
+                getattr(getattr(item, "usage", None), "completion_tokens", 0) or 0 for item in usage_responses
             )
             total_tokens = input_tokens + output_tokens
 
