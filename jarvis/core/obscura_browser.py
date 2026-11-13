@@ -119,89 +119,36 @@ class ObscuraBrowserClient:
             }
 
     async def search_opportunities(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
-        """
-        Performs web search across public opportunity directories.
-        Falls back to structured real-time curated mock data when offline.
-        """
-        encoded_query = urllib.parse.quote_plus(query)
-        search_url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
-        results: List[Dict[str, Any]] = []
+        """Return live search leads only. Search snippets are not verified event pages."""
+        from jarvis.browser.search_wrapper import WebSearchWrapper
+
+        if not query or limit <= 0:
+            return []
 
         try:
-            async with httpx.AsyncClient(headers=self.STEALTH_HEADERS, timeout=8.0) as client:
-                resp = await client.get(search_url)
-                if resp.status_code == 200:
-                    html = resp.text
-                    # Parse DuckDuckGo html snippets
-                    snippets = re.findall(
-                        r'<a class="result__snippet[^>]*href="([^"]+)"[^>]*>(.*?)</a>',
-                        html,
-                        re.IGNORECASE | re.DOTALL,
-                    )
-                    for raw_url, raw_snip in snippets[:limit]:
-                        clean_snip = re.sub(r"<[^>]+>", "", raw_snip).strip()
-                        results.append(
-                            {
-                                "title": clean_snip[:80] + "...",
-                                "snippet": clean_snip,
-                                "url": raw_url,
-                                "source": "duckduckgo_stealth",
-                            }
-                        )
-        except Exception as e:
-            logger.debug(f"DuckDuckGo search error: {e}")
+            searcher = WebSearchWrapper(timeout_sec=self.timeout_sec)
+            search_results = await asyncio.to_thread(searcher.search, query, limit)
+        except Exception as exc:
+            logger.warning("Live opportunity search failed: %s", exc)
+            return []
 
-        # If live search returned fewer than required results, return curated high-tier hackathons
-        if len(results) < limit:
-            curated = [
+        results: List[Dict[str, Any]] = []
+        for result in search_results[:limit]:
+            item = result.model_dump() if hasattr(result, "model_dump") else dict(result)
+            url = str(item.get("url", "")).strip()
+            title = str(item.get("title", "")).strip()
+            snippet = str(item.get("snippet", "")).strip()
+            if not title or not url.startswith(("https://", "http://")):
+                continue
+            results.append(
                 {
-                    "title": "Google Summer of Code (GSoC) 2026",
-                    "snippet": "Global program focused on bringing new contributors into open source software development. Stipends awarded for high-impact AI/ML and systems contributions.",
-                    "url": "https://summerofcode.withgoogle.com",
-                    "source": "gsoc_curated",
-                    "tags": ["Open Source", "Google", "Python", "Systems", "Stipend"],
-                    "deadline": "April 2026",
-                    "mode": "Remote / Online",
-                },
-                {
-                    "title": "Smart India Hackathon (SIH) 2026 - Hardware & Software",
-                    "snippet": "World's biggest open innovation model bringing students to solve pressing national challenges in Smart Automation, Robotics, and Generative AI.",
-                    "url": "https://sih.gov.in",
-                    "source": "sih_curated",
-                    "tags": ["National", "Generative AI", "Smart Automation", "Cash Prize"],
-                    "deadline": "August 2026",
-                    "mode": "Hybrid / India",
-                },
-                {
-                    "title": "HackMIT & ETHGlobal AI Agent Autonomous Hackathon",
-                    "snippet": "Premier collegiate and web3 AI agent hackathon. Build autonomous desktop agents, multi-agent frameworks, and local LLM perception pipelines.",
-                    "url": "https://ethglobal.com",
-                    "source": "hackathon_curated",
-                    "tags": ["AI Agents", "Autonomous Systems", "FastAPI", "High Prize Pool"],
-                    "deadline": "May 2026",
-                    "mode": "Online / Global",
-                },
-                {
-                    "title": "Devpost Global GenAI Agents & Voice Multimodal Hackathon",
-                    "snippet": "Build production voice-first AI assistants and agent swarms utilizing local edge hardware and cloud inference multiplexing.",
-                    "url": "https://devpost.com/hackathons",
-                    "source": "devpost_curated",
-                    "tags": ["Voice AI", "LLM", "RTX GPU Acceleration", "Devpost"],
-                    "deadline": "Rolling / Active",
-                    "mode": "Remote",
-                },
-                {
-                    "title": "Unstop National Innovation Challenge & AI Internship Drive",
-                    "snippet": "Top engineering firms and AI labs recruiting backend and AI agent engineers through live problem-solving challenges and hackathons.",
-                    "url": "https://unstop.com/hackathons",
-                    "source": "unstop_curated",
-                    "tags": ["Internship PPO", "Python", "FastAPI", "Machine Learning"],
-                    "deadline": "Upcoming Month",
-                    "mode": "India / Hybrid",
-                },
-            ]
-            results.extend(curated[: (limit - len(results))])
-
+                    "title": title,
+                    "snippet": snippet,
+                    "url": url,
+                    "source": "duckduckgo_html",
+                    "verification_status": "discovery_only",
+                }
+            )
         return results
 
 

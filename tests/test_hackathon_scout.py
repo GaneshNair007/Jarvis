@@ -1,100 +1,176 @@
-"""
-Verification Suite for JARVIS Obscura Browser & Autonomous Hackathon Scout Swarm
-"""
+"""Tests for live-only hackathon discovery and source-grounded research notes."""
+
+from unittest.mock import AsyncMock
 
 import pytest
-from pathlib import Path
+
+from jarvis.agents.hackathon_scout import AnalystAgent, ArchitectAgent, HackathonScoutSwarm
+from jarvis.browser.search_wrapper import SearchResult
 from jarvis.core.obscura_browser import obscura_browser
 from jarvis.core.notifier import opportunity_notifier
-from jarvis.agents.hackathon_scout import (
-    ScoutAgent,
-    AnalystAgent,
-    ArchitectAgent,
-    DispatcherAgent,
-    hackathon_scout_swarm,
-)
+from jarvis.powers.browser_powers import browser_powers
 
 
-class TestObscuraAndHackathonScout:
-    @pytest.mark.asyncio
-    async def test_obscura_browser_search_and_fallback(self):
-        """Verifies Obscura search returns structured opportunities with titles, URLs, and snippets."""
-        results = await obscura_browser.search_opportunities("AI agent hackathon 2026", limit=4)
-        assert len(results) >= 2
-        for r in results:
-            assert "title" in r
-            assert "url" in r
-            assert "snippet" in r
+@pytest.mark.asyncio
+async def test_obscura_browser_uses_live_search_results_only(monkeypatch):
+    monkeypatch.setattr(
+        "jarvis.browser.search_wrapper.WebSearchWrapper.search",
+        lambda self, query, max_results=5: [
+            SearchResult(
+                title="Official AI Hackathon",
+                url="https://events.example.org/hackathon",
+                snippet="Official event listing.",
+            )
+        ],
+    )
 
-    def test_analyst_agent_scoring(self):
-        """Verifies analyst agent prioritizes high-relevance AI/Systems opportunities."""
-        raw = [
-            {
-                "title": "Global AI Autonomous Agent Challenge",
-                "snippet": "Build multi-agent Python FastAPI pipelines with PyTorch GPU acceleration.",
-            },
-            {"title": "Beginner HTML Static Webpage Design Contest", "snippet": "Create static CSS stylesheets."},
-        ]
-        analyst = AnalystAgent()
-        evaluated = analyst.evaluate_opportunities(raw)
-        assert evaluated[0]["title"] == "Global AI Autonomous Agent Challenge"
-        assert evaluated[0]["relevance_score"] > evaluated[1]["relevance_score"]
-        assert evaluated[0]["feasibility"] == "HIGH"
+    results = await obscura_browser.search_opportunities("AI hackathon", limit=4)
 
-    def test_architect_agent_scaffolding(self, tmp_path):
-        """Verifies architect agent generates PROBLEM_STATEMENT.md and scaffolded repo files."""
-        architect = ArchitectAgent(workspace_root=tmp_path)
-        opp = {
-            "title": "Autonomous Desktop AI Assistant",
-            "url": "https://devpost.com/software/jarvis",
-            "mode": "Remote / India",
-            "relevance_score": 96,
+    assert len(results) == 1
+    assert results[0]["title"] == "Official AI Hackathon"
+    assert results[0]["source"] == "duckduckgo_html"
+    assert results[0]["verification_status"] == "discovery_only"
+
+
+@pytest.mark.asyncio
+async def test_obscura_browser_does_not_fabricate_offline_fallback(monkeypatch):
+    monkeypatch.setattr(
+        "jarvis.browser.search_wrapper.WebSearchWrapper.search",
+        lambda self, query, max_results=5: [],
+    )
+    results = await obscura_browser.search_opportunities("AI hackathon India", limit=5)
+    assert results == []
+
+
+def test_analyst_agent_does_not_invent_scores_or_technology():
+    raw = [
+        {
+            "title": "Global AI Autonomous Agent Challenge",
+            "url": "https://events.example.org/agents",
+            "snippet": "Build multi-agent Python pipelines.",
         }
-        proj_dir = architect.scaffold_top_opportunity(opp)
-        assert proj_dir.exists()
-        assert (proj_dir / "PROBLEM_STATEMENT.md").exists()
-        assert (proj_dir / "README.md").exists()
-        assert (proj_dir / "requirements.txt").exists()
-        assert (proj_dir / "main.py").exists()
+    ]
 
-        problem_content = (proj_dir / "PROBLEM_STATEMENT.md").read_text(encoding="utf-8")
-        assert "Autonomous Desktop AI Assistant" in problem_content
-        assert "RTX 4050" in problem_content
+    evaluated = AnalystAgent().evaluate_opportunities(raw)
 
-    @pytest.mark.asyncio
-    async def test_notifier_whatsapp_formatting_and_dispatch(self):
-        """Verifies WhatsApp formatter creates structured executive message and delivers receipt."""
-        opps = [
+    assert len(evaluated) == 1
+    assert evaluated[0]["analysis_status"] == "not_ranked"
+    assert evaluated[0]["relevance_score"] is None
+    assert evaluated[0]["recommended_tech"] == []
+
+
+def test_architect_requires_fetched_page_before_creating_notes(tmp_path):
+    architect = ArchitectAgent(workspace_root=tmp_path)
+    with pytest.raises(ValueError, match="fetched source page"):
+        architect.scaffold_top_opportunity(
             {
-                "title": "Google Summer of Code 2026",
-                "deadline": "April 2026",
-                "mode": "Remote",
-                "tags": ["Open Source", "Google", "Python"],
-                "url": "https://summerofcode.withgoogle.com",
+                "title": "Autonomous Desktop AI Assistant",
+                "url": "https://events.example.org/assistant",
+                "snippet": "A search result only.",
             }
-        ]
-        msg = opportunity_notifier.format_whatsapp_hackathon_digest(opps, "Ganesh", "India")
-        assert "Hey Ganesh" in msg
-        assert "Google Summer of Code 2026" in msg
-        assert "+91 9324094474" in opportunity_notifier.DEFAULT_TARGET_PHONE
-
-        dispatch_res = await opportunity_notifier.send_whatsapp_message(
-            phone_number="+91 9324094474",
-            message=msg,
         )
-        assert dispatch_res["status"] in ("sent", "simulated_success")
-        assert dispatch_res["recipient"] == "+919324094474"
+    assert list(tmp_path.iterdir()) == []
 
-    @pytest.mark.asyncio
-    async def test_full_hackathon_swarm_cycle(self, tmp_path):
-        """Verifies end-to-end execution of the 4-agent swarm."""
-        swarm = hackathon_scout_swarm
-        swarm.architect.workspace_root = tmp_path
-        res = await swarm.execute_autonomous_scout_cycle(
-            target_phone="+91 9324094474",
-            search_query="AI Hackathons 2026",
-        )
-        assert res["status"] == "success"
-        assert res["total_discovered"] > 0
-        assert len(res["opportunities"]) > 0
-        assert "notification" in res
+
+def test_architect_writes_source_grounded_research_not_a_fake_app(tmp_path):
+    architect = ArchitectAgent(workspace_root=tmp_path)
+    opportunity = {
+        "title": "Autonomous Desktop AI Assistant",
+        "url": "https://events.example.org/assistant",
+        "snippet": "Official challenge page.",
+        "source_page": {
+            "status": "completed",
+            "url": "https://events.example.org/assistant",
+            "title": "Official Challenge",
+            "headings": ["Eligibility", "Submission"],
+            "text_excerpt": "Eligibility: university students. Submission: working prototype and demo.",
+        },
+    }
+
+    research_path = architect.scaffold_top_opportunity(opportunity)
+    project_dir = research_path.parent
+
+    assert research_path.name == "HACKATHON_RESEARCH.md"
+    content = research_path.read_text(encoding="utf-8")
+    assert "Eligibility: university students." in content
+    assert "Registration deadline and timezone: **Not yet verified**" in content
+    assert not (project_dir / "main.py").exists()
+    assert not (project_dir / "requirements.txt").exists()
+
+
+@pytest.mark.asyncio
+async def test_full_scout_cycle_fetches_page_and_does_not_send_by_default(tmp_path, monkeypatch):
+    swarm = HackathonScoutSwarm()
+    swarm.architect.workspace_root = tmp_path
+    monkeypatch.setattr(
+        swarm.scout,
+        "scan_opportunities",
+        AsyncMock(
+            return_value=[
+                {
+                    "title": "Official AI Hackathon",
+                    "url": "https://events.example.org/hackathon",
+                    "snippet": "Search discovery snippet.",
+                    "source": "duckduckgo_html",
+                    "verification_status": "discovery_only",
+                }
+            ]
+        ),
+    )
+    monkeypatch.setattr(
+        browser_powers,
+        "read_url",
+        lambda url: {
+            "status": "completed",
+            "url": url,
+            "title": "Official AI Hackathon",
+            "headings": ["Rules", "Eligibility"],
+            "text_excerpt": "Official rules: teams of two to four. Final submission by the published portal deadline.",
+        },
+    )
+    send = AsyncMock(side_effect=AssertionError("No notification was requested"))
+    monkeypatch.setattr(swarm.dispatcher, "notify_user", send)
+
+    result = await swarm.execute_autonomous_scout_cycle(
+        search_query="AI hackathons",
+        send_notification=False,
+    )
+
+    assert result["status"] == "completed"
+    assert result["total_discovered"] == 1
+    assert result["pages_fetched"] == 1
+    assert len(result["research_notes"]) == 1
+    assert result["notification"]["status"] == "not_requested"
+    assert send.await_count == 0
+    assert (tmp_path / "official-ai-hackathon" / "HACKATHON_RESEARCH.md").exists()
+
+
+@pytest.mark.asyncio
+async def test_scout_cycle_fails_when_source_page_cannot_be_fetched(tmp_path, monkeypatch):
+    swarm = HackathonScoutSwarm()
+    swarm.architect.workspace_root = tmp_path
+    monkeypatch.setattr(
+        swarm.scout,
+        "scan_opportunities",
+        AsyncMock(
+            return_value=[
+                {
+                    "title": "Unavailable event",
+                    "url": "https://events.example.org/unavailable",
+                    "snippet": "Search result only.",
+                }
+            ]
+        ),
+    )
+    monkeypatch.setattr(
+        browser_powers,
+        "read_url",
+        lambda url: {"status": "unavailable", "url": url, "text_excerpt": ""},
+    )
+
+    result = await swarm.execute_autonomous_scout_cycle(search_query="AI hackathons")
+
+    assert result["status"] == "unavailable"
+    assert result["pages_fetched"] == 0
+    assert result["research_notes"] == []
+    assert not list(tmp_path.iterdir())
