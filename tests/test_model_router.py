@@ -305,10 +305,15 @@ def test_failed_tool_result_marks_inference_partial_failure(monkeypatch):
     messages = [
         SimpleNamespace(
             content=None,
-            tool_calls=[SimpleNamespace(
-                id="call_failed",
-                function=SimpleNamespace(name="browser_search", arguments=json.dumps({"query": "hackathons"})),
-            )],
+            tool_calls=[
+                SimpleNamespace(
+                    id="call_failed",
+                    function=SimpleNamespace(
+                        name="browser_search",
+                        arguments=json.dumps({"query": "hackathons"}),
+                    ),
+                )
+            ],
         ),
         SimpleNamespace(content="The search provider is unavailable.", tool_calls=None),
     ]

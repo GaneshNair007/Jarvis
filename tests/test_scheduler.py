@@ -64,20 +64,23 @@ async def test_manual_trigger_hackathon_scout(scheduler):
 
 @pytest.mark.asyncio
 async def test_manual_trigger_research_digest_uses_live_search_without_sending(scheduler):
-    with patch(
-        "jarvis.powers.browser_powers.browser_powers.search_web",
-        side_effect=[
-            {
-                "status": "completed",
-                "results": [{"title": "Live project", "url": "https://example.org/project"}],
-            },
-            {"status": "unavailable", "results": [], "message": "Search provider unavailable"},
-            {"status": "unavailable", "results": [], "message": "Search provider unavailable"},
-        ],
-    ) as search, patch(
-        "jarvis.powers.whatsapp_dispatcher.whatsapp_dispatcher.send_whatsapp_message",
-        AsyncMock(side_effect=AssertionError("Scheduled job must not send messages")),
-    ) as send:
+    with (
+        patch(
+            "jarvis.powers.browser_powers.browser_powers.search_web",
+            side_effect=[
+                {
+                    "status": "completed",
+                    "results": [{"title": "Live project", "url": "https://example.org/project"}],
+                },
+                {"status": "unavailable", "results": [], "message": "Search provider unavailable"},
+                {"status": "unavailable", "results": [], "message": "Search provider unavailable"},
+            ],
+        ) as search,
+        patch(
+            "jarvis.powers.whatsapp_dispatcher.whatsapp_dispatcher.send_whatsapp_message",
+            AsyncMock(side_effect=AssertionError("Scheduled job must not send messages")),
+        ) as send,
+    ):
         result = await scheduler.trigger_job("ai_research_digest")
     assert result["status"] == "PARTIAL"
     assert result["result"]["discoveries_count"] == 1

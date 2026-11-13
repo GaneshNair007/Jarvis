@@ -754,9 +754,7 @@ class ModelRouter:
             return {
                 "task_id": decision.task_id,
                 "status": (
-                    "partial_failure"
-                    if any(not receipt.get("success") for receipt in tool_results)
-                    else "completed"
+                    "partial_failure" if any(not receipt.get("success") for receipt in tool_results) else "completed"
                 ),
                 "error": (
                     "ONE_OR_MORE_TOOLS_FAILED"
