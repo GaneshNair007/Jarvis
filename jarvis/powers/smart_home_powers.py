@@ -1,7 +1,8 @@
 """JARVIS Smart Home Powers (PWR-256 to PWR-269).
 
-Provides BroadLink IR/RF device control, smart plugs, Wi-Fi smart bulbs,
-scene automation, and voice command dispatch for room control.
+Provides an in-memory demonstration of BroadLink IR/RF, smart plugs, lights,
+scenes, and voice routing. This class is simulation-only; public physical-device
+control is routed through Home Assistant with state readback.
 Reference: Ayman William Stage 01 Smart Room Architecture.
 """
 
@@ -82,9 +83,12 @@ class SmartHomePowers:
         }
 
     def get_all_devices(self) -> Dict[str, Any]:
-        """PWR-267: Queries all registered room devices and current states."""
+        """Return the in-memory demonstration inventory."""
         return {
             "power_id": "PWR-267",
+            "status": "simulation_only",
+            "execution_mode": "simulation",
+            "message": "Demonstration state only; no physical devices were queried or controlled.",
             "device_count": len(self.device_states),
             "devices": self.device_states,
         }
@@ -96,7 +100,7 @@ class SmartHomePowers:
         dev = self.device_states.get(entity_id)
         if not dev:
             return {"power_id": "PWR-238", "entity_id": entity_id, "state": "unknown", "error": "Device not found"}
-        return {"power_id": "PWR-238", "entity_id": entity_id, "data": dev}
+        return {"power_id": "PWR-238", "execution_mode": "simulation", "entity_id": entity_id, "data": dev}
 
     def control_climate(
         self,
@@ -128,6 +132,7 @@ class SmartHomePowers:
         logger.info(f"BroadLink IR AC updated: {ac}")
         return {
             "power_id": "PWR-257",
+            "execution_mode": "simulation",
             "device": "climate.ac",
             "state": ac["state"],
             "target_temperature": ac["target_temperature"],
@@ -168,6 +173,7 @@ class SmartHomePowers:
         logger.info(f"BroadLink IR Media updated: {media}")
         return {
             "power_id": "PWR-259",
+            "execution_mode": "simulation",
             "device": device_id,
             "state": media["state"],
             "input_source": media["input_source"],
@@ -206,6 +212,7 @@ class SmartHomePowers:
         logger.info(f"Smart Plug updated: {dev}")
         return {
             "power_id": "PWR-258",
+            "execution_mode": "simulation",
             "entity_id": entity_id,
             "state": dev["state"],
             "timer_active": dev.get("timer_active", False),
@@ -248,6 +255,7 @@ class SmartHomePowers:
         logger.info(f"Smart Light updated: {bulb}")
         return {
             "power_id": "PWR-256",
+            "execution_mode": "simulation",
             "entity_id": entity_id,
             "state": bulb["state"],
             "brightness": bulb.get("brightness", 100),
@@ -292,6 +300,7 @@ class SmartHomePowers:
         else:
             return {
                 "power_id": "PWR-260",
+            "execution_mode": "simulation",
                 "scene": scene_name,
                 "status": "unrecognized",
                 "feedback": f"Scene '{scene_name}' not defined. Available scenes: work_mode, movie_night, sleep_mode, morning_wake.",

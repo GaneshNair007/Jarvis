@@ -47,10 +47,33 @@ workspace task. Dismissal stores no memory or task.
 
 Deadline ranking is deterministic and does not depend on an LLM. A capture is
 not memory until a review action commits it. The briefing only summarizes
-records actually stored in the local JARVIS database. This integration does
-not connect a syllabus parser, a calendar account, Gmail, an external smart
-home controller, or a screen Companion; those integrations require separate
-credentials, configuration, and acceptance tests.
+records actually stored in the local JARVIS database.
+
+The local career pipeline is a tracker, not a live job-search feed. Each entry
+has an evidence status: missing source URL, placeholder example URL, or saved
+URL not yet live-verified. New internship/hackathon discovery uses the live
+browser-search provider and returns unavailable when that provider fails.
+Discovery links are not described as confirmed openings until the destination
+page has been fetched and checked.
+
+Public smart-home routes use the Home Assistant REST adapter only. They require
+HASS_URL/HASS_TOKEN, a reachable controller, and a state readback before
+reporting device-control success. The old SmartHomePowers class remains an
+explicit in-memory demo; multi-device scenes and voice-to-device dispatch are
+disabled in public routes until their individual actions can be verified.
+
+Deep research no longer turns search snippets or synthetic HTML into citations.
+A citation requires successful navigation and extracted page text. Reports
+show FAILED or PARTIAL when the requested source count was not verified.
+
+A Quartr connector is not enabled by this patch. Quartr's ChatGPT connector
+and a local JARVIS process are separate runtimes; JARVIS needs an officially
+documented API/MCP endpoint and credentials or an explicit export/import
+workflow before it can call Quartr directly. Do not copy ChatGPT connector
+tokens into JARVIS configuration.
+
+Gmail sync, calendar access, a screen Companion, and other external accounts
+still require their own credentials, adapters, and acceptance tests.
 
 ## Validation
 

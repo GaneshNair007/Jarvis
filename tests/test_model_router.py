@@ -123,3 +123,14 @@ def test_model_status_reports_ollama_reachability(monkeypatch):
     status = model_router.get_status()
     assert status["tier_1_local"]["reachable"] is False
     assert status["tier_1_local"]["status"] == "unavailable"
+
+
+
+def test_natural_language_opportunity_requests_are_routed_for_live_search():
+    for prompt in [
+        "find internships",
+        "search upcoming hackathons",
+        "show me AI jobs",
+        "get me scholarships",
+    ]:
+        assert model_router.is_instant_command(prompt)

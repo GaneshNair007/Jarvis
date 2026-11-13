@@ -449,6 +449,35 @@ class JarvisOrchestrator:
                 "type": "assistant_info",
                 "message": model_router._generate_heuristic_response(query),
             }
+        elif (
+            any(action in cleaned for action in ["find ", "search ", "look for", "get me", "give me", "show me", "looking for"])
+            and any(topic in cleaned for topic in ["opportunit", "internship", "hackathon", " job", "jobs", "scholarship"])
+        ):
+            from jarvis.powers.browser_powers import browser_powers
+
+            result = browser_powers.search_web(query, max_results=8)
+            if result.get("status") != "completed":
+                return {
+                    "type": "opportunity_search",
+                    "status": "unavailable",
+                    "error": "LIVE_SEARCH_UNAVAILABLE",
+                    "message": (
+                        "Live web search returned no usable sources. No openings were inferred from "
+                        "the local saved-pipeline data."
+                    ),
+                    "details": result,
+                }
+            return {
+                "type": "opportunity_search",
+                "status": "completed",
+                "source": "live_duckduckgo_search",
+                "message": (
+                    f"Live search returned {result['results_count']} source links. "
+                    "These are discovery results, not verified openings or confirmed deadlines."
+                ),
+                "query": query,
+                "results": result["results"],
+            }
         elif cleaned.startswith("search ") or "web search" in cleaned:
             from jarvis.powers.browser_powers import browser_powers
 

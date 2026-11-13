@@ -75,6 +75,7 @@ class ModelRouter:
         r"^.*(turn (on|off)|set|switch)\s+(the\s+)?(ac|air condition|projector|tv|geyser|lights?|lamp).*",
         r"^.*(movie night|work mode|sleep mode|morning wake).*",
         r"^.*(opportunity radar|career radar|daily pulse|system pulse|weekly sweep).*",
+        r"^(find|search|look for|get me|give me|show me|looking for)\b.*\b(opportunities|internships?|hackathons?|jobs?|scholarships?)\b.*$",
         r"^.*(gmail|check (my )?(email|mail|inbox)|missed (email|mail)).*",
         r"^connect (my )?gmail.*",
         r"^(status|help)$",
@@ -617,7 +618,18 @@ class ModelRouter:
     def _generate_heuristic_response(self, prompt: str) -> str:
         """Return capability guidance without claiming unverified features are online."""
         p = prompt.lower().strip()
-        if "help" in p:
+        if p in {"hi", "hello", "hey", "hi jarvis", "hello jarvis", "hey jarvis"}:
+            return (
+                "Hello. I'm JARVIS, your local-first assistant. I can manage saved workspace tasks, "
+                "deadlines and notes; connected tools are reported unavailable until their providers are reachable."
+            )
+        if "who are you" in p or "introduce yourself" in p:
+            return (
+                "I'm JARVIS, your local-first AI assistant. I can manage the saved workspace and use configured "
+                "local or connected tools. When Ollama or an integration is offline, I'll say so rather than "
+                "pretend an action ran."
+            )
+        if "help" in p or "what can you do" in p:
             return (
                 "I can answer through the configured local model, report system health, manage workspace "
                 "courses, tasks and reviewable captures, and invoke integrations only when they are actually "
@@ -631,7 +643,7 @@ class ModelRouter:
                 "readiness; a configured provider is not necessarily reachable."
             )
         return (
-            "I received your request, but I cannot claim an action was completed without a real execution "
+            "JARVIS received your request, but cannot claim an action was completed without a real execution "
             "handler and a verifiable result. Start the local Ollama server for local conversation, or "
             "configure a supported provider."
         )
