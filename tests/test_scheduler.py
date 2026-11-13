@@ -27,21 +27,29 @@ def test_default_jobs_registered(scheduler):
 
 @pytest.mark.asyncio
 async def test_manual_trigger_career_scout(scheduler):
-    mock_handler = AsyncMock(return_value={"type": "career_scout", "opportunities_found": 3, "whatsapp_status": "SENT"})
+    mock_handler = AsyncMock(
+        return_value={
+            "type": "career_scout",
+            "status": "discovery_only",
+            "opportunities_found": 3,
+            "notification": {"status": "not_requested"},
+        }
+    )
     scheduler.jobs["career_internship_scout"].handler = mock_handler
 
     result = await scheduler.trigger_job("career_internship_scout")
-    assert result["status"] == "SUCCESS"
+    assert result["status"] == "PARTIAL"
     assert result["job_id"] == "career_internship_scout"
+    assert result["result"]["notification"]["status"] == "not_requested"
     assert scheduler.jobs["career_internship_scout"].run_count == 1
-    assert scheduler.jobs["career_internship_scout"].last_status == "SUCCESS"
+    assert scheduler.jobs["career_internship_scout"].last_status == "PARTIAL"
 
 
 @pytest.mark.asyncio
 async def test_manual_trigger_hackathon_scout(scheduler):
     mock_res = {
         "pipeline_id": "pipe_test_123",
-        "status": "COMPLETED",
+        "status": "completed",
         "top_hackathon": "Smart India Hackathon 2026",
     }
     with patch(
@@ -55,15 +63,48 @@ async def test_manual_trigger_hackathon_scout(scheduler):
 
 
 @pytest.mark.asyncio
-async def test_manual_trigger_research_digest(scheduler):
+async def test_manual_trigger_research_digest_uses_live_search_without_sending(scheduler):
     with patch(
+        "jarvis.powers.browser_powers.browser_powers.search_web",
+        side_effect=[
+            {
+                "status": "completed",
+                "results": [{"title": "Live project", "url": "https://example.org/project"}],
+            },
+            {"status": "unavailable", "results": [], "message": "Search provider unavailable"},
+            {"status": "unavailable", "results": [], "message": "Search provider unavailable"},
+        ],
+    ) as search, patch(
         "jarvis.powers.whatsapp_dispatcher.whatsapp_dispatcher.send_whatsapp_message",
-        AsyncMock(return_value={"status": "SENT"}),
-    ):
+        AsyncMock(side_effect=AssertionError("Scheduled job must not send messages")),
+    ) as send:
         result = await scheduler.trigger_job("ai_research_digest")
-        assert result["status"] == "SUCCESS"
-        assert result["result"]["whatsapp_status"] == "SENT"
-        assert scheduler.jobs["ai_research_digest"].run_count == 1
+    assert result["status"] == "PARTIAL"
+    assert result["result"]["discoveries_count"] == 1
+    assert result["result"]["discoveries"][0]["verification_status"] == "discovery_only"
+    assert result["result"]["notification"]["status"] == "not_requested"
+    assert search.call_count == 3
+    send.assert_not_awaited()
+    assert scheduler.jobs["ai_research_digest"].run_count == 1
+
+
+@pytest.mark.asyncio
+async def test_handler_without_status_is_not_marked_success(scheduler):
+    scheduler.jobs["career_internship_scout"].handler = AsyncMock(return_value={"message": "I ran"})
+    result = await scheduler.trigger_job("career_internship_scout")
+    assert result["status"] == "UNVERIFIED"
+    assert scheduler.jobs["career_internship_scout"].last_status == "UNVERIFIED"
+    assert "no verifiable execution status" in result["error"].lower()
+
+
+@pytest.mark.asyncio
+async def test_unavailable_handler_is_recorded_unavailable(scheduler):
+    scheduler.jobs["career_internship_scout"].handler = AsyncMock(
+        return_value={"status": "unavailable", "error": "LIVE_SEARCH_UNAVAILABLE"}
+    )
+    result = await scheduler.trigger_job("career_internship_scout")
+    assert result["status"] == "UNAVAILABLE"
+    assert scheduler.jobs["career_internship_scout"].last_status == "UNAVAILABLE"
 
 
 @pytest.mark.asyncio
