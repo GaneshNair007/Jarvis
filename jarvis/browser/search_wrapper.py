@@ -64,10 +64,7 @@ class WebSearchWrapper:
             logger.warning(f"DuckDuckGo search query failed or timed out: {e}")
 
         if not results:
-            logger.warning(
-                "Live DuckDuckGo search returned no parseable results. "
-                "No synthetic fallback links will be returned."
-            )
+            logger.warning("Live DuckDuckGo search returned no parseable results. No synthetic fallback links will be returned.")
 
         return results[:max_results]
 

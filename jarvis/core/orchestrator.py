@@ -449,9 +449,11 @@ class JarvisOrchestrator:
                 "type": "assistant_info",
                 "message": model_router._generate_heuristic_response(query),
             }
-        elif (
-            any(action in cleaned for action in ["find ", "search ", "look for", "get me", "give me", "show me", "looking for"])
-            and any(topic in cleaned for topic in ["opportunit", "internship", "hackathon", " job", "jobs", "scholarship"])
+        elif any(
+            action in cleaned
+            for action in ["find ", "search ", "look for", "get me", "give me", "show me", "looking for"]
+        ) and any(
+            topic in cleaned for topic in ["opportunit", "internship", "hackathon", " job", "jobs", "scholarship"]
         ):
             from jarvis.powers.browser_powers import browser_powers
 

@@ -82,12 +82,7 @@ def _require_home_assistant() -> Dict[str, Any]:
 
 def _validate_entity(entity_id: str, expected_domain: str) -> str:
     clean = str(entity_id or "").strip()
-    if (
-        not clean.startswith(f"{expected_domain}.")
-        or len(clean) > 255
-        or "/" in clean
-        or "\\" in clean
-    ):
+    if not clean.startswith(f"{expected_domain}.") or len(clean) > 255 or "/" in clean or "\\" in clean:
         raise HTTPException(
             status_code=422,
             detail=f"Expected a Home Assistant {expected_domain} entity ID.",
@@ -206,32 +201,21 @@ async def control_ac(req: ClimateRequest):
     result = _service("climate", service, entity_id, expected_state=expected)
     if req.action != "off":
         if req.temperature is not None:
-            result = _service(
-                "climate", "set_temperature", entity_id,
-                {"temperature": req.temperature}, expected_state="not_off"
-            )
+            result = _service("climate", "set_temperature", entity_id, {"temperature": req.temperature}, expected_state="not_off")
         if req.mode is not None:
             if req.mode not in {"cool", "heat", "fan_only", "dry", "auto"}:
                 raise HTTPException(status_code=422, detail="Unsupported HVAC mode.")
-            result = _service(
-                "climate", "set_hvac_mode", entity_id,
-                {"hvac_mode": req.mode}, expected_state="not_off"
-            )
+            result = _service("climate", "set_hvac_mode", entity_id, {"hvac_mode": req.mode}, expected_state="not_off")
         if req.fan_speed is not None:
             if req.fan_speed not in {"low", "medium", "high", "auto"}:
                 raise HTTPException(status_code=422, detail="Unsupported fan mode.")
-            result = _service(
-                "climate", "set_fan_mode", entity_id,
-                {"fan_mode": req.fan_speed}, expected_state="not_off"
-            )
+            result = _service("climate", "set_fan_mode", entity_id, {"fan_mode": req.fan_speed}, expected_state="not_off")
     return {**result, "entity_id": entity_id}
 
 
 @router.post("/media")
 async def control_projector_tv(req: MediaRequest):
-    entity_id = _validate_entity(
-        os.getenv("JARVIS_HA_MEDIA_ENTITY", req.device_id), "media_player"
-    )
+    entity_id = _validate_entity(os.getenv("JARVIS_HA_MEDIA_ENTITY", req.device_id), "media_player")
     service, expected = _resolve_action(entity_id, req.action)
     result = _service("media_player", service, entity_id, expected_state=expected)
     if req.input_source:

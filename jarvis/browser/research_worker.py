@@ -131,9 +131,7 @@ class ResearchWorker:
         # 3. Generate Markdown Research Report
         report_filename = f"report_{timestamp}.md"
         report_path = self.output_dir / report_filename
-        report_status = (
-            "COMPLETED" if len(citations) >= max_docs else "PARTIAL" if citations else "FAILED"
-        )
+        report_status = "COMPLETED" if len(citations) >= max_docs else "PARTIAL" if citations else "FAILED"
         markdown_body = self._build_markdown_report(topic, citations, timestamp, report_status)
 
         with open(report_path, "w", encoding="utf-8") as f:

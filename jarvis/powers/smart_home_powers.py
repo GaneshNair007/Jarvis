@@ -300,7 +300,7 @@ class SmartHomePowers:
         else:
             return {
                 "power_id": "PWR-260",
-            "execution_mode": "simulation",
+                "execution_mode": "simulation",
                 "scene": scene_name,
                 "status": "unrecognized",
                 "feedback": f"Scene '{scene_name}' not defined. Available scenes: work_mode, movie_night, sleep_mode, morning_wake.",
@@ -308,6 +308,7 @@ class SmartHomePowers:
 
         return {
             "power_id": "PWR-260",
+            "execution_mode": "simulation",
             "scene": scene_name,
             "status": "active",
             "feedback": desc,
