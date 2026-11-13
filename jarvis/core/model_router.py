@@ -736,10 +736,7 @@ class ModelRouter:
 
             # Calculate cost across the initial tool-selection call and final answer call.
             try:
-                cost_usd = sum(
-                    litellm.completion_cost(completion_response=item) or 0.0
-                    for item in usage_responses
-                )
+                cost_usd = sum(litellm.completion_cost(completion_response=item) or 0.0 for item in usage_responses)
             except Exception:
                 cost_usd = 0.0 if decision.tier in ("TIER_1_LOCAL", "TIER_2_PRIVATE") else decision.estimated_cost_usd
 

@@ -134,6 +134,7 @@ def test_natural_language_opportunity_requests_are_routed_for_live_search():
     ]:
         assert model_router.is_instant_command(prompt)
 
+
 def test_model_router_executes_selected_tool_and_returns_final_answer(monkeypatch):
     import json
     import sys
@@ -236,6 +237,7 @@ def test_model_router_executes_selected_tool_and_returns_final_answer(monkeypatc
     assert "tools" in calls[0]
     assert "tools" not in calls[1]
     assert calls[1]["messages"][-1]["role"] == "tool"
+
 
 def test_offline_model_is_not_reported_as_success(monkeypatch):
     from jarvis.core.model_router import ModelRouter, RoutingDecision
