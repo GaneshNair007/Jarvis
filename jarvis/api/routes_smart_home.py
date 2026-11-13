@@ -201,7 +201,9 @@ async def control_ac(req: ClimateRequest):
     result = _service("climate", service, entity_id, expected_state=expected)
     if req.action != "off":
         if req.temperature is not None:
-            result = _service("climate", "set_temperature", entity_id, {"temperature": req.temperature}, expected_state="not_off")
+            result = _service(
+                "climate", "set_temperature", entity_id, {"temperature": req.temperature}, expected_state="not_off"
+            )
         if req.mode is not None:
             if req.mode not in {"cool", "heat", "fan_only", "dry", "auto"}:
                 raise HTTPException(status_code=422, detail="Unsupported HVAC mode.")
@@ -209,7 +211,9 @@ async def control_ac(req: ClimateRequest):
         if req.fan_speed is not None:
             if req.fan_speed not in {"low", "medium", "high", "auto"}:
                 raise HTTPException(status_code=422, detail="Unsupported fan mode.")
-            result = _service("climate", "set_fan_mode", entity_id, {"fan_mode": req.fan_speed}, expected_state="not_off")
+            result = _service(
+                "climate", "set_fan_mode", entity_id, {"fan_mode": req.fan_speed}, expected_state="not_off"
+            )
     return {**result, "entity_id": entity_id}
 
 

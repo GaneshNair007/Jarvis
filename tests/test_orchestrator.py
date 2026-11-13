@@ -71,6 +71,7 @@ def test_screenshot_requires_a_real_capture_receipt(monkeypatch):
     assert result["file"] == "capture.png"
     assert result["sha256"] == "abc123"
 
+
 def test_opportunity_search_uses_live_results_not_saved_pipeline(monkeypatch):
     from jarvis.powers.browser_powers import browser_powers
 

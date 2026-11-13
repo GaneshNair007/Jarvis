@@ -124,6 +124,7 @@ def test_model_status_reports_ollama_reachability(monkeypatch):
     assert status["tier_1_local"]["reachable"] is False
     assert status["tier_1_local"]["status"] == "unavailable"
 
+
 def test_natural_language_opportunity_requests_are_routed_for_live_search():
     for prompt in [
         "find internships",
