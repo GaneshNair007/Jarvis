@@ -11,6 +11,9 @@ jobs:
   coverage:
     name: 📈 Generate Coverage Report
     runs-on: ubuntu-latest
+    permissions:
+      contents: write        # badge data branch (python-coverage-comment-action)
+      pull-requests: write   # coverage comment on PRs
     services:
       postgres:
         image: postgres:15
