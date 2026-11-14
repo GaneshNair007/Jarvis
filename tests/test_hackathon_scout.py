@@ -128,8 +128,8 @@ async def test_full_scout_cycle_fetches_page_and_does_not_send_by_default(tmp_pa
             "text_excerpt": "Official rules: teams of two to four. Final submission by the published portal deadline.",
         },
     )
-    send = AsyncMock(side_effect=AssertionError("No notification was requested"))
-    monkeypatch.setattr(swarm.dispatcher, "notify_user", send)
+    send = AsyncMock(side_effect=AssertionError("No WhatsApp dispatch was requested"))
+    monkeypatch.setattr(opportunity_notifier, "send_whatsapp_message", send)
 
     result = await swarm.execute_autonomous_scout_cycle(
         search_query="AI hackathons",
