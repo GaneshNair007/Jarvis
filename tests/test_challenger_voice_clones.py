@@ -105,7 +105,7 @@ def test_desktop_worker_handles_focus_lock_failure(monkeypatch, tmp_path):
         GetWindowRect=lambda _hwnd: (0, 0, 640, 480),
         EnumWindows=enum_windows,
         ShowWindow=lambda *_args: None,
-        SetForegroundWindow=lambda _hwnd: (_ for _ in ()).throw(OSError("foreground lock denied")),
+        SetForegroundWindow=lambda _hwnd: False,
     )
     con = SimpleNamespace(SW_RESTORE=9)
     monkeypatch.setattr(desktop_module, "HAS_WIN32", True)
