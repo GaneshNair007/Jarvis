@@ -48,6 +48,7 @@ jobs:
           pip install pytest pytest-cov coverage[toml]
           pip install -r requirements.txt
           pip install -r requirements-ci.txt
+          python -m pip install --no-deps "openwakeword==0.6.0"
           python -c "from openwakeword.utils import download_models; download_models(['hey_jarvis'])"
           python -m playwright install --with-deps chromium
 
