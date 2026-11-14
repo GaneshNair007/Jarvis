@@ -146,5 +146,9 @@ def test_api_workforce_fleet_status():
     res = client.get("/workforce/fleet")
     assert res.status_code == 200
     data = res.json()
-    assert data["total_agents"] == 105
-    assert data["status"] == "ALL_SYSTEMS_OPERATIONAL"
+    assert data["registered_components"] == 4
+    assert data["components"] == ["scout", "analyst", "source_page_reader", "research_note_architect"]
+    assert data["active_workers"] == 0
+    assert data["execution_mode"] == "on_demand_workflow"
+    assert data["status"] == "IDLE"
+    assert "not a 105-process agent fleet" in data["message"]
