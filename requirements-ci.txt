@@ -8,7 +8,6 @@ pip-audit>=2.7.0
 python-multipart>=0.0.9
 pytest-benchmark>=4.0.0
 # CPU ONNX wake-word model smoke tests (TFLite is not used by JARVIS).
-openwakeword>=0.6.0,<0.7
 onnxruntime>=1.17,<2
 scipy>=1.3,<2
 tqdm>=4,<5
