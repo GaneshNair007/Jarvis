@@ -41,6 +41,9 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements-ci.txt
 
+      - name: 🎙️ Download real openWakeWord ONNX models
+        run: python -c "from openwakeword.utils import download_models; download_models(['hey_jarvis'])"
+
       - name: 🌐 Install Playwright browsers (Linux)
         if: runner.os == 'Linux'
         run: python -m playwright install --with-deps chromium
