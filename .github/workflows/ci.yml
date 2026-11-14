@@ -85,6 +85,9 @@ jobs:
           python -m pip install -r requirements-ci.txt
           python -m pip check
 
+      - name: Download real openWakeWord ONNX models
+        run: python -c "from openwakeword.utils import download_models; download_models(['hey_jarvis'])"
+
       - name: Install Playwright Chromium
         run: python -m playwright install --with-deps chromium
 
