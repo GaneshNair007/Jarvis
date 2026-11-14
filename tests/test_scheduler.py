@@ -64,9 +64,13 @@ async def test_manual_trigger_hackathon_scout(scheduler):
 
 @pytest.mark.asyncio
 async def test_manual_trigger_research_digest_uses_live_search_without_sending(scheduler):
+    from jarvis.powers.browser_powers import browser_powers
+    from jarvis.powers.whatsapp_dispatcher import whatsapp_dispatcher
+
     with (
-        patch(
-            "jarvis.powers.browser_powers.browser_powers.search_web",
+        patch.object(
+            browser_powers,
+            "search_web",
             side_effect=[
                 {
                     "status": "completed",
@@ -76,8 +80,9 @@ async def test_manual_trigger_research_digest_uses_live_search_without_sending(s
                 {"status": "unavailable", "results": [], "message": "Search provider unavailable"},
             ],
         ) as search,
-        patch(
-            "jarvis.powers.whatsapp_dispatcher.whatsapp_dispatcher.send_whatsapp_message",
+        patch.object(
+            whatsapp_dispatcher,
+            "send_whatsapp_message",
             AsyncMock(side_effect=AssertionError("Scheduled job must not send messages")),
         ) as send,
     ):
