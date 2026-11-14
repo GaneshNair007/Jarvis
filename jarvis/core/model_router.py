@@ -756,11 +756,7 @@ class ModelRouter:
                 "status": (
                     "partial_failure" if any(not receipt.get("success") for receipt in tool_results) else "completed"
                 ),
-                "error": (
-                    "ONE_OR_MORE_TOOLS_FAILED"
-                    if any(not receipt.get("success") for receipt in tool_results)
-                    else None
-                ),
+                "error": "ONE_OR_MORE_TOOLS_FAILED" if any(not receipt.get("success") for receipt in tool_results) else None,
                 "tier": decision.tier,
                 "model": model_string,
                 "reply": reply_text,
