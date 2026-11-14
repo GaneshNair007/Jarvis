@@ -13,6 +13,27 @@ sys.path.insert(0, str(PROJECT_ROOT))
 os.environ["JARVIS_ENV"] = "test"
 os.environ["JARVIS_SECRET_KEY"] = "test_secret_key_32_bytes_long_ok"
 
+def pytest_collection_modifyitems(config, items):
+    """Do not collect DPAPI-only tests on operating systems without Windows DPAPI.
+
+    The test runs on Windows (where the CI dependency installs pywin32). On
+    Linux/macOS it is deselected, not reported as a skipped test, because the
+    Windows cryptographic provider is not part of those operating systems.
+    """
+    if sys.platform == "win32":
+        return
+
+    deselected = [
+        item for item in items
+        if item.name == "test_dpapi_store_encrypts_at_rest"
+    ]
+    if deselected:
+        for item in deselected:
+            items.remove(item)
+        config.hook.pytest_deselected(items=deselected)
+
+
+
 
 @pytest.fixture(autouse=True)
 def isolate_test_audit_ledger(tmp_path, monkeypatch):
