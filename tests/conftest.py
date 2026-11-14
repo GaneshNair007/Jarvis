@@ -13,6 +13,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 os.environ["JARVIS_ENV"] = "test"
 os.environ["JARVIS_SECRET_KEY"] = "test_secret_key_32_bytes_long_ok"
 
+
 def pytest_collection_modifyitems(config, items):
     """Do not collect DPAPI-only tests on operating systems without Windows DPAPI.
 
@@ -28,8 +29,6 @@ def pytest_collection_modifyitems(config, items):
         for item in deselected:
             items.remove(item)
         config.hook.pytest_deselected(items=deselected)
-
-
 
 
 @pytest.fixture(autouse=True)
