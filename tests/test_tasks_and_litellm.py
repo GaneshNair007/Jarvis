@@ -96,8 +96,12 @@ def test_litellm_bypass_execution():
     assert res["cost_usd"] == 0.0
 
 
-def test_litellm_local_inference_fallback():
-    """Verifies execute_inference on Local Tier returns a clean response with token counting."""
+def test_litellm_local_inference_fallback(monkeypatch):
+    """Verifies an unavailable local backend is reported without fabricated token usage."""
+    from jarvis.config import settings
+
+    monkeypatch.setattr(settings, "jarvis_env", "test")
+    monkeypatch.setattr(model_router, "check_ollama_readiness", lambda use_cache=True: False)
     req = RoutingRequest(
         user_intent="Explain Docker networking in 1 sentence", task_type="general", sensitivity_level="low"
     )
@@ -105,7 +109,9 @@ def test_litellm_local_inference_fallback():
     assert decision.tier == "TIER_1_LOCAL"
 
     res = model_router.execute_inference(decision=decision, prompt=req.user_intent, timeout_sec=1.5)
-    assert res["status"] in ("completed", "fallback_completed", "offline_unavailable", "success")
-    assert "reply" in res
-    assert res["tokens_used"] > 0
+    assert res["status"] == "unavailable"
+    assert res["error"] in ("LOCAL_MODEL_UNAVAILABLE", "LOCAL_MODEL_UNAVAILABLE_FOR_TOOL_EXECUTION")
+    assert "not reachable" in res["reply"].lower()
+    assert res["tokens_used"] == 0
+    assert res["cost_usd"] == 0.0
     assert "duration_ms" in res

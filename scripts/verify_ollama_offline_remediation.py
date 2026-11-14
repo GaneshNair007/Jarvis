@@ -5,7 +5,7 @@ Empirically verifies:
 2. Cold probe latency < 100ms.
 3. Cached probe latency < 1ms for turns 2..10.
 4. Zero unhandled exceptions.
-5. Structured 'offline_unavailable' payload returned.
+5. Structured 'unavailable' payload returned when no local model is reachable.
 6. Adversarial edge cases: empty prompt, large payload, concurrent execution, TTL expiry.
 """
 
@@ -23,12 +23,16 @@ from typing import Any, Dict, List
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from jarvis.core.model_router import model_router, RoutingDecision
+from jarvis.config import settings
 
 
 def run_10_turn_benchmark() -> Dict[str, Any]:
     print("=" * 70)
     print("TEST 1: 10 CONSECUTIVE TURNS (TIER_1_LOCAL, OLLAMA OFFLINE)")
     print("=" * 70)
+
+    # Keep the check local-only: never attempt cloud inference from this verification script.
+    settings.jarvis_env = "test"
 
     # Invalidate cache to ensure Turn 1 is a true cold probe
     model_router._ollama_probe_cache = None
@@ -68,16 +72,15 @@ def run_10_turn_benchmark() -> Dict[str, Any]:
         # Assert zero unhandled exceptions (function returned)
         assert isinstance(response, dict), f"Turn {turn}: Response must be a dict"
         assert required_keys.issubset(response.keys()), f"Turn {turn}: Missing required keys in response"
-        assert response["status"] == "offline_unavailable", (
-            f"Turn {turn}: Expected status 'offline_unavailable', got {response['status']}"
+        assert response["status"] == "unavailable", (
+            f"Turn {turn}: Expected status 'unavailable', got {response['status']}"
         )
         assert response["tier"] == "TIER_1_LOCAL", f"Turn {turn}: Expected tier 'TIER_1_LOCAL', got {response['tier']}"
         assert response["cost_usd"] == 0.0, f"Turn {turn}: Expected cost_usd == 0.0, got {response['cost_usd']}"
-        assert (
-            "unreachable" in response["error"].lower()
-            or "timed out" in response["error"].lower()
-            or "refused" in response["error"].lower()
-        ), f"Turn {turn}: Unexpected error message: {response['error']}"
+        assert response["error"] == "LOCAL_MODEL_UNAVAILABLE", (
+            f"Turn {turn}: Unexpected error code: {response['error']}"
+        )
+        assert response["tokens_used"] == 0, "No inference means no tokens may be reported."
 
         results.append(
             {
@@ -148,8 +151,8 @@ def run_adversarial_tests() -> Dict[str, Any]:
     t0 = time.perf_counter()
     res_empty = model_router.execute_inference(decision, "")
     lat_empty = (time.perf_counter() - t0) * 1000.0
-    assert res_empty["status"] == "offline_unavailable"
-    assert res_empty["tokens_used"] == 1  # max(1, 0 // 4)
+    assert res_empty["status"] == "unavailable"
+    assert res_empty["tokens_used"] == 0
     adv_results["empty_prompt"] = {
         "latency_ms": lat_empty,
         "status": res_empty["status"],
@@ -163,8 +166,8 @@ def run_adversarial_tests() -> Dict[str, Any]:
     t0 = time.perf_counter()
     res_large = model_router.execute_inference(decision, large_prompt)
     lat_large = (time.perf_counter() - t0) * 1000.0
-    assert res_large["status"] == "offline_unavailable"
-    assert res_large["tokens_used"] == len(large_prompt) // 4
+    assert res_large["status"] == "unavailable"
+    assert res_large["tokens_used"] == 0
     adv_results["large_prompt"] = {
         "latency_ms": lat_large,
         "status": res_large["status"],
@@ -184,7 +187,7 @@ def run_adversarial_tests() -> Dict[str, Any]:
             t_start = time.perf_counter()
             res = f.result()
             concurrent_latencies.append((time.perf_counter() - t_start) * 1000.0)
-            assert res["status"] == "offline_unavailable"
+            assert res["status"] == "unavailable"
             assert res["cost_usd"] == 0.0
 
     max_concurrent_lat = max(concurrent_latencies)
@@ -205,7 +208,7 @@ def run_adversarial_tests() -> Dict[str, Any]:
     t0 = time.perf_counter()
     res_ttl = model_router.execute_inference(decision, "Post-TTL prompt")
     lat_ttl = (time.perf_counter() - t0) * 1000.0
-    assert res_ttl["status"] == "offline_unavailable"
+    assert res_ttl["status"] == "unavailable"
     assert lat_ttl < 100.0, f"Post-TTL probe latency too high: {lat_ttl:.2f} ms"
     adv_results["ttl_refresh"] = {"latency_ms": lat_ttl, "pass": lat_ttl < 100.0}
     print(f"      TTL refreshed probe completed in {lat_ttl:.4f} ms (< 100ms threshold).")

@@ -51,16 +51,19 @@ def test_ollama_offline_10_consecutive_turns_latency(monkeypatch):
 
     # 3. Output payload structure and zero unhandled exceptions
     for i, resp in enumerate(responses, start=1):
-        assert resp["status"] == "success", f"Turn {i} invalid status: {resp['status']}"
+        assert resp["status"] == "unavailable", f"Turn {i} invalid status: {resp['status']}"
         assert resp["tier"] == "TIER_1_LOCAL", f"Turn {i} invalid tier: {resp['tier']}"
         assert resp["cost_usd"] == 0.0, f"Turn {i} invalid cost: {resp['cost_usd']}"
+        assert resp["tokens_used"] == 0
         assert "ollama" in resp["model"].lower()
-        assert resp["error"] is None
-        assert "reply" in resp and len(resp["reply"]) > 0
+        assert resp["error"] == "LOCAL_MODEL_UNAVAILABLE"
+        assert "not reachable" in resp["reply"].lower()
 
 
-def test_ollama_offline_adversarial_prompts():
-    """Verify adversarial, empty, and large prompts produce structured replies without crashing."""
+def test_ollama_offline_adversarial_prompts(monkeypatch):
+    """Verify offline prompts return an explicit unavailable receipt without crashing."""
+    monkeypatch.setattr(settings, "jarvis_env", "test")
+    monkeypatch.setattr(model_router, "check_ollama_readiness", lambda use_cache=True: False)
     decision = RoutingDecision(
         task_id="pytest_offline_adv_01",
         tier="TIER_1_LOCAL",
@@ -83,7 +86,9 @@ def test_ollama_offline_adversarial_prompts():
 
     for i, prompt in enumerate(adversarial_inputs):
         resp = model_router.execute_inference(decision, prompt)
-        assert resp["status"] == "success", f"Failed on input {i}: {resp}"
+        assert resp["status"] == "unavailable", f"Failed on input {i}: {resp}"
         assert resp["tier"] == "TIER_1_LOCAL"
-        assert len(resp["reply"]) > 0
+        assert resp["error"] == "LOCAL_MODEL_UNAVAILABLE"
+        assert "not reachable" in resp["reply"].lower()
+        assert resp["tokens_used"] == 0
         assert resp["cost_usd"] == 0.0
