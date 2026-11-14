@@ -123,8 +123,11 @@ class DesktopWorker:
         try:
             hwnd = target["hwnd"]
             win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
-            win32gui.SetForegroundWindow(hwnd)
+            focused = win32gui.SetForegroundWindow(hwnd)
             time.sleep(0.2)
+            if focused is False:
+                logger.warning("Windows refused foreground focus for window %s", target["title"])
+                return False
             return True
         except Exception as e:
             logger.error("Failed to focus window %s: %s", target["title"], e)
