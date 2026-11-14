@@ -95,6 +95,9 @@ def _make_daemon(transcripts=None):
         tts=tts,
         speak_replies=True,
         wake_phrases=["hey jarvis", "jarvis", "ok jarvis"],
+        # These state-machine tests target the transcription path. The real
+        # ONNX acoustic gate is exercised independently in test_acoustic_wake.py.
+        acoustic_gate_enabled=False,
     )
     daemon.state = "LISTENING_FOR_WAKE"
     return daemon, orch, tts
