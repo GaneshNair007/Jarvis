@@ -324,7 +324,10 @@ def test_revoke_calls_provider_and_deletes_local_token():
 
 
 def test_dpapi_store_encrypts_at_rest(tmp_path):
-    pytest.importorskip("win32crypt")
+    # pywin32 is installed only on Windows runners; non-Windows collection
+    # deselects this OS-specific integration test in tests/conftest.py.
+    import win32crypt  # noqa: F401
+
     store = DpapiFileStore(tmp_path)
     secret_payload = {"refresh_token": "super-secret-refresh-value", "access_token": "secret-access"}
 
