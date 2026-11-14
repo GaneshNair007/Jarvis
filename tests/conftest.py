@@ -23,10 +23,7 @@ def pytest_collection_modifyitems(config, items):
     if sys.platform == "win32":
         return
 
-    deselected = [
-        item for item in items
-        if item.name == "test_dpapi_store_encrypts_at_rest"
-    ]
+    deselected = [item for item in items if item.name == "test_dpapi_store_encrypts_at_rest"]
     if deselected:
         for item in deselected:
             items.remove(item)
