@@ -14,10 +14,16 @@ def test_orchestrator_instant_command():
     assert "cpu_percent" in result["response"]
 
 
-def test_orchestrator_chat_query():
+def test_orchestrator_chat_query(monkeypatch):
+    monkeypatch.setattr(
+        orchestrator.router,
+        "execute_inference",
+        lambda **_kwargs: {"status": "completed", "reply": "The speed of light is approximately 299,792 km/s."},
+    )
     result = asyncio.run(orchestrator.process_user_query("What is the speed of light?"))
     assert result["status"] == "COMPLETED"
     assert result["tier"] in ["TIER_1_LOCAL", "TIER_2_PRIVATE", "TIER_3_CLOUD"]
+    assert result["response"]["reply"].startswith("The speed of light")
 
 
 def test_five_layer_memory():
@@ -38,3 +44,72 @@ def test_five_layer_memory():
     recalled = memory_manager.recall(layer="EPISODIC", query="PostgreSQL")
     assert len(recalled) > 0
     assert "PostgreSQL" in recalled[0]["content"]
+
+
+def test_unhandled_instant_command_never_claims_success():
+    result = orchestrator._execute_instant_command("open an unsupported application")
+    assert result["status"] == "unavailable"
+    assert result["error"] == "NO_HANDLER"
+
+
+def test_smart_home_demo_state_is_never_reported_as_physical_control():
+    result = orchestrator._execute_instant_command("turn on the AC")
+    assert result["status"] == "unavailable"
+    assert result["error"] == "NO_VERIFIED_DEVICE_CONTROLLER"
+
+
+def test_screenshot_requires_a_real_capture_receipt(monkeypatch):
+    from jarvis.powers.screen_powers import screen_powers
+
+    monkeypatch.setattr(
+        screen_powers,
+        "capture_region",
+        lambda: {"status": "success", "path": "capture.png", "sha256": "abc123"},
+    )
+    result = orchestrator._execute_instant_command("take screenshot")
+    assert result["status"] == "success"
+    assert result["file"] == "capture.png"
+    assert result["sha256"] == "abc123"
+
+
+def test_opportunity_search_uses_live_results_not_saved_pipeline(monkeypatch):
+    from jarvis.powers.browser_powers import browser_powers
+
+    monkeypatch.setattr(
+        browser_powers,
+        "search_web",
+        lambda query, max_results=5: {
+            "status": "completed",
+            "results_count": 1,
+            "results": [
+                {
+                    "title": "Official internship listing",
+                    "url": "https://careers.example.org/internship",
+                    "snippet": "Listing page",
+                }
+            ],
+        },
+    )
+    result = orchestrator._execute_instant_command("find internships")
+    assert result["type"] == "opportunity_search"
+    assert result["status"] == "completed"
+    assert result["source"] == "live_duckduckgo_search"
+    assert len(result["results"]) == 1
+
+
+def test_opportunity_search_reports_provider_unavailable(monkeypatch):
+    from jarvis.powers.browser_powers import browser_powers
+
+    monkeypatch.setattr(
+        browser_powers,
+        "search_web",
+        lambda query, max_results=5: {
+            "status": "unavailable",
+            "results_count": 0,
+            "results": [],
+        },
+    )
+    result = orchestrator._execute_instant_command("find internships")
+    assert result["status"] == "unavailable"
+    assert result["error"] == "LIVE_SEARCH_UNAVAILABLE"
+    assert "No openings were inferred" in result["message"]

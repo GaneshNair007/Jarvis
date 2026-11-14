@@ -154,31 +154,94 @@ def test_weekly_ops_sweep():
 # ==========================================
 
 
-def test_api_smarthome_endpoints(client):
-    # GET devices
-    r = client.get("/api/v1/smarthome/devices")
-    assert r.status_code == 200
-    assert r.json()["power_id"] == "PWR-267"
+def test_api_smarthome_endpoints(client, monkeypatch):
+    """Public smart-home routes use Home Assistant and never the simulator."""
+    from jarvis.api import routes_smart_home
 
-    # POST climate
-    r = client.post("/api/v1/smarthome/climate", json={"action": "on", "temperature": 23})
-    assert r.status_code == 200
-    assert r.json()["target_temperature"] == 23
+    ha = routes_smart_home.homeassistant_powers
+    monkeypatch.setattr(ha, "token", "test-token")
+    monkeypatch.setattr(ha, "check_connection", lambda: {"connected": True})
+    monkeypatch.setattr(
+        ha,
+        "list_entities",
+        lambda domain_filter=None: {
+            "success": True,
+            "entities": [{"entity_id": "climate.ac", "state": "off", "friendly_name": "Room AC"}],
+            "count": 1,
+        },
+    )
+    monkeypatch.setattr(
+        ha,
+        "get_entity_state",
+        lambda entity_id: {
+            "success": True,
+            "entity_id": entity_id,
+            "state": "off",
+            "attributes": {},
+        },
+    )
 
-    # POST plug
-    r = client.post("/api/v1/smarthome/plug", json={"entity_id": "switch.geyser", "state": "on"})
-    assert r.status_code == 200
-    assert r.json()["timer_active"] is True
+    def fake_service(domain, service, service_data=None, verify_entity_id=None, expected_state=None):
+        verified_state = "off" if expected_state == "off" else "on"
+        return {
+            "power_id": "PWR-240",
+            "success": True,
+            "verified": True,
+            "domain": domain,
+            "service": service,
+            "verified_state": verified_state,
+            "service_data": service_data or {},
+        }
 
-    # POST scene
-    r = client.post("/api/v1/smarthome/scene", json={"scene": "work_mode"})
-    assert r.status_code == 200
-    assert r.json()["status"] == "active"
+    monkeypatch.setattr(ha, "call_service", fake_service)
 
-    # POST voice
-    r = client.post("/api/v1/smarthome/voice", json={"transcript": "turn on projector"})
-    assert r.status_code == 200
-    assert r.json()["power_id"] == "PWR-259"
+    devices = client.get("/api/v1/smarthome/devices")
+    assert devices.status_code == 200
+    assert devices.json()["status"] == "connected"
+    assert devices.json()["execution_mode"] == "home_assistant_live"
+    assert devices.json()["devices"][0]["entity_id"] == "climate.ac"
+
+    climate = client.post(
+        "/api/v1/smarthome/climate",
+        json={"action": "on", "temperature": 23},
+    )
+    assert climate.status_code == 200
+    assert climate.json()["verified"] is True
+    assert climate.json()["execution_mode"] == "home_assistant_live"
+
+    plug = client.post(
+        "/api/v1/smarthome/plug",
+        json={"entity_id": "switch.geyser", "state": "on"},
+    )
+    assert plug.status_code == 200
+    assert plug.json()["verified"] is True
+
+    timer = client.post(
+        "/api/v1/smarthome/plug",
+        json={"entity_id": "switch.geyser", "state": "on", "auto_off_minutes": 15},
+    )
+    assert timer.status_code == 501
+    assert "AUTO_OFF_AUTOMATION_NOT_CONFIGURED" in str(timer.json())
+
+    scene = client.post("/api/v1/smarthome/scene", json={"scene": "work_mode"})
+    assert scene.status_code == 501
+
+    voice = client.post("/api/v1/smarthome/voice", json={"transcript": "turn on projector"})
+    assert voice.status_code == 501
+
+
+def test_api_smarthome_reports_unavailable_without_controller(client, monkeypatch):
+    from jarvis.api import routes_smart_home
+
+    monkeypatch.setattr(routes_smart_home.homeassistant_powers, "token", "")
+    devices = client.get("/api/v1/smarthome/devices")
+    assert devices.status_code == 200
+    assert devices.json()["status"] == "unavailable"
+    assert devices.json()["execution_mode"] == "none"
+    assert devices.json()["device_count"] == 0
+
+    climate = client.post("/api/v1/smarthome/climate", json={"action": "on"})
+    assert climate.status_code == 503
 
 
 def test_api_ops_endpoints(client):

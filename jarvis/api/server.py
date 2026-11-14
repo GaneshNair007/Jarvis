@@ -46,6 +46,7 @@ from jarvis.api.routes_workforce import router as workforce_router
 from jarvis.api.routes.reflections import router as reflections_router
 from jarvis.api.routes_ventures import router as ventures_router
 from jarvis.api.routes_gsoc import router as gsoc_router
+from jarvis.api.routes_workspace import router as workspace_router
 import uuid
 from graph.jarvis_graph import get_jarvis_graph
 from jarvis.powers.developer_powers import developer_powers
@@ -105,6 +106,8 @@ app.include_router(ventures_router)
 app.include_router(ventures_router, prefix="/api/v1")
 app.include_router(gsoc_router)
 app.include_router(gsoc_router, prefix="/api/v1")
+app.include_router(workspace_router)
+app.include_router(workspace_router, prefix="/api/v1")
 
 
 @app.get("/scheduler/status", tags=["Autonomous Scheduler"])

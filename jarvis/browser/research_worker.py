@@ -98,18 +98,19 @@ class ResearchWorker:
                         logger.warning(f"Navigation to '{item.url}' timed out or failed: {nav_err}")
                         continue
 
-                    # Capture screenshot evidence
+                    # Extract real DOM content before creating any evidence receipt.
+                    page_content = self.reader.extract_from_page(page, item.url)
+                    if not page_content.text_content.strip():
+                        logger.warning("Skipping source with no extracted page text: %s", item.url)
+                        continue
+
+                    # Only successfully fetched pages receive screenshot evidence.
                     screenshot_meta = self.evidence.capture_screenshot(
                         page=page,
                         task_id=task_id,
                         full_page=False,
                         audit=True,
                     )
-
-                    # Read DOM content directly from the active page
-                    page_content = self.reader.extract_from_page(page, item.url)
-
-                    # Extract concise summary from paragraphs
                     summary_text = self._summarize_content(page_content)
 
                     citation = DocumentCitation(
@@ -127,51 +128,21 @@ class ResearchWorker:
                 logger.error(f"Failed to process source '{item.url}': {e}")
                 continue
 
-        # Fallback if external networks are offline/unreachable
-        if not citations and search_results:
-            logger.info("External navigation unreachable; generating local verified snapshot from search snippets.")
-            with self.ctx_mgr.research_context() as (context, page):
-                first_item = search_results[0]
-                fallback_html = f"""
-                <html>
-                  <head><title>{first_item.title}</title></head>
-                  <body>
-                    <h1>{first_item.title}</h1>
-                    <h2>Overview</h2>
-                    <p>{first_item.snippet or f"Official documentation reference for {topic}."}</p>
-                    <a href="{first_item.url}">Source Documentation Link</a>
-                  </body>
-                </html>
-                """.strip()
-                page.set_content(fallback_html)
-                screenshot_meta = self.evidence.capture_screenshot(
-                    page=page,
-                    task_id=f"{task_id}_fallback",
-                    full_page=False,
-                    audit=True,
-                )
-                page_content = self.reader.extract_from_page(page, first_item.url)
-                citations.append(
-                    DocumentCitation(
-                        title=first_item.title,
-                        url=first_item.url,
-                        screenshot_path=screenshot_meta["file_path"],
-                        screenshot_sha256=screenshot_meta["sha256"],
-                        headings=page_content.headings[:6],
-                        summary=self._summarize_content(page_content),
-                        has_injection_flag=False,
-                    )
-                )
-
         # 3. Generate Markdown Research Report
         report_filename = f"report_{timestamp}.md"
         report_path = self.output_dir / report_filename
-        markdown_body = self._build_markdown_report(topic, citations, timestamp)
+        report_status = "COMPLETED" if len(citations) >= max_docs else "PARTIAL" if citations else "FAILED"
+        markdown_body = self._build_markdown_report(topic, citations, timestamp, report_status)
 
         with open(report_path, "w", encoding="utf-8") as f:
             f.write(markdown_body)
 
-        logger.info(f"Generated verified research report: {report_path.name} ({len(citations)} citations)")
+        logger.info(
+            "Generated research report: %s (%s, %s verified citations)",
+            report_path.name,
+            report_status,
+            len(citations),
+        )
 
         # 4. Audit ledger entry
         audit_ledger.record(
@@ -183,7 +154,7 @@ class ResearchWorker:
                 "citations_count": len(citations),
                 "citations": [{"url": c.url, "sha256": c.screenshot_sha256} for c in citations],
             },
-            result="SUCCESS",
+            result=report_status,
         )
 
         return ResearchReport(
@@ -191,7 +162,7 @@ class ResearchWorker:
             timestamp=timestamp,
             citations=citations,
             report_markdown_path=str(report_path.resolve()),
-            status="COMPLETED" if len(citations) >= 1 else "FAILED",
+            status=report_status,
         )
 
     def _summarize_content(self, page_content: PageContent) -> str:
@@ -205,18 +176,30 @@ class ResearchWorker:
         summary_snippets = paragraphs[:3] if paragraphs else [text[:300]]
         return " ".join(summary_snippets)[:600]
 
-    def _build_markdown_report(self, topic: str, citations: list[DocumentCitation], timestamp: int) -> str:
-        """Constructs an Iron-Man grade, cited research report with checksum evidence."""
+    def _build_markdown_report(
+        self, topic: str, citations: list[DocumentCitation], timestamp: int, status: str = "NOT_VERIFIED"
+    ) -> str:
+        """Build a report whose status reflects only pages actually fetched and extracted."""
+        if citations:
+            status_line = f"{status}: {len(citations)} external source page(s) fetched and extracted."
+            summary = (
+                f"JARVIS fetched and extracted {len(citations)} external source page(s) for **{topic}**. "
+                "Only those pages are listed below; snippets and synthetic pages are never citations."
+            )
+        else:
+            status_line = "NOT VERIFIED: no external source page was fetched and extracted."
+            summary = (
+                f"No external sources were verified for **{topic}**. Live search may have returned no usable "
+                "results, or page navigation/content extraction failed. No synthetic citation was created."
+            )
         lines = [
             f"# JARVIS Deep Research Report: {topic}",
             f"- **Generated Timestamp**: {timestamp}",
             f"- **Sources Analyzed**: {len(citations)} verified documents",
-            f"- **Status**: Verified by Playwright Research Worker",
+            f"- **Status**: {status_line}",
             "",
             "## 1. Executive Summary",
-            f"Autonomous multi-document investigation was conducted on **{topic}**. The research worker crawled "
-            f"{len(citations)} documentation sources, performed DOM content extraction, captured full-fidelity visual receipts, "
-            "and computed cryptographic SHA-256 hashes to guarantee provenance and audit integrity.",
+            summary,
             "",
             "## 2. Verified Documentation Sources",
             "",
@@ -245,8 +228,12 @@ class ResearchWorker:
             [
                 "---",
                 "## 4. Verification & Provenance Guarantee",
-                "All actions executed in a sandboxed, ephemeral Playwright context with zero credential leakage. "
-                "Visual receipts and raw SHA-256 checksums are registered in the append-only audit ledger.",
+                (
+                    "Only pages successfully fetched and extracted through Playwright are listed as sources. "
+                    "Screenshot receipts and SHA-256 checksums are recorded in the audit ledger."
+                    if citations
+                    else "No source page was verified; no screenshot citation or synthetic page was added."
+                ),
             ]
         )
 

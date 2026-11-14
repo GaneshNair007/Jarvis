@@ -34,13 +34,22 @@ class BrowserPowers:
         )
 
     def search_web(self, query: str, max_results: int = 5) -> dict[str, Any]:
-        """PWR-013: Executes a web search and returns ranked, deduplicated sources."""
+        """PWR-013: Executes live search; empty results are explicitly unavailable."""
         results = self.search_wrapper.search(query, max_results=max_results)
+        serialized = [result.model_dump() for result in results]
         return {
             "power_id": "PWR-013",
             "query": query,
-            "results_count": len(results),
-            "results": [r.model_dump() for r in results],
+            "provider": "duckduckgo_html",
+            "status": "completed" if serialized else "unavailable",
+            "message": (
+                "Live search returned source links. These are discovery results, not verified openings."
+                if serialized
+                else "Live DuckDuckGo search returned no usable results or the provider is unreachable. "
+                "No synthetic fallback links were returned."
+            ),
+            "results_count": len(serialized),
+            "results": serialized,
         }
 
     def read_url(self, url: str, allow_private: bool = False) -> dict[str, Any]:
@@ -48,6 +57,7 @@ class BrowserPowers:
         content = self.url_reader.read_url(url, allow_private=allow_private)
         return {
             "power_id": "PWR-014",
+            "status": "completed",
             "url": content.url,
             "title": content.title,
             "headings": content.headings,

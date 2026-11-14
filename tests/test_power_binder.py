@@ -32,11 +32,53 @@ def test_select_tools_for_calendar_query(binder):
     assert any("calendar" in n for n in names)
 
 
-def test_select_tools_for_email_query(binder):
-    query = "Draft an email to partner"
+def test_select_tools_for_read_only_email_query(binder):
+    query = "List pending emails from my outbox"
     tools = binder.select_tools_for_query(query, limit=3)
     names = [t["function"]["name"] for t in tools]
-    assert any("email" in n for n in names)
+    assert "email_scan_opportunities" in names
+    assert all(binder._tools[name]["privilege_level"] <= 1 for name in names)
+    cloud_tools = binder.select_tools_for_query(query, limit=3, max_privilege_level=0)
+    cloud_names = [tool["function"]["name"] for tool in cloud_tools]
+    assert "email_scan_opportunities" not in cloud_names
+    assert "email_list_outbox" not in cloud_names
+
+
+def test_irrelevant_query_does_not_receive_arbitrary_tools(binder):
+    assert binder.select_tools_for_query("Explain eigenvalues and eigenvectors") == []
+
+
+def test_mutating_tools_are_not_selected_by_default(binder):
+    names = [t["function"]["name"] for t in binder.select_tools_for_query("Draft an email and send it", limit=10)]
+    assert "email_draft" not in names
+    assert "email_send" not in names
+    assert "calendar_add_event" not in names
+    assert "home_call_service" not in names
+
+
+def test_execute_tool_rejects_mutating_tools(binder, monkeypatch):
+    called = False
+
+    def forbidden_send(**_kwargs):
+        nonlocal called
+        called = True
+        return {"status": "success"}
+
+    binder._tools["email_send"]["func"] = forbidden_send
+    result = binder.execute_tool("email_send", {"to": "user@example.com", "subject": "Test", "body": "Test"})
+    assert result["success"] is False
+    assert result["error"] == "APPROVAL_REQUIRED"
+    assert called is False
+
+
+def test_execute_tool_propagates_provider_failure(binder):
+    binder._tools["browser_search"]["func"] = lambda **_kwargs: {
+        "status": "unavailable",
+        "error": "Search provider unavailable",
+    }
+    result = binder.execute_tool("browser_search", {"query": "hackathons"})
+    assert result["success"] is False
+    assert result["error"] == "Search provider unavailable"
 
 
 def test_execute_tool_success(binder):

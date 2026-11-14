@@ -11,7 +11,9 @@ Validates:
 - Browser REST API endpoints
 """
 
+import hashlib
 import os
+from contextlib import contextmanager
 from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
@@ -19,7 +21,7 @@ from fastapi.testclient import TestClient
 from jarvis.api.server import app
 from jarvis.browser.context_manager import BrowserContextManager, SSRFValidationError
 from jarvis.browser.evidence import EvidenceStore
-from jarvis.browser.url_reader import URLReader
+from jarvis.browser.url_reader import PageContent, URLReader
 from jarvis.browser.search_wrapper import WebSearchWrapper, SearchResult
 from jarvis.browser.research_worker import ResearchWorker
 from jarvis.powers.browser_powers import browser_powers
@@ -132,53 +134,184 @@ def test_screenshot_checksum_evidence(tmp_path):
     assert screenshot_entry["outputs"]["sha256"] == meta["sha256"]
 
 
-def test_search_wrapper_query():
-    """Verifies search wrapper executes queries and returns structured results."""
+def test_search_wrapper_query(monkeypatch):
+    """Parses provider HTML without relying on external network access."""
     search = WebSearchWrapper()
+
+    class Response:
+        status_code = 200
+        text = (
+            '<a class="result__url" href="https://fastapi.tiangolo.com/">FastAPI Docs</a>'
+            '<a class="result__snippet">Official FastAPI documentation.</a>'
+        )
+
+    class FakeClient:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def post(self, *_args, **_kwargs):
+            return Response()
+
+    monkeypatch.setattr("jarvis.browser.search_wrapper.httpx.Client", FakeClient)
     results = search.search("FastAPI documentation", max_results=3)
 
-    assert len(results) >= 1
-    assert results[0].url.startswith("http")
-    assert results[0].title != ""
+    assert len(results) == 1
+    assert results[0].url == "https://fastapi.tiangolo.com/"
+    assert results[0].title == "FastAPI Docs"
+    assert results[0].snippet == "Official FastAPI documentation."
 
 
-def test_three_docs_research_acceptance_gate(tmp_path):
-    """
-    Milestone B Pass/Fail Gate:
-    Autonomous execution of 'find and summarise three official docs on X'
-    completes without manual clicking, saving sources and screenshots.
-    """
+def test_search_wrapper_does_not_invent_fallback_results(monkeypatch):
+    """An empty provider response must stay empty."""
+    search = WebSearchWrapper()
+
+    class Response:
+        status_code = 200
+        text = "<html><body>No search results</body></html>"
+
+    class FakeClient:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def post(self, *_args, **_kwargs):
+            return Response()
+
+    monkeypatch.setattr("jarvis.browser.search_wrapper.httpx.Client", FakeClient)
+    assert search.search("internships and hackathons", max_results=5) == []
+
+
+def test_search_wrapper_network_failure_returns_no_results(monkeypatch):
+    """A provider failure must not be disguised as a successful search."""
+    search = WebSearchWrapper()
+
+    class FakeClient:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def post(self, *_args, **_kwargs):
+            raise RuntimeError("provider unavailable")
+
+    monkeypatch.setattr("jarvis.browser.search_wrapper.httpx.Client", FakeClient)
+    assert search.search("internships", max_results=5) == []
+
+
+def test_three_docs_research_acceptance_gate(tmp_path, monkeypatch):
+    """Only successfully fetched pages are accepted as citations."""
     worker = ResearchWorker(output_dir=tmp_path)
+    worker.search.search = lambda _query, max_results: [
+        SearchResult(
+            title=f"Source {index}",
+            url=f"https://example.org/source-{index}",
+            snippet="A search snippet is discovery metadata, not page evidence.",
+        )
+        for index in range(1, 4)
+    ]
 
-    # Execute autonomous research on 'FastAPI Python framework'
+    class FakePage:
+        current_url = ""
+
+        def goto(self, url, **_kwargs):
+            self.current_url = url
+
+    @contextmanager
+    def fake_context():
+        yield object(), FakePage()
+
+    def fake_screenshot(page, task_id, full_page, audit):
+        evidence = f"evidence:{page.current_url}".encode("utf-8")
+        evidence_path = tmp_path / f"{task_id}-{page.current_url.rsplit('/', 1)[-1]}.png"
+        evidence_path.write_bytes(evidence)
+        return {
+            "file_path": str(evidence_path.resolve()),
+            "sha256": hashlib.sha256(evidence).hexdigest(),
+        }
+
+    def fake_extract(_page, url):
+        return PageContent(
+            url=url,
+            title=f"Fetched page {url.rsplit('/', 1)[-1]}",
+            text_content=("This is extracted page content with useful technical details. " * 8),
+            headings=["Overview"],
+        )
+
+    monkeypatch.setattr(worker.ctx_mgr, "research_context", fake_context)
+    monkeypatch.setattr(worker.evidence, "capture_screenshot", fake_screenshot)
+    monkeypatch.setattr(worker.reader, "extract_from_page", fake_extract)
+
     report = worker.execute_research(topic="FastAPI Python framework", max_docs=3, task_id="gate_fastapi")
 
     assert report.status == "COMPLETED"
-    assert len(report.citations) >= 1
-    assert os.path.exists(report.report_markdown_path)
-
-    # Check report contents
-    with open(report.report_markdown_path, "r", encoding="utf-8") as f:
-        report_text = f.read()
-
-    assert "JARVIS Deep Research Report" in report_text
+    assert len(report.citations) == 3
+    report_text = Path(report.report_markdown_path).read_text(encoding="utf-8")
+    assert "3 external source page(s) fetched and extracted" in report_text
     assert "Verified Documentation Sources" in report_text
-    assert "SHA-256" in report_text
-
-    # Verify screenshots exist for each citation
     for citation in report.citations:
-        assert os.path.exists(citation.screenshot_path)
+        assert Path(citation.screenshot_path).exists()
         assert len(citation.screenshot_sha256) == 64
 
 
-def test_browser_api_routes(test_client):
+def test_deep_research_fails_without_a_fetched_source(tmp_path, monkeypatch):
+    """A search snippet alone must never become a verified citation."""
+    worker = ResearchWorker(output_dir=tmp_path)
+    worker.search.search = lambda _query, max_results: [
+        SearchResult(
+            title="Unreachable source",
+            url="https://example.org/unreachable",
+            snippet="This is only a snippet, not fetched page content.",
+        )
+    ]
+
+    class FakePage:
+        def goto(self, *_args, **_kwargs):
+            raise RuntimeError("external navigation unavailable")
+
+    @contextmanager
+    def fake_context():
+        yield object(), FakePage()
+
+    monkeypatch.setattr(worker.ctx_mgr, "research_context", fake_context)
+    report = worker.execute_research(topic="source verification", max_docs=1, task_id="failed_research")
+
+    assert report.status == "FAILED"
+    assert report.citations == []
+    report_text = Path(report.report_markdown_path).read_text(encoding="utf-8")
+    assert "NOT VERIFIED" in report_text
+    assert "No external sources were verified" in report_text
+
+
+def test_browser_api_routes(test_client, monkeypatch):
     """Tests FastAPI endpoints for search, read, and screenshot."""
-    # Test Search API
+    monkeypatch.setattr(
+        browser_powers.search_wrapper,
+        "search",
+        lambda _query, max_results: [
+            SearchResult(title="Python Docs", url="https://docs.python.org/3/", snippet="Python docs")
+        ],
+    )
     search_resp = test_client.post("/api/v1/browser/search", json={"query": "Python docs", "max_results": 2})
     assert search_resp.status_code == 200
     search_data = search_resp.json()
     assert search_data["power_id"] == "PWR-013"
-    assert len(search_data["results"]) >= 1
+    assert search_data["status"] == "completed"
+    assert len(search_data["results"]) == 1
 
     # Test SSRF block in Read API
     ssrf_resp = test_client.post("/api/v1/browser/read", json={"url": "http://127.0.0.1:8000/admin"})

@@ -19,6 +19,12 @@ from jarvis.db.models.schedule import ScheduleModel
 from jarvis.db.models.audit import AuditModel
 from jarvis.db.models.knowledge import KnowledgeNodeModel, KnowledgeEdgeModel
 from jarvis.db.models.lifecycle import AgentLifecycleModel
+from jarvis.db.models.workspace import (
+    WorkspaceAssignmentModel,
+    WorkspaceCaptureModel,
+    WorkspaceCourseModel,
+    WorkspaceTaskModel,
+)
 
 __all__ = [
     "Base",
@@ -42,4 +48,8 @@ __all__ = [
     "KnowledgeNodeModel",
     "KnowledgeEdgeModel",
     "AgentLifecycleModel",
+    "WorkspaceCourseModel",
+    "WorkspaceAssignmentModel",
+    "WorkspaceTaskModel",
+    "WorkspaceCaptureModel",
 ]

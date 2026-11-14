@@ -59,6 +59,7 @@ class CareerPowers:
         )
         return {
             "power_id": "PWR-329",
+            "status": "completed",
             "job_id": score.job_id,
             "company_name": score.company_name,
             "job_title": score.job_title,
@@ -81,6 +82,7 @@ class CareerPowers:
         )
         return {
             "power_id": "PWR-330",
+            "status": "completed",
             "resume_id": resume.resume_id,
             "file_path": resume.file_path,
             "ats_score": resume.ats_score,
@@ -98,6 +100,7 @@ class CareerPowers:
         )
         return {
             "power_id": "PWR-331",
+            "status": "completed",
             "letter_id": cover.letter_id,
             "company_name": cover.company_name,
             "content": cover.content,
@@ -109,6 +112,7 @@ class CareerPowers:
         dossier = _safe_run_async(self.service.research_company(company_name=company_name, domain=domain))
         return {
             "power_id": "PWR-332",
+            "status": "completed",
             "company_name": dossier.company_name,
             "summary": dossier.summary,
             "culture_signals": dossier.culture_signals,
@@ -123,6 +127,7 @@ class CareerPowers:
         contacts = _safe_run_async(self.service.find_contacts(company_name=company_name, role_title=role_title))
         return {
             "power_id": "PWR-333",
+            "status": "completed",
             "company_name": company_name,
             "contacts_found": len(contacts),
             "contacts": [c.model_dump() for c in contacts],
@@ -135,6 +140,7 @@ class CareerPowers:
         )
         return {
             "power_id": "PWR-334",
+            "status": "completed",
             "subject": draft["subject"],
             "body": draft["body"],
             "recipient_name": draft["recipient_name"],
@@ -145,7 +151,7 @@ class CareerPowers:
     def analyze_application_pipeline(self) -> Dict[str, Any]:
         """PWR-335: Application pipeline analytics (analyze-patterns equivalent)."""
         stats = self.service.analyze_pipeline()
-        return {"power_id": "PWR-335", **stats}
+        return {"power_id": "PWR-335", "status": "completed", **stats}
 
     def interview_prep_and_red_flags(
         self,
@@ -162,6 +168,7 @@ class CareerPowers:
 
         return {
             "power_id": "PWR-336",
+            "status": "completed",
             "role_title": prep.role_title,
             "company_name": prep.company_name,
             "star_questions": prep.star_questions,
@@ -183,6 +190,7 @@ class CareerPowers:
         )
         return {
             "power_id": "PWR-337",
+            "status": "completed",
             "offer_id": analysis.offer_id,
             "company_name": analysis.company_name,
             "role_title": analysis.role_title,
