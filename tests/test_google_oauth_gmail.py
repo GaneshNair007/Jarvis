@@ -323,13 +323,20 @@ def test_revoke_calls_provider_and_deletes_local_token():
     assert mgr.status("google")["connected"] is False
 
 
-def test_dpapi_store_encrypts_at_rest(tmp_path):
-    # pywin32 is installed only on Windows runners; non-Windows collection
-    # deselects this OS-specific integration test in tests/conftest.py.
-    import win32crypt  # noqa: F401
+def test_dpapi_store_encrypts_at_rest_or_fails_closed(tmp_path):
+    """Windows encrypts OAuth tokens; other platforms fail closed without writing plaintext."""
+    import sys
 
     store = DpapiFileStore(tmp_path)
     secret_payload = {"refresh_token": "super-secret-refresh-value", "access_token": "secret-access"}
+
+    if sys.platform != "win32":
+        with pytest.raises(RuntimeError, match="Windows DPAPI is unavailable"):
+            store.save("google_oauth", secret_payload)
+        assert list(tmp_path.glob("*.bin")) == []
+        return
+
+    import win32crypt  # noqa: F401
 
     path = store.save("google_oauth", secret_payload)
     raw = Path(path).read_bytes()
