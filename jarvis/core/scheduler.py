@@ -61,6 +61,14 @@ class ProactiveAutonomousScheduler:
             handler=self._job_career_scout,
         )
 
+        # 08:15 Public ATS internship discovery; no applications are submitted.
+        self.register_job(
+            job_id="internship_ats_discovery",
+            name="Daily Public ATS Internship Discovery",
+            schedule_time_hhmm="08:15",
+            handler=self._job_internship_ats_discovery,
+        )
+
         # 2. 12:00 Hackathon Opportunity & Scaffold Pipeline
         self.register_job(
             job_id="hackathon_scout",
@@ -117,6 +125,23 @@ class ProactiveAutonomousScheduler:
             "opportunities_found": len(opportunities),
             "whatsapp_status": dispatch_res.get("status"),
         }
+
+    async def _job_internship_ats_discovery(self) -> Dict[str, Any]:
+        """08:15 Routine: fetch configured public ATS boards into the review queue."""
+        import yaml
+        from jarvis.career.internship_automation import internship_automation
+        config_path = Path(__file__).resolve().parents[2] / "config" / "internship_sources.yml"
+        if not config_path.exists():
+            return {"status": "NEEDS_CONFIGURATION", "discovered": 0,
+                    "message": "Create config/internship_sources.yml with public ATS board slugs."}
+        config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+        boards = config.get("boards", [])
+        if not boards:
+            return {"status": "NEEDS_CONFIGURATION", "discovered": 0,
+                    "message": "No ATS boards configured; no external requests made."}
+        result = await internship_automation.discover(boards)
+        return {"status": "COMPLETED" if not result.get("errors") else "COMPLETED_WITH_ERRORS",
+                **result, "submission": "never"}
 
     async def _job_hackathon_scout(self) -> Dict[str, Any]:
         """12:00 Routine: Mobilizes 105-agent workforce for Devfolio/Unstop hackathons."""

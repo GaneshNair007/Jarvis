@@ -1,0 +1,6 @@
+# Public ATS board identifiers to poll at 08:15 local time each day.
+# Add only company board slugs, never login credentials or API keys.
+# Greenhouse: https://boards-api.greenhouse.io/v1/boards/<board>/jobs
+# Lever:      https://api.lever.co/v0/postings/<site>?mode=json
+# Ashby:      https://api.ashbyhq.com/posting-api/job-board/<board>
+boards: []

@@ -13,15 +13,15 @@ def _utc_now_iso() -> str:
 
 class UserCareerProfile(BaseModel):
     name: str = "Ganesh Nair"
-    title: str = "Principal AI Systems Architect"
-    email: str = "nairganesh134@gmail.com"
-    location: str = "San Francisco, CA (or Remote)"
+    title: str = "B.Tech Artificial Intelligence & Machine Learning Student"
+    email: str = ""
+    location: str = "Pune, Maharashtra, India"
     target_roles: List[str] = Field(default_factory=list)
-    target_salary_min: float = 200000.0
-    target_salary_currency: str = "USD"
+    target_salary_min: float = 0.0
+    target_salary_currency: str = "INR"
     core_skills: List[str] = Field(default_factory=list)
     domain_expertise: List[str] = Field(default_factory=list)
-    experience_summary: str = ""
+    experience_summary: str = "Second-year B.Tech AIML student (2025-2029 expected) with academic, team-project and hackathon experience. No full-time professional experience is claimed."
 
 
 class JobFitScore(BaseModel):
