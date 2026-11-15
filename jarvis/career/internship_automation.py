@@ -304,6 +304,32 @@ class InternshipAutomation:
                     "eligibility": "REVIEW_REQUIRED", "score_type": "keyword_alignment_not_selection_probability"})
         return row
 
+    def _summarize_job_locally(self, description: str) -> str | None:
+        """Optional local-only Ollama summary of public job text; never receives candidate PII."""
+        if not description.strip():
+            return None
+        try:
+            from jarvis.config import settings as jarvis_settings
+            response = httpx.post(
+                jarvis_settings.ollama_base_url.rstrip("/") + "/api/generate",
+                json={
+                    "model": jarvis_settings.ollama_default_model,
+                    "prompt": (
+                        "Summarize this employer-provided internship description in at most 5 concise bullets. "
+                        "Only restate explicit facts; say 'not specified' for missing details. Do not infer eligibility, "
+                        "stipend, location or requirements.\n\n" + description[:7000]
+                    ),
+                    "stream": False,
+                },
+                timeout=6.0,
+            )
+            response.raise_for_status()
+            summary = str(response.json().get("response", "")).strip()
+            return summary[:2500] if summary else None
+        except Exception:
+            # Ollama is optional. Deterministic processing remains available.
+            return None
+
     def prepare_application(self, opportunity_id: str) -> dict[str, Any]:
         profile = self.load_profile()
         with self._connect() as db:
@@ -314,7 +340,10 @@ class InternshipAutomation:
             scored = self._score_row(job)
             if scored.get("fit_score") is None:
                 raise ValueError("Candidate profile is not ready")
+            local_summary = self._summarize_job_locally(job.get("description") or "")
             draft = {
+                "job_summary_local": local_summary,
+                "ollama_used": bool(local_summary),
                 "candidate_name": profile["full_name"], "candidate_email": profile["email"],
                 "candidate_location": profile["location"], "education": profile["education"],
                 "graduation_year": str(profile["graduation_year"]),
