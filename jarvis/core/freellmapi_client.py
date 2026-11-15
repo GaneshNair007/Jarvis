@@ -16,7 +16,6 @@ from jarvis.core.logger import get_logger
 
 logger = get_logger("core.freellmapi")
 
-DEFAULT_FREELLMAPI_KEY = "freellmapi-bbe4d824646ec4bca5903eeb1060d788eec976b612e2b48a"
 DEFAULT_FREELLMAPI_URL = "http://localhost:3001/v1"
 
 
@@ -24,7 +23,7 @@ class FreeLLMAPIClient:
     """Production client for local FreeLLMAPI Gateway."""
 
     def __init__(self):
-        self.api_key = os.getenv("FREELLMAPI_KEY", DEFAULT_FREELLMAPI_KEY)
+        self.api_key = os.getenv("FREELLMAPI_KEY", "").strip()
         self.base_url = os.getenv("FREELLMAPI_BASE_URL", DEFAULT_FREELLMAPI_URL).rstrip("/")
         self.default_model = os.getenv("FREELLMAPI_DEFAULT_MODEL", "auto")
         self._cached_available: Optional[bool] = None
@@ -33,6 +32,11 @@ class FreeLLMAPIClient:
     @property
     def is_available(self) -> bool:
         """Checks if the local FreeLLMAPI router at localhost:3001 is active."""
+        if not self.api_key:
+            self._cached_available = False
+            self._last_probe_time = time.time()
+            return False
+
         now = time.time()
         if self._cached_available is not None and (now - self._last_probe_time) < 10.0:
             return self._cached_available
