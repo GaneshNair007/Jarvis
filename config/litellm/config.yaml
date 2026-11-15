@@ -1,8 +1,8 @@
 model_list:
   - model_name: local-jarvis
     litellm_params:
-      model: ollama/llama3.1
-      api_base: http://ollama:11434
+      model: os.environ/OLLAMA_LITELLM_MODEL
+      api_base: os.environ/OLLAMA_API_BASE
   - model_name: claude-sonnet
     litellm_params:
       model: anthropic/claude-sonnet-4-5
