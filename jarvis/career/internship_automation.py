@@ -52,7 +52,15 @@ class InternshipSettings:
 
     @classmethod
     def from_env(cls) -> "InternshipSettings":
-        return cls()
+        # Reuse JARVIS typed .env configuration instead of reading secrets
+        # directly from os.environ (Pydantic also loads the project .env).
+        from jarvis.config import PROJECT_ROOT, settings as jarvis_settings
+        return cls(
+            profile_path=Path(os.getenv("JARVIS_CANDIDATE_PROFILE", str(PROJECT_ROOT / "data" / "candidate_profile.json"))),
+            database_path=Path(os.getenv("JARVIS_INTERNSHIP_DB", str(jarvis_settings.data_dir / "internship_applications.sqlite3"))),
+            approval_secret=os.getenv("JARVIS_SECRET_KEY") or jarvis_settings.jarvis_secret_key,
+            approval_ttl_seconds=int(os.getenv("JARVIS_INTERNSHIP_APPROVAL_TTL", "900")),
+        )
 
 
 class InternshipAutomation:
