@@ -97,3 +97,19 @@ def test_status_reports_missing_profile_without_false_success(tmp_path):
     assert status["profile_configured"] is False
     assert status["profile_error"]
     assert status["opportunities"] == 0
+
+
+
+def test_manual_import_deduplicates_same_source_url(tmp_path):
+    service = make_service(tmp_path)
+    payload = {
+        "source": "company_careers",
+        "company": "Acme",
+        "title": "Python Intern",
+        "url": "https://example.com/jobs/python-intern",
+        "description": "Student internship with Python.",
+    }
+    first = service.add_manual_opportunity(payload)
+    second = service.add_manual_opportunity(payload)
+    assert first["id"] == second["id"]
+    assert len(service.list_opportunities(limit=20)) == 1
