@@ -253,6 +253,29 @@ class InternshipAutomation:
             rows = db.execute(sql, params).fetchall()
         return [self._score_row(dict(row)) for row in rows]
 
+    def status(self) -> dict[str, Any]:
+        profile_ready = False
+        profile_error = None
+        try:
+            self.load_profile()
+            profile_ready = True
+        except Exception as exc:
+            profile_error = str(exc)
+        with self._connect() as db:
+            opportunity_count = db.execute("SELECT COUNT(*) FROM opportunities").fetchone()[0]
+            app_rows = db.execute("SELECT status, COUNT(*) AS count FROM applications GROUP BY status").fetchall()
+        return {
+            "service": "internship-automation",
+            "profile_configured": profile_ready,
+            "profile_error": profile_error,
+            "database": str(self.settings.database_path),
+            "opportunities": opportunity_count,
+            "applications_by_status": {row["status"]: row["count"] for row in app_rows},
+            "submission_mode": "human approval required; external final submission remains manual",
+            "supported_ats": sorted(ATS_PROVIDERS),
+            "manual_review_sources": sorted(ALLOWED_MANUAL_SOURCES),
+        }
+
     def _score_row(self, row: dict[str, Any]) -> dict[str, Any]:
         try:
             profile = self.load_profile()
