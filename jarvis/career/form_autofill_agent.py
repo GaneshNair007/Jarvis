@@ -33,28 +33,23 @@ class CandidateProfile(BaseModel):
     first_name: str = "Ganesh"
     last_name: str = "Nair"
     full_name: str = "Ganesh Nair"
-    email: str = "nairganesh134@gmail.com"
-    phone: str = "+919324094474"
+    email: str = ""
+    phone: str = ""
     location: str = "Pune, Maharashtra, India"
     university: str = "Symbiosis Institute of Technology (SIT), Pune"
     degree: str = "B.Tech in Artificial Intelligence and Machine Learning"
-    graduation_year: str = "2027"
+    graduation_year: str = "2029"
     linkedin_url: str = "https://www.linkedin.com/in/ganesh-nair-8ab1a5378/"
     github_url: str = "https://github.com/GaneshNair007"
     portfolio_url: str = "https://github.com/GaneshNair007/Jarvis"
     core_skills: List[str] = Field(
         default_factory=lambda: [
-            "Autonomous Multi-Agent Systems",
-            "Python (Asyncio, FastAPI)",
-            "Model Context Protocol (FastMCP)",
-            "PyTorch & Computer Vision (OpenCV)",
-            "AES-256-GCM Hardware Vaults",
-            "Abstract Syntax Tree (AST) Code Mapping",
-            "Distributed Task Graph Scheduling",
-            "NVIDIA RTX 4050 Edge ML Inference",
+            "Python", "C", "SQL", "Pandas", "NumPy", "Scikit-learn",
+            "Data Preprocessing", "Supervised Learning", "Git", "GitHub",
+            "Jupyter Notebook", "Excel", "Power BI",
         ]
     )
-    hardware: str = "NVIDIA GeForce RTX 4050 (6GB VRAM) Laptop GPU"
+    hardware: str = ""
 
 
 class FormField(BaseModel):
@@ -125,40 +120,38 @@ class AutonomousFormFiller:
         }
 
     def generate_essay_answer(self, prompt: str, word_limit: int = 150) -> str:
-        """
-        Synthesizes technical, grounded essay answers to standard application questions.
-        """
+        """Return conservative draft text grounded in the candidate's resume."""
         p_lower = prompt.lower()
-
-        if "why" in p_lower and ("interested" in p_lower or "join" in p_lower or "apply" in p_lower):
-            return (
-                f"I am deeply passionate about engineering autonomous systems and applied AI. "
-                f"At SIT Pune, I have architected Project JARVIS—an autonomous operating system running 105 concurrent "
-                f"micro-agents and an AES-256-GCM zero-leak security shield. This role aligns perfectly with my focus on "
-                f"low-latency backend concurrency, Model Context Protocol integration, and building reliable developer tooling."
+        if "why" in p_lower or "join" in p_lower or "interested" in p_lower:
+            answer = (
+                "I am a second-year B.Tech Artificial Intelligence and Machine Learning student at "
+                "Symbiosis Institute of Technology, Pune. I am interested in applying my current "
+                "foundations in Python, data analysis and machine learning while learning from an "
+                "industry team. My resume includes team projects such as Signal Atlas, Nayan, "
+                "CORTEX Cloud Autopilot, CarbonTerra and AI-Assisted Onion Quality Grading."
             )
-
-        if "project" in p_lower or "achievement" in p_lower or "proud" in p_lower or "challenging" in p_lower:
-            return (
-                f"My most challenging project is Project JARVIS (github.com/GaneshNair007/Jarvis). "
-                f"I engineered an asymmetric hybrid compute topology distributing low-latency Kokoro-TTS and Faster-Whisper "
-                f"onto my laptop's NVIDIA RTX 4050 GPU while routing cloud reasoning models through a fail-closed DLP firewall. "
-                f"I implemented an Aider-style AST codebase knowledge graph and verified the entire system with 80+ passing test cases."
+        elif any(term in p_lower for term in ["project", "achievement", "proud", "challenging"]):
+            answer = (
+                "My resume describes several team-based academic and hackathon projects, including "
+                "Signal Atlas (web-scraping and intelligence dashboard), Nayan (traffic-management "
+                "prototype), CORTEX Cloud Autopilot (cloud-incident prototype), CarbonTerra "
+                "(digital-sustainability prototype) and AI-Assisted Onion Quality Grading. "
+                "I would add the exact individual contribution for the project most relevant to this role."
             )
-
-        if "strength" in p_lower or "skills" in p_lower or "background" in p_lower:
-            return (
-                f"My core strengths are systems-level Python (Asyncio/FastAPI), autonomous agent design, and verifiable security. "
-                f"I build software with test-driven rigor, cryptographic auditability (Merkle chains), and strict git hygiene. "
-                f"I am currently preparing for GSoC 2026/2027 with open-source contributions in runtime ergonomics and compiler AST analysis."
+        elif any(term in p_lower for term in ["strength", "skills", "background"]):
+            answer = (
+                "I am pursuing a B.Tech in Artificial Intelligence and Machine Learning at "
+                "Symbiosis Institute of Technology, Pune. My resume lists Python, C, SQL, Pandas, "
+                "NumPy, Scikit-learn, data preprocessing, supervised learning, Git, Excel and "
+                "Power BI. I am continuing to strengthen these foundations through coursework and projects."
             )
-
-        # Generic default technical response
-        return (
-            f"As an AI Systems Engineer pursuing B.Tech AI & ML at SIT Pune, I specialize in autonomous multi-agent systems, "
-            f"Model Context Protocol architectures, and edge GPU acceleration on NVIDIA RTX hardware. "
-            f"You can review my open-source code and contributions at github.com/GaneshNair007."
-        )
+        else:
+            answer = (
+                "I am a second-year B.Tech Artificial Intelligence and Machine Learning student "
+                "at Symbiosis Institute of Technology, Pune, expected to graduate in 2029. "
+                "My current skills and project experience are listed in my attached resume."
+            )
+        return " ".join(answer.split()[:max(1, word_limit)])
 
     def autofill_form(
         self,
@@ -226,11 +219,16 @@ class AutonomousFormFiller:
                 unmapped_fields.append(f.label)
 
         # Check readiness
-        ready = len(unmapped_fields) == 0 or all(not f.required for f in fields if f.label in unmapped_fields)
+        # Autofill is preparation only. A human must review every answer and submit.
+        ready = False
 
         return FormAutofillResult(
             form_title=form_title,
-            fit_score=0.96,
+            fit_score=round(
+                len([skill for skill in self.profile.core_skills if skill.lower() in
+                     (form_title + " " + " ".join(f.label for f in fields)).lower()])
+                / max(1, len(self.profile.core_skills)), 2
+            ),
             total_fields=len(fields),
             filled_fields=filled_fields,
             unmapped_fields=unmapped_fields,
@@ -250,7 +248,7 @@ class AutonomousFormFiller:
         """
         Drives an ephemeral Playwright browser session to locate DOM form fields,
         maps Ganesh Nair's profile to inputs/textareas, types verified values,
-        and strictly pauses at the submit button unless explicit human authorization is granted.
+        and always pauses before submission. Submission is deliberately disabled here.
         """
         from jarvis.browser.context_manager import BrowserContextManager
 
@@ -346,12 +344,9 @@ class AutonomousFormFiller:
                 page.screenshot(path=str(s_file))
                 screenshot_path = str(s_file)
 
-            # Strict Human Gate: only submit if allow_submit is explicitly True
+            # Fail-closed: this legacy helper can fill and preview only. It cannot submit.
+            # The internship queue requires a separate review/approval flow.
             submitted = False
-            if submit_button_found and allow_submit and not dry_run:
-                submit_candidates.first.click()
-                submitted = True
-                logger.info(f"Form successfully submitted with human authorization for {url}")
 
         return {
             "target_url": url,
