@@ -34,9 +34,9 @@ def make_service(tmp_path):
 def test_rejects_non_https_and_unsupported_source(tmp_path):
     service = make_service(tmp_path)
     with pytest.raises(ValueError):
-        service.add_manual_opportunity("linkedin", "Acme", "AI Intern", "http://example.com/job")
+        service.add_manual_opportunity({"source": "linkedin_manual", "company": "Acme", "title": "AI Intern", "url": "http://example.com/job"})
     with pytest.raises(ValueError):
-        service.add_manual_opportunity("unknown", "Acme", "AI Intern", "https://example.com/job")
+        service.add_manual_opportunity({"source": "unknown", "company": "Acme", "title": "AI Intern", "url": "https://example.com/job"})
 
 
 def test_prepare_requires_profile_and_manual_review(tmp_path):
