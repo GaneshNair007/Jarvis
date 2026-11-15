@@ -405,8 +405,14 @@ class InternshipAutomation:
                 raise KeyError("Application not found")
             if row["status"] != "PENDING_REVIEW":
                 raise ValueError("Only pending applications can be approved")
-            if not hmac.compare_digest(row["review_hash"], reviewed_hash):
-                raise PermissionError("Review hash mismatch: draft changed or user approved stale content")
+            current_draft = json.loads(row["draft_json"])
+            current_hash = hashlib.sha256(
+                json.dumps(current_draft, sort_keys=True, ensure_ascii=False).encode()
+            ).hexdigest()
+            if not hmac.compare_digest(row["review_hash"], current_hash):
+                raise PermissionError("Stored draft changed after preparation; refusing approval")
+            if not hmac.compare_digest(current_hash, reviewed_hash):
+                raise PermissionError("Review hash mismatch: user approved stale or different content")
             expires = int(time.time() + self.settings.approval_ttl_seconds)
             nonce = secrets.token_urlsafe(24)
             message = f"{application_id}:{reviewed_hash}:{expires}:{nonce}".encode()
@@ -419,14 +425,31 @@ class InternshipAutomation:
                 "one_time_approval_token": token, "expires_at": expires,
                 "next_step": "Use the approved draft to complete the employer form yourself. JARVIS has not submitted it."}
 
+    def _approval_token_matches_row(self, row: sqlite3.Row, token: str) -> bool:
+        if not row["approval_hash"] or row["approval_expires"] is None:
+            return False
+        try:
+            expiry_text, nonce, supplied_signature = token.split(".", 2)
+            expiry = int(expiry_text)
+        except (ValueError, AttributeError):
+            return False
+        if expiry != int(row["approval_expires"]) or time.time() > expiry:
+            return False
+        secret = self.settings.approval_secret
+        message = f"{row['id']}:{row['review_hash']}:{expiry}:{nonce}".encode()
+        expected_signature = hmac.new(secret.encode(), message, hashlib.sha256).hexdigest()
+        expected_token_hash = hashlib.sha256(token.encode()).hexdigest()
+        return (
+            hmac.compare_digest(expected_signature, supplied_signature)
+            and hmac.compare_digest(row["approval_hash"], expected_token_hash)
+        )
+
     def verify_submission_approval(self, application_id: str, token: str) -> bool:
         with self._connect() as db:
             row = db.execute("SELECT * FROM applications WHERE id=?", (application_id,)).fetchone()
-        if not row or row["status"] != "APPROVED_FOR_MANUAL_SUBMISSION" or not row["approval_hash"]:
+        if not row or row["status"] != "APPROVED_FOR_MANUAL_SUBMISSION":
             return False
-        if row["approval_expires"] is None or time.time() > row["approval_expires"]:
-            return False
-        return hmac.compare_digest(row["approval_hash"], hashlib.sha256(token.encode()).hexdigest())
+        return self._approval_token_matches_row(row, token)
 
     def mark_manually_submitted(self, application_id: str, token: str,
                                 confirmation_evidence: str, confirm: bool) -> dict[str, Any]:
@@ -437,11 +460,8 @@ class InternshipAutomation:
             row = db.execute("SELECT * FROM applications WHERE id=?", (application_id,)).fetchone()
             if not row or row["status"] != "APPROVED_FOR_MANUAL_SUBMISSION" or not row["approval_hash"]:
                 raise PermissionError("Approval token is invalid, expired, already used or not for this application")
-            if row["approval_expires"] is None or time.time() > row["approval_expires"]:
-                raise PermissionError("Approval token has expired")
-            supplied_hash = hashlib.sha256(token.encode()).hexdigest()
-            if not hmac.compare_digest(row["approval_hash"], supplied_hash):
-                raise PermissionError("Approval token is invalid")
+            if not self._approval_token_matches_row(row, token):
+                raise PermissionError("Approval token is invalid, expired or has an invalid signature")
             updated = db.execute(
                 "UPDATE applications SET status=?,updated_at=?,submitted_at=?,result_evidence=? WHERE id=? AND status=?",
                 ("MANUALLY_SUBMITTED_CONFIRMED_BY_USER", time.time(), time.time(),
