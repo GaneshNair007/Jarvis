@@ -373,9 +373,8 @@ class ModelRouter:
             if ollama_ready
             else {"available": False, "models": [], "error": "Ollama endpoint is not reachable."}
         )
-        ollama_model_available = (
-            ollama_inventory["available"]
-            and self._configured_ollama_model_is_available(ollama_inventory["models"])
+        ollama_model_available = ollama_inventory["available"] and self._configured_ollama_model_is_available(
+            ollama_inventory["models"]
         )
         if not ollama_ready:
             ollama_status = "unavailable"
