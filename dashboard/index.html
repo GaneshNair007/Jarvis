@@ -1208,7 +1208,7 @@
       <p style="margin: 0 0 10px; font-size: 0.85rem; color: var(--muted);">
         1. Create an OAuth 2.0 Desktop client in Google Cloud Console and enable the Gmail API.<br>
         2. Set GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET in .env.<br>
-        3. Click Connect Google Account — you will sign in as <strong>jarvis33246146@gmail.com</strong> and grant gmail.readonly, gmail.compose, gmail.send.
+        3. Click Connect Google Account — sign in as the configured mailbox <strong id="comm-assistant-account">shown by JARVIS</strong> and grant gmail.readonly, gmail.compose, gmail.send.
       </p>
       <button class="btn-integ btn-integ-connect" onclick="startGoogleAuth()">Start Google Connection</button>
     </div>
@@ -2287,6 +2287,11 @@
         const status = await fetchComm('/api/v1/google/status') || { status: 'UNKNOWN', connected: false };
         commConnected = status.connected === true;
 
+        const assistantAccountEl = document.getElementById('comm-assistant-account');
+        if (assistantAccountEl) {
+          assistantAccountEl.textContent = status.assistant_email || 'not configured';
+        }
+
         const statusEl = document.getElementById('comm-google-status');
         const connectBtn = document.getElementById('comm-btn-connect');
         const disconnectBtn = document.getElementById('comm-btn-disconnect');
@@ -2431,6 +2436,10 @@
         const resp = await fetch(`${API_BASE}/api/v1/google/auth/start`, { method: 'POST' });
         const data = await resp.json();
         if (!data.authorization_url) throw new Error(data.detail || 'No authorization URL returned');
+        const assistantAccountEl = document.getElementById('comm-assistant-account');
+        if (assistantAccountEl) {
+          assistantAccountEl.textContent = data.assistant_account || 'not configured';
+        }
         window.open(data.authorization_url, '_blank', 'width=920,height=700');
         let done = false;
         const timer = setInterval(async () => {
