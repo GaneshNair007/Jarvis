@@ -160,9 +160,11 @@ or inference fails. It does not treat an open TCP port as proof of a working
 model.
 
 5. With JARVIS running, inspect `http://localhost:8000/model/status`.
-Tier 1 should show `status: "ready"`, `model_available: true`, and the
+Tier 1 should show `status: "model_available"`, `model_available: true`, and the
 configured model in `available_models`. `model_missing`, `unverified`,
-or `unavailable` are not success states.
+or `unavailable` are not success states. `model_available` only confirms the
+configured model is listed; the smoke test is the proof that a real inference
+request (including Ollama cloud sign-in, when used) succeeds.
 
 ### Docker Compose
 
