@@ -127,6 +127,9 @@ class InternshipAutomation:
         try:
             from jarvis.config import settings as jarvis_settings
             ollama_model = jarvis_settings.ollama_default_model
+            ollama_host = urlparse(jarvis_settings.ollama_base_url).hostname
+            if ollama_host not in {"localhost", "127.0.0.1", "::1"}:
+                raise ValueError("Ollama is configured on a non-local host; refusing to send job data")
             response = httpx.get(jarvis_settings.ollama_base_url.rstrip("/") + "/api/tags", timeout=1.5)
             response.raise_for_status()
             available = [item.get("name") for item in response.json().get("models", [])]
@@ -312,6 +315,9 @@ class InternshipAutomation:
             return None
         try:
             from jarvis.config import settings as jarvis_settings
+            ollama_host = urlparse(jarvis_settings.ollama_base_url).hostname
+            if ollama_host not in {"localhost", "127.0.0.1", "::1"}:
+                return None
             response = httpx.post(
                 jarvis_settings.ollama_base_url.rstrip("/") + "/api/generate",
                 json={
