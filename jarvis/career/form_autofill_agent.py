@@ -224,11 +224,8 @@ class AutonomousFormFiller:
 
         return FormAutofillResult(
             form_title=form_title,
-            fit_score=round(
-                len([skill for skill in self.profile.core_skills if skill.lower() in
-                     (form_title + " " + " ".join(f.label for f in fields)).lower()])
-                / max(1, len(self.profile.core_skills)), 2
-            ),
+            # This legacy field is now form-field coverage, not an opportunity-selection probability.
+            fit_score=round(len(filled_fields) / max(1, len(fields)), 2),
             total_fields=len(fields),
             filled_fields=filled_fields,
             unmapped_fields=unmapped_fields,
