@@ -118,7 +118,73 @@ curl -X POST http://localhost:8000/kill-switch \
 
 ---
 
-## 5. Running Tests Locally
+## 5. Connect your signed-in Ollama installation
+
+JARVIS talks to Ollama through its local HTTP API. The Ollama desktop/CLI
+installation owns the sign-in session; **do not copy your Ollama password,
+private key, or browser session into JARVIS**.
+
+### Native Windows / local Python run
+
+1. Open Ollama and sign in. For CLI sign-in, run `ollama signin` in the
+   Windows account that runs the Ollama service.
+2. Confirm the server and model are available:
+
+```powershell
+ollama list
+ollama run llama3.1 "Reply with exactly JARVIS_OLLAMA_OK."
+```
+
+Replace `llama3.1` with the exact model tag shown by `ollama list`.
+For an Ollama cloud model, use its cloud tag (for example, a tag ending in
+`:cloud`) and first verify it with `ollama run <model-tag>`. The local
+Ollama service forwards signed-in cloud requests; JARVIS does not need an
+Ollama API key for this local-server path.
+
+3. In the repository `.env`, set the same endpoint and exact model tag:
+
+```dotenv
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_DEFAULT_MODEL=llama3.1
+```
+
+4. Run the actual request smoke test:
+
+```powershell
+python scripts/verify_ollama_connection.py
+```
+
+The script checks `/api/tags` and then sends a real, short
+`/api/generate` request. It exits non-zero if the endpoint, model, sign-in,
+or inference fails. It does not treat an open TCP port as proof of a working
+model.
+
+5. With JARVIS running, inspect `http://localhost:8000/model/status`.
+Tier 1 should show `status: "ready"`, `model_available: true`, and the
+configured model in `available_models`. `model_missing`, `unverified`,
+or `unavailable` are not success states.
+
+### Docker Compose
+
+The Compose setup now points JARVIS and the LiteLLM gateway at the host
+Ollama server by default using
+`http://host.docker.internal:11434`, so it can use the Ollama installation
+where you signed in. If your Docker host cannot reach the desktop service,
+run JARVIS natively or configure Ollama's host binding/firewall deliberately;
+do not expose the Ollama port to an untrusted network.
+
+The separate Ollama container is opt-in because it has its own model store
+and does **not** automatically share the desktop account's sign-in session.
+To use that isolated container instead, set
+`OLLAMA_BASE_URL_DOCKER=http://ollama:11434` in `.env` and start it with:
+
+```powershell
+docker compose --profile bundled-ollama up -d --build
+```
+
+---
+
+## 6. Running Tests Locally
 
 ```bash
 pytest tests/test_milestone1_core.py -v
@@ -138,7 +204,7 @@ Validates all 12 core requirements:
 12. Kill switch
 
 
-## 6. Windows standalone browser and Gmail setup
+## 7. Windows standalone browser and Gmail setup
 
 Run these steps from the repository root in PowerShell after activating the
 virtual environment.
