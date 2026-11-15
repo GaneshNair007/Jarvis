@@ -67,6 +67,8 @@ def extract_profile(pdf_path: Path) -> dict:
         "email": email_match.group(0),
         "phone": phone_match.group(0),
         "location": "Pune, Maharashtra, India",
+        "linkedin": "https://www.linkedin.com/in/ganesh-nair-8ab1a5378/",
+        "github": "https://github.com/GaneshNair007",
         "education": "B.Tech Artificial Intelligence & Machine Learning, Symbiosis Institute of Technology, Pune",
         "graduation_year": grad_match.group(1),
         "skills": list(dict.fromkeys(skills)),
