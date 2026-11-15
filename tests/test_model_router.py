@@ -391,7 +391,7 @@ def test_model_status_accepts_ollama_latest_tag_alias(monkeypatch):
 
     status = router.get_status()["tier_1_local"]
     assert status["model_available"] is True
-    assert status["status"] == "ready"
+    assert status["status"] == "model_available"
 
 
 def test_empty_model_response_is_not_reported_as_completed(monkeypatch):
