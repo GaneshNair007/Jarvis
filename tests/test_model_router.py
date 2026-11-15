@@ -348,7 +348,6 @@ def test_failed_tool_result_marks_inference_partial_failure(monkeypatch):
     assert result["tools_executed"] == 0
 
 
-
 def test_model_status_requires_the_configured_ollama_model(monkeypatch):
     """A running Ollama daemon is not ready when the selected model is absent."""
     from jarvis.core.model_router import ModelRouter
