@@ -10,6 +10,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read   # least-privilege default; jobs elevate explicitly
+
 jobs:
   security-and-quality-gate:
     name: 10-Stage Security, Quality & Architecture Gate

@@ -2,59 +2,83 @@ name: ⚡ Performance Benchmarks
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: performance-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   benchmark:
     name: 🏃 Run Benchmarks
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
+          cache: pip
 
       - name: 📦 Install dependencies
         run: |
-          pip install pytest pytest-benchmark memory-profiler
-          pip install -r requirements.txt
-          pip install -r requirements-ci.txt
+          python -m pip install --upgrade pip
+          python -m pip install pytest pytest-benchmark memory-profiler
+          python -m pip install -r requirements.txt
+          python -m pip install -r requirements-ci.txt
 
       - name: ⚡ Run benchmarks
         run: |
-          python -m pytest tests/test_benchmarks.py --benchmark-only --benchmark-json=benchmark.json || echo "No benchmarks yet"
-          if [ ! -f benchmark.json ]; then
-            echo '{"benchmarks": []}' > benchmark.json
-          fi
+          test -f tests/test_benchmarks.py
+          python -m pytest tests/test_benchmarks.py --benchmark-only --benchmark-json=benchmark.json
+          test -s benchmark.json
 
-      - name: 📊 Store benchmark result
-        uses: benchmark-action/github-action-benchmark@v1
-        if: github.event_name == 'push'
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
         with:
-          tool: 'pytest'
+          name: benchmark-results
+          path: benchmark.json
+          if-no-files-found: error
+          retention-days: 14
+
+  publish-benchmarks:
+    name: 📊 Publish benchmark history
+    needs: benchmark
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out main for GitHub Pages publication
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download benchmark results
+        uses: actions/download-artifact@v4
+        with:
+          name: benchmark-results
+          path: .
+
+      # The existing gh-pages branch is the persistent benchmark history store.
+      # Keep the write token out of the job that executes pull-request code.
+      - name: 📈 Store benchmark result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: "pytest"
           output-file-path: benchmark.json
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
           comment-on-alert: true
           fail-on-alert: false
-
-  load-test:
-    name: 🔥 Load Testing
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: 🔥 Simulate load
-        run: |
-          echo "🎯 Running load tests..."
-          echo "✅ Agent initialization: <100ms"
-          echo "✅ Graph execution: <500ms"
-          echo "✅ Memory queries: <50ms"
-          echo "🏆 Performance benchmarks tracked!"

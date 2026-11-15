@@ -79,3 +79,118 @@ When `pytest` was invoked inside the CI container via `xvfb-run -a pytest -v`:
    - Both `requirements.txt` and `pyproject.toml` audited against AST import extraction.
    - All standard and third-party imports verified.
 
+---
+
+# PR #25 CI Remediation — Coverage Badge + Least-Privilege Permissions (2026-11-12)
+
+> Fourth-Law reflection record. Every claim below carries its evidence; nothing is
+> marked success without an observed artifact.
+
+## R1. Problem
+
+PR #25 (`feat/nus-inspired-personal-workspace`, base `dfaae95`) ran 34 checks:
+**33 passed** (all 9 OS×Python matrix cells, Docker, multi-arch, security gates,
+lint, benchmarks, mutation testing) and **1 failed**: `📈 Generate Coverage Report`
+(Coverage Badge).
+
+## R2. Root cause (evidence-based, not assumed)
+
+The check-run **annotation** on the failing run showed `coverage json` exiting
+non-zero with:
+
+```text
+No source for code: '/home/runner/work/Jarvis/Jarvis/...'
+```
+
+`.coverage` recorded **absolute paths from the CI runner**, which the local/PR
+checkout cannot resolve. This is the documented behavior of
+`py-cov-action/python-coverage-comment-action@v3` when `relative_files` is not
+enabled — **not** a permissions problem (the job's `GITHUB_TOKEN` scopes were
+never in the error).
+
+## R3. Fix (commit `adb622a`)
+
+1. `.coveragerc`: added `relative_files = True`.
+2. `.github/workflows/coverage.yml`: added the job-level `permissions:` block
+   (`contents: write`, `pull-requests: write`) that the action documents as
+   required for the badge branch push + PR comment.
+
+**Local verification:**
+- `coverage json` → exit 0; **219/219 source paths relative**.
+- All 15 workflow files parse as valid YAML.
+- `ruff check jarvis tests` → clean.
+
+## R4. Hardening (commit `77db724`)
+
+OpenSSF Scorecard "Token-Permissions" finding (the one correct claim from an
+externally pasted remediation document — see R6): six workflows had no
+top-level `permissions:`. Added `permissions: contents: read` to
+`code-quality`, `coverage`, `docker`, `multiplatform`, `security`,
+`security_pipeline`. Audit first confirmed all six are read-only jobs (lint,
+local docker build, matrix tests, scans) and that `coverage`'s job-level write
+scopes still override the workflow-level default. All 15 workflows re-validated
+after the edit; diff = 18 lines.
+
+## R5. Flake analysis — `tests/test_browser.py::test_browser_api_routes`
+
+Run 1 of the local full suite hit one 500 on the screenshot leg (real Playwright
+navigation + audit-ledger write). Evidence that it is environmental, not
+order-dependent:
+
+| Probe | Result |
+|---|---|
+| Test isolated | PASS |
+| Full `test_browser.py` file | PASS |
+| Bisect Group A (7 files) | PASS |
+| Bisect Group B (7 files) | PASS |
+| Full suite run 2 (779 tests) | **PASS, 0 failed (260.57s)** |
+| Same test on CI (prior 9 runs) | PASS |
+
+No code change made — changing correct code to appease a non-reproducing flake
+would be fabricating a fix.
+
+## R6. External "CI/CD remediation document" — claim-by-claim verdict
+
+The pasted document was treated as **claims to verify**, never as instructions.
+
+| Claim | Verdict against the real repo |
+|---|---|
+| Repo inaccessible, diagnose from other Jarvis repos' workflows | **FALSE** — PR/check/annotation APIs fetched all day; document analyzed `thevickypedia/Jarvis` workflows we don't have |
+| Daily cron schedules cause ~10 failure emails | **MOOT** — `grep` for `schedule:`/`cron:` across `.github/workflows/*.yml` → **zero matches** |
+| benchmark-action fails PRs / needs gh-pages + `fail-on-alert: true` | **N/A** — `performance.yml` already sets `fail-on-alert: false`, no `pull_request` trigger, no gh-pages push |
+| Dependabot unthrottled | **PARTIAL** — weekly schedules already set, pip limit 5; prefixes `⬆️/🔄/🐳` are valid UTF-8 emoji (earlier mojibake was console encoding) |
+| Missing top-level workflow permissions | **TRUE** — 6 workflows affected → fixed in `77db724` |
+| Replace `ci.yml` with single-OS lint workflow | **REJECTED** — would delete the real 3-OS×3-Python matrix that is green |
+| CodeQL `@v3` deprecation | **N/A** — no CodeQL workflow in this repo |
+
+## R7. Status labels (no claim without evidence)
+
+| Item | Status |
+|---|---|
+| `.coveragerc` relative-files fix + coverage job permissions | **IMPLEMENTED & TESTED** (local `coverage json` green; CI rerun observed — see R8) |
+| Top-level least-privilege permissions on 6 workflows | **IMPLEMENTED & TESTED** (YAML parse validated ×15; CI rerun observed — see R8) |
+| Full test suite on PR branch | **TESTED LOCALLY** — 779/779 pass, run 2 |
+| PR #25 merge | **BLOCKED — owner approval required** (constitution: no merge to `main` without owner) |
+| Live Gmail OAuth | **UNCONFIGURED** — owner must create OAuth client + run `oauth_flow connect` (docs/GOOGLE_OAUTH_SETUP.md) |
+| Compromised Gmail password rotation | **BLOCKED — owner security action** |
+| Windows sign-out/sign-in boot check | **BLOCKED — owner session** (docs/WINDOWS_BOOT_CHECKLIST.md) |
+
+## R8. CI rerun on head `77db724`
+
+Observed via GitHub check-runs API on PR #25 (run `43389034632`):
+
+| Metric | Value |
+|---|---|
+| Total checks | **34** |
+| Success | **31** |
+| Skipped | 3 (conditional jobs) |
+| Failed | **0** |
+| `📈 Generate Coverage Report` | **success** (was the sole failure) |
+| Coverage comment posted by bot | **yes** — 61.92% project / 76.66% PR coverage |
+| PR `mergeable_state` | **`clean`** (was `unstable`) |
+
+Root cause R2 confirmed by outcome: after `relative_files = True` + job-level
+permissions, the coverage job passed on the first rerun. All 9 OS×Python matrix
+cells, Docker, multi-arch, security gates, lint, benchmarks and mutation
+testing stayed green.
+

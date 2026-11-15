@@ -96,26 +96,24 @@ class ProactiveAutonomousScheduler:
         logger.info(f"Scheduler registered: [{job_id}] '{name}' at {schedule_time_hhmm} daily.")
 
     async def _job_career_scout(self) -> Dict[str, Any]:
-        """08:00 Routine: Scans internships, GSoC orgs, and matches Ganesh's profile."""
+        """08:00 Routine: discovers internship leads; no automatic external message."""
         from jarvis.core.web_recon import web_opportunity_recon
-        from jarvis.powers.whatsapp_dispatcher import whatsapp_dispatcher
 
         logger.info("Executing 08:00 Career & Internship Scout routine...")
         opportunities = await web_opportunity_recon.search_live_hackathons(
-            query="internship AI software engineer India 2026",
+            query="AI software engineer internship graduate research internship",
             location="India",
             limit=5,
         )
-        digest = whatsapp_dispatcher.format_hackathon_digest(
-            opportunities,
-            candidate_name="Ganesh",
-            title="🌅 MORNING CAREER & INTERNSHIP BRIEFING",
-        )
-        dispatch_res = await whatsapp_dispatcher.send_whatsapp_message(digest)
         return {
             "type": "career_scout",
+            "status": "discovery_only" if opportunities else "unavailable",
             "opportunities_found": len(opportunities),
-            "whatsapp_status": dispatch_res.get("status"),
+            "opportunities": opportunities,
+            "notification": {
+                "status": "not_requested",
+                "message": "No email or WhatsApp notification was sent by the scheduled discovery job.",
+            },
         }
 
     async def _job_hackathon_scout(self) -> Dict[str, Any]:
@@ -131,26 +129,46 @@ class ProactiveAutonomousScheduler:
         return result
 
     async def _job_research_digest(self) -> Dict[str, Any]:
-        """18:00 Routine: Aggregates top AI models, trending GitHub repos, and agent papers."""
-        from jarvis.core.web_recon import web_opportunity_recon
-        from jarvis.powers.whatsapp_dispatcher import whatsapp_dispatcher
+        """18:00 Routine: discovers current AI research and open-source project pages."""
+        from jarvis.powers.browser_powers import browser_powers
 
-        logger.info("Executing 18:00 AI Research & GitHub Digest routine...")
-        trending = [
-            {"title": "OpenMausBot Grok Engine Integration", "category": "Multi-Persona LLM"},
-            {"title": "Kokoro-TTS 82M Sub-50ms Speech Synthesis", "category": "Audio/Voice"},
-            {"title": "UI-TARS Visual Coordinate Grounding", "category": "Computer Use"},
-        ]
-        msg = (
-            "🔬 *JARVIS EVENING RESEARCH DIGEST*\n"
-            "Hey Ganesh, here are today's top open-source agent developments:\n\n"
-            "1. *OpenMausBot Grok Engine* - Multi-persona conversational router active.\n"
-            "2. *Kokoro-TTS Edge Audio* - Sub-50ms streaming voice synthesis.\n"
-            "3. *UI-TARS Grounding* - Normalized 0-1000 coordinate GUI actions.\n\n"
-            "All systems verified clean by 10-Layer Security Shield."
+        logger.info("Executing 18:00 live AI Research & GitHub discovery routine...")
+        queries = (
+            "latest AI agent open source projects GitHub",
+            "recent research papers multi agent systems LLM 2026",
+            "local LLM inference tools open source release",
         )
-        dispatch_res = await whatsapp_dispatcher.send_whatsapp_message(msg)
-        return {"trending_topics": len(trending), "whatsapp_status": dispatch_res.get("status")}
+        discoveries: List[Dict[str, Any]] = []
+        provider_errors: List[str] = []
+        for query in queries:
+            try:
+                result = browser_powers.search_web(query, max_results=5)
+                if result.get("status") != "completed":
+                    provider_errors.append(str(result.get("message") or "Live search unavailable"))
+                    continue
+                for item in result.get("results", []):
+                    discoveries.append(
+                        {
+                            **item,
+                            "query": query,
+                            "verification_status": "discovery_only",
+                        }
+                    )
+            except Exception as exc:
+                provider_errors.append(str(exc)[:240])
+
+        # These are discovery links only. No scheduled external notification is sent.
+        return {
+            "type": "ai_research_digest",
+            "status": "discovery_only" if discoveries else "unavailable",
+            "discoveries_count": len(discoveries),
+            "discoveries": discoveries,
+            "provider_errors": provider_errors,
+            "notification": {
+                "status": "not_requested",
+                "message": "No email or WhatsApp notification was sent by the scheduled discovery job.",
+            },
+        }
 
     async def trigger_job(self, job_id: str) -> Dict[str, Any]:
         """Immediately executes a scheduled job on demand."""
@@ -164,21 +182,51 @@ class ProactiveAutonomousScheduler:
 
         try:
             result = await job.handler()
-            job.last_status = "SUCCESS"
+            raw_status = str(result.get("status", "") if isinstance(result, dict) else "").strip().lower()
+            status_map = {
+                "success": "SUCCESS",
+                "completed": "SUCCESS",
+                "discovery_only": "PARTIAL",
+                "completed_local_only": "PARTIAL",
+                "partial": "PARTIAL",
+                "partial_failure": "PARTIAL_FAILURE",
+                "unavailable": "UNAVAILABLE",
+                "failed": "FAILED",
+                "security_halt": "FAILED",
+                "cancelled": "FAILED",
+            }
+            job_status = status_map.get(raw_status, "UNVERIFIED")
+            job.last_status = job_status
             job.last_run_timestamp = time.time()
             job.run_count += 1
-            job.last_result = result
-            job.last_error = None
+            job.last_result = result if isinstance(result, dict) else {"result": result}
+            job.last_error = (
+                "Handler returned no verifiable execution status."
+                if job_status == "UNVERIFIED"
+                else (
+                    str(result.get("error") or result.get("message") or job_status)
+                    if job_status in {"PARTIAL_FAILURE", "UNAVAILABLE", "FAILED"}
+                    else None
+                )
+            )
 
+            audit_event = (
+                "SCHEDULED_JOB_SUCCESS"
+                if job_status == "SUCCESS"
+                else "SCHEDULED_JOB_UNVERIFIED"
+                if job_status == "UNVERIFIED"
+                else "SCHEDULED_JOB_NON_SUCCESS"
+            )
             jarvis_security_suite.layer9_audit.log_event(
-                "SCHEDULED_JOB_SUCCESS",
-                f"Job '{job_id}' completed cleanly in {round(time.time() - start_ts, 2)}s",
+                audit_event,
+                f"Job '{job_id}' status={job_status} after {round(time.time() - start_ts, 2)}s",
             )
             return {
-                "status": "SUCCESS",
+                "status": job_status,
                 "job_id": job_id,
                 "duration_sec": round(time.time() - start_ts, 3),
                 "result": result,
+                **({"error": job.last_error} if job.last_error else {}),
             }
         except Exception as exc:
             job.last_status = "FAILED"

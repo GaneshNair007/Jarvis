@@ -142,6 +142,30 @@ class PowerBinder:
             privilege_level=1,
         )
 
+        # Gmail Inbox Scan (OAuth when connected; clearly-labelled local fallback otherwise)
+        self.register_function(
+            name="email_scan_opportunities",
+            func=email_powers.scan_inbox_for_opportunities,
+            description=(
+                "Scans the connected Gmail inbox for internship, hackathon, interview, and opportunity messages. "
+                "If Gmail is not connected, returns only the explicitly-labelled local .eml fallback."
+            ),
+            category="email",
+            keywords=[
+                "gmail",
+                "inbox",
+                "email",
+                "emails",
+                "mail",
+                "internship",
+                "hackathon",
+                "opportunity",
+                "interview",
+                "unread",
+            ],
+            privilege_level=1,
+        )
+
         # Home Assistant Powers
         self.register_function(
             name="home_get_state",
@@ -174,7 +198,21 @@ class PowerBinder:
             func=browser_powers.search_web,
             description="Searches the web and returns ranked deduplicated sources.",
             category="browser",
-            keywords=["search", "google", "web", "query", "find", "article", "news"],
+            keywords=[
+                "search",
+                "google",
+                "web",
+                "query",
+                "find",
+                "article",
+                "news",
+                "hackathon",
+                "internship",
+                "opportunity",
+                "job",
+                "scholarship",
+                "latest",
+            ],
             privilege_level=0,
         )
         self.register_function(
@@ -186,55 +224,110 @@ class PowerBinder:
             privilege_level=0,
         )
 
-    def select_tools_for_query(self, query: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
-        """Selects up to `limit` relevant tool schemas based on lexical query matching."""
-        max_tools = limit or self.max_concurrent_tools
+    def select_tools_for_query(
+        self,
+        query: str,
+        limit: Optional[int] = None,
+        max_privilege_level: int = 1,
+    ) -> List[Dict[str, Any]]:
+        """Select only relevant tools within the caller's privilege ceiling.
+
+        A zero-match query returns no tools; arbitrary tools are never attached
+        merely to fill the model's tool budget.
+        """
+        max_tools = min(limit or self.max_concurrent_tools, self.max_concurrent_tools)
         q_lower = query.lower()
 
         scored = []
         for name, tool in self._tools.items():
+            if int(tool.get("privilege_level", 99)) > max_privilege_level:
+                continue
+
             score = 0
-            # Keyword match
-            for kw in tool["keywords"]:
-                if kw in q_lower:
+            for keyword in tool["keywords"]:
+                if keyword in q_lower:
                     score += 2
-            # Category match
             if tool["category"] in q_lower:
                 score += 3
-            # Function name match
             if name.replace("_", " ") in q_lower:
                 score += 4
 
-            scored.append((score, tool))
+            if score > 0:
+                scored.append((score, name, tool))
 
-        # Sort descending by score
-        scored.sort(key=lambda x: x[0], reverse=True)
+        scored.sort(key=lambda item: (-item[0], item[1]))
+        return [item[2]["schema"] for item in scored[:max_tools]]
 
-        # Return top N schemas
-        selected = [item[1]["schema"] for item in scored[:max_tools]]
-        return selected
+    @staticmethod
+    def _result_succeeded(result: Any) -> bool:
+        """Interpret a tool receipt without hiding provider or execution failures."""
+        if not isinstance(result, dict):
+            return True
+        if result.get("success") is False or result.get("error"):
+            return False
+        status = str(result.get("status", "")).strip().lower()
+        return status not in {
+            "unavailable",
+            "partial",
+            "partial_failure",
+            "cancelled",
+            "error",
+            "failed",
+            "failure",
+            "not_found",
+            "not_configured",
+            "rejected",
+            "failed_verification",
+            "security_halt",
+        }
 
     def execute_tool(self, name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
-        """Dispatches tool execution with argument safety and audit logging."""
+        """Execute a registered tool only when it fits the default read-only policy."""
         if name not in self._tools:
             return {"success": False, "error": f"Tool '{name}' not found in registry."}
 
         tool_meta = self._tools[name]
-        func = tool_meta["func"]
+        privilege_level = int(tool_meta.get("privilege_level", 99))
+        if privilege_level > 1:
+            return {
+                "success": False,
+                "tool": name,
+                "error": "APPROVAL_REQUIRED",
+                "message": "This tool can modify state or send data and is not callable from the autonomous read-only tool loop.",
+            }
 
+        func = tool_meta["func"]
         try:
             result = func(**arguments)
+            succeeded = self._result_succeeded(result)
             audit_ledger.record(
                 actor="PowerBinder",
                 action=f"EXECUTE_{name.upper()}",
                 target=name,
                 payload=arguments,
-                result="SUCCESS",
+                result="SUCCESS" if succeeded else "FAILURE",
             )
-            return {"success": True, "tool": name, "result": result}
-        except Exception as e:
-            logger.error(f"Error executing tool '{name}': {e}", exc_info=True)
-            return {"success": False, "tool": name, "error": str(e)}
+            receipt = {"success": succeeded, "tool": name, "result": result}
+            if not succeeded:
+                receipt["error"] = (
+                    result.get("error") or result.get("message") or "The tool did not complete successfully."
+                    if isinstance(result, dict)
+                    else "The tool did not complete successfully."
+                )
+            return receipt
+        except Exception as exc:
+            logger.error("Error executing tool '%s': %s", name, exc, exc_info=True)
+            try:
+                audit_ledger.record(
+                    actor="PowerBinder",
+                    action=f"EXECUTE_{name.upper()}",
+                    target=name,
+                    payload=arguments,
+                    result="FAILURE",
+                )
+            except Exception:
+                logger.exception("Failed to record tool failure for %s", name)
+            return {"success": False, "tool": name, "error": str(exc)}
 
 
 # Global Power Binder singleton

@@ -60,6 +60,13 @@ class OpportunityRadarWorkflow:
             status = opp.get("status", "new")
             fit_score = opp.get("fit_score", 0.0)
             applied_str = opp.get("applied_date")
+            source_url = opp.get("job_url", opp.get("url"))
+            if not source_url:
+                evidence_status = "missing_source_url"
+            elif "example.com" in str(source_url).lower():
+                evidence_status = "placeholder_example_url"
+            else:
+                evidence_status = "saved_url_not_live_verified"
 
             days_active = 0
             if applied_str:
@@ -72,7 +79,12 @@ class OpportunityRadarWorkflow:
             # Classification rules
             if status in ["applied", "saved"] and (days_active >= days_threshold or fit_score >= 85):
                 urgency = "Needs follow-up / High Priority"
-                draft_msg = f"Dear Hiring Team at {company},\n\nI am writing regarding the {role} opportunity. I have prepared verified prototypes and architecture deliverables aligning directly with your engineering requirements.\n\nBest regards,\nGanesh Nair"
+                draft_msg = (
+                    f"Dear Hiring Team at {company},\n\n"
+                    f"I am following up on my application for the {role} opportunity. "
+                    "Could you please share any update on the application status or next steps?\n\n"
+                    "Best regards,\nGanesh Nair"
+                )
                 suggested_action = "Review draft note and submit application / follow-up"
                 needs_attention = True
             else:
@@ -87,6 +99,8 @@ class OpportunityRadarWorkflow:
                     "company": company,
                     "role": role,
                     "status": status,
+                    "job_url": source_url,
+                    "evidence_status": evidence_status,
                     "fit_score": fit_score,
                     "days_since_interaction": days_active,
                     "urgency_classification": urgency,
@@ -100,6 +114,13 @@ class OpportunityRadarWorkflow:
 
         return {
             "workflow": "opportunity_radar",
+            "status": "completed_local_only",
+            "source": "local_career_pipeline",
+            "live_search": False,
+            "message": (
+                "Local saved-pipeline review only. No new opportunities were searched or verified. "
+                "Check each source URL and evidence_status before acting."
+            ),
             "timestamp": now.isoformat(),
             "total_tracked": len(classified_items),
             "action_required_count": action_required_count,

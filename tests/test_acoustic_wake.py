@@ -410,22 +410,25 @@ def test_frame_accumulation_and_threshold():
 
 
 def test_real_openwakeword_model_smoke():
+    """Load and execute the real ONNX wake-word model; setup failures must fail CI."""
     import importlib.util
 
-    if importlib.util.find_spec("openwakeword") is None:
-        pytest.skip("openwakeword not installed on this host")
-    if os.getenv("JARVIS_SKIP_REAL_WAKE", "").strip() in ("1", "true", "yes"):
-        pytest.skip("JARVIS_SKIP_REAL_WAKE set")
+    assert importlib.util.find_spec("openwakeword") is not None, (
+        "openwakeword must be installed from requirements-ci.txt before running tests"
+    )
+    assert os.getenv("JARVIS_SKIP_REAL_WAKE", "").strip().lower() not in ("1", "true", "yes"), (
+        "The real wake-word model smoke check is required; JARVIS_SKIP_REAL_WAKE cannot disable it"
+    )
 
     from jarvis.voice.wake import get_acoustic_gate
 
     gate = get_acoustic_gate()
-    if not gate.available:
-        pytest.skip(f"openWakeWord models could not load: {gate.unavailable_reason}")
+    assert gate.available, f"openWakeWord ONNX model failed to load: {gate.unavailable_reason}"
 
     event = gate.gate(silence_block())
     assert event["source"] == "acoustic"
     assert event["wake"] in (True, False)
     assert 0.0 <= float(event["score"]) <= 1.0
     assert event["threshold"] == gate.threshold
+    assert gate.model_names, "The real wake-word model must report its loaded model name"
     gate.reset()

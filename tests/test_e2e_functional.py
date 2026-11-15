@@ -3,7 +3,7 @@ End-to-End JARVIS Functional Verification.
 
 Proves JARVIS is fully functional end-to-end:
   * Speaks (TTS via SAPI -> real WAV audio)
-  * Thinks & acts offline (model router local-heuristic fallback)
+  * Reports offline model unavailability without claiming an inference occurred
   * Codes (multi-agent subagent dispatch with Evidence/TrustResult)
   * Self-improves (CODER_ANTIGRAVITY -> self_upgrade_pipeline)
   * Runs multiple subagents in parallel (swarm execute_plan)
@@ -46,8 +46,12 @@ def test_tts_speaks_real_audio():
 # --------------------------------------------------------------------- #
 
 
-def test_think_offline_returns_helpful_reply():
-    """With no LLM backend, JARVIS still reasons via local reflex (success, not unavailable)."""
+def test_think_offline_returns_helpful_reply(monkeypatch):
+    """With no LLM backend, JARVIS reports that no inference was performed."""
+    from jarvis.config import settings
+
+    monkeypatch.setattr(settings, "jarvis_env", "test")
+    monkeypatch.setattr(model_router, "check_ollama_readiness", lambda use_cache=True: False)
     decision = RoutingDecision(
         task_id="tsk_e2e_think",
         tier="TIER_1_LOCAL",
@@ -60,9 +64,10 @@ def test_think_offline_returns_helpful_reply():
         requires_approval=False,
     )
     resp = model_router.execute_inference(decision, "Who are you?")
-    assert resp["status"] == "success"
-    assert resp["error"] is None
-    assert "JARVIS" in resp["reply"] or "assistant" in resp["reply"].lower()
+    assert resp["status"] == "unavailable"
+    assert resp["error"] == "LOCAL_MODEL_UNAVAILABLE"
+    assert "not reachable" in resp["reply"].lower()
+    assert resp["tokens_used"] == 0
     assert resp["cost_usd"] == 0.0
 
 

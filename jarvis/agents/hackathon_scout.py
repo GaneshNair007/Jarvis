@@ -1,189 +1,132 @@
-"""
-JARVIS Autonomous Hackathon & Opportunity Multi-Agent Workforce
-Coordinates a 4-agent swarm:
-  1. ScoutAgent: Scrapes Devpost, Unstop, SIH, GSoC via Obscura Browser
-  2. AnalystAgent: Ingests guidelines, filters for high-impact AI/Systems alignment
-  3. ArchitectAgent: Scaffolds project repository and drafts PROBLEM_STATEMENT.md
-  4. DispatcherAgent: Pushes executive WhatsApp digest to Ganesh (+91 9324094474)
+"""Source-grounded hackathon discovery and research-note workflow.
+
+This module discovers search leads, fetches source pages, and writes factual
+research notes only. It does not create generic starter applications or submit
+entries.
 """
 
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
-from pathlib import Path
+import re
 import time
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from jarvis.core.obscura_browser import obscura_browser
 from jarvis.core.notifier import opportunity_notifier
+from jarvis.core.web_recon import web_opportunity_recon
+from jarvis.powers.browser_powers import browser_powers
 from jarvis.security.ten_layer_shield import jarvis_security_suite
 
 logger = logging.getLogger("jarvis.agents.hackathon_scout")
 
 
 class ScoutAgent:
-    """Agent 1: Scans the web for live hackathons and competitive opportunities."""
+    """Discovers live search leads; does not synthesize offline opportunities."""
 
-    async def scan_opportunities(self, query: str = "AI hackathon India 2026 GSoC") -> List[Dict[str, Any]]:
-        logger.info(f"[ScoutAgent] Scanning opportunities with query: {query}")
-        results = await obscura_browser.search_opportunities(query, limit=5)
-        return results
+    async def scan_opportunities(self, query: str = "AI hackathon India 2026") -> List[Dict[str, Any]]:
+        if not query.strip():
+            return []
+        return await obscura_browser.search_opportunities(query, limit=5)
 
 
 class AnalystAgent:
-    """Agent 2: Analyzes competition guidelines, scores problem statements, and selects winner."""
-
-    PROFILE_KEYWORDS = ["python", "ai", "llm", "agent", "systems", "fastapi", "gpu", "gsoc"]
+    """Validates discovery records without inventing scores or event facts."""
 
     def evaluate_opportunities(self, raw_opps: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        scored = []
-        for opp in raw_opps:
-            text = f"{opp.get('title', '')} {opp.get('snippet', '')}".lower()
-            match_score = sum(15 for kw in self.PROFILE_KEYWORDS if kw in text)
-            # Baseline confidence
-            final_score = min(98, 50 + match_score)
-            analyzed = dict(opp)
-            analyzed["relevance_score"] = final_score
-            analyzed["feasibility"] = "HIGH" if final_score > 70 else "MEDIUM"
-            analyzed["recommended_tech"] = ["Python", "FastAPI", "RTX 4050 PyTorch", "Local LLM", "Docker"]
-            scored.append(analyzed)
-
-        scored.sort(key=lambda x: x["relevance_score"], reverse=True)
-        return scored
+        candidates: List[Dict[str, Any]] = []
+        for opportunity in raw_opps:
+            title = str(opportunity.get("title", "")).strip()
+            url = str(opportunity.get("url", "")).strip()
+            if not title or not url.startswith(("https://", "http://")):
+                continue
+            analyzed = dict(opportunity)
+            analyzed["analysis_status"] = "not_ranked"
+            analyzed["relevance_score"] = None
+            analyzed["recommended_tech"] = []
+            candidates.append(analyzed)
+        return candidates
 
 
 class ArchitectAgent:
-    """Agent 3: Creates project scaffolding, architecture blueprint, and PROBLEM_STATEMENT.md."""
+    """Writes a research note only after a source page has actually been fetched."""
 
     def __init__(self, workspace_root: Optional[Path] = None):
         self.workspace_root = workspace_root or Path("workspace/hackathons")
 
     def scaffold_top_opportunity(self, opportunity: Dict[str, Any]) -> Path:
-        title = opportunity.get("title", "Hackathon Project")
-        slug = "".join(c if c.isalnum() else "_" for c in title.lower()).strip("_")[:30]
+        title = str(opportunity.get("title", "")).strip()
+        source_page = opportunity.get("source_page")
+        if not title or not isinstance(source_page, dict):
+            raise ValueError("Cannot create a project scaffold without a fetched source page.")
+
+        text_excerpt = str(source_page.get("text_excerpt", "")).strip()
+        source_url = str(source_page.get("url") or opportunity.get("url") or "").strip()
+        if not text_excerpt or not source_url.startswith(("https://", "http://")):
+            raise ValueError("Fetched source page has no verifiable URL or extracted text.")
+
+        slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:48] or "hackathon-research"
         project_dir = self.workspace_root / slug
         project_dir.mkdir(parents=True, exist_ok=True)
 
-        # 1. Generate PROBLEM_STATEMENT.md
-        problem_statement_content = f"""# {title} — Autonomous Solution Blueprint
-**Target Challenge:** {title}  
-**Portal / Source:** {opportunity.get("url", "N/A")}  
-**Mode / Location:** {opportunity.get("mode", "India / Hybrid")}  
-**Scored Relevance:** {opportunity.get("relevance_score", 95)}% (Analyzed by JARVIS Swarm)  
-**Date Created:** {time.strftime("%Y-%m-%d %H:%M:%S")}
+        research_note = web_opportunity_recon.generate_problem_statement_md(
+            opportunity,
+            project_name=slug,
+        )
+        research_path = project_dir / "HACKATHON_RESEARCH.md"
+        research_path.write_text(research_note, encoding="utf-8")
 
----
+        readme = f"""# {title}
 
-## 1. Challenge & Problem Statement Analysis
-The challenge seeks an intelligent, production-ready system capable of autonomous multimodal reasoning, low-latency execution, and edge-to-cloud resilience.
+This directory currently contains a source-grounded research note only.
 
-### Core Objectives:
-- Deliver an autonomous agent workflow that solves domain-specific bottlenecks.
-- Operate within strict latency (<200ms) and privacy-first local hardware constraints.
-- Provide measurable impact, verifiable benchmarks, and comprehensive test coverage.
+- Research: [HACKATHON_RESEARCH.md](HACKATHON_RESEARCH.md)
+- Official page fetched: {source_url}
 
----
-
-## 2. Technical Architecture & Component Design
-```mermaid
-flowchart TD
-    Client[User / Webhook Interface] --> Gateway[FastAPI Asynchronous Gateway]
-    Gateway --> Security[JARVIS 10-Layer Security Shield]
-    Security --> Router[Hybrid Compute Model Router]
-    Router --> LocalPerception[RTX 4050 Local Perception: Whisper + Kokoro]
-    Router --> CloudMultiplex[Cloud LPU Multiplex: Gemini + Groq]
-    LocalPerception --> CoreEngine[State Machine & Tool Orchestration]
-    CloudMultiplex --> CoreEngine
-    CoreEngine --> PersistentMemory[SQLite / Merkle Audit Trail]
-```
-
----
-
-## 3. Recommended Technology Stack
-- **Language:** Python 3.12+
-- **Backend Framework:** FastAPI & Uvicorn
-- **Perception:** Faster-Whisper, Kokoro-82M, UI-TARS 4-bit (Local RTX 4050)
-- **Cloud Inference:** Multiplexed Google Gemini Pro / Flash + Groq LPU
-- **Storage & Security:** Genuine AES-256-GCM Vault, Merkle Hash Chain Audit
-- **Deployment:** Docker & GitHub Actions CI/CD
-
----
-
-## 4. Execution Milestones
-1. **Phase 1 (Hour 0-6):** Repo scaffolding, core schemas, security boundary validation.
-2. **Phase 2 (Hour 6-18):** Agent workflow integration, perceptual pipelines, local model binding.
-3. **Phase 3 (Hour 18-30):** End-to-end integration testing, UI telemetry dashboard, Docker packaging.
-4. **Phase 4 (Hour 30-36):** Final pitch deck, benchmark video demonstration, live submission.
+No application code, project architecture, deadline, prize, eligibility rule or Devpost submission has been generated or assumed. Choose the event and confirm its official rules before starting implementation.
 """
-        (project_dir / "PROBLEM_STATEMENT.md").write_text(problem_statement_content, encoding="utf-8")
-
-        # 2. Generate README.md
-        readme_content = f"""# {title}
-Autonomous AI submission scaffolded by JARVIS Multi-Agent Swarm.
-
-## Quickstart
-```bash
-python -m venv .venv
-source .venv/bin/activate  # Or .venv\\Scripts\\activate on Windows
-pip install -r requirements.txt
-python main.py
-```
-"""
-        (project_dir / "README.md").write_text(readme_content, encoding="utf-8")
-
-        # 3. Generate requirements.txt
-        reqs = "fastapi>=0.115.0\nuvicorn>=0.30.0\nhttpx>=0.27.0\npydantic>=2.8.0\npytest>=8.0.0\n"
-        (project_dir / "requirements.txt").write_text(reqs, encoding="utf-8")
-
-        # 4. Generate main.py starter
-        main_py = """import uvicorn
-from fastapi import FastAPI
-
-app = FastAPI(title="Autonomous Hackathon Service")
-
-@app.get("/")
-def read_root():
-    return {"status": "online", "system": "Autonomous AI Agent"}
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8080)
-"""
-        (project_dir / "main.py").write_text(main_py, encoding="utf-8")
-
-        return project_dir
+        (project_dir / "README.md").write_text(readme, encoding="utf-8")
+        return research_path
 
 
 class DispatcherAgent:
-    """Agent 4: Dispatches executive opportunity report to Ganesh via WhatsApp."""
+    """Formats a preview; external messaging is not automatic in discovery runs."""
 
     async def notify_user(
         self,
         opportunities: List[Dict[str, Any]],
         phone_number: str = "+91 9324094474",
+        send: bool = False,
     ) -> Dict[str, Any]:
-        logger.info(f"[DispatcherAgent] Formatting and sending WhatsApp alert to {phone_number}")
         message = opportunity_notifier.format_whatsapp_hackathon_digest(
             opportunities=opportunities,
             recipient_name="Ganesh",
-            location="Mumbai / India & Remote",
+            location="India / Remote",
         )
-        dispatch_result = await opportunity_notifier.send_whatsapp_message(
+        if not send:
+            return {
+                "status": "not_requested",
+                "channel": None,
+                "recipient": phone_number,
+                "formatted_message": message,
+                "message": "No external message was sent. This is only a preview.",
+            }
+        result = await opportunity_notifier.send_whatsapp_message(
             phone_number=phone_number,
             message=message,
         )
+        delivered = result.get("status") == "sent"
         return {
-            "dispatch_result": dispatch_result,
+            "status": "sent" if delivered else "not_delivered",
+            "dispatch_result": result,
             "formatted_message": message,
         }
 
 
 class HackathonScoutSwarm:
-    """
-    Coordinator of the 4-Agent Workforce:
-    Scout -> Analyst -> Architect -> Dispatcher
-    """
+    """Coordinates live search, official-page fetching and factual research-note creation."""
 
     def __init__(self):
         self.scout = ScoutAgent()
@@ -194,47 +137,100 @@ class HackathonScoutSwarm:
     async def execute_autonomous_scout_cycle(
         self,
         target_phone: str = "+91 9324094474",
-        search_query: str = "AI Agent Hackathons 2026 GSoC India",
+        search_query: str = "AI hackathons India",
+        send_notification: bool = False,
     ) -> Dict[str, Any]:
-        """Runs complete autonomous lifecycle from discovery to code scaffold and notification."""
+        """Discover leads and write research notes only for pages successfully fetched."""
         cycle_start = time.time()
-        jarvis_security_suite.layer9_audit.log_event(
-            "HACKATHON_SWARM_START",
-            f"Autonomous scout swarm launched for query '{search_query}'",
-        )
+        try:
+            jarvis_security_suite.layer9_audit.log_event(
+                "HACKATHON_SWARM_START",
+                f"Live scout cycle started for query: {search_query}",
+            )
+        except Exception as exc:
+            logger.warning("Unable to record scout start audit event: %s", exc)
 
-        # 1. Discovery
-        raw_opps = await self.scout.scan_opportunities(search_query)
+        raw_opportunities = await self.scout.scan_opportunities(search_query)
+        if not raw_opportunities:
+            return {
+                "status": "unavailable",
+                "error": "LIVE_OPPORTUNITY_SEARCH_UNAVAILABLE",
+                "message": "Live search returned no usable opportunity pages. No mock or curated entries were substituted.",
+                "query": search_query,
+                "total_discovered": 0,
+                "opportunities": [],
+                "research_notes": [],
+                "notification": {
+                    "status": "not_requested",
+                    "message": "No external notification was sent.",
+                },
+            }
 
-        # 2. Analysis
-        analyzed_opps = self.analyst.evaluate_opportunities(raw_opps)
+        opportunities = self.analyst.evaluate_opportunities(raw_opportunities)
+        research_notes: List[str] = []
+        page_failures: List[Dict[str, str]] = []
 
-        # 3. Architecture & Scaffolding of top 2 opportunities
-        for opp in analyzed_opps[:2]:
-            scaffold_path = self.architect.scaffold_top_opportunity(opp)
-            opp["scaffold_path"] = str(scaffold_path)
+        for opportunity in opportunities[:2]:
+            try:
+                page = await asyncio.to_thread(browser_powers.read_url, opportunity["url"])
+                if (
+                    not isinstance(page, dict)
+                    or page.get("status") != "completed"
+                    or not str(page.get("text_excerpt", "")).strip()
+                    or not str(page.get("url", "")).startswith(("https://", "http://"))
+                ):
+                    opportunity["verification_status"] = "page_fetch_failed"
+                    page_failures.append(
+                        {"url": opportunity["url"], "error": "Page reader returned no verified extracted text."}
+                    )
+                    continue
 
-        # 4. Dispatch Alert via WhatsApp
-        notification_info = await self.dispatcher.notify_user(
-            opportunities=analyzed_opps,
+                opportunity["source_page"] = page
+                opportunity["verification_status"] = "page_fetched"
+                research_path = self.architect.scaffold_top_opportunity(opportunity)
+                opportunity["research_note_path"] = str(research_path)
+                research_notes.append(str(research_path))
+            except Exception as exc:
+                opportunity["verification_status"] = "page_fetch_failed"
+                page_failures.append({"url": opportunity["url"], "error": str(exc)[:300]})
+
+        if research_notes and not page_failures:
+            status = "completed"
+        elif research_notes:
+            status = "partial_failure"
+        else:
+            status = "unavailable"
+
+        notification = await self.dispatcher.notify_user(
+            opportunities=opportunities,
             phone_number=target_phone,
+            send=send_notification,
         )
-
         duration_sec = round(time.time() - cycle_start, 2)
-        jarvis_security_suite.layer9_audit.log_event(
-            "HACKATHON_SWARM_COMPLETE",
-            f"Completed scout cycle in {duration_sec}s with {len(analyzed_opps)} opportunities",
-        )
+        try:
+            jarvis_security_suite.layer9_audit.log_event(
+                "HACKATHON_SWARM_FINISHED",
+                f"Scout status={status}; fetched_pages={len(research_notes)}; page_failures={len(page_failures)}",
+            )
+        except Exception as exc:
+            logger.warning("Unable to record scout completion audit event: %s", exc)
 
         return {
-            "status": "success",
+            "status": status,
             "duration_sec": duration_sec,
-            "target_recipient": target_phone,
-            "total_discovered": len(raw_opps),
-            "opportunities": analyzed_opps,
-            "notification": notification_info,
+            "query": search_query,
+            "total_discovered": len(opportunities),
+            "pages_fetched": len(research_notes),
+            "opportunities": opportunities,
+            "research_notes": research_notes,
+            "page_failures": page_failures,
+            "notification": notification,
+            "next_steps": [
+                "Confirm event activity, deadline, eligibility and judging rules from the official page.",
+                "Choose one event before project architecture or code generation begins.",
+                "Approve any GitHub repository creation, external notification or form submission separately.",
+            ],
         }
 
 
-# Global Swarm Singleton
 hackathon_scout_swarm = HackathonScoutSwarm()

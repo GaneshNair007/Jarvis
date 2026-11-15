@@ -7,10 +7,16 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read   # least-privilege default; jobs elevate explicitly
+
 jobs:
   coverage:
     name: 📈 Generate Coverage Report
     runs-on: ubuntu-latest
+    permissions:
+      contents: write        # badge data branch (python-coverage-comment-action)
+      pull-requests: write   # coverage comment on PRs
     services:
       postgres:
         image: postgres:15
@@ -42,6 +48,8 @@ jobs:
           pip install pytest pytest-cov coverage[toml]
           pip install -r requirements.txt
           pip install -r requirements-ci.txt
+          python -m pip install --no-deps "openwakeword==0.6.0"
+          python -c "from openwakeword.utils import download_models; download_models(['hey_jarvis'])"
           python -m playwright install --with-deps chromium
 
       - name: 🧪 Run tests with coverage
@@ -91,6 +99,8 @@ jobs:
           pip install mutmut
           pip install -r requirements.txt
           pip install -r requirements-ci.txt
+          python -m pip install --no-deps "openwakeword==0.6.0"
+          python -c "from openwakeword.utils import download_models; download_models(['hey_jarvis'])"
 
       - name: 🧬 Run mutation tests
         run: |

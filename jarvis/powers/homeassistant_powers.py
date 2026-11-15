@@ -2,7 +2,7 @@
 
 Provides authenticated local REST API integration with Home Assistant (e.g. http://127.0.0.1:8123),
 entity status querying, service invocation with state-transition readback verification,
-and offline fallback handling.
+without offline simulation; service success requires state readback.
 """
 
 from __future__ import annotations
@@ -38,6 +38,15 @@ class HomeAssistantPowers:
 
     def check_connection(self) -> Dict[str, Any]:
         """PWR-238A: Checks connectivity and API availability for local Home Assistant."""
+        if not self.token:
+            return {
+                "power_id": "PWR-238",
+                "connected": False,
+                "configured": False,
+                "base_url": self.base_url,
+                "error": "HASS_TOKEN is not configured.",
+                "suggestion": "Set HASS_URL and HASS_TOKEN before enabling physical device control.",
+            }
         url = f"{self.base_url}/api/"
         req = urllib.request.Request(url, headers=self._headers(), method="GET")
         try:
@@ -61,6 +70,13 @@ class HomeAssistantPowers:
 
     def get_entity_state(self, entity_id: str) -> Dict[str, Any]:
         """PWR-238: Queries current state and attributes of a specific Home Assistant entity."""
+        if not self.token:
+            return {
+                "power_id": "PWR-238",
+                "success": False,
+                "entity_id": entity_id,
+                "error": "HASS_TOKEN is not configured.",
+            }
         url = f"{self.base_url}/api/states/{entity_id}"
         req = urllib.request.Request(url, headers=self._headers(), method="GET")
         try:
@@ -82,20 +98,23 @@ class HomeAssistantPowers:
                 "error": f"HTTP {he.code}: {he.reason}",
             }
         except Exception as e:
-            # Fallback for disconnected / demo scenarios
             return {
                 "power_id": "PWR-238",
                 "success": False,
                 "entity_id": entity_id,
                 "error": f"Connection failed: {e}",
-                "simulated_fallback": {
-                    "entity_id": entity_id,
-                    "state": "unknown (offline)",
-                },
             }
 
     def list_entities(self, domain_filter: Optional[str] = None) -> Dict[str, Any]:
         """PWR-239: Queries all available entity states from Home Assistant."""
+        if not self.token:
+            return {
+                "power_id": "PWR-239",
+                "success": False,
+                "count": 0,
+                "entities": [],
+                "error": "HASS_TOKEN is not configured.",
+            }
         url = f"{self.base_url}/api/states"
         req = urllib.request.Request(url, headers=self._headers(), method="GET")
         try:
@@ -131,10 +150,30 @@ class HomeAssistantPowers:
         service: str,
         service_data: Optional[Dict[str, Any]] = None,
         verify_entity_id: Optional[str] = None,
+        expected_state: Optional[str] = None,
     ) -> Dict[str, Any]:
         """PWR-240: Calls a Home Assistant service and verifies state readback."""
         payload_data = service_data or {}
         target_entity = verify_entity_id or payload_data.get("entity_id")
+
+        if not self.token:
+            return {
+                "power_id": "PWR-240",
+                "success": False,
+                "verified": False,
+                "domain": domain,
+                "service": service,
+                "error": "HASS_TOKEN is not configured; no device command was sent.",
+            }
+        if not target_entity:
+            return {
+                "power_id": "PWR-240",
+                "success": False,
+                "verified": False,
+                "domain": domain,
+                "service": service,
+                "error": "A target entity is required for state readback verification.",
+            }
 
         url = f"{self.base_url}/api/services/{domain}/{service}"
         body_bytes = json.dumps(payload_data).encode("utf-8")
@@ -144,35 +183,73 @@ class HomeAssistantPowers:
             with urllib.request.urlopen(req, timeout=5) as resp:
                 result_states = json.loads(resp.read().decode("utf-8"))
 
-                # Readback verification
-                readback_state = None
-                if target_entity:
-                    readback = self.get_entity_state(target_entity)
-                    if readback.get("success"):
-                        readback_state = readback.get("state")
-
+            readback = self.get_entity_state(target_entity)
+            if not readback.get("success"):
                 audit_ledger.record(
                     actor="HomeAssistantPowers",
                     action=f"CALL_SERVICE_{domain.upper()}_{service.upper()}",
-                    target=str(target_entity or domain),
+                    target=str(target_entity),
                     payload=payload_data,
-                    result="SUCCESS",
+                    result="FAILED_VERIFICATION",
                 )
-
                 return {
                     "power_id": "PWR-240",
-                    "success": True,
+                    "success": False,
+                    "verified": False,
                     "domain": domain,
                     "service": service,
-                    "service_data": payload_data,
-                    "verified_state": readback_state,
-                    "result_states_count": len(result_states),
+                    "error": "Home Assistant accepted the request but state readback failed.",
+                    "details": readback,
                 }
+
+            readback_state = readback.get("state")
+            state_matches = (
+                expected_state is None
+                or (expected_state == "not_off" and readback_state not in {"off", "unknown", "unavailable", None})
+                or readback_state == expected_state
+            )
+            if not state_matches:
+                audit_ledger.record(
+                    actor="HomeAssistantPowers",
+                    action=f"CALL_SERVICE_{domain.upper()}_{service.upper()}",
+                    target=str(target_entity),
+                    payload=payload_data,
+                    result="FAILED_VERIFICATION",
+                )
+                return {
+                    "power_id": "PWR-240",
+                    "success": False,
+                    "verified": False,
+                    "domain": domain,
+                    "service": service,
+                    "expected_state": expected_state,
+                    "verified_state": readback_state,
+                    "error": "Home Assistant state did not match the expected state.",
+                }
+
+            audit_ledger.record(
+                actor="HomeAssistantPowers",
+                action=f"CALL_SERVICE_{domain.upper()}_{service.upper()}",
+                target=str(target_entity),
+                payload=payload_data,
+                result="SUCCESS",
+            )
+            return {
+                "power_id": "PWR-240",
+                "success": True,
+                "verified": True,
+                "domain": domain,
+                "service": service,
+                "service_data": payload_data,
+                "verified_state": readback_state,
+                "result_states_count": len(result_states) if isinstance(result_states, list) else 0,
+            }
         except Exception as e:
             logger.warning(f"Error calling Home Assistant service {domain}.{service}: {e}")
             return {
                 "power_id": "PWR-240",
                 "success": False,
+                "verified": False,
                 "domain": domain,
                 "service": service,
                 "error": str(e),

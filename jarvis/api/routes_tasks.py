@@ -230,7 +230,7 @@ def cancel_task(task_id: str, reason: str = "User requested cancellation"):
     current_state = state_machine.get_task_state(task_id)
     if not current_state:
         raise HTTPException(status_code=404, detail=f"Task '{task_id}' not found")
-    if current_state in ("COMPLETED", "FAILED_TERMINAL", "CANCELLED"):
+    if current_state in ("COMPLETED", "FAILED", "FAILED_TERMINAL", "REJECTED", "CANCELLED"):
         return {
             "task_id": task_id,
             "status": current_state,

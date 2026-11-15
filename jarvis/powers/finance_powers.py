@@ -68,8 +68,22 @@ class FinancePowers:
         if symbol:
             sym = symbol.upper().strip()
             q = quotes.get(sym, {"price": 150.00, "change_pct": "0.0%", "currency": "USD", "pe": 20.0})
-            return {"power_id": "PWR-215", "symbol": sym, **q}
-        return {"power_id": "PWR-215", "watchlist": self.watchlist, "quotes": quotes}
+            return {
+                "power_id": "PWR-215",
+                "status": "demo",
+                "data_source": "bundled_demo_fixture",
+                "disclaimer": "Illustrative fixture values only; this is not a live market quote.",
+                "symbol": sym,
+                **q,
+            }
+        return {
+            "power_id": "PWR-215",
+            "status": "demo",
+            "data_source": "bundled_demo_fixture",
+            "disclaimer": "Illustrative fixture values only; this is not live market data.",
+            "watchlist": self.watchlist,
+            "quotes": quotes,
+        }
 
     def pwr_216_price_alerts(self, symbol: str, target_price: float, condition: str = "above") -> Dict[str, Any]:
         """PWR-216: Set or evaluate real-time price alerts."""
@@ -136,6 +150,9 @@ class FinancePowers:
         """PWR-222: Macro market overview (S&P 500, Nasdaq, 10Y Yield, DXY)."""
         return {
             "power_id": "PWR-222",
+            "status": "demo",
+            "data_source": "bundled_demo_fixture",
+            "disclaimer": "Illustrative static market figures only; this is not live market data.",
             "indices": {
                 "S&P 500": {"level": 5875.2, "change": "+0.45%"},
                 "Nasdaq 100": {"level": 20450.8, "change": "+0.82%"},

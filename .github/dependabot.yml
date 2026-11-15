@@ -1,4 +1,6 @@
-# Dependabot configuration for automated dependency updates
+# Dependabot configuration for automated dependency updates.
+# Group routine minor/patch bumps so each ecosystem produces fewer PRs.
+# Major updates remain separate for deliberate compatibility review.
 version: 2
 updates:
   # Python dependencies
@@ -8,7 +10,14 @@ updates:
       interval: "weekly"
       day: "monday"
       time: "09:00"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 3
+    groups:
+      python-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
     labels:
       - "dependencies"
       - "python"
@@ -24,6 +33,14 @@ updates:
       interval: "weekly"
       day: "tuesday"
       time: "09:00"
+    open-pull-requests-limit: 3
+    groups:
+      github-actions-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
     labels:
       - "dependencies"
       - "github-actions"
@@ -38,6 +55,14 @@ updates:
       interval: "weekly"
       day: "wednesday"
       time: "09:00"
+    open-pull-requests-limit: 2
+    groups:
+      docker-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
     labels:
       - "dependencies"
       - "docker"

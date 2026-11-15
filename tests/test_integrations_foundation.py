@@ -29,6 +29,7 @@ from integrations import (
     RetryPolicy,
     IntegrationStatus,
 )
+from integrations.base.credential_manager import CredentialManager
 
 
 @pytest.fixture
@@ -280,3 +281,26 @@ def test_dangerous_action_blocking(client):
     assert invalid_res.json()["status"] == "APPROVAL_INVALID"
 
     credential_manager.clear_override("GITHUB_PERSONAL_ACCESS_TOKEN")
+
+
+def test_credential_manager_loads_dotenv_and_preserves_precedence(tmp_path, monkeypatch):
+    """OAuth credentials in project .env work without being exported to os.environ."""
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        "GOOGLE_CLIENT_ID=dotenv-client-id\nGOOGLE_CLIENT_SECRET=dotenv-client-secret\n",
+        encoding="utf-8",
+    )
+    monkeypatch.delenv("GOOGLE_CLIENT_ID", raising=False)
+    monkeypatch.delenv("GOOGLE_CLIENT_SECRET", raising=False)
+
+    manager = CredentialManager()
+    manager._env_file = env_file
+
+    assert manager.get_credential("GOOGLE_CLIENT_ID") == "dotenv-client-id"
+    assert manager.get_credential("GOOGLE_CLIENT_SECRET") == "dotenv-client-secret"
+
+    monkeypatch.setenv("GOOGLE_CLIENT_ID", "process-client-id")
+    assert manager.get_credential("GOOGLE_CLIENT_ID") == "process-client-id"
+
+    manager.set_override("GOOGLE_CLIENT_ID", "runtime-override-client-id")
+    assert manager.get_credential("GOOGLE_CLIENT_ID") == "runtime-override-client-id"

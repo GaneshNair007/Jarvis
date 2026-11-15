@@ -1,21 +1,16 @@
-"""
-Unit & Integration Tests for JARVIS Autonomous Multi-Agent Workforce & WhatsApp Dispatch
-Verifies:
-1. 105-agent fleet roster and division census.
-2. Web opportunity perception & hackathon ranking for Ganesh.
-3. Problem statement synthesis and AST project scaffolding.
-4. WhatsApp digest formatting and multi-channel dispatch to +91 9324094474.
-5. End-to-end pipeline execution with Merkle audit verification.
-6. FastAPI workforce endpoints.
-"""
+"""Tests for truthful on-demand workforce and source-grounded research."""
+
+from unittest.mock import AsyncMock
 
 import pytest
 from fastapi.testclient import TestClient
 
 from jarvis.agents.autonomous_workforce import autonomous_workforce
+from jarvis.agents.hackathon_scout import hackathon_scout_swarm
+from jarvis.browser.search_wrapper import SearchResult
 from jarvis.core.web_recon import web_opportunity_recon
+from jarvis.powers.browser_powers import browser_powers
 from jarvis.powers.whatsapp_dispatcher import whatsapp_dispatcher
-from jarvis.security.ten_layer_shield import jarvis_security_suite
 from jarvis.api.server import app
 
 
@@ -24,129 +19,168 @@ def client():
     return TestClient(app)
 
 
-class TestAutonomousWorkforceAndWhatsApp:
-    def test_105_agent_fleet_roster_and_divisions(self):
-        """Verifies fleet census of 105 specialized micro-agents across 5 divisions."""
-        fleet = autonomous_workforce.get_fleet_status()
-        assert fleet["total_agents"] == 105
-        divs = fleet["divisions"]
-        assert divs["RECONNAISSANCE"] == 20
-        assert divs["ANALYSIS"] == 20
-        assert divs["SCAFFOLDING"] == 30
-        assert divs["DEVOPS"] == 20
-        assert divs["DISPATCH"] == 15
-        assert fleet["status"] == "ALL_SYSTEMS_OPERATIONAL"
+def test_workforce_reports_components_not_fake_agent_processes():
+    status = autonomous_workforce.get_fleet_status()
+    assert status["registered_components"] == 4
+    assert status["active_workers"] == 0
+    assert status["execution_mode"] == "on_demand_workflow"
+    assert status["status"] == "IDLE"
+    assert "not a 105-process agent fleet" in status["message"]
 
-    @pytest.mark.asyncio
-    async def test_web_opportunity_recon_hackathon_ranking(self):
-        """Verifies hackathon search returns scored, domain-relevant competitions."""
-        hackathons = await web_opportunity_recon.search_live_hackathons(
-            query="AI agents",
-            location="India",
-            limit=3,
-        )
-        assert len(hackathons) >= 2
-        top = hackathons[0]
-        assert "title" in top
-        assert "url" in top
-        assert "recommended_problem" in top
-        assert top["match_score"] >= 0.85
 
-    def test_problem_statement_synthesis(self):
-        """Verifies automated synthesis of submission-grade PROBLEM_STATEMENT.md."""
-        hackathon = {
-            "title": "Smart India Hackathon 2026",
-            "organization": "AICTE",
-            "domain": "Autonomous AI Agents",
-            "recommended_problem": "Local Multi-Agent Desktop OS",
-        }
-        md_text = web_opportunity_recon.generate_problem_statement_md(hackathon, "JARVIS-SIH")
-        assert "# Problem Statement Analysis & Solution Architecture" in md_text
-        assert "Ganesh Nair" in md_text
-        assert "10-Layer Zero-Leak Security Shield" in md_text
-        assert "RTX 4050" in md_text
+@pytest.mark.asyncio
+async def test_web_opportunity_recon_returns_live_discovery_metadata_only(monkeypatch):
+    monkeypatch.setattr(
+        "jarvis.browser.search_wrapper.WebSearchWrapper.search",
+        lambda self, query, max_results=5: [
+            SearchResult(
+                title="Official AI Agents Hackathon",
+                url="https://events.example.org/agents",
+                snippet="Official event listing and challenge information.",
+            )
+        ],
+    )
+    hackathons = await web_opportunity_recon.search_live_hackathons(
+        query="AI agents",
+        location="India",
+        limit=3,
+    )
+    assert len(hackathons) == 1
+    assert hackathons[0]["title"] == "Official AI Agents Hackathon"
+    assert hackathons[0]["verification_status"] == "discovery_only"
+    assert "deadline" not in hackathons[0]
+    assert "prize_pool" not in hackathons[0]
+    assert "recommended_problem" not in hackathons[0]
 
-    def test_whatsapp_digest_formatting(self):
-        """Verifies WhatsApp digest contains Ganesh's greeting, markdown formatting, and action prompts."""
-        sample_hackathons = [
-            {
-                "title": "Smart India Hackathon 2026",
-                "location": "India",
-                "domain": "AI/ML",
-                "prize_pool": "₹1,00,000",
-                "deadline": "End of Month",
-                "url": "https://sih.gov.in",
-                "recommended_problem": "Autonomous Desktop Assistant",
-            }
-        ]
-        digest = whatsapp_dispatcher.format_hackathon_digest(sample_hackathons, "Ganesh")
-        assert "Hey Ganesh" in digest
-        assert "*JARVIS OPPORTUNITY ALERT*" in digest
-        assert "Smart India Hackathon 2026" in digest
-        assert "https://sih.gov.in" in digest
 
-    @pytest.mark.asyncio
-    async def test_whatsapp_dispatcher_send_and_receipt(self):
-        """Verifies WhatsApp message dispatch produces signed receipt and wa.me direct fallback."""
-        receipt = await whatsapp_dispatcher.send_whatsapp_message(
-            message="Hey Ganesh, test verification alert from JARVIS workforce.",
-            phone="+919324094474",
-        )
-        assert receipt["recipient"] == "+919324094474"
-        assert receipt["status"] in ("delivered", "ready_for_dispatch", "queued")
-        assert "https://wa.me/919324094474" in receipt["direct_link"]
-        assert receipt["message_length"] > 0
+@pytest.mark.asyncio
+async def test_web_opportunity_recon_returns_empty_when_search_is_unavailable(monkeypatch):
+    monkeypatch.setattr(
+        "jarvis.browser.search_wrapper.WebSearchWrapper.search",
+        lambda self, query, max_results=5: [],
+    )
+    assert await web_opportunity_recon.search_live_hackathons(query="AI agents", location="India") == []
 
-    @pytest.mark.asyncio
-    async def test_full_autonomous_hackathon_workforce_pipeline(self, tmp_path):
-        """Verifies complete end-to-end pipeline: Recon -> Analysis -> Scaffolding -> Dispatch -> Audit."""
-        output_dir = tmp_path / "test_hackathon_project"
-        result = await autonomous_workforce.run_hackathon_opportunity_pipeline(
-            target_phone="+919324094474",
-            location="India",
-            candidate_name="Ganesh",
-            output_workspace=output_dir,
+
+def test_research_note_requires_source_page_and_does_not_invent_facts():
+    with pytest.raises(ValueError, match="fetched source_page"):
+        web_opportunity_recon.generate_problem_statement_md(
+            {"title": "Unknown event", "url": "https://events.example.org/"},
+            project_name="JARVIS-demo",
         )
 
-        assert result["status"] == "COMPLETED"
-        assert result["candidate_name"] == "Ganesh"
-        assert result["target_phone"] == "+919324094474"
-        assert result["hackathons_found"] > 0
-
-        # Verify generated filesystem artifacts
-        assert (output_dir / "PROBLEM_STATEMENT.md").exists()
-        assert (output_dir / "app.py").exists()
-        assert (output_dir / ".github" / "workflows" / "ci.yml").exists()
-
-        # Verify WhatsApp dispatch receipt
-        wa = result["whatsapp_dispatch"]
-        assert wa["recipient"] == "+919324094474"
-
-        # Verify Merkle security audit logged
-        assert jarvis_security_suite.layer9_audit.verify_integrity() is True
-
-    def test_fastapi_workforce_endpoints(self, client):
-        """Verifies workforce REST API endpoints."""
-        # 1. Fleet census
-        r1 = client.get("/workforce/fleet")
-        assert r1.status_code == 200
-        d1 = r1.json()
-        assert d1["total_agents"] == 105
-
-        # 2. Hackathons query
-        r2 = client.get("/workforce/hackathons?location=India&limit=3")
-        assert r2.status_code == 200
-        d2 = r2.json()
-        assert d2["total"] >= 1
-
-        # 3. WhatsApp dispatch endpoint
-        r3 = client.post(
-            "/workforce/whatsapp/send",
-            json={
-                "message": "Hey Ganesh, API endpoint dispatch check.",
-                "phone": "+919324094474",
+    md_text = web_opportunity_recon.generate_problem_statement_md(
+        {
+            "title": "Official AI Agents Hackathon",
+            "url": "https://events.example.org/agents",
+            "snippet": "Search result excerpt.",
+            "source_page": {
+                "url": "https://events.example.org/agents",
+                "title": "Official Challenge Page",
+                "headings": ["Eligibility", "Submission"],
+                "text_excerpt": (
+                    "Eligibility: university students. Submit a working prototype through the event portal."
+                ),
             },
-        )
-        assert r3.status_code == 200
-        d3 = r3.json()
-        assert d3["recipient"] == "+919324094474"
+        },
+        project_name="JARVIS-demo",
+    )
+    assert "# Hackathon Research Notes: Official AI Agents Hackathon" in md_text
+    assert "Eligibility: university students." in md_text
+    assert "Registration deadline and timezone: **Not yet verified**" in md_text
+    assert "RTX 4050" not in md_text
+    assert "50-100 micro-tasks" not in md_text
+
+
+def test_whatsapp_digest_formatting_does_not_assert_delivery():
+    sample = [
+        {
+            "title": "Official AI Agents Hackathon",
+            "url": "https://events.example.org/agents",
+            "snippet": "Official source page.",
+        }
+    ]
+    digest = whatsapp_dispatcher.format_hackathon_digest(sample, "Ganesh")
+    assert "Hey Ganesh" in digest
+    assert "Official AI Agents Hackathon" in digest
+    assert "https://events.example.org/agents" in digest
+
+
+@pytest.mark.asyncio
+async def test_workforce_pipeline_uses_real_scout_and_does_not_send_or_fake_code(tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        hackathon_scout_swarm.scout,
+        "scan_opportunities",
+        AsyncMock(
+            return_value=[
+                {
+                    "title": "Official AI Hackathon",
+                    "url": "https://events.example.org/hackathon",
+                    "snippet": "Official search listing.",
+                    "source": "duckduckgo_html",
+                    "verification_status": "discovery_only",
+                }
+            ]
+        ),
+    )
+    monkeypatch.setattr(
+        browser_powers,
+        "read_url",
+        lambda url: {
+            "status": "completed",
+            "url": url,
+            "title": "Official AI Hackathon",
+            "headings": ["Rules", "Eligibility"],
+            "text_excerpt": "Official rules: university teams may submit a working prototype.",
+        },
+    )
+    result = await autonomous_workforce.run_hackathon_opportunity_pipeline(
+        target_phone="+919324094474",
+        location="India",
+        candidate_name="Ganesh",
+        output_workspace=tmp_path,
+    )
+
+    assert result["status"] == "completed"
+    assert result["hackathons_found"] == 1
+    assert result["pages_fetched"] == 1
+    assert result["notification"]["status"] == "not_requested"
+    research_path = tmp_path / "official-ai-hackathon" / "HACKATHON_RESEARCH.md"
+    assert research_path.exists()
+    assert "university teams may submit a working prototype" in research_path.read_text(encoding="utf-8")
+    assert not (tmp_path / "app.py").exists()
+    assert not (tmp_path / ".github" / "workflows" / "ci.yml").exists()
+
+
+def test_fastapi_workforce_endpoints_report_actual_catalog_and_search(monkeypatch, client):
+    monkeypatch.setattr(
+        "jarvis.browser.search_wrapper.WebSearchWrapper.search",
+        lambda self, query, max_results=5: [
+            SearchResult(
+                title="Official AI Hackathon",
+                url="https://events.example.org/hackathon",
+                snippet="Official listing.",
+            )
+        ],
+    )
+    fleet = client.get("/workforce/fleet")
+    assert fleet.status_code == 200
+    assert fleet.json()["registered_components"] == 4
+    assert fleet.json()["active_workers"] == 0
+
+    hackathons = client.get("/workforce/hackathons?location=India&limit=3")
+    assert hackathons.status_code == 200
+    assert hackathons.json()["status"] == "discovery_only"
+    assert hackathons.json()["total"] == 1
+
+    monkeypatch.setattr(
+        whatsapp_dispatcher,
+        "send_whatsapp_message",
+        AsyncMock(return_value={"status": "ready_for_dispatch", "recipient": "+919324094474"}),
+    )
+    response = client.post(
+        "/workforce/whatsapp/send",
+        json={"message": "Explicit test message", "phone": "+919324094474"},
+    )
+    assert response.status_code == 200
+    assert response.json()["status"] == "ready_for_dispatch"

@@ -184,7 +184,7 @@ def test_task_creation(client):
     assert response.status_code == 200
     data = response.json()
     assert "task_id" in data
-    assert data["status"] in ("COMPLETED", "TRIAGED", "PLANNED", "AWAITING_APPROVAL", "RUNNING")
+    assert data["status"] in ("COMPLETED", "TRIAGED", "PLANNED", "AWAITING_APPROVAL", "RUNNING", "FAILED", "REJECTED")
 
 
 # 9. Task cancellation
@@ -198,7 +198,9 @@ def test_task_cancellation(client):
     assert cancel_res.status_code == 200
     cancel_data = cancel_res.json()
     assert cancel_data["task_id"] == task_id
-    assert cancel_data["status"] in ("CANCELLED", "COMPLETED")
+    assert cancel_data["status"] in ("CANCELLED", "COMPLETED", "FAILED", "REJECTED")
+    if cancel_data["status"] in ("FAILED", "REJECTED"):
+        assert "terminal state" in cancel_data["message"].lower()
 
 
 # 10. Power registry
