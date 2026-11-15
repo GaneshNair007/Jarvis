@@ -5,32 +5,47 @@ SQLAlchemy 2.x Task and TaskGraph Models
 from __future__ import annotations
 
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.models.base import Base, GUID, UniversalJSON, TimestampMixin
 
 
+if TYPE_CHECKING:
+    from db.models.assignment import AssignmentModel
+    from db.models.dependency import TaskDependencyModel
+    from db.models.execution import ExecutionModel
+    from db.models.goal import GoalModel
+
+
 class TaskGraphModel(Base, TimestampMixin):
     __tablename__ = "task_graphs"
 
     id: Mapped[uuid.UUID] = mapped_column(GUID, primary_key=True, default=uuid.uuid4)
-    goal_id: Mapped[uuid.UUID] = mapped_column(GUID, sa.ForeignKey("goals.id", ondelete="CASCADE"), index=True, nullable=False)
+    goal_id: Mapped[uuid.UUID] = mapped_column(
+        GUID, sa.ForeignKey("goals.id", ondelete="CASCADE"), index=True, nullable=False
+    )
     status: Mapped[str] = mapped_column(sa.String(20), default="PENDING", index=True, nullable=False)
     metadata_json: Mapped[Dict[str, Any]] = mapped_column("metadata", UniversalJSON, default=dict, nullable=False)
 
     # Relationships
     goal: Mapped["GoalModel"] = relationship("GoalModel", back_populates="task_graphs")
-    tasks: Mapped[List["TaskModel"]] = relationship("TaskModel", back_populates="task_graph", cascade="all, delete-orphan")
+    tasks: Mapped[List["TaskModel"]] = relationship(
+        "TaskModel", back_populates="task_graph", cascade="all, delete-orphan"
+    )
 
 
 class TaskModel(Base, TimestampMixin):
     __tablename__ = "tasks"
 
     id: Mapped[uuid.UUID] = mapped_column(GUID, primary_key=True, default=uuid.uuid4)
-    task_graph_id: Mapped[uuid.UUID] = mapped_column(GUID, sa.ForeignKey("task_graphs.id", ondelete="CASCADE"), index=True, nullable=False)
-    goal_id: Mapped[uuid.UUID] = mapped_column(GUID, sa.ForeignKey("goals.id", ondelete="CASCADE"), index=True, nullable=False)
+    task_graph_id: Mapped[uuid.UUID] = mapped_column(
+        GUID, sa.ForeignKey("task_graphs.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    goal_id: Mapped[uuid.UUID] = mapped_column(
+        GUID, sa.ForeignKey("goals.id", ondelete="CASCADE"), index=True, nullable=False
+    )
     task_key: Mapped[str] = mapped_column(sa.String(100), nullable=False)
     name: Mapped[str] = mapped_column(sa.String(255), nullable=False)
     description: Mapped[str] = mapped_column(sa.Text, nullable=False)
@@ -47,8 +62,12 @@ class TaskModel(Base, TimestampMixin):
     # Relationships
     task_graph: Mapped["TaskGraphModel"] = relationship("TaskGraphModel", back_populates="tasks")
     goal: Mapped["GoalModel"] = relationship("GoalModel", back_populates="tasks")
-    assignments: Mapped[List["AssignmentModel"]] = relationship("AssignmentModel", back_populates="task", cascade="all, delete-orphan")
-    executions: Mapped[List["ExecutionModel"]] = relationship("ExecutionModel", back_populates="task", cascade="all, delete-orphan")
+    assignments: Mapped[List["AssignmentModel"]] = relationship(
+        "AssignmentModel", back_populates="task", cascade="all, delete-orphan"
+    )
+    executions: Mapped[List["ExecutionModel"]] = relationship(
+        "ExecutionModel", back_populates="task", cascade="all, delete-orphan"
+    )
     dependencies: Mapped[List["TaskDependencyModel"]] = relationship(
         "TaskDependencyModel",
         foreign_keys="TaskDependencyModel.task_id",

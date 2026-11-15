@@ -5,11 +5,17 @@ SQLAlchemy 2.x Improvement Request Model
 from __future__ import annotations
 
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.models.base import Base, GUID, UniversalJSON, TimestampMixin
+
+
+if TYPE_CHECKING:
+    from db.models.capability import CapabilityModel
+    from db.models.pr_workflow import PRWorkflowModel
+    from db.models.reflection import ReflectionModel
 
 
 class ImprovementRequestModel(Base, TimestampMixin):
@@ -30,8 +36,12 @@ class ImprovementRequestModel(Base, TimestampMixin):
     proposed_changes: Mapped[Dict[str, Any]] = mapped_column(UniversalJSON, default=dict, nullable=False)
 
     # Relationships
-    reflection: Mapped[Optional["ReflectionModel"]] = relationship("ReflectionModel", back_populates="improvement_requests")
-    capability: Mapped[Optional["CapabilityModel"]] = relationship("CapabilityModel", back_populates="improvement_requests")
+    reflection: Mapped[Optional["ReflectionModel"]] = relationship(
+        "ReflectionModel", back_populates="improvement_requests"
+    )
+    capability: Mapped[Optional["CapabilityModel"]] = relationship(
+        "CapabilityModel", back_populates="improvement_requests"
+    )
     pr_workflows: Mapped[List["PRWorkflowModel"]] = relationship(
         "PRWorkflowModel", back_populates="improvement_request", cascade="all, delete-orphan"
     )

@@ -6,20 +6,32 @@ from __future__ import annotations
 
 import datetime
 import uuid
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Dict, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.models.base import Base, GUID, UniversalJSON
 
 
+if TYPE_CHECKING:
+    from db.models.agent import AgentModel
+    from db.models.department import DepartmentModel
+    from db.models.task import TaskModel
+
+
 class AssignmentModel(Base):
     __tablename__ = "assignments"
 
     id: Mapped[uuid.UUID] = mapped_column(GUID, primary_key=True, default=uuid.uuid4)
-    task_id: Mapped[uuid.UUID] = mapped_column(GUID, sa.ForeignKey("tasks.id", ondelete="CASCADE"), index=True, nullable=False)
-    agent_id: Mapped[uuid.UUID] = mapped_column(GUID, sa.ForeignKey("agents.id", ondelete="CASCADE"), index=True, nullable=False)
-    department_id: Mapped[Optional[uuid.UUID]] = mapped_column(GUID, sa.ForeignKey("departments.id", ondelete="SET NULL"), nullable=True)
+    task_id: Mapped[uuid.UUID] = mapped_column(
+        GUID, sa.ForeignKey("tasks.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    agent_id: Mapped[uuid.UUID] = mapped_column(
+        GUID, sa.ForeignKey("agents.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    department_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        GUID, sa.ForeignKey("departments.id", ondelete="SET NULL"), nullable=True
+    )
     status: Mapped[str] = mapped_column(sa.String(20), default="ASSIGNED", index=True, nullable=False)
     assigned_at: Mapped[datetime.datetime] = mapped_column(
         sa.DateTime(timezone=True),

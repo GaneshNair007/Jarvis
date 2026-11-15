@@ -5,11 +5,16 @@ SQLAlchemy 2.x Department Model
 from __future__ import annotations
 
 import uuid
-from typing import Any, Dict, List
+from typing import TYPE_CHECKING, Any, Dict, List
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.models.base import Base, GUID, UniversalJSON, TimestampMixin
+
+
+if TYPE_CHECKING:
+    from db.models.agent import AgentModel
+    from db.models.assignment import AssignmentModel
 
 
 class DepartmentModel(Base, TimestampMixin):
@@ -26,6 +31,4 @@ class DepartmentModel(Base, TimestampMixin):
     agents: Mapped[List["AgentModel"]] = relationship(
         "AgentModel", back_populates="department", cascade="all, delete-orphan"
     )
-    assignments: Mapped[List["AssignmentModel"]] = relationship(
-        "AssignmentModel", back_populates="department"
-    )
+    assignments: Mapped[List["AssignmentModel"]] = relationship("AssignmentModel", back_populates="department")

@@ -11,6 +11,7 @@ Executes career growth, opportunity scouting, and open-source preparation tasks:
 
 from __future__ import annotations
 
+import asyncio
 import time
 from typing import Any, Dict, List, Optional
 

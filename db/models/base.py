@@ -18,6 +18,7 @@ class GUID(TypeDecorator):
     """Platform-independent GUID/UUID type.
     Uses PostgreSQL's UUID type, otherwise uses CHAR(36), storing as stringified hex.
     """
+
     impl = CHAR
     cache_ok = True
 
@@ -51,6 +52,7 @@ class UniversalJSON(TypeDecorator):
     """Platform-independent JSON type.
     Uses PostgreSQL JSONB, falls back to standard JSON on SQLite.
     """
+
     impl = sa.JSON
     cache_ok = True
 
