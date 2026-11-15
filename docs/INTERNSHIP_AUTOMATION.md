@@ -9,6 +9,7 @@ This is a local-first discovery and application-preparation workflow. It does no
 - Deterministic keyword fit scoring. A fit score is alignment, not a probability of selection.
 - Candidate profile extraction from a local PDF resume.
 - Draft preparation and a human approval gate bound to the exact draft hash.
+- Manual submission attestation after the user submits through the employer's site.
 - SQLite persistence under the local data directory.
 - Optional Ollama summaries of public job descriptions. Only job text is sent to the local Ollama daemon; candidate PII is not sent to the model.
 - Daily ATS discovery through a Windows Task Scheduler task at 08:15 local machine time.
@@ -18,7 +19,8 @@ This is a local-first discovery and application-preparation workflow. It does no
 - LinkedIn is manual-review only. JARVIS does not scrape LinkedIn or automate LinkedIn applications.
 - Internshala and Wellfound are manual import/review sources. Do not use unofficial scraping or browser automation against their restrictions.
 - Company careers and startup websites can be imported manually. Automatic crawling of arbitrary sites is not enabled.
-- The initial version does not click the final external Submit button. After reviewing and approving a draft, the candidate completes the employer's form and final submission manually. The API never reports an application as submitted.
+- Browser form filling is not yet connected to this queue. This version prepares a truthful application draft and cover letter; it does not populate the employer's web form.
+- The initial version does not click the final external Submit button. After reviewing and approving a draft, the candidate completes the employer's form and final submission manually. The tracker can record a user-attested submission, but it does not independently verify the employer's system.
 - CAPTCHA, MFA and anti-bot controls are not bypassed.
 - Job-board discovery only runs for ATS board identifiers explicitly configured by the user.
 
