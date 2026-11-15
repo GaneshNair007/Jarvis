@@ -76,3 +76,9 @@ data/runtime/
 
 data/career/
 
+
+# Private candidate data and internship application state
+data/candidate_profile.json
+data/internship_applications.sqlite3
+data/internship_applications.sqlite3-shm
+data/internship_applications.sqlite3-wal
