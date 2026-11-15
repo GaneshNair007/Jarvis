@@ -113,3 +113,24 @@ def test_manual_import_deduplicates_same_source_url(tmp_path):
     second = service.add_manual_opportunity(payload)
     assert first["id"] == second["id"]
     assert len(service.list_opportunities(limit=20)) == 1
+
+
+
+def test_tampered_draft_cannot_be_approved(tmp_path):
+    service = make_service(tmp_path)
+    opportunity = service.add_manual_opportunity({
+        "source": "company_careers",
+        "company": "Acme",
+        "title": "Python Intern",
+        "url": "https://example.com/jobs/python-intern",
+        "description": "Student internship with Python.",
+    })
+    prepared = service.prepare_application(opportunity["id"])
+    with service._connect() as db:
+        row = db.execute("SELECT draft_json FROM applications WHERE id=?", (prepared["application_id"],)).fetchone()
+        altered = json.loads(row["draft_json"])
+        altered["candidate_name"] = "Altered Name"
+        db.execute("UPDATE applications SET draft_json=? WHERE id=?",
+                   (json.dumps(altered), prepared["application_id"]))
+    with pytest.raises(PermissionError, match="Stored draft changed"):
+        service.approve_application(prepared["application_id"], prepared["review_hash"], True)
