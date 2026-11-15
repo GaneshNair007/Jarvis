@@ -206,7 +206,7 @@ class ResearcherAgent(BaseSpecialistAgent):
         user_id = context.user_id or "ganesh"
 
         try:
-            report = self.research(query=query, user_id=user_id, deep=deep, url=url)
+            report = await asyncio.to_thread(self.research, query, user_id, deep, url)
             duration_ms = round((time.time() - start) * 1000, 2)
             return AgentResult(
                 task_id=task.task_id,

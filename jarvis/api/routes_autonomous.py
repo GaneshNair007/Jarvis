@@ -2,11 +2,12 @@
 JARVIS Autonomous Routes
 Exposes browser, assignments, hackathon, forms
 """
-from fastapi import APIRouter, HTTPException, Body
+from fastapi import APIRouter, HTTPException, Body, Depends
 from typing import Dict, Any
 import asyncio
+from jarvis.api.routes_tasks import verify_admin_user
 
-router = APIRouter(prefix="/api/v1/autonomous", tags=["Autonomous"])
+router = APIRouter(prefix="/api/v1/autonomous", tags=["Autonomous"], dependencies=[Depends(verify_admin_user)])
 
 @router.post("/browser/init")
 async def browser_init(headless: bool = False):

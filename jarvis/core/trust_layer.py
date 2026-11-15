@@ -76,7 +76,7 @@ _SETUP_HINTS: Dict[str, str] = {
         "  1. Go to myaccount.google.com/apppasswords\n"
         "  2. Generate an App Password\n"
         "  3. Add to .env: GMAIL_USER=your@gmail.com\n"
-        "  4. Add to .env: GMAIL_APP_PASSWORD=xxxx-xxxx-xxxx-xxxx\n"
+        "  4. Add to .env: GMAIL_APP_PASSWORD=<your_16_digit_app_password>\n"
         "  5. Restart JARVIS"
     ),
     "ollama": (

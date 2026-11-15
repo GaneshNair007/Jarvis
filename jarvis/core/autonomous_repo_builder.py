@@ -363,6 +363,13 @@ jobs:
             verified=tests_passed,
         )
 
+        if not tests_passed or commit_cmd.returncode != 0:
+            return repo_obj, TrustResult.failed(
+                capability="project_scaffolding",
+                error=f"tests_passed={tests_passed}, commit_rc={commit_cmd.returncode}: {commit_cmd.stderr[:200] if commit_cmd else 'commit failed'}",
+                evidence=[evidence],
+            )
+
         trust_res = TrustResult.success(
             capability="project_scaffolding",
             evidence=[evidence],

@@ -62,6 +62,14 @@ def verify_admin_user(
         )
 
     expected_secret = settings.jarvis_secret_key
+    if expected_secret.strip() in {
+        "dev_secret_key_change_in_production_32b",
+        "jarvis_secret_hmac_production_key_32bytes",
+    } or len(expected_secret.strip()) < 32:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Admin auth disabled: configure a unique JARVIS_SECRET_KEY of at least 32 characters.",
+        )
     if not hmac.compare_digest(candidate_token.strip(), expected_secret.strip()):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

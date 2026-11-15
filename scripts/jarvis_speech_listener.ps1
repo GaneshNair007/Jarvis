@@ -20,7 +20,7 @@ param(
 
 $ErrorActionPreference = "Continue"
 
-function Write-JsonEvent {
+function global:Write-JsonEvent {
     param(
         [string]$EventName,
         [hashtable]$Data = @{}
@@ -151,7 +151,8 @@ try {
 
     # 5. Background Stdin listener thread for clean shutdown commands (in mic mode)
     if ($Mode -eq "mic") {
-        $stdinThread = [System.Threading.Thread]::new([System.Threading.ThreadStart]{
+        $stdinPs = [powershell]::Create()
+        $stdinPs.AddScript({
             try {
                 while ($true) {
                     $line = [Console]::In.ReadLine()
@@ -165,9 +166,8 @@ try {
                 # Stdin closed or interrupted
                 [System.Environment]::Exit(0)
             }
-        })
-        $stdinThread.IsBackground = $true
-        $stdinThread.Start()
+        }) | Out-Null
+        $asyncHandle = $stdinPs.BeginInvoke()
     }
 
     # 6. Configure Audio Input

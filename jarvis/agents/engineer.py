@@ -142,7 +142,7 @@ class EngineerAgent(BaseSpecialistAgent):
             "files_created": repo_meta.files_created,
             "tests_passed": repo_meta.tests_passed,
             "test_summary": repo_meta.test_summary,
-            "verified": trust_result.verified,
+            "verified": bool(trust_result.success and all(getattr(e, "verified", False) for e in trust_result.evidence)),
         }
 
     async def execute(self, task: AgentTask, context: AgentContext) -> AgentResult:

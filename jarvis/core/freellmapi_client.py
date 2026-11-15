@@ -64,6 +64,8 @@ class FreeLLMAPIClient:
         """Generates chat completion from local FreeLLMAPI."""
         if not prompt:
             return None
+        if not self.api_key:
+            return None
 
         # Zero-Leak Cloud Egress Sanitization (FAIL-CLOSED)
         try:

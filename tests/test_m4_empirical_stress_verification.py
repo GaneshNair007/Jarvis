@@ -455,8 +455,8 @@ class TestDomain4ReviewerAgentStress:
         task = AgentTask(task_id="t_secret_01", goal="Scout API Endpoints")
 
         leaks = [
-            ("api_key = 'sk-live-9923847291847129847192847'", "secret_key"),
-            ("token: ghp_1234567890abcdef1234567890abcdef123456", "secret_key"),
+            ("api_key = 'mock_secret_key_dummy_token_123'", "secret_key"),
+            ("token: mock_github_token_dummy_456", "secret_key"),
             ("Contact leaked email: developer.private@shadow-corp.org", "pii_email"),
             ("Customer card: 4111 2222 3333 4444", "credit_card"),
         ]

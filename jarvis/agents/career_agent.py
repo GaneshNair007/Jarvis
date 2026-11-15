@@ -179,16 +179,17 @@ class CareerAgent(BaseSpecialistAgent):
                     candidate_name=params.get("candidate_name", "Ganesh Nair"),
                 )
             elif "hackathon" in goal or "hackathon" in params:
-                if any(w in goal for w in ["start", "work on", "build", "research", "develop", "scaffold", "execute"]):
+                if params.get("action") == "execute_pipeline":
                     tools_used.extend(["hackathon_scout", "browser", "search"])
                     from jarvis.integrations.openjarvis_bridge import openjarvis_bridge
-                    output = openjarvis_bridge.execute_hackathon_pipeline(
+                    output = await asyncio.to_thread(
+                        openjarvis_bridge.execute_hackathon_pipeline,
                         hackathon_title=params.get("hackathon_title") or task.goal,
                         to_email=params.get("to_email", DEFAULT_TARGET_EMAIL),
                     )
                 else:
                     tools_used.append("hackathon_scout")
-                    output = self.scout_hackathons()
+                    output = await asyncio.to_thread(self.scout_hackathons)
             elif "query" in params or "search" in goal:
                 tools_used.append("internship_finder")
                 output = self.scout_opportunities(

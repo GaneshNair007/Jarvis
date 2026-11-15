@@ -155,7 +155,7 @@ def test_critic_agent_verification_in_stage_5(test_orchestrator):
         "status": "success",
         "tier": "TIER_1_LOCAL",
         "model": "ollama/llama3.1",
-        "reply": "Here is the key: api_key = sk-live-99887766554433221100aabbccddeeff",
+        "reply": "Here is the key: api_key = dummy_sample_secret_key_12345",
         "tokens_used": 15,
     }
 

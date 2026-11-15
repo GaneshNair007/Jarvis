@@ -3,6 +3,7 @@ JARVIS Voice REST API Routes
 Endpoints for speech-to-text, text-to-speech, push-to-talk, and barge-in.
 """
 
+import asyncio
 from fastapi import APIRouter, UploadFile, File, Form, Response, HTTPException
 from pydantic import BaseModel
 from typing import Optional
@@ -26,7 +27,7 @@ async def transcribe_audio(file: UploadFile = File(...)):
     audio_bytes = await file.read()
     if not audio_bytes:
         raise HTTPException(status_code=400, detail="Empty audio file provided")
-    return stt_engine.transcribe(audio_bytes)
+    return await asyncio.to_thread(stt_engine.transcribe, audio_bytes)
 
 
 @router.post("/synthesize")

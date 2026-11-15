@@ -46,9 +46,6 @@ class CareerRadar:
             from jarvis.powers.email_powers import EmailPowers
             self._email = EmailPowers()
         return self._email
-        self._cache: Optional[Dict[str, Any]] = None
-        self._cache_timestamp: float = 0.0
-        self._cache_ttl_sec: float = 900.0  # 15 minutes
 
     def get_verified_radar_data(self) -> Dict[str, Any]:
         """Returns baseline verified live opportunity catalog scraped from authoritative sources."""
@@ -586,6 +583,7 @@ class CareerRadar:
         from_email: str = DEFAULT_SENDER_EMAIL,
         query: str = "",
         force_refresh: bool = False,
+        approval_token: Optional[str] = None,
     ) -> Dict[str, Any]:
         """
         Authors a deterministic RFC 822 email draft and delivers via SMTP if credentials are configured.
@@ -622,12 +620,17 @@ class CareerRadar:
             "live_transmission": False,
         }
 
+        owner_email = getattr(settings, "default_target_email", DEFAULT_TARGET_EMAIL)
+        if to_email != owner_email:
+            delivery_result["smtp_warning"] = "Delivery restricted to owner address."
+            return delivery_result
+
         if smtp_user and smtp_pass and draft_file_path:
             logger.info(f"Attempting live SMTP transmission for career radar to {to_email}")
             send_res = self.email_powers.send_email(
                 draft_path=draft_file_path,
                 task_id="career_radar_digest_dispatch",
-                approval_token="auto_approved_user_requested_digest",
+                approval_token=approval_token,
             )
             if send_res.get("success"):
                 delivery_result["status"] = "SENT"
@@ -635,6 +638,7 @@ class CareerRadar:
                 delivery_result["live_transmission"] = True
                 delivery_result["archive_path"] = send_res.get("archive_path")
             else:
+                delivery_result["pending_approval"] = send_res.get("pending_approval")
                 delivery_result["smtp_warning"] = send_res.get("error")
 
         return delivery_result

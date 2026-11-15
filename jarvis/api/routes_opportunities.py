@@ -17,10 +17,15 @@ from pydantic import BaseModel, Field
 from jarvis.config import settings
 from jarvis.core.daily_connector import daily_opportunity_connector
 from jarvis.core.logger import get_logger
+from jarvis.api.routes_tasks import verify_admin_user
 
 logger = get_logger("api.opportunities")
 
-router = APIRouter(prefix="/api/v1/opportunities", tags=["Opportunities & Autonomous Pipelines"])
+router = APIRouter(
+    prefix="/api/v1/opportunities",
+    tags=["Opportunities & Autonomous Pipelines"],
+    dependencies=[Depends(verify_admin_user)],
+)
 
 
 class OpportunityApprovalRequest(BaseModel):
@@ -95,6 +100,9 @@ async def approve_and_execute_opportunity(
         opp_id=opp_id,
         approval_token=req.approval_token,
     )
+
+    if summary.get("status") == "NOT_FOUND":
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=summary.get("error"))
 
     return {
         "status": "SUCCESS",

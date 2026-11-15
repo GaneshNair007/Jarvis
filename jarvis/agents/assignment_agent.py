@@ -7,6 +7,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import re
 import time
 from datetime import datetime
 from pathlib import Path
@@ -30,7 +31,7 @@ class AssignmentHandler:
         content = await browser_orchestrator.extract_content()
         return {
             "url": content.get("url"),
-            "title": content.get("title"),
+            "title": content.get("title") or "Assignment",
             "text": content.get("text", "")[:10000],
             "extracted_at": datetime.utcnow().isoformat(),
         }
@@ -52,15 +53,16 @@ Provide the complete answer in a clean format."""
         return {"answer": answer, "model": decision.selected_model}
 
     async def convert_to_pdf(self, title: str, content: str) -> str:
+        safe_title = re.sub(r"[^A-Za-z0-9_-]", "_", title or "Assignment")
         try:
             from reportlab.lib.pagesizes import letter
             from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
             from reportlab.lib.styles import getSampleStyleSheet
-            filename = self.output_dir / f"{title.replace(' ', '_')}_{int(time.time())}.pdf"
+            filename = self.output_dir / f"{safe_title}_{int(time.time())}.pdf"
             doc = SimpleDocTemplate(str(filename), pagesize=letter)
             styles = getSampleStyleSheet()
             story = []
-            story.append(Paragraph(title, styles['Title']))
+            story.append(Paragraph(title or "Assignment", styles['Title']))
             story.append(Spacer(1, 12))
             for para in content.split('\n\n'):
                 if para.strip():
@@ -70,7 +72,7 @@ Provide the complete answer in a clean format."""
             return str(filename)
         except Exception as e:
             # Fallback to text
-            filename = self.output_dir / f"{title.replace(' ', '_')}_{int(time.time())}.txt"
+            filename = self.output_dir / f"{safe_title}_{int(time.time())}.txt"
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write(content)
             return str(filename)

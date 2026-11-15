@@ -168,7 +168,7 @@ class SwitchIntegration(BaseIntegration):
 
         return TrustResult.failed(
             capability="switch_bridge",
-            message="Switch transport is not implemented; message was not sent.",
+            error="Switch transport is not implemented; message was not sent.",
         )
 
     def request_room_approval(self, task_id: str, action_summary: str, power_id: str, privilege_level: int) -> TrustResult:
@@ -195,7 +195,7 @@ class SwitchIntegration(BaseIntegration):
 
         return TrustResult.failed(
             capability="switch_bridge",
-            message="Switch approval-card transport is not implemented; no card was posted.",
+            error="Switch approval-card transport is not implemented; no card was posted.",
         )
 
     def broadcast_failover_event(self, primary_model: str, fallback_model: str, reason: str) -> TrustResult:
@@ -226,7 +226,7 @@ class SwitchIntegration(BaseIntegration):
 
         return TrustResult.failed(
             capability="switch_bridge",
-            message="Switch failover-event transport is not implemented; no event was broadcast.",
+            error="Switch failover-event transport is not implemented; no event was broadcast.",
         )
 
 

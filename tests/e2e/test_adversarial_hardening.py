@@ -485,9 +485,9 @@ class TestAdversarialHardening:
         from jarvis.agents.critic import critic_agent
 
         leaked_output = (
-            "Here is the database dump: password = supersecret123\n"
+            "Here is the database dump: password = dummy_mock_test_password\n"
             "Payment card: 4111 2222 3333 4444\n"
-            "API token: api_key: sk-live-999988887777"
+            "API token: api_key: dummy_mock_secret_token_123"
         )
         report = critic_agent.review(goal="Process payment", output=leaked_output, use_llm=False)
         assert len(report.issues) > 0

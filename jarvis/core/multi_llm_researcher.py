@@ -176,7 +176,8 @@ class MultiLLMResearcher:
             analysis=fallback_analysis,
             tokens_used=len(fallback_analysis) // 4,
             duration_ms=duration_ms,
-            status="success",
+            status="fallback",
+            error="All cloud providers unavailable; deterministic template used",
         )
 
     def _generate_specialized_perspective(self, role: str, topic: str, guidelines: str) -> str:
@@ -232,9 +233,11 @@ class MultiLLMResearcher:
         # Build synthesis
         synthesis_sections = []
         synthesis_sections.append(f"# Deep Multi-LLM Architectural Research: {topic}\n")
+        successful_models = [p.model_name for p in perspectives if p.status == "success"]
+        consulted_str = ", ".join(successful_models) if successful_models else "NONE (offline sovereign template)"
         synthesis_sections.append(
             f"> Autonomously synthesized by JARVIS Multi-Agent Think Tank for **Ganesh Nair**\n"
-            f"> Models Consulted: Claude 3.5 Sonnet, GPT-4o, DeepSeek-V3, Google Gemini 2.0\n"
+            f"> Models Consulted: {consulted_str}\n"
             f"> Date: {time.strftime('%Y-%m-%d %H:%M:%S IST')}\n"
         )
 
@@ -261,9 +264,10 @@ class MultiLLMResearcher:
         out_path = self.output_dir / output_filename
         out_path.write_text(full_md_content, encoding="utf-8")
 
-        # Also write to root research.md if requested
-        root_path = Path("research.md")
-        root_path.write_text(full_md_content, encoding="utf-8")
+        # Only write to root research.md if explicitly configured
+        if os.getenv("JARVIS_UPDATE_ROOT_RESEARCH_MD", "false").lower() == "true":
+            root_path = Path("research.md")
+            root_path.write_text(full_md_content, encoding="utf-8")
 
         # Produce evidence
         content_hash = hashlib.sha256(full_md_content.encode("utf-8")).hexdigest()
@@ -278,20 +282,27 @@ class MultiLLMResearcher:
                 "content_hash": content_hash,
                 "duration_sec": round(time.time() - start_ts, 3),
             },
-            verified=True,
+            verified=bool(successful_models),
         )
 
-        trust_result = TrustResult.success(
-            capability="multi_llm_research",
-            evidence=[evidence],
-            data={
-                "topic": topic,
-                "output_path": str(out_path),
-                "models_count": len(perspectives),
-                "content_hash": content_hash,
-            },
-            message=f"Multi-LLM research synthesized across {len(perspectives)} frontier models with verified evidence.",
-        )
+        if not successful_models:
+            trust_result = TrustResult.failed(
+                capability="multi_llm_research",
+                error="All cloud LLM providers were unavailable; local deterministic fallback used.",
+                evidence=[evidence],
+            )
+        else:
+            trust_result = TrustResult.success(
+                capability="multi_llm_research",
+                evidence=[evidence],
+                data={
+                    "topic": topic,
+                    "output_path": str(out_path),
+                    "models_count": len(successful_models),
+                    "content_hash": content_hash,
+                },
+                message=f"Multi-LLM research synthesized across {len(successful_models)} frontier models with verified evidence.",
+            )
 
         package = MultiLLMResearchPackage(
             topic=topic,

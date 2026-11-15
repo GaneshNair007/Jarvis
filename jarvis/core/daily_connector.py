@@ -100,10 +100,19 @@ class DailyOpportunityConnector:
         start_ts = time.time()
         opp_id = f"job_scout_{int(start_ts)}"
 
-        job_title = "Principal AI Systems Architect"
-        company = "Anthropic / Autonomous AI Labs"
-        job_url = "https://www.linkedin.com/jobs/view/autonomous-ai-architect"
-        match_score = 0.96
+        from jarvis.core.career_radar import career_radar
+        radar_data = career_radar.get_verified_radar_data()
+        internships = radar_data.get("internships", [])
+        if not internships:
+            return None, TrustResult.failed(
+                capability="career_scout",
+                error="No verified career opportunities scouted in radar feed.",
+            )
+        top_role = internships[0]
+        job_title = top_role.get("title", "AI Systems Engineer")
+        company = top_role.get("company", "Autonomous Labs")
+        job_url = top_role.get("url", "https://github.com/careers")
+        match_score = float(top_role.get("match_score", 0.95))
 
         spoken_greeting = (
             f"Hello sir. I have scanned today's opportunities and found a high-match role on LinkedIn: "
@@ -324,13 +333,13 @@ class DailyOpportunityConnector:
         """
         start_ts = time.time()
         if opp_id not in self.pending_opportunities:
-            # Check if any pending opportunity exists to approve
-            if not self.pending_opportunities:
-                # Dynamically synthesize on-demand hackathon opportunity if none pending
-                opp, _ = await self.generate_midday_hackathon_briefing(voice_speak=False, dispatch_whatsapp=False)
-                opp_id = opp.opp_id
-            else:
-                opp_id = list(self.pending_opportunities.keys())[0]
+            return {
+                "error": f"Opportunity ID '{opp_id}' not found in pending opportunities.",
+                "status": "NOT_FOUND",
+            }, TrustResult.failed(
+                capability="opportunity_execution",
+                error=f"Unknown opportunity ID '{opp_id}'",
+            )
 
         opp = self.pending_opportunities[opp_id]
         logger.info(f"Ganesh APPROVED opportunity [{opp_id}] '{opp.title}'. Launching autonomous pipeline...")

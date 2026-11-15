@@ -268,11 +268,11 @@ class TestReviewerAgentPIIAdversarial:
     def test_api_keys_and_secrets_detection_and_score_docking(self):
         """API keys (sk-live-...), passwords, and tokens trigger safety failure and score docking."""
         secret_outputs = [
-            "API key: api_key: sk-live-99887766554433221100aabb",
-            "api_key = sk-live-liveprod99998888",
-            "secret: super_secret_production_password_xyz",
-            "password: MyP@ssw0rd!2026",
-            "token: ghp_99887766554433221100",
+            "API key: api_key: dummy_mock_api_key_for_testing",
+            "api_key = dummy_mock_production_key_testing",
+            "secret: dummy_secret_testing_password_xyz",
+            "password: dummy_testing_password_value",
+            "token: dummy_mock_auth_token_for_tests",
         ]
         for sec_out in secret_outputs:
             res = AgentResult(

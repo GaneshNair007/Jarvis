@@ -574,24 +574,31 @@ class ModelRouter:
             }
 
         except Exception as e:
-            logger.warning(f"Inference error on {model_string}: {e}. Attempting resilient FreeLLMAPI fallback.")
-            try:
-                from jarvis.core.freellmapi_client import freellmapi_client
-                if freellmapi_client.is_available:
-                    free_res = freellmapi_client.generate_completion(prompt, system_instruction=system_prompt)
-                    if free_res and free_res.get("reply"):
-                        return {
-                            "task_id": decision.task_id,
-                            "status": "success",
-                            "tier": decision.tier if decision.tier != "FALLBACK_CLOUD" else "TIER_3_CLOUD",
-                            "model": free_res.get("model", "freellmapi/auto"),
-                            "reply": free_res["reply"],
-                            "tokens_used": free_res.get("tokens_used", len(prompt) // 4),
-                            "cost_usd": 0.0,
-                            "duration_ms": round((time.time() - start_time) * 1000, 2),
-                        }
-            except Exception as _fe:
-                logger.warning(f"FreeLLMAPI fallback in exception handler failed: {_fe}")
+            logger.warning(f"Inference error on {model_string}: {e}. Evaluating fallback safety boundaries.")
+            # Keep private/local-tier prompts strictly within the user boundary (Fail-Closed)
+            is_private = (
+                decision.tier in ("TIER_1_LOCAL", "TIER_2_PRIVATE")
+                or decision.metadata.get("sensitivity_level") in ("high", "confidential")
+            ) and not decision.metadata.get("has_cloud_consent", False)
+
+            if not is_private:
+                try:
+                    from jarvis.core.freellmapi_client import freellmapi_client
+                    if freellmapi_client.is_available:
+                        free_res = freellmapi_client.generate_completion(prompt, system_instruction=system_prompt)
+                        if free_res and free_res.get("reply"):
+                            return {
+                                "task_id": decision.task_id,
+                                "status": "success",
+                                "tier": decision.tier if decision.tier != "FALLBACK_CLOUD" else "TIER_3_CLOUD",
+                                "model": free_res.get("model", "freellmapi/auto"),
+                                "reply": free_res["reply"],
+                                "tokens_used": free_res.get("tokens_used", len(prompt) // 4),
+                                "cost_usd": 0.0,
+                                "duration_ms": round((time.time() - start_time) * 1000, 2),
+                            }
+                except Exception as _fe:
+                    logger.warning(f"FreeLLMAPI fallback in exception handler failed: {_fe}")
 
             # Trip circuit breaker on failure if cloud
             if decision.tier == "TIER_3_CLOUD":

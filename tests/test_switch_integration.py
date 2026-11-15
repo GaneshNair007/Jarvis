@@ -18,12 +18,11 @@ def test_switch_send_room_message_returns_trust_result():
         message="JARVIS Sovereign Conductor online via Switch protocol.",
         room_id="dev-war-room",
     )
-    assert res.success is True
+    # First Law: Unimplemented network transports fail honestly (no fabricated success)
+    assert res.success is False
     assert res.fabricated is False
-    assert len(res.evidence) >= 1
-    assert res.evidence[0].source == "switch_bridge:send_room_message"
-    assert res.data["status"] == "DISPATCHED"
-    assert res.data["room_id"] == "dev-war-room"
+    assert "error" in res.data
+    assert "Switch transport is not implemented" in res.data["error"]
 
 
 def test_switch_request_room_approval_never_leaks_token():
@@ -33,11 +32,11 @@ def test_switch_request_room_approval_never_leaks_token():
         power_id="deploy_aws_ecs",
         privilege_level=4,
     )
-    assert res.success is True
+    # First Law & Zero-Leak: fails honestly without fabricating delivery, never leaks token
+    assert res.success is False
     assert res.fabricated is False
     assert "token" not in res.data  # Critical security invariant
-    assert res.data["status"] == "AWAITING_ROOM_APPROVAL"
-    assert "approval_id" in res.data
+    assert "Switch approval-card transport is not implemented" in res.data["error"]
 
 
 def test_switch_broadcast_failover_event():
@@ -46,8 +45,9 @@ def test_switch_broadcast_failover_event():
         fallback_model="deepseek/deepseek-r1",
         reason="HTTP 429 Rate Limit - Context preserved and hot-swapped",
     )
-    assert res.success is True
+    # First Law: fails honestly without fabricating delivery
+    assert res.success is False
     assert res.fabricated is False
-    assert res.data["status"] == "FAILOVER_BROADCAST_COMPLETE"
-    assert "HYDRA FAILOVER" in res.data["summary"]
+    assert "error" in res.data
+    assert "Switch failover-event transport is not implemented" in res.data["error"]
 
