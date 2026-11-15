@@ -91,3 +91,24 @@ def approve_application(application_id: str, request: ApprovalRequest):
         raise HTTPException(status_code=403, detail=str(exc))
     except (ValueError, RuntimeError) as exc:
         raise HTTPException(status_code=409, detail=str(exc))
+
+
+class ManualSubmissionRequest(BaseModel):
+    one_time_approval_token: str
+    confirmation_evidence: str
+    confirm: bool = False
+
+
+@router.post("/applications/{application_id}/mark-submitted")
+def mark_manually_submitted(application_id: str, request: ManualSubmissionRequest):
+    try:
+        return internship_automation.mark_manually_submitted(
+            application_id=application_id,
+            token=request.one_time_approval_token,
+            confirmation_evidence=request.confirmation_evidence,
+            confirm=request.confirm,
+        )
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+    except PermissionError as exc:
+        raise HTTPException(status_code=403, detail=str(exc))
