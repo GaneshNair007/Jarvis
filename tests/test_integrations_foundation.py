@@ -283,13 +283,11 @@ def test_dangerous_action_blocking(client):
     credential_manager.clear_override("GITHUB_PERSONAL_ACCESS_TOKEN")
 
 
-
 def test_credential_manager_loads_dotenv_and_preserves_precedence(tmp_path, monkeypatch):
     """OAuth credentials in project .env work without being exported to os.environ."""
     env_file = tmp_path / ".env"
     env_file.write_text(
-        "GOOGLE_CLIENT_ID=dotenv-client-id\n"
-        "GOOGLE_CLIENT_SECRET=dotenv-client-secret\n",
+        "GOOGLE_CLIENT_ID=dotenv-client-id\nGOOGLE_CLIENT_SECRET=dotenv-client-secret\n",
         encoding="utf-8",
     )
     monkeypatch.delenv("GOOGLE_CLIENT_ID", raising=False)
