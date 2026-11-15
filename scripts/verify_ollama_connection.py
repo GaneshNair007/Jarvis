@@ -64,9 +64,7 @@ def main() -> int:
             f"{base_url}/api/chat",
             json={
                 "model": model,
-                "messages": [
-                    {"role": "user", "content": "Reply with exactly: JARVIS_OLLAMA_OK"}
-                ],
+                "messages": [{"role": "user", "content": "Reply with exactly: JARVIS_OLLAMA_OK"}],
                 "stream": False,
             },
             timeout=settings.ollama_timeout_sec,
