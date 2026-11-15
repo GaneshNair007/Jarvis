@@ -136,3 +136,67 @@ Validates all 12 core requirements:
 10. Power registry
 11. Audit logging
 12. Kill switch
+
+
+## 6. Windows standalone browser and Gmail setup
+
+Run these steps from the repository root in PowerShell after activating the
+virtual environment.
+
+### Browser search and page reading
+
+Install the Python dependencies and the Playwright Chromium browser:
+
+```powershell
+python -m pip install -r requirements.txt
+python -m playwright install chromium
+```
+
+Start the API, then test public-web search:
+
+```powershell
+$body = @{ query = "latest Python documentation"; max_results = 5 } | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/api/v1/browser/search -ContentType "application/json" -Body $body
+```
+
+Test reading a public page:
+
+```powershell
+$body = @{ url = "https://www.python.org/" } | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/api/v1/browser/read -ContentType "application/json" -Body $body
+```
+
+JARVIS uses an isolated, temporary Playwright browser context for web research.
+It does not automatically inherit your normal Chrome profile, logged-in website
+sessions, or Gmail cookies. Use the official Gmail integration below for email.
+
+### Gmail authorization
+
+1. Create a Google Cloud OAuth client of type **Desktop app**, enable the Gmail
+   API, and put `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in the local
+   `.env` file.
+2. Ensure `ASSISTANT_EMAIL` is the exact mailbox you want JARVIS to access.
+   `OWNER_EMAIL` is a separate destination setting and does not grant inbox
+   access.
+3. Run the connection wizard:
+
+```powershell
+python -m integrations.google.oauth_flow status
+python -m integrations.google.oauth_flow connect
+python -m integrations.google.oauth_flow status
+```
+
+4. Sign in to Google as the configured `ASSISTANT_EMAIL` and grant the
+   requested Gmail scopes. Keep the wizard running until it reports
+   `CONNECTED`.
+5. With the API running, verify the same connection:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/api/v1/google/status
+Invoke-RestMethod http://127.0.0.1:8000/api/v1/google/gmail/profile
+Invoke-RestMethod http://127.0.0.1:8000/api/v1/google/gmail/inbox
+```
+
+A `CONNECTED` OAuth result and a successful Gmail profile/inbox response are
+the evidence that inbox access is live. A configured email address, a local
+`.eml` file, or a successful browser search is not proof of Gmail access.
