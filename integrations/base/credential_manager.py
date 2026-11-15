@@ -11,6 +11,7 @@ import re
 import uuid
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
+from dotenv import dotenv_values
 
 
 def dpapi_protect(data: bytes, description: str = "JARVIS protected secret") -> bytes:
@@ -145,12 +146,26 @@ class CredentialManager:
 
     def __init__(self, override_env: Optional[Dict[str, str]] = None):
         self._override_env = override_env or {}
+        self._env_file = Path(__file__).resolve().parents[2] / ".env"
 
     def get_credential(self, key: str, default: Optional[str] = None) -> Optional[str]:
-        """Fetches credential from override store or environment."""
+        """Fetch credentials from explicit overrides, process env, then project .env."""
         if key in self._override_env:
             return self._override_env[key]
-        return os.getenv(key, default)
+
+        # Process-level environment variables deliberately take precedence.
+        value = os.getenv(key)
+        if value is not None:
+            return value
+
+        # Pydantic reads .env into Settings but does not export unknown keys to
+        # os.environ. OAuth client credentials are intentionally not Settings
+        # fields, so read them from the same project .env file explicitly.
+        try:
+            value = dotenv_values(self._env_file).get(key)
+        except (OSError, UnicodeError, ValueError):
+            value = None
+        return value if value is not None else default
 
     def set_override(self, key: str, value: str) -> None:
         """Sets a temporary in-memory override (useful for testing or runtime auth)."""
