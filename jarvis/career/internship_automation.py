@@ -419,5 +419,25 @@ class InternshipAutomation:
             return False
         return hmac.compare_digest(row["approval_hash"], hashlib.sha256(token.encode()).hexdigest())
 
+    def mark_manually_submitted(self, application_id: str, token: str,
+                                confirmation_evidence: str, confirm: bool) -> dict[str, Any]:
+        """Record a user-attested external submission; JARVIS does not claim it submitted."""
+        if confirm is not True or not confirmation_evidence.strip():
+            raise PermissionError("Explicit confirmation and a non-empty confirmation reference are required")
+        if not self.verify_submission_approval(application_id, token):
+            raise PermissionError("Approval token is invalid, expired, already used or not for this application")
+        with self._connect() as db:
+            db.execute(
+                "UPDATE applications SET status=?,updated_at=? WHERE id=? AND status=?",
+                ("MANUALLY_SUBMITTED_CONFIRMED_BY_USER", time.time(), application_id,
+                 "APPROVED_FOR_MANUAL_SUBMISSION"),
+            )
+        return {
+            "application_id": application_id,
+            "status": "MANUALLY_SUBMITTED_CONFIRMED_BY_USER",
+            "recording": "User-attested only; JARVIS did not submit or independently verify the external form.",
+            "confirmation_evidence": confirmation_evidence[:500],
+        }
+
 
 internship_automation = InternshipAutomation()
