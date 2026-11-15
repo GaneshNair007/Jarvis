@@ -6,6 +6,7 @@ Run from the repository root:
 This performs a real inference request. It never prints credentials or sign-in
 material and exits non-zero unless Ollama returns a non-empty response.
 """
+
 from __future__ import annotations
 
 import sys
