@@ -224,10 +224,12 @@ class InternshipAutomation:
         source = str(data.get("source", "")).lower()
         if source not in ALLOWED_MANUAL_SOURCES:
             raise ValueError(f"Source must be one of: {', '.join(sorted(ALLOWED_MANUAL_SOURCES))}")
+        url = _safe_url(str(data.get("url", "")))
+        external_id = str(data.get("external_id") or hashlib.sha256(url.encode()).hexdigest()[:24])
         job = {
-            "source": source, "external_id": str(data.get("external_id") or uuid.uuid4().hex),
+            "source": source, "external_id": external_id,
             "company": str(data.get("company", "")).strip(), "title": str(data.get("title", "")).strip(),
-            "location": str(data.get("location", "")).strip(), "url": _safe_url(str(data.get("url", ""))),
+            "location": str(data.get("location", "")).strip(), "url": url,
             "description": str(data.get("description", "")).strip(),
             "employment_type": str(data.get("employment_type", "")), "raw": {"manual_import": True},
         }
@@ -435,9 +437,9 @@ class InternshipAutomation:
             if not hmac.compare_digest(row["approval_hash"], supplied_hash):
                 raise PermissionError("Approval token is invalid")
             updated = db.execute(
-                "UPDATE applications SET status=?,updated_at=? WHERE id=? AND status=?",
-                ("MANUALLY_SUBMITTED_CONFIRMED_BY_USER", time.time(), application_id,
-                 "APPROVED_FOR_MANUAL_SUBMISSION"),
+                "UPDATE applications SET status=?,updated_at=?,submitted_at=?,result_evidence=? WHERE id=? AND status=?",
+                ("MANUALLY_SUBMITTED_CONFIRMED_BY_USER", time.time(), time.time(),
+                 confirmation_evidence[:500], application_id, "APPROVED_FOR_MANUAL_SUBMISSION"),
             )
             if updated.rowcount != 1:
                 raise PermissionError("Approval token has already been consumed")
