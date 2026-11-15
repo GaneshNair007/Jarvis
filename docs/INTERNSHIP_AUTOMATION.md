@@ -101,7 +101,8 @@ Provide the company, title, HTTPS job URL, location and description. For LinkedI
 2. Call `POST /api/v1/internships/applications/prepare` with an opportunity ID.
 3. Inspect every field and cover letter in the returned draft.
 4. If correct, call `POST /api/v1/internships/applications/{application_id}/approve` with the returned `review_hash` and `confirm: true`.
-5. The API marks the draft `APPROVED_FOR_MANUAL_SUBMISSION`. Open the employer's official form, attach the resume and submit it yourself. Only then should the application tracker be updated by the user.
+5. The API marks the draft `APPROVED_FOR_MANUAL_SUBMISSION`. Open the employer's official form, attach the resume and submit it yourself.
+6. After the employer confirmation appears, optionally call `POST /api/v1/internships/applications/{application_id}/mark-submitted` with the one-time approval token, `confirm: true`, and a brief confirmation reference. This records a user attestation only; it is not independent proof and does not mean JARVIS submitted the form.
 
 Approval is short-lived and tied to the exact draft hash. Editing the draft invalidates the approval. Rejection or stale approval does not submit anything.
 
