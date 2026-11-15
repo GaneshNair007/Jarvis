@@ -155,7 +155,7 @@ python scripts/verify_ollama_connection.py
 ```
 
 The script checks `/api/tags` and then sends a real, short
-`/api/generate` request. It exits non-zero if the endpoint, model, sign-in,
+`/api/chat` request. It exits non-zero if the endpoint, model, sign-in,
 or inference fails. It does not treat an open TCP port as proof of a working
 model.
 
