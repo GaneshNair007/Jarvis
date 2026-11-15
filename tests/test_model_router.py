@@ -346,3 +346,97 @@ def test_failed_tool_result_marks_inference_partial_failure(monkeypatch):
     assert result["status"] == "partial_failure"
     assert result["error"] == "ONE_OR_MORE_TOOLS_FAILED"
     assert result["tools_executed"] == 0
+
+
+
+def test_model_status_requires_the_configured_ollama_model(monkeypatch):
+    """A running Ollama daemon is not ready when the selected model is absent."""
+    from jarvis.core.model_router import ModelRouter
+
+    router = ModelRouter()
+    monkeypatch.setattr(router, "check_ollama_readiness", lambda use_cache=False: True)
+    monkeypatch.setattr(
+        router,
+        "_get_ollama_model_inventory",
+        lambda use_cache=False: {
+            "available": True,
+            "models": ["mistral:latest"],
+            "error": None,
+        },
+    )
+    monkeypatch.setattr(settings, "ollama_default_model", "llama3.1")
+
+    status = router.get_status()["tier_1_local"]
+    assert status["reachable"] is True
+    assert status["model_available"] is False
+    assert status["status"] == "model_missing"
+    assert "llama3.1" in status["error"]
+
+
+def test_model_status_accepts_ollama_latest_tag_alias(monkeypatch):
+    """An untagged configured name matches Ollama's explicit :latest tag."""
+    from jarvis.core.model_router import ModelRouter
+
+    router = ModelRouter()
+    monkeypatch.setattr(router, "check_ollama_readiness", lambda use_cache=False: True)
+    monkeypatch.setattr(
+        router,
+        "_get_ollama_model_inventory",
+        lambda use_cache=False: {
+            "available": True,
+            "models": ["llama3.1:latest"],
+            "error": None,
+        },
+    )
+    monkeypatch.setattr(settings, "ollama_default_model", "llama3.1")
+
+    status = router.get_status()["tier_1_local"]
+    assert status["model_available"] is True
+    assert status["status"] == "ready"
+
+
+def test_empty_model_response_is_not_reported_as_completed(monkeypatch):
+    """A 200 response with empty content is not a successful inference."""
+    import sys
+    from types import SimpleNamespace
+    from jarvis.core.model_router import ModelRouter, RoutingDecision
+
+    router = ModelRouter()
+    monkeypatch.setattr(router, "check_ollama_readiness", lambda use_cache=True: True)
+    monkeypatch.setattr(
+        "jarvis.security.ten_layer_shield.jarvis_security_suite.sanitize_outbound_prompt",
+        lambda value: value,
+    )
+    monkeypatch.setattr(
+        "jarvis.core.power_binder.power_binder.select_tools_for_query",
+        lambda query, limit=5, max_privilege_level=1: [],
+    )
+    response = SimpleNamespace(
+        choices=[SimpleNamespace(message=SimpleNamespace(content="   ", tool_calls=None))],
+        usage=SimpleNamespace(prompt_tokens=1, completion_tokens=0),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "litellm",
+        SimpleNamespace(
+            completion=lambda **kwargs: response,
+            completion_cost=lambda completion_response: 0.0,
+        ),
+    )
+    decision = RoutingDecision(
+        task_id="empty_reply_task",
+        tier="TIER_1_LOCAL",
+        provider="ollama",
+        selected_model="llama3.1",
+        reason="Local-first",
+        redacted_context="",
+        redactions_made=[],
+        estimated_cost_usd=0.0,
+        requires_approval=False,
+    )
+
+    result = router.execute_inference(decision, "Explain eigenvectors.")
+
+    assert result["status"] == "unavailable"
+    assert result["error"] == "MODEL_RETURNED_EMPTY_REPLY"
+    assert result["tokens_used"] == 0
