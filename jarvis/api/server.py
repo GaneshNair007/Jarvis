@@ -38,6 +38,7 @@ from jarvis.api.routes_integrations import router as integrations_router
 from jarvis.api.routes_google import router as google_router
 from jarvis.api.routes_search import router as search_router
 from jarvis.api.routes_career import router as career_router
+from jarvis.api.routes_internships import router as internships_router
 from jarvis.api.routes_assistants import router as assistants_router
 from jarvis.api.routes_smart_home import router as smart_home_router
 from jarvis.api.routes_ops import router as ops_router
@@ -94,6 +95,7 @@ app.include_router(google_router)
 app.include_router(search_router)
 app.include_router(search_router, prefix="/api/v1")
 app.include_router(career_router)
+app.include_router(internships_router)
 app.include_router(assistants_router)
 app.include_router(smart_home_router)
 app.include_router(ops_router)
