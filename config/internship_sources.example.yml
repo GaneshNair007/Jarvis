@@ -1,0 +1,10 @@
+# Configure only public ATS board identifiers for companies you want JARVIS to check.
+# No credentials or personal data belong in this file.
+# POST these entries to /api/v1/internships/discover.
+boards:
+  - provider: greenhouse
+    board: example-company
+  - provider: lever
+    board: example-company
+  - provider: ashby
+    board: example-company
