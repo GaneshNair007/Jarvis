@@ -345,8 +345,9 @@ class InternshipAutomation:
                 "job_summary_local": local_summary,
                 "ollama_used": bool(local_summary),
                 "candidate_name": profile["full_name"], "candidate_email": profile["email"],
-                "candidate_location": profile["location"], "education": profile["education"],
-                "graduation_year": str(profile["graduation_year"]),
+                "candidate_location": profile["location"], "candidate_phone": profile.get("phone", ""),
+                "linkedin": profile.get("linkedin", ""), "github": profile.get("github", ""),
+                "education": profile["education"], "graduation_year": str(profile["graduation_year"]),
                 "skills": profile["skills"], "projects": profile.get("projects", []),
                 "resume_path": profile["resume_path"], "job_title": job["title"],
                 "company": job["company"], "job_url": job["url"],
@@ -424,14 +425,22 @@ class InternshipAutomation:
         """Record a user-attested external submission; JARVIS does not claim it submitted."""
         if confirm is not True or not confirmation_evidence.strip():
             raise PermissionError("Explicit confirmation and a non-empty confirmation reference are required")
-        if not self.verify_submission_approval(application_id, token):
-            raise PermissionError("Approval token is invalid, expired, already used or not for this application")
         with self._connect() as db:
-            db.execute(
+            row = db.execute("SELECT * FROM applications WHERE id=?", (application_id,)).fetchone()
+            if not row or row["status"] != "APPROVED_FOR_MANUAL_SUBMISSION" or not row["approval_hash"]:
+                raise PermissionError("Approval token is invalid, expired, already used or not for this application")
+            if row["approval_expires"] is None or time.time() > row["approval_expires"]:
+                raise PermissionError("Approval token has expired")
+            supplied_hash = hashlib.sha256(token.encode()).hexdigest()
+            if not hmac.compare_digest(row["approval_hash"], supplied_hash):
+                raise PermissionError("Approval token is invalid")
+            updated = db.execute(
                 "UPDATE applications SET status=?,updated_at=? WHERE id=? AND status=?",
                 ("MANUALLY_SUBMITTED_CONFIRMED_BY_USER", time.time(), application_id,
                  "APPROVED_FOR_MANUAL_SUBMISSION"),
             )
+            if updated.rowcount != 1:
+                raise PermissionError("Approval token has already been consumed")
         return {
             "application_id": application_id,
             "status": "MANUALLY_SUBMITTED_CONFIRMED_BY_USER",
