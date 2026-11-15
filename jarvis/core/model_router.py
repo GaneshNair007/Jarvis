@@ -383,7 +383,9 @@ class ModelRouter:
         elif not ollama_model_available:
             ollama_status = "model_missing"
         else:
-            ollama_status = "ready"
+            # Presence in /api/tags proves the model is listed, not that signed-in
+            # cloud inference has succeeded. The smoke test verifies actual inference.
+            ollama_status = "model_available"
 
         ollama_status_error = ollama_inventory.get("error")
         if ollama_ready and ollama_inventory["available"] and not ollama_model_available:
