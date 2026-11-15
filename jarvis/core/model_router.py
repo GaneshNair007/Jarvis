@@ -14,6 +14,7 @@ import uuid
 import re
 import socket
 import json
+import httpx
 from urllib.parse import urlparse
 from typing import Dict, Any, Optional, List
 from pydantic import BaseModel, Field
@@ -105,6 +106,10 @@ class ModelRouter:
         self._ollama_probe_cache: Optional[bool] = None
         self._ollama_probe_timestamp: float = 0.0
         self._ollama_probe_ttl_sec: float = 5.0
+        self._ollama_models_cache: Optional[List[str]] = None
+        self._ollama_models_timestamp: float = 0.0
+        self._ollama_models_ttl_sec: float = 5.0
+        self._ollama_models_error: Optional[str] = None
 
     def check_ollama_readiness(self, use_cache: bool = True) -> bool:
         """
@@ -131,6 +136,67 @@ class ModelRouter:
         self._ollama_probe_cache = is_ready
         self._ollama_probe_timestamp = now
         return is_ready
+
+    def _get_ollama_model_inventory(self, use_cache: bool = True) -> Dict[str, Any]:
+        """Read the model names exposed by the local Ollama API.
+
+        A listening TCP port alone is not proof that the model configured for
+        JARVIS exists. Cache the inventory briefly to keep status checks cheap.
+        """
+        now = time.perf_counter()
+        if use_cache and self._ollama_models_cache is not None:
+            if (now - self._ollama_models_timestamp) < self._ollama_models_ttl_sec:
+                return {
+                    "available": self._ollama_models_error is None,
+                    "models": list(self._ollama_models_cache),
+                    "error": self._ollama_models_error,
+                }
+
+        try:
+            response = httpx.get(
+                f"{settings.ollama_base_url.rstrip('/')}/api/tags",
+                timeout=0.75,
+            )
+            response.raise_for_status()
+            payload = response.json()
+            entries = payload.get("models") if isinstance(payload, dict) else None
+            if not isinstance(entries, list):
+                raise ValueError("Ollama /api/tags response did not contain a models list.")
+
+            model_names = sorted(
+                {
+                    str(item.get("name") or item.get("model")).strip()
+                    for item in entries
+                    if isinstance(item, dict) and (item.get("name") or item.get("model"))
+                }
+            )
+            self._ollama_models_cache = model_names
+            self._ollama_models_timestamp = now
+            self._ollama_models_error = None
+            return {"available": True, "models": model_names, "error": None}
+        except Exception as exc:
+            self._ollama_models_cache = []
+            self._ollama_models_timestamp = now
+            self._ollama_models_error = f"{type(exc).__name__}: {str(exc)[:180]}"
+            logger.warning("Could not read Ollama model inventory: %s", self._ollama_models_error)
+            return {"available": False, "models": [], "error": self._ollama_models_error}
+
+    @staticmethod
+    def _normalize_ollama_model_name(model_name: str) -> str:
+        """Normalize an untagged model name to Ollama's default :latest tag."""
+        normalized = str(model_name or "").strip().lower()
+        if not normalized:
+            return ""
+        final_segment = normalized.rsplit("/", 1)[-1]
+        if ":" not in final_segment:
+            normalized = f"{normalized}:latest"
+        return normalized
+
+    def _configured_ollama_model_is_available(self, model_names: List[str]) -> bool:
+        configured = self._normalize_ollama_model_name(settings.ollama_default_model)
+        if not configured:
+            return False
+        return any(self._normalize_ollama_model_name(name) == configured for name in model_names)
 
     def is_instant_command(self, intent: str) -> bool:
         """Determines if the command is purely deterministic and bypasses LLM inference."""
@@ -302,13 +368,41 @@ class ModelRouter:
     def get_status(self) -> Dict[str, Any]:
         """Returns live status of all inference tiers."""
         ollama_ready = self.check_ollama_readiness(use_cache=False)
+        ollama_inventory = (
+            self._get_ollama_model_inventory(use_cache=False)
+            if ollama_ready
+            else {"available": False, "models": [], "error": "Ollama endpoint is not reachable."}
+        )
+        ollama_model_available = (
+            ollama_inventory["available"]
+            and self._configured_ollama_model_is_available(ollama_inventory["models"])
+        )
+        if not ollama_ready:
+            ollama_status = "unavailable"
+        elif not ollama_inventory["available"]:
+            ollama_status = "unverified"
+        elif not ollama_model_available:
+            ollama_status = "model_missing"
+        else:
+            ollama_status = "ready"
+
+        ollama_status_error = ollama_inventory.get("error")
+        if ollama_ready and ollama_inventory["available"] and not ollama_model_available:
+            ollama_status_error = (
+                f"Configured model '{settings.ollama_default_model}' is not listed by Ollama. "
+                "Pull/select that model or update OLLAMA_DEFAULT_MODEL."
+            )
+
         return {
             "tier_1_local": {
                 "provider": "ollama",
                 "base_url": settings.ollama_base_url,
                 "default_model": settings.ollama_default_model,
                 "reachable": ollama_ready,
-                "status": "ready" if ollama_ready else "unavailable",
+                "model_available": ollama_model_available,
+                "available_models": ollama_inventory["models"],
+                "status": ollama_status,
+                "error": ollama_status_error,
             },
             "tier_2_private": {
                 "provider": "vllm",
@@ -726,6 +820,8 @@ class ModelRouter:
                 assistant_message = response.choices[0].message
 
             reply_text = getattr(assistant_message, "content", None) or ""
+            if not isinstance(reply_text, str) or not reply_text.strip():
+                raise RuntimeError("MODEL_RETURNED_EMPTY_REPLY")
             input_tokens = sum(
                 getattr(getattr(item, "usage", None), "prompt_tokens", 0) or 0 for item in usage_responses
             )
