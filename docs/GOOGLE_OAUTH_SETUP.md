@@ -1,31 +1,25 @@
 # JARVIS Google OAuth 2.0 Setup — Owner Instructions
 
-**Applies to:** Gmail integration (`integrations/google/`) on branch
-`feature/jarvis-google-voice-multiagent`.
+**Applies to:** the Gmail integration in the current JARVIS repository
+branch `feat/nus-inspired-personal-workspace`.
 
-## Security prerequisites (owner, do this first)
+## Security prerequisites
 
-The shared Gmail password (`nairganesh134@gmail.com`) is treated as
-**compromised**. Before connecting JARVIS to Google:
-
-1. **Change the Gmail password** immediately at
-   https://myaccount.google.com/
-2. **Enable 2-Step Verification** on the Google account.
-3. **Review active sessions** at
-   https://myaccount.google.com/device-activity and sign out anything you
-   do not recognize.
-4. **Revoke unnecessary app passwords / third-party access** at
-   https://myaccount.google.com/u/3/security?linkedapps=.
-5. **Never** put the Google password, an app password, browser cookies, or a
-   copied browser session into JARVIS, Antigravity, GitHub, `.env`, or the
-   master prompt. JARVIS uses OAuth 2.0 authorization code flow + PKCE only.
+Before connecting an account, make sure its Google password is unique, enable
+2-Step Verification, and review active Google sessions. Never put a Google
+password, app password, browser cookie, or copied Chrome session into JARVIS,
+Antigravity, GitHub, or `.env`. JARVIS uses OAuth 2.0 authorization code flow
+with PKCE; it does not use password login or Gmail IMAP.
 
 ## What JARVIS connects as
 
 - Assistant identity: `jarvis33246146@gmail.com` (dedicated assistant account,
   configured in `jarvis/config.py` and `.env.example` as `ASSISTANT_EMAIL`).
-- Owner destination: `OWNER_EMAIL` in `.env` — set this explicitly; it is
-  never assumed from old docs.
+- Owner destination: `OWNER_EMAIL` in `.env` — this is a destination for
+  owner-directed messages, not the mailbox JARVIS reads.
+- To connect a different mailbox, set `ASSISTANT_EMAIL` to that exact address
+  in `.env`, restart JARVIS, and authorize that same Google account. The
+  OAuth flow intentionally rejects a different signed-in account.
 - Least-privilege scopes: `gmail.readonly`, `gmail.compose`, `gmail.send`.
 - Tokens are encrypted at rest with Windows DPAPI under
   `data/credentials/google_oauth.bin` (never plaintext, never logged).
@@ -47,7 +41,9 @@ Add to your local `.env` (gitignored, never commit):
 ```ini
 GOOGLE_CLIENT_ID=<your-client-id>.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=<your-client-secret>
+# Must match the Google account you will select during the OAuth consent flow.
 ASSISTANT_EMAIL=jarvis33246146@gmail.com
+# Optional owner destination; does not grant inbox access.
 OWNER_EMAIL=<your-personal-email@example.com>
 OWNER_DISPLAY_NAME=<Your Name>
 ```
@@ -62,6 +58,12 @@ python -m integrations.google.oauth_flow status
 python -m integrations.google.oauth_flow connect
 ```
 
+Run these commands from the JARVIS repository root, in the same Windows
+account that will run the API. The project `.env` is read directly for the
+OAuth client ID and secret. On Windows, install dependencies with
+`python -m pip install -r requirements.txt`; this includes the `pywin32`
+dependency used for DPAPI-encrypted token persistence.
+
 The wizard:
 
 1. Starts a loopback listener on `127.0.0.1` only (ephemeral port).
@@ -72,13 +74,15 @@ The wizard:
    (PKCE-bound), verifies the account matches the assistant identity, and
    stores the refresh token encrypted with Windows DPAPI.
 
-**Wrong account protection:** if you sign in as any other Google account, the
-token is revoked immediately and the connection is refused.
+**Wrong account protection:** if you sign in as an account other than the
+configured `ASSISTANT_EMAIL`, the token is revoked immediately and the
+connection is refused. A Gmail address in `OWNER_EMAIL` does not change this.
 
 ## Step 4 — Verify
 
 ```powershell
 python -m integrations.google.oauth_flow status
+Invoke-RestMethod http://127.0.0.1:8000/api/v1/google/status
 ```
 
 Should report `status: CONNECTED`, `account_email: jarvis33246146@gmail.com`,
