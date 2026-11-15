@@ -166,16 +166,9 @@ class SwitchIntegration(BaseIntegration):
             verified=True,
         )
 
-        return TrustResult.success(
+        return TrustResult.failed(
             capability="switch_bridge",
-            evidence=[evidence],
-            data={
-                "status": "DISPATCHED",
-                "room_id": target_room,
-                "message_hash": msg_hash,
-                "timestamp": ts,
-            },
-            message=f"Message broadcasted to Switch room '{target_room}'.",
+            message="Switch transport is not implemented; message was not sent.",
         )
 
     def request_room_approval(self, task_id: str, action_summary: str, power_id: str, privilege_level: int) -> TrustResult:
@@ -200,17 +193,9 @@ class SwitchIntegration(BaseIntegration):
             verified=True,
         )
 
-        return TrustResult.success(
+        return TrustResult.failed(
             capability="switch_bridge",
-            evidence=[evidence],
-            data={
-                "status": "AWAITING_ROOM_APPROVAL",
-                "approval_id": approval_id,
-                "task_id": task_id,
-                "action_summary": action_summary,
-                "expires_in_sec": 300,
-            },
-            message=f"Approval card posted to Switch team room for task '{task_id}'.",
+            message="Switch approval-card transport is not implemented; no card was posted.",
         )
 
     def broadcast_failover_event(self, primary_model: str, fallback_model: str, reason: str) -> TrustResult:
@@ -239,16 +224,9 @@ class SwitchIntegration(BaseIntegration):
             verified=True,
         )
 
-        return TrustResult.success(
+        return TrustResult.failed(
             capability="switch_bridge",
-            evidence=[evidence],
-            data={
-                "status": "FAILOVER_BROADCAST_COMPLETE",
-                "summary": failover_summary,
-                "primary_model": primary_model,
-                "fallback_model": fallback_model,
-            },
-            message=f"Failover event broadcasted to Switch swarm.",
+            message="Switch failover-event transport is not implemented; no event was broadcast.",
         )
 
 
