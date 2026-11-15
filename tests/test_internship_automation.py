@@ -74,6 +74,15 @@ def test_approval_is_bound_to_exact_draft_and_expires(tmp_path):
     assert service.verify_submission_approval(
         prepared["application_id"], approved["one_time_approval_token"]
     )
+    recorded = service.mark_manually_submitted(
+        prepared["application_id"], approved["one_time_approval_token"],
+        "Employer confirmation page displayed; user verified", True
+    )
+    assert recorded["status"] == "MANUALLY_SUBMITTED_CONFIRMED_BY_USER"
+    assert "JARVIS did not submit" in recorded["recording"]
+    assert not service.verify_submission_approval(
+        prepared["application_id"], approved["one_time_approval_token"]
+    )
     assert not service.verify_submission_approval(prepared["application_id"], "tampered-token")
 
 
