@@ -11,7 +11,7 @@ This is a local-first discovery and application-preparation workflow. It does no
 - Draft preparation and a human approval gate bound to the exact draft hash.
 - SQLite persistence under the local data directory.
 - Optional Ollama summaries of public job descriptions. Only job text is sent to the local Ollama daemon; candidate PII is not sent to the model.
-- Daily ATS discovery scheduler at 08:15 local machine time.
+- Daily ATS discovery through a Windows Task Scheduler task at 08:15 local machine time.
 
 ## Important limitations
 
@@ -81,7 +81,13 @@ Run a discovery pass:
 - `POST /api/v1/internships/discover` with `{"boards":[{"provider":"greenhouse","board":"your-board"}]}`
 - Or `POST /scheduler/trigger/internship_ats_discovery` after configuring `config/internship_sources.yml`.
 
-The scheduled job runs daily at 08:15 according to the laptop's local clock. JARVIS must be running for the scheduler to execute.
+Register the Windows task once from an elevated or normal PowerShell session (whichever permissions your Windows account allows):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/register_internship_task.ps1
+```
+
+The task runs daily at 08:15 according to the laptop's local clock. Its runner starts JARVIS if the local API is not already responding, triggers only the internship discovery job, and writes a timestamped result under `data/logs/`. It fails visibly if the API does not start, ATS boards are not configured or discovery returns errors. It does not submit applications.
 
 ## Manual source import
 
@@ -112,7 +118,7 @@ Approval is short-lived and tied to the exact draft hash. Editing the draft inva
 - Approval fails due to secret: ensure `.env` contains a unique `JARVIS_SECRET_KEY` with at least 32 characters; restart JARVIS after changing it.
 - Ollama unavailable: the workflow falls back to deterministic matching; local summaries are optional.
 - No jobs discovered: verify the ATS board slug and provider; inspect errors returned by the discovery endpoint.
-- Scheduler not running: JARVIS API server must remain running; check `GET /scheduler/status`.
+- Scheduled discovery not running: inspect Windows Task Scheduler task `JARVIS-Internship-Discovery` and the timestamped logs under `data/logs/`.
 
 ## Verification status
 
