@@ -122,6 +122,17 @@ class InternshipAutomation:
             opportunities = db.execute("SELECT COUNT(*) FROM opportunities").fetchone()[0]
             pending = db.execute("SELECT COUNT(*) FROM applications WHERE status='PENDING_REVIEW'").fetchone()[0]
             approved = db.execute("SELECT COUNT(*) FROM applications WHERE status='APPROVED_FOR_MANUAL_SUBMISSION'").fetchone()[0]
+        ollama_ready = False
+        ollama_model = None
+        try:
+            from jarvis.config import settings as jarvis_settings
+            ollama_model = jarvis_settings.ollama_default_model
+            response = httpx.get(jarvis_settings.ollama_base_url.rstrip("/") + "/api/tags", timeout=1.5)
+            response.raise_for_status()
+            available = [item.get("name") for item in response.json().get("models", [])]
+            ollama_ready = any(name == ollama_model or str(name).startswith(ollama_model + ":") for name in available)
+        except Exception:
+            pass
         return {
             "service": "internship-automation",
             "profile_configured": profile_ok,
@@ -133,6 +144,7 @@ class InternshipAutomation:
             "submission_mode": "human-approved; manual final submission",
             "supported_ats": sorted(ATS_PROVIDERS),
             "manual_sources": sorted(ALLOWED_MANUAL_SOURCES),
+            "ollama": {"available": ollama_ready, "model": ollama_model, "scope": "local-only job-description summaries; never invents candidate facts"},
         }
 
     @staticmethod
@@ -347,8 +359,8 @@ class InternshipAutomation:
         if confirm is not True:
             raise PermissionError("Explicit human confirmation is required")
         secret = self.settings.approval_secret
-        if len(secret) < 32:
-            raise RuntimeError("JARVIS_SECRET_KEY must contain at least 32 characters before approval can be enabled")
+        if len(secret) < 32 or secret == "dev_secret_key_change_in_production_32b":
+            raise RuntimeError("Set a unique JARVIS_SECRET_KEY of at least 32 characters before enabling application approvals")
         with self._connect() as db:
             row = db.execute("SELECT * FROM applications WHERE id=?", (application_id,)).fetchone()
             if not row:
