@@ -60,10 +60,12 @@ def main() -> int:
     started = time.perf_counter()
     try:
         inference_response = httpx.post(
-            f"{base_url}/api/generate",
+            f"{base_url}/api/chat",
             json={
                 "model": model,
-                "prompt": "Reply with exactly: JARVIS_OLLAMA_OK",
+                "messages": [
+                    {"role": "user", "content": "Reply with exactly: JARVIS_OLLAMA_OK"}
+                ],
                 "stream": False,
             },
             timeout=settings.ollama_timeout_sec,
@@ -85,13 +87,13 @@ def main() -> int:
         print(f"FAIL: Ollama inference did not complete: {type(exc).__name__}: {exc}")
         return 1
 
-    reply = result.get("response", "").strip() if isinstance(result, dict) else ""
+    reply = (result.get("message") or {}).get("content", "").strip() if isinstance(result, dict) else ""
     if not reply:
         print("FAIL: Ollama returned an empty response; JARVIS is not verified.")
         return 1
 
     elapsed_ms = (time.perf_counter() - started) * 1000.0
-    print("PASS: JARVIS reached Ollama and received a real model response.")
+    print("PASS: JARVIS reached Ollama /api/chat and received a real model response.")
     print(f"Endpoint: {base_url}")
     print(f"Model: {model}")
     print(f"Latency: {elapsed_ms:.1f} ms")
