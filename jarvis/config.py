@@ -49,8 +49,13 @@ class Settings(BaseSettings):
         description="Explicit allow-list for outbound email recipients beyond the owner",
     )
     cors_allow_origins: List[str] = Field(
-        default_factory=lambda: ["*"],
-        description="Allowed CORS origin domains",
+        default_factory=lambda: [
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            "http://localhost:8000",
+            "http://127.0.0.1:8000",
+        ],
+        description="Allowed CORS origins; configure additional trusted frontends explicitly",
     )
     disk_mount_path: str = Field(
         default="C:\\" if os.name == "nt" else "/",
@@ -215,8 +220,13 @@ class Settings(BaseSettings):
         self.ensure_directories()
 
         if self.jarvis_env == "production":
-            insecure_secret = "dev_secret_key_change_in_production_32b"
-            if self.jarvis_secret_key == insecure_secret or len(self.jarvis_secret_key) < 32:
+            insecure_secrets = {
+                "dev_secret_key_change_in_production_32b",
+                "jarvis_secret_hmac_production_key_32bytes",
+                "CHANGE_ME_GENERATE_A_UNIQUE_32_PLUS_CHARACTER_SECRET",
+            }
+            configured_secret = self.jarvis_secret_key.strip()
+            if configured_secret in insecure_secrets or len(configured_secret) < 32:
                 raise ValueError(
                     "STARTUP ERROR: Insecure or default JARVIS_SECRET_KEY detected in production. "
                     "Generate a cryptographically secure 32+ character key and set it in your environment."
