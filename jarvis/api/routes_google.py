@@ -29,6 +29,7 @@ from integrations.base.oauth_manager import OAuthError
 from integrations.google.gmail_api import GmailApiError
 from integrations.google.gmail_integration import gmail_integration, GMAIL_SCOPES
 from integrations.google.oauth_flow import GoogleOAuthFlow
+from jarvis.config import settings
 from jarvis.core.logger import get_logger
 from jarvis.core.policy_gate import policy_gate
 
@@ -70,7 +71,7 @@ async def google_auth_start(req: Optional[AuthStartRequest] = None) -> Dict[str,
         "redirect_uri": redirect_uri,
         "expires_in_sec": auth["expires_in_sec"],
         "scopes": list(GMAIL_SCOPES),
-        "assistant_account": "jarvis33246146@gmail.com",
+        "assistant_account": settings.assistant_email,
     }
 
 
@@ -112,7 +113,7 @@ async def google_auth_callback(
     """
     try:
         result = google_flow.complete(code or "", state or "", GOOGLE_CALLBACK_URI)
-        email = result.get("account_email", "jarvis33246146@gmail.com")
+        email = result.get("account_email", settings.assistant_email)
         scopes = " ".join(result.get("scopes", []))
         return HTMLResponse(
             _CONNECTED_PAGE.replace("{email}", email).replace("{scopes}", scopes),
